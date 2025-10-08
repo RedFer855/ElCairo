@@ -111,11 +111,11 @@ namespace ModernMenuUI
         private void btnAbrirMenu_Click(object sender, EventArgs e)
         {
 
-            if (panelMenuLateral.Width == 260)
+            /*if (panelMenuLateral.Width == 260)
                 panelMenuLateral.Width = 100;
             else
-                panelMenuLateral.Width = 260;
-            //MenulateralAnimacion();
+                panelMenuLateral.Width = 260;*/
+            MenulateralAnimacion();
         }
 
         // Submenus de Módulos
