@@ -61,9 +61,9 @@ namespace ModernMenuUI
             dgvProductos.Rows.Add(6, "Leche", 8, 4);
             dgvProductos.Rows.Add(7, "Arroz", 8, 4);
 
-            Image Eliminar = Image.FromFile("C:\\Users\\fbara\\OneDrive\\Desktop\\PROYECTOS\\ModernMenuUI - copia\\ModernMenuUI\\Resources\\eliminar (1).png");
-            Image Restar = Image.FromFile("C:\\Users\\fbara\\OneDrive\\Desktop\\PROYECTOS\\ModernMenuUI - copia\\ModernMenuUI\\Resources\\signo-menos (1).png");
-            Image Sumar = Image.FromFile("C:\\Users\\fbara\\OneDrive\\Desktop\\PROYECTOS\\ModernMenuUI - copia\\ModernMenuUI\\Resources\\mas (2).png");
+            Image Eliminar = Properties.Resources.eliminar__1_;
+            Image Restar = Properties.Resources.signo_menos__1_;
+            Image Sumar = Properties.Resources.mas__2_;
 
             dgvCarrito.Rows.Add(1, "Manzana Manzana, Manazana", 10, 20, Eliminar, Restar, Sumar);
             dgvCarrito.Rows.Add(2, "Pan", 5, 4, Eliminar, Restar, Sumar);
@@ -103,7 +103,25 @@ namespace ModernMenuUI
 
         private void dgvCarrito_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            
+        }
+     
 
+        private void dgvCarrito_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 4)
+            {
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.LightBlue;
+            }
+        }
+
+        private void dgvCarrito_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 4)
+            {
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
+            }
         }
     }
 }
+

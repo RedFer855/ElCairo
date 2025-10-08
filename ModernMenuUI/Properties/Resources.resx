@@ -121,8 +121,8 @@
   <data name="el cairo 2 (1) 1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\el cairo 2 (1) 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="avatar (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\avatar (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="signo-menos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\signo-menos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boton-de-notificaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boton-de-notificaciones.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -133,8 +133,14 @@
   <data name="buscar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buscar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="avatar (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\avatar (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="cuadrado-en-blanco (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cuadrado-en-blanco (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mas (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mas (2)1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="carrito-de-compras (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\carrito-de-compras (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,7 +172,7 @@
   <data name="el cairo 2 (1) 1 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\el cairo 2 (1) 1 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="signo-menos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\signo-menos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="signo-menos (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\signo-menos (1)1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -75,6 +75,8 @@
             timerCerrar = new System.Windows.Forms.Timer(components);
             panelNotificaciones = new Panel();
             lblNotificaciones = new Label();
+            pictureBox3 = new PictureBox();
+            pictureBox4 = new PictureBox();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
@@ -88,7 +90,10 @@
             panelCompras.SuspendLayout();
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
+            panelFormHijo.SuspendLayout();
             panelNotificaciones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
             // 
             // panBarraControl
@@ -714,6 +719,8 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.FromArgb(253, 253, 253);
+            panelFormHijo.Controls.Add(pictureBox4);
+            panelFormHijo.Controls.Add(pictureBox3);
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(260, 65);
             panelFormHijo.Name = "panelFormHijo";
@@ -753,6 +760,24 @@
             lblNotificaciones.TabIndex = 0;
             lblNotificaciones.Text = "No tienes notificaciones pendientes...";
             // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = Properties.Resources.signo_menos__1_;
+            pictureBox3.Location = new Point(213, 140);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(100, 50);
+            pictureBox3.TabIndex = 0;
+            pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = Properties.Resources.mas__2_;
+            pictureBox4.Location = new Point(307, 282);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(100, 50);
+            pictureBox4.TabIndex = 1;
+            pictureBox4.TabStop = false;
+            // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -783,8 +808,11 @@
             panelCompras.ResumeLayout(false);
             panelInventario.ResumeLayout(false);
             panelMneuLateral.ResumeLayout(false);
+            panelFormHijo.ResumeLayout(false);
             panelNotificaciones.ResumeLayout(false);
             panelNotificaciones.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
         }
 
@@ -835,5 +863,7 @@
         private Panel panel1;
         private Panel panel3;
         private Label lblNotificaciones;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
     }
 }
