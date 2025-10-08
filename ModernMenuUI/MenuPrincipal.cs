@@ -1,0 +1,371 @@
+using System.Configuration;
+
+namespace ModernMenuUI
+{
+    public partial class MenuPrincipal : Form
+    {
+        public bool Animacion = true;
+        AnimadorPanel animadorPanel;
+        public MenuPrincipal()
+        {
+            InitializeComponent();
+            this.WindowState = FormWindowState.Maximized; // Siempre inicia maximizado
+            animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
+            
+
+        }
+
+
+        private void AbrirPaneles(Panel panel)
+        {
+            if (panel.Visible == false)
+            {
+                panel.Visible = !panel.Visible;
+            }
+            else
+            {
+                panel.Visible = true;
+            }
+        }
+
+
+        private void panelvisible()
+        {
+            panelInventario.Visible = false;
+            panelCompras.Visible = false;
+            panelVentas.Visible = false;
+            panelReporteria.Visible = false;
+            panelUsuarios.Visible = false;
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            panelvisible();
+            //tema = new Clase_Animaciones(panelMenuLateral, panelMneuLateral, panBarraControl);
+            //tema.AplicarTema();
+        }
+
+        private void CerrarSubmenu()
+        {
+            if (panelInventario.Visible == true)
+            {
+                panelInventario.Visible = false;
+            }
+
+            if (panelCompras.Visible == true)
+            {
+                panelCompras.Visible = false;
+            }
+
+            if (panelVentas.Visible == true)
+            {
+                panelVentas.Visible = false;
+            }
+
+            if (panelReporteria.Visible == true)
+            {
+                panelReporteria.Visible = false;
+            }
+
+            if (panelUsuarios.Visible == true)
+            {
+                panelUsuarios.Visible = false;
+            }
+        }
+
+        private void MenulateralAnimacion()
+        {
+            if (panelMenuLateral.Width == 100)
+            {
+                timerAbrir.Start();
+                //panelMenuLateral.Width = 260; 
+            }
+            else
+            {
+
+                timerCerrar.Start();
+
+                //panelMenuLateral.Width = 100;
+                CerrarSubmenu();
+            }
+        }
+
+        //Abrir y Cerrar Paneles
+        private void AbrirCerrarPanel(Panel PanelActual)
+        {
+            if (PanelActual.Visible == true)
+            {
+                CerrarSubmenu();
+            }
+            else
+            {
+                CerrarSubmenu();
+                AbrirPaneles(PanelActual);
+                if (panelMenuLateral.Width == 100)
+                    MenulateralAnimacion();
+            }
+        }
+
+        // Ocultar Menú Lateral
+        private void btnAbrirMenu_Click(object sender, EventArgs e)
+        {
+
+            if (panelMenuLateral.Width == 260)
+                panelMenuLateral.Width = 100;
+            else
+                panelMenuLateral.Width = 260;
+            //MenulateralAnimacion();
+        }
+
+        // Submenus de Módulos
+        private void btnInventario_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelInventario);
+        }
+
+        private void btnCompras_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelCompras);
+        }
+
+        private void btnVentas_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelVentas);
+        }
+
+        private void btnUsuarios_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelUsuarios);
+        }
+
+        private void btnReporteria_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelReporteria);
+        }
+
+        // Botones de Control de Ventana
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnMiniMaxi_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnAjustes_Click(object sender, EventArgs e)
+        {
+            abrirFormularioHijo(new Ajustes());
+        }
+
+        // Abrir Fomularios Hijos
+        private Form formularioactivo = null;
+        private void abrirFormularioHijo(Form Formulariohijo)
+        {
+            if (formularioactivo != null)
+                formularioactivo.Close();
+            formularioactivo = Formulariohijo;
+            Formulariohijo.TopLevel = false;
+            Formulariohijo.Dock = DockStyle.Fill;
+            panelFormHijo.Controls.Add(Formulariohijo);
+            panelFormHijo.Tag = Formulariohijo;
+            Formulariohijo.BringToFront();
+            Formulariohijo.Show();
+
+            if (Formulariohijo == null)
+            {
+                lblNombreModulo.Text = "MENU PRINCIPAL";
+            }
+        }
+
+        // Botones Submenus
+        private void btnGestionInventario_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+
+        }
+
+        private void btnInventarioBodega_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+        }
+
+        private void btnGestionCompra_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            abrirFormularioHijo(new Gestion_de_Compra());
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+        }
+
+        private void btnProveedores_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+        }
+
+        private void btnGestionVentas_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            abrirFormularioHijo(new Gestion_de_Ventas());
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+        }
+
+        private void btnClientes_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+        }
+
+        private void btnGestionEmpleados_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+        }
+
+        private void btnGestionUsuarios_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            abrirFormularioHijo(new Gestion_de_Usuarios());
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+        }
+
+        private void btnGestionRoles_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+        }
+
+        private void btnAcciones_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+        }
+
+        private void btnBitacora_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+        }
+
+        private void btnCrearReporte_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
+        }
+
+        private void btnReportesCreados_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
+        }
+
+        private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void panel4_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void panelMenuLateral_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void btnNotificaciones_Click(object sender, EventArgs e)
+        {
+            if (panelNotificaciones.Width == 0)
+            {
+                btnNotificaciones.Enabled = false;
+                animadorPanel.Abrir();
+                btnNotificaciones.Enabled = true;
+            }
+            else
+            {
+                btnNotificaciones.Enabled = false;
+                animadorPanel.Cerrar();
+                btnNotificaciones.Enabled = true;
+            }
+
+        }
+
+        // Animaciones de deslizamiento PanelMenuLateral
+        private void timerAbrir_Tick(object sender, EventArgs e)
+        {
+            if (panelMenuLateral.Width < 261)
+            {
+                btnAbrirMenu.Enabled = false;
+                panelMenuLateral.Width = panelMenuLateral.Width + 20;
+            }
+            else
+            {
+                timerAbrir.Stop();
+                btnReporteria.Text = "            " + "Reportería";
+                btnUsuarios.Text = "            " + "Usuarios";
+                btnVentas.Text = "            " + "Ventas";
+                btnCompras.Text = "            " + "Compras";
+                btnInventario.Text = "            " + "Inventario";
+                btnAbrirMenu.Enabled = true;
+            }
+
+        }
+
+        private void timerCerrar_Tick(object sender, EventArgs e)
+        {
+            if (panelMenuLateral.Width > 101)
+            {
+                btnReporteria.Text = null;
+                btnUsuarios.Text = null;
+                btnVentas.Text = null;
+                btnCompras.Text = null;
+                btnInventario.Text = null;
+                btnAbrirMenu.Enabled = false;
+                panelMenuLateral.Width = panelMenuLateral.Width - 20;
+            }
+            else
+            {
+                timerCerrar.Stop();
+                btnAbrirMenu.Enabled = true;
+            }
+        }
+
+        private void panBarraControl_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+    }
+}
