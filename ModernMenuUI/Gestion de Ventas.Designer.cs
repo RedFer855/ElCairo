@@ -67,11 +67,9 @@
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            Precio = new DataGridViewTextBoxColumn();
-            Stock = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
+            label8 = new Label();
+            txtCodigo = new TextBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
@@ -79,6 +77,10 @@
             txtPrecio = new TextBox();
             txtCantidad = new TextBox();
             btnAgregar = new Button();
+            Codigos = new DataGridViewTextBoxColumn();
+            Producto = new DataGridViewTextBoxColumn();
+            Precio = new DataGridViewTextBoxColumn();
+            Stock = new DataGridViewTextBoxColumn();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             panelCarrito.SuspendLayout();
@@ -139,11 +141,10 @@
             // 
             // panel5
             // 
-            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel5.BackColor = Color.FromArgb(189, 215, 238);
             panel5.Controls.Add(label4);
             panel5.Controls.Add(textBox4);
-            panel5.Location = new Point(477, 17);
+            panel5.Location = new Point(29, 12);
             panel5.Name = "panel5";
             panel5.Size = new Size(258, 51);
             panel5.TabIndex = 14;
@@ -240,9 +241,9 @@
             panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(29, 316);
+            panelCarrito.Location = new Point(29, 309);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(708, 266);
+            panelCarrito.Size = new Size(708, 273);
             panelCarrito.TabIndex = 12;
             // 
             // panel10
@@ -252,7 +253,7 @@
             panel10.Controls.Add(dgvCarrito);
             panel10.Location = new Point(21, 19);
             panel10.Name = "panel10";
-            panel10.Size = new Size(666, 230);
+            panel10.Size = new Size(666, 237);
             panel10.TabIndex = 17;
             // 
             // pictureBox1
@@ -310,11 +311,14 @@
             dgvCarrito.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvCarrito.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvCarrito.RowTemplate.Height = 50;
-            dgvCarrito.Size = new Size(666, 230);
+            dgvCarrito.Size = new Size(666, 237);
             dgvCarrito.TabIndex = 1;
+            dgvCarrito.CellClick += dgvCarrito_CellClick;
             dgvCarrito.CellContentClick += dgvCarrito_CellContentClick;
+            dgvCarrito.CellMouseDown += dgvCarrito_CellMouseDown;
             dgvCarrito.CellMouseEnter += dgvCarrito_CellMouseEnter;
             dgvCarrito.CellMouseLeave += dgvCarrito_CellMouseLeave;
+            dgvCarrito.CellMouseUp += dgvCarrito_CellMouseUp;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -340,7 +344,7 @@
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.FillWeight = 80F;
-            dataGridViewTextBoxColumn4.HeaderText = "Stock";
+            dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // Restar
@@ -369,11 +373,10 @@
             // 
             // panelBusqueda
             // 
-            panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(buscar);
-            panelBusqueda.Location = new Point(29, 17);
+            panelBusqueda.Location = new Point(308, 12);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(429, 51);
             panelBusqueda.TabIndex = 9;
@@ -382,10 +385,11 @@
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
-            txtBuscar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(21, 14);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(338, 22);
+            txtBuscar.PlaceholderText = "Buscar Productos...";
+            txtBuscar.Size = new Size(338, 20);
             txtBuscar.TabIndex = 1;
             // 
             // buscar
@@ -408,7 +412,7 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel7);
-            panel1.Location = new Point(29, 90);
+            panel1.Location = new Point(308, 84);
             panel1.Name = "panel1";
             panel1.Size = new Size(429, 207);
             panel1.TabIndex = 10;
@@ -421,7 +425,7 @@
             panel7.Controls.Add(dgvProductos);
             panel7.Location = new Point(21, 17);
             panel7.Name = "panel7";
-            panel7.Size = new Size(395, 181);
+            panel7.Size = new Size(390, 173);
             panel7.TabIndex = 11;
             // 
             // dgvProductos
@@ -442,7 +446,7 @@
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvProductos.ColumnHeadersHeight = 40;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { Column1, Producto, Precio, Stock });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { Codigos, Producto, Precio, Stock });
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = Color.White;
             dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -468,18 +472,129 @@
             dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 40;
-            dgvProductos.Size = new Size(395, 181);
+            dgvProductos.Size = new Size(390, 173);
             dgvProductos.TabIndex = 0;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
-            // Column1
+            // panel2
+            // 
+            panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(label8);
+            panel2.Controls.Add(txtCodigo);
+            panel2.Controls.Add(label3);
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(label1);
+            panel2.Controls.Add(txtProducto);
+            panel2.Controls.Add(txtPrecio);
+            panel2.Controls.Add(txtCantidad);
+            panel2.Controls.Add(btnAgregar);
+            panel2.Location = new Point(28, 84);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(259, 207);
+            panel2.TabIndex = 11;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Location = new Point(12, 17);
+            label8.Name = "label8";
+            label8.Size = new Size(47, 17);
+            label8.TabIndex = 19;
+            label8.Text = "Código:";
+            // 
+            // txtCodigo
+            // 
+            txtCodigo.BorderStyle = BorderStyle.None;
+            txtCodigo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCodigo.Location = new Point(80, 17);
+            txtCodigo.Name = "txtCodigo";
+            txtCodigo.Size = new Size(160, 20);
+            txtCodigo.TabIndex = 18;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(10, 108);
+            label3.Name = "label3";
+            label3.Size = new Size(59, 17);
+            label3.TabIndex = 17;
+            label3.Text = "Cantidad:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(15, 75);
+            label2.Name = "label2";
+            label2.Size = new Size(46, 17);
+            label2.TabIndex = 16;
+            label2.Text = "Precio:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(10, 46);
+            label1.Name = "label1";
+            label1.Size = new Size(60, 17);
+            label1.TabIndex = 15;
+            label1.Text = "Producto:";
+            // 
+            // txtProducto
+            // 
+            txtProducto.BorderStyle = BorderStyle.None;
+            txtProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtProducto.Location = new Point(80, 46);
+            txtProducto.Name = "txtProducto";
+            txtProducto.Size = new Size(160, 20);
+            txtProducto.TabIndex = 13;
+            // 
+            // txtPrecio
+            // 
+            txtPrecio.BorderStyle = BorderStyle.None;
+            txtPrecio.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPrecio.Location = new Point(80, 75);
+            txtPrecio.Name = "txtPrecio";
+            txtPrecio.Size = new Size(160, 20);
+            txtPrecio.TabIndex = 12;
+            // 
+            // txtCantidad
+            // 
+            txtCantidad.BorderStyle = BorderStyle.None;
+            txtCantidad.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCantidad.Location = new Point(80, 108);
+            txtCantidad.Name = "txtCantidad";
+            txtCantidad.Size = new Size(160, 20);
+            txtCantidad.TabIndex = 11;
+            // 
+            // btnAgregar
+            // 
+            btnAgregar.BackColor = Color.FromArgb(149, 195, 172);
+            btnAgregar.BackgroundImage = (Image)resources.GetObject("btnAgregar.BackgroundImage");
+            btnAgregar.BackgroundImageLayout = ImageLayout.None;
+            btnAgregar.FlatAppearance.BorderSize = 0;
+            btnAgregar.Font = new Font("Itim", 18.25F);
+            btnAgregar.ForeColor = SystemColors.ButtonFace;
+            btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
+            btnAgregar.Location = new Point(15, 144);
+            btnAgregar.Name = "btnAgregar";
+            btnAgregar.Padding = new Padding(40, 0, 0, 0);
+            btnAgregar.Size = new Size(225, 46);
+            btnAgregar.TabIndex = 10;
+            btnAgregar.Text = "Añadir";
+            btnAgregar.UseVisualStyleBackColor = false;
+            btnAgregar.Click += btnAgregar_Click;
+            // 
+            // Codigos
             // 
             dataGridViewCellStyle6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle6.Padding = new Padding(0, 1, 0, 0);
-            Column1.DefaultCellStyle = dataGridViewCellStyle6;
-            Column1.FillWeight = 80F;
-            Column1.HeaderText = "Id";
-            Column1.Name = "Column1";
+            Codigos.DefaultCellStyle = dataGridViewCellStyle6;
+            Codigos.FillWeight = 80F;
+            Codigos.HeaderText = "Id";
+            Codigos.Name = "Codigos";
             // 
             // Producto
             // 
@@ -498,97 +613,6 @@
             Stock.FillWeight = 80F;
             Stock.HeaderText = "Stock";
             Stock.Name = "Stock";
-            // 
-            // panel2
-            // 
-            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panel2.BackColor = Color.FromArgb(189, 215, 238);
-            panel2.Controls.Add(label3);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(label1);
-            panel2.Controls.Add(txtProducto);
-            panel2.Controls.Add(txtPrecio);
-            panel2.Controls.Add(txtCantidad);
-            panel2.Controls.Add(btnAgregar);
-            panel2.Location = new Point(477, 90);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(259, 207);
-            panel2.TabIndex = 11;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(14, 91);
-            label3.Name = "label3";
-            label3.Size = new Size(59, 17);
-            label3.TabIndex = 17;
-            label3.Text = "Cantidad:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(14, 62);
-            label2.Name = "label2";
-            label2.Size = new Size(46, 17);
-            label2.TabIndex = 16;
-            label2.Text = "Precio:";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(14, 33);
-            label1.Name = "label1";
-            label1.Size = new Size(60, 17);
-            label1.TabIndex = 15;
-            label1.Text = "Producto:";
-            // 
-            // txtProducto
-            // 
-            txtProducto.BorderStyle = BorderStyle.None;
-            txtProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtProducto.Location = new Point(79, 31);
-            txtProducto.Name = "txtProducto";
-            txtProducto.Size = new Size(160, 20);
-            txtProducto.TabIndex = 13;
-            // 
-            // txtPrecio
-            // 
-            txtPrecio.BorderStyle = BorderStyle.None;
-            txtPrecio.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPrecio.Location = new Point(79, 60);
-            txtPrecio.Name = "txtPrecio";
-            txtPrecio.Size = new Size(160, 20);
-            txtPrecio.TabIndex = 12;
-            // 
-            // txtCantidad
-            // 
-            txtCantidad.BorderStyle = BorderStyle.None;
-            txtCantidad.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCantidad.Location = new Point(79, 89);
-            txtCantidad.Name = "txtCantidad";
-            txtCantidad.Size = new Size(160, 20);
-            txtCantidad.TabIndex = 11;
-            // 
-            // btnAgregar
-            // 
-            btnAgregar.BackColor = Color.FromArgb(149, 195, 172);
-            btnAgregar.BackgroundImage = (Image)resources.GetObject("btnAgregar.BackgroundImage");
-            btnAgregar.BackgroundImageLayout = ImageLayout.None;
-            btnAgregar.FlatAppearance.BorderSize = 0;
-            btnAgregar.Font = new Font("Itim", 18.25F);
-            btnAgregar.ForeColor = SystemColors.ButtonFace;
-            btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(14, 135);
-            btnAgregar.Name = "btnAgregar";
-            btnAgregar.Padding = new Padding(40, 0, 0, 0);
-            btnAgregar.Size = new Size(225, 46);
-            btnAgregar.TabIndex = 10;
-            btnAgregar.Text = "Añadir";
-            btnAgregar.UseVisualStyleBackColor = false;
-            btnAgregar.Click += btnAgregar_Click;
             // 
             // Gestion_de_Ventas
             // 
@@ -654,10 +678,6 @@
         private Button btnAgregar;
         private DataGridView dgvProductos;
         private Panel panel7;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Producto;
-        private DataGridViewTextBoxColumn Precio;
-        private DataGridViewTextBoxColumn Stock;
         private Panel panel10;
         private DataGridView dgvCarrito;
         private TextBox textBox3;
@@ -671,5 +691,11 @@
         private DataGridViewImageColumn Restar;
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
+        private Label label8;
+        private TextBox txtCodigo;
+        private DataGridViewTextBoxColumn Codigos;
+        private DataGridViewTextBoxColumn Producto;
+        private DataGridViewTextBoxColumn Precio;
+        private DataGridViewTextBoxColumn Stock;
     }
 }
