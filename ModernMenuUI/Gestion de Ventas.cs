@@ -26,7 +26,11 @@ namespace ModernMenuUI
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             Clase_Animaciones.ActivarDoubleBuffering(dgvCarrito);
-            
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
+                 ControlStyles.UserPaint |
+                 ControlStyles.OptimizedDoubleBuffer, true);
+            this.UpdateStyles();
+
 
         }
 

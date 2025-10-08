@@ -134,6 +134,7 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(90, 65);
             panel3.TabIndex = 10;
+            panel3.MouseDown += panel3_MouseDown;
             // 
             // panel1
             // 
@@ -143,6 +144,8 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(218, 65);
             panel1.TabIndex = 9;
+            panel1.Paint += panel1_Paint;
+            panel1.MouseDown += panel1_MouseDown_1;
             // 
             // lblNombreModulo
             // 
@@ -154,6 +157,7 @@
             lblNombreModulo.Size = new Size(200, 29);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "MENU PRINCIPAL";
+            lblNombreModulo.Click += lblNombreModulo_Click;
             lblNombreModulo.MouseDown += lblNombreModulo_MouseDown;
             // 
             // btnAjustes

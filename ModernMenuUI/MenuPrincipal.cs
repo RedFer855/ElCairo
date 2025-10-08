@@ -11,7 +11,8 @@ namespace ModernMenuUI
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized; // Siempre inicia maximizado
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
-            
+            this.BackColor = Color.White;
+
 
         }
 
@@ -115,6 +116,10 @@ namespace ModernMenuUI
                 panelMenuLateral.Width = 100;
             else
                 panelMenuLateral.Width = 260;*/
+            panelFormHijo.Visible = false;
+            btnCerrar.SuspendLayout();
+            btnMiniMaxi.SuspendLayout();
+            btnMinimizar.SuspendLayout();
             MenulateralAnimacion();
         }
 
@@ -335,6 +340,7 @@ namespace ModernMenuUI
                 btnCompras.Text = "            " + "Compras";
                 btnInventario.Text = "            " + "Inventario";
                 btnAbrirMenu.Enabled = true;
+                panelFormHijo.Visible = true;
             }
 
         }
@@ -355,6 +361,8 @@ namespace ModernMenuUI
             {
                 timerCerrar.Stop();
                 btnAbrirMenu.Enabled = true;
+
+                panelFormHijo.Visible = true;
             }
         }
 
@@ -364,6 +372,26 @@ namespace ModernMenuUI
         }
 
         private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblNombreModulo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_MouseDown_1(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void panel3_MouseDown(object sender, MouseEventArgs e)
         {
             Clase_Animaciones.MoverFormulario(this.Handle);
         }
