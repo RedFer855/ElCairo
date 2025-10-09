@@ -25,8 +25,8 @@ namespace ModernMenuUI
 
             timerAbrir = new Timer();
             timerCerrar = new Timer();
-            timerAbrir.Interval = 8;
-            timerCerrar.Interval = 8;
+            timerAbrir.Interval = 10;
+            timerCerrar.Interval = 10;
 
             timerAbrir.Tick += TimerAbrir_Tick;
             timerCerrar.Tick += TimerCerrar_Tick;

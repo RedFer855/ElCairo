@@ -11,12 +11,13 @@ namespace ModernMenuUI
         public MenuPrincipal()
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized; // Siempre inicia maximizado
+            this.AutoScaleMode = AutoScaleMode.Dpi;
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             this.DoubleBuffered = true;
+
         }
-        
+
         //FORMS HIJOS DENTRO DE MENU
 
         //Abrir Fomularios Hijos
@@ -74,30 +75,9 @@ namespace ModernMenuUI
         // Cerrar todos los submenu
         private void CerrarSubmenu()
         {
-            if (panelInventario.Visible == true)
-            {
-                panelInventario.Visible = false;
-            }
-
-            if (panelCompras.Visible == true)
-            {
-                panelCompras.Visible = false;
-            }
-
-            if (panelVentas.Visible == true)
-            {
-                panelVentas.Visible = false;
-            }
-
-            if (panelReporteria.Visible == true)
-            {
-                panelReporteria.Visible = false;
-            }
-
-            if (panelUsuarios.Visible == true)
-            {
-                panelUsuarios.Visible = false;
-            }
+            Panel[] submenus = { panelInventario, panelCompras, panelVentas, panelReporteria, panelUsuarios };
+            foreach (var p in submenus)
+                p.Visible = false;
         }
 
         //Abrir y Cerrar Paneles
@@ -112,7 +92,10 @@ namespace ModernMenuUI
                 CerrarSubmenu();
                 AbrirPaneles(PanelActual);
                 if (panelMenuLateral.Width == 100)
+                {
                     MenulateralAnimacion();
+                }
+
             }
         }
 
@@ -121,29 +104,28 @@ namespace ModernMenuUI
         {
             if (panelMenuLateral.Width == 100)
             {
-                timerAbrir.Start();
-                //panelMenuLateral.Width = 260; 
+                panelFormHijo.Invalidate(false);
+                panelFormHijo.Visible = false;
+                panelMenuLateral.Width = 260;
+                panelFormHijo.Update();
+                panelFormHijo.Visible = true;
             }
             else
             {
-                timerCerrar.Start();
-                //panelMenuLateral.Width = 100;
+                panelFormHijo.Invalidate(false);
+                panelFormHijo.Visible = false;
+                panelMenuLateral.Width = 100;
                 CerrarSubmenu();
+                panelFormHijo.Update();
+                panelFormHijo.Visible = true;
+
             }
         }
 
         // Ocultar Menú Lateral
         private void btnAbrirMenu_Click(object sender, EventArgs e)
         {
-
-            /*if (panelMenuLateral.Width == 260)
-                panelMenuLateral.Width = 100;
-            else
-                panelMenuLateral.Width = 260;*/
-            panelFormHijo.Visible = false;
-            btnCerrar.SuspendLayout();
-            btnMiniMaxi.SuspendLayout();
-            btnMinimizar.SuspendLayout();
+            //panelFormHijo.Visible = false;
             MenulateralAnimacion();
         }
 
@@ -178,6 +160,9 @@ namespace ModernMenuUI
         {
             if (panelMenuLateral.Width < 261)
             {
+                btnCerrar.SuspendLayout();
+                btnMiniMaxi.SuspendLayout();
+                btnMinimizar.SuspendLayout();
                 btnAbrirMenu.Enabled = false;
                 panelMenuLateral.Width = panelMenuLateral.Width + 20;
             }
@@ -191,6 +176,10 @@ namespace ModernMenuUI
                 btnInventario.Text = "            " + "Inventario";
                 btnAbrirMenu.Enabled = true;
                 panelFormHijo.Visible = true;
+                btnCerrar.ResumeLayout();
+                btnMiniMaxi.ResumeLayout();
+                btnMinimizar.ResumeLayout();
+
             }
 
         }
@@ -198,6 +187,10 @@ namespace ModernMenuUI
         {
             if (panelMenuLateral.Width > 101)
             {
+
+                btnCerrar.SuspendLayout();
+                btnMiniMaxi.SuspendLayout();
+                btnMinimizar.SuspendLayout();
                 btnReporteria.Text = null;
                 btnUsuarios.Text = null;
                 btnVentas.Text = null;
@@ -210,8 +203,10 @@ namespace ModernMenuUI
             {
                 timerCerrar.Stop();
                 btnAbrirMenu.Enabled = true;
-
                 panelFormHijo.Visible = true;
+                btnCerrar.ResumeLayout();
+                btnMiniMaxi.ResumeLayout();
+                btnMinimizar.ResumeLayout();
             }
         }
         // BOTONES DE CONTROL DE VENTANA
@@ -375,5 +370,6 @@ namespace ModernMenuUI
         {
             Clase_Animaciones.MoverFormulario(this.Handle);
         }
+
     }
 }

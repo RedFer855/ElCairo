@@ -133,6 +133,7 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(90, 65);
             panel3.TabIndex = 10;
+            panel3.Visible = false;
             panel3.MouseDown += panel3_MouseDown;
             // 
             // panel1
@@ -193,6 +194,7 @@
             btnMinimizar.TabIndex = 5;
             btnMinimizar.TextAlign = ContentAlignment.MiddleLeft;
             btnMinimizar.UseVisualStyleBackColor = false;
+            btnMinimizar.Visible = false;
             btnMinimizar.Click += btnMinimizar_Click;
             // 
             // btnMiniMaxi
@@ -212,6 +214,7 @@
             btnMiniMaxi.TabIndex = 4;
             btnMiniMaxi.TextAlign = ContentAlignment.MiddleLeft;
             btnMiniMaxi.UseVisualStyleBackColor = false;
+            btnMiniMaxi.Visible = false;
             btnMiniMaxi.Click += btnMiniMaxi_Click;
             // 
             // btnCerrar
@@ -231,6 +234,7 @@
             btnCerrar.TabIndex = 3;
             btnCerrar.TextAlign = ContentAlignment.MiddleLeft;
             btnCerrar.UseVisualStyleBackColor = false;
+            btnCerrar.Visible = false;
             btnCerrar.Click += btnCerrar_Click;
             // 
             // panelMenuLateral
@@ -528,7 +532,7 @@
             btnGestionVentas.Padding = new Padding(20, 0, 0, 0);
             btnGestionVentas.Size = new Size(243, 40);
             btnGestionVentas.TabIndex = 0;
-            btnGestionVentas.Text = "Gestión de Ventas";
+            btnGestionVentas.Text = "Facturación";
             btnGestionVentas.TextAlign = ContentAlignment.MiddleLeft;
             btnGestionVentas.UseVisualStyleBackColor = true;
             btnGestionVentas.Click += btnGestionVentas_Click;
@@ -752,16 +756,16 @@
             // 
             // MenuPrincipal
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(224, 224, 224);
             ClientSize = new Size(1024, 728);
             Controls.Add(panelNotificaciones);
             Controls.Add(panelFormHijo);
             Controls.Add(panBarraControl);
             Controls.Add(panelMenuLateral);
+            DoubleBuffered = true;
             Font = new Font("Segoe UI", 10F);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "MenuPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "  ";
@@ -814,10 +818,6 @@
         private Button btnBitacora;
         private Panel panBarraControl;
         private Button btnAbrirMenu;
-        private Button btnMinimizar;
-        private Button btnMiniMaxi;
-        private Button btnCerrar;
-        private Button btnNotificaciones;
         private Button btnAjustes;
         private Panel panelFormHijo;
         private Label lblNombreModulo;
@@ -830,7 +830,11 @@
         private System.Windows.Forms.Timer timerCerrar;
         private Panel panelNotificaciones;
         private Panel panel1;
-        private Panel panel3;
         private Label lblNotificaciones;
+        private Button btnNotificaciones;
+        private Panel panel3;
+        private Button btnMinimizar;
+        private Button btnMiniMaxi;
+        private Button btnCerrar;
     }
 }

@@ -17,8 +17,6 @@ namespace ModernMenuUI
         public Gestion_de_Ventas()
         {
             InitializeComponent();
-
-
             CargarDatos();
             // ===== ESTILO BARRA LATERAL (RowHeader) =====
             dgvProductos.RowHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#DCE6F1");
@@ -26,11 +24,9 @@ namespace ModernMenuUI
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             Clase_Animaciones.ActivarDoubleBuffering(dgvCarrito);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
-                 ControlStyles.UserPaint |
-                 ControlStyles.OptimizedDoubleBuffer, true);
-            this.UpdateStyles();
-
+            Clase_Animaciones.ActivarDoubleBuffering(dgvProductos);
+            txtBuscar.PlaceholderText = "Buscar producto...";
+            txtBuscar.ForeColor = Color.White; // Esto cambia el color del texto normal
 
         }
 
@@ -49,8 +45,6 @@ namespace ModernMenuUI
             // Primero, permite que se ajusten todas
             dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-
-
             dgvProductos.Rows.Clear(); // Limpia las filas actuales
 
             dgvProductos.Rows.Add(1, "Manzana", 10, 20);
@@ -60,18 +54,6 @@ namespace ModernMenuUI
             dgvProductos.Rows.Add(5, "Pan", 5, 7);
             dgvProductos.Rows.Add(6, "Leche", 8, 4);
             dgvProductos.Rows.Add(7, "Arroz", 8, 4);
-
-            Image Eliminar = Properties.Resources.eliminar__1_;
-            Image Restar = Properties.Resources.signo_menos__1_;
-            Image Sumar = Properties.Resources.mas__2_;
-
-            dgvCarrito.Rows.Add(1, "Manzana", 10, 20, Eliminar, Restar, Sumar);
-            dgvCarrito.Rows.Add(2, "Pan", 5, 4, Eliminar, Restar, Sumar);
-            dgvCarrito.Rows.Add(3, "Leche", 8, 70, Eliminar, Restar, Sumar);
-            dgvCarrito.Rows.Add(4, "Manzana", 10, 4, Eliminar, Restar, Sumar);
-            dgvCarrito.Rows.Add(5, "Pan", 5, 7, Eliminar, Restar, Sumar);
-            dgvCarrito.Rows.Add(6, "Leche", 8, 4, Eliminar, Restar, Sumar);
-            dgvCarrito.Rows.Add(7, "Arroz", 8, 4, Eliminar, Restar, Sumar);
         }
 
 
@@ -89,6 +71,7 @@ namespace ModernMenuUI
                 txtProducto.Text = "";
                 txtPrecio.Text = "";
                 txtCodigo.Text = "";
+                
             }
         }
 
@@ -262,30 +245,88 @@ namespace ModernMenuUI
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (txtCantidad.Text == "" || txtCodigo.Text == "" && txtProducto.Text == "")
-                MessageBox.Show($"Ingrese Producto y Cantidad", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (nudCantidad.Value <= 0)
+            {
+                MessageBox.Show($"No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else
-                AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(txtCantidad.Text));
-            txtCantidad.Text = null;
-            txtCodigo.Text = null;
-            txtProducto.Text = null;
-            dgvProductos.ClearSelection();
-            txtPrecio.Text = null;
+            {
+                if (nudCantidad.Value <= 0 || txtCodigo.Text == "" && txtProducto.Text == "")
+                    MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
+                    AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(nudCantidad.Text));
+                nudCantidad.Value = 1;
+                txtCodigo.Text = null;
+                txtProducto.Text = null;
+                dgvProductos.ClearSelection();
+                txtPrecio.Text = null;
+                ActualizarImagenCarrito();
+            }
+
+            
         }
 
         private void dgvCarrito_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
+
                 // Solo recalcular si cambia la columna de cantidad (3) o precio (2)
                 if (e.ColumnIndex == 2 || e.ColumnIndex == 3)
                 {
                     double precio = Convert.ToDouble(dgvCarrito.Rows[e.RowIndex].Cells[2].Value);
                     double cantidad = Convert.ToDouble(dgvCarrito.Rows[e.RowIndex].Cells[3].Value);
-
-                   
                 }
             }
+        }
+
+        private void ActualizarImagenCarrito()
+        {
+            // Si no hay filas visibles (ni productos)
+            if (dgvCarrito.Rows.Count == 0)
+            {
+                pbxCarritoVacio.Visible = true;
+                //lblCarritoVacio.Visible = true;
+            }
+            else
+            {
+                pbxCarritoVacio.Visible = false;
+                //lblCarritoVacio.Visible = false;
+            }
+        }
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Gestion_de_Ventas_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

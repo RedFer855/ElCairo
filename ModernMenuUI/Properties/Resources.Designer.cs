@@ -123,6 +123,16 @@ namespace ModernMenuUI.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap carro_vacio {
+            get {
+                object obj = ResourceManager.GetObject("carro-vacio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cuadrado_en_blanco__1_ {
             get {
                 object obj = ResourceManager.GetObject("cuadrado-en-blanco (1)", resourceCulture);
