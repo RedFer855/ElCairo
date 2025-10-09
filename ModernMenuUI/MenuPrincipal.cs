@@ -6,17 +6,42 @@ namespace ModernMenuUI
     {
         public bool Animacion = true;
         AnimadorPanel animadorPanel;
+        private Form formularioactivo = null;
+
         public MenuPrincipal()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized; // Siempre inicia maximizado
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
+            this.DoubleBuffered = true;
+        }
+        
+        //FORMS HIJOS DENTRO DE MENU
 
+        //Abrir Fomularios Hijos
+        private void abrirFormularioHijo(Form Formulariohijo)
+        {
+            if (formularioactivo != null)
+                formularioactivo.Close();
+            formularioactivo = Formulariohijo;
+            Formulariohijo.TopLevel = false;
+            Formulariohijo.Dock = DockStyle.Fill;
+            panelFormHijo.Controls.Add(Formulariohijo);
+            panelFormHijo.Tag = Formulariohijo;
+            Formulariohijo.BringToFront();
+            Formulariohijo.Show();
 
+            if (Formulariohijo == null)
+            {
+                lblNombreModulo.Text = "MENU PRINCIPAL";
+            }
         }
 
+        // PANELES
+        // FUNCIONES DENTRO DE PANELES SUBMENUS
 
+        // Mostrar Paneles
         private void AbrirPaneles(Panel panel)
         {
             if (panel.Visible == false)
@@ -29,7 +54,7 @@ namespace ModernMenuUI
             }
         }
 
-
+        // Cerrar todos lo paneles
         private void panelvisible()
         {
             panelInventario.Visible = false;
@@ -40,13 +65,13 @@ namespace ModernMenuUI
 
         }
 
+        // Mostrar paneles cerrados al cargar por primera vez el form
         private void Form1_Load(object sender, EventArgs e)
         {
             panelvisible();
-            //tema = new Clase_Animaciones(panelMenuLateral, panelMneuLateral, panBarraControl);
-            //tema.AplicarTema();
         }
 
+        // Cerrar todos los submenu
         private void CerrarSubmenu()
         {
             if (panelInventario.Visible == true)
@@ -75,23 +100,6 @@ namespace ModernMenuUI
             }
         }
 
-        private void MenulateralAnimacion()
-        {
-            if (panelMenuLateral.Width == 100)
-            {
-                timerAbrir.Start();
-                //panelMenuLateral.Width = 260; 
-            }
-            else
-            {
-
-                timerCerrar.Start();
-
-                //panelMenuLateral.Width = 100;
-                CerrarSubmenu();
-            }
-        }
-
         //Abrir y Cerrar Paneles
         private void AbrirCerrarPanel(Panel PanelActual)
         {
@@ -105,6 +113,22 @@ namespace ModernMenuUI
                 AbrirPaneles(PanelActual);
                 if (panelMenuLateral.Width == 100)
                     MenulateralAnimacion();
+            }
+        }
+
+        // Inicializar timers
+        private void MenulateralAnimacion()
+        {
+            if (panelMenuLateral.Width == 100)
+            {
+                timerAbrir.Start();
+                //panelMenuLateral.Width = 260; 
+            }
+            else
+            {
+                timerCerrar.Start();
+                //panelMenuLateral.Width = 100;
+                CerrarSubmenu();
             }
         }
 
@@ -123,7 +147,7 @@ namespace ModernMenuUI
             MenulateralAnimacion();
         }
 
-        // Submenus de Módulos
+        // BOTENES PARA ABRIR SUBMENUS
         private void btnInventario_Click(object sender, EventArgs e)
         {
             AbrirCerrarPanel(panelInventario);
@@ -149,8 +173,48 @@ namespace ModernMenuUI
             AbrirCerrarPanel(panelReporteria);
         }
 
-        // Botones de Control de Ventana
+        // Timers para Animar apneles en abrir y cerrar
+        private void timerAbrir_Tick(object sender, EventArgs e)
+        {
+            if (panelMenuLateral.Width < 261)
+            {
+                btnAbrirMenu.Enabled = false;
+                panelMenuLateral.Width = panelMenuLateral.Width + 20;
+            }
+            else
+            {
+                timerAbrir.Stop();
+                btnReporteria.Text = "            " + "Reportería";
+                btnUsuarios.Text = "            " + "Usuarios";
+                btnVentas.Text = "            " + "Ventas";
+                btnCompras.Text = "            " + "Compras";
+                btnInventario.Text = "            " + "Inventario";
+                btnAbrirMenu.Enabled = true;
+                panelFormHijo.Visible = true;
+            }
 
+        }
+        private void timerCerrar_Tick(object sender, EventArgs e)
+        {
+            if (panelMenuLateral.Width > 101)
+            {
+                btnReporteria.Text = null;
+                btnUsuarios.Text = null;
+                btnVentas.Text = null;
+                btnCompras.Text = null;
+                btnInventario.Text = null;
+                btnAbrirMenu.Enabled = false;
+                panelMenuLateral.Width = panelMenuLateral.Width - 20;
+            }
+            else
+            {
+                timerCerrar.Stop();
+                btnAbrirMenu.Enabled = true;
+
+                panelFormHijo.Visible = true;
+            }
+        }
+        // BOTONES DE CONTROL DE VENTANA
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -178,27 +242,24 @@ namespace ModernMenuUI
             abrirFormularioHijo(new Ajustes());
         }
 
-        // Abrir Fomularios Hijos
-        private Form formularioactivo = null;
-        private void abrirFormularioHijo(Form Formulariohijo)
+        private void btnNotificaciones_Click(object sender, EventArgs e)
         {
-            if (formularioactivo != null)
-                formularioactivo.Close();
-            formularioactivo = Formulariohijo;
-            Formulariohijo.TopLevel = false;
-            Formulariohijo.Dock = DockStyle.Fill;
-            panelFormHijo.Controls.Add(Formulariohijo);
-            panelFormHijo.Tag = Formulariohijo;
-            Formulariohijo.BringToFront();
-            Formulariohijo.Show();
-
-            if (Formulariohijo == null)
+            if (panelNotificaciones.Width == 0)
             {
-                lblNombreModulo.Text = "MENU PRINCIPAL";
+                btnNotificaciones.Enabled = false;
+                animadorPanel.Abrir();
+                btnNotificaciones.Enabled = true;
             }
+            else
+            {
+                btnNotificaciones.Enabled = false;
+                animadorPanel.Cerrar();
+                btnNotificaciones.Enabled = true;
+            }
+
         }
 
-        // Botones Submenus
+        // BOTONES SUBMENUS
         private void btnGestionInventario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
@@ -281,16 +342,25 @@ namespace ModernMenuUI
             Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
         }
 
+        // CONTENEDORES PARA MOVER FORMULARIO CON EVENTO
+        private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void panel1_MouseDown_1(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void panel3_MouseDown(object sender, MouseEventArgs e)
+        {
+            Clase_Animaciones.MoverFormulario(this.Handle);
+        }
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
             Clase_Animaciones.MoverFormulario(this.Handle);
         }
-
-        private void panel4_MouseDown(object sender, MouseEventArgs e)
-        {
-            Clase_Animaciones.MoverFormulario(this.Handle);
-        }
-
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             Clase_Animaciones.MoverFormulario(this.Handle);
@@ -302,96 +372,6 @@ namespace ModernMenuUI
         }
 
         private void panelMenuLateral_MouseDown(object sender, MouseEventArgs e)
-        {
-            Clase_Animaciones.MoverFormulario(this.Handle);
-        }
-
-        private void btnNotificaciones_Click(object sender, EventArgs e)
-        {
-            if (panelNotificaciones.Width == 0)
-            {
-                btnNotificaciones.Enabled = false;
-                animadorPanel.Abrir();
-                btnNotificaciones.Enabled = true;
-            }
-            else
-            {
-                btnNotificaciones.Enabled = false;
-                animadorPanel.Cerrar();
-                btnNotificaciones.Enabled = true;
-            }
-
-        }
-
-        // Animaciones de deslizamiento PanelMenuLateral
-        private void timerAbrir_Tick(object sender, EventArgs e)
-        {
-            if (panelMenuLateral.Width < 261)
-            {
-                btnAbrirMenu.Enabled = false;
-                panelMenuLateral.Width = panelMenuLateral.Width + 20;
-            }
-            else
-            {
-                timerAbrir.Stop();
-                btnReporteria.Text = "            " + "Reportería";
-                btnUsuarios.Text = "            " + "Usuarios";
-                btnVentas.Text = "            " + "Ventas";
-                btnCompras.Text = "            " + "Compras";
-                btnInventario.Text = "            " + "Inventario";
-                btnAbrirMenu.Enabled = true;
-                panelFormHijo.Visible = true;
-            }
-
-        }
-
-        private void timerCerrar_Tick(object sender, EventArgs e)
-        {
-            if (panelMenuLateral.Width > 101)
-            {
-                btnReporteria.Text = null;
-                btnUsuarios.Text = null;
-                btnVentas.Text = null;
-                btnCompras.Text = null;
-                btnInventario.Text = null;
-                btnAbrirMenu.Enabled = false;
-                panelMenuLateral.Width = panelMenuLateral.Width - 20;
-            }
-            else
-            {
-                timerCerrar.Stop();
-                btnAbrirMenu.Enabled = true;
-
-                panelFormHijo.Visible = true;
-            }
-        }
-
-        private void panBarraControl_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
-        {
-            Clase_Animaciones.MoverFormulario(this.Handle);
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblNombreModulo_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_MouseDown_1(object sender, MouseEventArgs e)
-        {
-            Clase_Animaciones.MoverFormulario(this.Handle);
-        }
-
-        private void panel3_MouseDown(object sender, MouseEventArgs e)
         {
             Clase_Animaciones.MoverFormulario(this.Handle);
         }

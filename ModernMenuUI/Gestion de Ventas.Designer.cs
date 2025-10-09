@@ -32,11 +32,11 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             btnSalir = new Button();
             button1 = new Button();
             label4 = new Label();
@@ -54,19 +54,16 @@
             panel10 = new Panel();
             pictureBox1 = new PictureBox();
             dgvCarrito = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            Restar = new DataGridViewImageColumn();
-            Sumar = new DataGridViewImageColumn();
-            Eliminar = new DataGridViewImageColumn();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             buscar = new Button();
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
+            Codigos = new DataGridViewTextBoxColumn();
+            Producto = new DataGridViewTextBoxColumn();
+            Precio = new DataGridViewTextBoxColumn();
+            Stock = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
             label8 = new Label();
             txtCodigo = new TextBox();
@@ -77,10 +74,13 @@
             txtPrecio = new TextBox();
             txtCantidad = new TextBox();
             btnAgregar = new Button();
-            Codigos = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            Precio = new DataGridViewTextBoxColumn();
-            Stock = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            Restar = new DataGridViewImageColumn();
+            Sumar = new DataGridViewImageColumn();
+            Eliminar = new DataGridViewImageColumn();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             panelCarrito.SuspendLayout();
@@ -319,57 +319,7 @@
             dgvCarrito.CellMouseEnter += dgvCarrito_CellMouseEnter;
             dgvCarrito.CellMouseLeave += dgvCarrito_CellMouseLeave;
             dgvCarrito.CellMouseUp += dgvCarrito_CellMouseUp;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
-            dataGridViewTextBoxColumn1.FillWeight = 80F;
-            dataGridViewTextBoxColumn1.HeaderText = "Id";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.FillWeight = 200F;
-            dataGridViewTextBoxColumn2.HeaderText = "Producto";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.FillWeight = 80F;
-            dataGridViewTextBoxColumn3.HeaderText = "Precio";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.FillWeight = 80F;
-            dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // Restar
-            // 
-            Restar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            Restar.HeaderText = "";
-            Restar.Name = "Restar";
-            Restar.Resizable = DataGridViewTriState.True;
-            Restar.Width = 50;
-            // 
-            // Sumar
-            // 
-            Sumar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            Sumar.HeaderText = "";
-            Sumar.Name = "Sumar";
-            Sumar.Resizable = DataGridViewTriState.True;
-            Sumar.Width = 50;
-            // 
-            // Eliminar
-            // 
-            Eliminar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            Eliminar.HeaderText = "";
-            Eliminar.Name = "Eliminar";
-            Eliminar.Resizable = DataGridViewTriState.True;
-            Eliminar.Width = 50;
+            dgvCarrito.CellValueChanged += dgvCarrito_CellValueChanged;
             // 
             // panelBusqueda
             // 
@@ -476,6 +426,33 @@
             dgvProductos.TabIndex = 0;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
+            // Codigos
+            // 
+            dataGridViewCellStyle6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.Padding = new Padding(0, 1, 0, 0);
+            Codigos.DefaultCellStyle = dataGridViewCellStyle6;
+            Codigos.FillWeight = 80F;
+            Codigos.HeaderText = "Id";
+            Codigos.Name = "Codigos";
+            // 
+            // Producto
+            // 
+            Producto.FillWeight = 200F;
+            Producto.HeaderText = "Producto";
+            Producto.Name = "Producto";
+            // 
+            // Precio
+            // 
+            Precio.FillWeight = 80F;
+            Precio.HeaderText = "Precio";
+            Precio.Name = "Precio";
+            // 
+            // Stock
+            // 
+            Stock.FillWeight = 80F;
+            Stock.HeaderText = "Stock";
+            Stock.Name = "Stock";
+            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
@@ -509,6 +486,7 @@
             txtCodigo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCodigo.Location = new Point(80, 17);
             txtCodigo.Name = "txtCodigo";
+            txtCodigo.ReadOnly = true;
             txtCodigo.Size = new Size(160, 20);
             txtCodigo.TabIndex = 18;
             // 
@@ -548,6 +526,7 @@
             txtProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtProducto.Location = new Point(80, 46);
             txtProducto.Name = "txtProducto";
+            txtProducto.ReadOnly = true;
             txtProducto.Size = new Size(160, 20);
             txtProducto.TabIndex = 13;
             // 
@@ -557,6 +536,7 @@
             txtPrecio.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecio.Location = new Point(80, 75);
             txtPrecio.Name = "txtPrecio";
+            txtPrecio.ReadOnly = true;
             txtPrecio.Size = new Size(160, 20);
             txtPrecio.TabIndex = 12;
             // 
@@ -566,6 +546,7 @@
             txtCantidad.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCantidad.Location = new Point(80, 108);
             txtCantidad.Name = "txtCantidad";
+            txtCantidad.PlaceholderText = "Ingrese la Cantidad...";
             txtCantidad.Size = new Size(160, 20);
             txtCantidad.TabIndex = 11;
             // 
@@ -587,32 +568,56 @@
             btnAgregar.UseVisualStyleBackColor = false;
             btnAgregar.Click += btnAgregar_Click;
             // 
-            // Codigos
+            // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.Padding = new Padding(0, 1, 0, 0);
-            Codigos.DefaultCellStyle = dataGridViewCellStyle6;
-            Codigos.FillWeight = 80F;
-            Codigos.HeaderText = "Id";
-            Codigos.Name = "Codigos";
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewTextBoxColumn1.FillWeight = 50F;
+            dataGridViewTextBoxColumn1.HeaderText = "Id";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
-            // Producto
+            // dataGridViewTextBoxColumn2
             // 
-            Producto.FillWeight = 200F;
-            Producto.HeaderText = "Producto";
-            Producto.Name = "Producto";
+            dataGridViewTextBoxColumn2.FillWeight = 120F;
+            dataGridViewTextBoxColumn2.HeaderText = "Producto";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
-            // Precio
+            // dataGridViewTextBoxColumn3
             // 
-            Precio.FillWeight = 80F;
-            Precio.HeaderText = "Precio";
-            Precio.Name = "Precio";
+            dataGridViewTextBoxColumn3.FillWeight = 60F;
+            dataGridViewTextBoxColumn3.HeaderText = "Precio";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
-            // Stock
+            // dataGridViewTextBoxColumn4
             // 
-            Stock.FillWeight = 80F;
-            Stock.HeaderText = "Stock";
-            Stock.Name = "Stock";
+            dataGridViewTextBoxColumn4.FillWeight = 70F;
+            dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // Restar
+            // 
+            Restar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Restar.HeaderText = "";
+            Restar.Name = "Restar";
+            Restar.Resizable = DataGridViewTriState.True;
+            Restar.Width = 50;
+            // 
+            // Sumar
+            // 
+            Sumar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Sumar.HeaderText = "";
+            Sumar.Name = "Sumar";
+            Sumar.Resizable = DataGridViewTriState.True;
+            Sumar.Width = 50;
+            // 
+            // Eliminar
+            // 
+            Eliminar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Eliminar.HeaderText = "";
+            Eliminar.Name = "Eliminar";
+            Eliminar.Resizable = DataGridViewTriState.True;
+            Eliminar.Width = 50;
             // 
             // Gestion_de_Ventas
             // 
@@ -684,6 +689,12 @@
         private TextBox textBox2;
         private TextBox textBox1;
         private PictureBox pictureBox1;
+        private Label label8;
+        private TextBox txtCodigo;
+        private DataGridViewTextBoxColumn Codigos;
+        private DataGridViewTextBoxColumn Producto;
+        private DataGridViewTextBoxColumn Precio;
+        private DataGridViewTextBoxColumn Stock;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -691,11 +702,5 @@
         private DataGridViewImageColumn Restar;
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
-        private Label label8;
-        private TextBox txtCodigo;
-        private DataGridViewTextBoxColumn Codigos;
-        private DataGridViewTextBoxColumn Producto;
-        private DataGridViewTextBoxColumn Precio;
-        private DataGridViewTextBoxColumn Stock;
     }
 }

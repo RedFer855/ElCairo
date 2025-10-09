@@ -74,7 +74,7 @@ namespace ModernMenuUI
             dgvCarrito.Rows.Add(7, "Arroz", 8, 4, Eliminar, Restar, Sumar);
         }
 
-       
+
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
@@ -100,7 +100,7 @@ namespace ModernMenuUI
         private void dgvCarrito_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            
+
         }
 
 
@@ -256,12 +256,36 @@ namespace ModernMenuUI
                 MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
+
             dgvCarrito.Rows.Add(codigoProducto, descripcion, precio, cantidadFinal, Eliminar, Restar, Sumar);
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(txtCantidad.Text));
+            if (txtCantidad.Text == "" || txtCodigo.Text == "" && txtProducto.Text == "")
+                MessageBox.Show($"Ingrese Producto y Cantidad", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(txtCantidad.Text));
+            txtCantidad.Text = null;
+            txtCodigo.Text = null;
+            txtProducto.Text = null;
+            dgvProductos.ClearSelection();
+            txtPrecio.Text = null;
+        }
+
+        private void dgvCarrito_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Solo recalcular si cambia la columna de cantidad (3) o precio (2)
+                if (e.ColumnIndex == 2 || e.ColumnIndex == 3)
+                {
+                    double precio = Convert.ToDouble(dgvCarrito.Rows[e.RowIndex].Cells[2].Value);
+                    double cantidad = Convert.ToDouble(dgvCarrito.Rows[e.RowIndex].Cells[3].Value);
+
+                   
+                }
+            }
         }
     }
 }
