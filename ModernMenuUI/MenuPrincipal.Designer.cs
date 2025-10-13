@@ -71,10 +71,13 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            lblFecha = new Label();
+            lblHora = new Label();
             timerAbrir = new System.Windows.Forms.Timer(components);
             timerCerrar = new System.Windows.Forms.Timer(components);
             panelNotificaciones = new Panel();
             lblNotificaciones = new Label();
+            HoraFecha = new System.Windows.Forms.Timer(components);
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
@@ -88,6 +91,7 @@
             panelCompras.SuspendLayout();
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
+            panelFormHijo.SuspendLayout();
             panelNotificaciones.SuspendLayout();
             SuspendLayout();
             // 
@@ -657,7 +661,7 @@
             btnGestionInventario.Padding = new Padding(20, 0, 0, 0);
             btnGestionInventario.Size = new Size(243, 40);
             btnGestionInventario.TabIndex = 0;
-            btnGestionInventario.Text = "Gestión de Producto";
+            btnGestionInventario.Text = "Productos";
             btnGestionInventario.TextAlign = ContentAlignment.MiddleLeft;
             btnGestionInventario.UseVisualStyleBackColor = false;
             btnGestionInventario.Click += btnGestionInventario_Click;
@@ -716,11 +720,35 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(lblFecha);
+            panelFormHijo.Controls.Add(lblHora);
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(260, 65);
             panelFormHijo.Name = "panelFormHijo";
             panelFormHijo.Size = new Size(764, 663);
             panelFormHijo.TabIndex = 2;
+            // 
+            // lblFecha
+            // 
+            lblFecha.AutoSize = true;
+            lblFecha.Font = new Font("Itim", 47.9999924F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
+            lblFecha.Location = new Point(479, 467);
+            lblFecha.Name = "lblFecha";
+            lblFecha.Size = new Size(200, 77);
+            lblFecha.TabIndex = 1;
+            lblFecha.Text = "label3";
+            // 
+            // lblHora
+            // 
+            lblHora.AutoSize = true;
+            lblHora.Font = new Font("Itim", 47.9999924F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
+            lblHora.Location = new Point(451, 365);
+            lblHora.Name = "lblHora";
+            lblHora.Size = new Size(200, 77);
+            lblHora.TabIndex = 0;
+            lblHora.Text = "label3";
             // 
             // timerAbrir
             // 
@@ -755,6 +783,11 @@
             lblNotificaciones.TabIndex = 0;
             lblNotificaciones.Text = "No tienes notificaciones pendientes...";
             // 
+            // HoraFecha
+            // 
+            HoraFecha.Enabled = true;
+            HoraFecha.Tick += HoraFecha_Tick;
+            // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -785,6 +818,8 @@
             panelCompras.ResumeLayout(false);
             panelInventario.ResumeLayout(false);
             panelMneuLateral.ResumeLayout(false);
+            panelFormHijo.ResumeLayout(false);
+            panelFormHijo.PerformLayout();
             panelNotificaciones.ResumeLayout(false);
             panelNotificaciones.PerformLayout();
             ResumeLayout(false);
@@ -837,5 +872,8 @@
         private Button btnMinimizar;
         private Button btnMiniMaxi;
         private Button btnCerrar;
+        private Label lblHora;
+        private Label lblFecha;
+        private System.Windows.Forms.Timer HoraFecha;
     }
 }

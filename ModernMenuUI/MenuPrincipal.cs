@@ -1,4 +1,6 @@
 using System.Configuration;
+using System.Data;
+
 
 namespace ModernMenuUI
 {
@@ -8,11 +10,11 @@ namespace ModernMenuUI
         AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
 
-        
+
 
         public MenuPrincipal()
         {
-            
+
             InitializeComponent();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
@@ -263,7 +265,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             abrirFormularioHijo(new Gestion_de_Inventario());
             Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-            
+
         }
 
         private void btnInventarioBodega_Click(object sender, EventArgs e)
@@ -374,6 +376,15 @@ namespace ModernMenuUI
         {
             Clase_Animaciones.MoverFormulario(this.Handle);
         }
+
+        // HORA FECHA
+        private void HoraFecha_Tick(object sender, EventArgs e)
+        {
+            
+        }
+
+       
+
 
     }
 }
