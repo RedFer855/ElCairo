@@ -730,23 +730,25 @@
             // 
             // lblFecha
             // 
+            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 47.9999924F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(479, 467);
+            lblFecha.Location = new Point(470, 629);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(200, 77);
+            lblFecha.Size = new Size(67, 25);
             lblFecha.TabIndex = 1;
             lblFecha.Text = "label3";
             // 
             // lblHora
             // 
+            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblHora.AutoSize = true;
-            lblHora.Font = new Font("Itim", 47.9999924F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblHora.Font = new Font("Itim", 23.9999962F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(451, 365);
+            lblHora.Location = new Point(470, 591);
             lblHora.Name = "lblHora";
-            lblHora.Size = new Size(200, 77);
+            lblHora.Size = new Size(101, 38);
             lblHora.TabIndex = 0;
             lblHora.Text = "label3";
             // 

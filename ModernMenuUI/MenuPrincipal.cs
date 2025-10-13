@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using System.Configuration;
 using System.Data;
 
@@ -380,7 +381,8 @@ namespace ModernMenuUI
         // HORA FECHA
         private void HoraFecha_Tick(object sender, EventArgs e)
         {
-            
+            lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
+            lblFecha.Text = DateAndTime.Now.ToString("dddd dd 'de' MMMM 'del' yyy");
         }
 
        
