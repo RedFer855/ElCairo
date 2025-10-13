@@ -8,14 +8,17 @@ namespace ModernMenuUI
         AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
 
+        
+
         public MenuPrincipal()
         {
+            
             InitializeComponent();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             this.DoubleBuffered = true;
-
+            Clase_Animaciones objnombre = new Clase_Animaciones("MENU PRINCIPAL", lblNombreModulo);
         }
 
         //FORMS HIJOS DENTRO DE MENU
@@ -258,8 +261,9 @@ namespace ModernMenuUI
         private void btnGestionInventario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            abrirFormularioHijo(new Gestion_de_Inventario());
             Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-
+            
         }
 
         private void btnInventarioBodega_Click(object sender, EventArgs e)

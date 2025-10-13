@@ -334,7 +334,7 @@
             // 
             btnReportesCreados.Dock = DockStyle.Top;
             btnReportesCreados.FlatAppearance.BorderSize = 0;
-            btnReportesCreados.Font = new Font("Segoe UI", 11.25F);
+            btnReportesCreados.Font = new Font("Itim", 11.25F);
             btnReportesCreados.ForeColor = Color.FromArgb(87, 99, 110);
             btnReportesCreados.Location = new Point(0, 40);
             btnReportesCreados.Name = "btnReportesCreados";
@@ -350,7 +350,7 @@
             // 
             btnCrearReporte.Dock = DockStyle.Top;
             btnCrearReporte.FlatAppearance.BorderSize = 0;
-            btnCrearReporte.Font = new Font("Segoe UI", 11.25F);
+            btnCrearReporte.Font = new Font("Itim", 11.25F);
             btnCrearReporte.ForeColor = Color.FromArgb(87, 99, 110);
             btnCrearReporte.Location = new Point(0, 0);
             btnCrearReporte.Name = "btnCrearReporte";
@@ -399,7 +399,7 @@
             // 
             btnBitacora.Dock = DockStyle.Top;
             btnBitacora.FlatAppearance.BorderSize = 0;
-            btnBitacora.Font = new Font("Segoe UI", 11.25F);
+            btnBitacora.Font = new Font("Itim", 11.25F);
             btnBitacora.ForeColor = Color.FromArgb(87, 99, 110);
             btnBitacora.Location = new Point(0, 160);
             btnBitacora.Name = "btnBitacora";
@@ -415,7 +415,7 @@
             // 
             btnAcciones.Dock = DockStyle.Top;
             btnAcciones.FlatAppearance.BorderSize = 0;
-            btnAcciones.Font = new Font("Segoe UI", 11.25F);
+            btnAcciones.Font = new Font("Itim", 11.25F);
             btnAcciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnAcciones.Location = new Point(0, 120);
             btnAcciones.Name = "btnAcciones";
@@ -431,7 +431,7 @@
             // 
             btnGestionRoles.Dock = DockStyle.Top;
             btnGestionRoles.FlatAppearance.BorderSize = 0;
-            btnGestionRoles.Font = new Font("Segoe UI", 11.25F);
+            btnGestionRoles.Font = new Font("Itim", 11.25F);
             btnGestionRoles.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionRoles.Location = new Point(0, 80);
             btnGestionRoles.Name = "btnGestionRoles";
@@ -447,7 +447,7 @@
             // 
             btnGestionUsuarios.Dock = DockStyle.Top;
             btnGestionUsuarios.FlatAppearance.BorderSize = 0;
-            btnGestionUsuarios.Font = new Font("Segoe UI", 11.25F);
+            btnGestionUsuarios.Font = new Font("Itim", 11.25F);
             btnGestionUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionUsuarios.Location = new Point(0, 40);
             btnGestionUsuarios.Name = "btnGestionUsuarios";
@@ -463,7 +463,7 @@
             // 
             btnGestionEmpleados.Dock = DockStyle.Top;
             btnGestionEmpleados.FlatAppearance.BorderSize = 0;
-            btnGestionEmpleados.Font = new Font("Segoe UI", 11.25F);
+            btnGestionEmpleados.Font = new Font("Itim", 11.25F);
             btnGestionEmpleados.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionEmpleados.Location = new Point(0, 0);
             btnGestionEmpleados.Name = "btnGestionEmpleados";
@@ -509,7 +509,7 @@
             // 
             btnClientes.Dock = DockStyle.Top;
             btnClientes.FlatAppearance.BorderSize = 0;
-            btnClientes.Font = new Font("Segoe UI", 11.25F);
+            btnClientes.Font = new Font("Itim", 11.25F);
             btnClientes.ForeColor = Color.FromArgb(87, 99, 110);
             btnClientes.Location = new Point(0, 40);
             btnClientes.Name = "btnClientes";
@@ -525,7 +525,7 @@
             // 
             btnGestionVentas.Dock = DockStyle.Top;
             btnGestionVentas.FlatAppearance.BorderSize = 0;
-            btnGestionVentas.Font = new Font("Segoe UI", 11.25F);
+            btnGestionVentas.Font = new Font("Itim", 11.25F);
             btnGestionVentas.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionVentas.Location = new Point(0, 0);
             btnGestionVentas.Name = "btnGestionVentas";
@@ -571,7 +571,7 @@
             // 
             btnProveedores.Dock = DockStyle.Top;
             btnProveedores.FlatAppearance.BorderSize = 0;
-            btnProveedores.Font = new Font("Segoe UI", 11.25F);
+            btnProveedores.Font = new Font("Itim", 11.25F);
             btnProveedores.ForeColor = Color.FromArgb(87, 99, 110);
             btnProveedores.Location = new Point(0, 40);
             btnProveedores.Name = "btnProveedores";
@@ -587,7 +587,7 @@
             // 
             btnGestionCompra.Dock = DockStyle.Top;
             btnGestionCompra.FlatAppearance.BorderSize = 0;
-            btnGestionCompra.Font = new Font("Segoe UI", 11.25F);
+            btnGestionCompra.Font = new Font("Itim", 11.25F);
             btnGestionCompra.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionCompra.Location = new Point(0, 0);
             btnGestionCompra.Name = "btnGestionCompra";
@@ -633,7 +633,7 @@
             // 
             btnInventarioBodega.Dock = DockStyle.Top;
             btnInventarioBodega.FlatAppearance.BorderSize = 0;
-            btnInventarioBodega.Font = new Font("Segoe UI", 11.25F);
+            btnInventarioBodega.Font = new Font("Itim", 11.25F);
             btnInventarioBodega.ForeColor = Color.FromArgb(87, 99, 110);
             btnInventarioBodega.Location = new Point(0, 40);
             btnInventarioBodega.Name = "btnInventarioBodega";
@@ -647,18 +647,19 @@
             // 
             // btnGestionInventario
             // 
+            btnGestionInventario.BackColor = Color.FromArgb(253, 253, 253);
             btnGestionInventario.Dock = DockStyle.Top;
             btnGestionInventario.FlatAppearance.BorderSize = 0;
-            btnGestionInventario.Font = new Font("Segoe UI", 11.25F);
+            btnGestionInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnGestionInventario.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionInventario.Location = new Point(0, 0);
             btnGestionInventario.Name = "btnGestionInventario";
             btnGestionInventario.Padding = new Padding(20, 0, 0, 0);
             btnGestionInventario.Size = new Size(243, 40);
             btnGestionInventario.TabIndex = 0;
-            btnGestionInventario.Text = "Gestión de Inventario";
+            btnGestionInventario.Text = "Gestión de Producto";
             btnGestionInventario.TextAlign = ContentAlignment.MiddleLeft;
-            btnGestionInventario.UseVisualStyleBackColor = true;
+            btnGestionInventario.UseVisualStyleBackColor = false;
             btnGestionInventario.Click += btnGestionInventario_Click;
             // 
             // btnInventario
@@ -714,7 +715,7 @@
             // 
             // panelFormHijo
             // 
-            panelFormHijo.BackColor = Color.FromArgb(253, 253, 253);
+            panelFormHijo.BackColor = Color.White;
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(260, 65);
             panelFormHijo.Name = "panelFormHijo";
@@ -733,7 +734,7 @@
             // 
             // panelNotificaciones
             // 
-            panelNotificaciones.BackColor = Color.FromArgb(189, 215, 238);
+            panelNotificaciones.BackColor = Color.FromArgb(167, 191, 211);
             panelNotificaciones.BackgroundImage = Properties.Resources.sin_notificacion;
             panelNotificaciones.BackgroundImageLayout = ImageLayout.Center;
             panelNotificaciones.Controls.Add(lblNotificaciones);
@@ -820,7 +821,7 @@
         private Button btnAbrirMenu;
         private Button btnAjustes;
         private Panel panelFormHijo;
-        private Label lblNombreModulo;
+        public Label lblNombreModulo;
         private Panel panel2;
         private Label label2;
         private Label label1;

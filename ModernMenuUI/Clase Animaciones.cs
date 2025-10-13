@@ -13,7 +13,26 @@ namespace ModernMenuUI
 {
     internal class Clase_Animaciones
     {
- 
+        public static String Titulo;
+        public static Label TituloLabel;
+
+        public Clase_Animaciones(String nom, Label lbl) 
+        {
+            Titulo = nom;
+            TituloLabel = lbl;
+        }
+
+        public static void NombreMenuPrincipal()
+        {
+            CambiarNombreMenu(TituloLabel,Titulo);
+        }
+
+        // Cambiar de Nombre un Label
+        public static void CambiarNombreMenu(Label label, String Nombre)
+        {
+            label.Text = Nombre;
+        }
+
         // Mover Formularios de pocisión
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
@@ -21,11 +40,12 @@ namespace ModernMenuUI
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hwnd, int wmsg, int wparam, int lparam);
 
-        // Cambiar de Nombre un Label
-        public static void CambiarNombreMenu(Label label, String Nombre)
-        { 
-            label.Text = Nombre;   
+        public static void RegresarMenuPrincipal(String nombre)
+        {
+            
         }
+
+     
         public static void MoverFormulario(IntPtr handle)
         {
             ReleaseCapture();

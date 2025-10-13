@@ -116,7 +116,7 @@
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
             btnSalir.Location = new Point(674, 604);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(66, 63);
+            btnSalir.Size = new Size(80, 63);
             btnSalir.TabIndex = 17;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -154,7 +154,7 @@
             textBox4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox4.Location = new Point(91, 14);
             textBox4.Name = "textBox4";
-            textBox4.Size = new Size(148, 20);
+            textBox4.Size = new Size(177, 20);
             textBox4.TabIndex = 13;
             // 
             // panel5
@@ -162,9 +162,9 @@
             panel5.BackColor = Color.FromArgb(189, 215, 238);
             panel5.Controls.Add(label4);
             panel5.Controls.Add(textBox4);
-            panel5.Location = new Point(29, 12);
+            panel5.Location = new Point(12, 12);
             panel5.Name = "panel5";
-            panel5.Size = new Size(273, 51);
+            panel5.Size = new Size(290, 51);
             panel5.TabIndex = 14;
             // 
             // label7
@@ -199,7 +199,7 @@
             button2.Name = "button2";
             button2.Size = new Size(108, 63);
             button2.TabIndex = 16;
-            button2.Text = "Cerrar Venta";
+            button2.Text = "Facturar";
             button2.UseVisualStyleBackColor = false;
             // 
             // panel8
@@ -207,9 +207,9 @@
             panel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel8.Controls.Add(textBox3);
             panel8.Controls.Add(label6);
-            panel8.Location = new Point(257, 3);
+            panel8.Location = new Point(269, 3);
             panel8.Name = "panel8";
-            panel8.Size = new Size(103, 51);
+            panel8.Size = new Size(108, 51);
             panel8.TabIndex = 24;
             // 
             // textBox3
@@ -222,7 +222,7 @@
             textBox3.Name = "textBox3";
             textBox3.PlaceholderText = "L0,00";
             textBox3.ReadOnly = true;
-            textBox3.Size = new Size(103, 29);
+            textBox3.Size = new Size(108, 29);
             textBox3.TabIndex = 24;
             // 
             // panel6
@@ -230,9 +230,9 @@
             panel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel6.Controls.Add(textBox2);
             panel6.Controls.Add(label5);
-            panel6.Location = new Point(21, 3);
+            panel6.Location = new Point(22, 3);
             panel6.Name = "panel6";
-            panel6.Size = new Size(105, 51);
+            panel6.Size = new Size(110, 51);
             panel6.TabIndex = 23;
             panel6.Paint += panel6_Paint;
             // 
@@ -246,7 +246,7 @@
             textBox2.Name = "textBox2";
             textBox2.PlaceholderText = "L0,00";
             textBox2.ReadOnly = true;
-            textBox2.Size = new Size(105, 29);
+            textBox2.Size = new Size(110, 29);
             textBox2.TabIndex = 23;
             // 
             // label5
@@ -266,9 +266,9 @@
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel3.Controls.Add(textBox1);
             panel3.Controls.Add(label7);
-            panel3.Location = new Point(158, 3);
+            panel3.Location = new Point(166, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(70, 51);
+            panel3.Size = new Size(73, 51);
             panel3.TabIndex = 22;
             // 
             // textBox1
@@ -281,7 +281,7 @@
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "L0,00";
             textBox1.ReadOnly = true;
-            textBox1.Size = new Size(70, 29);
+            textBox1.Size = new Size(73, 29);
             textBox1.TabIndex = 22;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
@@ -290,9 +290,9 @@
             panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(29, 309);
+            panelCarrito.Location = new Point(12, 309);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(708, 289);
+            panelCarrito.Size = new Size(742, 289);
             panelCarrito.TabIndex = 12;
             // 
             // panel10
@@ -303,7 +303,7 @@
             panel10.Controls.Add(dgvCarrito);
             panel10.Location = new Point(21, 16);
             panel10.Name = "panel10";
-            panel10.Size = new Size(666, 260);
+            panel10.Size = new Size(700, 260);
             panel10.TabIndex = 17;
             // 
             // pbxCarritoVacio
@@ -313,7 +313,7 @@
             pbxCarritoVacio.Image = Properties.Resources.carro_vacio;
             pbxCarritoVacio.Location = new Point(243, 99);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(197, 99);
+            pbxCarritoVacio.Size = new Size(231, 99);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
@@ -374,7 +374,7 @@
             dgvCarrito.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvCarrito.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvCarrito.RowTemplate.Height = 50;
-            dgvCarrito.Size = new Size(666, 260);
+            dgvCarrito.Size = new Size(700, 260);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
             dgvCarrito.CellContentClick += dgvCarrito_CellContentClick;
@@ -443,7 +443,7 @@
             panelBusqueda.Controls.Add(buscar);
             panelBusqueda.Location = new Point(308, 12);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(429, 51);
+            panelBusqueda.Size = new Size(446, 51);
             panelBusqueda.TabIndex = 9;
             // 
             // txtBuscar
@@ -454,7 +454,7 @@
             txtBuscar.Location = new Point(21, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(338, 20);
+            txtBuscar.Size = new Size(355, 20);
             txtBuscar.TabIndex = 1;
             // 
             // buscar
@@ -465,7 +465,7 @@
             buscar.BackgroundImageLayout = ImageLayout.Zoom;
             buscar.FlatAppearance.BorderSize = 0;
             buscar.FlatStyle = FlatStyle.Flat;
-            buscar.Location = new Point(366, 14);
+            buscar.Location = new Point(383, 14);
             buscar.Name = "buscar";
             buscar.Size = new Size(48, 20);
             buscar.TabIndex = 0;
@@ -479,7 +479,7 @@
             panel1.Controls.Add(panel7);
             panel1.Location = new Point(308, 69);
             panel1.Name = "panel1";
-            panel1.Size = new Size(429, 234);
+            panel1.Size = new Size(446, 234);
             panel1.TabIndex = 10;
             // 
             // panel7
@@ -490,7 +490,7 @@
             panel7.Controls.Add(dgvProductos);
             panel7.Location = new Point(21, 9);
             panel7.Name = "panel7";
-            panel7.Size = new Size(390, 210);
+            panel7.Size = new Size(407, 210);
             panel7.TabIndex = 11;
             // 
             // dgvProductos
@@ -515,7 +515,7 @@
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = Color.White;
             dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle7.ForeColor = Color.FromArgb(102, 102, 102);
             dataGridViewCellStyle7.Padding = new Padding(5);
             dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(148, 168, 187);
             dataGridViewCellStyle7.SelectionForeColor = Color.White;
@@ -537,7 +537,7 @@
             dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 40;
-            dgvProductos.Size = new Size(390, 210);
+            dgvProductos.Size = new Size(407, 210);
             dgvProductos.TabIndex = 0;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -581,16 +581,16 @@
             panel2.Controls.Add(txtProducto);
             panel2.Controls.Add(txtPrecio);
             panel2.Controls.Add(btnAgregar);
-            panel2.Location = new Point(28, 69);
+            panel2.Location = new Point(12, 69);
             panel2.Name = "panel2";
-            panel2.Size = new Size(274, 234);
+            panel2.Size = new Size(290, 234);
             panel2.TabIndex = 11;
             // 
             // nudCantidad
             // 
             nudCantidad.Font = new Font("Itim", 16.25F);
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
-            nudCantidad.Location = new Point(80, 135);
+            nudCantidad.Location = new Point(108, 135);
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
             nudCantidad.Size = new Size(160, 33);
@@ -611,11 +611,11 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
             label8.Location = new Point(10, 46);
             label8.Name = "label8";
-            label8.Size = new Size(47, 17);
+            label8.Size = new Size(58, 18);
             label8.TabIndex = 19;
             label8.Text = "Código:";
             // 
@@ -624,7 +624,7 @@
             txtCodigo.BorderStyle = BorderStyle.None;
             txtCodigo.Enabled = false;
             txtCodigo.Font = new Font("Itim", 13F);
-            txtCodigo.Location = new Point(80, 46);
+            txtCodigo.Location = new Point(108, 43);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
             txtCodigo.Size = new Size(160, 21);
@@ -633,33 +633,33 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(87, 99, 110);
             label3.Location = new Point(11, 136);
             label3.Name = "label3";
-            label3.Size = new Size(59, 17);
+            label3.Size = new Size(72, 18);
             label3.TabIndex = 17;
             label3.Text = "Cantidad:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(87, 99, 110);
             label2.Location = new Point(11, 104);
             label2.Name = "label2";
-            label2.Size = new Size(46, 17);
+            label2.Size = new Size(53, 18);
             label2.TabIndex = 16;
             label2.Text = "Precio:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(10, 75);
             label1.Name = "label1";
-            label1.Size = new Size(60, 17);
+            label1.Size = new Size(72, 18);
             label1.TabIndex = 15;
             label1.Text = "Producto:";
             // 
@@ -668,7 +668,7 @@
             txtProducto.BorderStyle = BorderStyle.None;
             txtProducto.Enabled = false;
             txtProducto.Font = new Font("Itim", 13F);
-            txtProducto.Location = new Point(80, 75);
+            txtProducto.Location = new Point(108, 73);
             txtProducto.Name = "txtProducto";
             txtProducto.ReadOnly = true;
             txtProducto.Size = new Size(160, 21);
@@ -679,7 +679,7 @@
             txtPrecio.BorderStyle = BorderStyle.None;
             txtPrecio.Enabled = false;
             txtPrecio.Font = new Font("Itim", 13F);
-            txtPrecio.Location = new Point(80, 104);
+            txtPrecio.Location = new Point(108, 104);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.ReadOnly = true;
             txtPrecio.Size = new Size(160, 21);
@@ -721,7 +721,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(386, 63);
+            tableLayoutPanel1.Size = new Size(402, 63);
             tableLayoutPanel1.TabIndex = 0;
             tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
             // 
@@ -732,9 +732,9 @@
             panel4.BackColor = Color.FromArgb(189, 215, 238);
             panel4.Controls.Add(panel9);
             panel4.Controls.Add(tableLayoutPanel1);
-            panel4.Location = new Point(28, 604);
+            panel4.Location = new Point(12, 604);
             panel4.Name = "panel4";
-            panel4.Size = new Size(386, 63);
+            panel4.Size = new Size(402, 63);
             panel4.TabIndex = 13;
             // 
             // panel9

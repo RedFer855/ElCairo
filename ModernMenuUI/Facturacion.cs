@@ -32,8 +32,8 @@ namespace ModernMenuUI
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
+            Clase_Animaciones.NombreMenuPrincipal();
             this.Close();
-
         }
 
         private void buscar_Click(object sender, EventArgs e)
@@ -48,12 +48,12 @@ namespace ModernMenuUI
             dgvProductos.Rows.Clear(); // Limpia las filas actuales
 
             dgvProductos.Rows.Add(1, "Manzana", 10, 20);
-            dgvProductos.Rows.Add(2, "Pan", 5, 4);
+            dgvProductos.Rows.Add(2, "Pan", 5, 43);
             dgvProductos.Rows.Add(3, "Leche", 8, 70);
-            dgvProductos.Rows.Add(4, "Manzana", 10, 4);
-            dgvProductos.Rows.Add(5, "Pan", 5, 7);
-            dgvProductos.Rows.Add(6, "Leche", 8, 4);
-            dgvProductos.Rows.Add(7, "Arroz", 8, 4);
+            dgvProductos.Rows.Add(4, "Pera", 10, 29);
+            dgvProductos.Rows.Add(5, "Semitas", 5, 89);
+            dgvProductos.Rows.Add(6, "Ensure", 8, 48);
+            dgvProductos.Rows.Add(7, "Bolsa de Frijoles", 8, 90);
         }
 
 
