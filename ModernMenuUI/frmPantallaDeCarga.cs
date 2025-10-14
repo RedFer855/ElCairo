@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class FormPantallaDeCarga : Form
+    public partial class frmPantallaDeCarga : Form
     {
         private System.Windows.Forms.Timer temporizador;
-        public FormPantallaDeCarga()
+        public frmPantallaDeCarga()
         {
             InitializeComponent();
             // Inicializar el temporizador
@@ -38,7 +38,7 @@ namespace ModernMenuUI
                 this.Visible = false;// ocultar pantalla de carga
 
                 // Abrir MenuPrincipal
-                MenuPrincipal formularioPrincipal = new MenuPrincipal();
+                frmMenuPrincipal formularioPrincipal = new frmMenuPrincipal();
                 formularioPrincipal.StartPosition = FormStartPosition.CenterScreen;
                 formularioPrincipal.WindowState = FormWindowState.Maximized;
                 formularioPrincipal.ShowDialog();

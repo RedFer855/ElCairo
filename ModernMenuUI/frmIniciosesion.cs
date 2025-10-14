@@ -11,15 +11,15 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class FormInicioUsuarios : Form
+    public partial class frmIniciosesion : Form
     {
-        public FormInicioUsuarios()
+        public frmIniciosesion()
         {
             InitializeComponent();
         }
         private void btnAcceder_Click(object sender, EventArgs e)
         {
-            Form formcarga = new FormPantallaDeCarga();
+            Form formcarga = new frmPantallaDeCarga();
             this.Visible = false;
             formcarga.ShowDialog();
             this.Close();

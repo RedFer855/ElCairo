@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class Ajustes
+    partial class frmAjustes
     {
         /// <summary>
         /// Required designer variable.

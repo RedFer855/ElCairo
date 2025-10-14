@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class FormInicioUsuarios
+    partial class frmIniciosesion
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInicioUsuarios));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIniciosesion));
             panLogo = new Panel();
             pictureBox1 = new PictureBox();
             panDatosIngreso = new Panel();

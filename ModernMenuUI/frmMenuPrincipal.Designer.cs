@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class MenuPrincipal
+    partial class frmMenuPrincipal
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             Panel panBarraControl;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuPrincipal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuPrincipal));
             btnNotificaciones = new Button();
             panel3 = new Panel();
             panel1 = new Panel();
@@ -71,6 +71,10 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            panel7 = new Panel();
+            panel6 = new Panel();
+            panel5 = new Panel();
+            panel4 = new Panel();
             lblFecha = new Label();
             lblHora = new Label();
             timerAbrir = new System.Windows.Forms.Timer(components);
@@ -720,6 +724,10 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(panel7);
+            panelFormHijo.Controls.Add(panel6);
+            panelFormHijo.Controls.Add(panel5);
+            panelFormHijo.Controls.Add(panel4);
             panelFormHijo.Controls.Add(lblFecha);
             panelFormHijo.Controls.Add(lblHora);
             panelFormHijo.Dock = DockStyle.Fill;
@@ -728,29 +736,57 @@
             panelFormHijo.Size = new Size(764, 663);
             panelFormHijo.TabIndex = 2;
             // 
+            // panel7
+            // 
+            panel7.Location = new Point(261, 140);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(200, 100);
+            panel7.TabIndex = 5;
+            // 
+            // panel6
+            // 
+            panel6.Location = new Point(18, 140);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(200, 100);
+            panel6.TabIndex = 4;
+            // 
+            // panel5
+            // 
+            panel5.Location = new Point(261, 20);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(200, 100);
+            panel5.TabIndex = 3;
+            // 
+            // panel4
+            // 
+            panel4.Location = new Point(18, 20);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(200, 100);
+            panel4.TabIndex = 2;
+            // 
             // lblFecha
             // 
             lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFecha.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(470, 629);
+            lblFecha.Location = new Point(497, 629);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(67, 25);
+            lblFecha.Size = new Size(114, 23);
             lblFecha.TabIndex = 1;
-            lblFecha.Text = "label3";
+            lblFecha.Text = "Fecha Actual";
             // 
             // lblHora
             // 
             lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblHora.AutoSize = true;
-            lblHora.Font = new Font("Itim", 23.9999962F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(470, 591);
+            lblHora.Location = new Point(497, 596);
             lblHora.Name = "lblHora";
-            lblHora.Size = new Size(101, 38);
+            lblHora.Size = new Size(72, 33);
             lblHora.TabIndex = 0;
-            lblHora.Text = "label3";
+            lblHora.Text = "Hora";
             // 
             // timerAbrir
             // 
@@ -877,5 +913,9 @@
         private Label lblHora;
         private Label lblFecha;
         private System.Windows.Forms.Timer HoraFecha;
+        private Panel panel7;
+        private Panel panel6;
+        private Panel panel5;
+        private Panel panel4;
     }
 }

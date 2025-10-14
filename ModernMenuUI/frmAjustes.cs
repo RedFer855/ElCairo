@@ -12,9 +12,9 @@ using ModernMenuUI;
 
 namespace ModernMenuUI
 {
-    public partial class Ajustes : Form
+    public partial class frmAjustes : Form
     {
-        public Ajustes()
+        public frmAjustes()
         {
             InitializeComponent();
         }

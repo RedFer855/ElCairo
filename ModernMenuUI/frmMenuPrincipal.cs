@@ -1,11 +1,12 @@
 using Microsoft.VisualBasic;
 using System.Configuration;
 using System.Data;
+using System.Globalization;
 
 
 namespace ModernMenuUI
 {
-    public partial class MenuPrincipal : Form
+    public partial class frmMenuPrincipal : Form
     {
         public bool Animacion = true;
         AnimadorPanel animadorPanel;
@@ -13,7 +14,7 @@ namespace ModernMenuUI
 
 
 
-        public MenuPrincipal()
+        public frmMenuPrincipal()
         {
 
             InitializeComponent();
@@ -38,11 +39,6 @@ namespace ModernMenuUI
             panelFormHijo.Tag = Formulariohijo;
             Formulariohijo.BringToFront();
             Formulariohijo.Show();
-
-            if (Formulariohijo == null)
-            {
-                lblNombreModulo.Text = "MENU PRINCIPAL";
-            }
         }
 
         // PANELES
@@ -240,7 +236,7 @@ namespace ModernMenuUI
 
         private void btnAjustes_Click(object sender, EventArgs e)
         {
-            abrirFormularioHijo(new Ajustes());
+            abrirFormularioHijo(new frmAjustes());
         }
 
         private void btnNotificaciones_Click(object sender, EventArgs e)
@@ -272,6 +268,7 @@ namespace ModernMenuUI
         private void btnInventarioBodega_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            abrirFormularioHijo(new Inventario_por_Bodega());
             Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
 
@@ -381,8 +378,8 @@ namespace ModernMenuUI
         // HORA FECHA
         private void HoraFecha_Tick(object sender, EventArgs e)
         {
-            lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
-            lblFecha.Text = DateAndTime.Now.ToString("dddd dd 'de' MMMM 'del' yyy");
+            lblHora.Text = DateTime.Now.ToString("h:mm:ss tt", new CultureInfo("es-ES"));
+            lblFecha.Text = DateTime.Now.ToString("dddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
         }
 
        

@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class FormPantallaDeCarga
+    partial class frmPantallaDeCarga
     {
         /// <summary>
         /// Required designer variable.

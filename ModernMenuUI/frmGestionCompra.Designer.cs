@@ -40,20 +40,21 @@
             btnSalir = new Button();
             button1 = new Button();
             panel5 = new Panel();
-            label4 = new Label();
+            btnBuscarCliente = new Button();
             textBox4 = new TextBox();
+            label4 = new Label();
             button2 = new Button();
             panel4 = new Panel();
             panel9 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel8 = new Panel();
-            textBox3 = new TextBox();
+            txtTotal = new TextBox();
             label6 = new Label();
             panel3 = new Panel();
-            textBox1 = new TextBox();
+            txtImpuesto = new TextBox();
             label7 = new Label();
             panel6 = new Panel();
-            textBox2 = new TextBox();
+            txtSubTotal = new TextBox();
             label5 = new Label();
             panelCarrito = new Panel();
             panel10 = new Panel();
@@ -69,7 +70,7 @@
             Eliminar = new DataGridViewImageColumn();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            buscar = new Button();
+            btnBuscarProductos = new Button();
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
@@ -138,12 +139,38 @@
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
-            panel5.Controls.Add(label4);
+            panel5.Controls.Add(btnBuscarCliente);
             panel5.Controls.Add(textBox4);
+            panel5.Controls.Add(label4);
             panel5.Location = new Point(12, 4);
             panel5.Name = "panel5";
             panel5.Size = new Size(288, 51);
             panel5.TabIndex = 23;
+            // 
+            // btnBuscarCliente
+            // 
+            btnBuscarCliente.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscarCliente.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarCliente.BackgroundImage = (Image)resources.GetObject("btnBuscarCliente.BackgroundImage");
+            btnBuscarCliente.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarCliente.FlatAppearance.BorderSize = 0;
+            btnBuscarCliente.FlatStyle = FlatStyle.Flat;
+            btnBuscarCliente.Location = new Point(222, 15);
+            btnBuscarCliente.Name = "btnBuscarCliente";
+            btnBuscarCliente.Size = new Size(48, 20);
+            btnBuscarCliente.TabIndex = 2;
+            btnBuscarCliente.UseVisualStyleBackColor = false;
+            // 
+            // textBox4
+            // 
+            textBox4.BorderStyle = BorderStyle.None;
+            textBox4.Enabled = false;
+            textBox4.Font = new Font("Itim", 13F);
+            textBox4.Location = new Point(67, 14);
+            textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
+            textBox4.Size = new Size(148, 21);
+            textBox4.TabIndex = 22;
             // 
             // label4
             // 
@@ -152,20 +179,9 @@
             label4.ForeColor = Color.FromArgb(87, 99, 110);
             label4.Location = new Point(10, 16);
             label4.Name = "label4";
-            label4.Size = new Size(78, 17);
+            label4.Size = new Size(51, 17);
             label4.TabIndex = 16;
-            label4.Text = "No. Factura:";
-            // 
-            // textBox4
-            // 
-            textBox4.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Enabled = false;
-            textBox4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox4.Location = new Point(91, 14);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(179, 20);
-            textBox4.TabIndex = 13;
+            label4.Text = "Cliente:";
             // 
             // button2
             // 
@@ -224,25 +240,25 @@
             // panel8
             // 
             panel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel8.Controls.Add(textBox3);
+            panel8.Controls.Add(txtTotal);
             panel8.Controls.Add(label6);
             panel8.Location = new Point(269, 3);
             panel8.Name = "panel8";
             panel8.Size = new Size(108, 51);
             panel8.TabIndex = 24;
             // 
-            // textBox3
+            // txtTotal
             // 
-            textBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Enabled = false;
-            textBox3.Font = new Font("Itim", 18F);
-            textBox3.Location = new Point(0, 17);
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "L0,00";
-            textBox3.ReadOnly = true;
-            textBox3.Size = new Size(108, 29);
-            textBox3.TabIndex = 24;
+            txtTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTotal.BorderStyle = BorderStyle.None;
+            txtTotal.Enabled = false;
+            txtTotal.Font = new Font("Itim", 18F);
+            txtTotal.Location = new Point(0, 17);
+            txtTotal.Name = "txtTotal";
+            txtTotal.PlaceholderText = "L0,00";
+            txtTotal.ReadOnly = true;
+            txtTotal.Size = new Size(108, 29);
+            txtTotal.TabIndex = 24;
             // 
             // label6
             // 
@@ -258,25 +274,26 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(textBox1);
+            panel3.Controls.Add(txtImpuesto);
             panel3.Controls.Add(label7);
+            panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(166, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(70, 57);
+            panel3.Size = new Size(73, 57);
             panel3.TabIndex = 22;
             // 
-            // textBox1
+            // txtImpuesto
             // 
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Enabled = false;
-            textBox1.Font = new Font("Itim", 18F);
-            textBox1.Location = new Point(0, 17);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "L0,00";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(70, 29);
-            textBox1.TabIndex = 22;
+            txtImpuesto.BorderStyle = BorderStyle.None;
+            txtImpuesto.Dock = DockStyle.Fill;
+            txtImpuesto.Enabled = false;
+            txtImpuesto.Font = new Font("Itim", 18F);
+            txtImpuesto.Location = new Point(0, 17);
+            txtImpuesto.Name = "txtImpuesto";
+            txtImpuesto.PlaceholderText = "L0,00";
+            txtImpuesto.ReadOnly = true;
+            txtImpuesto.Size = new Size(73, 29);
+            txtImpuesto.TabIndex = 22;
             // 
             // label7
             // 
@@ -293,25 +310,25 @@
             // panel6
             // 
             panel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel6.Controls.Add(textBox2);
+            panel6.Controls.Add(txtSubTotal);
             panel6.Controls.Add(label5);
             panel6.Location = new Point(22, 3);
             panel6.Name = "panel6";
             panel6.Size = new Size(110, 51);
             panel6.TabIndex = 23;
             // 
-            // textBox2
+            // txtSubTotal
             // 
-            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Enabled = false;
-            textBox2.Font = new Font("Itim", 18F);
-            textBox2.Location = new Point(0, 17);
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "L0,00";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(110, 29);
-            textBox2.TabIndex = 23;
+            txtSubTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtSubTotal.BorderStyle = BorderStyle.None;
+            txtSubTotal.Enabled = false;
+            txtSubTotal.Font = new Font("Itim", 18F);
+            txtSubTotal.Location = new Point(0, 17);
+            txtSubTotal.Name = "txtSubTotal";
+            txtSubTotal.PlaceholderText = "L0,00";
+            txtSubTotal.ReadOnly = true;
+            txtSubTotal.Size = new Size(110, 29);
+            txtSubTotal.TabIndex = 23;
             // 
             // label5
             // 
@@ -471,7 +488,7 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(buscar);
+            panelBusqueda.Controls.Add(btnBuscarProductos);
             panelBusqueda.Location = new Point(306, 4);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(448, 51);
@@ -485,22 +502,22 @@
             txtBuscar.Location = new Point(21, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(407, 20);
+            txtBuscar.Size = new Size(353, 20);
             txtBuscar.TabIndex = 1;
             // 
-            // buscar
+            // btnBuscarProductos
             // 
-            buscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buscar.BackColor = Color.FromArgb(168, 191, 212);
-            buscar.BackgroundImage = (Image)resources.GetObject("buscar.BackgroundImage");
-            buscar.BackgroundImageLayout = ImageLayout.Zoom;
-            buscar.FlatAppearance.BorderSize = 0;
-            buscar.FlatStyle = FlatStyle.Flat;
-            buscar.Location = new Point(614, 14);
-            buscar.Name = "buscar";
-            buscar.Size = new Size(48, 20);
-            buscar.TabIndex = 0;
-            buscar.UseVisualStyleBackColor = false;
+            btnBuscarProductos.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscarProductos.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarProductos.BackgroundImage = (Image)resources.GetObject("btnBuscarProductos.BackgroundImage");
+            btnBuscarProductos.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarProductos.FlatAppearance.BorderSize = 0;
+            btnBuscarProductos.FlatStyle = FlatStyle.Flat;
+            btnBuscarProductos.Location = new Point(380, 13);
+            btnBuscarProductos.Name = "btnBuscarProductos";
+            btnBuscarProductos.Size = new Size(48, 20);
+            btnBuscarProductos.TabIndex = 0;
+            btnBuscarProductos.UseVisualStyleBackColor = false;
             // 
             // panel1
             // 
@@ -619,10 +636,10 @@
             // 
             nudCantidad.Font = new Font("Itim", 16.25F);
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
-            nudCantidad.Location = new Point(110, 131);
+            nudCantidad.Location = new Point(95, 131);
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
-            nudCantidad.Size = new Size(160, 33);
+            nudCantidad.Size = new Size(82, 33);
             nudCantidad.TabIndex = 21;
             nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -653,10 +670,10 @@
             txtCodigo.BorderStyle = BorderStyle.None;
             txtCodigo.Enabled = false;
             txtCodigo.Font = new Font("Itim", 13F);
-            txtCodigo.Location = new Point(110, 46);
+            txtCodigo.Location = new Point(95, 46);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
-            txtCodigo.Size = new Size(160, 21);
+            txtCodigo.Size = new Size(175, 21);
             txtCodigo.TabIndex = 18;
             // 
             // label3
@@ -697,10 +714,10 @@
             txtProducto.BorderStyle = BorderStyle.None;
             txtProducto.Enabled = false;
             txtProducto.Font = new Font("Itim", 13F);
-            txtProducto.Location = new Point(110, 75);
+            txtProducto.Location = new Point(95, 75);
             txtProducto.Name = "txtProducto";
             txtProducto.ReadOnly = true;
-            txtProducto.Size = new Size(160, 21);
+            txtProducto.Size = new Size(175, 21);
             txtProducto.TabIndex = 13;
             // 
             // txtPrecio
@@ -708,10 +725,10 @@
             txtPrecio.BorderStyle = BorderStyle.None;
             txtPrecio.Enabled = false;
             txtPrecio.Font = new Font("Itim", 13F);
-            txtPrecio.Location = new Point(110, 104);
+            txtPrecio.Location = new Point(95, 104);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.ReadOnly = true;
-            txtPrecio.Size = new Size(160, 21);
+            txtPrecio.Size = new Size(175, 21);
             txtPrecio.TabIndex = 12;
             // 
             // btnAgregar
@@ -723,10 +740,10 @@
             btnAgregar.Font = new Font("Itim", 18.25F);
             btnAgregar.ForeColor = SystemColors.ButtonFace;
             btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(21, 174);
+            btnAgregar.Location = new Point(73, 176);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Padding = new Padding(40, 0, 0, 0);
-            btnAgregar.Size = new Size(225, 46);
+            btnAgregar.Size = new Size(142, 46);
             btnAgregar.TabIndex = 10;
             btnAgregar.Text = "Añadir";
             btnAgregar.UseVisualStyleBackColor = false;
@@ -736,6 +753,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(766, 679);
             Controls.Add(btnSalir);
             Controls.Add(button1);
@@ -783,19 +801,18 @@
         private Button button1;
         private Panel panel5;
         private Label label4;
-        private TextBox textBox4;
         private Button button2;
         private Panel panel4;
         private Panel panel9;
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel8;
-        private TextBox textBox3;
+        private TextBox txtTotal;
         private Label label6;
         private Panel panel3;
-        private TextBox textBox1;
+        private TextBox txtImpuesto;
         private Label label7;
         private Panel panel6;
-        private TextBox textBox2;
+        private TextBox txtSubTotal;
         private Label label5;
         private Panel panelCarrito;
         private Panel panel10;
@@ -811,7 +828,7 @@
         private DataGridViewImageColumn Eliminar;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button buscar;
+        private Button btnBuscarProductos;
         private Panel panel1;
         private Panel panel2;
         private NumericUpDown nudCantidad;
@@ -830,5 +847,7 @@
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
+        private TextBox textBox4;
+        private Button btnBuscarCliente;
     }
 }
