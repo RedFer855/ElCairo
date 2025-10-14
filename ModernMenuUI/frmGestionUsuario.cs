@@ -21,5 +21,11 @@ namespace ModernMenuUI
         {
             this.Close();
         }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Clase_Animaciones.NombreMenuPrincipal();
+            this.Close();   
+        }
     }
 }

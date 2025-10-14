@@ -826,7 +826,7 @@
             HoraFecha.Enabled = true;
             HoraFecha.Tick += HoraFecha_Tick;
             // 
-            // MenuPrincipal
+            // frmMenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
@@ -838,7 +838,7 @@
             Controls.Add(panelMenuLateral);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 10F);
-            Name = "MenuPrincipal";
+            Name = "frmMenuPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "  ";
             Load += Form1_Load;

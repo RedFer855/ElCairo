@@ -295,6 +295,7 @@ namespace ModernMenuUI
         private void btnClientes_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            abrirFormularioHijo(new frmClientes());
             Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
         }
 
