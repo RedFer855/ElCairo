@@ -71,10 +71,10 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            pbxCalculadora = new PictureBox();
             panel7 = new Panel();
             panel6 = new Panel();
             panel5 = new Panel();
-            panel4 = new Panel();
             lblFecha = new Label();
             lblHora = new Label();
             timerAbrir = new System.Windows.Forms.Timer(components);
@@ -96,6 +96,7 @@
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
             panelNotificaciones.SuspendLayout();
             SuspendLayout();
             // 
@@ -724,10 +725,10 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(pbxCalculadora);
             panelFormHijo.Controls.Add(panel7);
             panelFormHijo.Controls.Add(panel6);
             panelFormHijo.Controls.Add(panel5);
-            panelFormHijo.Controls.Add(panel4);
             panelFormHijo.Controls.Add(lblFecha);
             panelFormHijo.Controls.Add(lblHora);
             panelFormHijo.Dock = DockStyle.Fill;
@@ -735,6 +736,20 @@
             panelFormHijo.Name = "panelFormHijo";
             panelFormHijo.Size = new Size(764, 663);
             panelFormHijo.TabIndex = 2;
+            // 
+            // pbxCalculadora
+            // 
+            pbxCalculadora.Image = Properties.Resources.calculator_6472942;
+            pbxCalculadora.Location = new Point(18, 20);
+            pbxCalculadora.Name = "pbxCalculadora";
+            pbxCalculadora.Size = new Size(95, 100);
+            pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxCalculadora.TabIndex = 6;
+            pbxCalculadora.TabStop = false;
+            pbxCalculadora.Click += pbxCalculadora_Click;
+            pbxCalculadora.DoubleClick += pbxCalculadora_DoubleClick;
+            pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
+            pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
             // 
             // panel7
             // 
@@ -756,13 +771,6 @@
             panel5.Name = "panel5";
             panel5.Size = new Size(200, 100);
             panel5.TabIndex = 3;
-            // 
-            // panel4
-            // 
-            panel4.Location = new Point(18, 20);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(200, 100);
-            panel4.TabIndex = 2;
             // 
             // lblFecha
             // 
@@ -858,6 +866,7 @@
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
             panelFormHijo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             panelNotificaciones.ResumeLayout(false);
             panelNotificaciones.PerformLayout();
             ResumeLayout(false);
@@ -916,6 +925,6 @@
         private Panel panel7;
         private Panel panel6;
         private Panel panel5;
-        private Panel panel4;
+        private PictureBox pbxCalculadora;
     }
 }

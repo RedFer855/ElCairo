@@ -1,6 +1,7 @@
 using Microsoft.VisualBasic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 
 
@@ -303,6 +304,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            abrirFormularioHijo(new frmEmpleados());
         }
 
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
@@ -383,8 +385,31 @@ namespace ModernMenuUI
             lblFecha.Text = DateTime.Now.ToString("dddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
         }
 
-       
+        private void pbxCalculadora_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("calc.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
+            }
+        }
 
+        private void pbxCalculadora_DoubleClick(object sender, EventArgs e)
+        {
+         
+        }
 
+        private void pbxCalculadora_MouseDown(object sender, MouseEventArgs e)
+        {
+            pbxCalculadora.BackColor = Color.LightGreen; // resalta
+        }
+
+        private void pbxCalculadora_MouseUp(object sender, MouseEventArgs e)
+        {
+            pbxCalculadora.BackColor = Color.Transparent; // resalta
+        }
     }
 }
