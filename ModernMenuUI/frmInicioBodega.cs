@@ -12,10 +12,14 @@ namespace ModernMenuUI
 {
     public partial class frmInicioBodega : Form
     {
+        static String CodBodega = "admin";
+        static String Contrasenia = "admin";
         public frmInicioBodega()
         {
             InitializeComponent();
+
         }
+
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
@@ -24,10 +28,20 @@ namespace ModernMenuUI
 
         private void btnAcceder_Click(object sender, EventArgs e)
         {
-            Form formcarga = new frmPantallaDeCarga();
-            this.Visible = false;
-            formcarga.ShowDialog();
-            this.Close();
+            String codbodega = txtCodigoBodega.Text;
+            String contrasenia = txtContrasenia.Text;
+            if (contrasenia == Contrasenia && codbodega == CodBodega)
+            {
+                Form formcarga = new frmPantallaDeCarga();
+                this.Visible = false;
+                formcarga.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                lblMensajeError.Visible = true;
+
+            }
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -43,6 +57,41 @@ namespace ModernMenuUI
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
             Clase_Animaciones.MoverFormulario(this.Handle);
+        }
+
+        private void txtContrasenia_Enter(object sender, EventArgs e)
+        {
+            if (txtContrasenia.Text == "CONTRASEÑA")
+            {
+                Clase_Animaciones.PrivacidadIngresarDatos(txtContrasenia, "");
+            }
+           
+           
+        }
+
+        private void txtContrasenia_Leave(object sender, EventArgs e)
+        {
+            if (txtContrasenia.Text == "")
+            {
+                txtContrasenia.Text = "CONTRASEÑA";
+            }
+
+        }
+
+        private void txtCodigoBodega_Enter(object sender, EventArgs e)
+        {
+            if (txtCodigoBodega.Text == "CÓDIGO")
+            {
+                txtCodigoBodega.Text = "";
+            }
+        }
+
+        private void txtCodigoBodega_Leave(object sender, EventArgs e)
+        {
+            if (txtCodigoBodega.Text == "")
+            {
+                txtCodigoBodega.Text = "CÓDIGO";
+            }
         }
     }
 }

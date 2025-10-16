@@ -13,16 +13,31 @@ namespace ModernMenuUI
 {
     public partial class frmIniciosesion : Form
     {
+
+        static String usu = "admin";
+        static String contra = "admin";
         public frmIniciosesion()
         {
             InitializeComponent();
         }
         private void btnAcceder_Click(object sender, EventArgs e)
         {
-            Form formcarga = new frmInicioBodega();
-            this.Visible = false;
-            formcarga.ShowDialog();
-            this.Close();
+            if (contra == txtContra.Text && usu == txtUsuario.Text)
+            {
+                Form formcarga = new frmInicioBodega();
+                this.Visible = false;
+                formcarga.ShowDialog();
+                this.Close();
+            }
+            else 
+            {
+
+                lblMensajeError.Visible = true;
+                txtContra.Text = "";
+                txtContra_Leave(e, e);
+                txtUsuario.Text = "USUARIO"; 
+            }
+            
 
         }
 

@@ -30,9 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInicioBodega));
             panLogo = new Panel();
-            textBox1 = new TextBox();
+            lblMensajeError = new Label();
+            txtContrasenia = new TextBox();
             label1 = new Label();
-            txtContra = new TextBox();
+            txtCodigoBodega = new TextBox();
             btnAcceder = new Button();
             panBarraControl = new Panel();
             btnMinimizar = new Button();
@@ -45,9 +46,10 @@
             // 
             panLogo.BackColor = Color.FromArgb(189, 215, 238);
             panLogo.BackgroundImage = Properties.Resources.imglogin;
-            panLogo.Controls.Add(textBox1);
+            panLogo.Controls.Add(lblMensajeError);
+            panLogo.Controls.Add(txtContrasenia);
             panLogo.Controls.Add(label1);
-            panLogo.Controls.Add(txtContra);
+            panLogo.Controls.Add(txtCodigoBodega);
             panLogo.Controls.Add(btnAcceder);
             panLogo.Dock = DockStyle.Fill;
             panLogo.Location = new Point(0, 35);
@@ -55,42 +57,60 @@
             panLogo.Size = new Size(638, 295);
             panLogo.TabIndex = 3;
             // 
-            // textBox1
+            // lblMensajeError
             // 
-            textBox1.BackColor = Color.White;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.DimGray;
-            textBox1.Location = new Point(111, 142);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(420, 20);
-            textBox1.TabIndex = 17;
-            textBox1.Text = "Contraseña...";
+            lblMensajeError.AutoSize = true;
+            lblMensajeError.BackColor = Color.Transparent;
+            lblMensajeError.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblMensajeError.ForeColor = Color.Red;
+            lblMensajeError.Location = new Point(169, 167);
+            lblMensajeError.Name = "lblMensajeError";
+            lblMensajeError.Size = new Size(293, 14);
+            lblMensajeError.TabIndex = 18;
+            lblMensajeError.Text = "Código o contraseña incorrectos ingrese nuevamente...";
+            lblMensajeError.TextAlign = ContentAlignment.TopCenter;
+            lblMensajeError.Visible = false;
+            // 
+            // txtContrasenia
+            // 
+            txtContrasenia.BackColor = Color.White;
+            txtContrasenia.BorderStyle = BorderStyle.None;
+            txtContrasenia.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtContrasenia.ForeColor = Color.DimGray;
+            txtContrasenia.Location = new Point(109, 134);
+            txtContrasenia.Name = "txtContrasenia";
+            txtContrasenia.Size = new Size(420, 20);
+            txtContrasenia.TabIndex = 17;
+            txtContrasenia.Text = "CONTRASEÑA";
+            txtContrasenia.Enter += txtContrasenia_Enter;
+            txtContrasenia.Leave += txtContrasenia_Leave;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.Black;
-            label1.Location = new Point(154, 36);
+            label1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(20, 20, 20);
+            label1.Location = new Point(138, 42);
             label1.Name = "label1";
-            label1.Size = new Size(330, 36);
+            label1.Size = new Size(359, 38);
             label1.TabIndex = 16;
             label1.Text = "Por favor, Ingrese el código de la bodega en la que \r\nel sistema realizará las acciones...\r\n";
             label1.TextAlign = ContentAlignment.TopCenter;
             // 
-            // txtContra
+            // txtCodigoBodega
             // 
-            txtContra.BackColor = Color.White;
-            txtContra.BorderStyle = BorderStyle.None;
-            txtContra.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContra.ForeColor = Color.DimGray;
-            txtContra.Location = new Point(111, 93);
-            txtContra.Name = "txtContra";
-            txtContra.Size = new Size(420, 20);
-            txtContra.TabIndex = 15;
-            txtContra.Text = "Código de la Bodega...";
+            txtCodigoBodega.BackColor = Color.White;
+            txtCodigoBodega.BorderStyle = BorderStyle.None;
+            txtCodigoBodega.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCodigoBodega.ForeColor = Color.DimGray;
+            txtCodigoBodega.Location = new Point(111, 93);
+            txtCodigoBodega.Name = "txtCodigoBodega";
+            txtCodigoBodega.Size = new Size(420, 20);
+            txtCodigoBodega.TabIndex = 15;
+            txtCodigoBodega.Text = "CÓDIGO";
+            txtCodigoBodega.Enter += txtCodigoBodega_Enter;
+            txtCodigoBodega.Leave += txtCodigoBodega_Leave;
             // 
             // btnAcceder
             // 
@@ -173,9 +193,10 @@
         private Panel panBarraControl;
         private Button btnMinimizar;
         private Button btnCerrar;
-        private TextBox txtContra;
+        private TextBox txtCodigoBodega;
         private Button btnAcceder;
         private Label label1;
-        private TextBox textBox1;
+        private TextBox txtContrasenia;
+        private Label lblMensajeError;
     }
 }

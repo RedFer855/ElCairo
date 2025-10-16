@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIniciosesion));
             panLogo = new Panel();
+            pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             panDatosIngreso = new Panel();
             txtContra = new TextBox();
@@ -44,14 +45,14 @@
             panBarraControl = new Panel();
             btnMinimizar = new Button();
             btnCerrar = new Button();
-            pictureBox2 = new PictureBox();
+            lblMensajeError = new Label();
             panLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panDatosIngreso.SuspendLayout();
             panel5.SuspendLayout();
             panel3.SuspendLayout();
             panBarraControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // panLogo
@@ -67,6 +68,17 @@
             panLogo.TabIndex = 0;
             panLogo.MouseDown += panLogo_MouseDown;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.BackColor = Color.Transparent;
+            pictureBox2.Image = Properties.Resources.el_cairo_2__1__12;
+            pictureBox2.Location = new Point(0, 75);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(250, 170);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 9;
+            pictureBox2.TabStop = false;
+            // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
@@ -81,6 +93,7 @@
             // panDatosIngreso
             // 
             panDatosIngreso.BackColor = Color.FromArgb(15, 15, 15);
+            panDatosIngreso.Controls.Add(lblMensajeError);
             panDatosIngreso.Controls.Add(txtContra);
             panDatosIngreso.Controls.Add(txtUsuario);
             panDatosIngreso.Controls.Add(label4);
@@ -237,18 +250,21 @@
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
             // 
-            // pictureBox2
+            // lblMensajeError
             // 
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.Image = Properties.Resources.el_cairo_2__1__12;
-            pictureBox2.Location = new Point(0, 75);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(250, 170);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 9;
-            pictureBox2.TabStop = false;
+            lblMensajeError.AutoSize = true;
+            lblMensajeError.BackColor = Color.Transparent;
+            lblMensajeError.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblMensajeError.ForeColor = Color.DarkRed;
+            lblMensajeError.Location = new Point(130, 178);
+            lblMensajeError.Name = "lblMensajeError";
+            lblMensajeError.Size = new Size(253, 14);
+            lblMensajeError.TabIndex = 19;
+            lblMensajeError.Text = "Credenciales incorrectas ingrese nuevamente...";
+            lblMensajeError.TextAlign = ContentAlignment.TopCenter;
+            lblMensajeError.Visible = false;
             // 
-            // FormInicioUsuarios
+            // frmIniciosesion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -257,10 +273,11 @@
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "FormInicioUsuarios";
+            Name = "frmIniciosesion";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormInicioUsurio";
             panLogo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panDatosIngreso.ResumeLayout(false);
             panDatosIngreso.PerformLayout();
@@ -268,7 +285,6 @@
             panel3.ResumeLayout(false);
             panBarraControl.ResumeLayout(false);
             panBarraControl.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
         }
 
@@ -290,5 +306,6 @@
         private Label label3;
         private Button btnMinimizar;
         private PictureBox pictureBox2;
+        private Label lblMensajeError;
     }
 }
