@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class Gestion_de_Usuarios
+    partial class frmRoles
     {
         /// <summary>
         /// Required designer variable.
@@ -28,15 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gestion_de_Usuarios));
-            DataGridViewCellStyle dataGridViewCellStyle66 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle67 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle69 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle70 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle68 = new DataGridViewCellStyle();
-            button4 = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            btnSalir = new Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRoles));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             button6 = new Button();
             btnNuevo = new Button();
             groupBox1 = new GroupBox();
@@ -58,55 +55,15 @@
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             PrecioVenta = new DataGridViewTextBoxColumn();
             Estado = new DataGridViewTextBoxColumn();
-            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            btnSalir = new Button();
             groupBox1.SuspendLayout();
             panelBusqueda.SuspendLayout();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // button4
-            // 
-            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button4.Location = new Point(525, 93);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 23);
-            button4.TabIndex = 5;
-            button4.Text = "button4";
-            button4.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel1.Controls.Add(button6, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnNuevo, 0, 1);
-            tableLayoutPanel1.Location = new Point(18, 512);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(348, 100);
-            tableLayoutPanel1.TabIndex = 43;
-            // 
-            // btnSalir
-            // 
-            btnSalir.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnSalir.BackColor = Color.FromArgb(148, 168, 187);
-            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSalir.ForeColor = Color.White;
-            btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(220, 3);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(125, 44);
-            btnSalir.TabIndex = 18;
-            btnSalir.Text = "Salir";
-            btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click;
             // 
             // button6
             // 
@@ -118,7 +75,7 @@
             button6.Name = "button6";
             button6.Size = new Size(211, 44);
             button6.TabIndex = 22;
-            button6.Text = "Agregar Usuario";
+            button6.Text = "Agregar Rol";
             button6.UseVisualStyleBackColor = false;
             // 
             // btnNuevo
@@ -131,7 +88,7 @@
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(211, 44);
             btnNuevo.TabIndex = 20;
-            btnNuevo.Text = "Editar Usuario";
+            btnNuevo.Text = "Editar Rol";
             btnNuevo.UseVisualStyleBackColor = false;
             // 
             // groupBox1
@@ -142,10 +99,10 @@
             groupBox1.Controls.Add(rdbTodos);
             groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(18, 62);
+            groupBox1.Location = new Point(33, 48);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(718, 53);
-            groupBox1.TabIndex = 42;
+            groupBox1.Size = new Size(684, 53);
+            groupBox1.TabIndex = 52;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtro";
             // 
@@ -187,10 +144,10 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(18, 12);
+            panelBusqueda.Location = new Point(33, -2);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(718, 43);
-            panelBusqueda.TabIndex = 41;
+            panelBusqueda.Size = new Size(684, 43);
+            panelBusqueda.TabIndex = 51;
             // 
             // txtBuscar
             // 
@@ -200,7 +157,7 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Usuarios...";
-            txtBuscar.Size = new Size(626, 20);
+            txtBuscar.Size = new Size(588, 20);
             txtBuscar.TabIndex = 1;
             // 
             // btnbuscar
@@ -211,7 +168,7 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(656, 12);
+            btnbuscar.Location = new Point(618, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
@@ -222,79 +179,78 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
-            panel1.Location = new Point(18, 124);
+            panel1.Location = new Point(33, 110);
             panel1.Name = "panel1";
-            panel1.Size = new Size(718, 344);
-            panel1.TabIndex = 40;
+            panel1.Size = new Size(684, 389);
+            panel1.TabIndex = 50;
             // 
             // panel10
             // 
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
             panel10.Controls.Add(dgvProductos);
-            panel10.Location = new Point(16, 18);
+            panel10.Location = new Point(18, 16);
             panel10.Name = "panel10";
-            panel10.Size = new Size(688, 308);
+            panel10.Size = new Size(648, 359);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
             // 
             dgvProductos.AllowUserToAddRows = false;
-            dataGridViewCellStyle66.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle66.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle66.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle66;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvProductos.BorderStyle = BorderStyle.None;
             dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle67.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle67.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle67.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle67.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle67.SelectionBackColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle67.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle67.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle67;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, PorcentajeGanancia, PrecioCompra, dataGridViewTextBoxColumn3, PrecioVenta, Estado });
-            dataGridViewCellStyle69.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle69.BackColor = Color.White;
-            dataGridViewCellStyle69.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle69.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle69.Padding = new Padding(5);
-            dataGridViewCellStyle69.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle69.SelectionForeColor = Color.White;
-            dataGridViewCellStyle69.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle69;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle4.Padding = new Padding(5);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvProductos.DefaultCellStyle = dataGridViewCellStyle4;
             dgvProductos.Dock = DockStyle.Fill;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
             dgvProductos.Location = new Point(0, 0);
             dgvProductos.Name = "dgvProductos";
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle70.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle70.BackColor = SystemColors.Control;
-            dataGridViewCellStyle70.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle70.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle70.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle70.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle70.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle70;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(688, 308);
+            dgvProductos.Size = new Size(648, 359);
             dgvProductos.TabIndex = 1;
-            dgvProductos.CellContentClick += dgvProductos_CellContentClick;
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle68.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle68.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle68;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewTextBoxColumn1.FillWeight = 50F;
             dataGridViewTextBoxColumn1.HeaderText = "DNI";
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
@@ -347,20 +303,50 @@
             Estado.HeaderText = "Estado";
             Estado.Name = "Estado";
             // 
-            // Gestion_de_Usuarios
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
+            tableLayoutPanel1.Controls.Add(button6, 0, 0);
+            tableLayoutPanel1.Controls.Add(btnNuevo, 0, 1);
+            tableLayoutPanel1.Location = new Point(33, 528);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(348, 100);
+            tableLayoutPanel1.TabIndex = 53;
+            // 
+            // btnSalir
+            // 
+            btnSalir.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSalir.BackColor = Color.FromArgb(148, 168, 187);
+            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSalir.ForeColor = Color.White;
+            btnSalir.ImageAlign = ContentAlignment.TopCenter;
+            btnSalir.Location = new Point(220, 3);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(125, 44);
+            btnSalir.TabIndex = 18;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click;
+            // 
+            // frmRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(748, 624);
-            Controls.Add(tableLayoutPanel1);
+            ClientSize = new Size(750, 640);
             Controls.Add(groupBox1);
             Controls.Add(panelBusqueda);
             Controls.Add(panel1);
-            Controls.Add(button4);
+            Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Gestion_de_Usuarios";
-            Text = "Gestion_de_Usuarios";
-            tableLayoutPanel1.ResumeLayout(false);
+            Name = "frmRoles";
+            Text = "frmRoles";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             panelBusqueda.ResumeLayout(false);
@@ -368,13 +354,12 @@
             panel1.ResumeLayout(false);
             panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-        private Button button4;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Button btnSalir;
+
         private Button button6;
         private Button btnNuevo;
         private GroupBox groupBox1;
@@ -396,5 +381,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn Estado;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Button btnSalir;
     }
 }

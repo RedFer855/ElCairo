@@ -317,6 +317,7 @@ namespace ModernMenuUI
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            abrirFormularioHijo(new frmRoles());
             Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
         }
 
@@ -399,7 +400,7 @@ namespace ModernMenuUI
 
         private void pbxCalculadora_DoubleClick(object sender, EventArgs e)
         {
-         
+
         }
 
         private void pbxCalculadora_MouseDown(object sender, MouseEventArgs e)
@@ -410,6 +411,11 @@ namespace ModernMenuUI
         private void pbxCalculadora_MouseUp(object sender, MouseEventArgs e)
         {
             pbxCalculadora.BackColor = Color.Transparent; // resalta
+        }
+
+        private void lblHora_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

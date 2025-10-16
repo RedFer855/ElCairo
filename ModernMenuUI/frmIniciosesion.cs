@@ -19,7 +19,7 @@ namespace ModernMenuUI
         }
         private void btnAcceder_Click(object sender, EventArgs e)
         {
-            Form formcarga = new frmPantallaDeCarga();
+            Form formcarga = new frmInicioBodega();
             this.Visible = false;
             formcarga.ShowDialog();
             this.Close();

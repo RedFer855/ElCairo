@@ -71,10 +71,11 @@ namespace ModernMenuUI
                 string estadoFila = "";
                 if (stockActual < stockMinimo)
                     estadoFila = "Bajo";
-                else if (stockActual <= stockMinimo + 10)
+                else if (stockActual >= stockMinimo && stockActual <= stockMinimo + 10)
                     estadoFila = "Medio";
                 else
                     estadoFila = "Alto";
+
 
                 // Aplicar visibilidad según filtros
                 bool visiblePorBodega = (bodegaSeleccionada == "Todas" || bodega == bodegaSeleccionada);
@@ -85,11 +86,13 @@ namespace ModernMenuUI
                 if (fila.Visible)
                 {
                     if (estadoFila == "Bajo")
-                        fila.DefaultCellStyle.BackColor = Color.LightCoral;
+                        fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 221, 221); //Rojo
                     else if (estadoFila == "Medio")
-                        fila.DefaultCellStyle.BackColor = Color.Khaki;
+                        fila.DefaultCellStyle.BackColor = Color.FromArgb(252, 239, 220); // Amarillo
+                    else if (estadoFila == "Alto")
+                        fila.DefaultCellStyle.BackColor = Color.FromArgb(223, 244, 216); // Verde
                     else
-                        fila.DefaultCellStyle.BackColor = Color.LightGreen;
+                        MessageBox.Show("Nuevo estado");
                 }
             }
         }

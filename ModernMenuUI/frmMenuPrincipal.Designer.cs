@@ -778,7 +778,7 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(497, 629);
+            lblFecha.Location = new Point(479, 629);
             lblFecha.Name = "lblFecha";
             lblFecha.Size = new Size(114, 23);
             lblFecha.TabIndex = 1;
@@ -790,11 +790,12 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(497, 596);
+            lblHora.Location = new Point(479, 596);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(72, 33);
             lblHora.TabIndex = 0;
             lblHora.Text = "Hora";
+            lblHora.Click += lblHora_Click;
             // 
             // timerAbrir
             // 

@@ -10,27 +10,17 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class Gestion_de_Usuarios : Form
+    public partial class frmRoles : Form
     {
-        public Gestion_de_Usuarios()
+        public frmRoles()
         {
             InitializeComponent();
-        }
-
-        private void btnCerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
             Clase_Animaciones.NombreMenuPrincipal();
             this.Close();
-        }
-
-        private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
