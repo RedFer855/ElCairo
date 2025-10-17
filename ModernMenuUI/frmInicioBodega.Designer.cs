@@ -76,7 +76,7 @@
             txtContrasenia.BackColor = Color.White;
             txtContrasenia.BorderStyle = BorderStyle.None;
             txtContrasenia.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContrasenia.ForeColor = Color.DimGray;
+            txtContrasenia.ForeColor = Color.Black;
             txtContrasenia.Location = new Point(109, 134);
             txtContrasenia.Name = "txtContrasenia";
             txtContrasenia.Size = new Size(420, 20);
@@ -103,7 +103,7 @@
             txtCodigoBodega.BackColor = Color.White;
             txtCodigoBodega.BorderStyle = BorderStyle.None;
             txtCodigoBodega.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCodigoBodega.ForeColor = Color.DimGray;
+            txtCodigoBodega.ForeColor = Color.Black;
             txtCodigoBodega.Location = new Point(111, 93);
             txtCodigoBodega.Name = "txtCodigoBodega";
             txtCodigoBodega.Size = new Size(420, 20);
