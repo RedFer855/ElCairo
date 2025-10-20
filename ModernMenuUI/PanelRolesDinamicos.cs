@@ -11,10 +11,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ModernMenuUI
 {
-    public partial class PanelRolesDinamicos : UserControl
+    public partial class controlPanelRolesDinamicos : UserControl
     {
 
-        public PanelRolesDinamicos()
+        public controlPanelRolesDinamicos()
         {
             InitializeComponent();
 

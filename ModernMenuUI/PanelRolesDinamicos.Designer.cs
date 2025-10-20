@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class PanelRolesDinamicos
+    partial class controlPanelRolesDinamicos
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelRolesDinamicos));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(controlPanelRolesDinamicos));
             lblNombreRol = new Label();
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
@@ -86,13 +86,13 @@
             btnInfo.UseVisualStyleBackColor = false;
             btnInfo.Click += btnInfo_Click;
             // 
-            // PanelRolesDinamicos
+            // controlPanelRolesDinamicos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Controls.Add(pictureBox1);
-            Name = "PanelRolesDinamicos";
+            Name = "controlPanelRolesDinamicos";
             Size = new Size(180, 160);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);

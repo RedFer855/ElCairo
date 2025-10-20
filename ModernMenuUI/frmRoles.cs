@@ -57,9 +57,9 @@ namespace ModernMenuUI
                 panelDestino.Controls.Clear();
 
                 // Crear y agregar el control personalizado
-                PanelRolesDinamicos nuevoRol = new PanelRolesDinamicos();
+                controlPanelRolesDinamicos nuevoRol = new controlPanelRolesDinamicos();
                 nuevoRol.Dock = DockStyle.Fill; // ocupa todo el panel
-                nuevoRol.Name = $"PanelRolesDinamicos{contadorRoles + 1}";
+                nuevoRol.Name = $"controlPanelRolesDinamicos{contadorRoles + 1}";
 
                 panelDestino.Controls.Add(nuevoRol);
                 contadorRoles++;

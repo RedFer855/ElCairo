@@ -10,16 +10,14 @@ namespace ModernMenuUI
     public partial class frmMenuPrincipal : Form
     {
         public bool Animacion = true;
-        AnimadorPanel animadorPanel;
+        clsAnimadorPanel animadorPanel;
         private Form formularioactivo = null;
-       
-
 
         public frmMenuPrincipal()
         {
             InitializeComponent();
             this.AutoScaleMode = AutoScaleMode.Dpi;
-            animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
+            animadorPanel = new clsAnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             this.DoubleBuffered = true;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);

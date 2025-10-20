@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModernMenuUI
 {
-    internal class AgregarInfromacion
+    internal class clsAgregarInfromacion
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
