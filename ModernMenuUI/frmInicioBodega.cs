@@ -56,14 +56,14 @@ namespace ModernMenuUI
 
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void txtContrasenia_Enter(object sender, EventArgs e)
         {
             if (txtContrasenia.Text == "CONTRASEÑA")
             {
-                Clase_Animaciones.PrivacidadIngresarDatos(txtContrasenia, "");
+                clsAnmaciones.PrivacidadIngresarDatos(txtContrasenia, "");
             }
            
            

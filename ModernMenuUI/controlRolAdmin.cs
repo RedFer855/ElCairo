@@ -10,17 +10,16 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class frmEmpleados : Form
+    public partial class controlRolAdmin : UserControl
     {
-        public frmEmpleados()
+        public controlRolAdmin()
         {
             InitializeComponent();
         }
 
-        private void btnSalir_Click(object sender, EventArgs e)
+        private void btnInfo_Click(object sender, EventArgs e)
         {
-            clsAnmaciones.NombreMenuPrincipal();
-            this.Close();
+            clsManejarFormularios.Instancia.AbrirFormularioEncima(new frmEditarRol());
         }
     }
 }

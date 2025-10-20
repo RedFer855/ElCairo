@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class Gestion_de_Usuarios : Form
+    public partial class frmGestionUsuario : Form
     {
-        public Gestion_de_Usuarios()
+        public frmGestionUsuario()
         {
             InitializeComponent();
         }
@@ -24,7 +24,7 @@ namespace ModernMenuUI
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Clase_Animaciones.NombreMenuPrincipal();
+            clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
 

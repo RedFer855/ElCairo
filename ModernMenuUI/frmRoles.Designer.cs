@@ -29,359 +29,353 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRoles));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            button6 = new Button();
-            btnNuevo = new Button();
-            groupBox1 = new GroupBox();
-            rdbDeshabilitados = new RadioButton();
-            rdbHabilitados = new RadioButton();
-            rdbTodos = new RadioButton();
-            panelBusqueda = new Panel();
-            txtBuscar = new TextBox();
-            btnbuscar = new Button();
-            panel1 = new Panel();
+            pnlContenedorRoles = new FlowLayoutPanel();
+            pnlRolDinamico1 = new Panel();
+            pnlRolDinamico2 = new Panel();
+            pnlRolDinamico3 = new Panel();
+            pnlRolDinamico4 = new Panel();
+            pnlRolDinamico5 = new Panel();
+            pnlRolDinamico6 = new Panel();
             panel10 = new Panel();
-            dgvProductos = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
-            PrecioCompra = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            PrecioVenta = new DataGridViewTextBoxColumn();
-            Estado = new DataGridViewTextBoxColumn();
             tableLayoutPanel1 = new TableLayoutPanel();
+            btnNuevoRol = new Button();
             btnSalir = new Button();
-            groupBox1.SuspendLayout();
-            panelBusqueda.SuspendLayout();
-            panel1.SuspendLayout();
+            panel1 = new Panel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            panel2 = new Panel();
+            controlRolAdmin1 = new controlRolAdmin();
+            panel3 = new Panel();
+            controlRolCajero1 = new controlRolCajero();
+            panel4 = new Panel();
+            controlVendedorBodeguero1 = new controlVendedorBodeguero();
+            panel5 = new Panel();
+            label1 = new Label();
+            panel6 = new Panel();
+            label2 = new Label();
+            pnlContenedorRoles.SuspendLayout();
             panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             tableLayoutPanel1.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
+            panel4.SuspendLayout();
+            panel5.SuspendLayout();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
-            // button6
+            // pnlContenedorRoles
             // 
-            button6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            button6.BackColor = Color.FromArgb(149, 195, 172);
-            button6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button6.ForeColor = SystemColors.ButtonFace;
-            button6.Location = new Point(3, 3);
-            button6.Name = "button6";
-            button6.Size = new Size(211, 44);
-            button6.TabIndex = 22;
-            button6.Text = "Agregar Rol";
-            button6.UseVisualStyleBackColor = false;
+            pnlContenedorRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlContenedorRoles.AutoScroll = true;
+            pnlContenedorRoles.Controls.Add(pnlRolDinamico1);
+            pnlContenedorRoles.Controls.Add(pnlRolDinamico2);
+            pnlContenedorRoles.Controls.Add(pnlRolDinamico3);
+            pnlContenedorRoles.Controls.Add(pnlRolDinamico4);
+            pnlContenedorRoles.Controls.Add(pnlRolDinamico5);
+            pnlContenedorRoles.Controls.Add(pnlRolDinamico6);
+            pnlContenedorRoles.Location = new Point(15, 256);
+            pnlContenedorRoles.Margin = new Padding(3, 33, 3, 3);
+            pnlContenedorRoles.Name = "pnlContenedorRoles";
+            pnlContenedorRoles.Size = new Size(751, 343);
+            pnlContenedorRoles.TabIndex = 0;
             // 
-            // btnNuevo
+            // pnlRolDinamico1
             // 
-            btnNuevo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnNuevo.BackColor = Color.FromArgb(189, 215, 238);
-            btnNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.FromArgb(87, 99, 110);
-            btnNuevo.Location = new Point(3, 53);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(211, 44);
-            btnNuevo.TabIndex = 20;
-            btnNuevo.Text = "Editar Rol";
-            btnNuevo.UseVisualStyleBackColor = false;
+            pnlRolDinamico1.BackColor = SystemColors.GradientInactiveCaption;
+            pnlRolDinamico1.BackgroundImage = (Image)resources.GetObject("pnlRolDinamico1.BackgroundImage");
+            pnlRolDinamico1.BackgroundImageLayout = ImageLayout.Center;
+            pnlRolDinamico1.BorderStyle = BorderStyle.FixedSingle;
+            pnlRolDinamico1.ForeColor = SystemColors.ControlText;
+            pnlRolDinamico1.Location = new Point(15, 15);
+            pnlRolDinamico1.Margin = new Padding(15);
+            pnlRolDinamico1.Name = "pnlRolDinamico1";
+            pnlRolDinamico1.Size = new Size(180, 160);
+            pnlRolDinamico1.TabIndex = 1;
             // 
-            // groupBox1
+            // pnlRolDinamico2
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(rdbDeshabilitados);
-            groupBox1.Controls.Add(rdbHabilitados);
-            groupBox1.Controls.Add(rdbTodos);
-            groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(33, 48);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(684, 53);
-            groupBox1.TabIndex = 52;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Filtro";
+            pnlRolDinamico2.BackColor = SystemColors.GradientInactiveCaption;
+            pnlRolDinamico2.BackgroundImage = (Image)resources.GetObject("pnlRolDinamico2.BackgroundImage");
+            pnlRolDinamico2.BackgroundImageLayout = ImageLayout.Center;
+            pnlRolDinamico2.BorderStyle = BorderStyle.FixedSingle;
+            pnlRolDinamico2.Location = new Point(225, 15);
+            pnlRolDinamico2.Margin = new Padding(15);
+            pnlRolDinamico2.Name = "pnlRolDinamico2";
+            pnlRolDinamico2.Size = new Size(180, 160);
+            pnlRolDinamico2.TabIndex = 2;
             // 
-            // rdbDeshabilitados
+            // pnlRolDinamico3
             // 
-            rdbDeshabilitados.AutoSize = true;
-            rdbDeshabilitados.Location = new Point(341, 21);
-            rdbDeshabilitados.Name = "rdbDeshabilitados";
-            rdbDeshabilitados.Size = new Size(178, 22);
-            rdbDeshabilitados.TabIndex = 30;
-            rdbDeshabilitados.Text = "Mostrar Deshabilitados";
-            rdbDeshabilitados.UseVisualStyleBackColor = true;
+            pnlRolDinamico3.BackColor = SystemColors.GradientInactiveCaption;
+            pnlRolDinamico3.BackgroundImage = (Image)resources.GetObject("pnlRolDinamico3.BackgroundImage");
+            pnlRolDinamico3.BackgroundImageLayout = ImageLayout.Center;
+            pnlRolDinamico3.BorderStyle = BorderStyle.FixedSingle;
+            pnlRolDinamico3.Location = new Point(435, 15);
+            pnlRolDinamico3.Margin = new Padding(15);
+            pnlRolDinamico3.Name = "pnlRolDinamico3";
+            pnlRolDinamico3.Size = new Size(180, 160);
+            pnlRolDinamico3.TabIndex = 3;
             // 
-            // rdbHabilitados
+            // pnlRolDinamico4
             // 
-            rdbHabilitados.AutoSize = true;
-            rdbHabilitados.Checked = true;
-            rdbHabilitados.Location = new Point(158, 21);
-            rdbHabilitados.Name = "rdbHabilitados";
-            rdbHabilitados.Size = new Size(156, 22);
-            rdbHabilitados.TabIndex = 29;
-            rdbHabilitados.TabStop = true;
-            rdbHabilitados.Text = "Mostrar Habilitados";
-            rdbHabilitados.UseVisualStyleBackColor = true;
+            pnlRolDinamico4.BackColor = SystemColors.GradientInactiveCaption;
+            pnlRolDinamico4.BackgroundImage = (Image)resources.GetObject("pnlRolDinamico4.BackgroundImage");
+            pnlRolDinamico4.BackgroundImageLayout = ImageLayout.Center;
+            pnlRolDinamico4.BorderStyle = BorderStyle.FixedSingle;
+            pnlRolDinamico4.Location = new Point(15, 205);
+            pnlRolDinamico4.Margin = new Padding(15);
+            pnlRolDinamico4.Name = "pnlRolDinamico4";
+            pnlRolDinamico4.Size = new Size(180, 160);
+            pnlRolDinamico4.TabIndex = 4;
             // 
-            // rdbTodos
+            // pnlRolDinamico5
             // 
-            rdbTodos.AutoSize = true;
-            rdbTodos.Location = new Point(18, 21);
-            rdbTodos.Name = "rdbTodos";
-            rdbTodos.Size = new Size(120, 22);
-            rdbTodos.TabIndex = 28;
-            rdbTodos.Text = "Mostrar Todos";
-            rdbTodos.UseVisualStyleBackColor = true;
+            pnlRolDinamico5.BackColor = SystemColors.GradientInactiveCaption;
+            pnlRolDinamico5.BackgroundImage = (Image)resources.GetObject("pnlRolDinamico5.BackgroundImage");
+            pnlRolDinamico5.BackgroundImageLayout = ImageLayout.Center;
+            pnlRolDinamico5.BorderStyle = BorderStyle.FixedSingle;
+            pnlRolDinamico5.Location = new Point(225, 205);
+            pnlRolDinamico5.Margin = new Padding(15);
+            pnlRolDinamico5.Name = "pnlRolDinamico5";
+            pnlRolDinamico5.Size = new Size(180, 160);
+            pnlRolDinamico5.TabIndex = 5;
             // 
-            // panelBusqueda
+            // pnlRolDinamico6
             // 
-            panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
-            panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(33, -2);
-            panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(684, 43);
-            panelBusqueda.TabIndex = 51;
-            // 
-            // txtBuscar
-            // 
-            txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtBuscar.BorderStyle = BorderStyle.None;
-            txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(18, 12);
-            txtBuscar.Name = "txtBuscar";
-            txtBuscar.PlaceholderText = "Buscar Usuarios...";
-            txtBuscar.Size = new Size(588, 20);
-            txtBuscar.TabIndex = 1;
-            // 
-            // btnbuscar
-            // 
-            btnbuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(618, 12);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 20);
-            btnbuscar.TabIndex = 0;
-            btnbuscar.UseVisualStyleBackColor = false;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(panel10);
-            panel1.Location = new Point(33, 110);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(684, 389);
-            panel1.TabIndex = 50;
+            pnlRolDinamico6.BackColor = SystemColors.GradientInactiveCaption;
+            pnlRolDinamico6.BackgroundImage = (Image)resources.GetObject("pnlRolDinamico6.BackgroundImage");
+            pnlRolDinamico6.BackgroundImageLayout = ImageLayout.Center;
+            pnlRolDinamico6.BorderStyle = BorderStyle.FixedSingle;
+            pnlRolDinamico6.Location = new Point(435, 205);
+            pnlRolDinamico6.Margin = new Padding(15);
+            pnlRolDinamico6.Name = "pnlRolDinamico6";
+            pnlRolDinamico6.Size = new Size(180, 160);
+            pnlRolDinamico6.TabIndex = 6;
             // 
             // panel10
             // 
-            panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel10.AutoScroll = true;
-            panel10.Controls.Add(dgvProductos);
-            panel10.Location = new Point(18, 16);
+            panel10.BackColor = SystemColors.GradientInactiveCaption;
+            panel10.BorderStyle = BorderStyle.FixedSingle;
+            panel10.Controls.Add(tableLayoutPanel1);
+            panel10.Dock = DockStyle.Bottom;
+            panel10.Location = new Point(0, 599);
             panel10.Name = "panel10";
-            panel10.Size = new Size(648, 359);
-            panel10.TabIndex = 17;
-            // 
-            // dgvProductos
-            // 
-            dgvProductos.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-            dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.BorderStyle = BorderStyle.None;
-            dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, PorcentajeGanancia, PrecioCompra, dataGridViewTextBoxColumn3, PrecioVenta, Estado });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle4.Padding = new Padding(5);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvProductos.Dock = DockStyle.Fill;
-            dgvProductos.EnableHeadersVisualStyles = false;
-            dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Name = "dgvProductos";
-            dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dgvProductos.RowHeadersWidth = 30;
-            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(648, 359);
-            dgvProductos.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "DNI";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // Categoria
-            // 
-            Categoria.FillWeight = 80F;
-            Categoria.HeaderText = "Apellido";
-            Categoria.Name = "Categoria";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // PorcentajeGanancia
-            // 
-            PorcentajeGanancia.FillWeight = 80F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            // 
-            // PrecioCompra
-            // 
-            PrecioCompra.FillWeight = 80F;
-            PrecioCompra.HeaderText = "Vendedor";
-            PrecioCompra.Name = "PrecioCompra";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.FillWeight = 80F;
-            dataGridViewTextBoxColumn3.HeaderText = "Longitud";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // PrecioVenta
-            // 
-            PrecioVenta.FillWeight = 70F;
-            PrecioVenta.HeaderText = "Latitud";
-            PrecioVenta.Name = "PrecioVenta";
-            // 
-            // Estado
-            // 
-            Estado.FillWeight = 60F;
-            Estado.HeaderText = "Estado";
-            Estado.Name = "Estado";
+            panel10.Size = new Size(766, 80);
+            panel10.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 81F));
+            tableLayoutPanel1.Controls.Add(btnNuevoRol, 0, 0);
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel1.Controls.Add(button6, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnNuevo, 0, 1);
-            tableLayoutPanel1.Location = new Point(33, 528);
+            tableLayoutPanel1.Location = new Point(30, 22);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(348, 100);
-            tableLayoutPanel1.TabIndex = 53;
+            tableLayoutPanel1.Size = new Size(247, 44);
+            tableLayoutPanel1.TabIndex = 32;
+            // 
+            // btnNuevoRol
+            // 
+            btnNuevoRol.BackColor = Color.FromArgb(149, 195, 172);
+            btnNuevoRol.Dock = DockStyle.Fill;
+            btnNuevoRol.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnNuevoRol.ForeColor = SystemColors.ButtonFace;
+            btnNuevoRol.Location = new Point(3, 3);
+            btnNuevoRol.Name = "btnNuevoRol";
+            btnNuevoRol.Size = new Size(160, 38);
+            btnNuevoRol.TabIndex = 17;
+            btnNuevoRol.Text = "Nuevo Rol";
+            btnNuevoRol.UseVisualStyleBackColor = false;
+            btnNuevoRol.Click += btnNuevoRol_Click;
             // 
             // btnSalir
             // 
-            btnSalir.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
+            btnSalir.Dock = DockStyle.Fill;
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(220, 3);
+            btnSalir.Location = new Point(169, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(125, 44);
+            btnSalir.Size = new Size(75, 38);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click;
+            btnSalir.Click += btnSalir_Click_1;
+            // 
+            // panel1
+            // 
+            panel1.Dock = DockStyle.Left;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(15, 599);
+            panel1.TabIndex = 2;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanel1.Controls.Add(panel2);
+            flowLayoutPanel1.Controls.Add(panel3);
+            flowLayoutPanel1.Controls.Add(panel4);
+            flowLayoutPanel1.Location = new Point(15, 33);
+            flowLayoutPanel1.Margin = new Padding(3, 33, 3, 3);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(751, 193);
+            flowLayoutPanel1.TabIndex = 3;
+            // 
+            // panel2
+            // 
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(controlRolAdmin1);
+            panel2.Location = new Point(15, 15);
+            panel2.Margin = new Padding(15);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(180, 160);
+            panel2.TabIndex = 0;
+            // 
+            // controlRolAdmin1
+            // 
+            controlRolAdmin1.Location = new Point(0, 0);
+            controlRolAdmin1.Name = "controlRolAdmin1";
+            controlRolAdmin1.Size = new Size(180, 160);
+            controlRolAdmin1.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(controlRolCajero1);
+            panel3.Location = new Point(225, 15);
+            panel3.Margin = new Padding(15);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(180, 160);
+            panel3.TabIndex = 1;
+            // 
+            // controlRolCajero1
+            // 
+            controlRolCajero1.Location = new Point(0, 0);
+            controlRolCajero1.Name = "controlRolCajero1";
+            controlRolCajero1.Size = new Size(180, 160);
+            controlRolCajero1.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            panel4.BorderStyle = BorderStyle.FixedSingle;
+            panel4.Controls.Add(controlVendedorBodeguero1);
+            panel4.Location = new Point(435, 15);
+            panel4.Margin = new Padding(15);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(180, 160);
+            panel4.TabIndex = 2;
+            // 
+            // controlVendedorBodeguero1
+            // 
+            controlVendedorBodeguero1.Location = new Point(0, 0);
+            controlVendedorBodeguero1.Name = "controlVendedorBodeguero1";
+            controlVendedorBodeguero1.Size = new Size(180, 160);
+            controlVendedorBodeguero1.TabIndex = 0;
+            // 
+            // panel5
+            // 
+            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel5.BackColor = SystemColors.ActiveCaption;
+            panel5.Controls.Add(label1);
+            panel5.ForeColor = SystemColors.ControlText;
+            panel5.Location = new Point(0, 0);
+            panel5.Margin = new Padding(15);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(766, 30);
+            panel5.TabIndex = 4;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(15, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(240, 18);
+            label1.TabIndex = 0;
+            label1.Text = "ROLES POR DEFECTO DEL SISTEMA";
+            // 
+            // panel6
+            // 
+            panel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel6.BackColor = SystemColors.ActiveCaption;
+            panel6.Controls.Add(label2);
+            panel6.ForeColor = SystemColors.ControlText;
+            panel6.Location = new Point(0, 226);
+            panel6.Margin = new Padding(15);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(766, 30);
+            panel6.TabIndex = 5;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(15, 9);
+            label2.Name = "label2";
+            label2.Size = new Size(292, 18);
+            label2.TabIndex = 0;
+            label2.Text = "ROLES CREADOS POR EL ADMINISTRADOR";
             // 
             // frmRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(750, 640);
-            Controls.Add(groupBox1);
-            Controls.Add(panelBusqueda);
+            ClientSize = new Size(766, 679);
+            Controls.Add(panel5);
+            Controls.Add(pnlContenedorRoles);
+            Controls.Add(flowLayoutPanel1);
+            Controls.Add(panel6);
             Controls.Add(panel1);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(panel10);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmRoles";
             Text = "frmRoles";
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            panelBusqueda.ResumeLayout(false);
-            panelBusqueda.PerformLayout();
-            panel1.ResumeLayout(false);
+            pnlContenedorRoles.ResumeLayout(false);
             panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel4.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button button6;
-        private Button btnNuevo;
-        private GroupBox groupBox1;
-        private RadioButton rdbDeshabilitados;
-        private RadioButton rdbHabilitados;
-        private RadioButton rdbTodos;
-        private Panel panelBusqueda;
-        private TextBox txtBuscar;
-        private Button btnbuscar;
-        private Panel panel1;
+        private FlowLayoutPanel pnlContenedorRoles;
+        private Panel pnlRolDinamico1;
+        private Panel pnlRolDinamico2;
+        private Panel pnlRolDinamico3;
+        private Panel pnlRolDinamico4;
+        private Panel pnlRolDinamico5;
+        private Panel pnlRolDinamico6;
         private Panel panel10;
-        private DataGridView dgvProductos;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Categoria;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn PorcentajeGanancia;
-        private DataGridViewTextBoxColumn PrecioCompra;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn PrecioVenta;
-        private DataGridViewTextBoxColumn Estado;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button btnNuevoRol;
         private Button btnSalir;
+        private Panel panel1;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panel2;
+        private Panel panel3;
+        private Panel panel4;
+        private controlRolAdmin controlRolAdmin1;
+        private controlRolCajero controlRolCajero1;
+        private controlVendedorBodeguero controlVendedorBodeguero1;
+        private Panel panel5;
+        private Label label1;
+        private Panel panel6;
+        private Label label2;
     }
 }

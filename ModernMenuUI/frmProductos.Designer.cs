@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class Gestion_de_Inventario
+    partial class frmProductos
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gestion_de_Inventario));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProductos));
             panelCarrito = new Panel();
             panel10 = new Panel();
             dgvProductos = new DataGridView();
@@ -282,12 +282,12 @@
             groupBox1.Controls.Add(radioButton1);
             groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(12, 85);
+            groupBox1.Location = new Point(15, 85);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(742, 53);
+            groupBox1.Size = new Size(522, 53);
             groupBox1.TabIndex = 28;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Filtro";
+            groupBox1.Text = "Filtro de Búsqueda:";
             // 
             // radioButton3
             // 
@@ -327,11 +327,12 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(481, 645);
+            lblFecha.Location = new Point(419, 638);
             lblFecha.Name = "lblFecha";
             lblFecha.Size = new Size(67, 25);
             lblFecha.TabIndex = 30;
             lblFecha.Text = "label3";
+            lblFecha.Visible = false;
             // 
             // lblHora
             // 
@@ -339,11 +340,12 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(481, 607);
+            lblHora.Location = new Point(419, 612);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(87, 33);
             lblHora.TabIndex = 29;
             lblHora.Text = "label3";
+            lblHora.Visible = false;
             // 
             // HoraFecha
             // 
@@ -407,7 +409,7 @@
             panel1.Size = new Size(739, 388);
             panel1.TabIndex = 32;
             // 
-            // Gestion_de_Inventario
+            // frmProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -420,8 +422,8 @@
             Controls.Add(groupBox1);
             Controls.Add(panelBusqueda);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Gestion_de_Inventario";
-            Text = "Gestion_de_Inventario";
+            Name = "frmProductos";
+            Text = "frmProductos";
             panelCarrito.ResumeLayout(false);
             panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();

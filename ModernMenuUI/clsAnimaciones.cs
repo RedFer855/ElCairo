@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    internal class Clase_Animaciones
+    internal class clsAnmaciones
     {
         public static String Titulo;
         public static Label TituloLabel;
 
-        public Clase_Animaciones(String nom, Label lbl) 
+        public clsAnmaciones(String nom, Label lbl) 
         {
             Titulo = nom;
             TituloLabel = lbl;

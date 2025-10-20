@@ -55,22 +55,22 @@ namespace ModernMenuUI
         private void panDatosIngreso_MouseDown(object sender, MouseEventArgs e)
         {
 
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panLogo_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         // ANIMACIONES DENTRO DE 
@@ -98,7 +98,7 @@ namespace ModernMenuUI
         // Ingresar a caja de contra y usuario
         private void txtContra_Enter(object sender, EventArgs e)
         {
-            Clase_Animaciones.PrivacidadIngresarDatos(txtContra, "");
+            clsAnmaciones.PrivacidadIngresarDatos(txtContra, "");
         }
 
         private void txtUsuario_Enter(object sender, EventArgs e)

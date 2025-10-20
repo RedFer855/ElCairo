@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class Gestion_de_Compra
+    partial class frmGestionCompra
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gestion_de_Compra));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestionCompra));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
@@ -749,7 +749,7 @@
             btnAgregar.UseVisualStyleBackColor = false;
             btnAgregar.Click += btnAgregar_Click;
             // 
-            // Gestion_de_Compra
+            // frmGestionCompra
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -766,8 +766,8 @@
             Controls.Add(panel2);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Gestion_de_Compra";
-            Text = "Gestion_de_Compra";
+            Name = "frmGestionCompra";
+            Text = "frmGestionCompra";
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
             panel4.ResumeLayout(false);

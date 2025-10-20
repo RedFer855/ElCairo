@@ -31,7 +31,7 @@ namespace ModernMenuUI
 
         private void chkModoOscuro_CheckedChanged(object sender, EventArgs e)
         {
-           // Clase_Animaciones.ModoOscuroActivado = chkModoOscuro.Checked;
+           // clsAnmaciones.ModoOscuroActivado = chkModoOscuro.Checked;
         }
     }
 }

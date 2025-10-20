@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class Inventario_por_Bodega
+    partial class frmInventarioBodega
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inventario_por_Bodega));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioBodega));
             panel1 = new Panel();
             panelCarrito = new Panel();
             panel10 = new Panel();
@@ -271,7 +271,7 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
-            // Inventario_por_Bodega
+            // frmInventarioBodega
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -285,8 +285,8 @@
             Controls.Add(cmbBodega);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Inventario_por_Bodega";
-            Text = "Inventario_por_Bodega";
+            Name = "frmInventarioBodega";
+            Text = "frmInventarioBodega";
             panel1.ResumeLayout(false);
             panelCarrito.ResumeLayout(false);
             panel10.ResumeLayout(false);

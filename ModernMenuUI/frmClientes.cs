@@ -19,7 +19,7 @@ namespace ModernMenuUI
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Clase_Animaciones.NombreMenuPrincipal();
+            clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
     }

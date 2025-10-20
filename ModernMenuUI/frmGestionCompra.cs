@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class Gestion_de_Compra : Form
+    public partial class frmGestionCompra : Form
     {
-        public Gestion_de_Compra()
+        public frmGestionCompra()
         {
             InitializeComponent();
             dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -42,7 +42,7 @@ namespace ModernMenuUI
 
         private void btnSalir_Click_1(object sender, EventArgs e)
         {
-            Clase_Animaciones.NombreMenuPrincipal();
+            clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
 

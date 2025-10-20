@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class Gestion_de_Usuarios
+    partial class frmGestionUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gestion_de_Usuarios));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestionUsuario));
             DataGridViewCellStyle dataGridViewCellStyle66 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle67 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle69 = new DataGridViewCellStyle();
@@ -347,7 +347,7 @@
             Estado.HeaderText = "Estado";
             Estado.Name = "Estado";
             // 
-            // Gestion_de_Usuarios
+            // frmGestionUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -358,8 +358,8 @@
             Controls.Add(panel1);
             Controls.Add(button4);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Gestion_de_Usuarios";
-            Text = "Gestion_de_Usuarios";
+            Name = "frmGestionUsuario";
+            Text = "frmGestionUsuario";
             tableLayoutPanel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

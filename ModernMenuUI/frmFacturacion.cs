@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class Gestion_de_Ventas : Form
+    public partial class frmFacturacion : Form
     {
-        public Gestion_de_Ventas()
+        public frmFacturacion()
         {
             InitializeComponent();
             CargarDatos();
@@ -23,8 +23,8 @@ namespace ModernMenuUI
             dgvProductos.RowHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#57636e");
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            Clase_Animaciones.ActivarDoubleBuffering(dgvCarrito);
-            Clase_Animaciones.ActivarDoubleBuffering(dgvProductos);
+            clsAnmaciones.ActivarDoubleBuffering(dgvCarrito);
+            clsAnmaciones.ActivarDoubleBuffering(dgvProductos);
             txtBuscar.PlaceholderText = "Buscar producto...";
             txtBuscar.ForeColor = Color.White; // Esto cambia el color del texto normal
 
@@ -32,7 +32,7 @@ namespace ModernMenuUI
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Clase_Animaciones.NombreMenuPrincipal();
+            clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
 

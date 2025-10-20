@@ -12,35 +12,19 @@ namespace ModernMenuUI
         public bool Animacion = true;
         AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
-
+       
 
 
         public frmMenuPrincipal()
         {
-
             InitializeComponent();
             this.AutoScaleMode = AutoScaleMode.Dpi;
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             this.DoubleBuffered = true;
-            Clase_Animaciones objnombre = new Clase_Animaciones("MENU PRINCIPAL", lblNombreModulo);
+            clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
         }
 
-        //FORMS HIJOS DENTRO DE MENU
-
-        //Abrir Fomularios Hijos
-        private void abrirFormularioHijo(Form Formulariohijo)
-        {
-            if (formularioactivo != null)
-                formularioactivo.Close();
-            formularioactivo = Formulariohijo;
-            Formulariohijo.TopLevel = false;
-            Formulariohijo.Dock = DockStyle.Fill;
-            panelFormHijo.Controls.Add(Formulariohijo);
-            panelFormHijo.Tag = Formulariohijo;
-            Formulariohijo.BringToFront();
-            Formulariohijo.Show();
-        }
 
         // PANELES
         // FUNCIONES DENTRO DE PANELES SUBMENUS
@@ -72,6 +56,7 @@ namespace ModernMenuUI
         // Mostrar paneles cerrados al cargar por primera vez el form
         private void Form1_Load(object sender, EventArgs e)
         {
+            clsManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
         }
 
@@ -98,7 +83,6 @@ namespace ModernMenuUI
                 {
                     MenulateralAnimacion();
                 }
-
             }
         }
 
@@ -128,7 +112,6 @@ namespace ModernMenuUI
         // Ocultar Menú Lateral
         private void btnAbrirMenu_Click(object sender, EventArgs e)
         {
-            //panelFormHijo.Visible = false;
             MenulateralAnimacion();
         }
 
@@ -190,7 +173,6 @@ namespace ModernMenuUI
         {
             if (panelMenuLateral.Width > 101)
             {
-
                 btnCerrar.SuspendLayout();
                 btnMiniMaxi.SuspendLayout();
                 btnMinimizar.SuspendLayout();
@@ -212,6 +194,7 @@ namespace ModernMenuUI
                 btnMinimizar.ResumeLayout();
             }
         }
+
         // BOTONES DE CONTROL DE VENTANA
         private void btnCerrar_Click(object sender, EventArgs e)
         {
@@ -237,7 +220,7 @@ namespace ModernMenuUI
 
         private void btnAjustes_Click(object sender, EventArgs e)
         {
-            abrirFormularioHijo(new frmAjustes());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmAjustes()); 
         }
 
         private void btnNotificaciones_Click(object sender, EventArgs e)
@@ -254,135 +237,145 @@ namespace ModernMenuUI
                 animadorPanel.Cerrar();
                 btnNotificaciones.Enabled = true;
             }
-
         }
 
         // BOTONES SUBMENUS
         private void btnGestionInventario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            abrirFormularioHijo(new Gestion_de_Inventario());
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmProductos());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            MenulateralAnimacion();
         }
 
         private void btnInventarioBodega_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            abrirFormularioHijo(new Inventario_por_Bodega());
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            MenulateralAnimacion();
         }
 
         private void btnGestionCompra_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            abrirFormularioHijo(new Gestion_de_Compra());
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionCompra());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            MenulateralAnimacion();
         }
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            MenulateralAnimacion();
         }
 
         private void btnGestionVentas_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            abrirFormularioHijo(new Gestion_de_Ventas());
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmFacturacion());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            MenulateralAnimacion();
         }
 
         private void btnClientes_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            abrirFormularioHijo(new frmClientes());
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            MenulateralAnimacion();
         }
 
         private void btnGestionEmpleados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            abrirFormularioHijo(new frmEmpleados());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleados());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            MenulateralAnimacion();
         }
 
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            abrirFormularioHijo(new Gestion_de_Usuarios());
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionUsuario());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            MenulateralAnimacion();
         }
 
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            abrirFormularioHijo(new frmRoles());
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmRoles());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            MenulateralAnimacion();
         }
 
         private void btnAcciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            MenulateralAnimacion();
         }
 
         private void btnBitacora_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            MenulateralAnimacion();
         }
 
         private void btnCrearReporte_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
+            MenulateralAnimacion();
         }
 
         private void btnReportesCreados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            Clase_Animaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
         }
 
         // CONTENEDORES PARA MOVER FORMULARIO CON EVENTO
         private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panel1_MouseDown_1(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panel3_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panelMenuLateral_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         // HORA FECHA
         private void HoraFecha_Tick(object sender, EventArgs e)
         {
-            lblHora.Text = DateTime.Now.ToString("h:mm:ss tt", new CultureInfo("es-ES"));
+            lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt", new CultureInfo("es-ES"));
             lblFecha.Text = DateTime.Now.ToString("dddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
         }
 
@@ -398,11 +391,6 @@ namespace ModernMenuUI
             }
         }
 
-        private void pbxCalculadora_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
         private void pbxCalculadora_MouseDown(object sender, MouseEventArgs e)
         {
             pbxCalculadora.BackColor = Color.LightGreen; // resalta
@@ -413,9 +401,6 @@ namespace ModernMenuUI
             pbxCalculadora.BackColor = Color.Transparent; // resalta
         }
 
-        private void lblHora_Click(object sender, EventArgs e)
-        {
 
-        }
     }
 }

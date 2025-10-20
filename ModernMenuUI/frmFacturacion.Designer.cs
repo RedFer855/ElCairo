@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class Gestion_de_Ventas
+    partial class frmFacturacion
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gestion_de_Ventas));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFacturacion));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
@@ -745,7 +745,7 @@
             panel9.Size = new Size(30, 0);
             panel9.TabIndex = 1;
             // 
-            // Gestion_de_Ventas
+            // frmFacturacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -763,8 +763,8 @@
             Controls.Add(panel2);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Gestion_de_Ventas";
-            Text = "Gestion_de_Ventas";
+            Name = "frmFacturacion";
+            Text = "frmFacturacion";
             Load += Gestion_de_Ventas_Load;
             panel5.ResumeLayout(false);
             panel5.PerformLayout();

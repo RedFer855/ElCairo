@@ -10,17 +10,11 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class frmEmpleados : Form
+    public partial class controlRolCajero : UserControl
     {
-        public frmEmpleados()
+        public controlRolCajero()
         {
             InitializeComponent();
-        }
-
-        private void btnSalir_Click(object sender, EventArgs e)
-        {
-            clsAnmaciones.NombreMenuPrincipal();
-            this.Close();
         }
     }
 }

@@ -24,12 +24,12 @@ namespace ModernMenuUI
 
         private void Editar_Producto_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
-            Clase_Animaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

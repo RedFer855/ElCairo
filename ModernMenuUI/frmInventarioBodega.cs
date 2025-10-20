@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class Inventario_por_Bodega : Form
+    public partial class frmInventarioBodega : Form
     {
-        public Inventario_por_Bodega()
+        public frmInventarioBodega()
         {
             InitializeComponent();
             Random rnd = new Random();
@@ -107,7 +107,7 @@ namespace ModernMenuUI
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Clase_Animaciones.NombreMenuPrincipal();
+            clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
 

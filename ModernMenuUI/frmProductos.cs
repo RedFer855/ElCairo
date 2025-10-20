@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class Gestion_de_Inventario : Form
+    public partial class frmProductos : Form
     {
         Form formularioactivo = null;
-        public Gestion_de_Inventario()
+        public frmProductos()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
@@ -54,7 +54,7 @@ namespace ModernMenuUI
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Clase_Animaciones.NombreMenuPrincipal();
+            clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
 
