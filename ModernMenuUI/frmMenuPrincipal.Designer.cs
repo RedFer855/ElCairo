@@ -71,6 +71,7 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            lblFecha = new Label();
             lblHora = new Label();
             pbxCalculadora = new PictureBox();
             timerAbrir = new System.Windows.Forms.Timer(components);
@@ -78,7 +79,6 @@
             panelNotificaciones = new Panel();
             lblNotificaciones = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
-            lblFecha = new Label();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
@@ -191,7 +191,6 @@
             btnMinimizar.FlatStyle = FlatStyle.Flat;
             btnMinimizar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMinimizar.ForeColor = Color.FromArgb(167, 191, 211);
-            btnMinimizar.Image = Properties.Resources.minimizar_signo;
             btnMinimizar.ImageAlign = ContentAlignment.MiddleLeft;
             btnMinimizar.Location = new Point(764, 0);
             btnMinimizar.Name = "btnMinimizar";
@@ -211,7 +210,6 @@
             btnMiniMaxi.FlatStyle = FlatStyle.Flat;
             btnMiniMaxi.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMiniMaxi.ForeColor = Color.FromArgb(167, 191, 211);
-            btnMiniMaxi.Image = Properties.Resources.cuadrado_en_blanco__1_;
             btnMiniMaxi.ImageAlign = ContentAlignment.MiddleLeft;
             btnMiniMaxi.Location = new Point(764, 0);
             btnMiniMaxi.Name = "btnMiniMaxi";
@@ -731,6 +729,18 @@
             panelFormHijo.Size = new Size(764, 663);
             panelFormHijo.TabIndex = 2;
             // 
+            // lblFecha
+            // 
+            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblFecha.AutoSize = true;
+            lblFecha.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
+            lblFecha.Location = new Point(484, 630);
+            lblFecha.Name = "lblFecha";
+            lblFecha.Size = new Size(70, 29);
+            lblFecha.TabIndex = 31;
+            lblFecha.Text = "Fecha";
+            // 
             // lblHora
             // 
             lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -745,7 +755,6 @@
             // 
             // pbxCalculadora
             // 
-            pbxCalculadora.Image = Properties.Resources.calculator_6472942;
             pbxCalculadora.Location = new Point(18, 20);
             pbxCalculadora.Name = "pbxCalculadora";
             pbxCalculadora.Size = new Size(95, 100);
@@ -769,7 +778,6 @@
             // panelNotificaciones
             // 
             panelNotificaciones.BackColor = Color.FromArgb(167, 191, 211);
-            panelNotificaciones.BackgroundImage = Properties.Resources.sin_notificacion;
             panelNotificaciones.BackgroundImageLayout = ImageLayout.Center;
             panelNotificaciones.Controls.Add(lblNotificaciones);
             panelNotificaciones.Dock = DockStyle.Right;
@@ -793,18 +801,6 @@
             // 
             HoraFecha.Enabled = true;
             HoraFecha.Tick += HoraFecha_Tick;
-            // 
-            // lblFecha
-            // 
-            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(484, 630);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(70, 29);
-            lblFecha.TabIndex = 31;
-            lblFecha.Text = "Fecha";
             // 
             // frmMenuPrincipal
             // 
