@@ -70,7 +70,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(497, 62);
+            panBarraControl.Size = new Size(481, 62);
             panBarraControl.TabIndex = 2;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -123,7 +123,7 @@
             btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
             btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(432, 0);
+            btnCerrar.Location = new Point(416, 0);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(11, 0, 0, 0);
             btnCerrar.Size = new Size(65, 62);
@@ -221,6 +221,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.BorderStyle = BorderStyle.Fixed3D;
             panel2.Controls.Add(label3);
             panel2.Controls.Add(textBox3);
             panel2.Controls.Add(groupBox1);
@@ -240,7 +241,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 62);
             panel2.Name = "panel2";
-            panel2.Size = new Size(497, 485);
+            panel2.Size = new Size(481, 485);
             panel2.TabIndex = 12;
             // 
             // label3
@@ -371,7 +372,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(497, 547);
+            ClientSize = new Size(481, 547);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             FormBorderStyle = FormBorderStyle.None;
