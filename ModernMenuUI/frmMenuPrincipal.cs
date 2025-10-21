@@ -319,6 +319,7 @@ namespace ModernMenuUI
         private void btnBitacora_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
             MenulateralAnimacion();
         }

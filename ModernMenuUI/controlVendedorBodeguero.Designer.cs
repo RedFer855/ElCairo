@@ -50,6 +50,7 @@
             btnInfo.Size = new Size(35, 40);
             btnInfo.TabIndex = 1;
             btnInfo.UseVisualStyleBackColor = false;
+            btnInfo.Click += btnInfo_Click;
             // 
             // lblNombreRol
             // 

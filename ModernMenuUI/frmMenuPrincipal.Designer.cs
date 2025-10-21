@@ -79,6 +79,7 @@
             panelNotificaciones = new Panel();
             lblNotificaciones = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
+            flowLayoutPanel1 = new FlowLayoutPanel();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
@@ -95,6 +96,7 @@
             panelFormHijo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
             panelNotificaciones.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panBarraControl
@@ -720,9 +722,9 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(flowLayoutPanel1);
             panelFormHijo.Controls.Add(lblFecha);
             panelFormHijo.Controls.Add(lblHora);
-            panelFormHijo.Controls.Add(pbxCalculadora);
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(260, 65);
             panelFormHijo.Name = "panelFormHijo";
@@ -735,7 +737,7 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(484, 630);
+            lblFecha.Location = new Point(444, 625);
             lblFecha.Name = "lblFecha";
             lblFecha.Size = new Size(70, 29);
             lblFecha.TabIndex = 31;
@@ -747,7 +749,7 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(626, 599);
+            lblHora.Location = new Point(624, 595);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(72, 33);
             lblHora.TabIndex = 30;
@@ -755,7 +757,8 @@
             // 
             // pbxCalculadora
             // 
-            pbxCalculadora.Location = new Point(18, 20);
+            pbxCalculadora.Image = Properties.Resources.calculadora;
+            pbxCalculadora.Location = new Point(3, 3);
             pbxCalculadora.Name = "pbxCalculadora";
             pbxCalculadora.Size = new Size(95, 100);
             pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
@@ -802,6 +805,14 @@
             HoraFecha.Enabled = true;
             HoraFecha.Tick += HoraFecha_Tick;
             // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(pbxCalculadora);
+            flowLayoutPanel1.Location = new Point(21, 20);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(731, 559);
+            flowLayoutPanel1.TabIndex = 32;
+            // 
             // frmMenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -837,6 +848,7 @@
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             panelNotificaciones.ResumeLayout(false);
             panelNotificaciones.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -891,5 +903,6 @@
         private PictureBox pbxCalculadora;
         private Label lblHora;
         private Label lblFecha;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

@@ -16,5 +16,10 @@ namespace ModernMenuUI
         {
             InitializeComponent();
         }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            clsManejarFormularios.Instancia.AbrirFormularioEncima(new frmEditarRol());
+        }
     }
 }

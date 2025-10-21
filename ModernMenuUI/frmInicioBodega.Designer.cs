@@ -63,7 +63,7 @@
             lblMensajeError.BackColor = Color.Transparent;
             lblMensajeError.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensajeError.ForeColor = Color.Red;
-            lblMensajeError.Location = new Point(169, 167);
+            lblMensajeError.Location = new Point(171, 184);
             lblMensajeError.Name = "lblMensajeError";
             lblMensajeError.Size = new Size(293, 14);
             lblMensajeError.TabIndex = 18;
@@ -75,11 +75,11 @@
             // 
             txtContrasenia.BackColor = Color.White;
             txtContrasenia.BorderStyle = BorderStyle.None;
-            txtContrasenia.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContrasenia.ForeColor = Color.Black;
-            txtContrasenia.Location = new Point(109, 134);
+            txtContrasenia.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtContrasenia.ForeColor = Color.DimGray;
+            txtContrasenia.Location = new Point(206, 151);
             txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.Size = new Size(420, 20);
+            txtContrasenia.Size = new Size(215, 23);
             txtContrasenia.TabIndex = 17;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContrasenia_Enter;
@@ -91,7 +91,7 @@
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(20, 20, 20);
-            label1.Location = new Point(138, 42);
+            label1.Location = new Point(137, 52);
             label1.Name = "label1";
             label1.Size = new Size(359, 38);
             label1.TabIndex = 16;
@@ -102,11 +102,11 @@
             // 
             txtCodigoBodega.BackColor = Color.White;
             txtCodigoBodega.BorderStyle = BorderStyle.None;
-            txtCodigoBodega.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCodigoBodega.ForeColor = Color.Black;
-            txtCodigoBodega.Location = new Point(111, 93);
+            txtCodigoBodega.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCodigoBodega.ForeColor = Color.DimGray;
+            txtCodigoBodega.Location = new Point(206, 110);
             txtCodigoBodega.Name = "txtCodigoBodega";
-            txtCodigoBodega.Size = new Size(420, 20);
+            txtCodigoBodega.Size = new Size(215, 23);
             txtCodigoBodega.TabIndex = 15;
             txtCodigoBodega.Text = "CÓDIGO";
             txtCodigoBodega.Enter += txtCodigoBodega_Enter;
@@ -119,9 +119,9 @@
             btnAcceder.FlatStyle = FlatStyle.Flat;
             btnAcceder.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAcceder.ForeColor = Color.White;
-            btnAcceder.Location = new Point(111, 202);
+            btnAcceder.Location = new Point(206, 231);
             btnAcceder.Name = "btnAcceder";
-            btnAcceder.Size = new Size(418, 40);
+            btnAcceder.Size = new Size(215, 40);
             btnAcceder.TabIndex = 10;
             btnAcceder.Text = "ACCEDER";
             btnAcceder.UseVisualStyleBackColor = false;

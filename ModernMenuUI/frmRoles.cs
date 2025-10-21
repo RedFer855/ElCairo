@@ -28,6 +28,7 @@ namespace ModernMenuUI
 
         private void btnSalir_Click_1(object sender, EventArgs e)
         {
+            clsAnmaciones.NombreMenuPrincipal();
             this.Close();
 
         }
