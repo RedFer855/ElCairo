@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaDeDatos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,17 +14,26 @@ namespace ModernMenuUI
 {
     public partial class frmIniciosesion : Form
     {
-
-        static String usu = "admin";
-        static String contra = "admin";
-        public frmIniciosesion()
+        private readonly Supabase.Client SupabaseClient;
+      
+        public frmIniciosesion(Supabase.Client supabaseClient)
         {
             InitializeComponent();
+            SupabaseClient = supabaseClient;
+          
         }
-        private void btnAcceder_Click(object sender, EventArgs e)
+        private async void btnAcceder_Click(object sender, EventArgs e)
         {
-            if (contra == txtContra.Text && usu == txtUsuario.Text)
+
+            string alias = txtUsuario.Text.Trim();
+            string contra = txtContra.Text.Trim();
+
+            Usuario_ usuario = await clsConexion.Iniciar_Sesion(alias, contra);
+
+
+            if(usuario != null)
             {
+                MessageBox.Show("Inicio de sesion Exitoso");
                 Form formcarga = new frmInicioBodega();
                 this.Visible = false;
                 formcarga.ShowDialog();
@@ -31,7 +41,6 @@ namespace ModernMenuUI
             }
             else 
             {
-
                 lblMensajeError.Visible = true;
                 txtContra.Text = "";
                 txtContra_Leave(e, e);

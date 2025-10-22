@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CapaDeDatos\CapaDeDatos.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="frmProductos.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
