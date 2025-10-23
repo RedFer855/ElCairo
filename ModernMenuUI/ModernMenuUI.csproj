@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RJCodeAdvance.RJControls" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CapaDeDatos\CapaDeDatos.csproj" />
   </ItemGroup>
 

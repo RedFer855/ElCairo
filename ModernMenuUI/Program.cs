@@ -19,7 +19,7 @@ namespace ModernMenuUI
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            
+            /*
             var cliente = clsConexion.GetClientAsync().GetAwaiter().GetResult();
 
             if (cliente == null)
@@ -28,9 +28,9 @@ namespace ModernMenuUI
                 return;
 
             }
-
+            */
             
-            Application.Run(new frmIniciosesion(cliente));
+            Application.Run(new frmIniciosesion());
         }
     }
 }

@@ -33,6 +33,8 @@
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             panDatosIngreso = new Panel();
+            pbxCargando = new PictureBox();
+            lblMensajeError = new Label();
             txtContra = new TextBox();
             txtUsuario = new TextBox();
             label4 = new Label();
@@ -45,11 +47,11 @@
             panBarraControl = new Panel();
             btnMinimizar = new Button();
             btnCerrar = new Button();
-            lblMensajeError = new Label();
             panLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panDatosIngreso.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxCargando).BeginInit();
             panel5.SuspendLayout();
             panel3.SuspendLayout();
             panBarraControl.SuspendLayout();
@@ -64,7 +66,7 @@
             panLogo.Dock = DockStyle.Left;
             panLogo.Location = new Point(0, 0);
             panLogo.Name = "panLogo";
-            panLogo.Size = new Size(250, 330);
+            panLogo.Size = new Size(250, 340);
             panLogo.TabIndex = 0;
             panLogo.MouseDown += panLogo_MouseDown;
             // 
@@ -93,6 +95,7 @@
             // panDatosIngreso
             // 
             panDatosIngreso.BackColor = Color.FromArgb(15, 15, 15);
+            panDatosIngreso.Controls.Add(pbxCargando);
             panDatosIngreso.Controls.Add(lblMensajeError);
             panDatosIngreso.Controls.Add(txtContra);
             panDatosIngreso.Controls.Add(txtUsuario);
@@ -103,9 +106,34 @@
             panDatosIngreso.Dock = DockStyle.Fill;
             panDatosIngreso.Location = new Point(250, 0);
             panDatosIngreso.Name = "panDatosIngreso";
-            panDatosIngreso.Size = new Size(530, 330);
+            panDatosIngreso.Size = new Size(530, 340);
             panDatosIngreso.TabIndex = 1;
             panDatosIngreso.MouseDown += panDatosIngreso_MouseDown;
+            // 
+            // pbxCargando
+            // 
+            pbxCargando.Image = (Image)resources.GetObject("pbxCargando.Image");
+            pbxCargando.Location = new Point(234, 170);
+            pbxCargando.Name = "pbxCargando";
+            pbxCargando.Size = new Size(40, 40);
+            pbxCargando.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbxCargando.TabIndex = 20;
+            pbxCargando.TabStop = false;
+            pbxCargando.Visible = false;
+            // 
+            // lblMensajeError
+            // 
+            lblMensajeError.BackColor = Color.Transparent;
+            lblMensajeError.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblMensajeError.ForeColor = Color.DarkRed;
+            lblMensajeError.Location = new Point(100, 213);
+            lblMensajeError.Name = "lblMensajeError";
+            lblMensajeError.Size = new Size(314, 18);
+            lblMensajeError.TabIndex = 19;
+            lblMensajeError.Text = "Credenciales incorrectas ingrese nuevamente...";
+            lblMensajeError.TextAlign = ContentAlignment.TopCenter;
+            lblMensajeError.Visible = false;
+            lblMensajeError.Click += lblMensajeError_Click;
             // 
             // txtContra
             // 
@@ -113,7 +141,7 @@
             txtContra.BorderStyle = BorderStyle.None;
             txtContra.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtContra.ForeColor = Color.FromArgb(142, 142, 142);
-            txtContra.Location = new Point(54, 138);
+            txtContra.Location = new Point(52, 136);
             txtContra.Name = "txtContra";
             txtContra.Size = new Size(420, 20);
             txtContra.TabIndex = 8;
@@ -127,7 +155,7 @@
             txtUsuario.BorderStyle = BorderStyle.None;
             txtUsuario.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtUsuario.ForeColor = Color.FromArgb(142, 142, 142);
-            txtUsuario.Location = new Point(54, 97);
+            txtUsuario.Location = new Point(52, 89);
             txtUsuario.Name = "txtUsuario";
             txtUsuario.Size = new Size(420, 20);
             txtUsuario.TabIndex = 7;
@@ -139,7 +167,7 @@
             // 
             label4.AutoSize = true;
             label4.ForeColor = Color.FromArgb(142, 142, 142);
-            label4.Location = new Point(186, 278);
+            label4.Location = new Point(176, 291);
             label4.Name = "label4";
             label4.Size = new Size(161, 15);
             label4.TabIndex = 5;
@@ -149,7 +177,7 @@
             // 
             panel5.BackColor = Color.DimGray;
             panel5.Controls.Add(panel6);
-            panel5.Location = new Point(54, 164);
+            panel5.Location = new Point(52, 162);
             panel5.Name = "panel5";
             panel5.Size = new Size(420, 2);
             panel5.TabIndex = 3;
@@ -166,7 +194,7 @@
             // 
             panel3.BackColor = Color.DimGray;
             panel3.Controls.Add(panel4);
-            panel3.Location = new Point(54, 125);
+            panel3.Location = new Point(52, 117);
             panel3.Name = "panel3";
             panel3.Size = new Size(420, 2);
             panel3.TabIndex = 1;
@@ -186,7 +214,7 @@
             btnAcceder.FlatStyle = FlatStyle.Flat;
             btnAcceder.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAcceder.ForeColor = Color.White;
-            btnAcceder.Location = new Point(56, 205);
+            btnAcceder.Location = new Point(52, 234);
             btnAcceder.Name = "btnAcceder";
             btnAcceder.Size = new Size(418, 40);
             btnAcceder.TabIndex = 0;
@@ -250,25 +278,11 @@
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
             // 
-            // lblMensajeError
-            // 
-            lblMensajeError.AutoSize = true;
-            lblMensajeError.BackColor = Color.Transparent;
-            lblMensajeError.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblMensajeError.ForeColor = Color.DarkRed;
-            lblMensajeError.Location = new Point(130, 178);
-            lblMensajeError.Name = "lblMensajeError";
-            lblMensajeError.Size = new Size(253, 14);
-            lblMensajeError.TabIndex = 19;
-            lblMensajeError.Text = "Credenciales incorrectas ingrese nuevamente...";
-            lblMensajeError.TextAlign = ContentAlignment.TopCenter;
-            lblMensajeError.Visible = false;
-            // 
             // frmIniciosesion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(780, 330);
+            ClientSize = new Size(780, 340);
             Controls.Add(panBarraControl);
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
@@ -281,6 +295,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panDatosIngreso.ResumeLayout(false);
             panDatosIngreso.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxCargando).EndInit();
             panel5.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panBarraControl.ResumeLayout(false);
@@ -307,5 +322,6 @@
         private Button btnMinimizar;
         private PictureBox pictureBox2;
         private Label lblMensajeError;
+        private PictureBox pbxCargando;
     }
 }
