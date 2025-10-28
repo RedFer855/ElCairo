@@ -133,7 +133,6 @@
             lblMensajeError.Text = "Credenciales incorrectas ingrese nuevamente...";
             lblMensajeError.TextAlign = ContentAlignment.TopCenter;
             lblMensajeError.Visible = false;
-            lblMensajeError.Click += lblMensajeError_Click;
             // 
             // txtContra
             // 

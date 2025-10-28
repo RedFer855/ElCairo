@@ -21,6 +21,8 @@ namespace ModernMenuUI
         {
             InitializeComponent();
         }
+
+      
         public void LimpiarDatos(object sender, EventArgs e)
         {
             txtContra.Text = "";
@@ -42,17 +44,21 @@ namespace ModernMenuUI
             }
             else
             {
+                // Validadcion inicial para acceder al servidor y comprobar Inicio de sesión
                 string username = txtUsuario.Text;
                 string password = txtContra.Text;
+                username = username.Trim(); 
+                password = password.Trim();
 
-
-
-                // ... (Validación inicial y deshabilitar botón) ...
-
+                lblMensajeError.ForeColor = Color.DarkGray; // Color neutro para carga
+                lblMensajeError.Visible = true;
+                lblMensajeError.Text = "Procesando...";
+               
                 try
                 {
-                    pbxCargando.Visible = true;
-                    Usuario_ usuario = await clsConexion.Iniciar_Sesion(username, password);
+                    pbxCargando.Visible = true; // Picture box con imagen en formato gift para carga
+
+                    Usuario_ usuario = await clsConexion.Iniciar_Sesion(username, password); // Conexion con el Usuarios
 
                     if (usuario != null)
                     {
@@ -61,35 +67,36 @@ namespace ModernMenuUI
                         lblMensajeError.Text = "Conectando al servidor...";
                         lblMensajeError.Visible = true;
 
-                        // Pausa 1: Espera 1.5 segundos
-                        await Task.Delay(1000);
+                        // Pausa 1: Espera 1 s
+                        await Task.Delay(400);
 
-                        // Pausa 2: Muestra el segundo mensaje
+                        // Pausa 2: Muestra el segundo mensaje 1s
                         lblMensajeError.Text = "Verificando credenciales...";
-                        await Task.Delay(1000);
+                        await Task.Delay(300);
 
-                        // Pausa 3: Muestra el tercer mensaje (opcional, simula la espera real)
-                        lblMensajeError.Text = "Procesando...";
-
-                        await Task.Delay(1000); // 2 segundos finales para sumar 5s totales
+                        // Pausa 3: Muestra el tercer mensaje (opcional, simula la espera real) 1s
+                        lblMensajeError.Text = "Validando Permisos...";
+                        await Task.Delay(500); // 1s segundo
+                        
+                        // Pausa 4: Mensaje de incio de sesión
                         lblMensajeError.ForeColor = Color.Green;
                         lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
-                        await Task.Delay(1000);
+                        await Task.Delay(500); // 1s Final de espera
                         pbxCargando.Visible = false;
-                        // ÉXITO: ... (Tu código de éxito) ...
-
-
+                        
+                        // Se abre el nuevo form e inicia la aplicación 
                         Form formcarga = new frmInicioBodega();
                         this.Visible = false;
                         formcarga.ShowDialog();
-                        this.Close();
-                        lblMensajeError.Visible = true;
+                        this.Close();   
                     }
                     else
                     {
-                        pbxCargando.Visible = false;
                         // FALLO DE CREDENCIALES: El servidor respondió, pero el usuario/contraseña no coincide.
+                        pbxCargando.Visible = false;
                         lblMensajeError.Visible = true;
+                        lblMensajeError.ForeColor = Color.Red; // Color neutro para carga
+                        lblMensajeError.Text = "Usuario o Contraseña incorrectos";
 
                         // Lógica de limpieza y re-enfoque
                         LimpiarDatos(e, e);
@@ -109,21 +116,22 @@ namespace ModernMenuUI
                     pbxCargando.Visible = false;
                     // Captura el error de timeout (conexión lenta)
                     MessageBox.Show(tex.Message, "Tiempo de Espera del Servidor Excedido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    // Lógica de limpieza y re-enfoque
                     LimpiarDatos(e, e);
                 }
                 catch (ApplicationException aex)
                 {
                     pbxCargando.Visible = false;
                     // Captura el error de configuración
-                    MessageBox.Show($"Error de configuración: {aex.Message}\nEl programa terminará.", "Error Fatal", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    this.Close();
-                    
+                    MessageBox.Show($"Error de configuración: {aex.Message}\nEl programa terminará.", "Error en el Sistema", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    this.Close(); 
                 }
                 catch (Exception)
                 {
                     pbxCargando.Visible = false;
                     // Captura cualquier otro error inesperado
                     MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión.", "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Lógica de limpieza y re-enfoque
                     LimpiarDatos(e, e);
                 }
                 finally
@@ -135,34 +143,34 @@ namespace ModernMenuUI
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Close(); // Cerrar el fromulario
         }
 
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            this.WindowState = FormWindowState.Minimized; // Minimizar formulario
 
         }
 
         private void panDatosIngreso_MouseDown(object sender, MouseEventArgs e)
         {
 
-            clsAnmaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
         }
 
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
         }
 
         private void panLogo_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle);
+            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
         }
 
         // ANIMACIONES DENTRO DE 
@@ -202,9 +210,5 @@ namespace ModernMenuUI
             }
         }
 
-        private void lblMensajeError_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

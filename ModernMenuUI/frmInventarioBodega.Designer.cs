@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioBodega));
             panel1 = new Panel();
             panelCarrito = new Panel();
@@ -52,11 +52,17 @@
             cmbEstado = new ComboBox();
             label1 = new Label();
             btnSalir = new Button();
+            btnCambioBodega = new Button();
+            panel2 = new Panel();
+            label2 = new Label();
+            textBox1 = new TextBox();
+            button1 = new Button();
             panel1.SuspendLayout();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             panelBusqueda.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -64,9 +70,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(15, 160);
+            panel1.Location = new Point(15, 116);
             panel1.Name = "panel1";
-            panel1.Size = new Size(739, 430);
+            panel1.Size = new Size(739, 474);
             panel1.TabIndex = 33;
             // 
             // panelCarrito
@@ -76,7 +82,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(14, 16);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(709, 395);
+            panelCarrito.Size = new Size(709, 439);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -86,7 +92,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(709, 395);
+            panel10.Size = new Size(709, 439);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -98,51 +104,51 @@
             dgvProductos.BorderStyle = BorderStyle.None;
             dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle13.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle13.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle13.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle13.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
+            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, Stock, StockMin, Bodega });
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.White;
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.Padding = new Padding(5);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle7.SelectionForeColor = Color.White;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = Color.White;
+            dataGridViewCellStyle15.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle15.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle15.Padding = new Padding(5);
+            dataGridViewCellStyle15.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle15.SelectionForeColor = Color.White;
+            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
+            dgvProductos.DefaultCellStyle = dataGridViewCellStyle15;
             dgvProductos.Dock = DockStyle.Fill;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
             dgvProductos.Location = new Point(0, 0);
             dgvProductos.Name = "dgvProductos";
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = SystemColors.Control;
+            dataGridViewCellStyle16.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle16.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle16.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle16.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
+            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle16;
             dgvProductos.RowHeadersWidth = 20;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(709, 395);
+            dgvProductos.Size = new Size(709, 439);
             dgvProductos.TabIndex = 1;
             dgvProductos.CellContentClick += dgvProductos_CellContentClick;
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle14.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle14.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle14;
             dataGridViewTextBoxColumn1.FillWeight = 80F;
             dataGridViewTextBoxColumn1.HeaderText = "Código";
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
@@ -182,9 +188,9 @@
             // cmbBodega
             // 
             cmbBodega.FormattingEnabled = true;
-            cmbBodega.Location = new Point(167, 103);
+            cmbBodega.Location = new Point(167, 75);
             cmbBodega.Name = "cmbBodega";
-            cmbBodega.Size = new Size(162, 23);
+            cmbBodega.Size = new Size(190, 23);
             cmbBodega.TabIndex = 34;
             cmbBodega.SelectedIndexChanged += cmbBodega_SelectedIndexChanged;
             // 
@@ -193,7 +199,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
-            label8.Location = new Point(15, 104);
+            label8.Location = new Point(15, 75);
             label8.Name = "label8";
             label8.Size = new Size(146, 18);
             label8.TabIndex = 35;
@@ -206,9 +212,9 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(15, 35);
+            panelBusqueda.Location = new Point(15, 12);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(739, 43);
+            panelBusqueda.Size = new Size(394, 43);
             panelBusqueda.TabIndex = 36;
             // 
             // txtBuscar
@@ -219,7 +225,7 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(642, 20);
+            txtBuscar.Size = new Size(297, 20);
             txtBuscar.TabIndex = 1;
             // 
             // btnbuscar
@@ -230,7 +236,7 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(672, 12);
+            btnbuscar.Location = new Point(327, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
@@ -239,9 +245,9 @@
             // cmbEstado
             // 
             cmbEstado.FormattingEnabled = true;
-            cmbEstado.Location = new Point(471, 103);
+            cmbEstado.Location = new Point(560, 76);
             cmbEstado.Name = "cmbEstado";
-            cmbEstado.Size = new Size(191, 23);
+            cmbEstado.Size = new Size(194, 23);
             cmbEstado.TabIndex = 37;
             cmbEstado.SelectedIndexChanged += cmbEstado_SelectedIndexChanged;
             // 
@@ -250,7 +256,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(363, 103);
+            label1.Location = new Point(452, 77);
             label1.Name = "label1";
             label1.Size = new Size(102, 18);
             label1.TabIndex = 38;
@@ -271,12 +277,76 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
+            // btnCambioBodega
+            // 
+            btnCambioBodega.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnCambioBodega.BackColor = Color.FromArgb(149, 195, 172);
+            btnCambioBodega.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCambioBodega.ForeColor = Color.White;
+            btnCambioBodega.ImageAlign = ContentAlignment.TopCenter;
+            btnCambioBodega.Location = new Point(167, 613);
+            btnCambioBodega.Name = "btnCambioBodega";
+            btnCambioBodega.Size = new Size(146, 54);
+            btnCambioBodega.TabIndex = 40;
+            btnCambioBodega.Text = "Cambiar Bodega del Sistema";
+            btnCambioBodega.UseVisualStyleBackColor = false;
+            btnCambioBodega.Click += btnCambioBodega_Click;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(textBox1);
+            panel2.Location = new Point(415, 12);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(339, 43);
+            panel2.TabIndex = 41;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.FromArgb(87, 99, 110);
+            label2.Location = new Point(18, 14);
+            label2.Name = "label2";
+            label2.Size = new Size(139, 18);
+            label2.TabIndex = 36;
+            label2.Text = "Bodega del Sistema:";
+            // 
+            // textBox1
+            // 
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.Location = new Point(163, 12);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(160, 20);
+            textBox1.TabIndex = 2;
+            // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            button1.BackColor = Color.FromArgb(149, 195, 172);
+            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
+            button1.ImageAlign = ContentAlignment.TopCenter;
+            button1.Location = new Point(319, 613);
+            button1.Name = "button1";
+            button1.Size = new Size(146, 54);
+            button1.TabIndex = 42;
+            button1.Text = "Crear Bodega";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // frmInventarioBodega
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(766, 679);
+            Controls.Add(button1);
+            Controls.Add(panel2);
+            Controls.Add(btnCambioBodega);
             Controls.Add(btnSalir);
             Controls.Add(label1);
             Controls.Add(cmbEstado);
@@ -287,12 +357,15 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmInventarioBodega";
             Text = "frmInventarioBodega";
+            //Load += this.frmInventarioBodega_Load;
             panel1.ResumeLayout(false);
             panelCarrito.ResumeLayout(false);
             panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -318,5 +391,10 @@
         private DataGridViewTextBoxColumn Stock;
         private DataGridViewTextBoxColumn StockMin;
         private DataGridViewTextBoxColumn Bodega;
+        private Button btnCambioBodega;
+        private Panel panel2;
+        private Label label2;
+        private TextBox textBox1;
+        private Button button1;
     }
 }

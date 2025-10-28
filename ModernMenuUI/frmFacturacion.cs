@@ -27,6 +27,7 @@ namespace ModernMenuUI
             clsAnmaciones.ActivarDoubleBuffering(dgvProductos);
             txtBuscar.PlaceholderText = "Buscar producto...";
             txtBuscar.ForeColor = Color.White; // Esto cambia el color del texto normal
+            dgvProductos.ClearSelection();
 
         }
 
@@ -54,6 +55,7 @@ namespace ModernMenuUI
             dgvProductos.Rows.Add(5, "Semitas", 5, 89);
             dgvProductos.Rows.Add(6, "Ensure", 8, 48);
             dgvProductos.Rows.Add(7, "Bolsa de Frijoles", 8, 90);
+            
         }
 
 

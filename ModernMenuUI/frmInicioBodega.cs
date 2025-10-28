@@ -64,18 +64,16 @@ namespace ModernMenuUI
             if (txtContrasenia.Text == "CONTRASEÑA")
             {
                 clsAnmaciones.PrivacidadIngresarDatos(txtContrasenia, "");
-            }
-           
-           
+            }           
         }
 
         private void txtContrasenia_Leave(object sender, EventArgs e)
         {
             if (txtContrasenia.Text == "")
             {
+                txtContrasenia.UseSystemPasswordChar = false;
                 txtContrasenia.Text = "CONTRASEÑA";
             }
-
         }
 
         private void txtCodigoBodega_Enter(object sender, EventArgs e)
