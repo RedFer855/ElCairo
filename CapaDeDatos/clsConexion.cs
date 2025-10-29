@@ -137,6 +137,28 @@ namespace CapaDeDatos
                 throw new System.Net.WebException("Fallo al establecer la conexión con el servidor. Verifique su conexión a Internet.", ex);
             }
         }
+
+        public static async Task InsertarEmpleado(Empleado nuevoEmpleado)
+        {
+            try
+            {
+                var client = await ConnectWithTimeoutAsync(10);
+                await client.From<Empleado>().Insert(nuevoEmpleado);
+            }
+            catch (System.Net.WebException ex)
+            {
+                throw new Exception("Error de red al guardar empleado: " + ex.Message, ex);
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception("El servidor tardó demasiado en responder.", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error de Supabase: {ex.Message}");
+                throw new Exception("Error al guardar el empleado en la base de datos.", ex);
+            }
+        }
     }
 }
 
