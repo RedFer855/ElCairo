@@ -15,11 +15,12 @@ namespace ModernMenuUI
 {
     public partial class frmIniciosesion : Form
     {
-        private readonly Supabase.Client SupabaseClient;
+        private readonly UsuarioRepositorio _usuarioRepo;
 
         public frmIniciosesion()
         {
             InitializeComponent();
+            _usuarioRepo = new UsuarioRepositorio();
         }
 
 
@@ -58,7 +59,7 @@ namespace ModernMenuUI
                 {
                     pbxCargando.Visible = true; // Picture box con imagen en formato gift para carga
 
-                    Usuario_ usuario = await Conexion.Iniciar_Sesion(username, password); // Conexion con el Usuarios
+                    Usuario usuario = await _usuarioRepo.Iniciar_Sesion(username, password);
 
                     if (usuario != null)
                     {

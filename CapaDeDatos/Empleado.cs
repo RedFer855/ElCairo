@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace CapaDeDatos
 {
+    [Table("empleado")]
     public class Empleado : BaseModel
     {
         // 3. Define la llave primaria
-        [PrimaryKey("id_empleado", true)]
+        [PrimaryKey("id_empleado", false)]
         public int Id { get; set; }
 
         // 4. Mapea cada columna de la base de datos a una propiedad
@@ -20,7 +21,7 @@ namespace CapaDeDatos
 
         // ¡AQUÍ ESTÁ LA CORRECCIÓN IMPORTANTE!
         // El nombre debe ser idéntico al de tu base de datos (con la 'e')
-        [Column("apellido_empled`o`")]
+        [Column("apellido_empleado")]
         public string Apellido { get; set; }
 
         [Column("dni_empleado")]

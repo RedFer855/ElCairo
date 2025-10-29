@@ -28,7 +28,7 @@ namespace ModernMenuUI
             }
 
             // 2. CREACIÓN DEL OBJETO (ACTUALIZADO)
-            EmpleadoModelo nuevoEmpleado = new EmpleadoModelo
+            Empleado nuevoEmpleado = new Empleado
             {
                 Nombre = txtNombre.Text.Trim(),
                 Apellido = txtApellido.Text.Trim(),

@@ -10,7 +10,8 @@ using Supabase.Postgrest.Attributes;
 
 namespace CapaDeDatos
 {
-    internal class Usuario: BaseModel
+    [Table("usuario")]
+    public class Usuario: BaseModel
     {
         [Column("alias_usuario")]
         public string Name { get; set; }

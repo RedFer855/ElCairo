@@ -4,6 +4,7 @@
 // Ahora no necesitas ponerlas en Empleado.cs, Usuario.cs, etc.
 global using Supabase.Postgrest.Attributes;
 global using Supabase.Postgrest.Models;
+global using Supabase;
 
 // --- LIBRERÍAS COMUNES DE .NET ---
 // Estas son las que siempre repites en todos los archivos.

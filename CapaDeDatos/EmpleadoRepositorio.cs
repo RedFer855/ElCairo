@@ -35,6 +35,12 @@ namespace CapaDeDatos
             }
         }
 
+        private async Task<Client> GetClient()
+        {
+            // Llama al método estático de tu clase Conexion.cs
+            return await Conexion.ConnectWithTimeoutAsync(10);
+        }
+
         // VER UN EMPLEADO
         public async Task<List<Empleado>> ObtenerTodosLosEmpleados()
         {

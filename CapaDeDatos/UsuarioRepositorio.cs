@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 
 namespace CapaDeDatos
 {
-    internal class UsuarioRepositorio
+    public class UsuarioRepositorio
     {
-        public static async Task<Usuario_> Iniciar_Sesion(string username, string Password_)
+        private async Task<Client> GetClient()
+        {
+            return await Conexion.ConnectWithTimeoutAsync(10);
+        }
+        public async Task<Usuario> Iniciar_Sesion(string username, string password)
         {
             try
             {
                 // 1. Intentar la conexión con límite de tiempo
-                var client = await Conexion.ConnectWithTimeoutAsync(10);
+                var client = await GetClient();
 
                 // 2. Búsqueda y comparación de credenciales
-                var response = await client.From<Usuario_>()
+                var response = await client.From<Usuario>()
                     .Where(x => x.Name == username)
-                    .Where(x => x.password == Password_)
+                    .Where(x => x.password == password)
                     .Get();
 
                 return response.Models.FirstOrDefault();
@@ -35,15 +39,10 @@ namespace CapaDeDatos
             }
             catch (Exception ex)
             {
-                // Captura CUALQUIER otro error, que probablemente sea de red (Wi-Fi apagado, DNS, etc.)
-                // **IMPORTANTE:** Relanzamos la excepción para que el formulario sepa que es un fallo de red.
-                // Si no relanzas, el formulario asume que el resultado es 'null' (credenciales inválidas).
-
-                // Loguea el error real (opcional pero recomendado)
+                
                 Console.WriteLine($"Error de Red/Sistema: {ex.Message}");
 
-                // Relanzar el error genérico como un error de conexión para distinguirlo del login fallido.
-                throw new System.Net.WebException("Fallo al establecer la conexión con el servidor. Verifique su conexión a Internet.", ex);
+                throw; /*new System.Net.WebException("Fallo al establecer la conexión con el servidor. Verifique su conexión a Internet.", ex);*/
             }
         }
     }
