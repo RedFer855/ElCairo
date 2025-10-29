@@ -12,6 +12,32 @@ using Supabase.Postgrest.Models;
 
 namespace CapaDeDatos
 {
+    // 2. MODELO EMPLEADO (AHORA DENTRO DEL NAMESPACE PRINCIPAL)
+    [Table("empleado")] // El nombre de tu tabla
+    public class Empleado : BaseModel
+    {
+        [PrimaryKey("id_empleado", true)]
+        public int Id { get; set; }
+
+        [Column("nombre_empleado")]
+        public string Nombre { get; set; }
+
+        [Column("apellido_empleado")]
+        public string Apellido { get; set; }
+
+        [Column("dni_empleado")]
+        public string Dni { get; set; }
+
+        [Column("telefono_empleado")]
+        public string Telefono { get; set; }
+
+        [Column("email_empleado")]
+        public string Email { get; set; }
+
+        [Column("direccion_empleado")]
+        public string Direccion { get; set; }
+    }
+
     // CLASE DE MODELO (sin cambios)
     [Table("usuario")]
     public class Usuario_ : BaseModel
