@@ -137,11 +137,9 @@
             // 
             txtCorreo.BackColor = Color.White;
             txtCorreo.BorderStyle = BorderStyle.None;
-            txtCorreo.Enabled = false;
             txtCorreo.Font = new Font("Itim", 13F);
             txtCorreo.Location = new Point(116, 196);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.ReadOnly = true;
             txtCorreo.Size = new Size(315, 21);
             txtCorreo.TabIndex = 23;
             // 
@@ -149,11 +147,9 @@
             // 
             txtTelefono.BackColor = Color.White;
             txtTelefono.BorderStyle = BorderStyle.None;
-            txtTelefono.Enabled = false;
             txtTelefono.Font = new Font("Itim", 13F);
             txtTelefono.Location = new Point(116, 160);
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.ReadOnly = true;
             txtTelefono.Size = new Size(315, 21);
             txtTelefono.TabIndex = 22;
             // 
@@ -183,11 +179,9 @@
             // 
             txtDni.BackColor = Color.White;
             txtDni.BorderStyle = BorderStyle.None;
-            txtDni.Enabled = false;
             txtDni.Font = new Font("Itim", 13F);
             txtDni.Location = new Point(116, 46);
             txtDni.Name = "txtDni";
-            txtDni.ReadOnly = true;
             txtDni.Size = new Size(315, 21);
             txtDni.TabIndex = 18;
             // 
@@ -217,11 +211,9 @@
             // 
             txtNombre.BackColor = Color.White;
             txtNombre.BorderStyle = BorderStyle.None;
-            txtNombre.Enabled = false;
             txtNombre.Font = new Font("Itim", 13F);
             txtNombre.Location = new Point(116, 87);
             txtNombre.Name = "txtNombre";
-            txtNombre.ReadOnly = true;
             txtNombre.Size = new Size(315, 21);
             txtNombre.TabIndex = 13;
             // 
@@ -229,11 +221,9 @@
             // 
             txtApellido.BackColor = Color.White;
             txtApellido.BorderStyle = BorderStyle.None;
-            txtApellido.Enabled = false;
             txtApellido.Font = new Font("Itim", 13F);
             txtApellido.Location = new Point(116, 123);
             txtApellido.Name = "txtApellido";
-            txtApellido.ReadOnly = true;
             txtApellido.Size = new Size(315, 21);
             txtApellido.TabIndex = 12;
             // 
@@ -263,11 +253,9 @@
             // 
             txtDireccion.BackColor = Color.White;
             txtDireccion.BorderStyle = BorderStyle.None;
-            txtDireccion.Enabled = false;
             txtDireccion.Font = new Font("Itim", 13F);
             txtDireccion.Location = new Point(116, 235);
             txtDireccion.Name = "txtDireccion";
-            txtDireccion.ReadOnly = true;
             txtDireccion.Size = new Size(315, 21);
             txtDireccion.TabIndex = 31;
             // 

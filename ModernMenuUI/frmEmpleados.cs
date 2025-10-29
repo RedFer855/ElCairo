@@ -22,5 +22,11 @@ namespace ModernMenuUI
             clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
+
+        private void btnAgregarEmpleado_Click(object sender, EventArgs e)
+        {
+            frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
+            Empleados.ShowDialog(); 
+        }
     }
 }
