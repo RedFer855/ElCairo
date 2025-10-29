@@ -22,7 +22,7 @@ namespace ModernMenuUI
             InitializeComponent();
         }
 
-      
+
         public void LimpiarDatos(object sender, EventArgs e)
         {
             txtContra.Text = "";
@@ -40,20 +40,20 @@ namespace ModernMenuUI
             {
                 btnAcceder.Enabled = true;
                 MessageBox.Show("El Usuario o contraseña estan vacios", "Credenciales Vacias", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                LimpiarDatos(e,e);
+                LimpiarDatos(e, e);
             }
             else
             {
                 // Validadcion inicial para acceder al servidor y comprobar Inicio de sesión
                 string username = txtUsuario.Text;
                 string password = txtContra.Text;
-                username = username.Trim(); 
+                username = username.Trim();
                 password = password.Trim();
 
                 lblMensajeError.ForeColor = Color.DarkGray; // Color neutro para carga
                 lblMensajeError.Visible = true;
                 lblMensajeError.Text = "Procesando...";
-               
+
                 try
                 {
                     pbxCargando.Visible = true; // Picture box con imagen en formato gift para carga
@@ -77,18 +77,18 @@ namespace ModernMenuUI
                         // Pausa 3: Muestra el tercer mensaje (opcional, simula la espera real) 1s
                         lblMensajeError.Text = "Validando Permisos...";
                         await Task.Delay(500); // 1s segundo
-                        
+
                         // Pausa 4: Mensaje de incio de sesión
                         lblMensajeError.ForeColor = Color.Green;
                         lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
                         await Task.Delay(500); // 1s Final de espera
                         pbxCargando.Visible = false;
-                        
+
                         // Se abre el nuevo form e inicia la aplicación 
                         Form formcarga = new frmInicioBodega();
                         this.Visible = false;
                         formcarga.ShowDialog();
-                        this.Close();   
+                        this.Close();
                     }
                     else
                     {
@@ -124,7 +124,7 @@ namespace ModernMenuUI
                     pbxCargando.Visible = false;
                     // Captura el error de configuración
                     MessageBox.Show($"Error de configuración: {aex.Message}\nEl programa terminará.", "Error en el Sistema", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    this.Close(); 
+                    this.Close();
                 }
                 catch (Exception)
                 {
@@ -210,5 +210,24 @@ namespace ModernMenuUI
             }
         }
 
+        private void lblRecuperarContrasenia_MouseEnter(object sender, EventArgs e)
+        {
+            lblRecuperarContrasenia.ForeColor = Color.Blue; // Cambia color al pasar el mouse
+            lblRecuperarContrasenia.Font = new Font(lblRecuperarContrasenia.Font, FontStyle.Underline);
+        }
+
+        private void lblRecuperarContrasenia_MouseLeave(object sender, EventArgs e)
+        {
+
+            lblRecuperarContrasenia.ForeColor = Color.DimGray;
+
+            // Vuelve al color normal
+            lblRecuperarContrasenia.Font = new Font(lblRecuperarContrasenia.Font, FontStyle.Regular); // Quita subrayado
+        }
+
+        private void lblRecuperarContrasenia_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

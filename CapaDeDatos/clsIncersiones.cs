@@ -12,7 +12,7 @@ namespace CapaDeDatos
 
 
 
-    public class clsEstructuraConexion
+    public class clsIncersiones
     {
         
 

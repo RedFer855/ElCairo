@@ -37,7 +37,7 @@
             lblMensajeError = new Label();
             txtContra = new TextBox();
             txtUsuario = new TextBox();
-            label4 = new Label();
+            lblRecuperarContrasenia = new Label();
             panel5 = new Panel();
             panel6 = new Panel();
             panel3 = new Panel();
@@ -99,7 +99,7 @@
             panDatosIngreso.Controls.Add(lblMensajeError);
             panDatosIngreso.Controls.Add(txtContra);
             panDatosIngreso.Controls.Add(txtUsuario);
-            panDatosIngreso.Controls.Add(label4);
+            panDatosIngreso.Controls.Add(lblRecuperarContrasenia);
             panDatosIngreso.Controls.Add(panel5);
             panDatosIngreso.Controls.Add(panel3);
             panDatosIngreso.Controls.Add(btnAcceder);
@@ -162,15 +162,18 @@
             txtUsuario.Enter += txtUsuario_Enter;
             txtUsuario.Leave += txtUsuario_Leave;
             // 
-            // label4
+            // lblRecuperarContrasenia
             // 
-            label4.AutoSize = true;
-            label4.ForeColor = Color.FromArgb(142, 142, 142);
-            label4.Location = new Point(176, 291);
-            label4.Name = "label4";
-            label4.Size = new Size(161, 15);
-            label4.TabIndex = 5;
-            label4.Text = "¿Has olvidado tu contraseña?";
+            lblRecuperarContrasenia.AutoSize = true;
+            lblRecuperarContrasenia.ForeColor = Color.FromArgb(142, 142, 142);
+            lblRecuperarContrasenia.Location = new Point(176, 291);
+            lblRecuperarContrasenia.Name = "lblRecuperarContrasenia";
+            lblRecuperarContrasenia.Size = new Size(161, 15);
+            lblRecuperarContrasenia.TabIndex = 5;
+            lblRecuperarContrasenia.Text = "¿Has olvidado tu contraseña?";
+            lblRecuperarContrasenia.Click += lblRecuperarContrasenia_Click;
+            lblRecuperarContrasenia.MouseEnter += lblRecuperarContrasenia_MouseEnter;
+            lblRecuperarContrasenia.MouseLeave += lblRecuperarContrasenia_MouseLeave;
             // 
             // panel5
             // 
@@ -312,7 +315,7 @@
         private Panel panel5;
         private Panel panel6;
         private PictureBox pictureBox1;
-        private Label label4;
+        private Label lblRecuperarContrasenia;
         private TextBox txtUsuario;
         private TextBox txtContra;
         private Panel panBarraControl;
