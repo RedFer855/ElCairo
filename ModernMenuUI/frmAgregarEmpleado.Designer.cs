@@ -31,6 +31,7 @@
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEmpleado));
             lblNombreModulo = new Label();
+            btnCerrar = new Button();
             label6 = new Label();
             label5 = new Label();
             label4 = new Label();
@@ -50,9 +51,8 @@
             radioButton2 = new RadioButton();
             btnAgregar = new Button();
             panel2 = new Panel();
-            btnCerrar = new Button();
-            button1 = new Button();
-            button2 = new Button();
+            btnVover = new Button();
+            btnGuardarEmpleado = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -81,6 +81,24 @@
             lblNombreModulo.Size = new Size(215, 29);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "EDITAR EMPLEADO";
+            // 
+            // btnCerrar
+            // 
+            btnCerrar.BackColor = Color.FromArgb(148, 168, 187);
+            btnCerrar.Dock = DockStyle.Right;
+            btnCerrar.FlatAppearance.BorderSize = 0;
+            btnCerrar.FlatStyle = FlatStyle.Flat;
+            btnCerrar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
+            btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
+            btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCerrar.Location = new Point(443, 0);
+            btnCerrar.Name = "btnCerrar";
+            btnCerrar.Padding = new Padding(11, 0, 0, 0);
+            btnCerrar.Size = new Size(65, 62);
+            btnCerrar.TabIndex = 3;
+            btnCerrar.TextAlign = ContentAlignment.MiddleLeft;
+            btnCerrar.UseVisualStyleBackColor = false;
             // 
             // label6
             // 
@@ -295,8 +313,8 @@
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
             panel2.BorderStyle = BorderStyle.Fixed3D;
-            panel2.Controls.Add(button2);
-            panel2.Controls.Add(button1);
+            panel2.Controls.Add(btnVover);
+            panel2.Controls.Add(btnGuardarEmpleado);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(txtDireccion);
             panel2.Controls.Add(groupBox1);
@@ -319,53 +337,36 @@
             panel2.Size = new Size(508, 388);
             panel2.TabIndex = 14;
             // 
-            // btnCerrar
+            // btnVover
             // 
-            btnCerrar.BackColor = Color.FromArgb(148, 168, 187);
-            btnCerrar.Dock = DockStyle.Right;
-            btnCerrar.FlatAppearance.BorderSize = 0;
-            btnCerrar.FlatStyle = FlatStyle.Flat;
-            btnCerrar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
-            btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
-            btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(443, 0);
-            btnCerrar.Name = "btnCerrar";
-            btnCerrar.Padding = new Padding(11, 0, 0, 0);
-            btnCerrar.Size = new Size(65, 62);
-            btnCerrar.TabIndex = 3;
-            btnCerrar.TextAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.UseVisualStyleBackColor = false;
+            btnVover.BackColor = Color.FromArgb(148, 168, 187);
+            btnVover.BackgroundImageLayout = ImageLayout.None;
+            btnVover.FlatAppearance.BorderSize = 0;
+            btnVover.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnVover.ForeColor = SystemColors.ButtonFace;
+            btnVover.ImageAlign = ContentAlignment.BottomLeft;
+            btnVover.Location = new Point(77, 334);
+            btnVover.Name = "btnVover";
+            btnVover.Size = new Size(106, 40);
+            btnVover.TabIndex = 34;
+            btnVover.Text = "Salir";
+            btnVover.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // btnGuardarEmpleado
             // 
-            button1.BackColor = Color.FromArgb(149, 195, 172);
-            button1.BackgroundImageLayout = ImageLayout.None;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = SystemColors.ButtonFace;
-            button1.ImageAlign = ContentAlignment.BottomLeft;
-            button1.Location = new Point(230, 334);
-            button1.Name = "button1";
-            button1.Size = new Size(153, 40);
-            button1.TabIndex = 33;
-            button1.Text = "Guardar";
-            button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.FromArgb(148, 168, 187);
-            button2.BackgroundImageLayout = ImageLayout.None;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ButtonFace;
-            button2.ImageAlign = ContentAlignment.BottomLeft;
-            button2.Location = new Point(77, 334);
-            button2.Name = "button2";
-            button2.Size = new Size(106, 40);
-            button2.TabIndex = 34;
-            button2.Text = "Salir";
-            button2.UseVisualStyleBackColor = false;
+            btnGuardarEmpleado.BackColor = Color.FromArgb(149, 195, 172);
+            btnGuardarEmpleado.BackgroundImageLayout = ImageLayout.None;
+            btnGuardarEmpleado.FlatAppearance.BorderSize = 0;
+            btnGuardarEmpleado.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
+            btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
+            btnGuardarEmpleado.Location = new Point(230, 334);
+            btnGuardarEmpleado.Name = "btnGuardarEmpleado";
+            btnGuardarEmpleado.Size = new Size(153, 40);
+            btnGuardarEmpleado.TabIndex = 33;
+            btnGuardarEmpleado.Text = "Guardar";
+            btnGuardarEmpleado.UseVisualStyleBackColor = false;
+            btnGuardarEmpleado.Click += btnGuardarEmpleado_Click;
             // 
             // frmAgregarEmpleado
             // 
@@ -408,7 +409,7 @@
         private Panel panel2;
         public Label lblNombreModulo;
         private Button btnCerrar;
-        private Button button2;
-        private Button button1;
+        private Button btnVover;
+        private Button btnGuardarEmpleado;
     }
 }

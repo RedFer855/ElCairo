@@ -121,6 +121,17 @@
     <value>False</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnCerrar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEfSURBVFhHvZdL
+        TkJBEADZEyXeVPRkiq4hfqILgldBLlBmSHccO8x78+m2lvNmuirwSJgFsAZOwDOwWgQDXAEbcd6nhSO/
+        fEZGiPw9853S4mO2kPiIiLggTzylB0tgZx7sgRs7pJdZx+yGAapnV29soHlm84EJumd1H8wYnjEyYOTs
+        H2TQtmWQm1xpiXCXKzURYXJlKiJcrhQiDsCbWfOXK4WInDi5IhEv1gx8hcsTEvBq7f8SUHjhcuK+goI8
+        vYT20/CPKMjzn6F9Mf0ipuRmj39Ejdzs9YtokStuET1yZThiRK50R3jIleYIT7lSHREhV2YjIuXKZETh
+        anZth4wiVzP73+F8NcsvpyFy5ULE+XJ6C3zLlTlMrkjEgzjvfgAWIrv6UavWJgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="btnAgregar.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -137,17 +148,6 @@
         D/bUNx2PeYoScEEfmK94vOLH0WtyBU9UPEdxW/QWJe1vU6PiCYofRK9Jd4JpkuJ5is9Eb1EC6nUp9QCX
         gA/6YOaZDqxRf7f8nxXPit6iBWzS3W6yYmxfV0afSQfZAb2qTHaSNkdfn6UX0TRgZOzLEjBC/urY91/o
         N6yqsdgFCuDXAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnCerrar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEfSURBVFhHvZdL
-        TkJBEADZEyXeVPRkiq4hfqILgldBLlBmSHccO8x78+m2lvNmuirwSJgFsAZOwDOwWgQDXAEbcd6nhSO/
-        fEZGiPw9853S4mO2kPiIiLggTzylB0tgZx7sgRs7pJdZx+yGAapnV29soHlm84EJumd1H8wYnjEyYOTs
-        H2TQtmWQm1xpiXCXKzURYXJlKiJcrhQiDsCbWfOXK4WInDi5IhEv1gx8hcsTEvBq7f8SUHjhcuK+goI8
-        vYT20/CPKMjzn6F9Mf0ipuRmj39Ejdzs9YtokStuET1yZThiRK50R3jIleYIT7lSHREhV2YjIuXKZETh
-        anZth4wiVzP73+F8NcsvpyFy5ULE+XJ6C3zLlTlMrkjEgzjvfgAWIrv6UavWJgAAAABJRU5ErkJggg==
 </value>
   </data>
 </root>

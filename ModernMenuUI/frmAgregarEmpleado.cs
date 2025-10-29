@@ -16,5 +16,10 @@ namespace ModernMenuUI
         {
             InitializeComponent();
         }
+
+        private void btnGuardarEmpleado_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
