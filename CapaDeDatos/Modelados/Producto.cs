@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CapaDeDatos.Modelados
 {
-    [Table("producto")] // El nombre exacto de tu tabla
+    [Table("producto")] 
     public class Producto: BaseModel
     {
-        [PrimaryKey("id_producto", false)] // 'false' para que la BD genere el ID
+        [PrimaryKey("id_producto", false)] 
         public int Id { get; set; }
 
         [Column("nombre_producto")]
