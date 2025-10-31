@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos
+namespace CapaDeDatos.Modelados
 {
     [Table("producto")] // El nombre exacto de tu tabla
     public class Producto: BaseModel

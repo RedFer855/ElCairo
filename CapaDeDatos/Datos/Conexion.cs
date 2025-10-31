@@ -10,12 +10,12 @@ using Supabase.Postgrest.Models;
 
 
 
-namespace CapaDeDatos 
+namespace CapaDeDatos.Datos 
 { 
 
     public class Conexion
     {
-        public static Supabase.Client _supabaseClient { get; private set; }
+        public static Client _supabaseClient { get; private set; }
 
         // MÉTODOS DE CONEXION: Creación de Cliente y Manejo de Timeout
 
@@ -27,7 +27,7 @@ namespace CapaDeDatos
                 return _supabaseClient;
             }
 
-            DotNetEnv.Env.Load();
+            Env.Load();
             string supabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL");
             string supabaseKey = Environment.GetEnvironmentVariable("SUPABASE_KEY");
 
@@ -38,7 +38,7 @@ namespace CapaDeDatos
             }
 
             var options = new SupabaseOptions { AutoRefreshToken = true, AutoConnectRealtime = true };
-            _supabaseClient = new Supabase.Client(supabaseUrl, supabaseKey, options);
+            _supabaseClient = new Client(supabaseUrl, supabaseKey, options);
             await _supabaseClient.InitializeAsync();
 
             return _supabaseClient;

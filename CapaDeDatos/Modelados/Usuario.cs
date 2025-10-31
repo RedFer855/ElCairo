@@ -8,7 +8,7 @@ using Supabase;
 using Supabase.Postgrest.Attributes;
 
 
-namespace CapaDeDatos
+namespace CapaDeDatos.Modelados
 {
     [Table("usuario")]
     public class Usuario: BaseModel

@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Empleado.cs" />
+    <None Include="Modelados\Empleado.cs" />
   </ItemGroup>
 
   <ItemGroup>

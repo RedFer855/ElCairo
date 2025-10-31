@@ -1,4 +1,6 @@
-﻿using Supabase.Interfaces;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
+using Supabase.Interfaces;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 using System;
@@ -7,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos 
+namespace CapaDeDatos.Repositorios 
 {
 
     public class EmpleadoRepositorio

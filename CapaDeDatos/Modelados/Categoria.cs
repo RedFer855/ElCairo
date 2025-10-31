@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos
+namespace CapaDeDatos.Modelados
 {
     public class Categoria: BaseModel
     {
