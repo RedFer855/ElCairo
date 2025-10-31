@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaDeDatos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace ModernMenuUI
 {
     public partial class frmProductos : Form
     {
+        private readonly ProductoRepositorio _productoRepo;
         Form formularioactivo = null;
         public frmProductos()
         {
@@ -23,27 +25,9 @@ namespace ModernMenuUI
             dgvProductos.RowHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#57636e");
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            // Ejemplo de 20 productos distintos
-            dgvProductos.Rows.Add(1, "Manzana", "Frutas", "Cfruit", 10, 5, 8.0, 8.0, 8.8);
-            dgvProductos.Rows.Add(2, "Pera", "Frutas", "Cfruit", "10%", 8.0, 8.0, 8.8);
-            dgvProductos.Rows.Add(3, "Banana", "Frutas", "Cfruit", "15%", 5.0, 5.0, 5.75);
-            dgvProductos.Rows.Add(4, "Lechuga", "Verduras", "Veggy", "20%", 3.0, 3.0, 3.6);
-            dgvProductos.Rows.Add(5, "Tomate", "Verduras", "Veggy", "12%", 4.0, 4.0, 4.48);
-            dgvProductos.Rows.Add(6, "Cebolla", "Verduras", "Veggy", "10%", 2.5, 2.5, 2.75);
-            dgvProductos.Rows.Add(7, "Arroz", "Cereales", "GranoPlus", "8%", 15.0, 15.0, 16.2);
-            dgvProductos.Rows.Add(8, "Frijol", "Cereales", "GranoPlus", "10%", 12.0, 12.0, 13.2);
-            dgvProductos.Rows.Add(9, "Lenteja", "Cereales", "GranoPlus", "12%", 14.0, 14.0, 15.68);
-            dgvProductos.Rows.Add(10, "Leche", "Lácteos", "Lacto", "15%", 20.0, 20.0, 23.0);
-            dgvProductos.Rows.Add(11, "Queso", "Lácteos", "Lacto", "20%", 25.0, 25.0, 30.0);
-            dgvProductos.Rows.Add(12, "Yogurt", "Lácteos", "Lacto", "10%", 18.0, 18.0, 19.8);
-            dgvProductos.Rows.Add(13, "Pan", "Panadería", "Bake", "12%", 10.0, 10.0, 11.2);
-            dgvProductos.Rows.Add(14, "Galleta", "Panadería", "Bake", "15%", 8.0, 8.0, 9.2);
-            dgvProductos.Rows.Add(15, "Chocolate", "Dulces", "Sweet", "25%", 5.0, 5.0, 6.25);
-            dgvProductos.Rows.Add(16, "Caramelo", "Dulces", "Sweet", "30%", 2.0, 2.0, 2.6);
-            dgvProductos.Rows.Add(17, "Refresco", "Bebidas", "DrinkIt", "20%", 10.0, 10.0, 12.0);
-            dgvProductos.Rows.Add(18, "Jugo", "Bebidas", "DrinkIt", "18%", 12.0, 12.0, 14.16);
-            dgvProductos.Rows.Add(19, "Agua", "Bebidas", "DrinkIt", "10%", 5.0, 5.0, 5.5);
-            dgvProductos.Rows.Add(20, "Café", "Bebidas", "CafePlus", "25%", 15.0, 15.0, 18.75);
+
+            _productoRepo = new ProductoRepositorio();
+            dgvProductos.AutoGenerateColumns = false;
 
         }
 
@@ -95,6 +79,34 @@ namespace ModernMenuUI
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
             btnNuevo.Enabled = dgvProductos.SelectedRows.Count > 0;
+        }
+        private async void CargarProductos()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor; // Pone el cursor de espera
+
+                // 1. Llama al método del repositorio
+                List<Producto> listaDeProductos = await _productoRepo.ObtenerTodosLosProductos();
+
+                // 2. Asigna los datos al DataGridView (asumo que se llama 'dgvProductos')
+                dgvProductos.DataSource = null;
+                dgvProductos.DataSource = listaDeProductos;
+            }
+            catch (Exception ex)
+            {
+                // Muestra el error que viene del repositorio
+                MessageBox.Show(ex.Message, "Error al cargar productos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default; // Devuelve el cursor
+            }
+        }
+
+        private void frmProductos_Load(object sender, EventArgs e)
+        {
+            CargarProductos();
         }
     }
 
