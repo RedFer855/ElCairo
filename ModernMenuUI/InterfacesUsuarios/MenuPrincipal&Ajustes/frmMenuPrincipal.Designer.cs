@@ -31,6 +31,12 @@
             components = new System.ComponentModel.Container();
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuPrincipal));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             btnNotificaciones = new Button();
             panel3 = new Panel();
             panel1 = new Panel();
@@ -78,12 +84,14 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel4 = new Panel();
             panel5 = new Panel();
-            pbxCalculadora = new PictureBox();
             panel7 = new Panel();
             panel11 = new Panel();
             panel6 = new Panel();
+            pbxCalculadora = new PictureBox();
             panel8 = new Panel();
+            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             panel10 = new Panel();
+            chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             timerAbrir = new System.Windows.Forms.Timer(components);
             timerCerrar = new System.Windows.Forms.Timer(components);
             panelNotificaciones = new Panel();
@@ -106,6 +114,10 @@
             panel9.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
+            panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
+            panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)chart2).BeginInit();
             panelNotificaciones.SuspendLayout();
             SuspendLayout();
             // 
@@ -855,20 +867,6 @@
             panel5.Size = new Size(431, 100);
             panel5.TabIndex = 8;
             // 
-            // pbxCalculadora
-            // 
-            pbxCalculadora.Image = Properties.Resources.calculadora;
-            pbxCalculadora.Location = new Point(821, 130);
-            pbxCalculadora.Margin = new Padding(10);
-            pbxCalculadora.Name = "pbxCalculadora";
-            pbxCalculadora.Size = new Size(86, 100);
-            pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
-            pbxCalculadora.TabIndex = 6;
-            pbxCalculadora.TabStop = false;
-            pbxCalculadora.Click += pbxCalculadora_Click;
-            pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
-            pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
-            // 
             // panel7
             // 
             panel7.BackColor = Color.FromArgb(189, 215, 238);
@@ -896,23 +894,74 @@
             panel6.Size = new Size(243, 100);
             panel6.TabIndex = 12;
             // 
+            // pbxCalculadora
+            // 
+            pbxCalculadora.Image = Properties.Resources.calculadora;
+            pbxCalculadora.Location = new Point(821, 130);
+            pbxCalculadora.Margin = new Padding(10);
+            pbxCalculadora.Name = "pbxCalculadora";
+            pbxCalculadora.Size = new Size(86, 100);
+            pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxCalculadora.TabIndex = 6;
+            pbxCalculadora.TabStop = false;
+            pbxCalculadora.Click += pbxCalculadora_Click;
+            pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
+            pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
+            // 
             // panel8
             // 
             panel8.BackColor = Color.FromArgb(189, 215, 238);
+            panel8.Controls.Add(chart1);
             panel8.Location = new Point(10, 250);
             panel8.Margin = new Padding(10);
             panel8.Name = "panel8";
-            panel8.Size = new Size(528, 338);
+            panel8.Size = new Size(413, 338);
             panel8.TabIndex = 11;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
+            chart1.Location = new Point(16, 16);
+            chart1.Name = "chart1";
+            chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chart1.Series.Add(series1);
+            chart1.Size = new Size(379, 308);
+            chart1.TabIndex = 0;
+            chart1.Text = "chart1";
             // 
             // panel10
             // 
             panel10.BackColor = Color.FromArgb(189, 215, 238);
-            panel10.Location = new Point(558, 250);
+            panel10.Controls.Add(chart2);
+            panel10.Location = new Point(443, 250);
             panel10.Margin = new Padding(10);
             panel10.Name = "panel10";
-            panel10.Size = new Size(351, 338);
+            panel10.Size = new Size(462, 338);
             panel10.TabIndex = 12;
+            // 
+            // chart2
+            // 
+            chartArea2.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            chart2.Legends.Add(legend2);
+            chart2.Location = new Point(19, 16);
+            chart2.Name = "chart2";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            chart2.Series.Add(series2);
+            chart2.Size = new Size(419, 308);
+            chart2.TabIndex = 0;
+            chart2.Text = "chart1";
             // 
             // timerAbrir
             // 
@@ -985,6 +1034,10 @@
             panel9.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
+            panel8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
+            panel10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)chart2).EndInit();
             panelNotificaciones.ResumeLayout(false);
             panelNotificaciones.PerformLayout();
             ResumeLayout(false);
@@ -1051,5 +1104,7 @@
         private Panel panel11;
         private Panel panel10;
         private Panel panel6;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
     }
 }

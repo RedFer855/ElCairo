@@ -41,7 +41,7 @@ namespace CapaDeDatos.Repositorios
                 Console.WriteLine($"Error de Supabase al obtener productos: {ex.Message}");
                 // Relanza la excepción para que el formulario (la UI) pueda
                 // mostrar un mensaje de error al usuario.
-                throw new Exception("No se pudieron cargar los productos. Verifique la conexión.", ex);
+                throw;// new Exception("No se pudieron cargar los productos. Verifique la conexión.", ex);
             }
         }
         public async Task<Producto> InsertarProducto(Producto nuevoProducto)

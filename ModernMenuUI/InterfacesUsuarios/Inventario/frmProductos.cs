@@ -30,6 +30,7 @@ namespace ModernMenuUI
             _productoRepo = new ProductoRepositorio();
             dgvProductos.AutoGenerateColumns = false;
 
+
         }
 
         private void txtBuscar_TextChanged(object sender, EventArgs e)
@@ -105,7 +106,7 @@ namespace ModernMenuUI
             }
         }
 
-        private void frmProductos_Load(object sender, EventArgs e)
+        private async void frmProductos_Load(object sender, EventArgs e)
         {
             CargarProductos();
         }
