@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             Panel panBarraControl;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEmpleado));
             lblNombreModulo = new Label();
-            btnCerrar = new Button();
             label6 = new Label();
             label5 = new Label();
             label4 = new Label();
@@ -49,7 +47,6 @@
             txtDireccion = new TextBox();
             groupBox1 = new GroupBox();
             radioButton2 = new RadioButton();
-            btnAgregar = new Button();
             panel2 = new Panel();
             btnVover = new Button();
             btnGuardarEmpleado = new Button();
@@ -63,49 +60,31 @@
             // 
             panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
             panBarraControl.Controls.Add(lblNombreModulo);
-            panBarraControl.Controls.Add(btnCerrar);
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(508, 62);
+            panBarraControl.Size = new Size(508, 41);
             panBarraControl.TabIndex = 13;
             // 
             // lblNombreModulo
             // 
-            lblNombreModulo.AutoSize = true;
+            lblNombreModulo.Dock = DockStyle.Fill;
             lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNombreModulo.ForeColor = Color.White;
-            lblNombreModulo.Location = new Point(142, 16);
+            lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(215, 29);
-            lblNombreModulo.TabIndex = 8;
+            lblNombreModulo.Size = new Size(508, 41);
+            lblNombreModulo.TabIndex = 13;
             lblNombreModulo.Text = "EDITAR EMPLEADO";
-            // 
-            // btnCerrar
-            // 
-            btnCerrar.BackColor = Color.FromArgb(148, 168, 187);
-            btnCerrar.Dock = DockStyle.Right;
-            btnCerrar.FlatAppearance.BorderSize = 0;
-            btnCerrar.FlatStyle = FlatStyle.Flat;
-            btnCerrar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
-            btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
-            btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(443, 0);
-            btnCerrar.Name = "btnCerrar";
-            btnCerrar.Padding = new Padding(11, 0, 0, 0);
-            btnCerrar.Size = new Size(65, 62);
-            btnCerrar.TabIndex = 3;
-            btnCerrar.TextAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.UseVisualStyleBackColor = false;
+            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(87, 99, 110);
-            label6.Location = new Point(14, 199);
+            label6.Location = new Point(40, 191);
             label6.Name = "label6";
             label6.Size = new Size(57, 18);
             label6.TabIndex = 27;
@@ -116,7 +95,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(87, 99, 110);
-            label5.Location = new Point(14, 284);
+            label5.Location = new Point(40, 326);
             label5.Name = "label5";
             label5.Size = new Size(57, 18);
             label5.TabIndex = 26;
@@ -127,7 +106,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.FromArgb(87, 99, 110);
-            label4.Location = new Point(14, 163);
+            label4.Location = new Point(40, 158);
             label4.Name = "label4";
             label4.Size = new Size(68, 18);
             label4.TabIndex = 25;
@@ -138,27 +117,28 @@
             txtCorreo.BackColor = Color.White;
             txtCorreo.BorderStyle = BorderStyle.None;
             txtCorreo.Font = new Font("Itim", 13F);
-            txtCorreo.Location = new Point(116, 196);
+            txtCorreo.Location = new Point(142, 189);
             txtCorreo.Name = "txtCorreo";
             txtCorreo.Size = new Size(315, 21);
-            txtCorreo.TabIndex = 23;
+            txtCorreo.TabIndex = 5;
             // 
             // txtTelefono
             // 
             txtTelefono.BackColor = Color.White;
             txtTelefono.BorderStyle = BorderStyle.None;
-            txtTelefono.Font = new Font("Itim", 13F);
-            txtTelefono.Location = new Point(116, 160);
+            txtTelefono.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtTelefono.Location = new Point(142, 156);
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(315, 21);
-            txtTelefono.TabIndex = 22;
+            txtTelefono.PlaceholderText = "(Número de Teléfono sin espacios guiones)";
+            txtTelefono.Size = new Size(315, 20);
+            txtTelefono.TabIndex = 4;
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Comic Sans MS", 12F);
             label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(10, 9);
+            label9.Location = new Point(36, 15);
             label9.Name = "label9";
             label9.Size = new Size(153, 23);
             label9.TabIndex = 20;
@@ -169,7 +149,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
-            label8.Location = new Point(12, 49);
+            label8.Location = new Point(40, 51);
             label8.Name = "label8";
             label8.Size = new Size(38, 18);
             label8.TabIndex = 19;
@@ -179,18 +159,19 @@
             // 
             txtDni.BackColor = Color.White;
             txtDni.BorderStyle = BorderStyle.None;
-            txtDni.Font = new Font("Itim", 13F);
-            txtDni.Location = new Point(116, 46);
+            txtDni.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDni.Location = new Point(142, 49);
             txtDni.Name = "txtDni";
-            txtDni.Size = new Size(315, 21);
-            txtDni.TabIndex = 18;
+            txtDni.PlaceholderText = "(Ingrese Dni sin espacios ni guiones)";
+            txtDni.Size = new Size(315, 20);
+            txtDni.TabIndex = 0;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(87, 99, 110);
-            label2.Location = new Point(13, 126);
+            label2.Location = new Point(40, 124);
             label2.Name = "label2";
             label2.Size = new Size(65, 18);
             label2.TabIndex = 16;
@@ -201,7 +182,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(12, 90);
+            label1.Location = new Point(38, 91);
             label1.Name = "label1";
             label1.Size = new Size(64, 18);
             label1.TabIndex = 15;
@@ -212,28 +193,28 @@
             txtNombre.BackColor = Color.White;
             txtNombre.BorderStyle = BorderStyle.None;
             txtNombre.Font = new Font("Itim", 13F);
-            txtNombre.Location = new Point(116, 87);
+            txtNombre.Location = new Point(142, 88);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(315, 21);
-            txtNombre.TabIndex = 13;
+            txtNombre.TabIndex = 1;
             // 
             // txtApellido
             // 
             txtApellido.BackColor = Color.White;
             txtApellido.BorderStyle = BorderStyle.None;
             txtApellido.Font = new Font("Itim", 13F);
-            txtApellido.Location = new Point(116, 123);
+            txtApellido.Location = new Point(142, 121);
             txtApellido.Name = "txtApellido";
             txtApellido.Size = new Size(315, 21);
-            txtApellido.TabIndex = 12;
+            txtApellido.TabIndex = 3;
             // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(8, 22);
+            radioButton1.Location = new Point(8, 21);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(59, 19);
-            radioButton1.TabIndex = 28;
+            radioButton1.Size = new Size(70, 23);
+            radioButton1.TabIndex = 8;
             radioButton1.TabStop = true;
             radioButton1.Text = "Activo";
             radioButton1.UseVisualStyleBackColor = true;
@@ -243,7 +224,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(87, 99, 110);
-            label3.Location = new Point(14, 238);
+            label3.Location = new Point(40, 229);
             label3.Name = "label3";
             label3.Size = new Size(73, 18);
             label3.TabIndex = 32;
@@ -254,53 +235,40 @@
             txtDireccion.BackColor = Color.White;
             txtDireccion.BorderStyle = BorderStyle.None;
             txtDireccion.Font = new Font("Itim", 13F);
-            txtDireccion.Location = new Point(116, 235);
+            txtDireccion.Location = new Point(142, 226);
+            txtDireccion.Multiline = true;
             txtDireccion.Name = "txtDireccion";
-            txtDireccion.Size = new Size(315, 21);
-            txtDireccion.TabIndex = 31;
+            txtDireccion.Size = new Size(315, 72);
+            txtDireccion.TabIndex = 6;
             // 
             // groupBox1
             // 
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(116, 262);
+            groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox1.ForeColor = Color.DimGray;
+            groupBox1.Location = new Point(142, 304);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(315, 54);
-            groupBox1.TabIndex = 30;
+            groupBox1.Size = new Size(315, 51);
+            groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(124, 21);
+            radioButton2.Location = new Point(124, 20);
             radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(67, 19);
-            radioButton2.TabIndex = 29;
+            radioButton2.Size = new Size(82, 23);
+            radioButton2.TabIndex = 9;
             radioButton2.TabStop = true;
             radioButton2.Text = "Inactivo";
             radioButton2.UseVisualStyleBackColor = true;
             // 
-            // btnAgregar
-            // 
-            btnAgregar.BackColor = Color.FromArgb(149, 195, 172);
-            btnAgregar.BackgroundImage = (Image)resources.GetObject("btnAgregar.BackgroundImage");
-            btnAgregar.BackgroundImageLayout = ImageLayout.None;
-            btnAgregar.FlatAppearance.BorderSize = 0;
-            btnAgregar.Font = new Font("Itim", 18.25F);
-            btnAgregar.ForeColor = SystemColors.ButtonFace;
-            btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(108, 383);
-            btnAgregar.Name = "btnAgregar";
-            btnAgregar.Padding = new Padding(40, 0, 0, 0);
-            btnAgregar.Size = new Size(225, 46);
-            btnAgregar.TabIndex = 10;
-            btnAgregar.Text = "Guardar";
-            btnAgregar.UseVisualStyleBackColor = false;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
-            panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(txtNombre);
+            panel2.Controls.Add(txtDni);
             panel2.Controls.Add(btnVover);
             panel2.Controls.Add(btnGuardarEmpleado);
             panel2.Controls.Add(label3);
@@ -313,16 +281,13 @@
             panel2.Controls.Add(txtTelefono);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(label8);
-            panel2.Controls.Add(txtDni);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label1);
-            panel2.Controls.Add(txtNombre);
             panel2.Controls.Add(txtApellido);
-            panel2.Controls.Add(btnAgregar);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 62);
+            panel2.Location = new Point(0, 41);
             panel2.Name = "panel2";
-            panel2.Size = new Size(508, 388);
+            panel2.Size = new Size(508, 436);
             panel2.TabIndex = 14;
             // 
             // btnVover
@@ -330,43 +295,50 @@
             btnVover.BackColor = Color.FromArgb(148, 168, 187);
             btnVover.BackgroundImageLayout = ImageLayout.None;
             btnVover.FlatAppearance.BorderSize = 0;
-            btnVover.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnVover.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnVover.ForeColor = SystemColors.ButtonFace;
             btnVover.ImageAlign = ContentAlignment.BottomLeft;
-            btnVover.Location = new Point(77, 334);
+            btnVover.Location = new Point(79, 372);
             btnVover.Name = "btnVover";
-            btnVover.Size = new Size(106, 40);
-            btnVover.TabIndex = 34;
+            btnVover.Size = new Size(157, 37);
+            btnVover.TabIndex = 10;
             btnVover.Text = "Salir";
             btnVover.UseVisualStyleBackColor = false;
+            btnVover.Click += btnVover_Click;
             // 
             // btnGuardarEmpleado
             // 
             btnGuardarEmpleado.BackColor = Color.FromArgb(149, 195, 172);
             btnGuardarEmpleado.BackgroundImageLayout = ImageLayout.None;
             btnGuardarEmpleado.FlatAppearance.BorderSize = 0;
-            btnGuardarEmpleado.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGuardarEmpleado.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
             btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarEmpleado.Location = new Point(230, 334);
+            btnGuardarEmpleado.Location = new Point(242, 372);
             btnGuardarEmpleado.Name = "btnGuardarEmpleado";
-            btnGuardarEmpleado.Size = new Size(153, 40);
-            btnGuardarEmpleado.TabIndex = 33;
+            btnGuardarEmpleado.Size = new Size(153, 37);
+            btnGuardarEmpleado.TabIndex = 11;
             btnGuardarEmpleado.Text = "Guardar";
             btnGuardarEmpleado.UseVisualStyleBackColor = false;
             btnGuardarEmpleado.Click += btnGuardarEmpleado_Click;
             // 
             // frmAgregarEmpleado
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(508, 450);
+            ClientSize = new Size(508, 477);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
+            DoubleBuffered = true;
+            Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmAgregarEmpleado";
-            Text = "frmAgregarEmpleado";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Datos de Empleados";
+            Load += frmAgregarEmpleado_Load;
             panBarraControl.ResumeLayout(false);
-            panBarraControl.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -393,10 +365,8 @@
         private TextBox txtDireccion;
         private GroupBox groupBox1;
         private RadioButton radioButton2;
-        private Button btnAgregar;
         private Panel panel2;
         public Label lblNombreModulo;
-        private Button btnCerrar;
         private Button btnVover;
         private Button btnGuardarEmpleado;
     }

@@ -17,6 +17,7 @@ namespace ModernMenuUI
         public frmAgregarEmpleado()
         {
             InitializeComponent();
+            txtDni.Focus();
         }
 
         private async void btnGuardarEmpleado_Click(object sender, EventArgs e)
@@ -27,6 +28,7 @@ namespace ModernMenuUI
                 MessageBox.Show("Nombre, Apellido y DNI son obligatorios.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
 
             // 2. CREACIÓN DEL OBJETO (ACTUALIZADO)
             Empleado nuevoEmpleado = new Empleado
@@ -50,7 +52,7 @@ namespace ModernMenuUI
 
                 MessageBox.Show("¡Empleado guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-      
+
             }
             catch (Exception ex)
             {
@@ -61,6 +63,17 @@ namespace ModernMenuUI
                 // ERROR 3 (corregido)
                 btnGuardarEmpleado.Enabled = true;
             }
+        }
+
+        private void frmAgregarEmpleado_Load(object sender, EventArgs e)
+        {
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "AGREGUE UN EMPLEADO NUEVO");
+            
+        }
+
+        private void btnVover_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

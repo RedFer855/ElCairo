@@ -57,6 +57,7 @@
             btnGestionEmpleados = new Button();
             btnUsuarios = new Button();
             panelVentas = new Panel();
+            btnCierreDiario = new Button();
             btnClientes = new Button();
             btnGestionVentas = new Button();
             btnVentas = new Button();
@@ -71,15 +72,15 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            pbxCalculadora = new PictureBox();
             lblFecha = new Label();
             lblHora = new Label();
-            pbxCalculadora = new PictureBox();
             timerAbrir = new System.Windows.Forms.Timer(components);
             timerCerrar = new System.Windows.Forms.Timer(components);
             panelNotificaciones = new Panel();
             lblNotificaciones = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
-            flowLayoutPanel1 = new FlowLayoutPanel();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
@@ -94,9 +95,9 @@
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
             panelNotificaciones.SuspendLayout();
-            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panBarraControl
@@ -113,7 +114,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(260, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(764, 65);
+            panBarraControl.Size = new Size(924, 65);
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -126,7 +127,7 @@
             btnNotificaciones.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             btnNotificaciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnNotificaciones.Image = (Image)resources.GetObject("btnNotificaciones.Image");
-            btnNotificaciones.Location = new Point(699, 0);
+            btnNotificaciones.Location = new Point(859, 0);
             btnNotificaciones.Name = "btnNotificaciones";
             btnNotificaciones.Size = new Size(65, 65);
             btnNotificaciones.TabIndex = 6;
@@ -137,7 +138,7 @@
             // panel3
             // 
             panel3.Dock = DockStyle.Right;
-            panel3.Location = new Point(764, 0);
+            panel3.Location = new Point(924, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(0, 65);
             panel3.TabIndex = 10;
@@ -194,7 +195,7 @@
             btnMinimizar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMinimizar.ForeColor = Color.FromArgb(167, 191, 211);
             btnMinimizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMinimizar.Location = new Point(764, 0);
+            btnMinimizar.Location = new Point(924, 0);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Padding = new Padding(11, 0, 0, 0);
             btnMinimizar.Size = new Size(0, 65);
@@ -213,7 +214,7 @@
             btnMiniMaxi.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMiniMaxi.ForeColor = Color.FromArgb(167, 191, 211);
             btnMiniMaxi.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMiniMaxi.Location = new Point(764, 0);
+            btnMiniMaxi.Location = new Point(924, 0);
             btnMiniMaxi.Name = "btnMiniMaxi";
             btnMiniMaxi.Padding = new Padding(11, 0, 0, 0);
             btnMiniMaxi.Size = new Size(0, 65);
@@ -233,7 +234,7 @@
             btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
             btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(764, 0);
+            btnCerrar.Location = new Point(924, 0);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(11, 0, 0, 0);
             btnCerrar.Size = new Size(0, 65);
@@ -264,7 +265,7 @@
             panelMenuLateral.Dock = DockStyle.Left;
             panelMenuLateral.Location = new Point(0, 0);
             panelMenuLateral.Name = "panelMenuLateral";
-            panelMenuLateral.Size = new Size(260, 728);
+            panelMenuLateral.Size = new Size(260, 741);
             panelMenuLateral.TabIndex = 0;
             panelMenuLateral.MouseDown += panelMenuLateral_MouseDown;
             // 
@@ -275,7 +276,7 @@
             panel2.Controls.Add(label1);
             panel2.Controls.Add(pictureBox2);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 1160);
+            panel2.Location = new Point(0, 1200);
             panel2.Name = "panel2";
             panel2.Size = new Size(243, 80);
             panel2.TabIndex = 11;
@@ -318,7 +319,7 @@
             pictureBox1.Dock = DockStyle.Top;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(0, 985);
+            pictureBox1.Location = new Point(0, 1025);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(243, 175);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -331,15 +332,17 @@
             panelReporteria.Controls.Add(btnReportesCreados);
             panelReporteria.Controls.Add(btnCrearReporte);
             panelReporteria.Dock = DockStyle.Top;
-            panelReporteria.Location = new Point(0, 905);
+            panelReporteria.Location = new Point(0, 945);
             panelReporteria.Name = "panelReporteria";
             panelReporteria.Size = new Size(243, 80);
             panelReporteria.TabIndex = 10;
             // 
             // btnReportesCreados
             // 
+            btnReportesCreados.BackColor = Color.FromArgb(202, 223, 255);
             btnReportesCreados.Dock = DockStyle.Top;
-            btnReportesCreados.FlatAppearance.BorderSize = 0;
+            btnReportesCreados.FlatAppearance.BorderColor = Color.White;
+            btnReportesCreados.FlatStyle = FlatStyle.Flat;
             btnReportesCreados.Font = new Font("Itim", 11.25F);
             btnReportesCreados.ForeColor = Color.FromArgb(87, 99, 110);
             btnReportesCreados.Location = new Point(0, 40);
@@ -349,13 +352,15 @@
             btnReportesCreados.TabIndex = 1;
             btnReportesCreados.Text = "Reportes Creados";
             btnReportesCreados.TextAlign = ContentAlignment.MiddleLeft;
-            btnReportesCreados.UseVisualStyleBackColor = true;
+            btnReportesCreados.UseVisualStyleBackColor = false;
             btnReportesCreados.Click += btnReportesCreados_Click;
             // 
             // btnCrearReporte
             // 
+            btnCrearReporte.BackColor = Color.FromArgb(202, 223, 255);
             btnCrearReporte.Dock = DockStyle.Top;
-            btnCrearReporte.FlatAppearance.BorderSize = 0;
+            btnCrearReporte.FlatAppearance.BorderColor = Color.White;
+            btnCrearReporte.FlatStyle = FlatStyle.Flat;
             btnCrearReporte.Font = new Font("Itim", 11.25F);
             btnCrearReporte.ForeColor = Color.FromArgb(87, 99, 110);
             btnCrearReporte.Location = new Point(0, 0);
@@ -365,7 +370,7 @@
             btnCrearReporte.TabIndex = 0;
             btnCrearReporte.Text = "Crear Reporte";
             btnCrearReporte.TextAlign = ContentAlignment.MiddleLeft;
-            btnCrearReporte.UseVisualStyleBackColor = true;
+            btnCrearReporte.UseVisualStyleBackColor = false;
             btnCrearReporte.Click += btnCrearReporte_Click;
             // 
             // btnReporteria
@@ -377,7 +382,7 @@
             btnReporteria.ForeColor = Color.FromArgb(87, 99, 110);
             btnReporteria.Image = (Image)resources.GetObject("btnReporteria.Image");
             btnReporteria.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReporteria.Location = new Point(0, 825);
+            btnReporteria.Location = new Point(0, 865);
             btnReporteria.Name = "btnReporteria";
             btnReporteria.Padding = new Padding(30, 0, 0, 0);
             btnReporteria.Size = new Size(243, 80);
@@ -396,15 +401,17 @@
             panelUsuarios.Controls.Add(btnGestionUsuarios);
             panelUsuarios.Controls.Add(btnGestionEmpleados);
             panelUsuarios.Dock = DockStyle.Top;
-            panelUsuarios.Location = new Point(0, 625);
+            panelUsuarios.Location = new Point(0, 665);
             panelUsuarios.Name = "panelUsuarios";
             panelUsuarios.Size = new Size(243, 200);
             panelUsuarios.TabIndex = 8;
             // 
             // btnBitacora
             // 
+            btnBitacora.BackColor = Color.FromArgb(202, 223, 255);
             btnBitacora.Dock = DockStyle.Top;
-            btnBitacora.FlatAppearance.BorderSize = 0;
+            btnBitacora.FlatAppearance.BorderColor = Color.White;
+            btnBitacora.FlatStyle = FlatStyle.Flat;
             btnBitacora.Font = new Font("Itim", 11.25F);
             btnBitacora.ForeColor = Color.FromArgb(87, 99, 110);
             btnBitacora.Location = new Point(0, 160);
@@ -414,13 +421,15 @@
             btnBitacora.TabIndex = 7;
             btnBitacora.Text = "Bitacora";
             btnBitacora.TextAlign = ContentAlignment.MiddleLeft;
-            btnBitacora.UseVisualStyleBackColor = true;
+            btnBitacora.UseVisualStyleBackColor = false;
             btnBitacora.Click += btnBitacora_Click;
             // 
             // btnAcciones
             // 
+            btnAcciones.BackColor = Color.FromArgb(202, 223, 255);
             btnAcciones.Dock = DockStyle.Top;
-            btnAcciones.FlatAppearance.BorderSize = 0;
+            btnAcciones.FlatAppearance.BorderColor = Color.White;
+            btnAcciones.FlatStyle = FlatStyle.Flat;
             btnAcciones.Font = new Font("Itim", 11.25F);
             btnAcciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnAcciones.Location = new Point(0, 120);
@@ -430,13 +439,15 @@
             btnAcciones.TabIndex = 5;
             btnAcciones.Text = "Lista de Acciones";
             btnAcciones.TextAlign = ContentAlignment.MiddleLeft;
-            btnAcciones.UseVisualStyleBackColor = true;
+            btnAcciones.UseVisualStyleBackColor = false;
             btnAcciones.Click += btnAcciones_Click;
             // 
             // btnGestionRoles
             // 
+            btnGestionRoles.BackColor = Color.FromArgb(202, 223, 255);
             btnGestionRoles.Dock = DockStyle.Top;
-            btnGestionRoles.FlatAppearance.BorderSize = 0;
+            btnGestionRoles.FlatAppearance.BorderColor = Color.White;
+            btnGestionRoles.FlatStyle = FlatStyle.Flat;
             btnGestionRoles.Font = new Font("Itim", 11.25F);
             btnGestionRoles.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionRoles.Location = new Point(0, 80);
@@ -446,13 +457,15 @@
             btnGestionRoles.TabIndex = 4;
             btnGestionRoles.Text = "Gestión de Roles";
             btnGestionRoles.TextAlign = ContentAlignment.MiddleLeft;
-            btnGestionRoles.UseVisualStyleBackColor = true;
+            btnGestionRoles.UseVisualStyleBackColor = false;
             btnGestionRoles.Click += btnGestionRoles_Click;
             // 
             // btnGestionUsuarios
             // 
+            btnGestionUsuarios.BackColor = Color.FromArgb(202, 223, 255);
             btnGestionUsuarios.Dock = DockStyle.Top;
-            btnGestionUsuarios.FlatAppearance.BorderSize = 0;
+            btnGestionUsuarios.FlatAppearance.BorderColor = Color.White;
+            btnGestionUsuarios.FlatStyle = FlatStyle.Flat;
             btnGestionUsuarios.Font = new Font("Itim", 11.25F);
             btnGestionUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionUsuarios.Location = new Point(0, 40);
@@ -462,13 +475,15 @@
             btnGestionUsuarios.TabIndex = 1;
             btnGestionUsuarios.Text = "Gestión de Usuarios";
             btnGestionUsuarios.TextAlign = ContentAlignment.MiddleLeft;
-            btnGestionUsuarios.UseVisualStyleBackColor = true;
+            btnGestionUsuarios.UseVisualStyleBackColor = false;
             btnGestionUsuarios.Click += btnGestionUsuarios_Click;
             // 
             // btnGestionEmpleados
             // 
+            btnGestionEmpleados.BackColor = Color.FromArgb(202, 223, 255);
             btnGestionEmpleados.Dock = DockStyle.Top;
-            btnGestionEmpleados.FlatAppearance.BorderSize = 0;
+            btnGestionEmpleados.FlatAppearance.BorderColor = Color.White;
+            btnGestionEmpleados.FlatStyle = FlatStyle.Flat;
             btnGestionEmpleados.Font = new Font("Itim", 11.25F);
             btnGestionEmpleados.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionEmpleados.Location = new Point(0, 0);
@@ -478,7 +493,7 @@
             btnGestionEmpleados.TabIndex = 0;
             btnGestionEmpleados.Text = "Gestión de Empleados";
             btnGestionEmpleados.TextAlign = ContentAlignment.MiddleLeft;
-            btnGestionEmpleados.UseVisualStyleBackColor = true;
+            btnGestionEmpleados.UseVisualStyleBackColor = false;
             btnGestionEmpleados.Click += btnGestionEmpleados_Click;
             // 
             // btnUsuarios
@@ -490,7 +505,7 @@
             btnUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
             btnUsuarios.Image = (Image)resources.GetObject("btnUsuarios.Image");
             btnUsuarios.ImageAlign = ContentAlignment.MiddleLeft;
-            btnUsuarios.Location = new Point(0, 545);
+            btnUsuarios.Location = new Point(0, 585);
             btnUsuarios.Name = "btnUsuarios";
             btnUsuarios.Padding = new Padding(30, 0, 0, 0);
             btnUsuarios.Size = new Size(243, 80);
@@ -503,18 +518,39 @@
             // panelVentas
             // 
             panelVentas.BackColor = Color.FromArgb(238, 238, 238);
+            panelVentas.Controls.Add(btnCierreDiario);
             panelVentas.Controls.Add(btnClientes);
             panelVentas.Controls.Add(btnGestionVentas);
             panelVentas.Dock = DockStyle.Top;
             panelVentas.Location = new Point(0, 465);
             panelVentas.Name = "panelVentas";
-            panelVentas.Size = new Size(243, 80);
+            panelVentas.Size = new Size(243, 120);
             panelVentas.TabIndex = 6;
+            // 
+            // btnCierreDiario
+            // 
+            btnCierreDiario.BackColor = Color.FromArgb(202, 223, 255);
+            btnCierreDiario.Dock = DockStyle.Top;
+            btnCierreDiario.FlatAppearance.BorderColor = Color.White;
+            btnCierreDiario.FlatStyle = FlatStyle.Flat;
+            btnCierreDiario.Font = new Font("Itim", 11.25F);
+            btnCierreDiario.ForeColor = Color.FromArgb(87, 99, 110);
+            btnCierreDiario.Location = new Point(0, 80);
+            btnCierreDiario.Name = "btnCierreDiario";
+            btnCierreDiario.Padding = new Padding(20, 0, 0, 0);
+            btnCierreDiario.Size = new Size(243, 40);
+            btnCierreDiario.TabIndex = 2;
+            btnCierreDiario.Text = "CierreDiario";
+            btnCierreDiario.TextAlign = ContentAlignment.MiddleLeft;
+            btnCierreDiario.UseVisualStyleBackColor = false;
+            btnCierreDiario.Click += btnCierreDiario_Click;
             // 
             // btnClientes
             // 
+            btnClientes.BackColor = Color.FromArgb(202, 223, 255);
             btnClientes.Dock = DockStyle.Top;
-            btnClientes.FlatAppearance.BorderSize = 0;
+            btnClientes.FlatAppearance.BorderColor = Color.White;
+            btnClientes.FlatStyle = FlatStyle.Flat;
             btnClientes.Font = new Font("Itim", 11.25F);
             btnClientes.ForeColor = Color.FromArgb(87, 99, 110);
             btnClientes.Location = new Point(0, 40);
@@ -524,13 +560,15 @@
             btnClientes.TabIndex = 1;
             btnClientes.Text = "Clientes";
             btnClientes.TextAlign = ContentAlignment.MiddleLeft;
-            btnClientes.UseVisualStyleBackColor = true;
+            btnClientes.UseVisualStyleBackColor = false;
             btnClientes.Click += btnClientes_Click;
             // 
             // btnGestionVentas
             // 
+            btnGestionVentas.BackColor = Color.FromArgb(202, 223, 255);
             btnGestionVentas.Dock = DockStyle.Top;
-            btnGestionVentas.FlatAppearance.BorderSize = 0;
+            btnGestionVentas.FlatAppearance.BorderColor = Color.White;
+            btnGestionVentas.FlatStyle = FlatStyle.Flat;
             btnGestionVentas.Font = new Font("Itim", 11.25F);
             btnGestionVentas.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionVentas.Location = new Point(0, 0);
@@ -540,7 +578,7 @@
             btnGestionVentas.TabIndex = 0;
             btnGestionVentas.Text = "Facturación";
             btnGestionVentas.TextAlign = ContentAlignment.MiddleLeft;
-            btnGestionVentas.UseVisualStyleBackColor = true;
+            btnGestionVentas.UseVisualStyleBackColor = false;
             btnGestionVentas.Click += btnGestionVentas_Click;
             // 
             // btnVentas
@@ -575,8 +613,10 @@
             // 
             // btnProveedores
             // 
+            btnProveedores.BackColor = Color.FromArgb(202, 223, 255);
             btnProveedores.Dock = DockStyle.Top;
-            btnProveedores.FlatAppearance.BorderSize = 0;
+            btnProveedores.FlatAppearance.BorderColor = Color.White;
+            btnProveedores.FlatStyle = FlatStyle.Flat;
             btnProveedores.Font = new Font("Itim", 11.25F);
             btnProveedores.ForeColor = Color.FromArgb(87, 99, 110);
             btnProveedores.Location = new Point(0, 40);
@@ -586,13 +626,15 @@
             btnProveedores.TabIndex = 1;
             btnProveedores.Text = "Proveedores";
             btnProveedores.TextAlign = ContentAlignment.MiddleLeft;
-            btnProveedores.UseVisualStyleBackColor = true;
+            btnProveedores.UseVisualStyleBackColor = false;
             btnProveedores.Click += btnProveedores_Click;
             // 
             // btnGestionCompra
             // 
+            btnGestionCompra.BackColor = Color.FromArgb(202, 223, 255);
             btnGestionCompra.Dock = DockStyle.Top;
-            btnGestionCompra.FlatAppearance.BorderSize = 0;
+            btnGestionCompra.FlatAppearance.BorderColor = Color.White;
+            btnGestionCompra.FlatStyle = FlatStyle.Flat;
             btnGestionCompra.Font = new Font("Itim", 11.25F);
             btnGestionCompra.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionCompra.Location = new Point(0, 0);
@@ -602,7 +644,7 @@
             btnGestionCompra.TabIndex = 0;
             btnGestionCompra.Text = "Gestión de Compra";
             btnGestionCompra.TextAlign = ContentAlignment.MiddleLeft;
-            btnGestionCompra.UseVisualStyleBackColor = true;
+            btnGestionCompra.UseVisualStyleBackColor = false;
             btnGestionCompra.Click += btnGestionCompra_Click;
             // 
             // btnCompras
@@ -637,8 +679,10 @@
             // 
             // btnInventarioBodega
             // 
+            btnInventarioBodega.BackColor = Color.FromArgb(202, 223, 255);
             btnInventarioBodega.Dock = DockStyle.Top;
-            btnInventarioBodega.FlatAppearance.BorderSize = 0;
+            btnInventarioBodega.FlatAppearance.BorderColor = Color.White;
+            btnInventarioBodega.FlatStyle = FlatStyle.Flat;
             btnInventarioBodega.Font = new Font("Itim", 11.25F);
             btnInventarioBodega.ForeColor = Color.FromArgb(87, 99, 110);
             btnInventarioBodega.Location = new Point(0, 40);
@@ -648,14 +692,15 @@
             btnInventarioBodega.TabIndex = 2;
             btnInventarioBodega.Text = "Inventario por Bodega";
             btnInventarioBodega.TextAlign = ContentAlignment.MiddleLeft;
-            btnInventarioBodega.UseVisualStyleBackColor = true;
+            btnInventarioBodega.UseVisualStyleBackColor = false;
             btnInventarioBodega.Click += btnInventarioBodega_Click;
             // 
             // btnGestionInventario
             // 
-            btnGestionInventario.BackColor = Color.FromArgb(253, 253, 253);
+            btnGestionInventario.BackColor = Color.FromArgb(202, 223, 255);
             btnGestionInventario.Dock = DockStyle.Top;
-            btnGestionInventario.FlatAppearance.BorderSize = 0;
+            btnGestionInventario.FlatAppearance.BorderColor = Color.White;
+            btnGestionInventario.FlatStyle = FlatStyle.Flat;
             btnGestionInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnGestionInventario.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionInventario.Location = new Point(0, 0);
@@ -728,32 +773,16 @@
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(260, 65);
             panelFormHijo.Name = "panelFormHijo";
-            panelFormHijo.Size = new Size(764, 663);
+            panelFormHijo.Size = new Size(924, 676);
             panelFormHijo.TabIndex = 2;
             // 
-            // lblFecha
+            // flowLayoutPanel1
             // 
-            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(444, 625);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(70, 29);
-            lblFecha.TabIndex = 31;
-            lblFecha.Text = "Fecha";
-            // 
-            // lblHora
-            // 
-            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblHora.AutoSize = true;
-            lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(624, 595);
-            lblHora.Name = "lblHora";
-            lblHora.Size = new Size(72, 33);
-            lblHora.TabIndex = 30;
-            lblHora.Text = "Hora";
+            flowLayoutPanel1.Controls.Add(pbxCalculadora);
+            flowLayoutPanel1.Location = new Point(21, 20);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(731, 559);
+            flowLayoutPanel1.TabIndex = 32;
             // 
             // pbxCalculadora
             // 
@@ -767,6 +796,30 @@
             pbxCalculadora.Click += pbxCalculadora_Click;
             pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
             pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
+            // 
+            // lblFecha
+            // 
+            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblFecha.AutoSize = true;
+            lblFecha.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
+            lblFecha.Location = new Point(604, 638);
+            lblFecha.Name = "lblFecha";
+            lblFecha.Size = new Size(70, 29);
+            lblFecha.TabIndex = 31;
+            lblFecha.Text = "Fecha";
+            // 
+            // lblHora
+            // 
+            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblHora.AutoSize = true;
+            lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
+            lblHora.Location = new Point(784, 608);
+            lblHora.Name = "lblHora";
+            lblHora.Size = new Size(72, 33);
+            lblHora.TabIndex = 30;
+            lblHora.Text = "Hora";
             // 
             // timerAbrir
             // 
@@ -784,9 +837,9 @@
             panelNotificaciones.BackgroundImageLayout = ImageLayout.Center;
             panelNotificaciones.Controls.Add(lblNotificaciones);
             panelNotificaciones.Dock = DockStyle.Right;
-            panelNotificaciones.Location = new Point(1024, 65);
+            panelNotificaciones.Location = new Point(1184, 65);
             panelNotificaciones.Name = "panelNotificaciones";
-            panelNotificaciones.Size = new Size(0, 663);
+            panelNotificaciones.Size = new Size(0, 676);
             panelNotificaciones.TabIndex = 3;
             // 
             // lblNotificaciones
@@ -805,20 +858,12 @@
             HoraFecha.Enabled = true;
             HoraFecha.Tick += HoraFecha_Tick;
             // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.Controls.Add(pbxCalculadora);
-            flowLayoutPanel1.Location = new Point(21, 20);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(731, 559);
-            flowLayoutPanel1.TabIndex = 32;
-            // 
             // frmMenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(224, 224, 224);
-            ClientSize = new Size(1024, 728);
+            ClientSize = new Size(1184, 741);
             Controls.Add(panelNotificaciones);
             Controls.Add(panelFormHijo);
             Controls.Add(panBarraControl);
@@ -845,10 +890,10 @@
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
             panelFormHijo.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             panelNotificaciones.ResumeLayout(false);
             panelNotificaciones.PerformLayout();
-            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -904,5 +949,6 @@
         private Label lblHora;
         private Label lblFecha;
         private FlowLayoutPanel flowLayoutPanel1;
+        private Button btnCierreDiario;
     }
 }

@@ -44,6 +44,41 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudieron cargar los productos. Verifique la conexión.", ex);
             }
         }
+        public async Task<Producto> InsertarProducto(Producto nuevoProducto)
+        {
+            // Verificación para asegurar que el objeto no sea nulo
+            if (nuevoProducto == null)
+            {
+                throw new ArgumentNullException(nameof(nuevoProducto), "El producto a insertar no puede ser nulo.");
+            }
 
+            try
+            {
+                // 1. Obtiene la conexión
+                var client = await GetClient();
+
+                // 2. Realiza la operación de inserción
+                // El cliente de Supabase puede insertar un solo objeto o una lista
+                var response = await client.From<Producto>().Insert(nuevoProducto);
+
+                // 3. Verifica y devuelve el producto insertado
+                if (response?.Models != null && response.Models.Count > 0)
+                {
+                    // Devuelve el primer producto de la respuesta,
+                    // que ahora incluirá el ID autogenerado (si aplica).
+                    return response.Models.First();
+                }
+
+                // Si la respuesta es nula o no contiene modelos, algo falló.
+                throw new Exception("La base de datos no devolvió el producto insertado.");
+            }
+            catch (Exception ex)
+            {
+                // 4. Manejo de errores
+                Console.WriteLine($"Error de Supabase al insertar producto: {ex.Message}");
+                // Relanza para que la UI (el formulario) pueda manejarlo
+                throw new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
+            }
+        }
     }
 }

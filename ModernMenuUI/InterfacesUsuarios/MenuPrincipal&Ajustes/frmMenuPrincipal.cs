@@ -16,10 +16,8 @@ namespace ModernMenuUI
         public frmMenuPrincipal()
         {
             InitializeComponent();
-            this.AutoScaleMode = AutoScaleMode.Dpi;
             animadorPanel = new clsAnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
-            this.DoubleBuffered = true;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
         }
 
@@ -107,7 +105,7 @@ namespace ModernMenuUI
             }
         }
 
-        // Ocultar Menú Lateral
+        // Ocultar Menï¿½ Lateral
         private void btnAbrirMenu_Click(object sender, EventArgs e)
         {
             MenulateralAnimacion();
@@ -153,7 +151,7 @@ namespace ModernMenuUI
             else
             {
                 timerAbrir.Stop();
-                btnReporteria.Text = "            " + "Reportería";
+                btnReporteria.Text = "            " + "Reporterï¿½a";
                 btnUsuarios.Text = "            " + "Usuarios";
                 btnVentas.Text = "            " + "Ventas";
                 btnCompras.Text = "            " + "Compras";
@@ -218,7 +216,7 @@ namespace ModernMenuUI
 
         private void btnAjustes_Click(object sender, EventArgs e)
         {
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmAjustes()); 
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmAjustes());
         }
 
         private void btnNotificaciones_Click(object sender, EventArgs e)
@@ -243,7 +241,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmProductos());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-            MenulateralAnimacion();
+            
         }
 
         private void btnInventarioBodega_Click(object sender, EventArgs e)
@@ -251,7 +249,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-            MenulateralAnimacion();
+          
         }
 
         private void btnGestionCompra_Click(object sender, EventArgs e)
@@ -259,14 +257,14 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionCompra());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
-            MenulateralAnimacion();
+           
         }
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
-            MenulateralAnimacion();
+           
         }
 
         private void btnGestionVentas_Click(object sender, EventArgs e)
@@ -274,7 +272,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmFacturacion());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
-            MenulateralAnimacion();
+            
         }
 
         private void btnClientes_Click(object sender, EventArgs e)
@@ -282,7 +280,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
-            MenulateralAnimacion();
+            
         }
 
         private void btnGestionEmpleados_Click(object sender, EventArgs e)
@@ -290,7 +288,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleados());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            MenulateralAnimacion();
+           
         }
 
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
@@ -298,7 +296,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionUsuario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            MenulateralAnimacion();
+            
         }
 
         private void btnGestionRoles_Click(object sender, EventArgs e)
@@ -306,14 +304,14 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmRoles());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            MenulateralAnimacion();
+            
         }
 
         private void btnAcciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            MenulateralAnimacion();
+            
         }
 
         private void btnBitacora_Click(object sender, EventArgs e)
@@ -321,20 +319,20 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            MenulateralAnimacion();
+            
         }
 
         private void btnCrearReporte_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
-            MenulateralAnimacion();
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERï¿½A");
+            
         }
 
         private void btnReportesCreados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERÍA");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERï¿½A");
         }
 
         // CONTENEDORES PARA MOVER FORMULARIO CON EVENTO
@@ -400,6 +398,9 @@ namespace ModernMenuUI
             pbxCalculadora.BackColor = Color.Transparent; // resalta
         }
 
+        private void btnCierreDiario_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
