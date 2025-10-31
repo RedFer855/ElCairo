@@ -72,10 +72,18 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            pbxCalculadora = new PictureBox();
+            panel9 = new Panel();
             lblFecha = new Label();
             lblHora = new Label();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            panel4 = new Panel();
+            panel5 = new Panel();
+            pbxCalculadora = new PictureBox();
+            panel7 = new Panel();
+            panel11 = new Panel();
+            panel6 = new Panel();
+            panel8 = new Panel();
+            panel10 = new Panel();
             timerAbrir = new System.Windows.Forms.Timer(components);
             timerCerrar = new System.Windows.Forms.Timer(components);
             panelNotificaciones = new Panel();
@@ -95,6 +103,7 @@
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
+            panel9.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
             panelNotificaciones.SuspendLayout();
@@ -377,7 +386,8 @@
             // 
             btnReporteria.BackColor = Color.FromArgb(189, 215, 238);
             btnReporteria.Dock = DockStyle.Top;
-            btnReporteria.FlatAppearance.BorderSize = 0;
+            btnReporteria.FlatAppearance.BorderColor = Color.White;
+            btnReporteria.FlatStyle = FlatStyle.Flat;
             btnReporteria.Font = new Font("Itim", 17.2499981F);
             btnReporteria.ForeColor = Color.FromArgb(87, 99, 110);
             btnReporteria.Image = (Image)resources.GetObject("btnReporteria.Image");
@@ -500,7 +510,8 @@
             // 
             btnUsuarios.BackColor = Color.FromArgb(189, 215, 238);
             btnUsuarios.Dock = DockStyle.Top;
-            btnUsuarios.FlatAppearance.BorderSize = 0;
+            btnUsuarios.FlatAppearance.BorderColor = Color.White;
+            btnUsuarios.FlatStyle = FlatStyle.Flat;
             btnUsuarios.Font = new Font("Itim", 17.2499981F);
             btnUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
             btnUsuarios.Image = (Image)resources.GetObject("btnUsuarios.Image");
@@ -585,7 +596,8 @@
             // 
             btnVentas.BackColor = Color.FromArgb(189, 215, 238);
             btnVentas.Dock = DockStyle.Top;
-            btnVentas.FlatAppearance.BorderSize = 0;
+            btnVentas.FlatAppearance.BorderColor = Color.White;
+            btnVentas.FlatStyle = FlatStyle.Flat;
             btnVentas.Font = new Font("Itim", 17.2499981F);
             btnVentas.ForeColor = Color.FromArgb(87, 99, 110);
             btnVentas.Image = (Image)resources.GetObject("btnVentas.Image");
@@ -651,7 +663,8 @@
             // 
             btnCompras.BackColor = Color.FromArgb(189, 215, 238);
             btnCompras.Dock = DockStyle.Top;
-            btnCompras.FlatAppearance.BorderSize = 0;
+            btnCompras.FlatAppearance.BorderColor = Color.White;
+            btnCompras.FlatStyle = FlatStyle.Flat;
             btnCompras.Font = new Font("Itim", 17.2499981F);
             btnCompras.ForeColor = Color.FromArgb(87, 99, 110);
             btnCompras.Image = (Image)resources.GetObject("btnCompras.Image");
@@ -718,7 +731,8 @@
             btnInventario.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnInventario.BackColor = Color.FromArgb(189, 215, 238);
             btnInventario.Dock = DockStyle.Top;
-            btnInventario.FlatAppearance.BorderSize = 0;
+            btnInventario.FlatAppearance.BorderColor = Color.White;
+            btnInventario.FlatStyle = FlatStyle.Flat;
             btnInventario.Font = new Font("Itim", 17.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnInventario.ForeColor = Color.FromArgb(87, 99, 110);
             btnInventario.Image = (Image)resources.GetObject("btnInventario.Image");
@@ -767,29 +781,87 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(panel9);
             panelFormHijo.Controls.Add(flowLayoutPanel1);
-            panelFormHijo.Controls.Add(lblFecha);
-            panelFormHijo.Controls.Add(lblHora);
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(260, 65);
             panelFormHijo.Name = "panelFormHijo";
             panelFormHijo.Size = new Size(924, 676);
             panelFormHijo.TabIndex = 2;
             // 
+            // panel9
+            // 
+            panel9.Controls.Add(lblFecha);
+            panel9.Controls.Add(lblHora);
+            panel9.Dock = DockStyle.Bottom;
+            panel9.Location = new Point(0, 595);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(924, 81);
+            panel9.TabIndex = 33;
+            // 
+            // lblFecha
+            // 
+            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
+            lblFecha.Location = new Point(608, 52);
+            lblFecha.Name = "lblFecha";
+            lblFecha.Size = new Size(316, 29);
+            lblFecha.TabIndex = 31;
+            lblFecha.Text = "Fecha";
+            // 
+            // lblHora
+            // 
+            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblHora.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
+            lblHora.Location = new Point(756, 19);
+            lblHora.Name = "lblHora";
+            lblHora.Size = new Size(168, 33);
+            lblHora.TabIndex = 30;
+            lblHora.Text = "Hora";
+            // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Controls.Add(panel4);
+            flowLayoutPanel1.Controls.Add(panel5);
+            flowLayoutPanel1.Controls.Add(panel7);
+            flowLayoutPanel1.Controls.Add(panel11);
+            flowLayoutPanel1.Controls.Add(panel6);
             flowLayoutPanel1.Controls.Add(pbxCalculadora);
-            flowLayoutPanel1.Location = new Point(21, 20);
+            flowLayoutPanel1.Controls.Add(panel8);
+            flowLayoutPanel1.Controls.Add(panel10);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(731, 559);
+            flowLayoutPanel1.Size = new Size(924, 676);
             flowLayoutPanel1.TabIndex = 32;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.FromArgb(189, 215, 238);
+            panel4.Location = new Point(10, 10);
+            panel4.Margin = new Padding(10);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(444, 100);
+            panel4.TabIndex = 7;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.FromArgb(189, 215, 238);
+            panel5.Location = new Point(474, 10);
+            panel5.Margin = new Padding(10);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(431, 100);
+            panel5.TabIndex = 8;
             // 
             // pbxCalculadora
             // 
             pbxCalculadora.Image = Properties.Resources.calculadora;
-            pbxCalculadora.Location = new Point(3, 3);
+            pbxCalculadora.Location = new Point(821, 130);
+            pbxCalculadora.Margin = new Padding(10);
             pbxCalculadora.Name = "pbxCalculadora";
-            pbxCalculadora.Size = new Size(95, 100);
+            pbxCalculadora.Size = new Size(86, 100);
             pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCalculadora.TabIndex = 6;
             pbxCalculadora.TabStop = false;
@@ -797,29 +869,50 @@
             pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
             pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
             // 
-            // lblFecha
+            // panel7
             // 
-            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(604, 638);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(70, 29);
-            lblFecha.TabIndex = 31;
-            lblFecha.Text = "Fecha";
+            panel7.BackColor = Color.FromArgb(189, 215, 238);
+            panel7.Location = new Point(10, 130);
+            panel7.Margin = new Padding(10);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(258, 100);
+            panel7.TabIndex = 9;
             // 
-            // lblHora
+            // panel11
             // 
-            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblHora.AutoSize = true;
-            lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(784, 608);
-            lblHora.Name = "lblHora";
-            lblHora.Size = new Size(72, 33);
-            lblHora.TabIndex = 30;
-            lblHora.Text = "Hora";
+            panel11.BackColor = Color.FromArgb(189, 215, 238);
+            panel11.Location = new Point(288, 130);
+            panel11.Margin = new Padding(10);
+            panel11.Name = "panel11";
+            panel11.Size = new Size(250, 100);
+            panel11.TabIndex = 11;
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.FromArgb(189, 215, 238);
+            panel6.Location = new Point(558, 130);
+            panel6.Margin = new Padding(10);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(243, 100);
+            panel6.TabIndex = 12;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = Color.FromArgb(189, 215, 238);
+            panel8.Location = new Point(10, 250);
+            panel8.Margin = new Padding(10);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(528, 338);
+            panel8.TabIndex = 11;
+            // 
+            // panel10
+            // 
+            panel10.BackColor = Color.FromArgb(189, 215, 238);
+            panel10.Location = new Point(558, 250);
+            panel10.Margin = new Padding(10);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(351, 338);
+            panel10.TabIndex = 12;
             // 
             // timerAbrir
             // 
@@ -889,7 +982,7 @@
             panelInventario.ResumeLayout(false);
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
-            panelFormHijo.PerformLayout();
+            panel9.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             panelNotificaciones.ResumeLayout(false);
@@ -950,5 +1043,13 @@
         private Label lblFecha;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnCierreDiario;
+        private Panel panel4;
+        private Panel panel5;
+        private Panel panel7;
+        private Panel panel8;
+        private Panel panel9;
+        private Panel panel11;
+        private Panel panel10;
+        private Panel panel6;
     }
 }
