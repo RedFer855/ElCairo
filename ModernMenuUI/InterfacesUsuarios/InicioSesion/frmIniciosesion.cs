@@ -48,7 +48,7 @@ namespace ModernMenuUI
             else
             {
                 // Validadcion inicial para acceder al servidor y comprobar Inicio de sesión
-                string username = txtUsuario.Text;
+                string username = txtUsuario.Text + "@gmail.com";
                 string password = txtContra.Text;
                 username = username.Trim();
                 password = password.Trim();
@@ -160,6 +160,7 @@ namespace ModernMenuUI
                     MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión.", "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     // Lógica de limpieza y re-enfoque
                     LimpiarDatos(e, e);
+                    lblMensajeError.Visible = false;
                 }
                 finally
                 {
