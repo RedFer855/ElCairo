@@ -1,5 +1,6 @@
 ﻿using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using ModernMenuUI.InterfacesUsuarios.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,7 @@ namespace ModernMenuUI
 
         private async void btnGuardarEmpleado_Click(object sender, EventArgs e)
         {
+
             // 1. VALIDACIÓN (Simple)
             if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text))
             {
@@ -68,12 +70,18 @@ namespace ModernMenuUI
         private void frmAgregarEmpleado_Load(object sender, EventArgs e)
         {
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "AGREGUE UN EMPLEADO NUEVO");
-            
+
         }
 
         private void btnVover_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnUsuario_Click(object sender, EventArgs e)
+        {
+            frmAgregarUsuario Usu = new frmAgregarUsuario();
+            Usu.ShowDialog();   
         }
     }
 }

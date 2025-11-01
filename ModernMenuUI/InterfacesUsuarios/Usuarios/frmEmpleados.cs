@@ -21,7 +21,7 @@ namespace ModernMenuUI
             InitializeComponent();
             dgvEmpleados.AutoGenerateColumns = false;
             _empleadoRepo = new EmpleadoRepositorio();
-           
+
         }
 
         private void frmEmpleados_Load(object sender, EventArgs e)
@@ -71,6 +71,11 @@ namespace ModernMenuUI
 
             // Refresca la lista después de cerrar el diálogo
             CargarEmpleados();
+        }
+
+        private void dgvEmpleados_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
         }
     }
 }

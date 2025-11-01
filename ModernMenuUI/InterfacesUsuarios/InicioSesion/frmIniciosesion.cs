@@ -1,5 +1,6 @@
 ﻿using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using Supabase.Gotrue.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,7 +61,9 @@ namespace ModernMenuUI
                 {
                     pbxCargando.Visible = true; // Picture box con imagen en formato gift para carga
 
-                    Usuario usuario = await _usuarioRepo.Iniciar_Sesion(username, password);
+                    var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+
+                    var usuario = await supabase.Auth.SignIn(username, password);
 
                     if (usuario != null)
                     {
@@ -103,6 +106,28 @@ namespace ModernMenuUI
                         // Lógica de limpieza y re-enfoque
                         LimpiarDatos(e, e);
                     }
+                }catch (GotrueException gex)
+                {
+                    // Captura el error específico de credenciales inválidas
+                    pbxCargando.Visible = false;
+                    lblMensajeError.Visible = true;
+                    lblMensajeError.ForeColor = Color.Red;
+
+                    if (gex.Message.Contains("Invalid login credentials"))
+                    {
+                        lblMensajeError.Text = "Usuario o Contraseña incorrectos";
+                    }
+                    else if (gex.Message.Contains("Email not confirmed"))
+                    {
+                        lblMensajeError.Text = "El email no ha sido confirmado.";
+                    }
+                    else
+                    {
+                        lblMensajeError.Text = "Error de autenticación.";
+                        Console.WriteLine($"GotrueError: {gex.Message}");
+                    }
+
+                    LimpiarDatos(e, e);
                 }
                 catch (System.Net.WebException wex)
                 {

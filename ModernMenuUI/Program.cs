@@ -4,6 +4,7 @@ using ModernMenuUI;
 using System;
 using System.Windows.Forms;
 using CapaDeDatos;
+using Supabase.Realtime;
 
 namespace ModernMenuUI
 {

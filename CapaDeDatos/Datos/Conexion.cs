@@ -10,12 +10,14 @@ using Supabase.Postgrest.Models;
 
 
 
-namespace CapaDeDatos.Datos 
-{ 
+namespace CapaDeDatos.Datos
+{
 
     public class Conexion
     {
         public static Client _supabaseClient { get; private set; }
+        //public static Client Instance => _supabaseClient;
+
 
         // MÉTODOS DE CONEXION: Creación de Cliente y Manejo de Timeout
 
@@ -63,4 +65,3 @@ namespace CapaDeDatos.Datos
         }
     }
 }
-

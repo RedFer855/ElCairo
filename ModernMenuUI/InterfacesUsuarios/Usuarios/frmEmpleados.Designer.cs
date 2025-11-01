@@ -32,9 +32,16 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmpleados));
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmpleados));
             dgvEmpleados = new DataGridView();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
+            PorcentajeGanancia = new DataGridViewTextBoxColumn();
+            PrecioCompra = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             panel10 = new Panel();
             txtBuscar = new TextBox();
             panel1 = new Panel();
@@ -49,13 +56,6 @@
             btnNuevo = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             button4 = new Button();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
-            PrecioCompra = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).BeginInit();
             panel10.SuspendLayout();
             panel1.SuspendLayout();
@@ -115,6 +115,59 @@
             dgvEmpleados.RowTemplate.Height = 50;
             dgvEmpleados.Size = new Size(650, 362);
             dgvEmpleados.TabIndex = 1;
+            dgvEmpleados.CellContentClick += dgvEmpleados_CellContentClick;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.DataPropertyName = "Id";
+            dataGridViewTextBoxColumn3.FillWeight = 80F;
+            dataGridViewTextBoxColumn3.HeaderText = "Id";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.DataPropertyName = "Dni";
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewTextBoxColumn1.FillWeight = 50F;
+            dataGridViewTextBoxColumn1.HeaderText = "DNI";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.DataPropertyName = "Nombre";
+            dataGridViewTextBoxColumn2.FillWeight = 70F;
+            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // Categoria
+            // 
+            Categoria.DataPropertyName = "Apellido";
+            Categoria.FillWeight = 80F;
+            Categoria.HeaderText = "Apellido";
+            Categoria.Name = "Categoria";
+            // 
+            // PorcentajeGanancia
+            // 
+            PorcentajeGanancia.DataPropertyName = "Telefono";
+            PorcentajeGanancia.FillWeight = 80F;
+            PorcentajeGanancia.HeaderText = "Teléfono";
+            PorcentajeGanancia.Name = "PorcentajeGanancia";
+            // 
+            // PrecioCompra
+            // 
+            PrecioCompra.DataPropertyName = "Email";
+            PrecioCompra.FillWeight = 80F;
+            PrecioCompra.HeaderText = "Correo";
+            PrecioCompra.Name = "PrecioCompra";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.DataPropertyName = "Direccion";
+            dataGridViewTextBoxColumn4.FillWeight = 70F;
+            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // panel10
             // 
@@ -288,58 +341,6 @@
             button4.TabIndex = 44;
             button4.Text = "button4";
             button4.UseVisualStyleBackColor = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.DataPropertyName = "Id";
-            dataGridViewTextBoxColumn3.FillWeight = 80F;
-            dataGridViewTextBoxColumn3.HeaderText = "Id";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "Dni";
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "DNI";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.DataPropertyName = "Nombre";
-            dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // Categoria
-            // 
-            Categoria.DataPropertyName = "Apellido";
-            Categoria.FillWeight = 80F;
-            Categoria.HeaderText = "Apellido";
-            Categoria.Name = "Categoria";
-            // 
-            // PorcentajeGanancia
-            // 
-            PorcentajeGanancia.DataPropertyName = "Telefono";
-            PorcentajeGanancia.FillWeight = 80F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            // 
-            // PrecioCompra
-            // 
-            PrecioCompra.DataPropertyName = "Email";
-            PrecioCompra.FillWeight = 80F;
-            PrecioCompra.HeaderText = "Correo";
-            PrecioCompra.Name = "PrecioCompra";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "Direccion";
-            dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // frmEmpleados
             // 

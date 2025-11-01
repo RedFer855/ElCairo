@@ -35,7 +35,6 @@
             label4 = new Label();
             txtCorreo = new TextBox();
             txtTelefono = new TextBox();
-            label9 = new Label();
             label8 = new Label();
             txtDni = new TextBox();
             label2 = new Label();
@@ -48,6 +47,7 @@
             groupBox1 = new GroupBox();
             radioButton2 = new RadioButton();
             panel2 = new Panel();
+            btnUsuario = new Button();
             btnVover = new Button();
             btnGuardarEmpleado = new Button();
             panBarraControl = new Panel();
@@ -132,17 +132,6 @@
             txtTelefono.PlaceholderText = "(Número de Teléfono sin espacios guiones)";
             txtTelefono.Size = new Size(315, 20);
             txtTelefono.TabIndex = 4;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Comic Sans MS", 12F);
-            label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(36, 15);
-            label9.Name = "label9";
-            label9.Size = new Size(153, 23);
-            label9.TabIndex = 20;
-            label9.Text = "Datos del Producto:";
             // 
             // label8
             // 
@@ -267,6 +256,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(btnUsuario);
             panel2.Controls.Add(txtNombre);
             panel2.Controls.Add(txtDni);
             panel2.Controls.Add(btnVover);
@@ -279,7 +269,6 @@
             panel2.Controls.Add(label4);
             panel2.Controls.Add(txtCorreo);
             panel2.Controls.Add(txtTelefono);
-            panel2.Controls.Add(label9);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label1);
@@ -287,20 +276,36 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 41);
             panel2.Name = "panel2";
-            panel2.Size = new Size(508, 436);
+            panel2.Size = new Size(508, 434);
             panel2.TabIndex = 14;
+            // 
+            // btnUsuario
+            // 
+            btnUsuario.BackColor = Color.FromArgb(13, 90, 169);
+            btnUsuario.BackgroundImageLayout = ImageLayout.None;
+            btnUsuario.FlatAppearance.BorderSize = 0;
+            btnUsuario.Font = new Font("Itim", 11.9999981F);
+            btnUsuario.ForeColor = SystemColors.ButtonFace;
+            btnUsuario.ImageAlign = ContentAlignment.BottomLeft;
+            btnUsuario.Location = new Point(150, 376);
+            btnUsuario.Name = "btnUsuario";
+            btnUsuario.Size = new Size(198, 37);
+            btnUsuario.TabIndex = 33;
+            btnUsuario.Text = "Usuario del Empleado";
+            btnUsuario.UseVisualStyleBackColor = false;
+            btnUsuario.Click += btnUsuario_Click;
             // 
             // btnVover
             // 
             btnVover.BackColor = Color.FromArgb(148, 168, 187);
             btnVover.BackgroundImageLayout = ImageLayout.None;
             btnVover.FlatAppearance.BorderSize = 0;
-            btnVover.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnVover.Font = new Font("Itim", 11.9999981F);
             btnVover.ForeColor = SystemColors.ButtonFace;
             btnVover.ImageAlign = ContentAlignment.BottomLeft;
-            btnVover.Location = new Point(79, 372);
+            btnVover.Location = new Point(362, 376);
             btnVover.Name = "btnVover";
-            btnVover.Size = new Size(157, 37);
+            btnVover.Size = new Size(95, 37);
             btnVover.TabIndex = 10;
             btnVover.Text = "Salir";
             btnVover.UseVisualStyleBackColor = false;
@@ -311,12 +316,12 @@
             btnGuardarEmpleado.BackColor = Color.FromArgb(149, 195, 172);
             btnGuardarEmpleado.BackgroundImageLayout = ImageLayout.None;
             btnGuardarEmpleado.FlatAppearance.BorderSize = 0;
-            btnGuardarEmpleado.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGuardarEmpleado.Font = new Font("Itim", 11.9999981F);
             btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
             btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarEmpleado.Location = new Point(242, 372);
+            btnGuardarEmpleado.Location = new Point(36, 376);
             btnGuardarEmpleado.Name = "btnGuardarEmpleado";
-            btnGuardarEmpleado.Size = new Size(153, 37);
+            btnGuardarEmpleado.Size = new Size(103, 37);
             btnGuardarEmpleado.TabIndex = 11;
             btnGuardarEmpleado.Text = "Guardar";
             btnGuardarEmpleado.UseVisualStyleBackColor = false;
@@ -326,7 +331,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(508, 477);
+            ClientSize = new Size(508, 475);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             DoubleBuffered = true;
@@ -369,5 +374,6 @@
         public Label lblNombreModulo;
         private Button btnVover;
         private Button btnGuardarEmpleado;
+        private Button btnUsuario;
     }
 }
