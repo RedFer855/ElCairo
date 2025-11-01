@@ -1,5 +1,7 @@
-﻿using CapaDeDatos.Modelados;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using Supabase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,12 +11,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
+using Supabase.Realtime;
 
 namespace ModernMenuUI
 {
+    
     public partial class frmEmpleados : Form
     {
         private readonly EmpleadoRepositorio _empleadoRepo;
+        private Supabase.Realtime.RealtimeChannel? _empleadoSubscription;
 
         public frmEmpleados()
         {
@@ -23,13 +29,39 @@ namespace ModernMenuUI
             _empleadoRepo = new EmpleadoRepositorio();
 
         }
-
-        private void frmEmpleados_Load(object sender, EventArgs e)
+        private async void FrmEmpleados_Load(object sender, EventArgs e)
         {
-            CargarEmpleados();
+            await CargarEmpleados(); // Ahora llamamos con await
+
+            // 2. INICIO: Iniciar la suscripción después de cargar los datos iniciales
+            await IniciarSuscripcionEmpleados();
         }
 
-        private async void CargarEmpleados()
+       
+        private async Task IniciarSuscripcionEmpleados()
+        {
+
+            var client = await Conexion.ConnectWithTimeoutAsync(10);
+
+
+            _empleadoSubscription = await client.From<Empleado>().On(ListenType.All, (sender, change) =>
+            {
+                
+                this.Invoke((MethodInvoker)delegate
+                {
+                    // Lógica para recargar la lista en caso de cualquier cambio (INSERT, UPDATE, DELETE)
+                    System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en la tabla Empleados.");
+                    CargarEmpleados();
+                });
+            });
+        }
+        private async Task frmEmpleados_Load(object sender, EventArgs e)
+        {
+            await IniciarSuscripcionEmpleados();
+            await CargarEmpleados();
+        }
+
+        private async Task CargarEmpleados()
         {
             try
             {

@@ -356,7 +356,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmEmpleados";
             Text = "frmEmpleados";
-            Load += frmEmpleados_Load;
+            Load += FrmEmpleados_Load;
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).EndInit();
             panel10.ResumeLayout(false);
             panel1.ResumeLayout(false);
