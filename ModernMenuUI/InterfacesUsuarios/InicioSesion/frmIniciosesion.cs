@@ -67,8 +67,12 @@ namespace ModernMenuUI
 
                     var usuario = await supabase.Auth.SignIn(username, password);
 
+                    var Actual = supabase.Auth.CurrentUser;
                     if (usuario != null)
                     {
+                        
+                        CapaServiciosSeguridadValidacion.ServicioSesionUsuario.IniciarSesion(Actual);
+
                         // Muestra el label y prepara el primer mensaje
                         lblMensajeError.ForeColor = Color.DarkGray; // Color neutro para carga
                         lblMensajeError.Text = "Conectando al servidor...";

@@ -52,7 +52,7 @@ namespace ModernMenuUI
         // Mostrar paneles cerrados al cargar por primera vez el form
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
             clsManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
         }
@@ -89,8 +89,8 @@ namespace ModernMenuUI
             panelFormHijo.Invalidate(false);
             panelFormHijo.Visible = false;
 
-            double factorCerrado = (double)100 / 260; // porque 100 / 260 ≈ 0.3846
-            double factorAbierto = 2.6;    // porque 260 / 100 = 2.6
+            double factorCerrado = (double)100 / 300; // porque 100 / 260 ≈ 0.3846
+            double factorAbierto = 3;    // porque 260 / 100 = 2.6
 
             if (panelMenuLateral.Width < 200) // asumimos que está cerrado si < mitad aprox
             {
