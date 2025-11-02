@@ -15,33 +15,44 @@ namespace CapaDeDatos.Repositorios
         {
             return await Conexion.ConnectWithTimeoutAsync(10);
         }
-        public async Task<List<Producto>> ObtenerTodosLosProductos()
+        public async Task<List<Producto>> ObtenerTodosLosProductos(bool? estado = null)
         {
             try
             {
                 // 1. Obtiene la conexión
                 var client = await GetClient();
 
-                // 2. Realiza la consulta (SELECT * FROM producto)
-                // Se cambia Empleado por Producto
-                var response = await client.From<Producto>().Get();
+                // 2. Prepara la consulta base (SIN .Get() todavía)
+                var query = client.From<Producto>();
 
-                // 3. Devuelve la lista de modelos (objetos Producto)
+                // 3. APLICA EL FILTRO (Esta es la parte que faltaba)
+                if (estado.HasValue) // Si estado es 'true' o 'false'
+                {
+                    // Aplica el filtro WHERE
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)query.Where(x => x.EstadoProducto == estado.Value);
+                }
+                else // Si estado es 'null' (para "Mostrar Todos")
+                {
+                    // Opcional: Si quieres que "Todos" solo incluya Habilitados y Deshabilitados
+                    // (y no otros posibles estados), usa el OR.
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)query.Where(x => x.EstadoProducto == true || x.EstadoProducto == false);
+                }
+
+                // 4. Ejecuta la consulta AHORA
+                var response = await query.Get();
+
+                // 5. Devuelve la lista de modelos
                 if (response != null && response.Models != null)
                 {
                     return response.Models;
                 }
 
-                // Devuelve una lista vacía si no hay respuesta
                 return new List<Producto>();
             }
             catch (Exception ex)
             {
-                // 4. Manejo de errores
                 Console.WriteLine($"Error de Supabase al obtener productos: {ex.Message}");
-                // Relanza la excepción para que el formulario (la UI) pueda
-                // mostrar un mensaje de error al usuario.
-                throw;// new Exception("No se pudieron cargar los productos. Verifique la conexión.", ex);
+                throw;
             }
         }
         public async Task<Producto> InsertarProducto(Producto nuevoProducto)

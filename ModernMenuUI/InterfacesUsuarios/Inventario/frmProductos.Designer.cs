@@ -44,10 +44,12 @@
             btnNuevoProducto = new Button();
             btnSalir = new Button();
             button1 = new Button();
-            groupBox1 = new GroupBox();
-            radioButton3 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
+            gbxEstado = new GroupBox();
+            comboBox2 = new ComboBox();
+            comboBox1 = new ComboBox();
+            rbMostrardeshabilitados = new RadioButton();
+            rbMostrarTodos = new RadioButton();
+            rbMostrarHabilitados = new RadioButton();
             lblFecha = new Label();
             lblHora = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
@@ -57,8 +59,8 @@
             panel1 = new Panel();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             PorcentajeGanancia = new DataGridViewTextBoxColumn();
             PrecioCompra = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
@@ -69,7 +71,7 @@
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             panelBusqueda.SuspendLayout();
-            groupBox1.SuspendLayout();
+            gbxEstado.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -81,7 +83,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 17);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(711, 358);
+            panelCarrito.Size = new Size(798, 407);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -91,7 +93,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(711, 358);
+            panel10.Size = new Size(798, 407);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -116,7 +118,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn4, Categoria, PorcentajeGanancia, PrecioCompra, dataGridViewTextBoxColumn3, PrecioVenta, CantidadProducto, EstadoProducto });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, PorcentajeGanancia, PrecioCompra, dataGridViewTextBoxColumn3, PrecioVenta, CantidadProducto, EstadoProducto });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = Color.White;
             dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -130,6 +132,7 @@
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
             dgvProductos.Location = new Point(0, 0);
             dgvProductos.Name = "dgvProductos";
+            dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
@@ -142,7 +145,7 @@
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(711, 358);
+            dgvProductos.Size = new Size(798, 407);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -152,9 +155,9 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(12, 32);
+            panelBusqueda.Location = new Point(12, 12);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(742, 43);
+            panelBusqueda.Size = new Size(826, 43);
             panelBusqueda.TabIndex = 14;
             // 
             // txtBuscar
@@ -165,9 +168,8 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(657, 20);
+            txtBuscar.Size = new Size(741, 20);
             txtBuscar.TabIndex = 1;
-            txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
             // btnbuscar
             // 
@@ -177,7 +179,7 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(681, 12);
+            btnbuscar.Location = new Point(765, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
@@ -225,52 +227,77 @@
             button1.Text = "Agregar Marca";
             button1.UseVisualStyleBackColor = false;
             // 
-            // groupBox1
+            // gbxEstado
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(radioButton3);
-            groupBox1.Controls.Add(radioButton2);
-            groupBox1.Controls.Add(radioButton1);
-            groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(15, 85);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(522, 53);
-            groupBox1.TabIndex = 28;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Filtro de Búsqueda:";
+            gbxEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            gbxEstado.Controls.Add(comboBox2);
+            gbxEstado.Controls.Add(comboBox1);
+            gbxEstado.Controls.Add(rbMostrardeshabilitados);
+            gbxEstado.Controls.Add(rbMostrarTodos);
+            gbxEstado.Controls.Add(rbMostrarHabilitados);
+            gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxEstado.ForeColor = Color.DimGray;
+            gbxEstado.Location = new Point(12, 61);
+            gbxEstado.Name = "gbxEstado";
+            gbxEstado.Size = new Size(826, 53);
+            gbxEstado.TabIndex = 28;
+            gbxEstado.TabStop = false;
+            gbxEstado.Text = "Filtros de Búsqueda:";
             // 
-            // radioButton3
+            // comboBox2
             // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(341, 21);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(178, 22);
-            radioButton3.TabIndex = 30;
-            radioButton3.Text = "Mostrar Deshabilitados";
-            radioButton3.UseVisualStyleBackColor = true;
+            comboBox2.ForeColor = Color.DimGray;
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(438, 17);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(184, 26);
+            comboBox2.TabIndex = 34;
+            comboBox2.Text = "Seleccionar Categoría";
             // 
-            // radioButton2
+            // comboBox1
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Checked = true;
-            radioButton2.Location = new Point(158, 21);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(156, 22);
-            radioButton2.TabIndex = 29;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Mostrar Habilitados";
-            radioButton2.UseVisualStyleBackColor = true;
+            comboBox1.ForeColor = Color.DimGray;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(659, 17);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(154, 26);
+            comboBox1.TabIndex = 33;
+            comboBox1.Text = "Seleccionar Marca";
             // 
-            // radioButton1
+            // rbMostrardeshabilitados
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(18, 21);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(120, 22);
-            radioButton1.TabIndex = 28;
-            radioButton1.Text = "Mostrar Todos";
-            radioButton1.UseVisualStyleBackColor = true;
+            rbMostrardeshabilitados.AutoSize = true;
+            rbMostrardeshabilitados.Location = new Point(280, 21);
+            rbMostrardeshabilitados.Name = "rbMostrardeshabilitados";
+            rbMostrardeshabilitados.Size = new Size(121, 22);
+            rbMostrardeshabilitados.TabIndex = 30;
+            rbMostrardeshabilitados.Text = "Deshabilitados";
+            rbMostrardeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrardeshabilitados.CheckedChanged += rbMostrardeshabilitados_CheckedChanged;
+            // 
+            // rbMostrarTodos
+            // 
+            rbMostrarTodos.AutoSize = true;
+            rbMostrarTodos.Checked = true;
+            rbMostrarTodos.Location = new Point(6, 21);
+            rbMostrarTodos.Name = "rbMostrarTodos";
+            rbMostrarTodos.Size = new Size(120, 22);
+            rbMostrarTodos.TabIndex = 29;
+            rbMostrarTodos.TabStop = true;
+            rbMostrarTodos.Text = "Mostrar Todos";
+            rbMostrarTodos.UseVisualStyleBackColor = true;
+            rbMostrarTodos.CheckedChanged += rbMostrarTodos_CheckedChanged;
+            // 
+            // rbMostrarHabilitados
+            // 
+            rbMostrarHabilitados.AutoSize = true;
+            rbMostrarHabilitados.Location = new Point(152, 21);
+            rbMostrarHabilitados.Name = "rbMostrarHabilitados";
+            rbMostrarHabilitados.Size = new Size(101, 22);
+            rbMostrarHabilitados.TabIndex = 28;
+            rbMostrarHabilitados.Text = "Habilitados";
+            rbMostrarHabilitados.UseVisualStyleBackColor = true;
+            rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
             // lblFecha
             // 
@@ -278,11 +305,11 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(419, 638);
+            lblFecha.Location = new Point(503, 638);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(67, 25);
+            lblFecha.Size = new Size(22, 25);
             lblFecha.TabIndex = 30;
-            lblFecha.Text = "label3";
+            lblFecha.Text = "1";
             lblFecha.Visible = false;
             // 
             // lblHora
@@ -291,11 +318,11 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(419, 612);
+            lblHora.Location = new Point(503, 612);
             lblHora.Name = "lblHora";
-            lblHora.Size = new Size(87, 33);
+            lblHora.Size = new Size(28, 33);
             lblHora.TabIndex = 29;
-            lblHora.Text = "label3";
+            lblHora.Text = "1";
             lblHora.Visible = false;
             // 
             // HoraFecha
@@ -355,9 +382,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(15, 158);
+            panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
-            panel1.Size = new Size(739, 388);
+            panel1.Size = new Size(826, 437);
             panel1.TabIndex = 32;
             // 
             // dataGridViewTextBoxColumn1
@@ -368,7 +395,10 @@
             dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewTextBoxColumn1.FillWeight = 80F;
             dataGridViewTextBoxColumn1.HeaderText = "Código";
+            dataGridViewTextBoxColumn1.MinimumWidth = 65;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Width = 65;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -377,27 +407,36 @@
             dataGridViewTextBoxColumn2.HeaderText = "Producto";
             dataGridViewTextBoxColumn2.MinimumWidth = 100;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "IdMarca";
-            dataGridViewTextBoxColumn4.FillWeight = 120F;
-            dataGridViewTextBoxColumn4.HeaderText = "Marca";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // Categoria
             // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Categoria.DataPropertyName = "IdCategoria";
             Categoria.HeaderText = "Categoría";
+            Categoria.MinimumWidth = 120;
             Categoria.Name = "Categoria";
-            Categoria.Width = 120;
+            Categoria.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn4.DataPropertyName = "IdMarca";
+            dataGridViewTextBoxColumn4.FillWeight = 120F;
+            dataGridViewTextBoxColumn4.HeaderText = "Marca";
+            dataGridViewTextBoxColumn4.MinimumWidth = 100;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // PorcentajeGanancia
             // 
             PorcentajeGanancia.DataPropertyName = "PorcentajeGananciaProducto";
             PorcentajeGanancia.FillWeight = 80F;
             PorcentajeGanancia.HeaderText = "Ganancia";
+            PorcentajeGanancia.MinimumWidth = 95;
             PorcentajeGanancia.Name = "PorcentajeGanancia";
+            PorcentajeGanancia.ReadOnly = true;
+            PorcentajeGanancia.Width = 95;
             // 
             // PrecioCompra
             // 
@@ -405,7 +444,8 @@
             PrecioCompra.FillWeight = 80F;
             PrecioCompra.HeaderText = "Precio Compra";
             PrecioCompra.Name = "PrecioCompra";
-            PrecioCompra.Width = 120;
+            PrecioCompra.ReadOnly = true;
+            PrecioCompra.Width = 150;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -413,7 +453,8 @@
             dataGridViewTextBoxColumn3.FillWeight = 80F;
             dataGridViewTextBoxColumn3.HeaderText = "Precio Costo";
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.Width = 64;
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            dataGridViewTextBoxColumn3.Width = 130;
             // 
             // PrecioVenta
             // 
@@ -421,20 +462,22 @@
             PrecioVenta.FillWeight = 80F;
             PrecioVenta.HeaderText = "Precio Venta";
             PrecioVenta.Name = "PrecioVenta";
-            PrecioVenta.Width = 64;
+            PrecioVenta.ReadOnly = true;
+            PrecioVenta.Width = 130;
             // 
             // CantidadProducto
             // 
             CantidadProducto.DataPropertyName = "CantidadProducto";
             CantidadProducto.HeaderText = "Cantidad";
             CantidadProducto.Name = "CantidadProducto";
-            CantidadProducto.Width = 80;
+            CantidadProducto.ReadOnly = true;
             // 
             // EstadoProducto
             // 
             EstadoProducto.DataPropertyName = "EstadoProducto";
             EstadoProducto.HeaderText = "Estado";
             EstadoProducto.Name = "EstadoProducto";
+            EstadoProducto.ReadOnly = true;
             EstadoProducto.Resizable = DataGridViewTriState.True;
             EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
             EstadoProducto.Width = 80;
@@ -444,12 +487,12 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(766, 679);
+            ClientSize = new Size(850, 679);
             Controls.Add(panel1);
             Controls.Add(lblFecha);
             Controls.Add(lblHora);
             Controls.Add(tableLayoutPanel1);
-            Controls.Add(groupBox1);
+            Controls.Add(gbxEstado);
             Controls.Add(panelBusqueda);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProductos";
@@ -460,8 +503,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gbxEstado.ResumeLayout(false);
+            gbxEstado.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ResumeLayout(false);
@@ -479,10 +522,10 @@
         private Button btnNuevoProducto;
         private Button btnSalir;
         private Button button1;
-        private GroupBox groupBox1;
-        private RadioButton radioButton3;
-        private RadioButton radioButton2;
-        private RadioButton radioButton1;
+        private GroupBox gbxEstado;
+        private RadioButton rbMostrardeshabilitados;
+        private RadioButton rbMostrarTodos;
+        private RadioButton rbMostrarHabilitados;
         private Label lblFecha;
         private Label lblHora;
         private System.Windows.Forms.Timer HoraFecha;
@@ -490,10 +533,12 @@
         private Button button4;
         private Button btnNuevo;
         private Panel panel1;
+        private ComboBox comboBox1;
+        private ComboBox comboBox2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn Categoria;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewTextBoxColumn PrecioCompra;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;

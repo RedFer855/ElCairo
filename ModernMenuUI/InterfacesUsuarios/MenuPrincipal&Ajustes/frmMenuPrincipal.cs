@@ -52,6 +52,7 @@ namespace ModernMenuUI
         // Mostrar paneles cerrados al cargar por primera vez el form
         private void Form1_Load(object sender, EventArgs e)
         {
+          
             clsManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
         }
@@ -82,14 +83,23 @@ namespace ModernMenuUI
             }
         }
 
-        // Inicializar timers
+
         private void MenulateralAnimacion()
         {
-            if (panelMenuLateral.Width == 100)
+            // Tamaño base
+            double baseSize = 100;
+
+            // Definir proporción abierta
+            double factorAbierto = 2.6; // porque 100 * 2.6 = 260
+
+            if (panelMenuLateral.Width == (int)baseSize)
             {
                 panelFormHijo.Invalidate(false);
                 panelFormHijo.Visible = false;
-                panelMenuLateral.Width = 260;
+
+                // Multiplicando por factor para abrir
+                panelMenuLateral.Width = (int)(baseSize * factorAbierto);
+
                 panelFormHijo.Update();
                 panelFormHijo.Visible = true;
             }
@@ -97,11 +107,13 @@ namespace ModernMenuUI
             {
                 panelFormHijo.Invalidate(false);
                 panelFormHijo.Visible = false;
-                panelMenuLateral.Width = 100;
+
+                // Volver al tamaño base
+                panelMenuLateral.Width = (int)baseSize;
+
                 CerrarSubmenu();
                 panelFormHijo.Update();
                 panelFormHijo.Visible = true;
-
             }
         }
 

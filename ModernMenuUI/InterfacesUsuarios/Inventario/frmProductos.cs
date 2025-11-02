@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Modelados;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using System;
 using System.Collections.Generic;
@@ -33,11 +34,6 @@ namespace ModernMenuUI
 
         }
 
-        private void txtBuscar_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnSalir_Click(object sender, EventArgs e)
         {
             clsAnmaciones.NombreMenuPrincipal();
@@ -65,11 +61,6 @@ namespace ModernMenuUI
         }
         private void btnNuevoProducto_Click(object sender, EventArgs e)
         {
-            
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -82,33 +73,60 @@ namespace ModernMenuUI
         {
             btnNuevo.Enabled = dgvProductos.SelectedRows.Count > 0;
         }
-        private async void CargarProductos()
+        // 1. REEMPLAZA tu método 'CargarProductos'
+        private async Task CargarProductos(bool? estado = null) // Ahora acepta un filtro
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor; // Pone el cursor de espera
+                gbxEstado.Enabled = false;     // Deshabilita los radio buttons
 
-                // 1. Llama al método del repositorio
-                List<Producto> listaDeProductos = await _productoRepo.ObtenerTodosLosProductos();
+                // 2. Llama al método del repositorio con el filtro
+                // (Debes modificar tu _productoRepo.ObtenerProductos para que acepte el 'estado')
+                List<Producto> listaDeProductos = await _productoRepo.ObtenerTodosLosProductos(estado);
 
-                // 2. Asigna los datos al DataGridView (asumo que se llama 'dgvProductos')
+                // 3. Asigna los datos al DataGridView
                 dgvProductos.DataSource = null;
                 dgvProductos.DataSource = listaDeProductos;
             }
             catch (Exception ex)
             {
-                // Muestra el error que viene del repositorio
                 MessageBox.Show(ex.Message, "Error al cargar productos", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 this.Cursor = Cursors.Default; // Devuelve el cursor
+                gbxEstado.Enabled = true;     // Vuelve a habilitar los radio buttons
             }
         }
 
         private async void frmProductos_Load(object sender, EventArgs e)
         {
-            CargarProductos();
+            CargarProductos(null);
+        }
+
+        private async void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                await CargarProductos(null); // 'null' significa Todos
+            }
+        }
+
+        private async void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                await CargarProductos(true); // 'true' significa Habilitados
+            }
+        }
+
+        private async void rbMostrardeshabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                await CargarProductos(false); // 'false' significa Deshabilitados
+            }
         }
     }
 

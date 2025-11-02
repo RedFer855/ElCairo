@@ -16,21 +16,10 @@ namespace ModernMenuUI
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-
-            /*
-            var cliente = clsConexion.GetClientAsync().GetAwaiter().GetResult();
-
-            if (cliente == null)
-            {
-                MessageBox.Show("Las variables de entorno SUPABASE_URL o SUPABASE_KEY no están configuradas.", "Error de configuración", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-
-            }
-            */
-            
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmIniciosesion());
         }
     }
