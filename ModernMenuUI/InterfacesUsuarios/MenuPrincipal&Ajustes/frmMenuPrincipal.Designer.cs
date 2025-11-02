@@ -31,12 +31,12 @@
             components = new System.ComponentModel.Container();
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuPrincipal));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             btnNotificaciones = new Button();
             panel3 = new Panel();
             panel1 = new Panel();
@@ -814,24 +814,28 @@
             // lblFecha
             // 
             lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(608, 52);
+            lblFecha.Location = new Point(861, 56);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(316, 29);
+            lblFecha.Size = new Size(63, 25);
             lblFecha.TabIndex = 31;
             lblFecha.Text = "Fecha";
+            lblFecha.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblHora
             // 
             lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(756, 19);
+            lblHora.Location = new Point(860, 27);
             lblHora.Name = "lblHora";
-            lblHora.Size = new Size(168, 33);
+            lblHora.Size = new Size(64, 29);
             lblHora.TabIndex = 30;
             lblHora.Text = "Hora";
+            lblHora.TextAlign = ContentAlignment.MiddleRight;
             // 
             // flowLayoutPanel1
             // 
@@ -920,18 +924,18 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            chart1.Legends.Add(legend3);
             chart1.Location = new Point(16, 16);
             chart1.Name = "chart1";
             chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            chart1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            chart1.Series.Add(series3);
             chart1.Size = new Size(379, 308);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
@@ -948,17 +952,17 @@
             // 
             // chart2
             // 
-            chartArea2.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            chart2.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            chart2.Legends.Add(legend4);
             chart2.Location = new Point(19, 16);
             chart2.Name = "chart2";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.YValuesPerPoint = 4;
-            chart2.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            series4.YValuesPerPoint = 4;
+            chart2.Series.Add(series4);
             chart2.Size = new Size(419, 308);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
@@ -1032,6 +1036,7 @@
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
             panel9.ResumeLayout(false);
+            panel9.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             panel8.ResumeLayout(false);
