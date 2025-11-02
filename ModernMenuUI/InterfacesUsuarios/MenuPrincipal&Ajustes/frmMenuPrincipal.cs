@@ -86,35 +86,26 @@ namespace ModernMenuUI
 
         private void MenulateralAnimacion()
         {
-            // Tamaño base
-            double baseSize = 100;
+            panelFormHijo.Invalidate(false);
+            panelFormHijo.Visible = false;
 
-            // Definir proporción abierta
-            double factorAbierto = 2.6; // porque 100 * 2.6 = 260
+            double factorCerrado = (double)100 / 260; // porque 100 / 260 ≈ 0.3846
+            double factorAbierto = 2.6;    // porque 260 / 100 = 2.6
 
-            if (panelMenuLateral.Width == (int)baseSize)
+            if (panelMenuLateral.Width < 200) // asumimos que está cerrado si < mitad aprox
             {
-                panelFormHijo.Invalidate(false);
-                panelFormHijo.Visible = false;
-
-                // Multiplicando por factor para abrir
-                panelMenuLateral.Width = (int)(baseSize * factorAbierto);
-
-                panelFormHijo.Update();
-                panelFormHijo.Visible = true;
+                // Abrir multiplicando por factor
+                panelMenuLateral.Width = (int)(panelMenuLateral.Width * factorAbierto);
             }
             else
             {
-                panelFormHijo.Invalidate(false);
-                panelFormHijo.Visible = false;
-
-                // Volver al tamaño base
-                panelMenuLateral.Width = (int)baseSize;
-
+                // Cerrar multiplicando por factor
+                panelMenuLateral.Width = (int)(panelMenuLateral.Width * factorCerrado);
                 CerrarSubmenu();
-                panelFormHijo.Update();
-                panelFormHijo.Visible = true;
             }
+
+            panelFormHijo.Update();
+            panelFormHijo.Visible = true;
         }
 
         // Ocultar Men� Lateral
