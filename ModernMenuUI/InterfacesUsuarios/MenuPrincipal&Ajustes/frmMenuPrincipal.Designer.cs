@@ -31,12 +31,12 @@
             components = new System.ComponentModel.Container();
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuPrincipal));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             btnNotificaciones = new Button();
             panel3 = new Panel();
             panel1 = new Panel();
@@ -79,7 +79,6 @@
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
             panel9 = new Panel();
-            lblFecha = new Label();
             lblHora = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel4 = new Panel();
@@ -97,6 +96,7 @@
             panelNotificaciones = new Panel();
             lblNotificaciones = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
+            lblFecha = new Label();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
@@ -806,23 +806,10 @@
             panel9.Controls.Add(lblFecha);
             panel9.Controls.Add(lblHora);
             panel9.Dock = DockStyle.Bottom;
-            panel9.Location = new Point(0, 595);
+            panel9.Location = new Point(0, 620);
             panel9.Name = "panel9";
-            panel9.Size = new Size(924, 81);
+            panel9.Size = new Size(924, 56);
             panel9.TabIndex = 33;
-            // 
-            // lblFecha
-            // 
-            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(861, 56);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(63, 25);
-            lblFecha.TabIndex = 31;
-            lblFecha.Text = "Fecha";
-            lblFecha.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblHora
             // 
@@ -830,12 +817,12 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(860, 27);
+            lblHora.Location = new Point(0, 27);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(64, 29);
             lblHora.TabIndex = 30;
             lblHora.Text = "Hora";
-            lblHora.TextAlign = ContentAlignment.MiddleRight;
+            lblHora.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // flowLayoutPanel1
             // 
@@ -924,18 +911,18 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            chart1.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
             chart1.Location = new Point(16, 16);
             chart1.Name = "chart1";
             chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            chart1.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chart1.Series.Add(series1);
             chart1.Size = new Size(379, 308);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
@@ -952,17 +939,17 @@
             // 
             // chart2
             // 
-            chartArea4.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            chart2.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            chart2.Legends.Add(legend2);
             chart2.Location = new Point(19, 16);
             chart2.Name = "chart2";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            series4.YValuesPerPoint = 4;
-            chart2.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            chart2.Series.Add(series2);
             chart2.Size = new Size(419, 308);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
@@ -1003,6 +990,19 @@
             // 
             HoraFecha.Enabled = true;
             HoraFecha.Tick += HoraFecha_Tick;
+            // 
+            // lblFecha
+            // 
+            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblFecha.AutoSize = true;
+            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
+            lblFecha.Location = new Point(861, 31);
+            lblFecha.Name = "lblFecha";
+            lblFecha.Size = new Size(63, 25);
+            lblFecha.TabIndex = 31;
+            lblFecha.Text = "Fecha";
+            lblFecha.TextAlign = ContentAlignment.MiddleRight;
             // 
             // frmMenuPrincipal
             // 
@@ -1098,7 +1098,6 @@
         private System.Windows.Forms.Timer HoraFecha;
         private PictureBox pbxCalculadora;
         private Label lblHora;
-        private Label lblFecha;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnCierreDiario;
         private Panel panel4;
@@ -1111,5 +1110,6 @@
         private Panel panel6;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private Label lblFecha;
     }
 }
