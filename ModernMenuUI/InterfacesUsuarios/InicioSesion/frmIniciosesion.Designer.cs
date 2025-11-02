@@ -145,12 +145,12 @@
             // 
             txtContra.BackColor = Color.FromArgb(15, 15, 15);
             txtContra.BorderStyle = BorderStyle.None;
-            txtContra.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtContra.Font = new Font("Century Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtContra.ForeColor = Color.FromArgb(142, 142, 142);
             txtContra.Location = new Point(59, 181);
             txtContra.Margin = new Padding(3, 4, 3, 4);
             txtContra.Name = "txtContra";
-            txtContra.Size = new Size(480, 20);
+            txtContra.Size = new Size(480, 24);
             txtContra.TabIndex = 3;
             txtContra.Text = "CONTRASEÑA";
             txtContra.Enter += txtContra_Enter;
@@ -160,12 +160,12 @@
             // 
             txtUsuario.BackColor = Color.FromArgb(15, 15, 15);
             txtUsuario.BorderStyle = BorderStyle.None;
-            txtUsuario.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtUsuario.Font = new Font("Century Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtUsuario.ForeColor = Color.FromArgb(142, 142, 142);
             txtUsuario.Location = new Point(59, 119);
             txtUsuario.Margin = new Padding(3, 4, 3, 4);
             txtUsuario.Name = "txtUsuario";
-            txtUsuario.Size = new Size(480, 20);
+            txtUsuario.Size = new Size(480, 24);
             txtUsuario.TabIndex = 2;
             txtUsuario.Text = "USUARIO";
             txtUsuario.Enter += txtUsuario_Enter;
@@ -174,10 +174,11 @@
             // lblRecuperarContrasenia
             // 
             lblRecuperarContrasenia.AutoSize = true;
+            lblRecuperarContrasenia.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblRecuperarContrasenia.ForeColor = Color.FromArgb(142, 142, 142);
             lblRecuperarContrasenia.Location = new Point(201, 388);
             lblRecuperarContrasenia.Name = "lblRecuperarContrasenia";
-            lblRecuperarContrasenia.Size = new Size(161, 15);
+            lblRecuperarContrasenia.Size = new Size(204, 20);
             lblRecuperarContrasenia.TabIndex = 5;
             lblRecuperarContrasenia.Text = "¿Has olvidado tu contraseña?";
             lblRecuperarContrasenia.Click += lblRecuperarContrasenia_Click;
@@ -299,8 +300,8 @@
             // 
             // frmIniciosesion
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(891, 429);
             Controls.Add(panBarraControl);
             Controls.Add(panDatosIngreso);
