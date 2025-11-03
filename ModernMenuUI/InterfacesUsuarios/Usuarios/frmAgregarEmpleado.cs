@@ -29,16 +29,22 @@ namespace ModernMenuUI
                 return;
             }
 
+            string nuevonombre = txtNombre.Text.Trim(); 
+            string nuevoapellido = txtApellido.Text.Trim();
+            string nuevoDni = txtDni.Text.Trim();
+            string nuevoTelefono = txtTelefono.Text.Trim();
+            string nuevoEmail = txtCorreo.Text.Trim();
+            string nuevaDireccion = txtDireccion.Text.Trim();
 
             // 2. CREACIÓN DEL OBJETO (ACTUALIZADO)
             Empleado nuevoEmpleado = new Empleado
             {
-                Nombre = txtNombre.Text.Trim(),
-                Apellido = txtApellido.Text.Trim(),
-                Dni = txtDni.Text.Trim(),
-                Telefono = txtTelefono.Text.Trim(),
-                Email = txtCorreo.Text.Trim(),       // Tu TextBox se llama txtCorreo, está bien.
-                Direccion = txtDireccion.Text.Trim()
+                Nombre = nuevonombre,
+                Apellido = nuevoapellido,
+                Dni = nuevoDni,
+                Telefono = nuevoTelefono,
+                Email = nuevoEmail,       // Tu TextBox se llama txtCorreo, está bien.
+                Direccion = nuevaDireccion
             };
 
             // 3. LLAMADA A LA CAPA DE DATOS

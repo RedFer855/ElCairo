@@ -79,14 +79,17 @@ namespace ModernMenuUI
             CargarEmpleados();
         }
 
-        private void btnNuevo_Click(object sender, EventArgs e)
+        private async void btnNuevo_Click(object sender, EventArgs e)
         {
             // Hacemos que "Nuevo" haga lo mismo que "Agregar"
-            frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
+            /*frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
             Empleados.ShowDialog();
 
             // Refresca la lista después de cerrar el diálogo
-            CargarEmpleados();
+            CargarEmpleados();*/
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+            var session = supabase.Auth.CurrentSession;
+            MessageBox.Show(session?.User?.Id);
         }
     }
 }
