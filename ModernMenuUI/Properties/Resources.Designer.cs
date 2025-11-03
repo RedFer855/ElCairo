@@ -273,6 +273,16 @@ namespace ModernMenuUI.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ojo {
+            get {
+                object obj = ResourceManager.GetObject("ojo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap signo_menos {
             get {
                 object obj = ResourceManager.GetObject("signo-menos", resourceCulture);
@@ -296,6 +306,16 @@ namespace ModernMenuUI.Properties {
         internal static System.Drawing.Bitmap sin_notificacion {
             get {
                 object obj = ResourceManager.GetObject("sin-notificacion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap vista {
+            get {
+                object obj = ResourceManager.GetObject("vista", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -33,9 +33,10 @@
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             panDatosIngreso = new Panel();
+            btnVer = new Button();
             pbxCargando = new PictureBox();
             lblMensajeError = new Label();
-            txtContra = new TextBox();
+            txtContrasenia = new TextBox();
             txtUsuario = new TextBox();
             lblRecuperarContrasenia = new Label();
             panel5 = new Panel();
@@ -100,9 +101,10 @@
             // panDatosIngreso
             // 
             panDatosIngreso.BackColor = Color.FromArgb(15, 15, 15);
+            panDatosIngreso.Controls.Add(btnVer);
             panDatosIngreso.Controls.Add(pbxCargando);
             panDatosIngreso.Controls.Add(lblMensajeError);
-            panDatosIngreso.Controls.Add(txtContra);
+            panDatosIngreso.Controls.Add(txtContrasenia);
             panDatosIngreso.Controls.Add(txtUsuario);
             panDatosIngreso.Controls.Add(lblRecuperarContrasenia);
             panDatosIngreso.Controls.Add(panel5);
@@ -115,6 +117,22 @@
             panDatosIngreso.Size = new Size(605, 429);
             panDatosIngreso.TabIndex = 1;
             panDatosIngreso.MouseDown += panDatosIngreso_MouseDown;
+            // 
+            // btnVer
+            // 
+            btnVer.BackColor = Color.FromArgb(15, 15, 15);
+            btnVer.BackgroundImage = Properties.Resources.ojo;
+            btnVer.BackgroundImageLayout = ImageLayout.Stretch;
+            btnVer.FlatAppearance.BorderSize = 0;
+            btnVer.FlatStyle = FlatStyle.Flat;
+            btnVer.ForeColor = SystemColors.ControlText;
+            btnVer.Location = new Point(492, 177);
+            btnVer.Name = "btnVer";
+            btnVer.Size = new Size(34, 34);
+            btnVer.TabIndex = 21;
+            btnVer.UseVisualStyleBackColor = false;
+            btnVer.MouseDown += btnVer_MouseDown;
+            btnVer.MouseUp += btnVer_MouseUp;
             // 
             // pbxCargando
             // 
@@ -141,20 +159,20 @@
             lblMensajeError.TextAlign = ContentAlignment.TopCenter;
             lblMensajeError.Visible = false;
             // 
-            // txtContra
+            // txtContrasenia
             // 
-            txtContra.BackColor = Color.FromArgb(15, 15, 15);
-            txtContra.BorderStyle = BorderStyle.None;
-            txtContra.Font = new Font("Century Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContra.ForeColor = Color.FromArgb(142, 142, 142);
-            txtContra.Location = new Point(59, 181);
-            txtContra.Margin = new Padding(3, 4, 3, 4);
-            txtContra.Name = "txtContra";
-            txtContra.Size = new Size(480, 24);
-            txtContra.TabIndex = 3;
-            txtContra.Text = "CONTRASEÑA";
-            txtContra.Enter += txtContra_Enter;
-            txtContra.Leave += txtContra_Leave;
+            txtContrasenia.BackColor = Color.FromArgb(15, 15, 15);
+            txtContrasenia.BorderStyle = BorderStyle.None;
+            txtContrasenia.Font = new Font("Century Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtContrasenia.ForeColor = Color.FromArgb(142, 142, 142);
+            txtContrasenia.Location = new Point(59, 181);
+            txtContrasenia.Margin = new Padding(3, 4, 3, 4);
+            txtContrasenia.Name = "txtContrasenia";
+            txtContrasenia.Size = new Size(427, 24);
+            txtContrasenia.TabIndex = 3;
+            txtContrasenia.Text = "CONTRASEÑA";
+            txtContrasenia.Enter += txtContra_Enter;
+            txtContrasenia.Leave += txtContra_Leave;
             // 
             // txtUsuario
             // 
@@ -336,7 +354,7 @@
         private PictureBox pictureBox1;
         private Label lblRecuperarContrasenia;
         private TextBox txtUsuario;
-        private TextBox txtContra;
+        private TextBox txtContrasenia;
         private Panel panBarraControl;
         private Button btnCerrar;
         private Label label3;
@@ -344,5 +362,6 @@
         private PictureBox pictureBox2;
         private Label lblMensajeError;
         private PictureBox pbxCargando;
+        private Button btnVer;
     }
 }

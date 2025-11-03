@@ -145,7 +145,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(300, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(884, 65);
+            panBarraControl.Size = new Size(928, 65);
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -156,7 +156,7 @@
             panel6.Controls.Add(panel12);
             panel6.Controls.Add(panel9);
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(763, 0);
+            panel6.Location = new Point(807, 0);
             panel6.Name = "panel6";
             panel6.RightToLeft = RightToLeft.Yes;
             panel6.Size = new Size(56, 65);
@@ -201,7 +201,7 @@
             btnNotificaciones.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             btnNotificaciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnNotificaciones.Image = (Image)resources.GetObject("btnNotificaciones.Image");
-            btnNotificaciones.Location = new Point(819, 0);
+            btnNotificaciones.Location = new Point(863, 0);
             btnNotificaciones.Name = "btnNotificaciones";
             btnNotificaciones.Size = new Size(65, 65);
             btnNotificaciones.TabIndex = 6;
@@ -212,7 +212,7 @@
             // panel3
             // 
             panel3.Dock = DockStyle.Right;
-            panel3.Location = new Point(884, 0);
+            panel3.Location = new Point(928, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(0, 65);
             panel3.TabIndex = 10;
@@ -269,7 +269,7 @@
             btnMinimizar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMinimizar.ForeColor = Color.FromArgb(167, 191, 211);
             btnMinimizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMinimizar.Location = new Point(884, 0);
+            btnMinimizar.Location = new Point(928, 0);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Padding = new Padding(11, 0, 0, 0);
             btnMinimizar.Size = new Size(0, 65);
@@ -288,7 +288,7 @@
             btnMiniMaxi.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMiniMaxi.ForeColor = Color.FromArgb(167, 191, 211);
             btnMiniMaxi.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMiniMaxi.Location = new Point(884, 0);
+            btnMiniMaxi.Location = new Point(928, 0);
             btnMiniMaxi.Name = "btnMiniMaxi";
             btnMiniMaxi.Padding = new Padding(11, 0, 0, 0);
             btnMiniMaxi.Size = new Size(0, 65);
@@ -308,7 +308,7 @@
             btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
             btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(884, 0);
+            btnCerrar.Location = new Point(928, 0);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(11, 0, 0, 0);
             btnCerrar.Size = new Size(0, 65);
@@ -890,7 +890,7 @@
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(300, 65);
             panelFormHijo.Name = "panelFormHijo";
-            panelFormHijo.Size = new Size(884, 676);
+            panelFormHijo.Size = new Size(928, 676);
             panelFormHijo.TabIndex = 2;
             // 
             // lblHora
@@ -928,7 +928,7 @@
             flowLayoutPanel1.Controls.Add(tableLayoutPanel1);
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(884, 612);
+            flowLayoutPanel1.Size = new Size(928, 612);
             flowLayoutPanel1.TabIndex = 32;
             // 
             // tableLayoutPanel2
@@ -1097,7 +1097,7 @@
             panelNotificaciones.BackgroundImageLayout = ImageLayout.Center;
             panelNotificaciones.Controls.Add(lblNotificaciones);
             panelNotificaciones.Dock = DockStyle.Right;
-            panelNotificaciones.Location = new Point(1184, 65);
+            panelNotificaciones.Location = new Point(1228, 65);
             panelNotificaciones.Name = "panelNotificaciones";
             panelNotificaciones.Size = new Size(0, 676);
             panelNotificaciones.TabIndex = 3;
@@ -1123,7 +1123,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(224, 224, 224);
-            ClientSize = new Size(1184, 741);
+            ClientSize = new Size(1228, 741);
             Controls.Add(panelNotificaciones);
             Controls.Add(panelFormHijo);
             Controls.Add(panBarraControl);

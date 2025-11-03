@@ -28,11 +28,11 @@ namespace ModernMenuUI
 
         public void LimpiarDatos(object sender, EventArgs e)
         {
-            txtContra.Text = "";
+            txtContrasenia.Text = "";
             txtUsuario.Text = "";
             txtContra_Leave(e, e);
             txtUsuario_Leave(e, e);
-            txtContra.Focus();
+            txtContrasenia.Focus();
             txtUsuario.Focus();
         }
         private async void btnAcceder_Click(object sender, EventArgs e)
@@ -40,18 +40,18 @@ namespace ModernMenuUI
             this.Cursor = Cursors.AppStarting;
             btnAcceder.Enabled = false;
 
-            if (txtContra.Text == "" || txtUsuario.Text == "")
+            if (txtContrasenia.Text == "" || txtUsuario.Text == "")
             {
                 btnAcceder.Enabled = true;
                 MessageBox.Show("El Usuario o contraseña estan vacios", "Credenciales Vacias", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 LimpiarDatos(e, e);
-                
+
             }
             else
             {
                 // Validadcion inicial para acceder al servidor y comprobar Inicio de sesión
                 string username = txtUsuario.Text + "@gmail.com";
-                string password = txtContra.Text;
+                string password = txtContrasenia.Text;
                 username = username.Trim();
                 password = password.Trim();
 
@@ -70,7 +70,7 @@ namespace ModernMenuUI
                     var Actual = supabase.Auth.CurrentUser;
                     if (usuario != null)
                     {
-                        
+
                         CapaServiciosSeguridadValidacion.ServicioSesionUsuario.IniciarSesion(Actual);
 
                         // Muestra el label y prepara el primer mensaje
@@ -112,7 +112,8 @@ namespace ModernMenuUI
                         // Lógica de limpieza y re-enfoque
                         LimpiarDatos(e, e);
                     }
-                }catch (GotrueException gex)
+                }
+                catch (GotrueException gex)
                 {
                     // Captura el error específico de credenciales inválidas
                     pbxCargando.Visible = false;
@@ -134,7 +135,7 @@ namespace ModernMenuUI
                     }
 
                     LimpiarDatos(e, e);
-                    
+
                 }
                 catch (System.Net.WebException wex)
                 {
@@ -218,11 +219,11 @@ namespace ModernMenuUI
         // Salir de la caja de contraseña y usuario
         private void txtContra_Leave(object sender, EventArgs e)
         {
-            if (txtContra.Text == "")
+            if (txtContrasenia.Text == "")
             {
-                txtContra.Text = "CONTRASEÑA";
-                txtContra.ForeColor = Color.LightGray;
-                txtContra.UseSystemPasswordChar = false;
+                txtContrasenia.Text = "CONTRASEÑA";
+                txtContrasenia.ForeColor = Color.LightGray;
+                txtContrasenia.UseSystemPasswordChar = false;
             }
         }
 
@@ -231,14 +232,14 @@ namespace ModernMenuUI
             if (txtUsuario.Text == "")
             {
                 txtUsuario.Text = "USUARIO";
-                txtUsuario.ForeColor = Color.DimGray;
+                txtUsuario.ForeColor = Color.LightGray;
             }
         }
 
         // Ingresar a caja de contra y usuario
         private void txtContra_Enter(object sender, EventArgs e)
         {
-            clsAnmaciones.PrivacidadIngresarDatos(txtContra, "");
+            clsAnmaciones.PrivacidadIngresarDatos(txtContrasenia, "");
         }
 
         private void txtUsuario_Enter(object sender, EventArgs e)
@@ -268,6 +269,22 @@ namespace ModernMenuUI
         private void lblRecuperarContrasenia_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnVer_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (txtContrasenia.Text != "CONTRASEÑA")
+            {
+                txtContrasenia.UseSystemPasswordChar = false; 
+            }
+        }
+
+        private void btnVer_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (txtContrasenia.Text != "CONTRASEÑA")
+            {
+                txtContrasenia.UseSystemPasswordChar = true;
+            }
         }
     }
 }
