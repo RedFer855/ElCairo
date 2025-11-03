@@ -52,6 +52,7 @@ namespace ModernMenuUI
         // Mostrar paneles cerrados al cargar por primera vez el form
         private void Form1_Load(object sender, EventArgs e)
         {
+            lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
             clsManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
         }
@@ -82,27 +83,29 @@ namespace ModernMenuUI
             }
         }
 
-        // Inicializar timers
+
         private void MenulateralAnimacion()
         {
-            if (panelMenuLateral.Width == 100)
+            panelFormHijo.Invalidate(false);
+            panelFormHijo.Visible = false;
+
+            double factorCerrado = (double)100 / 300; // porque 100 / 260 ≈ 0.3846
+            double factorAbierto = 3;    // porque 260 / 100 = 2.6
+
+            if (panelMenuLateral.Width < 200) // asumimos que está cerrado si < mitad aprox
             {
-                panelFormHijo.Invalidate(false);
-                panelFormHijo.Visible = false;
-                panelMenuLateral.Width = 260;
-                panelFormHijo.Update();
-                panelFormHijo.Visible = true;
+                // Abrir multiplicando por factor
+                panelMenuLateral.Width = (int)(panelMenuLateral.Width * factorAbierto);
             }
             else
             {
-                panelFormHijo.Invalidate(false);
-                panelFormHijo.Visible = false;
-                panelMenuLateral.Width = 100;
+                // Cerrar multiplicando por factor
+                panelMenuLateral.Width = (int)(panelMenuLateral.Width * factorCerrado);
                 CerrarSubmenu();
-                panelFormHijo.Update();
-                panelFormHijo.Visible = true;
-
             }
+
+            panelFormHijo.Update();
+            panelFormHijo.Visible = true;
         }
 
         // Ocultar Men� Lateral
@@ -241,7 +244,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmProductos());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-            
+
         }
 
         private void btnInventarioBodega_Click(object sender, EventArgs e)
@@ -249,7 +252,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-          
+
         }
 
         private void btnGestionCompra_Click(object sender, EventArgs e)
@@ -257,14 +260,14 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionCompra());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
-           
+
         }
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
-           
+
         }
 
         private void btnGestionVentas_Click(object sender, EventArgs e)
@@ -272,7 +275,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmFacturacion());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
-            
+
         }
 
         private void btnClientes_Click(object sender, EventArgs e)
@@ -280,7 +283,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
-            
+
         }
 
         private void btnGestionEmpleados_Click(object sender, EventArgs e)
@@ -288,7 +291,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleados());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-           
+
         }
 
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
@@ -296,7 +299,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionUsuario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            
+
         }
 
         private void btnGestionRoles_Click(object sender, EventArgs e)
@@ -304,14 +307,14 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmRoles());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            
+
         }
 
         private void btnAcciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            
+
         }
 
         private void btnBitacora_Click(object sender, EventArgs e)
@@ -319,20 +322,39 @@ namespace ModernMenuUI
             CerrarSubmenu();
             clsManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-            
+
         }
 
         private void btnCrearReporte_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
-            
+
         }
 
         private void btnReportesCreados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
+        }
+
+        private void btnRegistroPerdida_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+        }
+
+        private void btnCierreDiario_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+        }
+
+
+        private void btnDevoluciones_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
         }
 
         // CONTENEDORES PARA MOVER FORMULARIO CON EVENTO
@@ -373,7 +395,7 @@ namespace ModernMenuUI
         private void HoraFecha_Tick(object sender, EventArgs e)
         {
             lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt", new CultureInfo("es-ES"));
-            lblFecha.Text = DateTime.Now.ToString("dddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
+            lblFecha.Text = DateTime.Now.ToString("ddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
         }
 
         private void pbxCalculadora_Click(object sender, EventArgs e)
@@ -398,9 +420,6 @@ namespace ModernMenuUI
             pbxCalculadora.BackColor = Color.Transparent; // resalta
         }
 
-        private void btnCierreDiario_Click(object sender, EventArgs e)
-        {
-
-        }
+    
     }
 }

@@ -48,7 +48,7 @@
             panelMenuLateral = new Panel();
             panel2 = new Panel();
             label2 = new Label();
-            label1 = new Label();
+            lblUsuario = new Label();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             panelReporteria = new Panel();
@@ -63,6 +63,7 @@
             btnGestionEmpleados = new Button();
             btnUsuarios = new Button();
             panelVentas = new Panel();
+            btnDevoluciones = new Button();
             btnCierreDiario = new Button();
             btnClientes = new Button();
             btnGestionVentas = new Button();
@@ -72,26 +73,27 @@
             btnGestionCompra = new Button();
             btnCompras = new Button();
             panelInventario = new Panel();
+            btnRegistroPerdida = new Button();
             btnInventarioBodega = new Button();
             btnGestionInventario = new Button();
             btnInventario = new Button();
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
-            panel9 = new Panel();
-            lblFecha = new Label();
             lblHora = new Label();
+            lblFecha = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            panel4 = new Panel();
-            panel5 = new Panel();
-            panel7 = new Panel();
-            panel11 = new Panel();
-            panel6 = new Panel();
-            pbxCalculadora = new PictureBox();
+            tableLayoutPanel2 = new TableLayoutPanel();
             panel8 = new Panel();
             chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             panel10 = new Panel();
             chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panel5 = new Panel();
+            panel11 = new Panel();
+            panel7 = new Panel();
+            panel4 = new Panel();
+            pbxCalculadora = new PictureBox();
             timerAbrir = new System.Windows.Forms.Timer(components);
             timerCerrar = new System.Windows.Forms.Timer(components);
             panelNotificaciones = new Panel();
@@ -111,13 +113,15 @@
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
-            panel9.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
+            tableLayoutPanel2.SuspendLayout();
             panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)chart2).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
             panelNotificaciones.SuspendLayout();
             SuspendLayout();
             // 
@@ -133,9 +137,9 @@
             panBarraControl.Controls.Add(btnCerrar);
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.ForeColor = Color.Coral;
-            panBarraControl.Location = new Point(260, 0);
+            panBarraControl.Location = new Point(300, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(924, 65);
+            panBarraControl.Size = new Size(884, 65);
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -148,7 +152,7 @@
             btnNotificaciones.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             btnNotificaciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnNotificaciones.Image = (Image)resources.GetObject("btnNotificaciones.Image");
-            btnNotificaciones.Location = new Point(859, 0);
+            btnNotificaciones.Location = new Point(819, 0);
             btnNotificaciones.Name = "btnNotificaciones";
             btnNotificaciones.Size = new Size(65, 65);
             btnNotificaciones.TabIndex = 6;
@@ -159,7 +163,7 @@
             // panel3
             // 
             panel3.Dock = DockStyle.Right;
-            panel3.Location = new Point(924, 0);
+            panel3.Location = new Point(884, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(0, 65);
             panel3.TabIndex = 10;
@@ -216,7 +220,7 @@
             btnMinimizar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMinimizar.ForeColor = Color.FromArgb(167, 191, 211);
             btnMinimizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMinimizar.Location = new Point(924, 0);
+            btnMinimizar.Location = new Point(884, 0);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Padding = new Padding(11, 0, 0, 0);
             btnMinimizar.Size = new Size(0, 65);
@@ -235,7 +239,7 @@
             btnMiniMaxi.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMiniMaxi.ForeColor = Color.FromArgb(167, 191, 211);
             btnMiniMaxi.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMiniMaxi.Location = new Point(924, 0);
+            btnMiniMaxi.Location = new Point(884, 0);
             btnMiniMaxi.Name = "btnMiniMaxi";
             btnMiniMaxi.Padding = new Padding(11, 0, 0, 0);
             btnMiniMaxi.Size = new Size(0, 65);
@@ -255,7 +259,7 @@
             btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
             btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(924, 0);
+            btnCerrar.Location = new Point(884, 0);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(11, 0, 0, 0);
             btnCerrar.Size = new Size(0, 65);
@@ -286,7 +290,7 @@
             panelMenuLateral.Dock = DockStyle.Left;
             panelMenuLateral.Location = new Point(0, 0);
             panelMenuLateral.Name = "panelMenuLateral";
-            panelMenuLateral.Size = new Size(260, 741);
+            panelMenuLateral.Size = new Size(300, 741);
             panelMenuLateral.TabIndex = 0;
             panelMenuLateral.MouseDown += panelMenuLateral_MouseDown;
             // 
@@ -294,12 +298,12 @@
             // 
             panel2.BackColor = Color.FromArgb(167, 191, 211);
             panel2.Controls.Add(label2);
-            panel2.Controls.Add(label1);
+            panel2.Controls.Add(lblUsuario);
             panel2.Controls.Add(pictureBox2);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 1200);
+            panel2.Location = new Point(0, 1280);
             panel2.Name = "panel2";
-            panel2.Size = new Size(243, 80);
+            panel2.Size = new Size(283, 80);
             panel2.TabIndex = 11;
             // 
             // label2
@@ -313,16 +317,16 @@
             label2.TabIndex = 10;
             label2.Text = "Rol: Admin";
             // 
-            // label1
+            // lblUsuario
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(104, 13);
-            label1.Name = "label1";
-            label1.Size = new Size(135, 18);
-            label1.TabIndex = 9;
-            label1.Text = "Fernando Barahona";
+            lblUsuario.AutoSize = true;
+            lblUsuario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblUsuario.ForeColor = Color.White;
+            lblUsuario.Location = new Point(104, 13);
+            lblUsuario.Name = "lblUsuario";
+            lblUsuario.Size = new Size(135, 18);
+            lblUsuario.TabIndex = 9;
+            lblUsuario.Text = "Fernando Barahona";
             // 
             // pictureBox2
             // 
@@ -340,9 +344,9 @@
             pictureBox1.Dock = DockStyle.Top;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(0, 1025);
+            pictureBox1.Location = new Point(0, 1105);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(243, 175);
+            pictureBox1.Size = new Size(283, 175);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -353,9 +357,9 @@
             panelReporteria.Controls.Add(btnReportesCreados);
             panelReporteria.Controls.Add(btnCrearReporte);
             panelReporteria.Dock = DockStyle.Top;
-            panelReporteria.Location = new Point(0, 945);
+            panelReporteria.Location = new Point(0, 1025);
             panelReporteria.Name = "panelReporteria";
-            panelReporteria.Size = new Size(243, 80);
+            panelReporteria.Size = new Size(283, 80);
             panelReporteria.TabIndex = 10;
             // 
             // btnReportesCreados
@@ -369,7 +373,7 @@
             btnReportesCreados.Location = new Point(0, 40);
             btnReportesCreados.Name = "btnReportesCreados";
             btnReportesCreados.Padding = new Padding(20, 0, 0, 0);
-            btnReportesCreados.Size = new Size(243, 40);
+            btnReportesCreados.Size = new Size(283, 40);
             btnReportesCreados.TabIndex = 1;
             btnReportesCreados.Text = "Reportes Creados";
             btnReportesCreados.TextAlign = ContentAlignment.MiddleLeft;
@@ -387,7 +391,7 @@
             btnCrearReporte.Location = new Point(0, 0);
             btnCrearReporte.Name = "btnCrearReporte";
             btnCrearReporte.Padding = new Padding(20, 0, 0, 0);
-            btnCrearReporte.Size = new Size(243, 40);
+            btnCrearReporte.Size = new Size(283, 40);
             btnCrearReporte.TabIndex = 0;
             btnCrearReporte.Text = "Crear Reporte";
             btnCrearReporte.TextAlign = ContentAlignment.MiddleLeft;
@@ -404,10 +408,10 @@
             btnReporteria.ForeColor = Color.FromArgb(87, 99, 110);
             btnReporteria.Image = (Image)resources.GetObject("btnReporteria.Image");
             btnReporteria.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReporteria.Location = new Point(0, 865);
+            btnReporteria.Location = new Point(0, 945);
             btnReporteria.Name = "btnReporteria";
             btnReporteria.Padding = new Padding(30, 0, 0, 0);
-            btnReporteria.Size = new Size(243, 80);
+            btnReporteria.Size = new Size(283, 80);
             btnReporteria.TabIndex = 9;
             btnReporteria.Text = "            Reportería";
             btnReporteria.TextAlign = ContentAlignment.MiddleLeft;
@@ -423,9 +427,9 @@
             panelUsuarios.Controls.Add(btnGestionUsuarios);
             panelUsuarios.Controls.Add(btnGestionEmpleados);
             panelUsuarios.Dock = DockStyle.Top;
-            panelUsuarios.Location = new Point(0, 665);
+            panelUsuarios.Location = new Point(0, 745);
             panelUsuarios.Name = "panelUsuarios";
-            panelUsuarios.Size = new Size(243, 200);
+            panelUsuarios.Size = new Size(283, 200);
             panelUsuarios.TabIndex = 8;
             // 
             // btnBitacora
@@ -439,7 +443,7 @@
             btnBitacora.Location = new Point(0, 160);
             btnBitacora.Name = "btnBitacora";
             btnBitacora.Padding = new Padding(20, 0, 0, 0);
-            btnBitacora.Size = new Size(243, 40);
+            btnBitacora.Size = new Size(283, 40);
             btnBitacora.TabIndex = 7;
             btnBitacora.Text = "Bitacora";
             btnBitacora.TextAlign = ContentAlignment.MiddleLeft;
@@ -457,7 +461,7 @@
             btnAcciones.Location = new Point(0, 120);
             btnAcciones.Name = "btnAcciones";
             btnAcciones.Padding = new Padding(20, 0, 0, 0);
-            btnAcciones.Size = new Size(243, 40);
+            btnAcciones.Size = new Size(283, 40);
             btnAcciones.TabIndex = 5;
             btnAcciones.Text = "Lista de Acciones";
             btnAcciones.TextAlign = ContentAlignment.MiddleLeft;
@@ -475,7 +479,7 @@
             btnGestionRoles.Location = new Point(0, 80);
             btnGestionRoles.Name = "btnGestionRoles";
             btnGestionRoles.Padding = new Padding(20, 0, 0, 0);
-            btnGestionRoles.Size = new Size(243, 40);
+            btnGestionRoles.Size = new Size(283, 40);
             btnGestionRoles.TabIndex = 4;
             btnGestionRoles.Text = "Gestión de Roles";
             btnGestionRoles.TextAlign = ContentAlignment.MiddleLeft;
@@ -493,7 +497,7 @@
             btnGestionUsuarios.Location = new Point(0, 40);
             btnGestionUsuarios.Name = "btnGestionUsuarios";
             btnGestionUsuarios.Padding = new Padding(20, 0, 0, 0);
-            btnGestionUsuarios.Size = new Size(243, 40);
+            btnGestionUsuarios.Size = new Size(283, 40);
             btnGestionUsuarios.TabIndex = 1;
             btnGestionUsuarios.Text = "Gestión de Usuarios";
             btnGestionUsuarios.TextAlign = ContentAlignment.MiddleLeft;
@@ -511,7 +515,7 @@
             btnGestionEmpleados.Location = new Point(0, 0);
             btnGestionEmpleados.Name = "btnGestionEmpleados";
             btnGestionEmpleados.Padding = new Padding(20, 0, 0, 0);
-            btnGestionEmpleados.Size = new Size(243, 40);
+            btnGestionEmpleados.Size = new Size(283, 40);
             btnGestionEmpleados.TabIndex = 0;
             btnGestionEmpleados.Text = "Gestión de Empleados";
             btnGestionEmpleados.TextAlign = ContentAlignment.MiddleLeft;
@@ -528,10 +532,10 @@
             btnUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
             btnUsuarios.Image = (Image)resources.GetObject("btnUsuarios.Image");
             btnUsuarios.ImageAlign = ContentAlignment.MiddleLeft;
-            btnUsuarios.Location = new Point(0, 585);
+            btnUsuarios.Location = new Point(0, 665);
             btnUsuarios.Name = "btnUsuarios";
             btnUsuarios.Padding = new Padding(30, 0, 0, 0);
-            btnUsuarios.Size = new Size(243, 80);
+            btnUsuarios.Size = new Size(283, 80);
             btnUsuarios.TabIndex = 7;
             btnUsuarios.Text = "            Usuarios";
             btnUsuarios.TextAlign = ContentAlignment.MiddleLeft;
@@ -541,14 +545,33 @@
             // panelVentas
             // 
             panelVentas.BackColor = Color.FromArgb(238, 238, 238);
+            panelVentas.Controls.Add(btnDevoluciones);
             panelVentas.Controls.Add(btnCierreDiario);
             panelVentas.Controls.Add(btnClientes);
             panelVentas.Controls.Add(btnGestionVentas);
             panelVentas.Dock = DockStyle.Top;
-            panelVentas.Location = new Point(0, 465);
+            panelVentas.Location = new Point(0, 505);
             panelVentas.Name = "panelVentas";
-            panelVentas.Size = new Size(243, 120);
+            panelVentas.Size = new Size(283, 160);
             panelVentas.TabIndex = 6;
+            // 
+            // btnDevoluciones
+            // 
+            btnDevoluciones.BackColor = Color.FromArgb(202, 223, 255);
+            btnDevoluciones.Dock = DockStyle.Top;
+            btnDevoluciones.FlatAppearance.BorderColor = Color.White;
+            btnDevoluciones.FlatStyle = FlatStyle.Flat;
+            btnDevoluciones.Font = new Font("Itim", 11.25F);
+            btnDevoluciones.ForeColor = Color.FromArgb(87, 99, 110);
+            btnDevoluciones.Location = new Point(0, 120);
+            btnDevoluciones.Name = "btnDevoluciones";
+            btnDevoluciones.Padding = new Padding(20, 0, 0, 0);
+            btnDevoluciones.Size = new Size(283, 40);
+            btnDevoluciones.TabIndex = 3;
+            btnDevoluciones.Text = "Devoluciones";
+            btnDevoluciones.TextAlign = ContentAlignment.MiddleLeft;
+            btnDevoluciones.UseVisualStyleBackColor = false;
+            btnDevoluciones.Click += btnDevoluciones_Click;
             // 
             // btnCierreDiario
             // 
@@ -561,9 +584,9 @@
             btnCierreDiario.Location = new Point(0, 80);
             btnCierreDiario.Name = "btnCierreDiario";
             btnCierreDiario.Padding = new Padding(20, 0, 0, 0);
-            btnCierreDiario.Size = new Size(243, 40);
+            btnCierreDiario.Size = new Size(283, 40);
             btnCierreDiario.TabIndex = 2;
-            btnCierreDiario.Text = "CierreDiario";
+            btnCierreDiario.Text = "Cierre Diario";
             btnCierreDiario.TextAlign = ContentAlignment.MiddleLeft;
             btnCierreDiario.UseVisualStyleBackColor = false;
             btnCierreDiario.Click += btnCierreDiario_Click;
@@ -579,7 +602,7 @@
             btnClientes.Location = new Point(0, 40);
             btnClientes.Name = "btnClientes";
             btnClientes.Padding = new Padding(20, 0, 0, 0);
-            btnClientes.Size = new Size(243, 40);
+            btnClientes.Size = new Size(283, 40);
             btnClientes.TabIndex = 1;
             btnClientes.Text = "Clientes";
             btnClientes.TextAlign = ContentAlignment.MiddleLeft;
@@ -597,7 +620,7 @@
             btnGestionVentas.Location = new Point(0, 0);
             btnGestionVentas.Name = "btnGestionVentas";
             btnGestionVentas.Padding = new Padding(20, 0, 0, 0);
-            btnGestionVentas.Size = new Size(243, 40);
+            btnGestionVentas.Size = new Size(283, 40);
             btnGestionVentas.TabIndex = 0;
             btnGestionVentas.Text = "Facturación";
             btnGestionVentas.TextAlign = ContentAlignment.MiddleLeft;
@@ -614,10 +637,10 @@
             btnVentas.ForeColor = Color.FromArgb(87, 99, 110);
             btnVentas.Image = (Image)resources.GetObject("btnVentas.Image");
             btnVentas.ImageAlign = ContentAlignment.MiddleLeft;
-            btnVentas.Location = new Point(0, 385);
+            btnVentas.Location = new Point(0, 425);
             btnVentas.Name = "btnVentas";
             btnVentas.Padding = new Padding(30, 0, 0, 0);
-            btnVentas.Size = new Size(243, 80);
+            btnVentas.Size = new Size(283, 80);
             btnVentas.TabIndex = 5;
             btnVentas.Text = "            Ventas";
             btnVentas.TextAlign = ContentAlignment.MiddleLeft;
@@ -630,9 +653,9 @@
             panelCompras.Controls.Add(btnProveedores);
             panelCompras.Controls.Add(btnGestionCompra);
             panelCompras.Dock = DockStyle.Top;
-            panelCompras.Location = new Point(0, 305);
+            panelCompras.Location = new Point(0, 345);
             panelCompras.Name = "panelCompras";
-            panelCompras.Size = new Size(243, 80);
+            panelCompras.Size = new Size(283, 80);
             panelCompras.TabIndex = 4;
             // 
             // btnProveedores
@@ -646,7 +669,7 @@
             btnProveedores.Location = new Point(0, 40);
             btnProveedores.Name = "btnProveedores";
             btnProveedores.Padding = new Padding(20, 0, 0, 0);
-            btnProveedores.Size = new Size(243, 40);
+            btnProveedores.Size = new Size(283, 40);
             btnProveedores.TabIndex = 1;
             btnProveedores.Text = "Proveedores";
             btnProveedores.TextAlign = ContentAlignment.MiddleLeft;
@@ -664,7 +687,7 @@
             btnGestionCompra.Location = new Point(0, 0);
             btnGestionCompra.Name = "btnGestionCompra";
             btnGestionCompra.Padding = new Padding(20, 0, 0, 0);
-            btnGestionCompra.Size = new Size(243, 40);
+            btnGestionCompra.Size = new Size(283, 40);
             btnGestionCompra.TabIndex = 0;
             btnGestionCompra.Text = "Gestión de Compra";
             btnGestionCompra.TextAlign = ContentAlignment.MiddleLeft;
@@ -681,10 +704,10 @@
             btnCompras.ForeColor = Color.FromArgb(87, 99, 110);
             btnCompras.Image = (Image)resources.GetObject("btnCompras.Image");
             btnCompras.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCompras.Location = new Point(0, 225);
+            btnCompras.Location = new Point(0, 265);
             btnCompras.Name = "btnCompras";
             btnCompras.Padding = new Padding(30, 0, 0, 0);
-            btnCompras.Size = new Size(243, 80);
+            btnCompras.Size = new Size(283, 80);
             btnCompras.TabIndex = 3;
             btnCompras.Text = "            Compras";
             btnCompras.TextAlign = ContentAlignment.MiddleLeft;
@@ -694,13 +717,32 @@
             // panelInventario
             // 
             panelInventario.BackColor = Color.FromArgb(238, 238, 238);
+            panelInventario.Controls.Add(btnRegistroPerdida);
             panelInventario.Controls.Add(btnInventarioBodega);
             panelInventario.Controls.Add(btnGestionInventario);
             panelInventario.Dock = DockStyle.Top;
             panelInventario.Location = new Point(0, 145);
             panelInventario.Name = "panelInventario";
-            panelInventario.Size = new Size(243, 80);
+            panelInventario.Size = new Size(283, 120);
             panelInventario.TabIndex = 2;
+            // 
+            // btnRegistroPerdida
+            // 
+            btnRegistroPerdida.BackColor = Color.FromArgb(202, 223, 255);
+            btnRegistroPerdida.Dock = DockStyle.Top;
+            btnRegistroPerdida.FlatAppearance.BorderColor = Color.White;
+            btnRegistroPerdida.FlatStyle = FlatStyle.Flat;
+            btnRegistroPerdida.Font = new Font("Itim", 11.25F);
+            btnRegistroPerdida.ForeColor = Color.FromArgb(87, 99, 110);
+            btnRegistroPerdida.Location = new Point(0, 80);
+            btnRegistroPerdida.Name = "btnRegistroPerdida";
+            btnRegistroPerdida.Padding = new Padding(20, 0, 0, 0);
+            btnRegistroPerdida.Size = new Size(283, 40);
+            btnRegistroPerdida.TabIndex = 3;
+            btnRegistroPerdida.Text = "Perdidas";
+            btnRegistroPerdida.TextAlign = ContentAlignment.MiddleLeft;
+            btnRegistroPerdida.UseVisualStyleBackColor = false;
+            btnRegistroPerdida.Click += btnRegistroPerdida_Click;
             // 
             // btnInventarioBodega
             // 
@@ -713,9 +755,9 @@
             btnInventarioBodega.Location = new Point(0, 40);
             btnInventarioBodega.Name = "btnInventarioBodega";
             btnInventarioBodega.Padding = new Padding(20, 0, 0, 0);
-            btnInventarioBodega.Size = new Size(243, 40);
+            btnInventarioBodega.Size = new Size(283, 40);
             btnInventarioBodega.TabIndex = 2;
-            btnInventarioBodega.Text = "Inventario por Bodega";
+            btnInventarioBodega.Text = "Inventario de Bodegas";
             btnInventarioBodega.TextAlign = ContentAlignment.MiddleLeft;
             btnInventarioBodega.UseVisualStyleBackColor = false;
             btnInventarioBodega.Click += btnInventarioBodega_Click;
@@ -731,7 +773,7 @@
             btnGestionInventario.Location = new Point(0, 0);
             btnGestionInventario.Name = "btnGestionInventario";
             btnGestionInventario.Padding = new Padding(20, 0, 0, 0);
-            btnGestionInventario.Size = new Size(243, 40);
+            btnGestionInventario.Size = new Size(283, 40);
             btnGestionInventario.TabIndex = 0;
             btnGestionInventario.Text = "Productos";
             btnGestionInventario.TextAlign = ContentAlignment.MiddleLeft;
@@ -752,7 +794,7 @@
             btnInventario.Location = new Point(0, 65);
             btnInventario.Name = "btnInventario";
             btnInventario.Padding = new Padding(30, 0, 0, 0);
-            btnInventario.Size = new Size(243, 80);
+            btnInventario.Size = new Size(283, 80);
             btnInventario.TabIndex = 1;
             btnInventario.Text = "            Inventario";
             btnInventario.TextAlign = ContentAlignment.MiddleLeft;
@@ -767,7 +809,7 @@
             panelMneuLateral.ForeColor = Color.Coral;
             panelMneuLateral.Location = new Point(0, 0);
             panelMneuLateral.Name = "panelMneuLateral";
-            panelMneuLateral.Size = new Size(243, 65);
+            panelMneuLateral.Size = new Size(283, 65);
             panelMneuLateral.TabIndex = 0;
             panelMneuLateral.MouseDown += panel1_MouseDown;
             // 
@@ -793,111 +835,193 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
-            panelFormHijo.Controls.Add(panel9);
+            panelFormHijo.Controls.Add(lblHora);
+            panelFormHijo.Controls.Add(lblFecha);
             panelFormHijo.Controls.Add(flowLayoutPanel1);
             panelFormHijo.Dock = DockStyle.Fill;
-            panelFormHijo.Location = new Point(260, 65);
+            panelFormHijo.Location = new Point(300, 65);
             panelFormHijo.Name = "panelFormHijo";
-            panelFormHijo.Size = new Size(924, 676);
+            panelFormHijo.Size = new Size(884, 676);
             panelFormHijo.TabIndex = 2;
-            // 
-            // panel9
-            // 
-            panel9.Controls.Add(lblFecha);
-            panel9.Controls.Add(lblHora);
-            panel9.Dock = DockStyle.Bottom;
-            panel9.Location = new Point(0, 595);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(924, 81);
-            panel9.TabIndex = 33;
-            // 
-            // lblFecha
-            // 
-            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(608, 52);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(316, 29);
-            lblFecha.TabIndex = 31;
-            lblFecha.Text = "Fecha";
             // 
             // lblHora
             // 
-            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblHora.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(756, 19);
+            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblHora.AutoSize = true;
+            lblHora.Font = new Font("Itim", 14.25F);
+            lblHora.ForeColor = Color.DimGray;
+            lblHora.Location = new Point(6, 624);
             lblHora.Name = "lblHora";
-            lblHora.Size = new Size(168, 33);
-            lblHora.TabIndex = 30;
-            lblHora.Text = "Hora";
+            lblHora.RightToLeft = RightToLeft.Yes;
+            lblHora.Size = new Size(59, 23);
+            lblHora.TabIndex = 34;
+            lblHora.Text = "label3";
+            lblHora.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblFecha
+            // 
+            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblFecha.AutoSize = true;
+            lblFecha.Font = new Font("Itim", 14.25F);
+            lblFecha.ForeColor = Color.DimGray;
+            lblFecha.Location = new Point(6, 647);
+            lblFecha.Name = "lblFecha";
+            lblFecha.RightToLeft = RightToLeft.Yes;
+            lblFecha.Size = new Size(59, 23);
+            lblFecha.TabIndex = 33;
+            lblFecha.Text = "label3";
+            lblFecha.TextAlign = ContentAlignment.MiddleRight;
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Controls.Add(panel4);
-            flowLayoutPanel1.Controls.Add(panel5);
-            flowLayoutPanel1.Controls.Add(panel7);
-            flowLayoutPanel1.Controls.Add(panel11);
-            flowLayoutPanel1.Controls.Add(panel6);
-            flowLayoutPanel1.Controls.Add(pbxCalculadora);
-            flowLayoutPanel1.Controls.Add(panel8);
-            flowLayoutPanel1.Controls.Add(panel10);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flowLayoutPanel1.Controls.Add(tableLayoutPanel2);
+            flowLayoutPanel1.Controls.Add(tableLayoutPanel1);
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(924, 676);
+            flowLayoutPanel1.Size = new Size(884, 612);
             flowLayoutPanel1.TabIndex = 32;
             // 
-            // panel4
+            // tableLayoutPanel2
             // 
-            panel4.BackColor = Color.FromArgb(189, 215, 238);
-            panel4.Location = new Point(10, 10);
-            panel4.Margin = new Padding(10);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(444, 100);
-            panel4.TabIndex = 7;
+            tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(panel8, 0, 0);
+            tableLayoutPanel2.Controls.Add(panel10, 1, 0);
+            tableLayoutPanel2.Location = new Point(10, 10);
+            tableLayoutPanel2.Margin = new Padding(10);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(904, 310);
+            tableLayoutPanel2.TabIndex = 14;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = Color.FromArgb(189, 215, 238);
+            panel8.Controls.Add(chart1);
+            panel8.Dock = DockStyle.Fill;
+            panel8.Location = new Point(10, 10);
+            panel8.Margin = new Padding(10);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(432, 290);
+            panel8.TabIndex = 11;
+            // 
+            // chart1
+            // 
+            chart1.BackColor = Color.FromArgb(189, 215, 238);
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            chart1.Dock = DockStyle.Fill;
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
+            chart1.Location = new Point(0, 0);
+            chart1.Name = "chart1";
+            chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chart1.Series.Add(series1);
+            chart1.Size = new Size(432, 290);
+            chart1.TabIndex = 0;
+            chart1.Text = "chart1";
+            // 
+            // panel10
+            // 
+            panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel10.BackColor = Color.FromArgb(189, 215, 238);
+            panel10.Controls.Add(chart2);
+            panel10.Location = new Point(462, 10);
+            panel10.Margin = new Padding(10);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(432, 290);
+            panel10.TabIndex = 12;
+            // 
+            // chart2
+            // 
+            chart2.BackColor = Color.FromArgb(189, 215, 238);
+            chartArea2.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea2);
+            chart2.Dock = DockStyle.Fill;
+            legend2.Name = "Legend1";
+            chart2.Legends.Add(legend2);
+            chart2.Location = new Point(0, 0);
+            chart2.Name = "chart2";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            chart2.Series.Add(series2);
+            chart2.Size = new Size(432, 290);
+            chart2.TabIndex = 0;
+            chart2.Text = "chart1";
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(panel5, 1, 0);
+            tableLayoutPanel1.Controls.Add(panel11, 1, 1);
+            tableLayoutPanel1.Controls.Add(panel7, 0, 1);
+            tableLayoutPanel1.Controls.Add(panel4, 0, 0);
+            tableLayoutPanel1.Location = new Point(10, 340);
+            tableLayoutPanel1.Margin = new Padding(10);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(637, 242);
+            tableLayoutPanel1.TabIndex = 13;
             // 
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
-            panel5.Location = new Point(474, 10);
+            panel5.Dock = DockStyle.Fill;
+            panel5.Location = new Point(328, 10);
             panel5.Margin = new Padding(10);
             panel5.Name = "panel5";
-            panel5.Size = new Size(431, 100);
+            panel5.Size = new Size(299, 101);
             panel5.TabIndex = 8;
-            // 
-            // panel7
-            // 
-            panel7.BackColor = Color.FromArgb(189, 215, 238);
-            panel7.Location = new Point(10, 130);
-            panel7.Margin = new Padding(10);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(258, 100);
-            panel7.TabIndex = 9;
             // 
             // panel11
             // 
             panel11.BackColor = Color.FromArgb(189, 215, 238);
-            panel11.Location = new Point(288, 130);
+            panel11.Dock = DockStyle.Fill;
+            panel11.Location = new Point(328, 131);
             panel11.Margin = new Padding(10);
             panel11.Name = "panel11";
-            panel11.Size = new Size(250, 100);
+            panel11.Size = new Size(299, 101);
             panel11.TabIndex = 11;
             // 
-            // panel6
+            // panel7
             // 
-            panel6.BackColor = Color.FromArgb(189, 215, 238);
-            panel6.Location = new Point(558, 130);
-            panel6.Margin = new Padding(10);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(243, 100);
-            panel6.TabIndex = 12;
+            panel7.BackColor = Color.FromArgb(189, 215, 238);
+            panel7.Dock = DockStyle.Fill;
+            panel7.Location = new Point(10, 131);
+            panel7.Margin = new Padding(10);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(298, 101);
+            panel7.TabIndex = 9;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.FromArgb(189, 215, 238);
+            panel4.Controls.Add(pbxCalculadora);
+            panel4.Dock = DockStyle.Fill;
+            panel4.Location = new Point(10, 10);
+            panel4.Margin = new Padding(10);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(298, 101);
+            panel4.TabIndex = 7;
             // 
             // pbxCalculadora
             // 
             pbxCalculadora.Image = Properties.Resources.calculadora;
-            pbxCalculadora.Location = new Point(821, 130);
+            pbxCalculadora.Location = new Point(0, 0);
             pbxCalculadora.Margin = new Padding(10);
             pbxCalculadora.Name = "pbxCalculadora";
             pbxCalculadora.Size = new Size(86, 100);
@@ -907,61 +1031,6 @@
             pbxCalculadora.Click += pbxCalculadora_Click;
             pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
             pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
-            // 
-            // panel8
-            // 
-            panel8.BackColor = Color.FromArgb(189, 215, 238);
-            panel8.Controls.Add(chart1);
-            panel8.Location = new Point(10, 250);
-            panel8.Margin = new Padding(10);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(413, 338);
-            panel8.TabIndex = 11;
-            // 
-            // chart1
-            // 
-            chartArea1.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            chart1.Legends.Add(legend1);
-            chart1.Location = new Point(16, 16);
-            chart1.Name = "chart1";
-            chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            chart1.Series.Add(series1);
-            chart1.Size = new Size(379, 308);
-            chart1.TabIndex = 0;
-            chart1.Text = "chart1";
-            // 
-            // panel10
-            // 
-            panel10.BackColor = Color.FromArgb(189, 215, 238);
-            panel10.Controls.Add(chart2);
-            panel10.Location = new Point(443, 250);
-            panel10.Margin = new Padding(10);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(462, 338);
-            panel10.TabIndex = 12;
-            // 
-            // chart2
-            // 
-            chartArea2.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            chart2.Legends.Add(legend2);
-            chart2.Location = new Point(19, 16);
-            chart2.Name = "chart2";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.YValuesPerPoint = 4;
-            chart2.Series.Add(series2);
-            chart2.Size = new Size(419, 308);
-            chart2.TabIndex = 0;
-            chart2.Text = "chart1";
             // 
             // timerAbrir
             // 
@@ -1031,13 +1100,16 @@
             panelInventario.ResumeLayout(false);
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
-            panel9.ResumeLayout(false);
+            panelFormHijo.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
+            tableLayoutPanel2.ResumeLayout(false);
             panel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
             panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)chart2).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
+            panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             panelNotificaciones.ResumeLayout(false);
             panelNotificaciones.PerformLayout();
             ResumeLayout(false);
@@ -1077,7 +1149,7 @@
         public Label lblNombreModulo;
         private Panel panel2;
         private Label label2;
-        private Label label1;
+        private Label lblUsuario;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
         private System.Windows.Forms.Timer timerAbrir;
@@ -1092,19 +1164,21 @@
         private Button btnCerrar;
         private System.Windows.Forms.Timer HoraFecha;
         private PictureBox pbxCalculadora;
-        private Label lblHora;
-        private Label lblFecha;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnCierreDiario;
         private Panel panel4;
         private Panel panel5;
         private Panel panel7;
         private Panel panel8;
-        private Panel panel9;
         private Panel panel11;
         private Panel panel10;
-        private Panel panel6;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private Label lblFecha;
+        private Label lblHora;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Button btnDevoluciones;
+        private Button btnRegistroPerdida;
     }
 }

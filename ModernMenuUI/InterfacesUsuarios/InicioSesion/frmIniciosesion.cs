@@ -1,5 +1,6 @@
 ﻿using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using Supabase.Gotrue.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,6 +37,7 @@ namespace ModernMenuUI
         }
         private async void btnAcceder_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.AppStarting;
             btnAcceder.Enabled = false;
 
             if (txtContra.Text == "" || txtUsuario.Text == "")
@@ -43,11 +45,12 @@ namespace ModernMenuUI
                 btnAcceder.Enabled = true;
                 MessageBox.Show("El Usuario o contraseña estan vacios", "Credenciales Vacias", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 LimpiarDatos(e, e);
+                
             }
             else
             {
                 // Validadcion inicial para acceder al servidor y comprobar Inicio de sesión
-                string username = txtUsuario.Text;
+                string username = txtUsuario.Text + "@gmail.com";
                 string password = txtContra.Text;
                 username = username.Trim();
                 password = password.Trim();
@@ -60,10 +63,16 @@ namespace ModernMenuUI
                 {
                     pbxCargando.Visible = true; // Picture box con imagen en formato gift para carga
 
-                    Usuario usuario = await _usuarioRepo.Iniciar_Sesion(username, password);
+                    var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
 
+                    var usuario = await supabase.Auth.SignIn(username, password);
+
+                    var Actual = supabase.Auth.CurrentUser;
                     if (usuario != null)
                     {
+                        
+                        CapaServiciosSeguridadValidacion.ServicioSesionUsuario.IniciarSesion(Actual);
+
                         // Muestra el label y prepara el primer mensaje
                         lblMensajeError.ForeColor = Color.DarkGray; // Color neutro para carga
                         lblMensajeError.Text = "Conectando al servidor...";
@@ -103,6 +112,29 @@ namespace ModernMenuUI
                         // Lógica de limpieza y re-enfoque
                         LimpiarDatos(e, e);
                     }
+                }catch (GotrueException gex)
+                {
+                    // Captura el error específico de credenciales inválidas
+                    pbxCargando.Visible = false;
+                    lblMensajeError.Visible = true;
+                    lblMensajeError.ForeColor = Color.Red;
+
+                    if (gex.Message.Contains("Invalid login credentials"))
+                    {
+                        lblMensajeError.Text = "Usuario o Contraseña incorrectos";
+                    }
+                    else if (gex.Message.Contains("Email not confirmed"))
+                    {
+                        lblMensajeError.Text = "El email no ha sido confirmado.";
+                    }
+                    else
+                    {
+                        lblMensajeError.Text = "Error de autenticación.";
+                        Console.WriteLine($"GotrueError: {gex.Message}");
+                    }
+
+                    LimpiarDatos(e, e);
+                    lblMensajeError.Visible = false;
                 }
                 catch (System.Net.WebException wex)
                 {
@@ -112,6 +144,7 @@ namespace ModernMenuUI
                     MessageBox.Show($"Fallo de conexión: {wex.Message}\nAsegúrese de que el Wi-Fi o su conexión de red estén activos.",
                                     "Error de Conexión de Red", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     LimpiarDatos(e, e);
+                    lblMensajeError.Visible = false;
                 }
                 catch (TimeoutException tex)
                 {
@@ -120,6 +153,7 @@ namespace ModernMenuUI
                     MessageBox.Show(tex.Message, "Tiempo de Espera del Servidor Excedido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     // Lógica de limpieza y re-enfoque
                     LimpiarDatos(e, e);
+                    lblMensajeError.Visible = false;
                 }
                 catch (ApplicationException aex)
                 {
@@ -127,6 +161,7 @@ namespace ModernMenuUI
                     // Captura el error de configuración
                     MessageBox.Show($"Error de configuración: {aex.Message}\nEl programa terminará.", "Error en el Sistema", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     this.Close();
+                    lblMensajeError.Visible = false;
                 }
                 catch (Exception)
                 {
@@ -135,10 +170,12 @@ namespace ModernMenuUI
                     MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión.", "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     // Lógica de limpieza y re-enfoque
                     LimpiarDatos(e, e);
+                    lblMensajeError.Visible = false;
                 }
                 finally
                 {
                     btnAcceder.Enabled = true; // Habilitar el botón
+                    this.Cursor = Cursors.Default;
                 }
             }
         }

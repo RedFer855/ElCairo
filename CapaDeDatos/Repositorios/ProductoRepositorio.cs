@@ -15,33 +15,44 @@ namespace CapaDeDatos.Repositorios
         {
             return await Conexion.ConnectWithTimeoutAsync(10);
         }
-        public async Task<List<Producto>> ObtenerTodosLosProductos()
+        public async Task<List<Producto>> ObtenerTodosLosProductos(bool? estado = null)
         {
             try
             {
                 // 1. Obtiene la conexión
                 var client = await GetClient();
 
-                // 2. Realiza la consulta (SELECT * FROM producto)
-                // Se cambia Empleado por Producto
-                var response = await client.From<Producto>().Get();
+                // 2. Prepara la consulta base (SIN .Get() todavía)
+                var query = client.From<Producto>();
 
-                // 3. Devuelve la lista de modelos (objetos Producto)
+                // 3. APLICA EL FILTRO (Esta es la parte que faltaba)
+                if (estado.HasValue) // Si estado es 'true' o 'false'
+                {
+                    // Aplica el filtro WHERE
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)query.Where(x => x.EstadoProducto == estado.Value);
+                }
+                else // Si estado es 'null' (para "Mostrar Todos")
+                {
+                    // Opcional: Si quieres que "Todos" solo incluya Habilitados y Deshabilitados
+                    // (y no otros posibles estados), usa el OR.
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)query.Where(x => x.EstadoProducto == true || x.EstadoProducto == false);
+                }
+
+                // 4. Ejecuta la consulta AHORA
+                var response = await query.Get();
+
+                // 5. Devuelve la lista de modelos
                 if (response != null && response.Models != null)
                 {
                     return response.Models;
                 }
 
-                // Devuelve una lista vacía si no hay respuesta
                 return new List<Producto>();
             }
             catch (Exception ex)
             {
-                // 4. Manejo de errores
                 Console.WriteLine($"Error de Supabase al obtener productos: {ex.Message}");
-                // Relanza la excepción para que el formulario (la UI) pueda
-                // mostrar un mensaje de error al usuario.
-                throw;// new Exception("No se pudieron cargar los productos. Verifique la conexión.", ex);
+                throw;
             }
         }
         public async Task<Producto> InsertarProducto(Producto nuevoProducto)
@@ -78,6 +89,45 @@ namespace CapaDeDatos.Repositorios
                 Console.WriteLine($"Error de Supabase al insertar producto: {ex.Message}");
                 // Relanza para que la UI (el formulario) pueda manejarlo
                 throw new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
+            }
+        }
+
+        public async Task<Producto> ModificarProducto(Producto editproducto, int idProd)
+        {
+            // 1. Verificación de seguridad
+            if (editproducto == null)
+            {
+                throw new ArgumentNullException(nameof(editproducto), "El producto a modificar no puede ser nulo.");
+            }
+
+            try
+            {
+                // 2. Obtiene la conexión
+                var client = await GetClient();
+
+                // 3. Realiza la operación de actualización
+                // .Where() selecciona la fila por el idProd
+                // .Update(editproducto) aplica todos los cambios del objeto 'editproducto' a esa fila
+                var response = await client.From<Producto>()
+                    .Where(x => x.IdProducto == idProd)
+                    .Update(editproducto);
+
+                // 4. Verifica y devuelve el producto modificado
+                if (response?.Models != null && response.Models.Count > 0)
+                {
+                    // Devuelve el primer producto de la respuesta (el actualizado)
+                    return response.Models.First();
+                }
+
+                // Si la respuesta es nula o no contiene modelos, algo falló o no se encontró.
+                throw new Exception("La base de datos no devolvió el producto modificado o no se encontró el ID.");
+            }
+            catch (Exception ex)
+            {
+                // 5. Manejo de errores
+                Console.WriteLine($"Error de Supabase al modificar producto: {ex.Message}");
+                // Relanza para que la UI (el formulario) pueda manejarlo
+                throw new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
             }
         }
     }
