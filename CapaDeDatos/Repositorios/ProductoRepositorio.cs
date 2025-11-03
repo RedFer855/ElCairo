@@ -10,7 +10,7 @@ namespace CapaDeDatos.Repositorios
 {
     public class ProductoRepositorio
     {
-        // Método privado para obtener el cliente (asume que tu clase Conexion existe)
+        // Método privado para obtener el cliente 
         private async Task<Client> GetClient()
         {
             return await Conexion.ConnectWithTimeoutAsync(10);
