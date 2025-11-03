@@ -19,30 +19,24 @@ namespace CapaDeDatos.Repositorios
 
             public static async Task RegistrarBitacoraAsync(
                 Client client,
-                int idEmpleado,
-                string estadoAnterior,
-                string estadoActual,
-                string campoAfectado
+                string DescCambio,
+                string fechaCambio,
+                string datosComp
+               // string estadoAnterior,
+                //string campoAfectado
                 /*Accion accion,
                 Modulo modulo*/
                 )
             {
                 try
-                {
-                    var cliente = await Conexion.GetClientAsync();
-                    string nombreComputadora = Environment.MachineName;
-                    string usuarioWindows = Environment.UserName;
+                {           
                     var bitacora = new Modelados.Bitocora_Empleado
                     {
-                        Id_Empleado = idEmpleado,
-                        Estado_Anterior = estadoAnterior,
-                        Estado_Actual = estadoActual,
-                        Campo_Afectado = campoAfectado,
-                        Campo_Extra = $"{nombreComputadora} - {usuarioWindows}",
-                        /* Id_Accion = (int)accion,   // convertir enum a número
-                            Id_Modulo = (int)modulo*/
+                        Descripcion = DescCambio,
+                        Fecha_Hora = DateTime.Now,
+                        datos_comp = datosComp,
                     };
-                    await cliente.From<Bitocora_Empleado>().Insert(bitacora);
+                    await client.From<Bitocora_Empleado>().Insert(bitacora);
                 }
                 catch (Exception ex)
                 {

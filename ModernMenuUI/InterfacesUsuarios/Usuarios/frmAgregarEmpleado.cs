@@ -22,7 +22,6 @@ namespace ModernMenuUI
 
         private async void btnGuardarEmpleado_Click(object sender, EventArgs e)
         {
-            // 1. VALIDACIÓN (Simple)
             if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text))
             {
                 MessageBox.Show("Nombre, Apellido y DNI son obligatorios.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -36,41 +35,47 @@ namespace ModernMenuUI
             string nuevoEmail = txtCorreo.Text.Trim();
             string nuevaDireccion = txtDireccion.Text.Trim();
 
-            // 2. CREACIÓN DEL OBJETO (ACTUALIZADO)
             Empleado nuevoEmpleado = new Empleado
             {
                 Nombre = nuevonombre,
                 Apellido = nuevoapellido,
                 Dni = nuevoDni,
                 Telefono = nuevoTelefono,
-                Email = nuevoEmail,       // Tu TextBox se llama txtCorreo, está bien.
+                Email = nuevoEmail,       
                 Direccion = nuevaDireccion
             };
 
-            // 3. LLAMADA A LA CAPA DE DATOS
             try
             {
-                // ERROR 3: El botón se llama 'btnGuardar', no 'btnGuardarEmpleado'
                 btnGuardarEmpleado.Enabled = false;
 
-                // Ahora la llamada 'await' funcionará correctamente
                 await EmpleadoRepositorio.InsertarEmpleado(nuevoEmpleado);
+                
+                // Registro en bitácora
+                string nombreComputadora = Environment.MachineName; //con esta onda agarro los datos de la computadora lol
+                string usuarioWindows = Environment.UserName;
+                await BitacoraRepositorio.BitacoraService.RegistrarBitacoraAsync
+                    (
+                       await CapaDeDatos.Datos.Conexion.GetClientAsync(),
+                       "El empleado"+nuevonombre+" "+nuevoapellido+" ha sido agregado.",
+                        DateTime.Now.ToString(),
+                        $"PC: {nombreComputadora}, Usuario: {usuarioWindows}"
+                    );
 
                 MessageBox.Show("¡Empleado guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                this.Close();
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al guardar el empleado: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             finally
             {
-                // ERROR 3 (corregido)
                 btnGuardarEmpleado.Enabled = true;
             }
         }
-
         private void frmAgregarEmpleado_Load(object sender, EventArgs e)
         {
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "AGREGUE UN EMPLEADO NUEVO");

@@ -12,30 +12,14 @@ namespace CapaDeDatos.Modelados
     {
         [PrimaryKey("Id_Bitacora", false)]
         public int Id_Bitacora { get; set; }
-        
-        [Column("Id_Empleado")]
-        public int Id_Empleado { get; set; }
-        
-        [Column("Estado_Anterior")]
-        public string Estado_Anterior { get; set; }
 
-        [Column("Estado_Actual")]
-        public string Estado_Actual { get; set; }
+        [Column("descripcion_cambio")]
+        public string Descripcion { get; set; }
 
-        [Column("Campo_Afectado")]
-        public string Campo_Afectado { get; set; }
+        [Column("fecha_hora")]
+        public DateTime Fecha_Hora { get; set; } = DateTime.Now;
+        [Column("datos_comp")]
+        public string datos_comp { get; set; }
 
-        [Column("Fecha_Hora")]
-        public DateTime Fecha_Hora { get; set; }
-
-        [Column("Campo_Extra")]
-        public string Campo_Extra { get; set; }
-
-        [Column("Id_Accion")]
-        public int Id_Accion { get; set; }
-
-        [Column("Id_Modulo")]
-        public int Id_Modulo { get; set; }
-        
     }
 }
