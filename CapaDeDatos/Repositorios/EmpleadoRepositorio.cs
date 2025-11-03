@@ -77,6 +77,7 @@ namespace CapaDeDatos.Repositorios
                 // mostrar un mensaje de error al usuario.
                 throw new Exception("No se pudieron cargar los empleados. Verifique la conexión.", ex);
             }
+           
         }
     }
 }
