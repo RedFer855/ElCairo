@@ -41,11 +41,13 @@ namespace CapaDeDatos.Repositorios
         private async Task<Supabase.Client> GetClient()
         {
             // Llama al método estático de tu clase Conexion.cs
-            return await Conexion.ConnectWithTimeoutAsync(10);
+            return await Conexion.ConnectWithTimeoutAsync();
         }
 
-        // VER UN EMPLEADO
-        public async Task<List<Empleado>> ObtenerTodosLosEmpleados()
+        // Asegúrate de que tienes: using System.Threading; en este archivo.
+
+        // 1. Aceptar el token de cancelación como parámetro opcional.
+        public async Task<List<Empleado>> ObtenerTodosLosEmpleados(CancellationToken cancellationToken = default)
         {
             try
             {
@@ -55,11 +57,12 @@ namespace CapaDeDatos.Repositorios
                 // 2. INICIALIZA el constructor de consultas (queryBuilder)
                 var queryBuilder = client.From<Empleado>();
 
-                // 3. CONSTRUYE la consulta (Aplica la Ordenación al queryBuilder)
+                // 3. CONSTRUYE la consulta (Aplica la Ordenación)
                 queryBuilder.Order("id_empleado", Supabase.Postgrest.Constants.Ordering.Ascending);
 
-                // 4. EJECUTA la consulta usando la instancia de queryBuilder CON la ordenación
-                var response = await queryBuilder.Get(); // <-- CORRECCIÓN CLAVE: Usar 'queryBuilder.Get()'
+                // 4. EJECUTA la consulta, PASANDO EL TOKEN. 
+                //    Si el token se cancela (ej. después de 10 segundos), esta línea lanza OperationCanceledException.
+                var response = await queryBuilder.Get(cancellationToken);
 
                 // 5. Devuelve la lista de modelos (objetos Empleado)
                 if (response != null && response.Models != null)
@@ -69,15 +72,18 @@ namespace CapaDeDatos.Repositorios
 
                 return new List<Empleado>();
             }
+            // 6. CAPTURA EXPLÍCITA del error de timeout. 
+            //    Si la operación falla por timeout (OperationCanceledException), relanzamos como un TimeoutException.
+            catch (OperationCanceledException ex) when (cancellationToken.IsCancellationRequested)
+            {
+                throw new TimeoutException("Tiempo de espera agotado, verifique su conexión", ex);
+            }
             catch (Exception ex)
             {
-                // 4. Manejo de errores
+                // 7. Manejo de otros errores (red, Supabase, etc.)
                 Console.WriteLine($"Error de Supabase al obtener empleados: {ex.Message}");
-                // Relanza la excepción para que el formulario (la UI) pueda
-                // mostrar un mensaje de error al usuario.
                 throw new Exception("No se pudieron cargar los empleados. Verifique la conexión.", ex);
             }
-           
         }
     }
 }

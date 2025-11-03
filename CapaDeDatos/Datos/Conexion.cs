@@ -48,7 +48,7 @@ namespace CapaDeDatos.Datos
         }
 
         // 2. Conecta con un Timeout: Método para limitar el tiempo de espera.
-        public static async Task<Client> ConnectWithTimeoutAsync(int timeoutSeconds = 10)
+        public static async Task<Client> ConnectWithTimeoutAsync(int timeoutSeconds = 3)
         {
             var connectionTask = GetClientAsync();
             var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeoutSeconds));
