@@ -1,3 +1,4 @@
+using CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
 using System.Configuration;
 using System.Data;
@@ -12,6 +13,8 @@ namespace ModernMenuUI
         public bool Animacion = true;
         clsAnimadorPanel animadorPanel;
         private Form formularioactivo = null;
+        // 1. Declarar una instancia de tu servicio. Hazlo privado y de solo lectura.
+        private readonly CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
 
         public frmMenuPrincipal()
         {
@@ -19,8 +22,48 @@ namespace ModernMenuUI
             animadorPanel = new clsAnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
+
+            _monitorConexion = new ServicioVerificacionConexion();
+
+            // 3. Suscribirse al evento que dispara el servicio
+            _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
+
+            // 4. Comprobar el estado inicial
+            ActualizarEstadoVisual(_monitorConexion.HayConexionAhora());
         }
 
+        // 5. El método que se ejecuta cuando el servicio detecta un cambio
+        private void MonitorConexion_EstadoDeRedCambiado(bool hayRed)
+        {
+            // Llamar a la función de actualización de la UI para manejar el Invoke
+            ActualizarEstadoVisual(hayRed);
+        }
+
+        // 6. Método Thread-Safe para actualizar la UI
+        private void ActualizarEstadoVisual(bool hayRed)
+        {
+            // Usar Invoke para garantizar que la actualización ocurra en el hilo de la UI.
+            if (this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    ActualizarEstadoVisual(hayRed);
+                });
+                return;
+            }
+
+            // Actualización visual del Label
+            if (hayRed)
+            {
+                lblEstadoConexion.Text = "✅ Conectado a la red";
+                lblEstadoConexion.ForeColor = Color.White;
+            }
+            else
+            {
+                lblEstadoConexion.Text = "🛑 Sin conexión a Internet";
+                lblEstadoConexion.ForeColor = Color.FromArgb(150, 42, 68);
+            }
+        }
 
         // PANELES
         // FUNCIONES DENTRO DE PANELES SUBMENUS

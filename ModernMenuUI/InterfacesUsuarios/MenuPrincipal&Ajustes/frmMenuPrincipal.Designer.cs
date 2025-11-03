@@ -37,6 +37,10 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            panel6 = new Panel();
+            lblEstadoConexion = new Label();
+            panel12 = new Panel();
+            panel9 = new Panel();
             btnNotificaciones = new Button();
             panel3 = new Panel();
             panel1 = new Panel();
@@ -101,6 +105,7 @@
             HoraFecha = new System.Windows.Forms.Timer(components);
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
+            panel6.SuspendLayout();
             panel1.SuspendLayout();
             panelMenuLateral.SuspendLayout();
             panel2.SuspendLayout();
@@ -128,6 +133,7 @@
             // panBarraControl
             // 
             panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
+            panBarraControl.Controls.Add(panel6);
             panBarraControl.Controls.Add(btnNotificaciones);
             panBarraControl.Controls.Add(panel3);
             panBarraControl.Controls.Add(panel1);
@@ -142,6 +148,49 @@
             panBarraControl.Size = new Size(884, 65);
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
+            // 
+            // panel6
+            // 
+            panel6.AutoSize = true;
+            panel6.Controls.Add(lblEstadoConexion);
+            panel6.Controls.Add(panel12);
+            panel6.Controls.Add(panel9);
+            panel6.Dock = DockStyle.Right;
+            panel6.Location = new Point(763, 0);
+            panel6.Name = "panel6";
+            panel6.RightToLeft = RightToLeft.Yes;
+            panel6.Size = new Size(56, 65);
+            panel6.TabIndex = 11;
+            // 
+            // lblEstadoConexion
+            // 
+            lblEstadoConexion.AutoSize = true;
+            lblEstadoConexion.BackColor = Color.Transparent;
+            lblEstadoConexion.Dock = DockStyle.Fill;
+            lblEstadoConexion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblEstadoConexion.ForeColor = Color.Black;
+            lblEstadoConexion.Location = new Point(0, 26);
+            lblEstadoConexion.Name = "lblEstadoConexion";
+            lblEstadoConexion.RightToLeft = RightToLeft.Yes;
+            lblEstadoConexion.Size = new Size(56, 19);
+            lblEstadoConexion.TabIndex = 3;
+            lblEstadoConexion.Text = "Estado";
+            // 
+            // panel12
+            // 
+            panel12.Dock = DockStyle.Bottom;
+            panel12.Location = new Point(0, 48);
+            panel12.Name = "panel12";
+            panel12.Size = new Size(56, 17);
+            panel12.TabIndex = 15;
+            // 
+            // panel9
+            // 
+            panel9.Dock = DockStyle.Top;
+            panel9.Location = new Point(0, 0);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(56, 26);
+            panel9.TabIndex = 4;
             // 
             // btnNotificaciones
             // 
@@ -1086,6 +1135,9 @@
             Text = "  ";
             Load += Form1_Load;
             panBarraControl.ResumeLayout(false);
+            panBarraControl.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panelMenuLateral.ResumeLayout(false);
@@ -1180,5 +1232,9 @@
         private TableLayoutPanel tableLayoutPanel2;
         private Button btnDevoluciones;
         private Button btnRegistroPerdida;
+        private Label lblEstadoConexion;
+        private Panel panel6;
+        private Panel panel9;
+        private Panel panel12;
     }
 }

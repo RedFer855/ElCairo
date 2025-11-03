@@ -2,6 +2,8 @@
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using Supabase;
+using Supabase.Realtime;
+using Supabase.Realtime.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,8 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Websocket.Client;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
-using Supabase.Realtime;
+
 
 namespace ModernMenuUI
 {
@@ -27,14 +30,15 @@ namespace ModernMenuUI
             InitializeComponent();
             dgvEmpleados.AutoGenerateColumns = false;
             _empleadoRepo = new EmpleadoRepositorio();
-
         }
+
+        
         private async void FrmEmpleados_Load(object sender, EventArgs e)
         {
             await CargarEmpleados(); // Ahora llamamos con await
 
-            // 2. INICIO: Iniciar la suscripción después de cargar los datos iniciales
             await IniciarSuscripcionEmpleados();
+
         }
 
        
