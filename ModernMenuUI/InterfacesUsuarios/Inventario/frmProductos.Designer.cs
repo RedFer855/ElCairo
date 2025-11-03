@@ -412,7 +412,7 @@
             // Categoria
             // 
             Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Categoria.DataPropertyName = "IdCategoria";
+            Categoria.DataPropertyName = "NombreCategoria";
             Categoria.HeaderText = "Categoría";
             Categoria.MinimumWidth = 120;
             Categoria.Name = "Categoria";
@@ -421,7 +421,7 @@
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn4.DataPropertyName = "IdMarca";
+            dataGridViewTextBoxColumn4.DataPropertyName = "NombreMarca";
             dataGridViewTextBoxColumn4.FillWeight = 120F;
             dataGridViewTextBoxColumn4.HeaderText = "Marca";
             dataGridViewTextBoxColumn4.MinimumWidth = 100;

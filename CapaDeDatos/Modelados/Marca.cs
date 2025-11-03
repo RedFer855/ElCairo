@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CapaDeDatos.Modelados
 {
-    [Table("marcas")]
+    [Table("marca")]
     public class Marca : BaseModel
     {
         [PrimaryKey("id_marca", false)]

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Supabase.Postgrest;
 
 namespace CapaDeDatos.Repositorios 
 {
@@ -37,7 +38,7 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-        private async Task<Client> GetClient()
+        private async Task<Supabase.Client> GetClient()
         {
             // Llama al método estático de tu clase Conexion.cs
             return await Conexion.ConnectWithTimeoutAsync(10);
@@ -51,16 +52,21 @@ namespace CapaDeDatos.Repositorios
                 // 1. Obtiene la conexión
                 var client = await GetClient();
 
-                // 2. Realiza la consulta (SELECT * FROM empleado)
-                var response = await client.From<Empleado>().Get();
+                // 2. INICIALIZA el constructor de consultas (queryBuilder)
+                var queryBuilder = client.From<Empleado>();
 
-                // 3. Devuelve la lista de modelos (objetos Empleado)
+                // 3. CONSTRUYE la consulta (Aplica la Ordenación al queryBuilder)
+                queryBuilder.Order("id_empleado", Supabase.Postgrest.Constants.Ordering.Ascending);
+
+                // 4. EJECUTA la consulta usando la instancia de queryBuilder CON la ordenación
+                var response = await queryBuilder.Get(); // <-- CORRECCIÓN CLAVE: Usar 'queryBuilder.Get()'
+
+                // 5. Devuelve la lista de modelos (objetos Empleado)
                 if (response != null && response.Models != null)
                 {
                     return response.Models;
                 }
 
-                // Devuelve una lista vacía si no hay respuesta
                 return new List<Empleado>();
             }
             catch (Exception ex)

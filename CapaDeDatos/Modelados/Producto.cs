@@ -10,7 +10,7 @@ namespace CapaDeDatos.Modelados
     public class Producto : BaseModel
     {
         // "id_producto" es la Primary Key
-        [PrimaryKey("id_producto", false)] // Cambia a 'true' si es autoincremental
+        [PrimaryKey("id_producto", false)] 
         public int IdProducto { get; set; }
 
         // "nombre_producto" (character varying)
@@ -20,10 +20,28 @@ namespace CapaDeDatos.Modelados
         // "id_marca" (integer)
         [Column("id_marca")]
         public int IdMarca { get; set; }
+        public Marca Marca { get; set; }
 
-        // "id_categoria" (integer)
+        public string NombreMarca
+        {
+            get
+            {
+                return Marca?.NombreMarca ?? "Sin Marca";
+            }
+        }
+
         [Column("id_categoria")]
         public int IdCategoria { get; set; }
+
+        public Categoria Categoria { get; set; }
+
+        public string NombreCategoria
+        {
+            get
+            {
+                return Categoria?.NombreCategoria ?? "Sin Categoria";
+            }
+        }
 
         // "codigo_barra_producto" (character varying)
         [Column("codigo_barra_producto")]

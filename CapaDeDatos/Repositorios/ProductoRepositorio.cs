@@ -15,31 +15,41 @@ namespace CapaDeDatos.Repositorios
         {
             return await Conexion.ConnectWithTimeoutAsync(10);
         }
-        public async Task<List<Producto>> ObtenerTodosLosProductos(bool? estado = null)
+        public async Task<List<Producto>> ObtenerTodosLosProductos(bool? estado = null, int? marcaId = null, int? categoriaId = null)
         {
             try
             {
-                // 1. Obtiene la conexión
                 var client = await GetClient();
 
-                // 2. Prepara la consulta base (SIN .Get() todavía)
-                var query = client.From<Producto>();
+                // 1. Prepara la consulta base
+                var queryBuilder = client.From<Producto>();
 
-                // 3. APLICA EL FILTRO (Esta es la parte que faltaba)
-                if (estado.HasValue) // Si estado es 'true' o 'false'
+                // 2. APLICA LA ORDENACIÓN (para evitar que el DGV se desordene)
+                // Usamos 'id_producto' como campo de ordenación ascendente.
+                queryBuilder.Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
+
+                // 3. APLICA LOS FILTROS (¡SIN CASTING!)
+
+                if (estado.HasValue)
                 {
-                    // Aplica el filtro WHERE
-                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)query.Where(x => x.EstadoProducto == estado.Value);
-                }
-                else // Si estado es 'null' (para "Mostrar Todos")
-                {
-                    // Opcional: Si quieres que "Todos" solo incluya Habilitados y Deshabilitados
-                    // (y no otros posibles estados), usa el OR.
-                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)query.Where(x => x.EstadoProducto == true || x.EstadoProducto == false);
+                    // Nota: .Where() retorna el mismo tipo (Table<T>), el casting era innecesario.
+                    queryBuilder = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)queryBuilder.Where(x => x.EstadoProducto == estado.Value);
                 }
 
-                // 4. Ejecuta la consulta AHORA
-                var response = await query.Get();
+                // --- Filtro de Marca ---
+                if (marcaId.HasValue && marcaId.Value > 0)
+                {
+                    queryBuilder = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)queryBuilder.Where(x => x.IdMarca == marcaId.Value);
+                }
+
+                // --- Filtro de Categoría ---
+                if (categoriaId.HasValue && categoriaId.Value > 0)
+                {
+                    queryBuilder = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)queryBuilder.Where(x => x.IdCategoria == categoriaId.Value);
+                }
+
+                // 4. EJECUTA EL SELECT (CON LOS JOINS)
+                var response = await queryBuilder.Select("*, marca(*), categoria(*)").Get();
 
                 // 5. Devuelve la lista de modelos
                 if (response != null && response.Models != null)

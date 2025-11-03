@@ -47,18 +47,13 @@ namespace ModernMenuUI
             _empleadoSubscription = await client.From<Empleado>().On(ListenType.All, (sender, change) =>
             {
                 
-                this.Invoke((MethodInvoker)delegate
+                this.Invoke((MethodInvoker)(async () =>
                 {
                     // Lógica para recargar la lista en caso de cualquier cambio (INSERT, UPDATE, DELETE)
                     System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en la tabla Empleados.");
-                    CargarEmpleados();
-                });
+                    await CargarEmpleados();
+                }));
             });
-        }
-        private async Task frmEmpleados_Load(object sender, EventArgs e)
-        {
-            await IniciarSuscripcionEmpleados();
-            await CargarEmpleados();
         }
 
         private async Task CargarEmpleados()

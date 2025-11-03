@@ -134,7 +134,7 @@ namespace ModernMenuUI
                     }
 
                     LimpiarDatos(e, e);
-                    lblMensajeError.Visible = false;
+                    
                 }
                 catch (System.Net.WebException wex)
                 {
@@ -144,6 +144,7 @@ namespace ModernMenuUI
                     MessageBox.Show($"Fallo de conexión: {wex.Message}\nAsegúrese de que el Wi-Fi o su conexión de red estén activos.",
                                     "Error de Conexión de Red", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     LimpiarDatos(e, e);
+                    lblMensajeError.Visible = false;
                     lblMensajeError.Visible = false;
                 }
                 catch (TimeoutException tex)
