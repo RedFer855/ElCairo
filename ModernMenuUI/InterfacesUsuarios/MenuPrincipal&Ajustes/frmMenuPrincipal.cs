@@ -1,4 +1,5 @@
 using CapaServiciosSeguridadValidacion;
+using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
 using System.Configuration;
 using System.Data;
@@ -14,7 +15,7 @@ namespace ModernMenuUI
         clsAnimadorPanel animadorPanel;
         private Form formularioactivo = null;
         // 1. Declarar una instancia de tu servicio. Hazlo privado y de solo lectura.
-        private readonly CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
+        private readonly CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
 
         public frmMenuPrincipal()
         {
@@ -32,36 +33,43 @@ namespace ModernMenuUI
             ActualizarEstadoVisual(_monitorConexion.HayConexionAhora());
         }
 
-        // 5. El método que se ejecuta cuando el servicio detecta un cambio
-        private void MonitorConexion_EstadoDeRedCambiado(bool hayRed)
+        private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
         {
             // Llamar a la función de actualización de la UI para manejar el Invoke
-            ActualizarEstadoVisual(hayRed);
+            ActualizarEstadoVisual(status);
         }
 
         // 6. Método Thread-Safe para actualizar la UI
-        private void ActualizarEstadoVisual(bool hayRed)
+        //    (Ahora maneja 3 estados)
+        private void ActualizarEstadoVisual(NetworkStatus status)
         {
             // Usar Invoke para garantizar que la actualización ocurra en el hilo de la UI.
             if (this.InvokeRequired)
             {
                 this.Invoke((MethodInvoker)delegate
                 {
-                    ActualizarEstadoVisual(hayRed);
+                    ActualizarEstadoVisual(status);
                 });
                 return;
             }
 
-            // Actualización visual del Label
-            if (hayRed)
+            // Actualización visual del Label con 3 estados
+            switch (status)
             {
-                lblEstadoConexion.Text = "✅ Conectado a la red";
-                lblEstadoConexion.ForeColor = Color.White;
-            }
-            else
-            {
-                lblEstadoConexion.Text = "🛑 Sin conexión a Internet";
-                lblEstadoConexion.ForeColor = Color.FromArgb(150, 42, 68);
+                case NetworkStatus.Internet:
+                    lblEstadoConexion.Text = "✅ Conectado a la Red";
+                    lblEstadoConexion.ForeColor = Color.White; // Tu color de "Conectado"
+                    break;
+
+                case NetworkStatus.RedSinInternet: // <-- EL NUEVO ESTADO
+                    lblEstadoConexion.Text = "⚠️ Conectado Sin Internet";
+                    lblEstadoConexion.ForeColor = Color.Yellow; // Naranja para advertencia
+                    break;
+
+                case NetworkStatus.SinRed:
+                    lblEstadoConexion.Text = "🛑 Sin conexión";
+                    lblEstadoConexion.ForeColor = Color.FromArgb(150, 42, 68); // Tu rojo
+                    break;
             }
         }
 

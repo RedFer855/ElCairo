@@ -8,29 +8,72 @@ using System.Threading.Tasks;
 
 namespace CapaServiciosSeguridadValidacion
 {
-    public class ServicioVerificacionConexion
+    using Supabase.Gotrue;
+    using System;
+    using System.Net.NetworkInformation;
+
+    namespace CapaServiciosSeguridadValidacion
     {
-        // 1. Define un evento público al que los formularios se pueden suscribir.
-        //'Action<bool>' significa que el evento enviará un valor booleano (true=conectado, false=desconectado).
-        public event Action<bool> EstadoDeRedCambiado;
-
-        // 2. En el constructor de tu clase, suscríbete al evento del sistema
-        public ServicioVerificacionConexion()
+        public enum NetworkStatus
         {
-            NetworkChange.NetworkAvailabilityChanged += OnNetworkAvailabilityChanged;
+            SinRed,         // No hay WiFi/Cable
+            RedSinInternet, // Hay WiFi, pero no hay Ping
+            Internet        // Hay WiFi y hay Ping
         }
-
-        // 3. Este método se ejecuta cuando el S.O. detecta un cambio de red
-        private void OnNetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
+        public class ServicioVerificacionConexion
         {
-            // 4. Dispara NUESTRO evento para notificar a quien esté escuchando (el frmMenuPrincipal)
-            EstadoDeRedCambiado?.Invoke(e.IsAvailable);
-        }
+            // CAMBIO: El evento ahora envía la 'enum'
+            public event Action<NetworkStatus> EstadoDeRedCambiado;
 
-        // 5. Añade un método para que el formulario principal consulte el estado al iniciar
-        public bool HayConexionAhora()
-        {
-            return NetworkInterface.GetIsNetworkAvailable();
+            public ServicioVerificacionConexion()
+            {
+                NetworkChange.NetworkAvailabilityChanged += OnNetworkAvailabilityChanged;
+            }
+
+            // Se dispara cuando el WiFi/Cable cambia
+            private void OnNetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
+            {
+                // Llama a la comprobación completa
+                NetworkStatus statusActual = HayConexionAhora();
+                // Dispara el evento con el estado (enum)
+                EstadoDeRedCambiado?.Invoke(statusActual);
+            }
+
+            // CAMBIO: El método ahora devuelve la 'enum'
+            public NetworkStatus HayConexionAhora()
+            {
+                if (!NetworkInterface.GetIsNetworkAvailable())
+                {
+                    return NetworkStatus.SinRed;
+                }
+
+                if (PingInternet()) // Llama al método Ping
+                {
+                    return NetworkStatus.Internet;
+                }
+                else
+                {
+                    return NetworkStatus.RedSinInternet;
+                }
+            }
+
+            // NUEVO: Método que comprueba el Ping a Google
+            private bool PingInternet()
+            {
+                try
+                {
+                    using (var ping = new Ping())
+                    {
+                        // Intenta contactar a 8.8.8.8 con 2 segundos de timeout
+                        var reply = ping.Send("8.8.8.8", 2000);
+                        return (reply != null && reply.Status == IPStatus.Success);
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
         }
     }
 }

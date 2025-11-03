@@ -2,6 +2,7 @@
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
+using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Supabase;
 using Supabase.Realtime;
 using Supabase.Realtime.Interfaces;
@@ -35,11 +36,15 @@ namespace ModernMenuUI
             _empleadoRepo = new EmpleadoRepositorio();
         }
 
-        
+
         private async void FrmEmpleados_Load(object sender, EventArgs e)
         {
+            // 1. Mover la suscripción aquí para evitar el error de 'Invoke'
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-            await CargarEmpleados(); // Ahora llamamos con await
+
+
+            // 3. Carga inicial (con timeout) y suscripción
+            await CargarEmpleados();
             await IniciarSuscripcionEmpleados();
         }
 
@@ -154,29 +159,24 @@ namespace ModernMenuUI
             frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
             Empleados.ShowDialog();
         }
-        private async void MonitorConexion_EstadoDeRedCambiado(bool hayRed)
+        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
         {
-
-            // CÓDIGO DE SEGURIDAD CLAVE: Si el Handle no ha sido creado o el Formulario está cerrándose, sal.
+            // CÓDIGO DE SEGURIDAD CLAVE (el que ya tenías)
             if (!this.IsHandleCreated || this.IsDisposed)
             {
-                System.Diagnostics.Debug.WriteLine("MonitorConexion_EstadoDeRedCambiado: Formulario no listo para Invoke.");
+                System.Diagnostics.Debug.WriteLine("MonitorConexion: Formulario no listo para Invoke.");
                 return;
             }
 
-            if (hayRed)
+            // AHORA USA 'status'
+            if (status == NetworkStatus.Internet) // Comprueba si hay ping
             {
                 this.Invoke((MethodInvoker)(async () =>
                 {
-                    // Verificación adicional de Dispose dentro del Invoke, por si acaso
                     if (this.IsDisposed) return;
-
                     System.Diagnostics.Debug.WriteLine("Red recuperada. Iniciando recarga y Realtime...");
 
-                    // 1. Recargar los datos estáticos del DGV
                     await CargarEmpleados();
-
-                    // 2. Intentar establecer la suscripción Realtime (solo si falló antes)
                     await IniciarSuscripcionEmpleados();
                 }));
             }
