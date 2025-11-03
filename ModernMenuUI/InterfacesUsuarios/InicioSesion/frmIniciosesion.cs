@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using Supabase;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ModernMenuUI
@@ -60,7 +62,9 @@ namespace ModernMenuUI
                 {
                     pbxCargando.Visible = true; // Picture box con imagen en formato gift para carga
 
-                    Usuario usuario = await _usuarioRepo.Iniciar_Sesion(username, password);
+                    var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+
+                    var usuario = await supabase.Auth.SignIn(username, password);
 
                     if (usuario != null)
                     {

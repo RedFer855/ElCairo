@@ -1,5 +1,9 @@
 ﻿using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using Supabase;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Responses;
+using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ModernMenuUI
 {
@@ -24,9 +29,20 @@ namespace ModernMenuUI
            
         }
 
-        private void frmEmpleados_Load(object sender, EventArgs e)
+        private async void frmEmpleados_Load(object sender, EventArgs e)
         {
             CargarEmpleados();
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+
+            if (supabase != null)
+            {
+                MessageBox.Show("Conexión exitosa al servidor.", "Conexión Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private async void CargarEmpleados()

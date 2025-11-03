@@ -16,6 +16,8 @@ namespace CapaDeDatos.Datos
     public class Conexion
     {
         public static Client _supabaseClient { get; private set; }
+        //public static Client Instance => _supabaseClient;
+
 
         // MÉTODOS DE CONEXION: Creación de Cliente y Manejo de Timeout
 
