@@ -31,6 +31,9 @@ namespace CapaDeDatos.Modelados
 
         [Column("direccion_empleado")]
         public string Direccion { get; set; }
+        
+        [Column("estado_empleado")]
+        public bool EstadoEmpleado { get; set; }
     }
 
 

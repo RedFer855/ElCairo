@@ -18,36 +18,37 @@ using System.Windows.Forms;
 using Websocket.Client;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
-
 namespace ModernMenuUI
 {
-    
     public partial class frmEmpleados : Form
     {
         private readonly EmpleadoRepositorio _empleadoRepo;
         private Supabase.Realtime.RealtimeChannel? _empleadoSubscription;
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
+        private Empleado _empleadoSeleccionado = null;
 
         public frmEmpleados()
         {
             InitializeComponent();
             dgvEmpleados.AutoGenerateColumns = false;
             _empleadoRepo = new EmpleadoRepositorio();
-        }
 
+            // 👇 Aseguramos la limpieza de la suscripción cuando se cierre el formulario
+            this.FormClosing += frmEmpleados_FormClosing;
+        }
 
         private async void FrmEmpleados_Load(object sender, EventArgs e)
         {
-            // 1. Mover la suscripción aquí para evitar el error de 'Invoke'
+            // Suscripción al monitor de red
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
 
-
-            // 3. Carga inicial (con timeout) y suscripción
+            // Carga inicial
             await CargarEmpleados();
+
+            // Inicia suscripción Realtime
             await IniciarSuscripcionEmpleados();
         }
-
 
         private async Task DesecharSuscripcion()
         {
@@ -55,40 +56,55 @@ namespace ModernMenuUI
             {
                 try
                 {
-                    // ENVUELVE la llamada para que el compilador acepte el 'await'
                     await Task.Run(() => _empleadoSubscription.Unsubscribe());
-
                     System.Diagnostics.Debug.WriteLine("Suscripción antigua desechada con éxito.");
                 }
                 catch (Exception ex)
                 {
-                    // Ignoramos el error, el objeto puede estar ya roto (Disposed)
                     System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción: {ex.Message}");
                 }
-                // Lo ponemos a null para que IniciarSuscripcionEmpleados pueda crear uno nuevo
                 _empleadoSubscription = null;
             }
         }
+
         private async Task IniciarSuscripcionEmpleados()
         {
-
             await DesecharSuscripcion();
 
             try
             {
                 _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
 
-                // <- IMPORTANTE: usamos await aquí
+                // ✅ Suscripción segura al canal de Realtime
                 _empleadoSubscription = await _supabaseClient.From<Empleado>()
                     .On(ListenType.All, (sender, change) =>
                     {
-                        this.Invoke((MethodInvoker)(async () =>
+                        try
                         {
-                            System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en la tabla Empleados.");
-                            await CargarEmpleados();
-                        }));
+                            // 💡 Validación completa antes de acceder al formulario
+                            if (this == null || this.IsDisposed || !this.IsHandleCreated)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Evento Realtime ignorado: formulario cerrado o no inicializado.");
+                                return;
+                            }
+
+                            // ✅ Ejecutamos en el hilo de la UI, pero sin bloquear
+                            this.BeginInvoke((MethodInvoker)(async () =>
+                            {
+                                if (this.IsDisposed) return; // doble validación
+                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en la tabla Empleados.");
+                                await CargarEmpleados();
+                            }));
+
+                           
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime: {ex.Message}");
+                        }
                     });
 
+                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime creada correctamente.");
             }
             catch (Exception ex)
             {
@@ -96,26 +112,27 @@ namespace ModernMenuUI
             }
         }
 
-
         private async Task CargarEmpleados()
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor;
 
-                // 1. Creamos un token que se cancela automáticamente en 5 segundos
                 using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3)))
                 {
-                    // 2. Pasamos el token al repositorio
                     List<Empleado> listaDeEmpleados = await _empleadoRepo.ObtenerTodosLosEmpleados(cts.Token);
-            
+
                     dgvEmpleados.DataSource = null;
                     dgvEmpleados.DataSource = listaDeEmpleados;
                 }
+
+                if (dgvEmpleados.Rows.Count > 0)
+                {
+                    dgvEmpleados.ClearSelection();
+                }
             }
-            catch (OperationCanceledException) // <-- Captura el timeout
+            catch (OperationCanceledException)
             {
-                // El token se canceló (pasaron 5 segundos)
                 MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
@@ -124,7 +141,6 @@ namespace ModernMenuUI
             }
             finally
             {
-                // Esto se ejecuta SIEMPRE, liberando el cursor
                 this.Cursor = Cursors.Default;
             }
         }
@@ -146,44 +162,70 @@ namespace ModernMenuUI
             }
         }
 
+        private async void frmEmpleados_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            await DesecharSuscripcion();
+        }
+
         private void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
             frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
             Empleados.ShowDialog();
-
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            // Hacemos que "Nuevo" haga lo mismo que "Agregar"
-            frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
-            Empleados.ShowDialog();
+            if (_empleadoSeleccionado != null)
+            {
+                frmAgregarEmpleado EmpleadosEditar = new frmAgregarEmpleado(_empleadoSeleccionado);
+                EmpleadosEditar.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un empleado de la lista para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
         private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
         {
-            // CÓDIGO DE SEGURIDAD CLAVE (el que ya tenías)
             if (!this.IsHandleCreated || this.IsDisposed)
             {
                 System.Diagnostics.Debug.WriteLine("MonitorConexion: Formulario no listo para Invoke.");
                 return;
             }
 
-            // AHORA USA 'status'
-            if (status == NetworkStatus.Internet) // Comprueba si hay ping
+            if (status == NetworkStatus.Internet)
             {
-                this.Invoke((MethodInvoker)(async () =>
+                this.BeginInvoke((MethodInvoker)(async () =>
                 {
                     if (this.IsDisposed) return;
                     System.Diagnostics.Debug.WriteLine("Red recuperada. Iniciando recarga y Realtime...");
-
                     await CargarEmpleados();
                     await IniciarSuscripcionEmpleados();
                 }));
             }
         }
+
         private void dgvEmpleados_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+        }
+
+        private void dgvEmpleados_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvEmpleados.SelectedRows.Count > 0)
+            {
+                var filaSeleccionada = dgvEmpleados.SelectedRows[0];
+                Empleado empleado = filaSeleccionada.DataBoundItem as Empleado;
+
+                if (empleado != null)
+                {
+                    _empleadoSeleccionado = empleado;
+                }
+            }
+            else
+            {
+                _empleadoSeleccionado = null;
+            }
         }
     }
 }
