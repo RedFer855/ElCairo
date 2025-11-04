@@ -214,5 +214,10 @@ namespace ModernMenuUI
                 _usuarioSeleccionado = null;
             }
         }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

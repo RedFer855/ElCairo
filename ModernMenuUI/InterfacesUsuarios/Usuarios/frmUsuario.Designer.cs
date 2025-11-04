@@ -114,6 +114,7 @@
             button6.TabIndex = 22;
             button6.Text = "Agregar Usuario";
             button6.UseVisualStyleBackColor = false;
+            button6.Click += button6_Click_1;
             // 
             // btnNuevo
             // 
