@@ -10,16 +10,33 @@ namespace CapaDeDatos.Modelados
     [Table("bitacora_empleado")]
     public class Bitocora_Empleado : BaseModel
     {
-        [PrimaryKey("Id_Bitacora", false)]
-        public int Id_Bitacora { get; set; }
+        [Column("id_bitacora")]
+        public int Id_Bitacora_Empleado { get; set; }
 
-        [Column("descripcion_cambio")]
-        public string Descripcion { get; set; }
+        [Column("id_empleado")]
+        public int Id_Empleado { get; set; }
+
+        [Column("estado_anterior")]
+        public string Estado_Anterior { get; set; }
+
+        [Column("estado_actual")]
+        public string Estado_Actual { get; set; }
+
+        [Column("campo_afectado")]
+        public string Campo_Afectado { get; set; }
 
         [Column("fecha_hora")]
-        public DateTime Fecha_Hora { get; set; } = DateTime.Now;
-        [Column("datos_comp")]
-        public string datos_comp { get; set; }
+        public DateTime Fecha_Hora { get; set; }
+
+        [Column("campo_extra")]
+        public string Accion_Realizada { get; set; }
+
+        [Column("id_accion")]
+        public int Id_Accion { get; set; }
+
+
+        [Column("id_modulo")]
+        public int Id_Modulo { get; set; }
 
     }
 }

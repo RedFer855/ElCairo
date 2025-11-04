@@ -52,7 +52,7 @@ namespace ModernMenuUI
                 await EmpleadoRepositorio.InsertarEmpleado(nuevoEmpleado);
                 
                 // Registro en bitácora
-                string nombreComputadora = Environment.MachineName; //con esta onda agarro los datos de la computadora lol
+                /*string nombreComputadora = Environment.MachineName; //con esta onda agarro los datos de la computadora lol
                 string usuarioWindows = Environment.UserName;
                 await BitacoraRepositorio.BitacoraService.RegistrarBitacoraAsync
                     (
@@ -60,7 +60,7 @@ namespace ModernMenuUI
                        "El empleado"+nuevonombre+" "+nuevoapellido+" ha sido agregado.",
                         DateTime.Now.ToString(),
                         $"PC: {nombreComputadora}, Usuario: {usuarioWindows}"
-                    );
+                    );*/
 
                 MessageBox.Show("¡Empleado guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
