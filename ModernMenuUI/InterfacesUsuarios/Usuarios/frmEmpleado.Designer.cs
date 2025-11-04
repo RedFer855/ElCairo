@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class frmEmpleados
+    partial class frmEmpleado
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmpleados));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmpleado));
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             dgvEmpleados = new DataGridView();
             panel10 = new Panel();
@@ -339,20 +339,18 @@
             // 
             // Email
             // 
-            Email.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             Email.DataPropertyName = "Email";
             Email.FillWeight = 40.203476F;
             Email.HeaderText = "Correo";
             Email.Name = "Email";
             Email.ReadOnly = true;
-            Email.Width = 88;
             // 
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.DataPropertyName = "Direccion";
-            dataGridViewTextBoxColumn4.FillWeight = 78.28532F;
+            dataGridViewTextBoxColumn4.FillWeight = 70F;
             dataGridViewTextBoxColumn4.HeaderText = "Dirección";
-            dataGridViewTextBoxColumn4.MinimumWidth = 25;
+            dataGridViewTextBoxColumn4.MinimumWidth = 20;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
@@ -368,7 +366,7 @@
             dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
             dataGridViewTextBoxColumn3.Width = 89;
             // 
-            // frmEmpleados
+            // frmEmpleado
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -381,8 +379,8 @@
             Controls.Add(button4);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmEmpleados";
-            Text = "frmEmpleados";
+            Name = "frmEmpleado";
+            Text = "frmEmpleado";
             Load += FrmEmpleados_Load;
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).EndInit();
             panel10.ResumeLayout(false);

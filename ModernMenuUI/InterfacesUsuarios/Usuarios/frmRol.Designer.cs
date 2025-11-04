@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class frmRoles
+    partial class frmRol
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRoles));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRol));
             pnlContenedorRoles = new FlowLayoutPanel();
             pnlRolDinamico1 = new Panel();
             pnlRolDinamico2 = new Panel();

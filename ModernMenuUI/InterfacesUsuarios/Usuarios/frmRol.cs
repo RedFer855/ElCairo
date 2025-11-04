@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class frmRoles : Form
+    public partial class frmRol : Form
     {
         private int contadorRoles = 0; // contador global
         private clsManejarFormularios manejador;
-        public frmRoles()
+        public frmRol()
         {
             InitializeComponent();
 

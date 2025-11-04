@@ -340,7 +340,7 @@ namespace ModernMenuUI
         private void btnGestionEmpleados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleados());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleado());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -348,7 +348,7 @@ namespace ModernMenuUI
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionUsuario());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmUsuario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -356,7 +356,7 @@ namespace ModernMenuUI
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmRoles());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmRol());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }

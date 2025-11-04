@@ -20,7 +20,7 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
-    public partial class frmEmpleados : Form
+    public partial class frmEmpleado : Form
     {
         private readonly EmpleadoRepositorio _empleadoRepo;
         private Supabase.Realtime.RealtimeChannel? _empleadoSubscription;
@@ -28,7 +28,7 @@ namespace ModernMenuUI
         private Supabase.Client? _supabaseClient;
         private Empleado _empleadoSeleccionado = null;
 
-        public frmEmpleados()
+        public frmEmpleado()
         {
             InitializeComponent();
             dgvEmpleados.AutoGenerateColumns = false;
