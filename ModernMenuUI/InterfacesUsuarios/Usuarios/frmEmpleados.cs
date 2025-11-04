@@ -167,6 +167,7 @@ namespace ModernMenuUI
             await DesecharSuscripcion();
         }
 
+
         private void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
             frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
