@@ -7,35 +7,38 @@ using System.Threading.Tasks;
 namespace CapaDeDatos.Modelados
 {
     [Table("bitacora_empleado")]
-    public class Bitocora_Empleado : BaseModel
+    public class Bitacora : BaseModel
     {
         [Column("id_bitacora")]
-        public int Id_Bitacora_Empleado { get; set; }
+        public int IdBitacoraEmpleado { get; set; }
 
         [Column("id_empleado")]
-        public int Id_Empleado { get; set; }
+        public int IdEmpleado { get; set; }
 
         [Column("estado_anterior")]
-        public string Estado_Anterior { get; set; }
+        public string EstadoAnterior { get; set; }
 
         [Column("estado_actual")]
-        public string Estado_Actual { get; set; }
+        public string EstadoActual { get; set; }
 
         [Column("campo_afectado")]
-        public string Campo_Afectado { get; set; }
+        public string CampoAfectado { get; set; }
 
         [Column("fecha_hora")]
-        public DateTime Fecha_Hora { get; set; }
+        public DateTime FechaHora { get; set; }
 
-        [Column("campo_extra")]
-        public string Accion_Realizada { get; set; }
+        [Column("accion")]
+        public string AccionRealizada { get; set; }
 
-        [Column("id_accion")]
-        public int Id_Accion { get; set; }
+        [Column("modulo")]
+        public string Modulo { get; set; }
 
+        [Column("usuario_host")]
+        public string UsuarioHost { get; set; }
+       
+        [Column("nombre_host")]
+        public string NombreHost { get; set; }
 
-        [Column("id_modulo")]
-        public int Id_Modulo { get; set; }
 
     }
 }

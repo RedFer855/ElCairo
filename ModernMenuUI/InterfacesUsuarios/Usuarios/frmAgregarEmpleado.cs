@@ -27,6 +27,7 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             _empleadoActual = empleado;
+            
             txtApellido.Click += TextBox_ReadOnlyClick;
             txtTelefono.Click += TextBox_ReadOnlyClick;
             txtDireccion.Click += TextBox_ReadOnlyClick;
@@ -38,66 +39,79 @@ namespace ModernMenuUI
 
         private async void btnGuardarEmpleado_Click(object sender, EventArgs e)
         {
-            if (_empleadoActual != null)
+            // 1. VALIDACIÓN (Para ambos modos)
+            if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text))
             {
-                // 1. VALIDACIÓN (Simple)
-                if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text))
+                MessageBox.Show("Nombre, Apellido y DNI son obligatorios.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Deshabilitamos el botón para evitar doble clic
+            btnGuardarEmpleado.Enabled = false;
+
+            try
+            {
+                if (_empleadoActual == null)
                 {
-                    MessageBox.Show("Nombre, Apellido y DNI son obligatorios.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                    // --- MODO AGREGAR ---
+                    // 2. Creación del objeto nuevo
+                    Empleado nuevoEmpleado = new Empleado
+                    {
+                        Nombre = txtNombre.Text.Trim(),
+                        Apellido = txtApellido.Text.Trim(),
+                        Dni = txtDni.Text.Trim(),
+                        Telefono = txtTelefono.Text.Trim(),
+                        Email = txtCorreo.Text.Trim(),
+                        Direccion = txtDireccion.Text.Trim()
+                    };
 
-
-                // 2. CREACIÓN DEL OBJETO (ACTUALIZADO)
-                Empleado nuevoEmpleado = new Empleado
-                {
-                    Nombre = txtNombre.Text.Trim(),
-                    Apellido = txtApellido.Text.Trim(),
-                    Dni = txtDni.Text.Trim(),
-                    Telefono = txtTelefono.Text.Trim(),
-                    Email = txtCorreo.Text.Trim(),       // Tu TextBox se llama txtCorreo, está bien.
-                    Direccion = txtDireccion.Text.Trim()
-                };
-
-                // 3. LLAMADA A LA CAPA DE DATOS
-                try
-                {
-                    // ERROR 3: El botón se llama 'btnGuardar', no 'btnGuardarEmpleado'
-                    btnGuardarEmpleado.Enabled = false;
-
-                    // Ahora la llamada 'await' funcionará correctamente
+                    // 3. Llamada al Repositorio (INSERTAR)
                     await EmpleadoRepositorio.InsertarEmpleado(nuevoEmpleado);
 
                     MessageBox.Show("¡Empleado guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
+                    this.Close(); // Cerramos el form al terminar
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Error al guardar el empleado: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // --- MODO MODIFICAR ---
+                    // 2. Actualizamos el objeto existente
+                    _empleadoActual.Nombre = txtNombre.Text.Trim();
+                    _empleadoActual.Apellido = txtApellido.Text.Trim();
+                    _empleadoActual.Dni = txtDni.Text.Trim();
+                    _empleadoActual.Telefono = txtTelefono.Text.Trim();
+                    _empleadoActual.Email = txtCorreo.Text.Trim();
+                    _empleadoActual.Direccion = txtDireccion.Text.Trim();
+
+                    // 3. Llamada al Repositorio (ACTUALIZAR)
+                    await EmpleadoRepositorio.ActualizarEmpleado(_empleadoActual);
+
+                    MessageBox.Show("¡Empleado actualizado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close(); // Cerramos el form al terminar
                 }
-                finally
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar el empleado: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Si no se cerró el formulario (por un error), reactivamos el botón
+                if (!this.IsDisposed)
                 {
-                    // ERROR 3 (corregido)
                     btnGuardarEmpleado.Enabled = true;
                 }
-            } else
-            {
-                btnGuardarEmpleado.Visible = false;
-                btnModificar.Visible = true;   
-                btnModificar.Enabled = true;
-                MessageBox.Show("¡Empleado creado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-           
         }
 
         private void frmAgregarEmpleado_Load(object sender, EventArgs e)
         {
-
             // Comprobamos si estamos en modo "Editar"
             if (_empleadoActual != null)
             {
+                // --- MODO EDITAR (Inicia en "Solo Lectura") ---
+                clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "EDITAR EMPLEADO");
 
+                // Cargar datos
                 txtDni.Text = _empleadoActual.Dni;
                 txtNombre.Text = _empleadoActual.Nombre;
                 txtApellido.Text = _empleadoActual.Apellido;
@@ -105,14 +119,30 @@ namespace ModernMenuUI
                 txtDireccion.Text = _empleadoActual.Direccion;
                 txtCorreo.Text = _empleadoActual.Email;
 
+                // Poner en modo "Solo Lectura"
+                txtDni.ReadOnly = true;
+                txtNombre.ReadOnly = true;
+                txtApellido.ReadOnly = true;
+                txtTelefono.ReadOnly = true;
+                txtDireccion.ReadOnly = true;
+                txtCorreo.ReadOnly = true; // Asegúrate de incluir el correo
+
+                // Configurar botones para "Ver"
+                btnGuardarEmpleado.Visible = false;
+                btnModificar.Visible = true;
+                btnModificar.Enabled = true;
             }
             else
             {
-                // MODO AGREGAR: Dejamos todo vacío
+                // --- MODO AGREGAR ---
                 clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "AGREGUE UN EMPLEADO NUEVO");
-                // btnGuardar.Text = "Guardar";
 
-                // Los TextBoxes ya estarán vacíos por defecto.
+                // Los TextBoxes ya estarán editables por defecto.
+
+                // Configurar botones para "Guardar"
+                txtCorreo.Enabled = true;
+                btnGuardarEmpleado.Visible = true;
+                btnModificar.Visible = false;
             }
         }
 
@@ -131,13 +161,9 @@ namespace ModernMenuUI
 
         private void TextBox_ReadOnlyClick(object sender, EventArgs e)
         {
-            // El parámetro 'sender' es una referencia al control que disparó el evento.
-            // Lo convertimos al tipo TextBox.
+
             TextBox currentTextBox = sender as TextBox;
 
-            // Se realiza una doble verificación: 
-            // 1. Que la conversión fue exitosa (currentTextBox no es null).
-            // 2. Que el TextBox está actualmente en modo de solo lectura.
             if (currentTextBox != null && currentTextBox.ReadOnly)
             {
                 MessageBox.Show(
@@ -155,7 +181,8 @@ namespace ModernMenuUI
             txtDireccion.ReadOnly = false;
             txtNombre.ReadOnly = false;
             txtDni.ReadOnly = false;
-            txtDni.Focus();
+            txtCorreo.ReadOnly = false; // <-- AÑADE ESTE
+            btnVolver.Focus();
 
             btnModificar.Enabled = false;
             btnModificar.Visible = false;

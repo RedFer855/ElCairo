@@ -10,7 +10,6 @@ namespace CapaDeDatos.Repositorios
 {
     public class ProductoRepositorio
     {
-        // Método privado para obtener el cliente (asume que tu clase Conexion existe)
         private async Task<Client> GetClient()
         {
             return await Conexion.ConnectWithTimeoutAsync(10);
@@ -21,37 +20,28 @@ namespace CapaDeDatos.Repositorios
             {
                 var client = await GetClient();
 
-                // 1. Prepara la consulta base
                 var queryBuilder = client.From<Producto>();
 
-                // 2. APLICA LA ORDENACIÓN (para evitar que el DGV se desordene)
-                // Usamos 'id_producto' como campo de ordenación ascendente.
                 queryBuilder.Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
 
-                // 3. APLICA LOS FILTROS (¡SIN CASTING!)
 
                 if (estado.HasValue)
                 {
-                    // Nota: .Where() retorna el mismo tipo (Table<T>), el casting era innecesario.
                     queryBuilder = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)queryBuilder.Where(x => x.EstadoProducto == estado.Value);
                 }
 
-                // --- Filtro de Marca ---
                 if (marcaId.HasValue && marcaId.Value > 0)
                 {
                     queryBuilder = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)queryBuilder.Where(x => x.IdMarca == marcaId.Value);
                 }
 
-                // --- Filtro de Categoría ---
                 if (categoriaId.HasValue && categoriaId.Value > 0)
                 {
                     queryBuilder = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)queryBuilder.Where(x => x.IdCategoria == categoriaId.Value);
                 }
 
-                // 4. EJECUTA EL SELECT (CON LOS JOINS)
                 var response = await queryBuilder.Select("*, marca(*), categoria(*)").Get();
 
-                // 5. Devuelve la lista de modelos
                 if (response != null && response.Models != null)
                 {
                     return response.Models;
@@ -67,7 +57,6 @@ namespace CapaDeDatos.Repositorios
         }
         public async Task<Producto> InsertarProducto(Producto nuevoProducto)
         {
-            // Verificación para asegurar que el objeto no sea nulo
             if (nuevoProducto == null)
             {
                 throw new ArgumentNullException(nameof(nuevoProducto), "El producto a insertar no puede ser nulo.");
@@ -75,29 +64,20 @@ namespace CapaDeDatos.Repositorios
 
             try
             {
-                // 1. Obtiene la conexión
                 var client = await GetClient();
 
-                // 2. Realiza la operación de inserción
-                // El cliente de Supabase puede insertar un solo objeto o una lista
                 var response = await client.From<Producto>().Insert(nuevoProducto);
 
-                // 3. Verifica y devuelve el producto insertado
                 if (response?.Models != null && response.Models.Count > 0)
                 {
-                    // Devuelve el primer producto de la respuesta,
-                    // que ahora incluirá el ID autogenerado (si aplica).
                     return response.Models.First();
                 }
 
-                // Si la respuesta es nula o no contiene modelos, algo falló.
                 throw new Exception("La base de datos no devolvió el producto insertado.");
             }
             catch (Exception ex)
-            {
-                // 4. Manejo de errores
+            { 
                 Console.WriteLine($"Error de Supabase al insertar producto: {ex.Message}");
-                // Relanza para que la UI (el formulario) pueda manejarlo
                 throw new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
             }
         }

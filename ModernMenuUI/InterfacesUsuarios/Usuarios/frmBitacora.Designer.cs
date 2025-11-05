@@ -29,25 +29,16 @@
         private void InitializeComponent()
         {
             Panel panBarraControl;
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panel3 = new Panel();
             lblNombreModulo = new Label();
             panel1 = new Panel();
             panel10 = new Panel();
-            dgvProductos = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
-            PrecioCompra = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            PrecioVenta = new DataGridViewTextBoxColumn();
-            Estado = new DataGridViewTextBoxColumn();
+            dgvBitacora = new DataGridView();
             dateTimePicker1 = new DateTimePicker();
             dateTimePicker2 = new DateTimePicker();
             label1 = new Label();
@@ -57,12 +48,22 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             btnNuevoRol = new Button();
             btnSalir = new Button();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            Fecha = new DataGridViewTextBoxColumn();
+            Usuario = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            Modulo = new DataGridViewTextBoxColumn();
+            EstadoAnterior = new DataGridViewTextBoxColumn();
+            EstadoActual = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            Estado = new DataGridViewTextBoxColumn();
+            User = new DataGridViewTextBoxColumn();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel3.SuspendLayout();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvBitacora).BeginInit();
             panelBusqueda.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -112,120 +113,64 @@
             // 
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
-            panel10.Controls.Add(dgvProductos);
+            panel10.Controls.Add(dgvBitacora);
             panel10.Location = new Point(19, 20);
             panel10.Name = "panel10";
             panel10.Size = new Size(680, 376);
             panel10.TabIndex = 17;
             // 
-            // dgvProductos
+            // dgvBitacora
             // 
-            dgvProductos.AllowUserToAddRows = false;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
-            dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-            dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.BorderStyle = BorderStyle.None;
-            dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, PorcentajeGanancia, PrecioCompra, dataGridViewTextBoxColumn3, PrecioVenta, Estado });
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.White;
-            dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle9.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle9.Padding = new Padding(5);
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle9.SelectionForeColor = Color.White;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle9;
-            dgvProductos.Dock = DockStyle.Fill;
-            dgvProductos.EnableHeadersVisualStyles = false;
-            dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Name = "dgvProductos";
-            dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = SystemColors.Control;
-            dataGridViewCellStyle10.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle10.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            dgvProductos.RowHeadersWidth = 30;
-            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(680, 376);
-            dgvProductos.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle8;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "DNI";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // Categoria
-            // 
-            Categoria.FillWeight = 80F;
-            Categoria.HeaderText = "Apellido";
-            Categoria.Name = "Categoria";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // PorcentajeGanancia
-            // 
-            PorcentajeGanancia.FillWeight = 80F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            // 
-            // PrecioCompra
-            // 
-            PrecioCompra.FillWeight = 80F;
-            PrecioCompra.HeaderText = "Vendedor";
-            PrecioCompra.Name = "PrecioCompra";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.FillWeight = 80F;
-            dataGridViewTextBoxColumn3.HeaderText = "Longitud";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // PrecioVenta
-            // 
-            PrecioVenta.FillWeight = 70F;
-            PrecioVenta.HeaderText = "Latitud";
-            PrecioVenta.Name = "PrecioVenta";
-            // 
-            // Estado
-            // 
-            Estado.FillWeight = 60F;
-            Estado.HeaderText = "Estado";
-            Estado.Name = "Estado";
+            dgvBitacora.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvBitacora.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvBitacora.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            dgvBitacora.BackgroundColor = Color.FromArgb(189, 215, 238);
+            dgvBitacora.BorderStyle = BorderStyle.None;
+            dgvBitacora.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvBitacora.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvBitacora.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvBitacora.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvBitacora.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, Fecha, Usuario, dataGridViewTextBoxColumn2, Modulo, EstadoAnterior, EstadoActual, dataGridViewTextBoxColumn3, Estado, User });
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle4.NullValue = "NULL";
+            dataGridViewCellStyle4.Padding = new Padding(5);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvBitacora.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvBitacora.Dock = DockStyle.Fill;
+            dgvBitacora.EnableHeadersVisualStyles = false;
+            dgvBitacora.GridColor = Color.FromArgb(189, 215, 238);
+            dgvBitacora.Location = new Point(0, 0);
+            dgvBitacora.Name = "dgvBitacora";
+            dgvBitacora.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvBitacora.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dgvBitacora.RowHeadersWidth = 30;
+            dgvBitacora.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dgvBitacora.RowTemplate.Height = 50;
+            dgvBitacora.Size = new Size(680, 376);
+            dgvBitacora.TabIndex = 1;
             // 
             // dateTimePicker1
             // 
@@ -325,6 +270,93 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewTextBoxColumn1.DataPropertyName = "IdBitacoraEmpleado";
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewTextBoxColumn1.FillWeight = 50F;
+            dataGridViewTextBoxColumn1.HeaderText = "Id";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.Width = 57;
+            // 
+            // Fecha
+            // 
+            Fecha.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Fecha.DataPropertyName = "FechaHora";
+            Fecha.FillWeight = 70F;
+            Fecha.HeaderText = "Fecha";
+            Fecha.Name = "Fecha";
+            Fecha.Width = 81;
+            // 
+            // Usuario
+            // 
+            Usuario.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Usuario.DataPropertyName = "IdEmpleado";
+            Usuario.HeaderText = "Usuario";
+            Usuario.Name = "Usuario";
+            Usuario.Width = 95;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.DataPropertyName = "AccionRealizada";
+            dataGridViewTextBoxColumn2.FillWeight = 60F;
+            dataGridViewTextBoxColumn2.HeaderText = "Accion";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.Width = 88;
+            // 
+            // Modulo
+            // 
+            Modulo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Modulo.DataPropertyName = "Modulo";
+            Modulo.FillWeight = 60F;
+            Modulo.HeaderText = "Modulo";
+            Modulo.Name = "Modulo";
+            Modulo.Width = 94;
+            // 
+            // EstadoAnterior
+            // 
+            EstadoAnterior.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoAnterior.DataPropertyName = "EstadoAnterior";
+            EstadoAnterior.FillWeight = 80F;
+            EstadoAnterior.HeaderText = "Estado Anterior";
+            EstadoAnterior.Name = "EstadoAnterior";
+            EstadoAnterior.Width = 138;
+            // 
+            // EstadoActual
+            // 
+            EstadoActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoActual.DataPropertyName = "EstadoActual";
+            EstadoActual.FillWeight = 80F;
+            EstadoActual.HeaderText = "Estado Actual";
+            EstadoActual.Name = "EstadoActual";
+            EstadoActual.Width = 128;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn3.DataPropertyName = "CampoAfectado";
+            dataGridViewTextBoxColumn3.FillWeight = 80F;
+            dataGridViewTextBoxColumn3.HeaderText = "Campo Afectado";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.Width = 143;
+            // 
+            // Estado
+            // 
+            Estado.DataPropertyName = "NombreHost";
+            Estado.FillWeight = 60F;
+            Estado.HeaderText = "Nombre Host";
+            Estado.Name = "Estado";
+            // 
+            // User
+            // 
+            User.DataPropertyName = "UsuarioHost";
+            User.HeaderText = "Usuario del Host";
+            User.Name = "User";
+            // 
             // frmBitacora
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -341,12 +373,13 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmBitacora";
             Text = "frmBitacora";
+            Load += frmBitacora_Load;
             panBarraControl.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             panel1.ResumeLayout(false);
             panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvBitacora).EndInit();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
@@ -358,16 +391,7 @@
 
         private Panel panel1;
         private Panel panel10;
-        private DataGridView dgvProductos;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Categoria;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn PorcentajeGanancia;
-        private DataGridViewTextBoxColumn PrecioCompra;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn PrecioVenta;
-        private DataGridViewTextBoxColumn Estado;
+        private DataGridView dgvBitacora;
         private DateTimePicker dateTimePicker1;
         private DateTimePicker dateTimePicker2;
         private Label label1;
@@ -379,5 +403,15 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnNuevoRol;
         private Button btnSalir;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn Fecha;
+        private DataGridViewTextBoxColumn Usuario;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn Modulo;
+        private DataGridViewTextBoxColumn EstadoAnterior;
+        private DataGridViewTextBoxColumn EstadoActual;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn Estado;
+        private DataGridViewTextBoxColumn User;
     }
 }
