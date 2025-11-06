@@ -1,6 +1,7 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using ModernMenuUI.InterfacesUsuarios.Inventario;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace ModernMenuUI
     public partial class frmProductos : Form
     {
         private readonly ProductoRepositorio _productoRepo;
+        private readonly MarcaRepositorio _marcaRepo;
         Form formularioactivo = null;
         public frmProductos()
         {
@@ -31,6 +33,8 @@ namespace ModernMenuUI
             _productoRepo = new ProductoRepositorio();
             dgvProductos.AutoGenerateColumns = false;
 
+
+            _marcaRepo = new MarcaRepositorio();
 
         }
 
@@ -103,6 +107,7 @@ namespace ModernMenuUI
         private async void frmProductos_Load(object sender, EventArgs e)
         {
             CargarProductos(null);
+            await CargarMarcasAsync();
         }
 
         private async void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
@@ -126,6 +131,57 @@ namespace ModernMenuUI
             if (((RadioButton)sender).Checked)
             {
                 await CargarProductos(false); // 'false' significa Deshabilitados
+            }
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            /*frmAgregarEditarMarca marca = new frmAgregarEditarMarca();
+            marca.ShowDialog();*/
+
+            frmAgregarEditarMarca formDeIngreso = new frmAgregarEditarMarca();
+
+            // Muestra el formulario como un diálogo y "pausa" este código
+            DialogResult resultado = formDeIngreso.ShowDialog();
+
+            // 5. ¡AQUÍ ESTÁ LA MAGIA!
+            //    Comprueba la "señal" (OK o Cancel) que envió el formulario pequeño
+            if (resultado == DialogResult.OK)
+            {
+                // 6. Si la señal fue "OK", refresca el ComboBox
+                MessageBox.Show("Marca agregada. Refrescando lista...", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Vuelve a llamar al método de carga
+                await CargarMarcasAsync();
+            }
+
+            // Si el usuario presionó "Cancelar", no hace nada.
+        }
+
+        private async Task CargarMarcasAsync()
+        {
+            try
+            {
+                // Llama al repositorio (Capa de Datos) para obtener la lista
+                // (Usando la instancia _marcaRepo)
+                var listaDeMarcas = await _marcaRepo.ObtenerTodasLasMarcas();
+
+                // Configura el ComboBox
+                // (Asumiendo que tu ComboBox se llama cmbMarca)
+
+                // Le dice al ComboBox qué datos usar
+                cmbMarca.DataSource = listaDeMarcas;
+
+                // Le dice qué propiedad del modelo 'Marca' mostrar al usuario
+                // (Usa el nombre de la propiedad de tu clase C#)
+                cmbMarca.DisplayMember = "NombreMarcaMarca";
+
+                // Le dice qué propiedad usar como valor interno (el ID)
+                cmbMarca.ValueMember = "IdMarca";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar las marcas: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
