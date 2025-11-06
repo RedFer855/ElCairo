@@ -21,90 +21,25 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             InitializeComponent();
             _proveedorActual = null;
         }
+
         public frmAgregarEditarProveedor(Proveedor proveedor)
         {
             InitializeComponent();
-            _proveedorActual = proveedor; // Modo Editar
-
+            _proveedorActual = proveedor;
         }
-
 
         private void frmAgregarEditarProveedor_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void btnGuardarProveedor_Click(object sender, EventArgs e)
-        {
-            {
-                // 1. VALIDACIÓN
-                if (string.IsNullOrEmpty(txtTelefono.Text))
-                {
-                    MessageBox.Show("El nombre es obligatorio.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Deshabilitar el botón para evitar doble clic
-                btnGuardarProveedor.Enabled = false;
-
-                try
-                {
-                    if (_proveedorActual == null)
-                    {
-                        // --- MODO AGREGAR ---
-                        Proveedor nuevoProveedor = new Proveedor
-                        {
-                            NombreProveedorProveedor = txtTelefono.Text.Trim(),
-                            TelefonoProveedorProveedor = txtTelefono.Text.Trim(),
-                            DireccionProveedorProveedor = txtDireccion.Text.Trim(),
-                            EstadoProveedorProveedor = rbActivo.Checked,
-                            IdEstadoProveedor = rbActivo.Checked ? 1 : 2 // Asumiendo 1=Activo, 2=Inactivo
-                        };
-
-                        await ProveedorRepositorio.InsertarProveedor(nuevoProveedor);
-                        MessageBox.Show("¡Proveedor guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        // --- MODO ACTUALIZAR ---
-                        // Poblamos el objeto existente
-                        _proveedorActual.NombreProveedorProveedor = txtTelefono.Text.Trim();
-                        _proveedorActual.TelefonoProveedorProveedor = txtTelefono.Text.Trim();
-                        _proveedorActual.DireccionProveedorProveedor = txtDireccion.Text.Trim();
-                        _proveedorActual.EstadoProveedorProveedor = rbActivo.Checked;
-                        _proveedorActual.IdEstadoProveedor = rbActivo.Checked ? 1 : 2;
-
-                        await ProveedorRepositorio.ActualizarProveedor(_proveedorActual);
-                        MessageBox.Show("¡Proveedor actualizado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
-                    // Si todo salió bien, cerramos el formulario
-                    this.DialogResult = DialogResult.OK; // Opcional
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al guardar el proveedor: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    // Vuelve a habilitar el botón
-                    btnGuardarProveedor.Enabled = true;
-                }
-            }
-
-        private void frmAgregarProveedorescs_Load(object sender, EventArgs e)
         {
             if (_proveedorActual != null)
             {
                 // MODO EDITAR: Llenar los campos
                 lblNombreModulo.Text = "EDITAR PROVEEDOR";
-                txtTelefono.Text = _proveedorActual.NombreProveedorProveedor;
-                txtTelefono.Text = _proveedorActual.TelefonoProveedorProveedor;
-                txtDireccion.Text = _proveedorActual.DireccionProveedorProveedor;
+                txtNombre.Text = _proveedorActual.NombreProveedor;
+                txtTelefono.Text = _proveedorActual.TelefonoProveedor;
+                txtDireccion.Text = _proveedorActual.DireccionProveedor;
 
                 // Asignar RadioButtons
-                if (_proveedorActual.EstadoProveedorProveedor)
+                if (_proveedorActual.EstadoProveedor)
                 {
                     rbActivo.Checked = true;
                 }
@@ -127,12 +62,76 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
+        private async void btnGuardarProveedor_Click(object sender, EventArgs e)
+        {
+            {
+                // 1. VALIDACIÓN
+                if (string.IsNullOrEmpty(txtTelefono.Text)|| string.IsNullOrEmpty(txtNombre.Text))
+                {
+                    MessageBox.Show("El nombre es obligatorio.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Deshabilitar el botón para evitar doble clic
+                btnGuardarProveedor.Enabled = false;
+
+                try
+                {
+                    if (_proveedorActual == null)
+                    {
+                        // --- MODO AGREGAR ---
+                        Proveedor nuevoProveedor = new Proveedor
+                        {
+                            NombreProveedor = txtNombre.Text.Trim(),
+                            TelefonoProveedor = txtTelefono.Text.Trim(),
+                            DireccionProveedor = txtDireccion.Text.Trim(),
+                            EstadoProveedor = rbActivo.Checked,
+                            IdEstadoProveedor = rbActivo.Checked ? 1 : 2 // Asumiendo 1=Activo, 2=Inactivo
+                        };
+
+                        await ProveedorRepositorio.InsertarProveedor(nuevoProveedor);
+                        MessageBox.Show("¡Proveedor guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // --- MODO ACTUALIZAR ---
+                        // Poblamos el objeto existente
+                        _proveedorActual.NombreProveedor = txtNombre.Text.Trim();
+                        _proveedorActual.TelefonoProveedor = txtTelefono.Text.Trim();
+                        _proveedorActual.DireccionProveedor = txtDireccion.Text.Trim();
+                        _proveedorActual.EstadoProveedor = rbActivo.Checked;
+                        _proveedorActual.IdEstadoProveedor = rbActivo.Checked ? 1 : 2;
+
+                        await ProveedorRepositorio.ActualizarProveedor(_proveedorActual);
+                        MessageBox.Show("¡Proveedor actualizado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    // Si todo salió bien, cerramos el formulario
+                    this.DialogResult = DialogResult.OK; // Opcional
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar el proveedor: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Vuelve a habilitar el botón
+                    btnGuardarProveedor.Enabled = true;
+                }
+            }
+        }
+     
+
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
-    
+        private void btnModificarProveedor_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -61,7 +61,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(688, 38);
+            panBarraControl.Size = new Size(714, 38);
             panBarraControl.TabIndex = 15;
             // 
             // lblNombreModulo
@@ -71,7 +71,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(688, 38);
+            lblNombreModulo.Size = new Size(714, 38);
             lblNombreModulo.TabIndex = 14;
             lblNombreModulo.Text = "EDITAR PROVEEDOR";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -100,13 +100,14 @@
             btnModificarProveedor.TabIndex = 19;
             btnModificarProveedor.Text = "Modificar";
             btnModificarProveedor.UseVisualStyleBackColor = false;
+            btnModificarProveedor.Click += btnModificarProveedor_Click;
             // 
             // txtTelefono
             // 
             txtTelefono.BackColor = Color.White;
             txtTelefono.BorderStyle = BorderStyle.None;
             txtTelefono.Font = new Font("Itim", 13F);
-            txtTelefono.Location = new Point(190, 104);
+            txtTelefono.Location = new Point(199, 104);
             txtTelefono.Name = "txtTelefono";
             txtTelefono.Size = new Size(289, 26);
             txtTelefono.TabIndex = 2;
@@ -116,7 +117,7 @@
             txtNombre.BackColor = Color.White;
             txtNombre.BorderStyle = BorderStyle.None;
             txtNombre.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNombre.Location = new Point(190, 67);
+            txtNombre.Location = new Point(198, 68);
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "(Empresa)";
             txtNombre.Size = new Size(289, 24);
@@ -146,13 +147,12 @@
             btnGuardarProveedor.Font = new Font("Itim", 11.9999981F);
             btnGuardarProveedor.ForeColor = SystemColors.ButtonFace;
             btnGuardarProveedor.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarProveedor.Location = new Point(29, 245);
+            btnGuardarProveedor.Location = new Point(12, 243);
             btnGuardarProveedor.Name = "btnGuardarProveedor";
-            btnGuardarProveedor.Size = new Size(89, 35);
+            btnGuardarProveedor.Size = new Size(106, 35);
             btnGuardarProveedor.TabIndex = 9;
             btnGuardarProveedor.Text = "Guardar";
             btnGuardarProveedor.UseVisualStyleBackColor = false;
-            btnGuardarProveedor.Visible = false;
             btnGuardarProveedor.Click += btnGuardarProveedor_Click;
             // 
             // rbInactivo
@@ -205,7 +205,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
-            label8.Location = new Point(29, 69);
+            label8.Location = new Point(3, 68);
             label8.Name = "label8";
             label8.Size = new Size(197, 23);
             label8.TabIndex = 12;
@@ -216,7 +216,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(87, 99, 110);
-            label2.Location = new Point(111, 137);
+            label2.Location = new Point(90, 137);
             label2.Name = "label2";
             label2.Size = new Size(94, 23);
             label2.TabIndex = 14;
@@ -227,7 +227,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(116, 104);
+            label1.Location = new Point(99, 104);
             label1.Name = "label1";
             label1.Size = new Size(85, 23);
             label1.TabIndex = 13;
@@ -238,7 +238,7 @@
             txtDireccion.BackColor = Color.White;
             txtDireccion.BorderStyle = BorderStyle.None;
             txtDireccion.Font = new Font("Itim", 13F);
-            txtDireccion.Location = new Point(190, 134);
+            txtDireccion.Location = new Point(199, 134);
             txtDireccion.Name = "txtDireccion";
             txtDireccion.Size = new Size(289, 26);
             txtDireccion.TabIndex = 3;
@@ -261,14 +261,14 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(688, 290);
+            panel2.Size = new Size(714, 290);
             panel2.TabIndex = 14;
             // 
             // frmAgregarEditarProveedor
             // 
             AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(688, 290);
+            ClientSize = new Size(714, 290);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
