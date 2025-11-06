@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI.InterfacesUsuarios.Compras
 {
-    partial class frmProveedor
+    partial class frmAgregarEditarProveedor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProveedor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarProveedor));
             Panel panBarraControl;
             pictureBox1 = new PictureBox();
             btnModificarProveedor = new Button();

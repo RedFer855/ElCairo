@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 {
-    partial class frmAgregarUsuario
+    partial class frmAgregarEditarUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -57,7 +57,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(521, 41);
+            panBarraControl.Size = new Size(497, 41);
             panBarraControl.TabIndex = 15;
             // 
             // lblNombreModulo
@@ -67,7 +67,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(521, 41);
+            lblNombreModulo.Size = new Size(497, 41);
             lblNombreModulo.TabIndex = 13;
             lblNombreModulo.Text = "USUARIO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -103,9 +103,9 @@
             txtNombre.BackColor = Color.White;
             txtNombre.BorderStyle = BorderStyle.None;
             txtNombre.Font = new Font("Itim", 13F);
-            txtNombre.Location = new Point(180, 63);
+            txtNombre.Location = new Point(152, 59);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(283, 21);
+            txtNombre.Size = new Size(308, 21);
             txtNombre.TabIndex = 1;
             // 
             // btnGuardarEmpleado
@@ -128,7 +128,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(87, 99, 110);
-            label3.Location = new Point(61, 135);
+            label3.Location = new Point(33, 131);
             label3.Name = "label3";
             label3.Size = new Size(109, 18);
             label3.TabIndex = 32;
@@ -140,9 +140,9 @@
             groupBox1.Controls.Add(radioButton1);
             groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(180, 164);
+            groupBox1.Location = new Point(152, 160);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(283, 51);
+            groupBox1.Size = new Size(308, 51);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
@@ -162,7 +162,7 @@
             label6.AutoSize = true;
             label6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(87, 99, 110);
-            label6.Location = new Point(52, 100);
+            label6.Location = new Point(24, 96);
             label6.Name = "label6";
             label6.Size = new Size(118, 18);
             label6.TabIndex = 27;
@@ -173,7 +173,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(87, 99, 110);
-            label5.Location = new Point(113, 184);
+            label5.Location = new Point(85, 180);
             label5.Name = "label5";
             label5.Size = new Size(57, 18);
             label5.TabIndex = 26;
@@ -184,9 +184,9 @@
             txtCorreo.BackColor = Color.White;
             txtCorreo.BorderStyle = BorderStyle.None;
             txtCorreo.Font = new Font("Itim", 13F);
-            txtCorreo.Location = new Point(180, 100);
+            txtCorreo.Location = new Point(152, 96);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(283, 21);
+            txtCorreo.Size = new Size(308, 21);
             txtCorreo.TabIndex = 5;
             // 
             // label1
@@ -194,7 +194,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(121, 66);
+            label1.Location = new Point(93, 62);
             label1.Name = "label1";
             label1.Size = new Size(44, 18);
             label1.TabIndex = 15;
@@ -216,28 +216,28 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(521, 302);
+            panel2.Size = new Size(497, 302);
             panel2.TabIndex = 16;
             // 
             // cmbRol
             // 
             cmbRol.FormattingEnabled = true;
-            cmbRol.Location = new Point(180, 135);
+            cmbRol.Location = new Point(152, 131);
             cmbRol.Name = "cmbRol";
-            cmbRol.Size = new Size(283, 23);
+            cmbRol.Size = new Size(308, 23);
             cmbRol.TabIndex = 34;
             // 
-            // frmAgregarUsuario
+            // frmAgregarEditarUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(521, 302);
+            ClientSize = new Size(497, 302);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmAgregarUsuario";
+            Name = "frmAgregarEditarUsuario";
             Text = "Usuario";
             panBarraControl.ResumeLayout(false);
             groupBox1.ResumeLayout(false);

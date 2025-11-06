@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class BotonesMenuPrincipal
+    partial class controlBotonesMenuPrincipal
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BotonesMenuPrincipal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(controlBotonesMenuPrincipal));
             pbxIcono = new PictureBox();
             pnlTitulo = new Panel();
             lblTitulo = new Label();

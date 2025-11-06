@@ -13,17 +13,17 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class frmAgregarEmpleado : Form
+    public partial class frmAgregarEditarEmpleado : Form
     {
         private Empleado _empleadoActual;
         // Constructor 1: Para "AGREGAR" (no recibe nada)
 
-        public frmAgregarEmpleado()
+        public frmAgregarEditarEmpleado()
         {
             InitializeComponent();
             _empleadoActual = null; // Lo dejamos nulo
         }
-        public frmAgregarEmpleado(Empleado empleado)
+        public frmAgregarEditarEmpleado(Empleado empleado)
         {
             InitializeComponent();
             _empleadoActual = empleado;
@@ -155,7 +155,7 @@ namespace ModernMenuUI
 
         private void btnUsuario_Click(object sender, EventArgs e)
         {
-            frmAgregarUsuario Usu = new frmAgregarUsuario();
+            frmAgregarEditarUsuario Usu = new frmAgregarEditarUsuario();
             Usu.ShowDialog();
         }
 

@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ModernMenuUI.InterfacesUsuarios.Compras
+namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
-    public partial class frmProveedor : Form
+    public partial class frmAgregarEditarMarca : Form
     {
-        public frmProveedor()
+        public frmAgregarEditarMarca()
         {
             InitializeComponent();
         }

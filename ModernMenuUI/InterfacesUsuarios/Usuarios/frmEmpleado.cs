@@ -170,7 +170,7 @@ namespace ModernMenuUI
 
         private void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
-            frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
+            frmAgregarEditarEmpleado Empleados = new frmAgregarEditarEmpleado();
             Empleados.ShowDialog();
         }
 
@@ -178,7 +178,7 @@ namespace ModernMenuUI
         {
             if (_empleadoSeleccionado != null)
             {
-                frmAgregarEmpleado EmpleadosEditar = new frmAgregarEmpleado(_empleadoSeleccionado);
+                frmAgregarEditarEmpleado EmpleadosEditar = new frmAgregarEditarEmpleado(_empleadoSeleccionado);
                 EmpleadosEditar.ShowDialog();
             }
             else

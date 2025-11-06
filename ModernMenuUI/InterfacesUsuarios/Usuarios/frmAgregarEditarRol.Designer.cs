@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class frmEditarRol
+    partial class frmAgregarEditarRol
     {
         /// <summary>
         /// Required designer variable.

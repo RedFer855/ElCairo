@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class controlRolAdmin : UserControl
+    public partial class controlVendedorBodeguero : UserControl
     {
-        public controlRolAdmin()
+        public controlVendedorBodeguero()
         {
             InitializeComponent();
         }
 
         private void btnInfo_Click(object sender, EventArgs e)
         {
-            clsManejarFormularios.Instancia.AbrirFormularioEncima(new frmEditarRol());
+            clsManejarFormularios.Instancia.AbrirFormularioEncima(new frmAgregarEditarRol());
         }
     }
 }

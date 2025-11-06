@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ModernMenuUI.InterfacesUsuarios.Usuarios
+namespace ModernMenuUI.InterfacesUsuarios.Ventas
 {
-    public partial class frmAgregarUsuario : Form
+    public partial class frmAgregarEditarClientes : Form
     {
-        public frmAgregarUsuario()
+        public frmAgregarEditarClientes()
         {
             InitializeComponent();
         }

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class BotonesMenuPrincipal : UserControl
+    public partial class controlBotonesMenuPrincipal : UserControl
     {
         private Color colorNormal = Color.FromArgb(189, 215, 238);
         private Color colorHover = Color.FromArgb(170, 193, 214);
@@ -66,7 +66,7 @@ namespace ModernMenuUI
             set => lblTitulo.ForeColor = value;
         }
 
-        public BotonesMenuPrincipal()
+        public controlBotonesMenuPrincipal()
         {
             InitializeComponent();
             this.BackColor = colorNormal;

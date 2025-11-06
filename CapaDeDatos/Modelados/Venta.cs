@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos.Datos
+namespace CapaDeDatos.Modelados
 {
     [Table("ventas")]
     public class Venta : BaseModel

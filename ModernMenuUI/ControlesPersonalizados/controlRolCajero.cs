@@ -19,7 +19,7 @@ namespace ModernMenuUI
 
         private void btnInfo_Click(object sender, EventArgs e)
         {
-            clsManejarFormularios.Instancia.AbrirFormularioEncima(new frmEditarRol());
+            clsManejarFormularios.Instancia.AbrirFormularioEncima(new frmAgregarEditarRol());
         }
     }
 }

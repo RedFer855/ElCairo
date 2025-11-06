@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class frmAgregarEmpleado
+    partial class frmAgregarEditarEmpleado
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             Panel panBarraControl;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEmpleado));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarEmpleado));
             lblNombreModulo = new Label();
             txtApellido = new TextBox();
             label1 = new Label();
@@ -41,8 +41,8 @@
             label5 = new Label();
             label6 = new Label();
             groupBox1 = new GroupBox();
-            radioButton1 = new RadioButton();
             radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
             txtDireccion = new TextBox();
             label3 = new Label();
             btnGuardarEmpleado = new Button();
@@ -194,17 +194,6 @@
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
-            // radioButton1
-            // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(8, 21);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(70, 23);
-            radioButton1.TabIndex = 7;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Activo";
-            radioButton1.UseVisualStyleBackColor = true;
-            // 
             // radioButton2
             // 
             radioButton2.AutoSize = true;
@@ -215,6 +204,17 @@
             radioButton2.TabStop = true;
             radioButton2.Text = "Inactivo";
             radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(8, 21);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(70, 23);
+            radioButton1.TabIndex = 7;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Activo";
+            radioButton1.UseVisualStyleBackColor = true;
             // 
             // txtDireccion
             // 
@@ -338,9 +338,9 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(478, 121);
+            pictureBox1.Location = new Point(459, 111);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(144, 155);
+            pictureBox1.Size = new Size(180, 155);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 21;
             pictureBox1.TabStop = false;
@@ -371,14 +371,14 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 41);
             panel2.Name = "panel2";
-            panel2.Size = new Size(651, 473);
+            panel2.Size = new Size(651, 421);
             panel2.TabIndex = 0;
             // 
-            // frmAgregarEmpleado
+            // frmAgregarEditarEmpleado
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(651, 514);
+            ClientSize = new Size(651, 462);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             DoubleBuffered = true;
@@ -386,7 +386,7 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmAgregarEmpleado";
+            Name = "frmAgregarEditarEmpleado";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Datos de Empleados";
             Load += frmAgregarEmpleado_Load;

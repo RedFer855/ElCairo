@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class frmEditarRol : Form
+    public partial class frmAgregarEditarRol : Form
     {
-        public frmEditarRol()
+        public frmAgregarEditarRol()
         {
             InitializeComponent();
         }
