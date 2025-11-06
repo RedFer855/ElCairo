@@ -465,13 +465,6 @@ namespace ModernMenuUI
 
         // BOTENES PARA ABRIR SUBMENUS
 
-
-        //**************************************************************
-        private void btnInventario_Click_1(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelInventario);
-        }
-
         private void btnCompras_Click(object sender, EventArgs e)
         {
             AbrirCerrarPanel(panelCompras);
