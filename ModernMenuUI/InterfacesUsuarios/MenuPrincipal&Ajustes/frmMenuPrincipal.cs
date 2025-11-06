@@ -180,31 +180,6 @@ namespace ModernMenuUI
             MenulateralAnimacion();
         }
 
-        // BOTENES PARA ABRIR SUBMENUS
-        private void btnInventario_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelInventario);
-        }
-
-        private void btnCompra_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelCompras);
-        }
-
-        private void btnUsuario_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelUsuarios);
-        }
-
-        private void btnVenta_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelVentas);
-        }
-
-        private void btnReportería_Click_1(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelReporteria);
-        }
 
 
 
@@ -488,6 +463,38 @@ namespace ModernMenuUI
             pbxCalculadora.BackColor = Color.Transparent; // resalta
         }
 
-    
+        // BOTENES PARA ABRIR SUBMENUS
+
+
+        //**************************************************************
+        private void btnInventario_Click_1(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelInventario);
+        }
+
+        private void btnCompras_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelCompras);
+        }
+
+        private void btnVentas_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelVentas);
+        }
+
+        private void btnUsuarios_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelUsuarios);
+        }
+
+        private void btbStocks_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelInventario);
+        }
+
+        private void btnReporte_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelReporteria);
+        }
     }
 }
