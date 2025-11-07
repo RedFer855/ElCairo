@@ -1,7 +1,9 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
+using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
@@ -19,6 +22,11 @@ namespace ModernMenuUI
     {
         private readonly ProductoRepositorio _productoRepo;
         private readonly MarcaRepositorio _marcaRepo;
+        private Producto _productoSeleccionado = null;
+
+        private Supabase.Realtime.RealtimeChannel? _productoSubscription;
+        private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
+        private Supabase.Client? _supabaseClient;
         Form formularioactivo = null;
         public frmProductos()
         {
@@ -35,6 +43,8 @@ namespace ModernMenuUI
 
 
             _marcaRepo = new MarcaRepositorio();
+
+            this.FormClosing += frmProductos_FormClosing;
 
         }
 
@@ -63,19 +73,51 @@ namespace ModernMenuUI
 
             formHijo.ShowDialog(); // Modal
         }
-        private void btnNuevoProducto_Click(object sender, EventArgs e)
+        private async void btnNuevoProducto_Click(object sender, EventArgs e)
         {
+            Editar_Producto producto = new Editar_Producto();
+            DialogResult resultado = producto.ShowDialog();
 
+            // --- AÑADIDO: Refresco del DataGridView ---
+            // Comprueba la "señal" (OK o Cancel) que envió el formulario pequeño
+            if (resultado == DialogResult.OK)
+            {
+                // Si la señal fue "OK", refresca el DataGridView
+                // (null = Cargar Todos, respetando tu filtro)
+                await CargarProductos(null);
+            }
         }
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            AbrirFormularioHijo(new Editar_Producto());
+            if (_productoSeleccionado != null)
+            {
+                // ¡Clave! Abre el formulario de diálogo PASANDO el objeto
+                Editar_Producto productoEditar = new Editar_Producto(_productoSeleccionado);
+                productoEditar.ShowDialog();
+
+                // No necesitas refrescar el DGV aquí, porque
+                // tu lógica de Realtime se encargará de eso automáticamente.
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un producto de la lista para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+        
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
             btnNuevo.Enabled = dgvProductos.SelectedRows.Count > 0;
+            if (dgvProductos.SelectedRows.Count > 0)
+            {
+                var filaSeleccionada = dgvProductos.SelectedRows[0];
+                _productoSeleccionado = filaSeleccionada.DataBoundItem as Producto;
+            }
+            else
+            {
+                _productoSeleccionado = null;
+            }
         }
         // 1. REEMPLAZA tu método 'CargarProductos'
         private async Task CargarProductos(bool? estado = null) // Ahora acepta un filtro
@@ -106,10 +148,64 @@ namespace ModernMenuUI
 
         private async void frmProductos_Load(object sender, EventArgs e)
         {
-            CargarProductos(null);
+            await CargarProductos(null);
             await CargarMarcasAsync();
+            await IniciarSuscripcionProductos();
         }
+        private async Task DesecharSuscripcion()
+        {
+            if (_productoSubscription != null)
+            {
+                try
+                {
+                    await Task.Run(() => _productoSubscription.Unsubscribe());
+                    System.Diagnostics.Debug.WriteLine("Suscripción (Producto) desechada con éxito.");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción (Producto): {ex.Message}");
+                }
+                _productoSubscription = null;
+            }
+        }
+        private async Task IniciarSuscripcionProductos()
+        {
+            await DesecharSuscripcion();
+            try
+            {
+                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
 
+                _productoSubscription = await _supabaseClient.From<Producto>()
+                    .On(ListenType.All, (sender, change) =>
+                    {
+                        if (this == null || this.IsDisposed || !this.IsHandleCreated) return;
+                        this.BeginInvoke((MethodInvoker)(async () =>
+                        {
+                            if (this.IsDisposed) return;
+                            System.Diagnostics.Debug.WriteLine($"Cambio detectado en Productos: {change.Event}. Recargando...");
+                            await CargarProductos(null); // Recarga la tabla
+                        }));
+                    });
+                System.Diagnostics.Debug.WriteLine("Suscripción a Productos (Realtime) creada.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime (Producto): {ex.Message}");
+            }
+        }
+        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
+        {
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (status == NetworkStatus.Internet)
+            {
+                this.BeginInvoke((MethodInvoker)(async () =>
+                {
+                    if (this.IsDisposed) return;
+                    await CargarProductos(null);
+                    await IniciarSuscripcionProductos();
+                }));
+            }
+        }
         private async void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -177,12 +273,17 @@ namespace ModernMenuUI
                 //cmbMarca.DisplayMember = "NombreMarcaMarca";
 
                 // Le dice qué propiedad usar como valor interno (el ID)
-               // cmbMarca.ValueMember = "IdMarca";
+                // cmbMarca.ValueMember = "IdMarca";
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar las marcas: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            await DesecharSuscripcion();
         }
     }
 

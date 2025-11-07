@@ -1,8 +1,12 @@
-﻿using System;
+﻿using CapaDeDatos.Modelados; 
+using Supabase.Postgrest.Attributes; 
+using Supabase.Postgrest.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CapaDeDatos.Modelados
 {
@@ -20,8 +24,13 @@ namespace CapaDeDatos.Modelados
         // "id_marca" (integer)
         [Column("id_marca")]
         public int IdMarca { get; set; }
+
+        // --- 👇 1. AÑADIR AQUÍ ---
+        [JsonIgnore]
         public Marca Marca { get; set; }
 
+        // --- 👇 2. AÑADIR AQUÍ ---
+        [JsonIgnore]
         public string NombreMarca
         {
             get
@@ -33,14 +42,15 @@ namespace CapaDeDatos.Modelados
         [Column("id_categoria")]
         public int IdCategoria { get; set; }
 
+        // --- (Esto ya lo tenías) ---
+        [JsonIgnore]
         public Categoria Categoria { get; set; }
 
+        // --- 👇 3. AÑADIR AQUÍ ---
+        [JsonIgnore]
         public string NombreCategoria
         {
-            get
-            {
-                return Categoria?.NombreCategoria ?? "Sin Categoria";
-            }
+            get { return Categoria?.NombreCategoria ?? "Sin Categoria"; }
         }
 
         // "codigo_barra_producto" (character varying)
