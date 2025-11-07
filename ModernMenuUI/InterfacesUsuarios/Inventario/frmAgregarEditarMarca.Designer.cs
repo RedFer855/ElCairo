@@ -30,10 +30,12 @@
         {
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarMarca));
+            lblNombreModulo = new Label();
             panel2 = new Panel();
+            textBox1 = new TextBox();
+            btnbuscar = new Button();
             pictureBox1 = new PictureBox();
             btnModificarMarca = new Button();
-            txtNombre = new TextBox();
             txtDni = new TextBox();
             btnVolver = new Button();
             btnGuardarMarca = new Button();
@@ -43,16 +45,35 @@
             label5 = new Label();
             label8 = new Label();
             label2 = new Label();
-            label1 = new Label();
-            lblNombreModulo = new Label();
-            btnbuscar = new Button();
-            textBox1 = new TextBox();
             panBarraControl = new Panel();
+            panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             gbxEstado.SuspendLayout();
-            panBarraControl.SuspendLayout();
             SuspendLayout();
+            // 
+            // panBarraControl
+            // 
+            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
+            panBarraControl.Controls.Add(lblNombreModulo);
+            panBarraControl.Dock = DockStyle.Top;
+            panBarraControl.ForeColor = Color.Coral;
+            panBarraControl.Location = new Point(0, 0);
+            panBarraControl.Name = "panBarraControl";
+            panBarraControl.Size = new Size(571, 37);
+            panBarraControl.TabIndex = 17;
+            // 
+            // lblNombreModulo
+            // 
+            lblNombreModulo.Dock = DockStyle.Fill;
+            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNombreModulo.ForeColor = Color.White;
+            lblNombreModulo.Location = new Point(0, 0);
+            lblNombreModulo.Name = "lblNombreModulo";
+            lblNombreModulo.Size = new Size(571, 37);
+            lblNombreModulo.TabIndex = 14;
+            lblNombreModulo.Text = "EDITAR MARCA";
+            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
@@ -61,7 +82,6 @@
             panel2.Controls.Add(btnbuscar);
             panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(btnModificarMarca);
-            panel2.Controls.Add(txtNombre);
             panel2.Controls.Add(txtDni);
             panel2.Controls.Add(btnVolver);
             panel2.Controls.Add(btnGuardarMarca);
@@ -69,20 +89,43 @@
             panel2.Controls.Add(label5);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(label2);
-            panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 37);
             panel2.Name = "panel2";
-            panel2.Size = new Size(571, 212);
+            panel2.Size = new Size(571, 201);
             panel2.TabIndex = 16;
             panel2.Paint += panel2_Paint;
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = Color.White;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBox1.Location = new Point(150, 47);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "(Seleccione Buscar)";
+            textBox1.Size = new Size(201, 20);
+            textBox1.TabIndex = 24;
+            // 
+            // btnbuscar
+            // 
+            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
+            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
+            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
+            btnbuscar.FlatAppearance.BorderSize = 0;
+            btnbuscar.FlatStyle = FlatStyle.Flat;
+            btnbuscar.Location = new Point(357, 46);
+            btnbuscar.Name = "btnbuscar";
+            btnbuscar.Size = new Size(48, 21);
+            btnbuscar.TabIndex = 23;
+            btnbuscar.UseVisualStyleBackColor = false;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(423, 20);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(136, 167);
+            pictureBox1.Size = new Size(136, 158);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 21;
             pictureBox1.TabStop = false;
@@ -95,22 +138,12 @@
             btnModificarMarca.Font = new Font("Itim", 11.9999981F);
             btnModificarMarca.ForeColor = SystemColors.ButtonFace;
             btnModificarMarca.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarMarca.Location = new Point(114, 173);
+            btnModificarMarca.Location = new Point(166, 145);
             btnModificarMarca.Name = "btnModificarMarca";
             btnModificarMarca.Size = new Size(89, 33);
             btnModificarMarca.TabIndex = 19;
             btnModificarMarca.Text = "Modificar";
             btnModificarMarca.UseVisualStyleBackColor = false;
-            // 
-            // txtNombre
-            // 
-            txtNombre.BackColor = Color.White;
-            txtNombre.BorderStyle = BorderStyle.None;
-            txtNombre.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNombre.Location = new Point(150, 49);
-            txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(255, 20);
-            txtNombre.TabIndex = 2;
             // 
             // txtDni
             // 
@@ -130,7 +163,7 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(209, 173);
+            btnVolver.Location = new Point(261, 145);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(95, 33);
             btnVolver.TabIndex = 0;
@@ -145,7 +178,7 @@
             btnGuardarMarca.Font = new Font("Itim", 11.9999981F);
             btnGuardarMarca.ForeColor = SystemColors.ButtonFace;
             btnGuardarMarca.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarMarca.Location = new Point(19, 173);
+            btnGuardarMarca.Location = new Point(71, 145);
             btnGuardarMarca.Name = "btnGuardarMarca";
             btnGuardarMarca.Size = new Size(89, 33);
             btnGuardarMarca.TabIndex = 9;
@@ -159,7 +192,7 @@
             gbxEstado.Controls.Add(rbActivo);
             gbxEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
-            gbxEstado.Location = new Point(150, 107);
+            gbxEstado.Location = new Point(150, 73);
             gbxEstado.Name = "gbxEstado";
             gbxEstado.Size = new Size(255, 45);
             gbxEstado.TabIndex = 7;
@@ -192,7 +225,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(87, 99, 110);
-            label5.Location = new Point(87, 125);
+            label5.Location = new Point(87, 91);
             label5.Name = "label5";
             label5.Size = new Size(57, 18);
             label5.TabIndex = 18;
@@ -214,75 +247,17 @@
             label2.AutoSize = true;
             label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(87, 99, 110);
-            label2.Location = new Point(66, 85);
+            label2.Location = new Point(66, 51);
             label2.Name = "label2";
             label2.Size = new Size(78, 18);
             label2.TabIndex = 14;
             label2.Text = "Proveedor:";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(76, 51);
-            label1.Name = "label1";
-            label1.Size = new Size(68, 18);
-            label1.TabIndex = 13;
-            label1.Text = "Telefono:";
-            // 
-            // lblNombreModulo
-            // 
-            lblNombreModulo.Dock = DockStyle.Fill;
-            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNombreModulo.ForeColor = Color.White;
-            lblNombreModulo.Location = new Point(0, 0);
-            lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(571, 37);
-            lblNombreModulo.TabIndex = 14;
-            lblNombreModulo.Text = "EDITAR MARCA";
-            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // panBarraControl
-            // 
-            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
-            panBarraControl.Controls.Add(lblNombreModulo);
-            panBarraControl.Dock = DockStyle.Top;
-            panBarraControl.ForeColor = Color.Coral;
-            panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(571, 37);
-            panBarraControl.TabIndex = 17;
-            // 
-            // btnbuscar
-            // 
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(357, 80);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 21);
-            btnbuscar.TabIndex = 23;
-            btnbuscar.UseVisualStyleBackColor = false;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = Color.White;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(150, 81);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "(Seleccione Buscar)";
-            textBox1.Size = new Size(201, 20);
-            textBox1.TabIndex = 24;
-            // 
             // frmAgregarEditarMarca
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(571, 249);
+            ClientSize = new Size(571, 238);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -292,12 +267,12 @@
             Name = "frmAgregarEditarMarca";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Marca";
+            panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
-            panBarraControl.ResumeLayout(false);
             ResumeLayout(false);
         }
 

@@ -73,7 +73,7 @@ namespace ModernMenuUI
 
             try
             {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
+                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
 
                 // ✅ Suscripción segura al canal de Realtime
                 _empleadoSubscription = await _supabaseClient.From<Empleado>()
@@ -180,6 +180,7 @@ namespace ModernMenuUI
             {
                 frmAgregarEditarEmpleado EmpleadosEditar = new frmAgregarEditarEmpleado(_empleadoSeleccionado);
                 EmpleadosEditar.ShowDialog();
+                CargarEmpleados();
             }
             else
             {

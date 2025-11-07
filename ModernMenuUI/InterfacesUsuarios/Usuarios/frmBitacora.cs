@@ -162,11 +162,6 @@ namespace ModernMenuUI
             }
         }
 
-
-
-
-
-
         private async void btnSalir_Click(object sender, EventArgs e)
         {
             try

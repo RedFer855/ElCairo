@@ -13,19 +13,19 @@ namespace CapaDeDatos.Modelados
         public int IdProveedor { get; set; }
 
         [Column("nombre_proveedor")]
-        public string NombreProveedorProveedor { get; set; }
+        public string NombreProveedor { get; set; }
 
         [Column("telefono_proveedor")]
-        public string TelefonoProveedorProveedor { get; set; }
+        public string TelefonoProveedor { get; set; }
 
         [Column("direccion_proveedor")]
-        public string DireccionProveedorProveedor { get; set; }
+        public string DireccionProveedor { get; set; }
 
         [Column("id_estado")]
         public int IdEstadoProveedor { get; set; }
 
         [Column("estado_proveedor")]
-        public bool EstadoProveedorProveedor { get; set; }
+        public bool EstadoProveedor { get; set; }
     }
 
 }

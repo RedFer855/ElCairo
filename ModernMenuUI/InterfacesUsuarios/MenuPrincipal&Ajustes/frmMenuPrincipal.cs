@@ -1,6 +1,7 @@
 using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
+using ModernMenuUI.InterfacesUsuarios.Compras;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -309,7 +310,9 @@ namespace ModernMenuUI
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmProveedores());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            
 
         }
 
