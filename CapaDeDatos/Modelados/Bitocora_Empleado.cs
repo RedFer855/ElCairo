@@ -28,15 +28,12 @@ namespace CapaDeDatos.Modelados
         [Column("fecha_hora")]
         public DateTime Fecha_Hora { get; set; }
 
-        [Column("campo_extra")]
-        public string Accion_Realizada { get; set; }
-
-        [Column("id_accion")]
+        [Column("accion")]
         public int Id_Accion { get; set; }
 
-
-        [Column("id_modulo")]
+        [Column("modulo")]
         public int Id_Modulo { get; set; }
+        
 
     }
 }

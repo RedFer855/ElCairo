@@ -1,6 +1,6 @@
-﻿namespace ModernMenuUI
+﻿namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
-    partial class frmAgregarEmpleado
+    partial class frmAgregarProducto
     {
         /// <summary>
         /// Required designer variable.
@@ -29,55 +29,105 @@
         private void InitializeComponent()
         {
             Panel panBarraControl;
-            lblNombreModulo = new Label();
+            txtDni = new TextBox();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            txtNombre = new TextBox();
+            btnVover = new Button();
+            btnGuardarEmpleado = new Button();
             label6 = new Label();
             label5 = new Label();
-            label4 = new Label();
             txtCorreo = new TextBox();
             txtTelefono = new TextBox();
             label9 = new Label();
             label8 = new Label();
-            txtDni = new TextBox();
             label2 = new Label();
             label1 = new Label();
-            txtNombre = new TextBox();
             txtApellido = new TextBox();
-            radioButton1 = new RadioButton();
+            lblNombreModulo = new Label();
             label3 = new Label();
             txtDireccion = new TextBox();
             groupBox1 = new GroupBox();
-            radioButton2 = new RadioButton();
+            label4 = new Label();
             panel2 = new Panel();
-            btnVover = new Button();
-            btnGuardarEmpleado = new Button();
             panBarraControl = new Panel();
-            panBarraControl.SuspendLayout();
             groupBox1.SuspendLayout();
+            panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // panBarraControl
+            // txtDni
             // 
-            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
-            panBarraControl.Controls.Add(lblNombreModulo);
-            panBarraControl.Dock = DockStyle.Top;
-            panBarraControl.ForeColor = Color.Coral;
-            panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(508, 41);
-            panBarraControl.TabIndex = 13;
+            txtDni.BackColor = Color.White;
+            txtDni.BorderStyle = BorderStyle.None;
+            txtDni.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDni.Location = new Point(142, 49);
+            txtDni.Name = "txtDni";
+            txtDni.PlaceholderText = "(Ingrese Dni sin espacios ni guiones)";
+            txtDni.Size = new Size(315, 24);
+            txtDni.TabIndex = 0;
             // 
-            // lblNombreModulo
+            // radioButton2
             // 
-            lblNombreModulo.Dock = DockStyle.Fill;
-            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNombreModulo.ForeColor = Color.White;
-            lblNombreModulo.Location = new Point(0, 0);
-            lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(508, 41);
-            lblNombreModulo.TabIndex = 13;
-            lblNombreModulo.Text = "EDITAR EMPLEADO";
-            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(124, 20);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(100, 28);
+            radioButton2.TabIndex = 9;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Inactivo";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(8, 21);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(84, 28);
+            radioButton1.TabIndex = 8;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Activo";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // txtNombre
+            // 
+            txtNombre.BackColor = Color.White;
+            txtNombre.BorderStyle = BorderStyle.None;
+            txtNombre.Font = new Font("Itim", 13F);
+            txtNombre.Location = new Point(142, 88);
+            txtNombre.Name = "txtNombre";
+            txtNombre.Size = new Size(315, 26);
+            txtNombre.TabIndex = 1;
+            // 
+            // btnVover
+            // 
+            btnVover.BackColor = Color.FromArgb(148, 168, 187);
+            btnVover.BackgroundImageLayout = ImageLayout.None;
+            btnVover.FlatAppearance.BorderSize = 0;
+            btnVover.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnVover.ForeColor = SystemColors.ButtonFace;
+            btnVover.ImageAlign = ContentAlignment.BottomLeft;
+            btnVover.Location = new Point(79, 372);
+            btnVover.Name = "btnVover";
+            btnVover.Size = new Size(157, 37);
+            btnVover.TabIndex = 10;
+            btnVover.Text = "Salir";
+            btnVover.UseVisualStyleBackColor = false;
+            // 
+            // btnGuardarEmpleado
+            // 
+            btnGuardarEmpleado.BackColor = Color.FromArgb(149, 195, 172);
+            btnGuardarEmpleado.BackgroundImageLayout = ImageLayout.None;
+            btnGuardarEmpleado.FlatAppearance.BorderSize = 0;
+            btnGuardarEmpleado.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
+            btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
+            btnGuardarEmpleado.Location = new Point(242, 372);
+            btnGuardarEmpleado.Name = "btnGuardarEmpleado";
+            btnGuardarEmpleado.Size = new Size(153, 37);
+            btnGuardarEmpleado.TabIndex = 11;
+            btnGuardarEmpleado.Text = "Guardar";
+            btnGuardarEmpleado.UseVisualStyleBackColor = false;
             // 
             // label6
             // 
@@ -101,17 +151,6 @@
             label5.TabIndex = 26;
             label5.Text = "Estado:";
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.ForeColor = Color.FromArgb(87, 99, 110);
-            label4.Location = new Point(40, 158);
-            label4.Name = "label4";
-            label4.Size = new Size(85, 23);
-            label4.TabIndex = 25;
-            label4.Text = "Teléfono:";
-            // 
             // txtCorreo
             // 
             txtCorreo.BackColor = Color.White;
@@ -129,7 +168,7 @@
             txtTelefono.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtTelefono.Location = new Point(142, 156);
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.PlaceholderText = "(Número de Teléfono sin espacios guiones)";
+            txtTelefono.PlaceholderText = "(Codigo de Barra del Producto)";
             txtTelefono.Size = new Size(315, 24);
             txtTelefono.TabIndex = 4;
             // 
@@ -151,20 +190,9 @@
             label8.ForeColor = Color.FromArgb(87, 99, 110);
             label8.Location = new Point(40, 51);
             label8.Name = "label8";
-            label8.Size = new Size(48, 23);
+            label8.Size = new Size(81, 23);
             label8.TabIndex = 19;
-            label8.Text = "DNI:";
-            // 
-            // txtDni
-            // 
-            txtDni.BackColor = Color.White;
-            txtDni.BorderStyle = BorderStyle.None;
-            txtDni.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDni.Location = new Point(142, 49);
-            txtDni.Name = "txtDni";
-            txtDni.PlaceholderText = "(Ingrese Dni sin espacios ni guiones)";
-            txtDni.Size = new Size(315, 24);
-            txtDni.TabIndex = 0;
+            label8.Text = "Nombre:";
             // 
             // label2
             // 
@@ -173,9 +201,9 @@
             label2.ForeColor = Color.FromArgb(87, 99, 110);
             label2.Location = new Point(40, 124);
             label2.Name = "label2";
-            label2.Size = new Size(81, 23);
+            label2.Size = new Size(95, 23);
             label2.TabIndex = 16;
-            label2.Text = "Apellido:";
+            label2.Text = "Categoria:";
             // 
             // label1
             // 
@@ -184,19 +212,9 @@
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(38, 91);
             label1.Name = "label1";
-            label1.Size = new Size(81, 23);
+            label1.Size = new Size(66, 23);
             label1.TabIndex = 15;
-            label1.Text = "Nombre:";
-            // 
-            // txtNombre
-            // 
-            txtNombre.BackColor = Color.White;
-            txtNombre.BorderStyle = BorderStyle.None;
-            txtNombre.Font = new Font("Itim", 13F);
-            txtNombre.Location = new Point(142, 88);
-            txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(315, 26);
-            txtNombre.TabIndex = 1;
+            label1.Text = "Marca:";
             // 
             // txtApellido
             // 
@@ -208,16 +226,18 @@
             txtApellido.Size = new Size(315, 26);
             txtApellido.TabIndex = 3;
             // 
-            // radioButton1
+            // lblNombreModulo
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(8, 21);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(84, 28);
-            radioButton1.TabIndex = 8;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Activo";
-            radioButton1.UseVisualStyleBackColor = true;
+            lblNombreModulo.Dock = DockStyle.Fill;
+            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNombreModulo.ForeColor = Color.White;
+            lblNombreModulo.Location = new Point(0, 0);
+            lblNombreModulo.Name = "lblNombreModulo";
+            lblNombreModulo.Size = new Size(488, 41);
+            lblNombreModulo.TabIndex = 13;
+            lblNombreModulo.Text = "EDITAR PRODUCTO";
+            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
+            lblNombreModulo.Click += lblNombreModulo_Click;
             // 
             // label3
             // 
@@ -253,16 +273,27 @@
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
-            // radioButton2
+            // panBarraControl
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(124, 20);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(100, 28);
-            radioButton2.TabIndex = 9;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Inactivo";
-            radioButton2.UseVisualStyleBackColor = true;
+            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
+            panBarraControl.Controls.Add(lblNombreModulo);
+            panBarraControl.Dock = DockStyle.Top;
+            panBarraControl.ForeColor = Color.Coral;
+            panBarraControl.Location = new Point(0, 0);
+            panBarraControl.Name = "panBarraControl";
+            panBarraControl.Size = new Size(488, 41);
+            panBarraControl.TabIndex = 15;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.FromArgb(87, 99, 110);
+            label4.Location = new Point(40, 158);
+            label4.Name = "label4";
+            label4.Size = new Size(72, 23);
+            label4.TabIndex = 25;
+            label4.Text = "Codigo:";
             // 
             // panel2
             // 
@@ -285,63 +316,23 @@
             panel2.Controls.Add(label1);
             panel2.Controls.Add(txtApellido);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 41);
+            panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(508, 436);
-            panel2.TabIndex = 14;
-            panel2.Paint += panel2_Paint;
+            panel2.Size = new Size(488, 450);
+            panel2.TabIndex = 16;
             // 
-            // btnVover
+            // frmAgregarProducto
             // 
-            btnVover.BackColor = Color.FromArgb(148, 168, 187);
-            btnVover.BackgroundImageLayout = ImageLayout.None;
-            btnVover.FlatAppearance.BorderSize = 0;
-            btnVover.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnVover.ForeColor = SystemColors.ButtonFace;
-            btnVover.ImageAlign = ContentAlignment.BottomLeft;
-            btnVover.Location = new Point(79, 372);
-            btnVover.Name = "btnVover";
-            btnVover.Size = new Size(157, 37);
-            btnVover.TabIndex = 10;
-            btnVover.Text = "Salir";
-            btnVover.UseVisualStyleBackColor = false;
-            btnVover.Click += btnVover_Click;
-            // 
-            // btnGuardarEmpleado
-            // 
-            btnGuardarEmpleado.BackColor = Color.FromArgb(149, 195, 172);
-            btnGuardarEmpleado.BackgroundImageLayout = ImageLayout.None;
-            btnGuardarEmpleado.FlatAppearance.BorderSize = 0;
-            btnGuardarEmpleado.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
-            btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarEmpleado.Location = new Point(242, 372);
-            btnGuardarEmpleado.Name = "btnGuardarEmpleado";
-            btnGuardarEmpleado.Size = new Size(153, 37);
-            btnGuardarEmpleado.TabIndex = 11;
-            btnGuardarEmpleado.Text = "Guardar";
-            btnGuardarEmpleado.UseVisualStyleBackColor = false;
-            btnGuardarEmpleado.Click += btnGuardarEmpleado_Click;
-            // 
-            // frmAgregarEmpleado
-            // 
-            AutoScaleDimensions = new SizeF(8F, 18F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(508, 477);
-            Controls.Add(panel2);
+            ClientSize = new Size(488, 450);
             Controls.Add(panBarraControl);
-            DoubleBuffered = true;
-            Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "frmAgregarEmpleado";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Datos de Empleados";
-            Load += frmAgregarEmpleado_Load;
-            panBarraControl.ResumeLayout(false);
+            Controls.Add(panel2);
+            Name = "frmAgregarProducto";
+            Text = "frmAgregarProducto";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);
@@ -349,26 +340,26 @@
 
         #endregion
 
+        private TextBox txtDni;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
+        private TextBox txtNombre;
+        private Button btnVover;
+        private Button btnGuardarEmpleado;
         private Label label6;
         private Label label5;
-        private Label label4;
         private TextBox txtCorreo;
         private TextBox txtTelefono;
         private Label label9;
         private Label label8;
-        private TextBox txtDni;
         private Label label2;
         private Label label1;
-        private TextBox txtNombre;
         private TextBox txtApellido;
-        private RadioButton radioButton1;
+        public Label lblNombreModulo;
         private Label label3;
         private TextBox txtDireccion;
         private GroupBox groupBox1;
-        private RadioButton radioButton2;
+        private Label label4;
         private Panel panel2;
-        public Label lblNombreModulo;
-        private Button btnVover;
-        private Button btnGuardarEmpleado;
     }
 }

@@ -72,7 +72,7 @@ namespace ModernMenuUI
 
         private void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
-            frmAgregarEmpleado Empleados = new frmAgregarEmpleado();
+            frmAgregarEmpleado Empleados = new frmAgregarEmpleado();    
             Empleados.ShowDialog();
 
             // Refresca la lista después de cerrar el diálogo

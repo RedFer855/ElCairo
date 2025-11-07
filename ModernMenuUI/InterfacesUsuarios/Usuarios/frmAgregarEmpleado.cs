@@ -28,7 +28,7 @@ namespace ModernMenuUI
                 return;
             }
 
-            string nuevonombre = txtNombre.Text.Trim(); 
+            string nuevonombre = txtNombre.Text.Trim();
             string nuevoapellido = txtApellido.Text.Trim();
             string nuevoDni = txtDni.Text.Trim();
             string nuevoTelefono = txtTelefono.Text.Trim();
@@ -41,7 +41,7 @@ namespace ModernMenuUI
                 Apellido = nuevoapellido,
                 Dni = nuevoDni,
                 Telefono = nuevoTelefono,
-                Email = nuevoEmail,       
+                Email = nuevoEmail,
                 Direccion = nuevaDireccion
             };
 
@@ -81,12 +81,17 @@ namespace ModernMenuUI
         private void frmAgregarEmpleado_Load(object sender, EventArgs e)
         {
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "AGREGUE UN EMPLEADO NUEVO");
-            
+
         }
 
         private void btnVover_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
