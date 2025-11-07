@@ -170,14 +170,14 @@ namespace ModernMenuUI
                 // (Asumiendo que tu ComboBox se llama cmbMarca)
 
                 // Le dice al ComboBox qué datos usar
-                cmbMarca.DataSource = listaDeMarcas;
+                //cmbMarca.DataSource = listaDeMarcas;
 
                 // Le dice qué propiedad del modelo 'Marca' mostrar al usuario
                 // (Usa el nombre de la propiedad de tu clase C#)
-                cmbMarca.DisplayMember = "NombreMarcaMarca";
+                //cmbMarca.DisplayMember = "NombreMarcaMarca";
 
                 // Le dice qué propiedad usar como valor interno (el ID)
-                cmbMarca.ValueMember = "IdMarca";
+               // cmbMarca.ValueMember = "IdMarca";
             }
             catch (Exception ex)
             {

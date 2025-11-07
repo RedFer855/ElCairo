@@ -55,8 +55,12 @@
             btnSalir = new Button();
             button1 = new Button();
             gbxEstado = new GroupBox();
-            comboBox2 = new ComboBox();
-            cmbMarca = new ComboBox();
+            button3 = new Button();
+            label2 = new Label();
+            textBox1 = new TextBox();
+            button2 = new Button();
+            label1 = new Label();
+            txtMarca = new TextBox();
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
             rbMostrarHabilitados = new RadioButton();
@@ -84,7 +88,7 @@
             panelCarrito.Location = new Point(17, 23);
             panelCarrito.Margin = new Padding(3, 4, 3, 4);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(912, 543);
+            panelCarrito.Size = new Size(1070, 543);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -95,7 +99,7 @@
             panel10.Location = new Point(0, 0);
             panel10.Margin = new Padding(3, 4, 3, 4);
             panel10.Name = "panel10";
-            panel10.Size = new Size(912, 543);
+            panel10.Size = new Size(1070, 543);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -132,7 +136,7 @@
             dgvProductos.DefaultCellStyle = dataGridViewCellStyle9;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.Location = new Point(0, 0);
+            dgvProductos.Location = new Point(3, 4);
             dgvProductos.Margin = new Padding(3, 4, 3, 4);
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
@@ -148,7 +152,7 @@
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(912, 543);
+            dgvProductos.Size = new Size(1064, 535);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -262,7 +266,7 @@
             panelBusqueda.Location = new Point(14, 16);
             panelBusqueda.Margin = new Padding(3, 4, 3, 4);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(944, 57);
+            panelBusqueda.Size = new Size(1102, 57);
             panelBusqueda.TabIndex = 14;
             // 
             // txtBuscar
@@ -274,7 +278,7 @@
             txtBuscar.Margin = new Padding(3, 4, 3, 4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(847, 24);
+            txtBuscar.Size = new Size(1005, 24);
             txtBuscar.TabIndex = 1;
             // 
             // btnbuscar
@@ -285,7 +289,7 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(874, 16);
+            btnbuscar.Location = new Point(1032, 16);
             btnbuscar.Margin = new Padding(3, 4, 3, 4);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(55, 27);
@@ -341,8 +345,12 @@
             // gbxEstado
             // 
             gbxEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            gbxEstado.Controls.Add(comboBox2);
-            gbxEstado.Controls.Add(cmbMarca);
+            gbxEstado.Controls.Add(button3);
+            gbxEstado.Controls.Add(label2);
+            gbxEstado.Controls.Add(textBox1);
+            gbxEstado.Controls.Add(button2);
+            gbxEstado.Controls.Add(label1);
+            gbxEstado.Controls.Add(txtMarca);
             gbxEstado.Controls.Add(rbMostrardeshabilitados);
             gbxEstado.Controls.Add(rbMostrarTodos);
             gbxEstado.Controls.Add(rbMostrarHabilitados);
@@ -352,32 +360,76 @@
             gbxEstado.Margin = new Padding(3, 4, 3, 4);
             gbxEstado.Name = "gbxEstado";
             gbxEstado.Padding = new Padding(3, 4, 3, 4);
-            gbxEstado.Size = new Size(944, 71);
+            gbxEstado.Size = new Size(1102, 71);
             gbxEstado.TabIndex = 28;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
             // 
-            // comboBox2
+            // button3
             // 
-            comboBox2.ForeColor = Color.DimGray;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(501, 23);
-            comboBox2.Margin = new Padding(3, 4, 3, 4);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(210, 31);
-            comboBox2.TabIndex = 34;
-            comboBox2.Text = "Seleccionar Categoría";
+            button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button3.BackColor = Color.FromArgb(168, 191, 212);
+            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
+            button3.BackgroundImageLayout = ImageLayout.Zoom;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Location = new Point(741, 28);
+            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Name = "button3";
+            button3.Size = new Size(55, 30);
+            button3.TabIndex = 36;
+            button3.UseVisualStyleBackColor = false;
             // 
-            // cmbMarca
+            // label2
             // 
-            cmbMarca.ForeColor = Color.DimGray;
-            cmbMarca.FormattingEnabled = true;
-            cmbMarca.Location = new Point(753, 23);
-            cmbMarca.Margin = new Padding(3, 4, 3, 4);
-            cmbMarca.Name = "cmbMarca";
-            cmbMarca.Size = new Size(175, 31);
-            cmbMarca.TabIndex = 33;
-            cmbMarca.Text = "Seleccionar Marca";
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Location = new Point(509, 32);
+            label2.Name = "label2";
+            label2.Size = new Size(90, 23);
+            label2.TabIndex = 38;
+            label2.Text = "Categoria";
+            // 
+            // textBox1
+            // 
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            textBox1.Location = new Point(605, 28);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(125, 30);
+            textBox1.TabIndex = 37;
+            // 
+            // button2
+            // 
+            button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button2.BackColor = Color.FromArgb(168, 191, 212);
+            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
+            button2.BackgroundImageLayout = ImageLayout.Zoom;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Location = new Point(1041, 28);
+            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Name = "button2";
+            button2.Size = new Size(55, 30);
+            button2.TabIndex = 2;
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label1.AutoSize = true;
+            label1.Location = new Point(846, 31);
+            label1.Name = "label1";
+            label1.Size = new Size(61, 23);
+            label1.TabIndex = 35;
+            label1.Text = "Marca";
+            // 
+            // txtMarca
+            // 
+            txtMarca.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtMarca.Location = new Point(913, 28);
+            txtMarca.Name = "txtMarca";
+            txtMarca.Size = new Size(121, 30);
+            txtMarca.TabIndex = 33;
             // 
             // rbMostrardeshabilitados
             // 
@@ -423,7 +475,7 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(575, 851);
+            lblFecha.Location = new Point(733, 851);
             lblFecha.Name = "lblFecha";
             lblFecha.Size = new Size(28, 33);
             lblFecha.TabIndex = 30;
@@ -436,7 +488,7 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(575, 816);
+            lblHora.Location = new Point(733, 816);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(33, 40);
             lblHora.TabIndex = 29;
@@ -506,7 +558,7 @@
             panel1.Location = new Point(14, 160);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(944, 583);
+            panel1.Size = new Size(1102, 583);
             panel1.TabIndex = 32;
             // 
             // frmProductos
@@ -514,7 +566,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(971, 905);
+            ClientSize = new Size(1129, 905);
             Controls.Add(panel1);
             Controls.Add(lblFecha);
             Controls.Add(lblHora);
@@ -561,8 +613,6 @@
         private Button button4;
         private Button btnNuevo;
         private Panel panel1;
-        private ComboBox cmbMarca;
-        private ComboBox comboBox2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;
@@ -573,5 +623,11 @@
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewCheckBoxColumn EstadoProducto;
+        private TextBox txtMarca;
+        private Button button3;
+        private Label label2;
+        private TextBox textBox1;
+        private Button button2;
+        private Label label1;
     }
 }
