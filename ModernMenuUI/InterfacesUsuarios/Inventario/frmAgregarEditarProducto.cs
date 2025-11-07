@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaDeDatos.Modelados;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,16 +11,22 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    public partial class Editar_Producto : Form
+    public partial class frmAgregarEditarProducto : Form
     {
-        public Editar_Producto()
+        private Producto ProductoActual;
+        public frmAgregarEditarProducto()
         {
             InitializeComponent();
+            lblNombreModulo.Text = "AGREGAR EMPLEADO";
         }
 
-        private void lblNombreModulo_Click(object sender, EventArgs e)
+        public frmAgregarEditarProducto(Producto productoseleccionado)
         {
-
+            InitializeComponent();
+            ProductoActual = productoseleccionado;  
+            txtProducto.Text = productoseleccionado.NombreProducto;
+            txtMarca.Text = productoseleccionado.NombreMarca;
+            txtCategoria.Text = productoseleccionado.NombreCategoria;
         }
 
         private void Editar_Producto_MouseDown(object sender, MouseEventArgs e)
@@ -30,16 +37,6 @@ namespace ModernMenuUI
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
             clsAnmaciones.MoverFormulario(this.Handle);
-        }
-
-        private void btnCerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
     }
 }

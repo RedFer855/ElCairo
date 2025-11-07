@@ -26,7 +26,7 @@ namespace ModernMenuUI
         private Supabase.Realtime.RealtimeChannel? _empleadoSubscription;
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
-        private Empleado _empleadoSeleccionado = null;
+        private Empleado EmpleadoSeleccionado = null;
 
         public frmEmpleado()
         {
@@ -175,9 +175,9 @@ namespace ModernMenuUI
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            if (_empleadoSeleccionado != null)
+            if (EmpleadoSeleccionado != null)
             {
-                frmAgregarEditarEmpleado EmpleadosEditar = new frmAgregarEditarEmpleado(_empleadoSeleccionado);
+                frmAgregarEditarEmpleado EmpleadosEditar = new frmAgregarEditarEmpleado(EmpleadoSeleccionado);
                 EmpleadosEditar.ShowDialog();
                 CargarEmpleados();
             }
@@ -220,12 +220,12 @@ namespace ModernMenuUI
 
                 if (empleado != null)
                 {
-                    _empleadoSeleccionado = empleado;
+                    EmpleadoSeleccionado = empleado;
                 }
             }
             else
             {
-                _empleadoSeleccionado = null;
+                EmpleadoSeleccionado = null;
             }
         }
     }

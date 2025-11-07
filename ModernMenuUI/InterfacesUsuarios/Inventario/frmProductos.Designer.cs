@@ -55,8 +55,13 @@
             btnSalir = new Button();
             button1 = new Button();
             gbxEstado = new GroupBox();
-            comboBox2 = new ComboBox();
-            comboBox1 = new ComboBox();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            btnCategoria = new Button();
+            txtMarca = new TextBox();
+            label1 = new Label();
+            txtCategoria = new TextBox();
+            label2 = new Label();
+            btnMarca = new Button();
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
             rbMostrarHabilitados = new RadioButton();
@@ -64,15 +69,17 @@
             lblHora = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
             tableLayoutPanel1 = new TableLayoutPanel();
-            button4 = new Button();
-            btnNuevo = new Button();
-            panel1 = new Panel();
             button2 = new Button();
+            button4 = new Button();
+            btnEditarProducto = new Button();
+            panel1 = new Panel();
+            lstSugerencias = new ListBox();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             panelBusqueda.SuspendLayout();
             gbxEstado.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -84,7 +91,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 17);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(798, 407);
+            panelCarrito.Size = new Size(866, 407);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -94,7 +101,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(798, 407);
+            panel10.Size = new Size(866, 407);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -104,7 +111,6 @@
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
             dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvProductos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvProductos.BorderStyle = BorderStyle.None;
@@ -114,7 +120,7 @@
             dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
@@ -129,6 +135,7 @@
             dataGridViewCellStyle4.SelectionForeColor = Color.White;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
             dgvProductos.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvProductos.Dock = DockStyle.Fill;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
             dgvProductos.Location = new Point(0, 0);
@@ -146,7 +153,8 @@
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(798, 407);
+            dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvProductos.Size = new Size(866, 407);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -252,20 +260,25 @@
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
             panelBusqueda.Location = new Point(12, 12);
+            panelBusqueda.MaximumSize = new Size(885, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(826, 43);
+            panelBusqueda.Size = new Size(576, 43);
             panelBusqueda.TabIndex = 14;
             // 
             // txtBuscar
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscar.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(741, 20);
+            txtBuscar.Size = new Size(491, 20);
             txtBuscar.TabIndex = 1;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
+            txtBuscar.Leave += txtBuscar_Leave;
             // 
             // btnbuscar
             // 
@@ -275,11 +288,12 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(765, 12);
+            btnbuscar.Location = new Point(515, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
+            btnbuscar.Click += btnbuscar_Click;
             // 
             // btnNuevoProducto
             // 
@@ -326,8 +340,7 @@
             // gbxEstado
             // 
             gbxEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            gbxEstado.Controls.Add(comboBox2);
-            gbxEstado.Controls.Add(comboBox1);
+            gbxEstado.Controls.Add(tableLayoutPanel2);
             gbxEstado.Controls.Add(rbMostrardeshabilitados);
             gbxEstado.Controls.Add(rbMostrarTodos);
             gbxEstado.Controls.Add(rbMostrarHabilitados);
@@ -335,35 +348,111 @@
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(12, 61);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(826, 53);
+            gbxEstado.Size = new Size(894, 53);
             gbxEstado.TabIndex = 28;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
             // 
-            // comboBox2
+            // tableLayoutPanel2
             // 
-            comboBox2.ForeColor = Color.DimGray;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(438, 17);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(184, 26);
-            comboBox2.TabIndex = 34;
-            comboBox2.Text = "Seleccionar Categoría";
+            tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel2.ColumnCount = 6;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 56F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 78F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 34F));
+            tableLayoutPanel2.Controls.Add(btnCategoria, 5, 0);
+            tableLayoutPanel2.Controls.Add(txtMarca, 1, 0);
+            tableLayoutPanel2.Controls.Add(label1, 0, 0);
+            tableLayoutPanel2.Controls.Add(txtCategoria, 4, 0);
+            tableLayoutPanel2.Controls.Add(label2, 3, 0);
+            tableLayoutPanel2.Controls.Add(btnMarca, 2, 0);
+            tableLayoutPanel2.Location = new Point(375, 17);
+            tableLayoutPanel2.MinimumSize = new Size(501, 30);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(517, 30);
+            tableLayoutPanel2.TabIndex = 39;
             // 
-            // comboBox1
+            // btnCategoria
             // 
-            comboBox1.ForeColor = Color.DimGray;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(659, 17);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(154, 26);
-            comboBox1.TabIndex = 33;
-            comboBox1.Text = "Seleccionar Marca";
+            btnCategoria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCategoria.BackColor = Color.FromArgb(168, 191, 212);
+            btnCategoria.BackgroundImage = (Image)resources.GetObject("btnCategoria.BackgroundImage");
+            btnCategoria.BackgroundImageLayout = ImageLayout.Zoom;
+            btnCategoria.FlatAppearance.BorderSize = 0;
+            btnCategoria.FlatStyle = FlatStyle.Flat;
+            btnCategoria.Location = new Point(485, 3);
+            btnCategoria.Name = "btnCategoria";
+            btnCategoria.Size = new Size(29, 24);
+            btnCategoria.TabIndex = 38;
+            btnCategoria.UseVisualStyleBackColor = false;
+            // 
+            // txtMarca
+            // 
+            txtMarca.Dock = DockStyle.Fill;
+            txtMarca.Location = new Point(59, 3);
+            txtMarca.Name = "txtMarca";
+            txtMarca.PlaceholderText = "(Todas las Marcas)";
+            txtMarca.Size = new Size(152, 25);
+            txtMarca.TabIndex = 34;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Dock = DockStyle.Fill;
+            label1.Location = new Point(3, 0);
+            label1.MaximumSize = new Size(53, 30);
+            label1.MinimumSize = new Size(53, 30);
+            label1.Name = "label1";
+            label1.Size = new Size(53, 30);
+            label1.TabIndex = 36;
+            label1.Text = "Marca:";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // txtCategoria
+            // 
+            txtCategoria.Dock = DockStyle.Fill;
+            txtCategoria.Location = new Point(327, 3);
+            txtCategoria.Name = "txtCategoria";
+            txtCategoria.PlaceholderText = "(Todas las Categorías)";
+            txtCategoria.Size = new Size(152, 25);
+            txtCategoria.TabIndex = 35;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Fill;
+            label2.Location = new Point(249, 0);
+            label2.MaximumSize = new Size(77, 30);
+            label2.MinimumSize = new Size(77, 30);
+            label2.Name = "label2";
+            label2.Size = new Size(77, 30);
+            label2.TabIndex = 37;
+            label2.Text = "Categoría:";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnMarca
+            // 
+            btnMarca.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMarca.BackColor = Color.FromArgb(168, 191, 212);
+            btnMarca.BackgroundImage = (Image)resources.GetObject("btnMarca.BackgroundImage");
+            btnMarca.BackgroundImageLayout = ImageLayout.Zoom;
+            btnMarca.FlatAppearance.BorderSize = 0;
+            btnMarca.FlatStyle = FlatStyle.Flat;
+            btnMarca.Location = new Point(217, 3);
+            btnMarca.Name = "btnMarca";
+            btnMarca.Size = new Size(26, 24);
+            btnMarca.TabIndex = 2;
+            btnMarca.UseVisualStyleBackColor = false;
             // 
             // rbMostrardeshabilitados
             // 
             rbMostrardeshabilitados.AutoSize = true;
-            rbMostrardeshabilitados.Location = new Point(280, 21);
+            rbMostrardeshabilitados.Location = new Point(239, 20);
             rbMostrardeshabilitados.Name = "rbMostrardeshabilitados";
             rbMostrardeshabilitados.Size = new Size(121, 22);
             rbMostrardeshabilitados.TabIndex = 30;
@@ -387,7 +476,7 @@
             // rbMostrarHabilitados
             // 
             rbMostrarHabilitados.AutoSize = true;
-            rbMostrarHabilitados.Location = new Point(152, 21);
+            rbMostrarHabilitados.Location = new Point(132, 20);
             rbMostrarHabilitados.Name = "rbMostrarHabilitados";
             rbMostrarHabilitados.Size = new Size(101, 22);
             rbMostrarHabilitados.TabIndex = 28;
@@ -401,7 +490,7 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(810, 642);
+            lblFecha.Location = new Point(878, 642);
             lblFecha.Name = "lblFecha";
             lblFecha.Size = new Size(22, 25);
             lblFecha.TabIndex = 30;
@@ -414,7 +503,7 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(810, 616);
+            lblHora.Location = new Point(878, 616);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(28, 33);
             lblHora.TabIndex = 29;
@@ -434,11 +523,11 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 157F));
             tableLayoutPanel1.Controls.Add(button2, 2, 0);
-            tableLayoutPanel1.Controls.Add(button4, 0, 1);
-            tableLayoutPanel1.Controls.Add(btnNuevo, 1, 1);
+            tableLayoutPanel1.Controls.Add(button4, 1, 1);
             tableLayoutPanel1.Controls.Add(btnNuevoProducto, 0, 0);
             tableLayoutPanel1.Controls.Add(button1, 1, 0);
             tableLayoutPanel1.Controls.Add(btnSalir, 2, 1);
+            tableLayoutPanel1.Controls.Add(btnEditarProducto, 0, 1);
             tableLayoutPanel1.Location = new Point(12, 563);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
@@ -446,43 +535,6 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.Size = new Size(540, 100);
             tableLayoutPanel1.TabIndex = 31;
-            // 
-            // button4
-            // 
-            button4.BackColor = Color.FromArgb(149, 195, 172);
-            button4.Dock = DockStyle.Fill;
-            button4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button4.ForeColor = SystemColors.ButtonFace;
-            button4.Location = new Point(3, 53);
-            button4.Name = "button4";
-            button4.Size = new Size(185, 44);
-            button4.TabIndex = 22;
-            button4.Text = "Agregar Categoria";
-            button4.UseVisualStyleBackColor = false;
-            // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.FromArgb(189, 215, 238);
-            btnNuevo.Dock = DockStyle.Fill;
-            btnNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.FromArgb(87, 99, 110);
-            btnNuevo.Location = new Point(194, 53);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(185, 44);
-            btnNuevo.TabIndex = 20;
-            btnNuevo.Text = "Editar Producto";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += button3_Click_1;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(12, 120);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(826, 437);
-            panel1.TabIndex = 32;
             // 
             // button2
             // 
@@ -497,18 +549,73 @@
             button2.Text = "Ingresar Perdida";
             button2.UseVisualStyleBackColor = false;
             // 
+            // button4
+            // 
+            button4.BackColor = Color.FromArgb(149, 195, 172);
+            button4.Dock = DockStyle.Fill;
+            button4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button4.ForeColor = SystemColors.ButtonFace;
+            button4.Location = new Point(194, 53);
+            button4.Name = "button4";
+            button4.Size = new Size(185, 44);
+            button4.TabIndex = 22;
+            button4.Text = "Agregar Categoria";
+            button4.UseVisualStyleBackColor = false;
+            // 
+            // btnEditarProducto
+            // 
+            btnEditarProducto.BackColor = Color.FromArgb(189, 215, 238);
+            btnEditarProducto.Dock = DockStyle.Fill;
+            btnEditarProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnEditarProducto.ForeColor = Color.FromArgb(87, 99, 110);
+            btnEditarProducto.Location = new Point(3, 53);
+            btnEditarProducto.Name = "btnEditarProducto";
+            btnEditarProducto.Size = new Size(185, 44);
+            btnEditarProducto.TabIndex = 20;
+            btnEditarProducto.Text = "Editar Producto";
+            btnEditarProducto.UseVisualStyleBackColor = false;
+            btnEditarProducto.Click += btnEditarProducto_Click;
+            // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(panelCarrito);
+            panel1.Location = new Point(12, 120);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(894, 437);
+            panel1.TabIndex = 32;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 19;
+            lstSugerencias.Location = new Point(30, 52);
+            lstSugerencias.MaximumSize = new Size(800, 400);
+            lstSugerencias.MinimumSize = new Size(423, 23);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(491, 23);
+            lstSugerencias.TabIndex = 2;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.SelectedIndexChanged += lstSugerencias_SelectedIndexChanged;
+            // 
             // frmProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(850, 679);
-            Controls.Add(panel1);
+            ClientSize = new Size(918, 679);
+            Controls.Add(lstSugerencias);
+            Controls.Add(gbxEstado);
+            Controls.Add(panelBusqueda);
             Controls.Add(lblFecha);
             Controls.Add(lblHora);
             Controls.Add(tableLayoutPanel1);
-            Controls.Add(gbxEstado);
-            Controls.Add(panelBusqueda);
+            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProductos";
             Text = "frmProductos";
@@ -520,6 +627,8 @@
             panelBusqueda.PerformLayout();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ResumeLayout(false);
@@ -546,10 +655,8 @@
         private System.Windows.Forms.Timer HoraFecha;
         private TableLayoutPanel tableLayoutPanel1;
         private Button button4;
-        private Button btnNuevo;
+        private Button btnEditarProducto;
         private Panel panel1;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;
@@ -561,5 +668,13 @@
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewCheckBoxColumn EstadoProducto;
         private Button button2;
+        private ListBox lstSugerencias;
+        private TextBox txtCategoria;
+        private TextBox txtMarca;
+        private Button btnMarca;
+        private Label label2;
+        private Label label1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Button btnCategoria;
     }
 }
