@@ -107,6 +107,7 @@ namespace ModernMenuUI
         private void Form1_Load(object sender, EventArgs e)
         {
             lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
+            lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
             clsManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
         }

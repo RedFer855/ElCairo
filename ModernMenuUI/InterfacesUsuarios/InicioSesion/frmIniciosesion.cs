@@ -72,7 +72,7 @@ namespace ModernMenuUI
                     if (usuario != null)
                     {
 
-                        CapaServiciosSeguridadValidacion.ServicioSesionUsuario.IniciarSesion(Actual);
+                        
 
                         // Muestra el label y prepara el primer mensaje
                         lblMensajeError.ForeColor = Color.DarkGray; // Color neutro para carga
@@ -96,12 +96,9 @@ namespace ModernMenuUI
                         await Task.Delay(500); // 1s Final de espera
                         pbxCargando.Visible = false;
 
-                        var empleadoRepo = new CapaDeDatos.Repositorios.EmpleadoRepositorio(); // Asegúrate que el nombre sea correcto
-                        var perfilEmpleado = await empleadoRepo.ObtenerEmpleadoPorIdAuth(Actual.Id);
-
-                        // 2. Obtiene el rol. Si no se encuentra perfil, asigna "Invitado"
-                        string rolUsuario = perfilEmpleado?.Rol ?? "Invitado";
-
+                        // Llama a la función 'get_user_rolename_by_email' que creaste
+                        string rolUsuario = await supabase.Rpc<string>("get_user_rolename_by_email",new Dictionary<string, object> {{ "auth_email", Actual.Email }});
+                        CapaServiciosSeguridadValidacion.ServicioSesionUsuario.IniciarSesion(Actual, rolUsuario);
                         // Se abre el nuevo form e inicia la aplicación 
                         Form formcarga = new frmInicioBodega();
                         this.Visible = false;
