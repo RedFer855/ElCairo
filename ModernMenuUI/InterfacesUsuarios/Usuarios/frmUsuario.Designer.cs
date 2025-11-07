@@ -37,7 +37,6 @@
             button4 = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnSalir = new Button();
-            button6 = new Button();
             btnNuevo = new Button();
             groupBox1 = new GroupBox();
             rdbDeshabilitados = new RadioButton();
@@ -78,20 +77,18 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel1.Controls.Add(button6, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnNuevo, 0, 1);
-            tableLayoutPanel1.Location = new Point(18, 512);
+            tableLayoutPanel1.Controls.Add(btnNuevo, 0, 0);
+            tableLayoutPanel1.Location = new Point(18, 562);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(348, 100);
+            tableLayoutPanel1.Size = new Size(348, 50);
             tableLayoutPanel1.TabIndex = 43;
             // 
             // btnSalir
             // 
-            btnSalir.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
+            btnSalir.Dock = DockStyle.Fill;
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
@@ -102,27 +99,13 @@
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
             // 
-            // button6
-            // 
-            button6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            button6.BackColor = Color.FromArgb(149, 195, 172);
-            button6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button6.ForeColor = SystemColors.ButtonFace;
-            button6.Location = new Point(3, 3);
-            button6.Name = "button6";
-            button6.Size = new Size(211, 44);
-            button6.TabIndex = 22;
-            button6.Text = "Agregar Usuario";
-            button6.UseVisualStyleBackColor = false;
-            button6.Click += button6_Click_1;
-            // 
             // btnNuevo
             // 
-            btnNuevo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnNuevo.BackColor = Color.FromArgb(189, 215, 238);
+            btnNuevo.Dock = DockStyle.Fill;
             btnNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnNuevo.ForeColor = Color.FromArgb(87, 99, 110);
-            btnNuevo.Location = new Point(3, 53);
+            btnNuevo.Location = new Point(3, 3);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(211, 44);
             btnNuevo.TabIndex = 20;
@@ -219,7 +202,7 @@
             panel1.Controls.Add(panel10);
             panel1.Location = new Point(18, 124);
             panel1.Name = "panel1";
-            panel1.Size = new Size(718, 344);
+            panel1.Size = new Size(718, 421);
             panel1.TabIndex = 40;
             // 
             // panel10
@@ -229,7 +212,7 @@
             panel10.Controls.Add(dgvProductos);
             panel10.Location = new Point(16, 18);
             panel10.Name = "panel10";
-            panel10.Size = new Size(688, 308);
+            panel10.Size = new Size(688, 385);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -281,7 +264,7 @@
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(688, 308);
+            dgvProductos.Size = new Size(688, 385);
             dgvProductos.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn1
@@ -350,7 +333,6 @@
         private Button button4;
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnSalir;
-        private Button button6;
         private Button btnNuevo;
         private GroupBox groupBox1;
         private RadioButton rdbDeshabilitados;
