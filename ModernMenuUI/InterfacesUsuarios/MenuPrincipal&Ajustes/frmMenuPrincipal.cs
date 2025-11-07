@@ -31,6 +31,8 @@ namespace ModernMenuUI
 
             // 4. Comprobar el estado inicial
             ActualizarEstadoVisual(_monitorConexion.HayConexionAhora());
+
+
         }
 
         private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
@@ -134,30 +136,43 @@ namespace ModernMenuUI
             }
         }
 
+        private readonly int designFormWidth = 1920;   // ancho de referencia (Full HD)
+        private readonly int designMenuOpen = 300;     // menú abierto en diseño
+        private readonly int designMenuClosed = 100;   // menú cerrado en diseño
 
         private void MenulateralAnimacion()
         {
             panelFormHijo.Invalidate(false);
             panelFormHijo.Visible = false;
 
-            double factorCerrado = (double)100 / 300; // porque 100 / 260 ≈ 0.3846
-            double factorAbierto = 3;    // porque 260 / 100 = 2.6
+            // Calcula proporciones según el ancho actual del formulario
+            double ratioOpen = (double)designMenuOpen / designFormWidth;
+            double ratioClosed = (double)designMenuClosed / designFormWidth;
 
-            if (panelMenuLateral.Width < 200) // asumimos que está cerrado si < mitad aprox
+            int targetOpen = Math.Max(designMenuOpen, (int)Math.Round(this.Width * ratioOpen));
+            int targetClosed = Math.Max(designMenuClosed, (int)Math.Round(this.Width * ratioClosed));
+
+            // tolerancia para comparar (evita problemas de igualdad/redondeo)
+            int tol = 8;
+
+            // Si actualmente estamos cerca del estado abierto -> achicamos.
+            // Si estamos ya cerca del cerrado -> lo abrimos.
+            if (Math.Abs(panelMenuLateral.Width - targetOpen) <= tol)
             {
-                // Abrir multiplicando por factor
-                panelMenuLateral.Width = (int)(panelMenuLateral.Width * factorAbierto);
+                // achicar (cerrar)
+                panelMenuLateral.Width = targetClosed;
+                CerrarSubmenu();
             }
             else
             {
-                // Cerrar multiplicando por factor
-                panelMenuLateral.Width = (int)(panelMenuLateral.Width * factorCerrado);
-                CerrarSubmenu();
+                // abrir (si no estaba en abierto lo ponemos en abierto)
+                panelMenuLateral.Width = targetOpen;
             }
 
             panelFormHijo.Update();
             panelFormHijo.Visible = true;
         }
+
 
         // Ocultar Men� Lateral
         private void btnAbrirMenu_Click(object sender, EventArgs e)
@@ -165,31 +180,8 @@ namespace ModernMenuUI
             MenulateralAnimacion();
         }
 
-        // BOTENES PARA ABRIR SUBMENUS
-        private void btnInventario_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelInventario);
-        }
 
-        private void btnCompras_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelCompras);
-        }
 
-        private void btnVentas_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelVentas);
-        }
-
-        private void btnUsuarios_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelUsuarios);
-        }
-
-        private void btnReporteria_Click(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelReporteria);
-        }
 
         // Timers para Animar apneles en abrir y cerrar
         private void timerAbrir_Tick(object sender, EventArgs e)
@@ -206,9 +198,9 @@ namespace ModernMenuUI
             {
                 timerAbrir.Stop();
                 btnReporteria.Text = "            " + "Reporter�a";
-                btnUsuarios.Text = "            " + "Usuarios";
-                btnVentas.Text = "            " + "Ventas";
-                btnCompras.Text = "            " + "Compras";
+                btnUsuario.Text = "            " + "Usuarios";
+                btnVenta.Text = "            " + "Ventas";
+                btnCompra.Text = "            " + "Compras";
                 btnInventario.Text = "            " + "Inventario";
                 btnAbrirMenu.Enabled = true;
                 panelFormHijo.Visible = true;
@@ -227,9 +219,9 @@ namespace ModernMenuUI
                 btnMiniMaxi.SuspendLayout();
                 btnMinimizar.SuspendLayout();
                 btnReporteria.Text = null;
-                btnUsuarios.Text = null;
-                btnVentas.Text = null;
-                btnCompras.Text = null;
+                btnUsuario.Text = null;
+                btnVenta.Text = null;
+                btnCompra.Text = null;
                 btnInventario.Text = null;
                 btnAbrirMenu.Enabled = false;
                 panelMenuLateral.Width = panelMenuLateral.Width - 20;
@@ -340,7 +332,7 @@ namespace ModernMenuUI
         private void btnGestionEmpleados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleados());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleado());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -348,7 +340,7 @@ namespace ModernMenuUI
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionUsuario());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmUsuario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -356,7 +348,7 @@ namespace ModernMenuUI
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmRoles());
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmRol());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -471,6 +463,38 @@ namespace ModernMenuUI
             pbxCalculadora.BackColor = Color.Transparent; // resalta
         }
 
-    
+        // BOTENES PARA ABRIR SUBMENUS
+
+
+        //**************************************************************
+        private void btnInventario_Click_1(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelInventario);
+        }
+
+        private void btnCompras_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelCompras);
+        }
+
+        private void btnVentas_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelVentas);
+        }
+
+        private void btnUsuarios_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelUsuarios);
+        }
+
+        private void btbStocks_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelInventario);
+        }
+
+        private void btnReporte_Click(object sender, EventArgs e)
+        {
+            AbrirCerrarPanel(panelReporteria);
+        }
     }
 }
