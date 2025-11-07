@@ -75,23 +75,22 @@ namespace ModernMenuUI
             {
                 _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
 
-                // ✅ Suscripción segura al canal de Realtime
                 _empleadoSubscription = await _supabaseClient.From<Empleado>()
                     .On(ListenType.All, (sender, change) =>
                     {
                         try
                         {
-                            // 💡 Validación completa antes de acceder al formulario
+               
                             if (this == null || this.IsDisposed || !this.IsHandleCreated)
                             {
                                 System.Diagnostics.Debug.WriteLine("Evento Realtime ignorado: formulario cerrado o no inicializado.");
                                 return;
                             }
 
-                            // ✅ Ejecutamos en el hilo de la UI, pero sin bloquear
+                  
                             this.BeginInvoke((MethodInvoker)(async () =>
                             {
-                                if (this.IsDisposed) return; // doble validación
+                                if (this.IsDisposed) return; 
                                 System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en la tabla Empleados.");
                                 await CargarEmpleados();
                             }));

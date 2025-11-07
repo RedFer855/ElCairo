@@ -68,6 +68,7 @@ namespace ModernMenuUI
                     var usuario = await supabase.Auth.SignIn(username, password);
 
                     var Actual = supabase.Auth.CurrentUser;
+
                     if (usuario != null)
                     {
 
@@ -94,6 +95,12 @@ namespace ModernMenuUI
                         lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
                         await Task.Delay(500); // 1s Final de espera
                         pbxCargando.Visible = false;
+
+                        var empleadoRepo = new CapaDeDatos.Repositorios.EmpleadoRepositorio(); // Asegúrate que el nombre sea correcto
+                        var perfilEmpleado = await empleadoRepo.ObtenerEmpleadoPorIdAuth(Actual.Id);
+
+                        // 2. Obtiene el rol. Si no se encuentra perfil, asigna "Invitado"
+                        string rolUsuario = perfilEmpleado?.Rol ?? "Invitado";
 
                         // Se abre el nuevo form e inicia la aplicación 
                         Form formcarga = new frmInicioBodega();

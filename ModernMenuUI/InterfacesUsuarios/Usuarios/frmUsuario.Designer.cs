@@ -47,7 +47,7 @@
             btnbuscar = new Button();
             panel1 = new Panel();
             panel10 = new Panel();
-            dgvProductos = new DataGridView();
+            dgvUsuario = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
@@ -57,7 +57,7 @@
             panelBusqueda.SuspendLayout();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvUsuario).BeginInit();
             SuspendLayout();
             // 
             // button4
@@ -209,25 +209,25 @@
             // 
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
-            panel10.Controls.Add(dgvProductos);
+            panel10.Controls.Add(dgvUsuario);
             panel10.Location = new Point(16, 18);
             panel10.Name = "panel10";
             panel10.Size = new Size(688, 385);
             panel10.TabIndex = 17;
             // 
-            // dgvProductos
+            // dgvUsuario
             // 
-            dgvProductos.AllowUserToAddRows = false;
+            dgvUsuario.AllowUserToAddRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-            dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.BorderStyle = BorderStyle.None;
-            dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvUsuario.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvUsuario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvUsuario.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            dgvUsuario.BackgroundColor = Color.FromArgb(189, 215, 238);
+            dgvUsuario.BorderStyle = BorderStyle.None;
+            dgvUsuario.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvUsuario.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -235,9 +235,9 @@
             dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, EstadoUsuario });
+            dgvUsuario.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvUsuario.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvUsuario.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, EstadoUsuario });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = Color.White;
             dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -246,13 +246,13 @@
             dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
             dataGridViewCellStyle4.SelectionForeColor = Color.White;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvProductos.Dock = DockStyle.Fill;
-            dgvProductos.EnableHeadersVisualStyles = false;
-            dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Name = "dgvProductos";
-            dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvUsuario.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvUsuario.Dock = DockStyle.Fill;
+            dgvUsuario.EnableHeadersVisualStyles = false;
+            dgvUsuario.GridColor = Color.FromArgb(189, 215, 238);
+            dgvUsuario.Location = new Point(0, 0);
+            dgvUsuario.Name = "dgvUsuario";
+            dgvUsuario.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
             dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -260,16 +260,16 @@
             dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dgvProductos.RowHeadersWidth = 30;
-            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(688, 385);
-            dgvProductos.TabIndex = 1;
+            dgvUsuario.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dgvUsuario.RowHeadersWidth = 30;
+            dgvUsuario.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dgvUsuario.RowTemplate.Height = 50;
+            dgvUsuario.Size = new Size(688, 385);
+            dgvUsuario.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "EmpleadoUsuario";
+            dataGridViewTextBoxColumn1.DataPropertyName = "IdUsuario";
             dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
             dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
@@ -318,6 +318,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmUsuario";
             Text = "frmUsuario";
+            Load += frmUsuario_Load_1;
             tableLayoutPanel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -325,7 +326,7 @@
             panelBusqueda.PerformLayout();
             panel1.ResumeLayout(false);
             panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvUsuario).EndInit();
             ResumeLayout(false);
         }
 
@@ -344,6 +345,7 @@
         private Panel panel1;
         private Panel panel10;
         private DataGridView dgvProductos;
+        private DataGridView dgvUsuario;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;

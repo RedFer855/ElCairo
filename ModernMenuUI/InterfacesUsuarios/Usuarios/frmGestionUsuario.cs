@@ -17,17 +17,10 @@ namespace ModernMenuUI
     {
         private readonly UsuarioRepositorio usuario_repo;
 
-        public frmGestionUsuario()
-        {
-            InitializeComponent();
-
-            dgvUsuarios.AutoGenerateColumns = false;
-            usuario_repo = new UsuarioRepositorio();
-        }
 
         private async void frmGestionUsuario_Load(object sender, EventArgs e)
         {
-            CargarUsuarios();
+            //CargarUsuarios();
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
 
             if (supabase != null)
@@ -56,6 +49,7 @@ namespace ModernMenuUI
         {
 
         }
+        /*
         private async void CargarUsuarios()
         {
             try
@@ -74,7 +68,7 @@ namespace ModernMenuUI
                 this.Cursor = Cursors.Default;
             }
         }
-
+        */
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {

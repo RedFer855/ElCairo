@@ -30,19 +30,11 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioBodega));
             panel1 = new Panel();
             dgvProducto = new DataGridView();
-            IdStock = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            CategoriaStock = new DataGridViewTextBoxColumn();
-            MarcaStock = new DataGridViewTextBoxColumn();
-            StockTotal = new DataGridViewTextBoxColumn();
-            StockMinimo = new DataGridViewTextBoxColumn();
-            Bodega = new DataGridViewTextBoxColumn();
             cmbBodega = new ComboBox();
             label8 = new Label();
             panelBusqueda = new Panel();
@@ -57,6 +49,12 @@
             textBox1 = new TextBox();
             button1 = new Button();
             tlp = new TableLayoutPanel();
+            Producto = new DataGridViewTextBoxColumn();
+            Bodega = new DataGridViewTextBoxColumn();
+            CategoriaStock = new DataGridViewTextBoxColumn();
+            MarcaStock = new DataGridViewTextBoxColumn();
+            StockTotal = new DataGridViewTextBoxColumn();
+            StockMinimo = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducto).BeginInit();
             panelBusqueda.SuspendLayout();
@@ -97,105 +95,37 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProducto.Columns.AddRange(new DataGridViewColumn[] { IdStock, Producto, CategoriaStock, MarcaStock, StockTotal, StockMinimo, Bodega });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle4.NullValue = "(Vacío)";
-            dataGridViewCellStyle4.Padding = new Padding(5);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvProducto.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvProducto.Columns.AddRange(new DataGridViewColumn[] { Producto, Bodega, CategoriaStock, MarcaStock, StockTotal, StockMinimo });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.NullValue = "(Vacío)";
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvProducto.DefaultCellStyle = dataGridViewCellStyle3;
             dgvProducto.EnableHeadersVisualStyles = false;
             dgvProducto.GridColor = Color.FromArgb(189, 215, 238);
             dgvProducto.Location = new Point(18, 17);
             dgvProducto.Name = "dgvProducto";
             dgvProducto.ReadOnly = true;
             dgvProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvProducto.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvProducto.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvProducto.RowHeadersWidth = 30;
             dgvProducto.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProducto.RowTemplate.Height = 50;
             dgvProducto.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProducto.Size = new Size(705, 439);
             dgvProducto.TabIndex = 14;
-            // 
-            // IdStock
-            // 
-            IdStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            IdStock.DataPropertyName = "IdInventario";
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            IdStock.DefaultCellStyle = dataGridViewCellStyle3;
-            IdStock.FillWeight = 60F;
-            IdStock.HeaderText = "Id";
-            IdStock.MinimumWidth = 45;
-            IdStock.Name = "IdStock";
-            IdStock.ReadOnly = true;
-            IdStock.Width = 57;
-            // 
-            // Producto
-            // 
-            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Producto.DataPropertyName = "NombreProducto";
-            Producto.FillWeight = 35.1780434F;
-            Producto.HeaderText = "Producto";
-            Producto.Name = "Producto";
-            Producto.ReadOnly = true;
-            Producto.Width = 105;
-            // 
-            // CategoriaStock
-            // 
-            CategoriaStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            CategoriaStock.DataPropertyName = "Categoria";
-            CategoriaStock.FillWeight = 40.203476F;
-            CategoriaStock.HeaderText = "Categoria";
-            CategoriaStock.Name = "CategoriaStock";
-            CategoriaStock.ReadOnly = true;
-            CategoriaStock.Width = 108;
-            // 
-            // MarcaStock
-            // 
-            MarcaStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            MarcaStock.DataPropertyName = "Telefono";
-            MarcaStock.FillWeight = 40.203476F;
-            MarcaStock.HeaderText = "Marca";
-            MarcaStock.Name = "MarcaStock";
-            MarcaStock.ReadOnly = true;
-            MarcaStock.Width = 84;
-            // 
-            // StockTotal
-            // 
-            StockTotal.DataPropertyName = "StockProductoBodegaInventario";
-            StockTotal.FillWeight = 40.203476F;
-            StockTotal.HeaderText = "Stock";
-            StockTotal.Name = "StockTotal";
-            StockTotal.ReadOnly = true;
-            // 
-            // StockMinimo
-            // 
-            StockMinimo.DataPropertyName = "StockMinimoProductoBodegaInventario";
-            StockMinimo.FillWeight = 70F;
-            StockMinimo.HeaderText = "Stock Mínimo";
-            StockMinimo.MinimumWidth = 20;
-            StockMinimo.Name = "StockMinimo";
-            StockMinimo.ReadOnly = true;
-            // 
-            // Bodega
-            // 
-            Bodega.DataPropertyName = "NombreBodega";
-            Bodega.HeaderText = "Bodega";
-            Bodega.Name = "Bodega";
-            Bodega.ReadOnly = true;
             // 
             // cmbBodega
             // 
@@ -368,6 +298,60 @@
             tlp.Size = new Size(739, 45);
             tlp.TabIndex = 43;
             // 
+            // Producto
+            // 
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Producto.DataPropertyName = "NombreProducto";
+            Producto.FillWeight = 35.1780434F;
+            Producto.HeaderText = "Producto";
+            Producto.Name = "Producto";
+            Producto.ReadOnly = true;
+            Producto.Width = 105;
+            // 
+            // Bodega
+            // 
+            Bodega.DataPropertyName = "NombreBodega";
+            Bodega.HeaderText = "Bodega";
+            Bodega.Name = "Bodega";
+            Bodega.ReadOnly = true;
+            // 
+            // CategoriaStock
+            // 
+            CategoriaStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            CategoriaStock.DataPropertyName = "Categoria";
+            CategoriaStock.FillWeight = 40.203476F;
+            CategoriaStock.HeaderText = "Categoria";
+            CategoriaStock.Name = "CategoriaStock";
+            CategoriaStock.ReadOnly = true;
+            CategoriaStock.Width = 108;
+            // 
+            // MarcaStock
+            // 
+            MarcaStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            MarcaStock.DataPropertyName = "Telefono";
+            MarcaStock.FillWeight = 40.203476F;
+            MarcaStock.HeaderText = "Marca";
+            MarcaStock.Name = "MarcaStock";
+            MarcaStock.ReadOnly = true;
+            MarcaStock.Width = 84;
+            // 
+            // StockTotal
+            // 
+            StockTotal.DataPropertyName = "StockProductoBodegaInventario";
+            StockTotal.FillWeight = 40.203476F;
+            StockTotal.HeaderText = "Stock";
+            StockTotal.Name = "StockTotal";
+            StockTotal.ReadOnly = true;
+            // 
+            // StockMinimo
+            // 
+            StockMinimo.DataPropertyName = "StockMinimoProductoBodegaInventario";
+            StockMinimo.FillWeight = 70F;
+            StockMinimo.HeaderText = "Stock Mínimo";
+            StockMinimo.MinimumWidth = 20;
+            StockMinimo.Name = "StockMinimo";
+            StockMinimo.ReadOnly = true;
+            // 
             // frmInventarioBodega
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -419,10 +403,10 @@
         private TableLayoutPanel tlp;
         private DataGridViewTextBoxColumn IdStock;
         private DataGridViewTextBoxColumn Producto;
+        private DataGridViewTextBoxColumn Bodega;
         private DataGridViewTextBoxColumn CategoriaStock;
         private DataGridViewTextBoxColumn MarcaStock;
         private DataGridViewTextBoxColumn StockTotal;
         private DataGridViewTextBoxColumn StockMinimo;
-        private DataGridViewTextBoxColumn Bodega;
     }
 }
