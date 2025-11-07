@@ -174,7 +174,9 @@ namespace ModernMenuUI
                         EstadoProducto = rbActivo.Checked,
                         IdEstado = rbActivo.Checked ? 1 : 2,
                         IdMarca = this.idMarcaSeleccionada,
-                        IdCategoria = this.idCategoriaSeleccionada
+                        IdCategoria = this.idCategoriaSeleccionada,
+                        IdPresentacion = 1,
+                        IdTamanio = 1
                     };
 
                     await _productoRepo.InsertarProducto(nuevoProducto);
@@ -195,6 +197,8 @@ namespace ModernMenuUI
                     _productoActual.IdEstado = rbActivo.Checked ? 1 : 2;
                     _productoActual.IdMarca = this.idMarcaSeleccionada;
                     _productoActual.IdCategoria = this.idCategoriaSeleccionada;
+                    _productoActual.IdPresentacion = 1; 
+                    _productoActual.IdTamanio = 1;
 
                     // Llama al método Actualizar del Repositorio
                     await ProductoRepositorio.ActualizarProducto(_productoActual);
