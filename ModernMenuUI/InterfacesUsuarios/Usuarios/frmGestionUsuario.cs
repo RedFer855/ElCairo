@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CapaDeDatos.Modelados;
+using CapaDeDatos.Repositorios;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,11 +12,33 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
+
     public partial class frmGestionUsuario : Form
     {
+        private readonly UsuarioRepositorio usuario_repo;
+
         public frmGestionUsuario()
         {
             InitializeComponent();
+
+            dgvUsuarios.AutoGenerateColumns = false;
+            usuario_repo = new UsuarioRepositorio();
+        }
+
+        private async void frmGestionUsuario_Load(object sender, EventArgs e)
+        {
+            CargarUsuarios();
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+
+            if (supabase != null)
+            {
+                MessageBox.Show("Conexión exitosa al servidor.", "Conexión Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -32,10 +56,31 @@ namespace ModernMenuUI
         {
 
         }
+        private async void CargarUsuarios()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                List<Usuario> listausuarios = await usuario_repo.ObtenerTodosLosUsuarios();
+                dgvUsuarios.DataSource = null;
+                dgvUsuarios.DataSource = listausuarios;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al cargar datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
 
         }
+
+
     }
 }

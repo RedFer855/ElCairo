@@ -11,12 +11,19 @@ using Supabase.Postgrest.Attributes;
 namespace CapaDeDatos.Modelados
 {
     [Table("usuario")]
-    public class Usuario: BaseModel
+    public class Usuario : BaseModel
     {
-        [Column("alias_usuario")]
-        public string Name { get; set; }
+        [PrimaryKey("id_empleado", false)]
+        public int Id { get; set; }
 
-        [Column("contrasenia_usuario")]
-        public string password { get; set; }
+        [Column("alias_usuario")]
+        public string Alias { get; set; }
+
+        [Column("id_rol")]
+        public string Rol { get; set; }
+
+        [Column("estado_usuario")]
+        public bool Estado { get; set; }
+
     }
 }
