@@ -31,9 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestionUsuario));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             button4 = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnSalir = new Button();
@@ -48,22 +47,17 @@
             btnbuscar = new Button();
             panel1 = new Panel();
             panel10 = new Panel();
-            dgvProductos = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dgvUsuarios = new DataGridView();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
-            PrecioCompra = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            PrecioVenta = new DataGridViewTextBoxColumn();
-            Estado = new DataGridViewTextBoxColumn();
+            Estado = new DataGridViewCheckBoxColumn();
             tableLayoutPanel1.SuspendLayout();
             groupBox1.SuspendLayout();
             panelBusqueda.SuspendLayout();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             SuspendLayout();
             // 
             // button4
@@ -246,26 +240,26 @@
             // 
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
-            panel10.Controls.Add(dgvProductos);
+            panel10.Controls.Add(dgvUsuarios);
             panel10.Location = new Point(18, 24);
             panel10.Margin = new Padding(3, 4, 3, 4);
             panel10.Name = "panel10";
             panel10.Size = new Size(786, 411);
             panel10.TabIndex = 17;
             // 
-            // dgvProductos
+            // dgvUsuarios
             // 
-            dgvProductos.AllowUserToAddRows = false;
+            dgvUsuarios.AllowUserToAddRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-            dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.BorderStyle = BorderStyle.None;
-            dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvUsuarios.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvUsuarios.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            dgvUsuarios.BackgroundColor = Color.FromArgb(189, 215, 238);
+            dgvUsuarios.BorderStyle = BorderStyle.None;
+            dgvUsuarios.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvUsuarios.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -273,105 +267,81 @@
             dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, PorcentajeGanancia, PrecioCompra, dataGridViewTextBoxColumn3, PrecioVenta, Estado });
+            dgvUsuarios.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvUsuarios.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, Estado });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvUsuarios.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvUsuarios.Dock = DockStyle.Fill;
+            dgvUsuarios.EnableHeadersVisualStyles = false;
+            dgvUsuarios.GridColor = Color.FromArgb(189, 215, 238);
+            dgvUsuarios.Location = new Point(0, 0);
+            dgvUsuarios.Margin = new Padding(3, 4, 3, 4);
+            dgvUsuarios.Name = "dgvUsuarios";
+            dgvUsuarios.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
             dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle4.Padding = new Padding(5);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
             dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvProductos.Dock = DockStyle.Fill;
-            dgvProductos.EnableHeadersVisualStyles = false;
-            dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Margin = new Padding(3, 4, 3, 4);
-            dgvProductos.Name = "dgvProductos";
-            dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dgvProductos.RowHeadersWidth = 30;
-            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dgvProductos.RowTemplate.Height = 50;
-            dgvProductos.Size = new Size(786, 411);
-            dgvProductos.TabIndex = 1;
-            dgvProductos.CellContentClick += dgvProductos_CellContentClick;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "DNI";
-            dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvUsuarios.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvUsuarios.RowHeadersWidth = 30;
+            dgvUsuarios.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dgvUsuarios.RowTemplate.Height = 50;
+            dgvUsuarios.Size = new Size(786, 411);
+            dgvUsuarios.TabIndex = 1;
+            dgvUsuarios.CellContentClick += dgvProductos_CellContentClick;
             // 
             // dataGridViewTextBoxColumn2
             // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.DataPropertyName = "Id";
             dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn2.HeaderText = "Id";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.Width = 65;
             // 
             // Categoria
             // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Categoria.DataPropertyName = "Alias";
             Categoria.FillWeight = 80F;
-            Categoria.HeaderText = "Apellido";
+            Categoria.HeaderText = "Alias";
             Categoria.MinimumWidth = 6;
             Categoria.Name = "Categoria";
+            Categoria.Width = 90;
             // 
             // dataGridViewTextBoxColumn4
             // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn4.DataPropertyName = "Rol";
             dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
+            dataGridViewTextBoxColumn4.HeaderText = "Rol";
             dataGridViewTextBoxColumn4.MinimumWidth = 6;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // PorcentajeGanancia
-            // 
-            PorcentajeGanancia.FillWeight = 80F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.MinimumWidth = 6;
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            // 
-            // PrecioCompra
-            // 
-            PrecioCompra.FillWeight = 80F;
-            PrecioCompra.HeaderText = "Vendedor";
-            PrecioCompra.MinimumWidth = 6;
-            PrecioCompra.Name = "PrecioCompra";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.FillWeight = 80F;
-            dataGridViewTextBoxColumn3.HeaderText = "Longitud";
-            dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // PrecioVenta
-            // 
-            PrecioVenta.FillWeight = 70F;
-            PrecioVenta.HeaderText = "Latitud";
-            PrecioVenta.MinimumWidth = 6;
-            PrecioVenta.Name = "PrecioVenta";
+            dataGridViewTextBoxColumn4.Width = 75;
             // 
             // Estado
             // 
+            Estado.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Estado.DataPropertyName = "Estado";
             Estado.FillWeight = 60F;
             Estado.HeaderText = "Estado";
             Estado.MinimumWidth = 6;
             Estado.Name = "Estado";
+            Estado.Resizable = DataGridViewTriState.True;
+            Estado.SortMode = DataGridViewColumnSortMode.Automatic;
+            Estado.Width = 105;
             // 
             // frmGestionUsuario
             // 
@@ -387,6 +357,7 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "frmGestionUsuario";
             Text = "frmGestionUsuario";
+            Load += frmGestionUsuario_Load;
             tableLayoutPanel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -394,7 +365,7 @@
             panelBusqueda.PerformLayout();
             panel1.ResumeLayout(false);
             panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
             ResumeLayout(false);
         }
 
@@ -413,15 +384,10 @@
         private Button btnbuscar;
         private Panel panel1;
         private Panel panel10;
-        private DataGridView dgvProductos;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridView dgvUsuarios;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn PorcentajeGanancia;
-        private DataGridViewTextBoxColumn PrecioCompra;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn PrecioVenta;
-        private DataGridViewTextBoxColumn Estado;
+        private DataGridViewCheckBoxColumn Estado;
     }
 }

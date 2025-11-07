@@ -17,13 +17,15 @@ namespace CapaDeDatos.Modelados
         public int Id { get; set; }
 
         [Column("alias_usuario")]
-        public string alias { get; set; }
+        public string Alias { get; set; }
 
         [Column("id_rol")]
         public string Rol { get; set; }
 
         [Column("estado_usuario")]
-        public string estado { get; set; }
+        public bool Estado { get; set; }
+
+
 
     }
 }
