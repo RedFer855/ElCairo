@@ -30,15 +30,13 @@ namespace CapaDeDatos.Repositorios
 
                 return response.Models ?? new List<Bitacora>();
             }
-            // Captura la excepción cuando se solicita la cancelación (ej. por timeout)
             catch (OperationCanceledException ex) when (cancellationToken.IsCancellationRequested)
             {
                 throw new TimeoutException("La consulta de bitácoras fue cancelada por tiempo de espera Agotado.", ex);
             }
             catch (Exception ex)
             {
-                // Manejo general de errores
-                throw new Exception("No se pudieron cargar los registros de bitácora.", ex);
+                throw; //new Exception("No se pudieron cargar los registros de bitácora.", ex);
             }
         }
     }

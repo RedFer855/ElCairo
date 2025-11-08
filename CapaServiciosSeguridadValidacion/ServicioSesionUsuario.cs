@@ -11,37 +11,47 @@ namespace CapaServiciosSeguridadValidacion
     public static class ServicioSesionUsuario
     {
         // 1. Un lugar privado y estático para guardar el usuario autenticado
-        private static User _usuarioActual;
+        private static User UsuarioActual;
+        private static String Rol;
 
-       
-        public static void IniciarSesion(User usuarioAutenticado)
+
+        public static void IniciarSesion(User usuarioAutenticado, string rol)
         {
-            _usuarioActual = usuarioAutenticado;
+            UsuarioActual = usuarioAutenticado;
+            Rol = rol;
         }
 
        
         public static void CerrarSesion()
         {
-            _usuarioActual = null;
+            UsuarioActual = null;
         }
 
         public static string ObtenerEmailUsuario()
         {
-            if (_usuarioActual != null)
+            if (UsuarioActual != null)
             {
-                return _usuarioActual.Email;
+                return UsuarioActual.Email;
             }
             return "Usuario Desconocido";
         }
 
+        public static string ObtenerRolUsuario()
+        {
+            if (UsuarioActual != null)
+            {
+                return "Rol: " + Rol;
+            }
+            return "Rol Desconocido";
+        }
         public static string ObtenerIdUsuario()
         {
-            return _usuarioActual?.Id ?? string.Empty;
+            return UsuarioActual?.Id ?? string.Empty;
         }
 
         public static bool SesionActiva
         {
-            get { return _usuarioActual != null; }
+            get { return UsuarioActual != null; }
         }
     }
 }

@@ -122,6 +122,7 @@
             btnGuardarEmpleado.TabIndex = 11;
             btnGuardarEmpleado.Text = "Guardar";
             btnGuardarEmpleado.UseVisualStyleBackColor = false;
+            btnGuardarEmpleado.Click += btnGuardarEmpleado_Click;
             // 
             // label3
             // 

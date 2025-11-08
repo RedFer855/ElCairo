@@ -14,10 +14,9 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
-    // 1. HEREDA DIRECTAMENTE DE FORM
     public partial class frmUsuario : Form
     {
-        // 2. AÑADIMOS TODOS LOS SERVICIOS NECESARIOS
+
         private readonly UsuarioRepositorio _usuarioRepo;
         private Usuario _usuarioSeleccionado = null;
 
@@ -33,10 +32,10 @@ namespace ModernMenuUI
             _usuarioRepo = new UsuarioRepositorio();
 
             //Usamos 'dgvProductos' (el nombre de tu control)
-            dgvProductos.AutoGenerateColumns = false;
+            dgvUsuario.AutoGenerateColumns = false;
 
             // 3. CONECTAMOS LOS EVENTOS MANUALMENTE
-            this.dgvProductos.SelectionChanged += new System.EventHandler(this.dgvProductos_SelectionChanged);
+            this.dgvUsuario.SelectionChanged += new System.EventHandler(this.dgvProductos_SelectionChanged);
             this.Load += new System.EventHandler(this.frmUsuario_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUsuario_FormClosing);
         }
@@ -76,13 +75,13 @@ namespace ModernMenuUI
                     cts.CancelAfter(TimeSpan.FromSeconds(10));
                     List<Usuario> listaDeUsuarios = await _usuarioRepo.ObtenerTodosLosUsuarios(cts.Token);
 
-                    dgvProductos.DataSource = null;
-                    dgvProductos.DataSource = listaDeUsuarios;
+                    dgvUsuario.DataSource = null;
+                    dgvUsuario.DataSource = listaDeUsuarios;
                 }
 
-                if (dgvProductos.Rows.Count > 0)
+                if (dgvUsuario.Rows.Count > 0)
                 {
-                    dgvProductos.ClearSelection();
+                    dgvUsuario.ClearSelection();
                 }
             }
             catch (OperationCanceledException)
@@ -204,9 +203,9 @@ namespace ModernMenuUI
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvProductos.SelectedRows.Count > 0)
+            if (dgvUsuario.SelectedRows.Count > 0)
             {
-                var filaSeleccionada = dgvProductos.SelectedRows[0];
+                var filaSeleccionada = dgvUsuario.SelectedRows[0];
                 _usuarioSeleccionado = filaSeleccionada.DataBoundItem as Usuario;
             }
             else
@@ -215,7 +214,12 @@ namespace ModernMenuUI
             }
         }
 
-        private void button6_Click_1(object sender, EventArgs e)
+        private void frmUsuario_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNuevo_Click_1(object sender, EventArgs e)
         {
 
         }

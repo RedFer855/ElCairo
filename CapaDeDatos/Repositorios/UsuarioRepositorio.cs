@@ -13,28 +13,22 @@ namespace CapaDeDatos.Repositorios
 {
     public class UsuarioRepositorio
     {
-        // Helper para obtener el cliente, igual que en EmpleadoRepositorio
         private async Task<Supabase.Client> GetClient()
         {
             return await Conexion.ConnectWithTimeoutAsync(3);
         }
 
-        /// <summary>
-        /// Registra un nuevo usuario en Supabase Auth.
-        /// </summary>
         public async Task<Session> RegistrarUsuario(string email, string password)
         {
             try
             {
                 var client = await GetClient();
-                // Opcionalmente puedes pasar datos extra aquí (ej. nombre)
-                // var options = new SignUpOptions { Data = new Dictionary<string, object> { { "nombre_completo", "..." } } };
                 var session = await client.Auth.SignUp(email, password);
                 return session;
             }
             catch (GotrueException ex)
             {
-                // Errores de registro (ej. "User already registered")
+
                 throw new Exception($"Error de registro: {ex.Message}", ex);
             }
             catch (System.Net.WebException ex)
@@ -52,36 +46,6 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-        /// <summary>
-        /// Obtiene los datos de un usuario desde una tabla 'usuarios' (lógica de Postgrest).
-        /// Asume que tienes un modelo 'Usuario.cs' similar a 'Empleado.cs'.
-        /// </summary>
-        public async Task<Usuario> ObtenerDatosUsuario(string uuid, CancellationToken cancellationToken = default)
-        {
-            // Esta lógica es casi idéntica a 'ObtenerTodosLosEmpleados'
-            try
-            {
-                var client = await GetClient();
-                var response = await client.From<Usuario>()
-                                         .Where(u => u.Uuid == uuid) // Asumiendo que 'Usuario' tiene una prop 'Uuid'
-                                         .Single(cancellationToken);
-
-                return response;
-            }
-            catch (PostgrestException ex)
-            {
-                // Error de base de datos (ej. no encontrado, o RLS lo impide)
-                throw new Exception($"Error de base de datos al cargar usuario: {ex.Message}", ex);
-            }
-            catch (OperationCanceledException ex) when (cancellationToken.IsCancellationRequested)
-            {
-                throw new TimeoutException("Tiempo de espera agotado...", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("No se pudo cargar el usuario. Verifique la conexión.", ex);
-            }
-        }
 
         public async Task<List<Usuario>> ObtenerTodosLosUsuarios(CancellationToken cancellationToken = default)
         {
@@ -109,6 +73,26 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-
+        public static async Task ActualizarUsuario(Usuario UsuarioActualizado)
+        {
+            try
+            {
+                var client = await Conexion.ConnectWithTimeoutAsync(10);
+                await client.From<Usuario>().Update(UsuarioActualizado);
+            }
+            catch (System.Net.WebException ex)
+            {
+                throw new Exception("Error de red al actualizar usuario: " + ex.Message, ex);
+            }
+            catch (TimeoutException ex)
+            {
+                throw new Exception("El servidor tardó demasiado en responder.", ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error de Supabase al actualizar: {ex.Message}");
+                throw; //new Exception("Error al actualizar el empleado en la base de datos.", ex);
+            }
+        }
     }
 }

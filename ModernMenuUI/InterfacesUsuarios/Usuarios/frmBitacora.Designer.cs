@@ -39,15 +39,6 @@
             panel1 = new Panel();
             panel10 = new Panel();
             dgvBitacora = new DataGridView();
-            dateTimePicker1 = new DateTimePicker();
-            dateTimePicker2 = new DateTimePicker();
-            label1 = new Label();
-            label2 = new Label();
-            panelBusqueda = new Panel();
-            txtBuscar = new TextBox();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            btnNuevoRol = new Button();
-            btnSalir = new Button();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             Fecha = new DataGridViewTextBoxColumn();
             Usuario = new DataGridViewTextBoxColumn();
@@ -58,6 +49,15 @@
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             Estado = new DataGridViewTextBoxColumn();
             User = new DataGridViewTextBoxColumn();
+            dateTimePicker1 = new DateTimePicker();
+            dateTimePicker2 = new DateTimePicker();
+            label1 = new Label();
+            label2 = new Label();
+            panelBusqueda = new Panel();
+            txtBuscar = new TextBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            btnNuevoRol = new Button();
+            btnSalir = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel3.SuspendLayout();
@@ -136,7 +136,7 @@
             dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvBitacora.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
@@ -157,20 +157,119 @@
             dgvBitacora.GridColor = Color.FromArgb(189, 215, 238);
             dgvBitacora.Location = new Point(0, 0);
             dgvBitacora.Name = "dgvBitacora";
+            dgvBitacora.ReadOnly = true;
             dgvBitacora.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
             dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle5.SelectionBackColor = Color.Transparent;
             dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
             dgvBitacora.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvBitacora.RowHeadersWidth = 30;
             dgvBitacora.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvBitacora.RowTemplate.Height = 50;
+            dgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBitacora.Size = new Size(680, 376);
             dgvBitacora.TabIndex = 1;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewTextBoxColumn1.DataPropertyName = "IdBitacoraEmpleado";
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewTextBoxColumn1.FillWeight = 50F;
+            dataGridViewTextBoxColumn1.HeaderText = "Id";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Width = 57;
+            // 
+            // Fecha
+            // 
+            Fecha.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Fecha.DataPropertyName = "FechaHora";
+            Fecha.FillWeight = 70F;
+            Fecha.HeaderText = "Fecha";
+            Fecha.Name = "Fecha";
+            Fecha.ReadOnly = true;
+            Fecha.Width = 81;
+            // 
+            // Usuario
+            // 
+            Usuario.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Usuario.DataPropertyName = "IdEmpleado";
+            Usuario.HeaderText = "Usuario";
+            Usuario.Name = "Usuario";
+            Usuario.ReadOnly = true;
+            Usuario.Width = 95;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.DataPropertyName = "AccionRealizada";
+            dataGridViewTextBoxColumn2.FillWeight = 60F;
+            dataGridViewTextBoxColumn2.HeaderText = "Accion";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 88;
+            // 
+            // Modulo
+            // 
+            Modulo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Modulo.DataPropertyName = "Modulo";
+            Modulo.FillWeight = 60F;
+            Modulo.HeaderText = "Modulo";
+            Modulo.Name = "Modulo";
+            Modulo.ReadOnly = true;
+            Modulo.Width = 94;
+            // 
+            // EstadoAnterior
+            // 
+            EstadoAnterior.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoAnterior.DataPropertyName = "EstadoAnterior";
+            EstadoAnterior.FillWeight = 80F;
+            EstadoAnterior.HeaderText = "Estado Anterior";
+            EstadoAnterior.Name = "EstadoAnterior";
+            EstadoAnterior.ReadOnly = true;
+            EstadoAnterior.Width = 138;
+            // 
+            // EstadoActual
+            // 
+            EstadoActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoActual.DataPropertyName = "EstadoActual";
+            EstadoActual.FillWeight = 80F;
+            EstadoActual.HeaderText = "Estado Actual";
+            EstadoActual.Name = "EstadoActual";
+            EstadoActual.ReadOnly = true;
+            EstadoActual.Width = 128;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn3.DataPropertyName = "CampoAfectado";
+            dataGridViewTextBoxColumn3.FillWeight = 80F;
+            dataGridViewTextBoxColumn3.HeaderText = "Campo Afectado";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            dataGridViewTextBoxColumn3.Width = 143;
+            // 
+            // Estado
+            // 
+            Estado.DataPropertyName = "NombreHost";
+            Estado.FillWeight = 60F;
+            Estado.HeaderText = "Nombre Host";
+            Estado.Name = "Estado";
+            Estado.ReadOnly = true;
+            // 
+            // User
+            // 
+            User.DataPropertyName = "UsuarioHost";
+            User.HeaderText = "Usuario del Host";
+            User.Name = "User";
+            User.ReadOnly = true;
             // 
             // dateTimePicker1
             // 
@@ -269,93 +368,6 @@
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewTextBoxColumn1.DataPropertyName = "IdBitacoraEmpleado";
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "Id";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.Width = 57;
-            // 
-            // Fecha
-            // 
-            Fecha.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Fecha.DataPropertyName = "FechaHora";
-            Fecha.FillWeight = 70F;
-            Fecha.HeaderText = "Fecha";
-            Fecha.Name = "Fecha";
-            Fecha.Width = 81;
-            // 
-            // Usuario
-            // 
-            Usuario.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Usuario.DataPropertyName = "IdEmpleado";
-            Usuario.HeaderText = "Usuario";
-            Usuario.Name = "Usuario";
-            Usuario.Width = 95;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewTextBoxColumn2.DataPropertyName = "AccionRealizada";
-            dataGridViewTextBoxColumn2.FillWeight = 60F;
-            dataGridViewTextBoxColumn2.HeaderText = "Accion";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.Width = 88;
-            // 
-            // Modulo
-            // 
-            Modulo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Modulo.DataPropertyName = "Modulo";
-            Modulo.FillWeight = 60F;
-            Modulo.HeaderText = "Modulo";
-            Modulo.Name = "Modulo";
-            Modulo.Width = 94;
-            // 
-            // EstadoAnterior
-            // 
-            EstadoAnterior.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoAnterior.DataPropertyName = "EstadoAnterior";
-            EstadoAnterior.FillWeight = 80F;
-            EstadoAnterior.HeaderText = "Estado Anterior";
-            EstadoAnterior.Name = "EstadoAnterior";
-            EstadoAnterior.Width = 138;
-            // 
-            // EstadoActual
-            // 
-            EstadoActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoActual.DataPropertyName = "EstadoActual";
-            EstadoActual.FillWeight = 80F;
-            EstadoActual.HeaderText = "Estado Actual";
-            EstadoActual.Name = "EstadoActual";
-            EstadoActual.Width = 128;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewTextBoxColumn3.DataPropertyName = "CampoAfectado";
-            dataGridViewTextBoxColumn3.FillWeight = 80F;
-            dataGridViewTextBoxColumn3.HeaderText = "Campo Afectado";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.Width = 143;
-            // 
-            // Estado
-            // 
-            Estado.DataPropertyName = "NombreHost";
-            Estado.FillWeight = 60F;
-            Estado.HeaderText = "Nombre Host";
-            Estado.Name = "Estado";
-            // 
-            // User
-            // 
-            User.DataPropertyName = "UsuarioHost";
-            User.HeaderText = "Usuario del Host";
-            User.Name = "User";
             // 
             // frmBitacora
             // 

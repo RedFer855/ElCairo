@@ -1,4 +1,10 @@
-﻿using System;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
+using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
+using Supabase.Interfaces;
+using Supabase.Realtime;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,59 +13,72 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
+    public enum NivelStockFiltro
+    {
+        Todos,
+        Bajo,
+        Medio,
+        Alto
+    }
     public partial class frmInventarioBodega : Form
     {
+
+        // === REPOSITORIOS Y CLIENTE ===
+        private readonly InventarioRepositorio _inventarioRepo = new InventarioRepositorio();
+        private readonly BodegaRepositorio _bodegaRepo = new BodegaRepositorio();
+        private Supabase.Client? _supabaseClient;
+
+        // === REALTIME Y CONEXIÓN ===
+        private RealtimeChannel? _inventarioSubscription;
+        private RealtimeChannel? _bodegaSubscription;
+        private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
+
+        // Delegado para actualizar UI desde hilos
+        private delegate Task RefreshDelegate();
+
         public frmInventarioBodega()
         {
             InitializeComponent();
-            Random rnd = new Random();
+            dgvProducto.AutoGenerateColumns = false; // Importante para DataBoundItem
 
-            dgvProductos.Rows.Add(1, "Manzana", "Frutas", "Cfruit", 10, 5, "Bodega 1");
-            dgvProductos.Rows.Add(2, "Pera", "Frutas", "Cfruit", 3, 4, "Bodega 2");
-            dgvProductos.Rows.Add(3, "Banana", "Frutas", "Cfruit", 15, 6, "Bodega 3");
-            dgvProductos.Rows.Add(4, "Lechuga", "Verduras", "Veggy", 20, 8, "Bodega 4");
-            dgvProductos.Rows.Add(5, "Tomate", "Verduras", "Veggy", 25, 10, "Bodega 1");
-            dgvProductos.Rows.Add(6, "Cebolla", "Verduras", "Veggy", 18, 6, "Bodega 2");
-            dgvProductos.Rows.Add(7, "Arroz", "Cereales", "GranoPlus", 30, 12, "Bodega 3");
-            dgvProductos.Rows.Add(8, "Frijol", "Cereales", "GranoPlus", 22, 10, "Bodega 4");
-            dgvProductos.Rows.Add(9, "Lenteja", "Cereales", "GranoPlus", 16, 8, "Bodega 1");
-            dgvProductos.Rows.Add(10, "Leche", "Lácteos", "Lacto", 12, 4, "Bodega 2");
-            dgvProductos.Rows.Add(11, "Queso", "Lácteos", "Lacto", 14, 5, "Bodega 3");
-            dgvProductos.Rows.Add(12, "Yogurt", "Lácteos", "Lacto", 18, 7, "Bodega 4");
-            dgvProductos.Rows.Add(13, "Pan", "Panadería", "Bake", 25, 10, "Bodega 1");
-            dgvProductos.Rows.Add(14, "Galleta", "Panadería", "Bake", 30, 12, "Bodega 2");
-            dgvProductos.Rows.Add(15, "Chocolate", "Dulces", "Sweet", 20, 8, "Bodega 3");
-            dgvProductos.Rows.Add(16, "Caramelo", "Dulces", "Sweet", 35, 15, "Bodega 4");
-            dgvProductos.Rows.Add(17, "Refresco", "Bebidas", "DrinkIt", 28, 10, "Bodega 1");
-            dgvProductos.Rows.Add(18, "Jugo", "Bebidas", "DrinkIt", 24, 9, "Bodega 2");
-            dgvProductos.Rows.Add(19, "Agua", "Bebidas", "DrinkIt", 40, 20, "Bodega 3");
-            dgvProductos.Rows.Add(20, "Café", "Bebidas", "CafePlus", 15, 6, "Bodega 4");
-            cmbBodega.Items.Add("Todas");
-            cmbBodega.Items.Add("Bodega 1");
-            cmbBodega.Items.Add("Bodega 2");
-            cmbBodega.Items.Add("Bodega 3");
-            cmbBodega.Items.Add("Bodega 4");
-            cmbBodega.SelectedIndex = 0;
+            // Eventos de limpieza
+            this.FormClosing += frmInventarioBodega_FormClosing;
+        }
+        private async void frmInventarioBodega_Load(object sender, EventArgs e)
+        {
+            _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
 
-            cmbEstado.Items.Add("Todos");
-            cmbEstado.Items.Add("Bajo");     // rojo
-            cmbEstado.Items.Add("Medio");    // amarillo
-            cmbEstado.Items.Add("Alto");     // verde
-            cmbEstado.SelectedIndex = 0;
+            try
+            {
+                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"No se pudo conectar a Supabase: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            // Cargar datos iniciales
+            await CargarComboBoxesEstado();
+            await CargarBodegasComboBox();
+            await CargarInventarioGridAsync(); // Carga el Grid
 
+            // Iniciar suscripciones Realtime
+            await IniciarSuscripcionInventario();
+            await IniciarSuscripcionBodegas();
         }
 
-        // ======== MÉTODO PARA COLOREAR FILAS =========
-        void FiltrarYColorear()
+        private void FiltrarYColorear()
         {
+            /*
             string bodegaSeleccionada = cmbBodega.SelectedItem?.ToString() ?? "Todas";
             string estadoSeleccionado = cmbEstado.SelectedItem?.ToString() ?? "Todos";
 
-            foreach (DataGridViewRow fila in dgvProductos.Rows)
+            foreach (DataGridViewRow fila in dgvProducto.Rows)
             {
                 if (fila.IsNewRow) continue;
 
@@ -95,16 +114,11 @@ namespace ModernMenuUI
                         MessageBox.Show("Nuevo estado");
                 }
             }
+            */
         }
 
 
         // ======== FILTRAR AL CAMBIAR LA BODEGA =========
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnSalir_Click(object sender, EventArgs e)
         {
             clsAnmaciones.NombreMenuPrincipal();
@@ -113,37 +127,207 @@ namespace ModernMenuUI
 
         private void cmbBodega_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbBodega.SelectedItem == null) return;
-
-            string seleccion = cmbBodega.SelectedItem.ToString();
-
-            foreach (DataGridViewRow fila in dgvProductos.Rows)
-            {
-                if (fila.IsNewRow) continue;
-                string bodega = fila.Cells["Bodega"].Value.ToString();
-                fila.Visible = (seleccion == "Todas" || bodega == seleccion);
-            }
             FiltrarYColorear();
         }
 
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FiltrarYColorear();
-        }
-
-        private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
         }
 
-        private void btnCambioBodega_Click(object sender, EventArgs e)
+        private async Task CargarInventarioGridAsync()
         {
+            if (_supabaseClient == null) return;
 
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
+                {
+                    // 1. Carga TODOS los datos (Patrón Empleado)
+                    List<Inventario> lista = await _inventarioRepo.ObtenerTodoElInventario(cts.Token);
+
+                    dgvProducto.DataSource = null;
+                    dgvProducto.DataSource = lista;
+                }
+
+                // 2. Aplica el filtrado y coloreado en C# (Tu lógica original)
+                FiltrarYColorear();
+            }
+            catch (TimeoutException ex)
+            {
+                MessageBox.Show(ex.Message, "Tiempo de Espera", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al Cargar Inventario", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private Task CargarComboBoxesEstado()
         {
+            cmbEstado.Items.Clear();
+            cmbEstado.Items.Add(NivelStockFiltro.Todos.ToString());
+            cmbEstado.Items.Add(NivelStockFiltro.Bajo.ToString());
+            cmbEstado.Items.Add(NivelStockFiltro.Medio.ToString());
+            cmbEstado.Items.Add(NivelStockFiltro.Alto.ToString());
+            cmbEstado.SelectedIndex = 0;
+            return Task.CompletedTask;
+        }
 
+        // ====================================================================
+        // REALTIME Y CONEXIÓN (Patrón frmEmpleado)
+        // ====================================================================
+
+        private async Task IniciarSuscripcionInventario()
+        {
+            if (_supabaseClient == null) return;
+
+            // Limpiar suscripción anterior
+            if (_inventarioSubscription != null)
+            {
+                await Task.Run(() => _inventarioSubscription.Unsubscribe());
+                _inventarioSubscription = null;
+            }
+
+            try
+            {
+                // ✅ USANDO TU PATRÓN:
+                _inventarioSubscription = await _supabaseClient.From<Inventario>()
+                    .On(ListenType.All, (sender, change) =>
+                    {
+                        try
+                        {
+                            if (this.IsDisposed || !this.IsHandleCreated) return;
+
+                            this.BeginInvoke((MethodInvoker)(async () =>
+                            {
+                                if (this.IsDisposed) return;
+                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en Inventario.");
+                                await CargarInventarioGridAsync();
+                            }));
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime Inventario: {ex.Message}");
+                        }
+                    });
+                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime Inventario creada.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al suscribir Inventario: {ex.Message}");
+            }
+        }
+
+        private async Task IniciarSuscripcionBodegas()
+        {
+            if (_supabaseClient == null) return;
+
+            // Limpiar suscripción anterior
+            if (_bodegaSubscription != null)
+            {
+                await Task.Run(() => _bodegaSubscription.Unsubscribe());
+                _bodegaSubscription = null;
+            }
+
+            try
+            {
+                // ✅ USANDO TU PATRÓN:
+                _bodegaSubscription = await _supabaseClient.From<Bodega>()
+                    .On(ListenType.All, (sender, change) =>
+                    {
+                        try
+                        {
+                            if (this.IsDisposed || !this.IsHandleCreated) return;
+
+                            this.BeginInvoke((MethodInvoker)(async () =>
+                            {
+                                if (this.IsDisposed) return;
+                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en Bodega.");
+                                await CargarBodegasComboBox();      // Recarga el combo
+                                await CargarInventarioGridAsync();  // Recarga el grid
+                            }));
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime Bodega: {ex.Message}");
+                        }
+                    });
+                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime Bodega creada.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al suscribir Bodega: {ex.Message}");
+            }
+        }
+
+        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
+        {
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+
+            if (status == NetworkStatus.Internet)
+            {
+                this.BeginInvoke((MethodInvoker)(async () =>
+                {
+                    if (this.IsDisposed) return;
+                    System.Diagnostics.Debug.WriteLine("Red recuperada. Reiniciando conexión y suscripciones...");
+
+                    try { _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3); }
+                    catch { /* Ignorar error de reconexión */ }
+
+                    await CargarBodegasComboBox();
+                    await CargarInventarioGridAsync();
+                    await IniciarSuscripcionInventario();
+                    await IniciarSuscripcionBodegas();
+                }));
+            }
+        }
+
+        private async Task DesecharSuscripcion()
+        {
+            if (_inventarioSubscription != null)
+            {
+                try { await Task.Run(() => _inventarioSubscription.Unsubscribe()); }
+                catch (Exception ex) { System.Diagnostics.Debug.WriteLine($"Error al desechar sub inventario: {ex.Message}"); }
+                _inventarioSubscription = null;
+            }
+            if (_bodegaSubscription != null)
+            {
+                try { await Task.Run(() => _bodegaSubscription.Unsubscribe()); }
+                catch (Exception ex) { System.Diagnostics.Debug.WriteLine($"Error al desechar sub bodega: {ex.Message}"); }
+                _bodegaSubscription = null;
+            }
+        }
+
+        private async void frmInventarioBodega_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Asegura la limpieza al cerrar con la 'X'
+            await DesecharSuscripcion();
+        }
+
+        private async Task CargarBodegasComboBox()
+        {
+            try
+            {
+                List<Bodega> bodegas = await _bodegaRepo.ObtenerTodasLasBodegasAsync();
+                bodegas.Insert(0, new Bodega { Id = 0, NombreBodega = "Todas" });
+
+                cmbBodega.DataSource = null;
+                cmbBodega.DataSource = bodegas;
+                cmbBodega.DisplayMember = "NombreBodega";
+                cmbBodega.ValueMember = "Id"; // Usamos el ID para el filtro
+                cmbBodega.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cargar bodegas: {ex.Message}");
+            }
         }
     }
 }

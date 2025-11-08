@@ -1,6 +1,7 @@
 using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
+using ModernMenuUI.InterfacesUsuarios.Compras;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -106,6 +107,7 @@ namespace ModernMenuUI
         private void Form1_Load(object sender, EventArgs e)
         {
             lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
+            lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
             clsManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
         }
@@ -309,7 +311,9 @@ namespace ModernMenuUI
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmProveedores());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            
 
         }
 
@@ -464,13 +468,6 @@ namespace ModernMenuUI
         }
 
         // BOTENES PARA ABRIR SUBMENUS
-
-
-        //**************************************************************
-        private void btnInventario_Click_1(object sender, EventArgs e)
-        {
-            AbrirCerrarPanel(panelInventario);
-        }
 
         private void btnCompras_Click(object sender, EventArgs e)
         {

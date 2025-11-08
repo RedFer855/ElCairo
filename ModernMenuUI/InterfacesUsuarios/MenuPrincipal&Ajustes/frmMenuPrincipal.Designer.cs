@@ -66,7 +66,7 @@
             btnUsuarios = new controlBotonesMenuPrincipal();
             panel16 = new Panel();
             panel2 = new Panel();
-            label2 = new Label();
+            lblRol = new Label();
             lblUsuario = new Label();
             pictureBox2 = new PictureBox();
             panelVentas = new Panel();
@@ -580,7 +580,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(167, 191, 211);
-            panel2.Controls.Add(label2);
+            panel2.Controls.Add(lblRol);
             panel2.Controls.Add(lblUsuario);
             panel2.Controls.Add(pictureBox2);
             panel2.Dock = DockStyle.Bottom;
@@ -589,16 +589,16 @@
             panel2.Size = new Size(283, 80);
             panel2.TabIndex = 11;
             // 
-            // label2
+            // lblRol
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(104, 39);
-            label2.Name = "label2";
-            label2.Size = new Size(79, 18);
-            label2.TabIndex = 10;
-            label2.Text = "Rol: Admin";
+            lblRol.AutoSize = true;
+            lblRol.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblRol.ForeColor = Color.White;
+            lblRol.Location = new Point(104, 39);
+            lblRol.Name = "lblRol";
+            lblRol.Size = new Size(79, 18);
+            lblRol.TabIndex = 10;
+            lblRol.Text = "Rol: Admin";
             // 
             // lblUsuario
             // 
@@ -1242,7 +1242,7 @@
         private Panel panelFormHijo;
         public Label lblNombreModulo;
         private Panel panel2;
-        private Label label2;
+        private Label lblRol;
         private Label lblUsuario;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;

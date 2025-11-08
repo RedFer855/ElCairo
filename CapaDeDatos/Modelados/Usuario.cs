@@ -14,16 +14,16 @@ namespace CapaDeDatos.Modelados
     public class Usuario : BaseModel
     {
         [PrimaryKey("id_empleado", false)]
-        public int Id { get; set; }
+        public int IdUsuario { get; set; }
 
         [Column("alias_usuario")]
-        public string Alias { get; set; }
+        public string AliasUsuario { get; set; }
 
         [Column("id_rol")]
-        public string Rol { get; set; }
+        public string RolUsuario { get; set; }
 
         [Column("estado_usuario")]
-        public bool Estado { get; set; }
+        public bool EstadoUsuario { get; set; }
 
     }
 }
