@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Supabase.Postgrest.Constants;
+using BCrypt.Net;
 
 namespace CapaDeDatos.Repositorios
 {
