@@ -63,7 +63,7 @@
             lblMensajeError.BackColor = Color.Transparent;
             lblMensajeError.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensajeError.ForeColor = Color.Red;
-            lblMensajeError.Location = new Point(171, 184);
+            lblMensajeError.Location = new Point(167, 195);
             lblMensajeError.Name = "lblMensajeError";
             lblMensajeError.Size = new Size(293, 14);
             lblMensajeError.TabIndex = 18;

@@ -1,4 +1,5 @@
-﻿using ModernMenuUI.ClasesUI;
+﻿using CapaDeDatos.Repositorios;
+using ModernMenuUI.ClasesUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,23 +23,43 @@ namespace ModernMenuUI
 
 
 
-        private void btnAcceder_Click(object sender, EventArgs e)
+        private async void btnAcceder_Click(object sender, EventArgs e)
         {
-            String codbodega = txtCodigoBodega.Text;
-            String contrasenia = txtContrasenia.Text;
-            if (contrasenia == Contrasenia && codbodega == CodBodega)
-            {
-                Form formcarga = new frmPantallaDeCarga();
-                this.Visible = false;
-                formcarga.ShowDialog();
-                this.Close();
-            }
-            else
-            {
-                lblMensajeError.Visible = true;
+            string codbodega = txtCodigoBodega.Text.Trim();
+            string contrasenia = txtContrasenia.Text.Trim();
 
+            try
+            {
+                // Puedes mostrar un pequeño mensaje o un spinner aquí
+                btnAcceder.Enabled = false;
+
+                bool success = await BodegaRepositorio.IniciarSesion(codbodega, contrasenia);
+
+                if (success)
+                {
+                    var formCarga = new frmPantallaDeCarga();
+                    this.Visible = false;
+                    formCarga.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    lblMensajeError.Visible = true;
+                    lblMensajeError.Text = "Código o contraseña incorrectos.";
+                    codbodega = "";
+                    contrasenia = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al intentar iniciar sesión: {ex.Message}");
+            }
+            finally
+            {
+                btnAcceder.Enabled = true;
             }
         }
+        
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
