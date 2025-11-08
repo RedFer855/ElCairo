@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ModernMenuUI.ClasesUI
 {
-    public class clsManejarFormularios
+    public class ManejarFormularios
     {
-        private static clsManejarFormularios instancia;
+        private static ManejarFormularios instancia;
         private Form formularioActivo;
         private Panel panelContenedor;
 
         // Constructor privado para evitar instanciación externa
-        private clsManejarFormularios(Panel panel)
+        private ManejarFormularios(Panel panel)
         {
             panelContenedor = panel;
         }
@@ -22,11 +22,11 @@ namespace ModernMenuUI.ClasesUI
         public static void Inicializar(Panel panel)
         {
             if (instancia == null)
-                instancia = new clsManejarFormularios(panel);
+                instancia = new ManejarFormularios(panel);
         }
 
         // Propiedad para acceder a la instancia desde cualquier parte
-        public static clsManejarFormularios Instancia
+        public static ManejarFormularios Instancia
         {
             get
             {

@@ -7,7 +7,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace ModernMenuUI.ClasesUI
 {
-    internal class clsAnimadorPanel
+    internal class AnimadorPanel
     {
         private Panel panel;
         private Timer timerAbrir;
@@ -16,7 +16,7 @@ namespace ModernMenuUI.ClasesUI
         private int paso;
         private bool animando = false; // Para bloquear clicks rápidos
 
-        public clsAnimadorPanel(Panel panel, int anchoMin, int anchoMax, int paso)
+        public AnimadorPanel(Panel panel, int anchoMin, int anchoMax, int paso)
         {
             this.panel = panel;
             this.anchoMin = anchoMin;

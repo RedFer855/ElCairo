@@ -14,7 +14,7 @@ namespace ModernMenuUI
     public partial class frmRol : Form
     {
         private int contadorRoles = 0; // contador global
-        private clsManejarFormularios manejador;
+        private ManejarFormularios manejador;
         public frmRol()
         {
             InitializeComponent();

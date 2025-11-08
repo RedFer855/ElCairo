@@ -14,7 +14,7 @@ namespace ModernMenuUI
     public partial class frmMenuPrincipal : Form
     {
         public bool Animacion = true;
-        clsAnimadorPanel animadorPanel;
+        AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
         // 1. Declarar una instancia de tu servicio. Hazlo privado y de solo lectura.
         private readonly CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
@@ -22,7 +22,7 @@ namespace ModernMenuUI
         public frmMenuPrincipal()
         {
             InitializeComponent();
-            animadorPanel = new clsAnimadorPanel(panelNotificaciones, 0, 350, 50);
+            animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
 
@@ -109,7 +109,7 @@ namespace ModernMenuUI
         {
             lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
             lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
-            clsManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
+            ManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
         }
 
@@ -265,7 +265,7 @@ namespace ModernMenuUI
 
         private void btnAjustes_Click(object sender, EventArgs e)
         {
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmAjustes());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmAjustes());
         }
 
         private void btnNotificaciones_Click(object sender, EventArgs e)
@@ -288,7 +288,7 @@ namespace ModernMenuUI
         private void btnGestionInventario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmProductos());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmProductos());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
 
         }
@@ -296,7 +296,7 @@ namespace ModernMenuUI
         private void btnInventarioBodega_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
 
         }
@@ -304,7 +304,7 @@ namespace ModernMenuUI
         private void btnGestionCompra_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmGestionCompra());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmGestionCompra());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
 
         }
@@ -312,7 +312,7 @@ namespace ModernMenuUI
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmProveedores());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmProveedores());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
             
 
@@ -321,7 +321,7 @@ namespace ModernMenuUI
         private void btnGestionVentas_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmFacturacion());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmFacturacion());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
 
         }
@@ -329,7 +329,7 @@ namespace ModernMenuUI
         private void btnClientes_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
 
         }
@@ -337,7 +337,7 @@ namespace ModernMenuUI
         private void btnGestionEmpleados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmEmpleado());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmEmpleado());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -345,7 +345,7 @@ namespace ModernMenuUI
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmUsuario());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmUsuario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -353,7 +353,7 @@ namespace ModernMenuUI
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmRol());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmRol());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
@@ -368,7 +368,7 @@ namespace ModernMenuUI
         private void btnBitacora_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
 
         }
