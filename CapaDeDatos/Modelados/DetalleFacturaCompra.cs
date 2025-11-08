@@ -9,8 +9,6 @@ namespace CapaDeDatos.Modelados
     [Table("detalle_factura_compra")]
     public class DetalleFacturaCompra : BaseModel
     {
-        [PrimaryKey("id_detalle_compra", false)]
-        public int Id { get; set; }
 
         [Column("id_compra")]
         public int IdCompra { get; set; }
@@ -20,9 +18,6 @@ namespace CapaDeDatos.Modelados
 
         [Column("cantidad")]
         public int Cantidad { get; set; }
-
-        [Column("precio_unitario")]
-        public decimal PrecioUnitario { get; set; }
     }
 
 }

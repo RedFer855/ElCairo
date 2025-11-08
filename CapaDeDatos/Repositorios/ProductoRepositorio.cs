@@ -55,6 +55,34 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
+        public async Task<List<Producto>> ObtenerActivos(bool estado = true, int? marcaId = null, int? categoriaId = null)
+        {
+            try
+            {
+                var client = await GetClient();
+                var query = client.From<Producto>()
+                                  .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
+
+                // ✅ Solo productos activos
+                query = query.Filter("estado_producto", Supabase.Postgrest.Constants.Operator.Equals, estado.ToString().ToLower());
+
+                if (marcaId.HasValue && marcaId.Value > 0)
+                    query = query.Filter("id_marca", Supabase.Postgrest.Constants.Operator.Equals, marcaId.Value);
+
+                if (categoriaId.HasValue && categoriaId.Value > 0)
+                    query = query.Filter("id_categoria", Supabase.Postgrest.Constants.Operator.Equals, categoriaId.Value);
+
+                var response = await query.Select("*, marca(*), categoria(*)").Get();
+
+                return response?.Models ?? new List<Producto>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener productos activos: {ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<Producto> InsertarProducto(Producto nuevoProducto)
         {
             if (nuevoProducto == null)

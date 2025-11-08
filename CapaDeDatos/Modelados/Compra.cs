@@ -10,16 +10,17 @@ namespace CapaDeDatos.Modelados
     public class Compra : BaseModel
     {
         [PrimaryKey("id_compra", false)]
-        public int Id { get; set; }
+        public int IdCompra { get; set; }
 
         [Column("id_proveedor")]
         public int IdProveedor { get; set; }
 
+        [Column("id_empleado")]
+        public decimal IdEmpleado { get; set; }
+
         [Column("fecha_compra")]
         public DateTime FechaCompra { get; set; }
 
-        [Column("total_compra")]
-        public decimal TotalCompra { get; set; }
     }
 
 }
