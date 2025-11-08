@@ -1,7 +1,7 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados;
 using Supabase;
-using Supabase.Interfaces; 
+using Supabase.Interfaces;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Interfaces;
 using System;
@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Supabase.Postgrest.Responses;
+using Supabase.Postgrest.Extensions;
+using static Supabase.Postgrest.Constants;
+using System.Text.Json.Serialization;
 
 namespace CapaDeDatos.Repositorios
 {
@@ -32,31 +36,26 @@ namespace CapaDeDatos.Repositorios
                 {
                     query = query.Where(x => x.EstadoProducto == estado.Value);
                 }
-
                 if (marcaId.HasValue && marcaId.Value > 0)
                 {
                     query = query.Where(x => x.IdMarca == marcaId.Value);
                 }
-
                 if (categoriaId.HasValue && categoriaId.Value > 0)
                 {
                     query = query.Where(x => x.IdCategoria == categoriaId.Value);
                 }
-
+                query = query.Where(x => x.CantidadProducto > 0);
                 // 3. Ordena el resultado
                 query = query.Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
-
                 // 4. Ejecuta el SELECT y el GET al final
                 //    (Usamos el 'Select' con alias para que cargue los objetos 'Marca' y 'Categoria')
                 var response = await query
                     .Select("*, marca(*), categoria(*)")
                     .Get();
-
                 if (response != null && response.Models != null)
                 {
                     return response.Models;
                 }
-
                 return new List<Producto>();
             }
             catch (Exception ex)
@@ -71,27 +70,23 @@ namespace CapaDeDatos.Repositorios
             {
                 throw new ArgumentNullException(nameof(nuevoProducto), "El producto a insertar no puede ser nulo.");
             }
-
             try
             {
                 var client = await GetClient();
-
                 var response = await client.From<Producto>().Insert(nuevoProducto);
 
                 if (response?.Models != null && response.Models.Count > 0)
                 {
                     return response.Models.First();
                 }
-
                 throw new Exception("La base de datos no devolvió el producto insertado.");
             }
             catch (Exception ex)
-            { 
+            {
                 Console.WriteLine($"Error de Supabase al insertar producto: {ex.Message}");
                 throw;// new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
             }
         }
-
         public static async Task ActualizarProducto(Producto productoActualizado)
         {
             try
@@ -105,6 +100,38 @@ namespace CapaDeDatos.Repositorios
             {
                 // ... (tu manejo de errores) ...
                 throw;
+            }
+        }
+        public async Task ActualizarStockProducto(int idProducto, int cantidadVendida)
+        {
+            try
+            {
+                var client = await GetClient();
+
+                // 1. LEER el producto
+                var response = await client.From<Producto>()
+                    .Filter("id_producto", Operator.Equals, idProducto)
+                    .Single();
+
+                if (response != null)
+                {
+                    // 2. CALCULAR el nuevo stock
+                    int stockNuevo = response.CantidadProducto - cantidadVendida;
+                    if (stockNuevo < 0) stockNuevo = 0;
+
+                    // 3. ACTUALIZAR el modelo
+                    response.CantidadProducto = stockNuevo;
+                    // 4. GUARDAR el modelo completo
+                    // (Esto ahora funcionará porque el modelo 'Producto'
+                    // está limpio y el serializador 'System.Text.Json'
+                    // SÍ respetará los atributos [Column(...)])
+                    await client.From<Producto>()
+                        .Update(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al actualizar stock: {ex.Message}");
             }
         }
     }

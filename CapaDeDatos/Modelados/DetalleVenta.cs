@@ -9,8 +9,11 @@ namespace CapaDeDatos.Modelados
     [Table("detalle_venta")]
     public class DetalleVenta : BaseModel
     {
-        [PrimaryKey("id_detalle_venta", false)]
-        public int Id { get; set; }
+        // ---
+        // NOTA: Esta tabla no tiene una clave primaria 'id_detalle_venta' visible.
+        // Se asume que 'id_venta' y 'id_producto' juntas son la clave.
+        // Para insertar (INSERT), esto funcionará perfectamente.
+        // ---
 
         [Column("id_venta")]
         public int IdVenta { get; set; }
@@ -18,11 +21,12 @@ namespace CapaDeDatos.Modelados
         [Column("id_producto")]
         public int IdProducto { get; set; }
 
-        [Column("cantidad")]
-        public int Cantidad { get; set; }
+        // Esta es la columna que causaba el error
+        [Column("cantidad_venta")]
+        public int CantidadVenta { get; set; }
 
-        [Column("precio_unitario")]
-        public decimal PrecioUnitario { get; set; }
+        [Column("id_bodega")]
+        public int IdBodega { get; set; }
+
     }
-
 }

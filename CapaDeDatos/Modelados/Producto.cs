@@ -1,12 +1,13 @@
-﻿using CapaDeDatos.Modelados; 
-using Supabase.Postgrest.Attributes; 
+﻿using CapaDeDatos.Modelados;
+using Newtonsoft.Json;
+using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+//using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace CapaDeDatos.Modelados
 {
@@ -14,7 +15,7 @@ namespace CapaDeDatos.Modelados
     public class Producto : BaseModel
     {
         // "id_producto" es la Primary Key
-        [PrimaryKey("id_producto", false)] 
+        [PrimaryKey("id_producto", false)]
         public int IdProducto { get; set; }
 
         // "nombre_producto" (character varying)

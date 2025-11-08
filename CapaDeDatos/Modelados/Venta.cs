@@ -13,16 +13,16 @@ namespace CapaDeDatos.Modelados
         public int IdVenta { get; set; }
 
         [Column("id_cliente")]
-        public int IdClienteVenta { get; set; }
+        public int IdCliente { get; set; }
 
         [Column("id_rutas")]
         public int IdRutasVenta { get; set; }
 
         [Column("id_empleado")]
-        public int IdEmpleadoVenta { get; set; }
+        public int IdEmpleado { get; set; }
 
         [Column("fecha_venta")]
-        public DateTime FechaVentaVenta { get; set; }
+        public DateTime FechaVenta { get; set; }
     }
 
 }
