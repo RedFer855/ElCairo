@@ -17,7 +17,6 @@ namespace ModernMenuUI
         public frmInicioBodega()
         {
             InitializeComponent();
-
         }
 
 
