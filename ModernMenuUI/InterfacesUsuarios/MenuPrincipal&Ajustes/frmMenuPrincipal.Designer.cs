@@ -31,12 +31,12 @@
             components = new System.ComponentModel.Container();
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuPrincipal));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel6 = new Panel();
             lblEstadoConexion = new Label();
             panel12 = new Panel();
@@ -1018,19 +1018,19 @@
             // chart1
             // 
             chart1.BackColor = Color.FromArgb(189, 215, 238);
-            chartArea7.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea7);
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
             chart1.Dock = DockStyle.Fill;
-            legend7.Name = "Legend1";
-            chart1.Legends.Add(legend7);
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
             chart1.Location = new Point(0, 0);
             chart1.Name = "chart1";
             chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            chart1.Series.Add(series7);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chart1.Series.Add(series1);
             chart1.Size = new Size(432, 290);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
@@ -1049,18 +1049,18 @@
             // chart2
             // 
             chart2.BackColor = Color.FromArgb(189, 215, 238);
-            chartArea8.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea8);
+            chartArea2.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea2);
             chart2.Dock = DockStyle.Fill;
-            legend8.Name = "Legend1";
-            chart2.Legends.Add(legend8);
+            legend2.Name = "Legend1";
+            chart2.Legends.Add(legend2);
             chart2.Location = new Point(0, 0);
             chart2.Name = "chart2";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            series8.YValuesPerPoint = 4;
-            chart2.Series.Add(series8);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            chart2.Series.Add(series2);
             chart2.Size = new Size(432, 290);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
@@ -1080,27 +1080,27 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(637, 242);
+            tableLayoutPanel1.Size = new Size(904, 242);
             tableLayoutPanel1.TabIndex = 13;
             // 
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
             panel5.Dock = DockStyle.Fill;
-            panel5.Location = new Point(328, 10);
+            panel5.Location = new Point(462, 10);
             panel5.Margin = new Padding(10);
             panel5.Name = "panel5";
-            panel5.Size = new Size(299, 101);
+            panel5.Size = new Size(432, 101);
             panel5.TabIndex = 8;
             // 
             // panel11
             // 
             panel11.BackColor = Color.FromArgb(189, 215, 238);
             panel11.Dock = DockStyle.Fill;
-            panel11.Location = new Point(328, 131);
+            panel11.Location = new Point(462, 131);
             panel11.Margin = new Padding(10);
             panel11.Name = "panel11";
-            panel11.Size = new Size(299, 101);
+            panel11.Size = new Size(432, 101);
             panel11.TabIndex = 11;
             // 
             // panel7
@@ -1110,7 +1110,7 @@
             panel7.Location = new Point(10, 131);
             panel7.Margin = new Padding(10);
             panel7.Name = "panel7";
-            panel7.Size = new Size(298, 101);
+            panel7.Size = new Size(432, 101);
             panel7.TabIndex = 9;
             // 
             // panel4
@@ -1121,7 +1121,7 @@
             panel4.Location = new Point(10, 10);
             panel4.Margin = new Padding(10);
             panel4.Name = "panel4";
-            panel4.Size = new Size(298, 101);
+            panel4.Size = new Size(432, 101);
             panel4.TabIndex = 7;
             // 
             // pbxCalculadora
