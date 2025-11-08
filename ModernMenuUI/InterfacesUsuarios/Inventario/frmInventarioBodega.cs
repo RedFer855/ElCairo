@@ -316,7 +316,7 @@ namespace ModernMenuUI
             try
             {
                 List<Bodega> bodegas = await _bodegaRepo.ObtenerTodasLasBodegasAsync();
-                bodegas.Insert(0, new Bodega { Id = 0, NombreBodega = "Todas" });
+                bodegas.Insert(0, new Bodega { IdBodega = 0, NombreBodega = "Todas" });
 
                 cmbBodega.DataSource = null;
                 cmbBodega.DataSource = bodegas;

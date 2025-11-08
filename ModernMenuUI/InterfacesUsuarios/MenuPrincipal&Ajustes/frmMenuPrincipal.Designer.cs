@@ -832,6 +832,7 @@
             btnRegistroPerdida.Text = "Perdidas";
             btnRegistroPerdida.TextAlign = ContentAlignment.MiddleLeft;
             btnRegistroPerdida.UseVisualStyleBackColor = false;
+            btnRegistroPerdida.Visible = false;
             btnRegistroPerdida.Click += btnRegistroPerdida_Click;
             // 
             // btnInventarioBodega

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Supabase.Postgrest.Constants;
 
 namespace CapaDeDatos.Repositorios
 {
@@ -16,28 +17,66 @@ namespace CapaDeDatos.Repositorios
             return await Conexion.ConnectWithTimeoutAsync();
         }
 
-        // ---------------------------------------------
-        // Método 1: Obtener Datos (para llenar ComboBox)
-        // ---------------------------------------------
         public async Task<List<Bodega>> ObtenerTodasLasBodegasAsync()
         {
             var client = await GetClient();
-
-            // Asume que tu tabla se llama 'bodega' y tu modelo es 'Bodega.cs'
             var response = await client.From<Bodega>().Get();
 
             return response.Models;
         }
 
-        // ---------------------------------------------
-        // Método 2: Suscripción a Realtime
-        // ---------------------------------------------
-        public async Task<RealtimeChannel> SuscribirseABodegasAsync(Supabase.Client client)
+        public static async Task<bool> IniciarSesion(string idBodega, string passwordInput)
         {
-            // El canal escucha a la tabla 'bodega'
-            var channel = client.Realtime.Channel("public:bodega");
-            await channel.Subscribe();
-            return channel;
+            try
+            {
+                var supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
+
+                // Filtrar por ID de bodega (seguro contra inyecciones)
+                var bodegas = await supabaseClient
+                    .From<Bodega>()
+                    .Filter("id_bodega", Operator.Equals, idBodega)
+                    .Get();
+
+                var bodega = bodegas.Models.FirstOrDefault();
+                if (bodega == null)
+                {
+                    MessageBox.Show("Credenciales incorrectas o bodega no encontrada");
+                    return false;
+                }
+
+                if (!bodega.EstadoBodega)
+                {
+                    MessageBox.Show("La bodega está inactiva");
+                    return false;
+                }
+
+                bool ok = PasswordHasher.VerifyHash(bodega.ContraseniaBodega, passwordInput);
+                if (!ok)
+                {
+                    MessageBox.Show("Credenciales incorrectas");
+                    return false;
+                }
+                // Si llegó hasta aquí, el login fue exitoso
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al buscar Bodega: {ex.Message}");
+                return false;
+            }
+        }
+
+        protected static class PasswordHasher
+        {
+            public static string HashPassword(string plainPassword)
+            {
+                return BCrypt.Net.BCrypt.HashPassword(plainPassword);
+            }
+
+            public static bool VerifyHash(string storedHash, string passwordInput)
+            {
+                return BCrypt.Net.BCrypt.Verify(passwordInput, storedHash);
+            }
         }
     }
 }

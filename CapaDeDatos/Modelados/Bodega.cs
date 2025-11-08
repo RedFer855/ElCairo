@@ -10,13 +10,17 @@ namespace CapaDeDatos.Modelados
     public class Bodega : BaseModel
     {
         [PrimaryKey("id_bodega", false)]
-        public int Id { get; set; }
+        public int IdBodega { get; set; }
+
+        [Column("Contrasenia_Bodega")]
+        public string ContraseniaBodega { get; set; }
+
+        [Column("estado_bodega")]
+
+        public bool EstadoBodega { get; set; }
 
         [Column("nombre_bodega")]
         public string NombreBodega { get; set; }
-
-        [Column("ubicacion")]
-        public string Ubicacion { get; set; }
     }
 
 }
