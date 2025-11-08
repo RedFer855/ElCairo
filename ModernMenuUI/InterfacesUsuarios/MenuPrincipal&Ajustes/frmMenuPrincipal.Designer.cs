@@ -31,12 +31,12 @@
             components = new System.ComponentModel.Container();
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuPrincipal));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel6 = new Panel();
             lblEstadoConexion = new Label();
             panel12 = new Panel();
@@ -378,6 +378,8 @@
             // 
             // panelReporteria
             // 
+            panelReporteria.AutoSize = true;
+            panelReporteria.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelReporteria.BackColor = Color.FromArgb(238, 238, 238);
             panelReporteria.Controls.Add(btnReportesCreados);
             panelReporteria.Controls.Add(btnCrearReporte);
@@ -450,6 +452,8 @@
             // 
             // panelUsuarios
             // 
+            panelUsuarios.AutoSize = true;
+            panelUsuarios.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelUsuarios.BackColor = Color.FromArgb(238, 238, 238);
             panelUsuarios.Controls.Add(btnBitacora);
             panelUsuarios.Controls.Add(btnAcciones);
@@ -624,6 +628,8 @@
             // 
             // panelVentas
             // 
+            panelVentas.AutoSize = true;
+            panelVentas.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelVentas.BackColor = Color.FromArgb(238, 238, 238);
             panelVentas.Controls.Add(btnDevoluciones);
             panelVentas.Controls.Add(btnCierreDiario);
@@ -1012,19 +1018,19 @@
             // chart1
             // 
             chart1.BackColor = Color.FromArgb(189, 215, 238);
-            chartArea5.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea5);
+            chartArea7.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea7);
             chart1.Dock = DockStyle.Fill;
-            legend5.Name = "Legend1";
-            chart1.Legends.Add(legend5);
+            legend7.Name = "Legend1";
+            chart1.Legends.Add(legend7);
             chart1.Location = new Point(0, 0);
             chart1.Name = "chart1";
             chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            chart1.Series.Add(series5);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            chart1.Series.Add(series7);
             chart1.Size = new Size(432, 290);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
@@ -1043,18 +1049,18 @@
             // chart2
             // 
             chart2.BackColor = Color.FromArgb(189, 215, 238);
-            chartArea6.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea6);
+            chartArea8.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea8);
             chart2.Dock = DockStyle.Fill;
-            legend6.Name = "Legend1";
-            chart2.Legends.Add(legend6);
+            legend8.Name = "Legend1";
+            chart2.Legends.Add(legend8);
             chart2.Location = new Point(0, 0);
             chart2.Name = "chart2";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            series6.YValuesPerPoint = 4;
-            chart2.Series.Add(series6);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            series8.YValuesPerPoint = 4;
+            chart2.Series.Add(series8);
             chart2.Size = new Size(432, 290);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
