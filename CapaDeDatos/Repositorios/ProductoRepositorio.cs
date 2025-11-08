@@ -63,8 +63,8 @@ namespace CapaDeDatos.Repositorios
                 var query = client.From<Producto>()
                                   .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
 
-                // ✅ Solo productos activos
-                query = query.Filter("estado_producto", Supabase.Postgrest.Constants.Operator.Equals, estado.ToString().ToLower());
+                // Solo productos activos
+                query = query.Filter("estado_producto", Supabase.Postgrest.Constants.Operator.Equals, estado.ToString().ToLower());//estado a string por que postgresql no maneja datos bool en sus consultas
 
                 if (marcaId.HasValue && marcaId.Value > 0)
                     query = query.Filter("id_marca", Supabase.Postgrest.Constants.Operator.Equals, marcaId.Value);

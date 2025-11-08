@@ -16,7 +16,7 @@ namespace CapaDeDatos.Modelados
         public int IdProveedor { get; set; }
 
         [Column("id_empleado")]
-        public decimal IdEmpleado { get; set; }
+        public int IdEmpleado { get; set; }
 
         [Column("fecha_compra")]
         public DateTime FechaCompra { get; set; }

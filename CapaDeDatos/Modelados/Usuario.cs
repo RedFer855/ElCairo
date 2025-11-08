@@ -25,5 +25,8 @@ namespace CapaDeDatos.Modelados
         [Column("estado_usuario")]
         public bool EstadoUsuario { get; set; }
 
+        [Column("user_id")]
+        public string UserId { get; set; }
+
     }
 }

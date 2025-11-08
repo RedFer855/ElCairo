@@ -261,7 +261,7 @@ namespace ModernMenuUI
             dgvCarrito.Rows.Add(codigoProducto, descripcion, precio, cantidadFinal, Eliminar, Restar, Sumar);
         }
 
-       
+
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
@@ -296,5 +296,22 @@ namespace ModernMenuUI
 
         }
 
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+            var Actual = supabase.Auth.CurrentUser;
+           /* var respEmpleado = await supabase
+            .From<Usuario>()
+            .Select("user_id")
+            .Match(new Dictionary<string, object> { { "user_id", Actual.Id } })
+            .Get();
+
+            var compra = new Compra
+            {
+                IdEmpleado = Actual.Id,
+                IdProveedor = idProveedor,
+                FechaCompra = DateTime.UtcNow
+            }*/
+        }
     }
 }
