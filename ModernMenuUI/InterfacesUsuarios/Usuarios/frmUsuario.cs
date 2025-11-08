@@ -3,6 +3,7 @@ using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion; // Para el monitor de red
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
+using ModernMenuUI.ClasesUI;
 using Supabase.Realtime; // Para Realtime
 using System;
 using System.Collections.Generic;

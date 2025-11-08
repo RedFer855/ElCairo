@@ -5,18 +5,17 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using FormsTimer = System.Windows.Forms.Timer;
-using ModernMenuUI;
 using System.Windows.Forms;
 
 
-namespace ModernMenuUI
+namespace ModernMenuUI.ClasesUI
 {
     internal class clsAnmaciones
     {
-        public static String Titulo;
+        public static string Titulo;
         public static Label TituloLabel;
 
-        public clsAnmaciones(String nom, Label lbl) 
+        public clsAnmaciones(string nom, Label lbl) 
         {
             Titulo = nom;
             TituloLabel = lbl;
@@ -28,7 +27,7 @@ namespace ModernMenuUI
         }
 
         // Cambiar de Nombre un Label
-        public static void CambiarNombreMenu(Label label, String Nombre)
+        public static void CambiarNombreMenu(Label label, string Nombre)
         {
             label.Text = Nombre;
         }
@@ -38,22 +37,22 @@ namespace ModernMenuUI
         private extern static void ReleaseCapture();
 
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hwnd, int wmsg, int wparam, int lparam);
+        private extern static void SendMessage(nint hwnd, int wmsg, int wparam, int lparam);
 
-        public static void RegresarMenuPrincipal(String nombre)
+        public static void RegresarMenuPrincipal(string nombre)
         {
             
         }
 
      
-        public static void MoverFormulario(IntPtr handle)
+        public static void MoverFormulario(nint handle)
         {
             ReleaseCapture();
             SendMessage(handle, 0x112, 0xf012, 0);
         }
 
         // Animaciones de Inicio de sesion Cuadros de texto
-        public static void PrivacidadIngresarDatos(TextBox Caja, String Nombre)
+        public static void PrivacidadIngresarDatos(TextBox Caja, string Nombre)
         {
             if (Caja.Text == "CONTRASEÑA")
             {

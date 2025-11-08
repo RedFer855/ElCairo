@@ -2,6 +2,7 @@
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
+using ModernMenuUI.ClasesUI;
 using Supabase.Interfaces;
 using Supabase.Realtime;
 using System;

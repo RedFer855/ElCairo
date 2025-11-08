@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Timer = System.Windows.Forms.Timer;
 
-namespace ModernMenuUI
+namespace ModernMenuUI.ClasesUI
 {
     internal class clsAnimadorPanel
     {

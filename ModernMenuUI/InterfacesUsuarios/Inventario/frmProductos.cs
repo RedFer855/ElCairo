@@ -2,6 +2,7 @@
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion; // Añadido para el monitor
+using ModernMenuUI.ClasesUI;
 using Supabase; // Añadido
 using Supabase.Realtime; // Añadido
 using System;
