@@ -108,24 +108,24 @@ namespace CapaDeDatos.Repositorios
             {
                 var client = await GetClient();
 
-                // 1. LEER el producto
-                var response = await client.From<Producto>()
+                // 1. LEER el producto (usando el DTO limpio)
+                var response = await client.From<ProductoDTO>() // <-- USA EL DTO
                     .Filter("id_producto", Operator.Equals, idProducto)
                     .Single();
 
                 if (response != null)
                 {
                     // 2. CALCULAR el nuevo stock
-                    int stockNuevo = response.CantidadProducto - cantidadVendida;
+                    int stockNuevo = response.cantidad_producto - cantidadVendida;
                     if (stockNuevo < 0) stockNuevo = 0;
 
-                    // 3. ACTUALIZAR el modelo
-                    response.CantidadProducto = stockNuevo;
-                    // 4. GUARDAR el modelo completo
-                    // (Esto ahora funcionará porque el modelo 'Producto'
-                    // está limpio y el serializador 'System.Text.Json'
-                    // SÍ respetará los atributos [Column(...)])
-                    await client.From<Producto>()
+                    // 3. ACTUALIZAR el modelo DTO
+                    response.cantidad_producto = stockNuevo;
+
+                    // 4. GUARDAR el modelo DTO
+                    //    (Esto ahora funcionará porque [JsonPropertyName]
+                    //     forzará el envío de "cantidad_producto" en minúscula)
+                    await client.From<ProductoDTO>() // <-- USA EL DTO
                         .Update(response);
                 }
             }

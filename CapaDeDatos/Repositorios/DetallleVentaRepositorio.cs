@@ -9,7 +9,7 @@ using static Supabase.Postgrest.Constants;
 
 namespace CapaDeDatos.Repositorios
 {
-    public class DetalleVentaRepositorio
+    public class DetallleVentaRepositorio
     {
         // INSERTAR DETALLE DE VENTA
         public static async Task InsertarDetalleVenta(DetalleVenta nuevoDetalle)

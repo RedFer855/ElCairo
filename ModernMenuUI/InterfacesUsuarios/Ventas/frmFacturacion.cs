@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
+﻿using CapaDeDatos.Modelados;
+using CapaDeDatos.Repositorios;
+using Microsoft.VisualBasic.ApplicationServices;
 using ModernMenuUI.Properties;
 using System;
 using System.Collections.Generic;
@@ -9,8 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaDeDatos.Modelados;
-using CapaDeDatos.Repositorios;
+using static Supabase.Postgrest.Constants;
 
 namespace ModernMenuUI
 {
@@ -398,69 +399,90 @@ namespace ModernMenuUI
                 return;
             }
 
-            var confirmacion = MessageBox.Show($"¿Desea facturar un total de {txtTotal.Text}?", "Confirmar Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirmacion == DialogResult.No)
-            {
-                return;
-            }
-
-            this.Cursor = Cursors.WaitCursor;
-
             try
             {
-                // --- 2. GUARDAR LA VENTA (Maestra) ---
-                // (Debes cambiar IdCliente, IdRutasVenta e IdEmpleado por los IDs reales 
-                // de tu sistema, por ejemplo, el del empleado que está logueado)
-                Venta nuevaVenta = new Venta
+                this.Cursor = Cursors.WaitCursor;
+
+                // --- 2. OBTENER EL CLIENTE Y EL EMPLEADO ---
+                // (Lógica adaptada de tu 'button2_Click')
+                var supabase = await CapaDeDatos.Datos.Conexion.ConnectWithTimeoutAsync(10);
+                var Actual = supabase.Auth.CurrentUser;
+
+                if (Actual == null)
                 {
-                    FechaVenta = DateTime.Now,
-                    IdCliente = 4, // (ID 1 = Consumidor Final, por defecto)
-                    IdRutasVenta = 1, // (ID 1 = Ruta Mostrador, por defecto)
-                    IdEmpleado = 12  // (ID 1 = Admin, por defecto)
+                    throw new Exception("No hay usuario autenticado en la sesión actual.");
+                }
+
+                // Busca el 'id_empleado' basado en el 'user_id' de Auth
+                var respEmpleado = await supabase
+                    .From<Usuario>() // Asumiendo que tienes un modelo Usuario
+                    .Select("id_empleado")
+                    .Filter("user_id", Operator.Equals, Actual.Id.ToString())
+                    .Get();
+
+                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+                {
+                    MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
+                    return;
+                }
+
+                // (OJO: Tu 'button2_Click' usa 'IdUsuario'
+                // pero tu modelo 'Usuario' tiene 'id_empleado'. 
+                // He usado 'IdEmpleado' del modelo 'Usuario'.)
+                int idEmpleadoLogueado = respEmpleado.Models.First().IdEmpleado;
+
+                // --- 3. GUARDAR LA VENTA (Maestra) ---
+                var ventaRepo = new VentaRepositorio();
+                var venta = new Venta
+                {
+                    IdEmpleado = idEmpleadoLogueado, // ID obtenido de Auth
+                    IdCliente = 1,          // ID Fijo (Ej. Consumidor Final)
+                    IdRutasVenta = 1,     // ID Fijo (Ej. Mostrador)
+                    FechaVenta = DateTime.Now
                 };
 
-                // Llama al repositorio estático y obtiene el ID de la venta creada
-                int idVentaNueva = await VentaRepositorio.InsertarVenta(nuevaVenta);
+                // Inserta la Venta y obtiene el objeto con el nuevo ID
+                Venta ventaInsertada = await ventaRepo.InsertarVenta(venta);
+                int idVentaNueva = ventaInsertada.IdVenta;
 
 
-                // --- 3. GUARDAR DETALLES Y ACTUALIZAR STOCK ---
+                // --- 4. PREPARAR DETALLES Y ACTUALIZAR STOCK ---
+
+                var detallesAGuardar = new List<DetalleVenta>();
+
                 foreach (DataGridViewRow fila in dgvCarrito.Rows)
                 {
                     int idProducto = Convert.ToInt32(fila.Cells[0].Value);
                     int cantidadVendida = Convert.ToInt32(fila.Cells[3].Value);
-                    decimal precioVenta = Convert.ToDecimal(fila.Cells[2].Value);
 
-                    // --- 3A. GUARDAR DETALLE VENTA ---
-                    DetalleVenta detalle = new DetalleVenta
+                    // 4A. Preparar el detalle para el 'bulk insert'
+                    detallesAGuardar.Add(new DetalleVenta
                     {
-                        IdVenta = idVentaNueva, // El ID que obtuvimos en el paso 2
+                        IdVenta = idVentaNueva,
                         IdProducto = idProducto,
                         CantidadVenta = cantidadVendida,
-                        IdBodega = 1
-                    };
+                        IdBodega = 1 // ID Fijo (Ej. Bodega Principal)
+                    });
 
-                    // Llama al repositorio estático de detalles
-                    await DetalleVentaRepositorio.InsertarDetalleVenta(detalle);
-
-                    // --- 3B. ACTUALIZAR STOCK EN 'producto' ---
-                    // (Llama al método que ya existe en ProductoRepositorio)
+                    // 4B. Actualizar el stock (uno por uno)
                     await _productoRepo.ActualizarStockProducto(idProducto, cantidadVendida);
                 }
 
-                // --- 4. LIMPIAR EL FORMULARIO ---
+                // --- 5. GUARDAR LOS DETALLES (Bulk Insert) ---
+                var detalleRepo = new DetalleVentaRepositorio();
+                await detalleRepo.InsertarDetalleVenta(detallesAGuardar);
+
+                // --- 6. LIMPIAR FORMULARIO Y REFRESCAR ---
                 dgvCarrito.Rows.Clear();
                 ActualizarTotales();
-                ActualizarImagenCarrito(); //
-                MessageBox.Show("¡Venta facturada con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActualizarImagenCarrito();
+                MessageBox.Show($"Venta #{idVentaNueva} registrada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // --- 5. REFRESCAR LA LISTA DE PRODUCTOS ---
-                // (Esto actualizará el stock en 'dgvProductos' y ocultará los 
-                // productos que llegaron a 0)
                 await CargarProductosAsync();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al facturar la venta: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
