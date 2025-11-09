@@ -8,58 +8,56 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace CapaDeDatos.Repositorios
+public class VentaRepositorio
 {
-    public class VentaRepositorio
+    private async Task<Client> GetClient()
     {
-        private async Task<Client> GetClient()
+        return await Conexion.ConnectWithTimeoutAsync(10);
+    }
+    public async Task<Venta> InsertarVenta(Venta nuevaVenta)
+    {
+        try
         {
-            return await Conexion.ConnectWithTimeoutAsync(10);
-        }
+            var client = await GetClient();
 
-        // Inserta la Venta y devuelve el objeto con el ID
-        public async Task<Venta> InsertarVenta(Venta nuevaVenta)
+            var ventaResp = await client.From<Venta>().Insert(nuevaVenta);
+            int idCVenta = ventaResp.Models.First().IdVenta;
+
+
+            if (ventaResp?.Models != null && ventaResp.Models.Count > 0)
+            {
+                return ventaResp.Models.First();
+            }
+
+            throw new Exception("La base de datos no devolvió la compra.");
+
+        }
+        catch (Exception ex)
         {
-            try
-            {
-                var client = await GetClient();
-                var response = await client.From<Venta>().Insert(nuevaVenta);
-
-                if (response?.Models != null && response.Models.Count > 0)
-                {
-                    return response.Models.First(); // Devuelve la Venta con el ID
-                }
-                throw new Exception("La base de datos no devolvió la venta insertada.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al insertar venta: {ex.Message}");
-                throw;
-            }
+            Console.WriteLine($"Error al insertar compra: {ex.Message}");
+            throw;
         }
+        
+       /*
+         // 1) Insert compra
+             // depende del nombre de la propiedad
+
+            // 2) Preparar detalles y hacer insert masivo
+            var detalles = new List<DetalleVenta>();
+            foreach (DataGridViewRow row in dgvCarrito.Rows)
+            {
+                detalles.Add(new DetalleVenta {
+                    IdVenta = IdVenta,
+                    IdProducto = Convert.ToInt32(row.Cells["codigo"].Value),
+                    CantidadVenta = Convert.ToInt32(row.Cells["cantidad"].Value),
+                    Precio = Convert.ToDecimal(row.Cells["precio"].Value),
+                    Subtotal = Convert.ToDecimal(row.Cells["precio"].Value) * Convert.ToInt32(row.Cells["cantidad"].Value)
+                });
+            }
+            await client.From<DetalleVenta>().Insert(detalles).Execute();*/
+
+
+         
     }
 
-    // Repositorio para la tabla 'detalle_venta'
-    public class DetalleVentaRepositorio
-    {
-        private async Task<Client> GetClient()
-        {
-            return await Conexion.ConnectWithTimeoutAsync(10);
-        }
-
-        // Inserta todos los detalles del carrito en un solo viaje (Bulk Insert)
-        public async Task InsertarDetalleVenta(List<DetalleVenta> nuevosDetalles)
-        {
-            try
-            {
-                var client = await GetClient();
-                await client.From<DetalleVenta>().Insert(nuevosDetalles);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al insertar detalles de venta: {ex.Message}");
-                throw;
-            }
-        }
-    }
 }

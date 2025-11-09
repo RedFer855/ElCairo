@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Postgrest.Constants;
@@ -393,92 +394,68 @@ namespace ModernMenuUI
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            if (dgvCarrito.Rows.Count == 0)
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+            var Actual = supabase.Auth.CurrentUser;
+            if (Actual == null)
             {
-                MessageBox.Show("No hay productos en el carrito para facturar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                throw new Exception("No hay usuario autenticado en la sesión actual.");
+            }
+
+            //obteniendo el usuario
+            var respEmpleado = await supabase
+            .From<Usuario>()
+            .Select("id_empleado")
+            .Filter("user_id", Operator.Equals, Actual.Id.ToString())
+            .Get();
+
+            //obteniendo el id de la compra recien creada
+
+            /* var detalles = dgvCarrito.Rows
+              .Cast<DataGridViewRow>()
+              .Where(r => !r.IsNewRow)
+              .Select(r => new {
+                  id_producto = Convert.ToInt32(r.Cells["id_producto"].Value),
+                  cantidad = Convert.ToInt32(r.Cells["cantidad"].Value)
+              }).ToList();
+
+              string detallesJson = JsonSerializer.Serialize(detalles);*/
+
+
+            if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+            {
+                MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
                 return;
             }
 
+            int idEmpleado = respEmpleado.Models.First().IdEmpleado; // asegúrate del nombre de la propiedad
+
+
+            var venta = new Venta
+            {
+                IdEmpleado = idEmpleado,
+                IdCliente = 4,
+                IdRutasVenta = 1,
+                FechaVenta = DateTime.UtcNow
+            };
             try
             {
                 this.Cursor = Cursors.WaitCursor;
+                var ventaRepositorio = new VentaRepositorio();
+                await ventaRepositorio.InsertarVenta(venta);
 
-                // --- 2. OBTENER EL CLIENTE Y EL EMPLEADO ---
-                // (Lógica adaptada de tu 'button2_Click')
-                var supabase = await CapaDeDatos.Datos.Conexion.ConnectWithTimeoutAsync(10);
-                var Actual = supabase.Auth.CurrentUser;
-
-                if (Actual == null)
+              
+                /*
+                await supabase.Rpc("registrar_detalle_compra", new
                 {
-                    throw new Exception("No hay usuario autenticado en la sesión actual.");
-                }
+                    p_id_compra = idCompra,     
+                    p_detalles = JsonDocument.Parse(detallesJson).RootElement
+                });*/
 
-                // Busca el 'id_empleado' basado en el 'user_id' de Auth
-                var respEmpleado = await supabase
-                    .From<Usuario>() // Asumiendo que tienes un modelo Usuario
-                    .Select("id_empleado")
-                    .Filter("user_id", Operator.Equals, Actual.Id.ToString())
-                    .Get();
-
-                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
-                {
-                    MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
-                    return;
-                }
-
-                // (OJO: Tu 'button2_Click' usa 'IdUsuario'
-                // pero tu modelo 'Usuario' tiene 'id_empleado'. 
-                // He usado 'IdEmpleado' del modelo 'Usuario'.)
-                int idEmpleadoLogueado = respEmpleado.Models.First().IdEmpleado;
-
-                // --- 3. GUARDAR LA VENTA (Maestra) ---
-                var ventaRepo = new VentaRepositorio();
-                var venta = new Venta
-                {
-                    IdEmpleado = idEmpleadoLogueado, // ID obtenido de Auth
-                    IdCliente = 1,          // ID Fijo (Ej. Consumidor Final)
-                    IdRutasVenta = 1,     // ID Fijo (Ej. Mostrador)
-                    FechaVenta = DateTime.Now
-                };
-
-                // Inserta la Venta y obtiene el objeto con el nuevo ID
-                Venta ventaInsertada = await ventaRepo.InsertarVenta(venta);
-                int idVentaNueva = ventaInsertada.IdVenta;
-
-
-                // --- 4. PREPARAR DETALLES Y ACTUALIZAR STOCK ---
-
-                var detallesAGuardar = new List<DetalleVenta>();
-
-                foreach (DataGridViewRow fila in dgvCarrito.Rows)
-                {
-                    int idProducto = Convert.ToInt32(fila.Cells[0].Value);
-                    int cantidadVendida = Convert.ToInt32(fila.Cells[3].Value);
-
-                    // 4A. Preparar el detalle para el 'bulk insert'
-                    detallesAGuardar.Add(new DetalleVenta
-                    {
-                        IdVenta = idVentaNueva,
-                        IdProducto = idProducto,
-                        CantidadVenta = cantidadVendida,
-                        IdBodega = 1 // ID Fijo (Ej. Bodega Principal)
-                    });
-
-                    // 4B. Actualizar el stock (uno por uno)
-                    await _productoRepo.ActualizarStockProducto(idProducto, cantidadVendida);
-                }
-
-                // --- 5. GUARDAR LOS DETALLES (Bulk Insert) ---
-                var detalleRepo = new DetalleVentaRepositorio();
-                await detalleRepo.InsertarDetalleVenta(detallesAGuardar);
-
-                // --- 6. LIMPIAR FORMULARIO Y REFRESCAR ---
                 dgvCarrito.Rows.Clear();
                 ActualizarTotales();
                 ActualizarImagenCarrito();
-                MessageBox.Show($"Venta #{idVentaNueva} registrada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                await CargarProductosAsync();
+                MessageBox.Show($"Venta registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
             }
             catch (Exception ex)
             {
@@ -490,5 +467,6 @@ namespace ModernMenuUI
             }
         }
     }
+    
 }
 

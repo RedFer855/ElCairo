@@ -90,5 +90,18 @@ namespace CapaDeDatos.Repositorios
                 .Filter("id_detalle_venta", Operator.Equals, id)
                 .Delete();
         }
+        public async Task InsertarDetalleVenta(List<DetalleVenta> nuevosDetalles)
+        {
+            try
+            {
+                var client = await GetClient();
+                await client.From<DetalleVenta>().Insert(nuevosDetalles);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al insertar detalles de venta: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

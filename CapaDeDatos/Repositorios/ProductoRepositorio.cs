@@ -102,7 +102,7 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
-        public async Task ActualizarStockProducto(int idProducto, int cantidadVendida)
+       /* public async Task ActualizarStockProducto(int idProducto, int cantidadVendida)
         {
             try
             {
@@ -133,6 +133,6 @@ namespace CapaDeDatos.Repositorios
             {
                 Console.WriteLine($"Error al actualizar stock: {ex.Message}");
             }
-        }
+        }*/
     }
 }
