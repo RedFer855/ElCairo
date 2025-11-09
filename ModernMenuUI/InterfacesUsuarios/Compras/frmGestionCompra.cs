@@ -16,6 +16,9 @@ using System.Threading; // Añadido para CancellationTokenSource
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions; // Añadido
+using static Supabase.Postgrest.Constants;
+using System.Text.Json;
+
 
 namespace ModernMenuUI
 {
@@ -298,20 +301,99 @@ namespace ModernMenuUI
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
-            var Actual = supabase.Auth.CurrentUser;
-           /* var respEmpleado = await supabase
-            .From<Usuario>()
-            .Select("user_id")
-            .Match(new Dictionary<string, object> { { "user_id", Actual.Id } })
-            .Get();
+            if (dgvCarrito.Rows.Count==0)
+            {   
+                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else {
+                int proveedrId = 3; //por mientras, en lo que se configura la barra de busqueda
+                var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+                var Actual = supabase.Auth.CurrentUser;
+                
+                if (Actual == null)
+                {
+                    throw new Exception("No hay usuario autenticado en la sesión actual.");
+                }
 
-            var compra = new Compra
-            {
-                IdEmpleado = Actual.Id,
-                IdProveedor = idProveedor,
-                FechaCompra = DateTime.UtcNow
-            }*/
+                //obteniendo el usuario
+                var respEmpleado = await supabase
+                .From<Usuario>()
+                .Select("id_empleado")
+                .Filter("user_id", Operator.Equals, Actual.Id.ToString())
+                .Get();
+
+                //obteniendo el id de la compra recien creada
+                
+                var detalles = dgvCarrito.Rows
+                .Cast<DataGridViewRow>()
+                .Where(r => !r.IsNewRow)
+                .Select(r => new {
+                    id_producto = Convert.ToInt32(r.Cells[0].Value),
+                    cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
+                }).ToList();
+
+                //string detallesJson = JsonSerializer.Serialize(detalles);
+                /*
+                 
+                    esta mierda no sirve de nada, supabase hace el json de un solo cuando se envia el valor 
+                    de la variable detalles al rpc
+
+                 */
+
+                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+                {
+                    MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
+                    return;
+                }
+
+                int idEmpleado = respEmpleado.Models.First().IdUsuario;
+
+               
+                
+                
+                
+                var compra = new Compra
+                {
+                    IdEmpleado = idEmpleado,
+                    IdProveedor = proveedrId,
+                    FechaCompra = DateTime.UtcNow
+                };
+                try
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    var compraRepositorio = new CompraRepositorio();
+                    await compraRepositorio.InsertarCompra(compra);
+                    //MessageBox.Show(detallesJson);
+                    // se llama aqui para no crear registros fantasmas
+                    int? IdCompra = await CompraRepositorio.ObtenerCompraId(idEmpleado);
+                    if (IdCompra == null)
+                    {
+                        MessageBox.Show("No se pudo obtener el ID de la compra recién creada.");
+                        return;
+                    }
+                    await supabase.Rpc("registrar_detalle_compra", new
+                    {
+                        p_id_compra = IdCompra,
+                        p_detalles = detalles,
+                    });
+
+                    MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //ActualizarImagenCarrito();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al registrar la compra: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    this.Cursor = Cursors.Default;
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
