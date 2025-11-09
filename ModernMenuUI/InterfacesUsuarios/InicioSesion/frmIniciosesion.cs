@@ -1,5 +1,6 @@
 ﻿using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using Supabase.Gotrue.Exceptions;
 using System;
@@ -50,19 +51,18 @@ namespace ModernMenuUI
             }
             else
             {
-                // Validadcion inicial para acceder al servidor y comprobar Inicio de sesión
                 string username = txtUsuario.Text + "@gmail.com";
                 string password = txtContrasenia.Text;
                 username = username.Trim();
                 password = password.Trim();
 
-                lblMensajeError.ForeColor = Color.DarkGray; // Color neutro para carga
+                lblMensajeError.ForeColor = Color.DarkGray; 
                 lblMensajeError.Visible = true;
                 lblMensajeError.Text = "Procesando...";
 
                 try
                 {
-                    pbxCargando.Visible = true; // Picture box con imagen en formato gift para carga
+                    pbxCargando.Visible = true; 
 
                     var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
 
@@ -72,35 +72,50 @@ namespace ModernMenuUI
 
                     if (usuario != null)
                     {
-
-                        
-
-                        // Muestra el label y prepara el primer mensaje
-                        lblMensajeError.ForeColor = Color.DarkGray; // Color neutro para carga
+                        lblMensajeError.ForeColor = Color.DarkGray; 
                         lblMensajeError.Text = "Conectando al servidor...";
                         lblMensajeError.Visible = true;
 
-                        // Pausa 1: Espera 1 s
                         await Task.Delay(400);
 
-                        // Pausa 2: Muestra el segundo mensaje 1s
                         lblMensajeError.Text = "Verificando credenciales...";
                         await Task.Delay(300);
 
-                        // Pausa 3: Muestra el tercer mensaje (opcional, simula la espera real) 1s
                         lblMensajeError.Text = "Validando Permisos...";
-                        await Task.Delay(500); // 1s segundo
+                        await Task.Delay(500); 
 
-                        // Pausa 4: Mensaje de incio de sesión
                         lblMensajeError.ForeColor = Color.Green;
                         lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
-                        await Task.Delay(500); // 1s Final de espera
-                        pbxCargando.Visible = false;
+                        await Task.Delay(100); 
+                      
+                        try
+                        {
+                            var uuidUsuario = Actual.Id;
+                            var validacionRepo = new ValidacionRolRepositorio();
+                            var contexto = await validacionRepo.ConstruirContexto(uuidUsuario);
 
-                        // Llama a la función 'get_user_rolename_by_email' que creaste
-                        string rolUsuario = await supabase.Rpc<string>("get_user_rolename_by_email",new Dictionary<string, object> {{ "auth_email", Actual.Email }});
-                        CapaServiciosSeguridadValidacion.ServicioSesionUsuario.IniciarSesion(Actual, rolUsuario);
-                        // Se abre el nuevo form e inicia la aplicación 
+                            ServicioSesionUsuario.IniciarSesion(Actual, contexto);
+
+                            pbxCargando.Visible = false;
+
+                            var acciones = contexto.AccionesPermitidas;
+                            if (acciones == null || acciones.Count == 0)
+                            {
+                                MessageBox.Show("⚠️ El usuario no tiene acciones cargadas. El menú aparecerá vacío.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("✅ Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            pbxCargando.Visible = false;  
+                            MessageBox.Show($"Error crítico al cargar permisos: {ex.Message}. Cierre la aplicación.", "Error de Permisos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LimpiarDatos(e, e);
+                            return; 
+                        }
+
                         Form formcarga = new frmInicioBodega();
                         this.Visible = false;
                         formcarga.ShowDialog();
@@ -108,19 +123,16 @@ namespace ModernMenuUI
                     }
                     else
                     {
-                        // FALLO DE CREDENCIALES: El servidor respondió, pero el usuario/contraseña no coincide.
                         pbxCargando.Visible = false;
                         lblMensajeError.Visible = true;
-                        lblMensajeError.ForeColor = Color.Red; // Color neutro para carga
+                        lblMensajeError.ForeColor = Color.Red;
                         lblMensajeError.Text = "Usuario o Contraseña incorrectos";
 
-                        // Lógica de limpieza y re-enfoque
                         LimpiarDatos(e, e);
                     }
                 }
                 catch (GotrueException gex)
                 {
-                    // Captura el error específico de credenciales inválidas
                     pbxCargando.Visible = false;
                     lblMensajeError.Visible = true;
                     lblMensajeError.ForeColor = Color.Red;
@@ -146,7 +158,6 @@ namespace ModernMenuUI
                 {
                     pbxCargando.Visible = false;
 
-                    // NUEVO BLOQUE: Captura explícitamente el fallo de conexión/red
                     MessageBox.Show($"Fallo de conexión: {wex.Message}\nAsegúrese de que el Wi-Fi o su conexión de red estén activos.",
                                     "Error de Conexión de Red", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     LimpiarDatos(e, e);
@@ -156,16 +167,13 @@ namespace ModernMenuUI
                 catch (TimeoutException tex)
                 {
                     pbxCargando.Visible = false;
-                    // Captura el error de timeout (conexión lenta)
                     MessageBox.Show(tex.Message, "Tiempo de Espera del Servidor Excedido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    // Lógica de limpieza y re-enfoque
                     LimpiarDatos(e, e);
                     lblMensajeError.Visible = false;
                 }
                 catch (ApplicationException aex)
                 {
                     pbxCargando.Visible = false;
-                    // Captura el error de configuración
                     MessageBox.Show($"Error de configuración: {aex.Message}\nEl programa terminará.", "Error en el Sistema", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     this.Close();
                     lblMensajeError.Visible = false;
@@ -173,15 +181,13 @@ namespace ModernMenuUI
                 catch (Exception)
                 {
                     pbxCargando.Visible = false;
-                    // Captura cualquier otro error inesperado
                     MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión.", "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    // Lógica de limpieza y re-enfoque
                     LimpiarDatos(e, e);
                     lblMensajeError.Visible = false;
                 }
                 finally
                 {
-                    btnAcceder.Enabled = true; // Habilitar el botón
+                    btnAcceder.Enabled = true; 
                     this.Cursor = Cursors.Default;
                 }
             }
@@ -189,34 +195,32 @@ namespace ModernMenuUI
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            this.Close(); // Cerrar el fromulario
+            this.Close();
         }
 
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized; // Minimizar formulario
-
+            this.WindowState = FormWindowState.Minimized; 
         }
 
         private void panDatosIngreso_MouseDown(object sender, MouseEventArgs e)
         {
-
-            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
+            clsAnmaciones.MoverFormulario(this.Handle); 
         }
 
         private void panLogo_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle); // Fución para mover formulario en propiedad none
+            clsAnmaciones.MoverFormulario(this.Handle); 
         }
 
         // ANIMACIONES DENTRO DE 
@@ -240,8 +244,6 @@ namespace ModernMenuUI
                 txtUsuario.ForeColor = Color.LightGray;
             }
         }
-
-        // Ingresar a caja de contra y usuario
         private void txtContra_Enter(object sender, EventArgs e)
         {
             clsAnmaciones.PrivacidadIngresarDatos(txtContrasenia, "");
@@ -258,7 +260,7 @@ namespace ModernMenuUI
 
         private void lblRecuperarContrasenia_MouseEnter(object sender, EventArgs e)
         {
-            lblRecuperarContrasenia.ForeColor = Color.Blue; // Cambia color al pasar el mouse
+            lblRecuperarContrasenia.ForeColor = Color.Blue; 
             lblRecuperarContrasenia.Font = new Font(lblRecuperarContrasenia.Font, FontStyle.Underline);
         }
 
@@ -266,9 +268,7 @@ namespace ModernMenuUI
         {
 
             lblRecuperarContrasenia.ForeColor = Color.DimGray;
-
-            // Vuelve al color normal
-            lblRecuperarContrasenia.Font = new Font(lblRecuperarContrasenia.Font, FontStyle.Regular); // Quita subrayado
+            lblRecuperarContrasenia.Font = new Font(lblRecuperarContrasenia.Font, FontStyle.Regular);
         }
 
         private void lblRecuperarContrasenia_Click(object sender, EventArgs e)

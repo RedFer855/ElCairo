@@ -13,7 +13,7 @@ namespace CapaDeDatos.Repositorios
 {
     public class UsuarioRepositorio
     {
-        private async Task<Supabase.Client> GetClient()
+        public async Task<Supabase.Client> GetClient()
         {
             return await Conexion.ConnectWithTimeoutAsync(3);
         }
@@ -92,6 +92,28 @@ namespace CapaDeDatos.Repositorios
             {
                 Console.WriteLine($"Error de Supabase al actualizar: {ex.Message}");
                 throw; //new Exception("Error al actualizar el empleado en la base de datos.", ex);
+            }
+        }
+
+        public async Task<Usuario> ObtenerDatosUsuario(string uuid, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = await GetClient(); // Asumo que ya tienes este helper
+                var response = await client.From<Usuario>()
+                    .Where(u => u.Uuid == uuid) // Filtra por el UUID de Auth
+                    .Single(cancellationToken); // Espera un único resultado
+
+                return response;
+            }
+            catch (PostgrestException ex)
+            {
+                // Error de base de datos (ej. no encontrado, o RLS lo impide)
+                throw new Exception($"Error de base de datos al cargar usuario: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo cargar el usuario. Verifique la conexión.", ex);
             }
         }
     }

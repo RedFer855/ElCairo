@@ -20,10 +20,12 @@ namespace CapaDeDatos.Modelados
         public string AliasUsuario { get; set; }
 
         [Column("id_rol")]
-        public string RolUsuario { get; set; }
+        public int RolUsuario { get; set; }
 
         [Column("estado_usuario")]
         public bool EstadoUsuario { get; set; }
 
+        [Column("user_id")]
+        public string Uuid { get; set; }
     }
 }

@@ -149,7 +149,7 @@
             // lblMensajeError
             // 
             lblMensajeError.BackColor = Color.Transparent;
-            lblMensajeError.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblMensajeError.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensajeError.ForeColor = Color.DarkRed;
             lblMensajeError.Location = new Point(114, 284);
             lblMensajeError.Name = "lblMensajeError";
@@ -324,6 +324,7 @@
             Controls.Add(panBarraControl);
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
+            Font = new Font("Itim", 6.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 4, 3, 4);
             Name = "frmIniciosesion";

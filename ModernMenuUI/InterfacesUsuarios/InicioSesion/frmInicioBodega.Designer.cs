@@ -36,6 +36,7 @@
             txtCodigoBodega = new TextBox();
             btnAcceder = new Button();
             panBarraControl = new Panel();
+            label2 = new Label();
             btnMinimizar = new Button();
             btnCerrar = new Button();
             panLogo.SuspendLayout();
@@ -52,20 +53,22 @@
             panLogo.Controls.Add(txtCodigoBodega);
             panLogo.Controls.Add(btnAcceder);
             panLogo.Dock = DockStyle.Fill;
-            panLogo.Location = new Point(0, 35);
+            panLogo.Location = new Point(0, 44);
+            panLogo.Margin = new Padding(4);
             panLogo.Name = "panLogo";
-            panLogo.Size = new Size(638, 295);
+            panLogo.Size = new Size(596, 318);
             panLogo.TabIndex = 3;
             // 
             // lblMensajeError
             // 
             lblMensajeError.AutoSize = true;
             lblMensajeError.BackColor = Color.Transparent;
-            lblMensajeError.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblMensajeError.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensajeError.ForeColor = Color.Red;
-            lblMensajeError.Location = new Point(167, 195);
+            lblMensajeError.Location = new Point(109, 188);
+            lblMensajeError.Margin = new Padding(4, 0, 4, 0);
             lblMensajeError.Name = "lblMensajeError";
-            lblMensajeError.Size = new Size(293, 14);
+            lblMensajeError.Size = new Size(386, 19);
             lblMensajeError.TabIndex = 18;
             lblMensajeError.Text = "Código o contraseña incorrectos ingrese nuevamente...";
             lblMensajeError.TextAlign = ContentAlignment.TopCenter;
@@ -77,9 +80,10 @@
             txtContrasenia.BorderStyle = BorderStyle.None;
             txtContrasenia.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtContrasenia.ForeColor = Color.DimGray;
-            txtContrasenia.Location = new Point(206, 151);
+            txtContrasenia.Location = new Point(92, 144);
+            txtContrasenia.Margin = new Padding(4);
             txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.Size = new Size(215, 23);
+            txtContrasenia.Size = new Size(405, 23);
             txtContrasenia.TabIndex = 17;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContrasenia_Enter;
@@ -89,11 +93,12 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(20, 20, 20);
-            label1.Location = new Point(137, 52);
+            label1.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(50, 50, 50);
+            label1.Location = new Point(92, 35);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(359, 38);
+            label1.Size = new Size(417, 46);
             label1.TabIndex = 16;
             label1.Text = "Por favor, Ingrese el código de la bodega en la que \r\nel sistema realizará las acciones...\r\n";
             label1.TextAlign = ContentAlignment.TopCenter;
@@ -104,9 +109,10 @@
             txtCodigoBodega.BorderStyle = BorderStyle.None;
             txtCodigoBodega.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCodigoBodega.ForeColor = Color.DimGray;
-            txtCodigoBodega.Location = new Point(206, 110);
+            txtCodigoBodega.Location = new Point(92, 113);
+            txtCodigoBodega.Margin = new Padding(4);
             txtCodigoBodega.Name = "txtCodigoBodega";
-            txtCodigoBodega.Size = new Size(215, 23);
+            txtCodigoBodega.Size = new Size(405, 23);
             txtCodigoBodega.TabIndex = 15;
             txtCodigoBodega.Text = "CÓDIGO";
             txtCodigoBodega.Enter += txtCodigoBodega_Enter;
@@ -119,9 +125,10 @@
             btnAcceder.FlatStyle = FlatStyle.Flat;
             btnAcceder.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAcceder.ForeColor = Color.White;
-            btnAcceder.Location = new Point(206, 231);
+            btnAcceder.Location = new Point(157, 221);
+            btnAcceder.Margin = new Padding(4);
             btnAcceder.Name = "btnAcceder";
-            btnAcceder.Size = new Size(215, 40);
+            btnAcceder.Size = new Size(276, 51);
             btnAcceder.TabIndex = 10;
             btnAcceder.Text = "ACCEDER";
             btnAcceder.UseVisualStyleBackColor = false;
@@ -130,14 +137,30 @@
             // panBarraControl
             // 
             panBarraControl.BackColor = Color.FromArgb(87, 99, 110);
+            panBarraControl.Controls.Add(label2);
             panBarraControl.Controls.Add(btnMinimizar);
             panBarraControl.Controls.Add(btnCerrar);
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.Location = new Point(0, 0);
+            panBarraControl.Margin = new Padding(4);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(638, 35);
+            panBarraControl.Size = new Size(596, 44);
             panBarraControl.TabIndex = 5;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
+            // 
+            // label2
+            // 
+            label2.BackColor = Color.Transparent;
+            label2.Dock = DockStyle.Fill;
+            label2.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(0, 0);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(480, 44);
+            label2.TabIndex = 19;
+            label2.Text = "     INGRESE A UNA BODEGA";
+            label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // btnMinimizar
             // 
@@ -148,9 +171,10 @@
             btnMinimizar.Dock = DockStyle.Right;
             btnMinimizar.FlatAppearance.BorderSize = 0;
             btnMinimizar.FlatStyle = FlatStyle.Flat;
-            btnMinimizar.Location = new Point(548, 0);
+            btnMinimizar.Location = new Point(480, 0);
+            btnMinimizar.Margin = new Padding(4);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(45, 35);
+            btnMinimizar.Size = new Size(58, 44);
             btnMinimizar.TabIndex = 1;
             btnMinimizar.UseVisualStyleBackColor = false;
             btnMinimizar.Click += btnMinimizar_Click;
@@ -164,21 +188,24 @@
             btnCerrar.Dock = DockStyle.Right;
             btnCerrar.FlatAppearance.BorderSize = 0;
             btnCerrar.FlatStyle = FlatStyle.Flat;
-            btnCerrar.Location = new Point(593, 0);
+            btnCerrar.Location = new Point(538, 0);
+            btnCerrar.Margin = new Padding(4);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(45, 35);
+            btnCerrar.Size = new Size(58, 44);
             btnCerrar.TabIndex = 0;
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
             // 
             // frmInicioBodega
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(638, 330);
+            ClientSize = new Size(596, 362);
             Controls.Add(panLogo);
             Controls.Add(panBarraControl);
+            Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4);
             Name = "frmInicioBodega";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmInicioBodega";
@@ -198,5 +225,6 @@
         private Label label1;
         private TextBox txtContrasenia;
         private Label lblMensajeError;
+        private Label label2;
     }
 }
