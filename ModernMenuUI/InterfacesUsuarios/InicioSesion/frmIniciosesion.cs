@@ -41,6 +41,7 @@ namespace ModernMenuUI
         {
             this.Cursor = Cursors.AppStarting;
             btnAcceder.Enabled = false;
+            lblRecuperarContrasenia.Enabled = false;
 
             if (txtContrasenia.Text == "" || txtUsuario.Text == "")
             {
@@ -62,12 +63,11 @@ namespace ModernMenuUI
 
                 try
                 {
+
                     pbxCargando.Visible = true; 
 
                     var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
-
                     var usuario = await supabase.Auth.SignIn(username, password);
-
                     var Actual = supabase.Auth.CurrentUser;
 
                     if (usuario != null)
@@ -196,6 +196,7 @@ namespace ModernMenuUI
                 }
                 finally
                 {
+                    lblRecuperarContrasenia.Enabled = true;    
                     btnAcceder.Enabled = true; 
                     this.Cursor = Cursors.Default;
                 }
@@ -232,9 +233,6 @@ namespace ModernMenuUI
             clsAnmaciones.MoverFormulario(this.Handle); 
         }
 
-        // ANIMACIONES DENTRO DE 
-
-        // Salir de la caja de contraseña y usuario
         private void txtContra_Leave(object sender, EventArgs e)
         {
             if (txtContrasenia.Text == "")
@@ -282,7 +280,10 @@ namespace ModernMenuUI
 
         private void lblRecuperarContrasenia_Click(object sender, EventArgs e)
         {
-
+            frmRecuperacionContrasenia ContraNueva = new frmRecuperacionContrasenia();
+            this.Visible = false;
+            ContraNueva.ShowDialog();   
+            this.Visible = true;
         }
 
         private void btnVer_MouseDown(object sender, MouseEventArgs e)
