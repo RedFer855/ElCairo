@@ -178,10 +178,19 @@ namespace ModernMenuUI
                     this.Close();
                     lblMensajeError.Visible = false;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     pbxCargando.Visible = false;
-                    MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión.", "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    if (ex.Message.Contains("Unable to connect to the remote server", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show("No se pudo conectar con el servidor. Verifica tu conexión a Internet o intenta más tarde.", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión." + ex.Message, "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    
                     LimpiarDatos(e, e);
                     lblMensajeError.Visible = false;
                 }
