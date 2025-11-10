@@ -32,18 +32,43 @@ namespace ModernMenuUI
 
             // 4. Comprobar el estado inicial
             ActualizarEstadoVisual(_monitorConexion.HayConexionAhora());
+            RegistrarBotonesConPermisos();
+            _servicioPermisos.AplicarPermisos();
         }
 
 
         // Mostrar paneles cerrados al cargar por primera vez el form
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (btnInventarios.Visible == false)
+            {
+                pnlDivisorInventario.Visible = false;
+            }
+
+            if (btnVentas.Visible == false)
+            {
+                pnlDivisorVentas.Visible = false;
+            }
+
+            if (btnCompras.Visible == false)
+            {
+                pnlDivisorCompras.Visible = false;
+            }
+
+            if (btnUsuarios.Visible == false)
+            {
+                pnlDivisorUsuario.Visible = false;
+            }
+
+            if (btnReporte.Visible == false)
+            {
+                pnlDivisorReporteria.Visible = false;
+            }
             lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
             lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
             ManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
-            RegistrarBotonesConPermisos();
-            _servicioPermisos.AplicarPermisos();
+            
         }
 
         private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
@@ -510,6 +535,8 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnCrearReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
+
+         
         }
 
     }

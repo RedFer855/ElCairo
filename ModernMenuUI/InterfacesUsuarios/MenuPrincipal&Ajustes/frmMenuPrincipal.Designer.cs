@@ -51,19 +51,19 @@
             btnCerrar = new Button();
             panelMenuLateral = new Panel();
             pictureBox1 = new PictureBox();
-            panel14 = new Panel();
+            pnlDivisorReporteria = new Panel();
             panelReporteria = new Panel();
             btnReportesCreados = new Button();
             btnCrearReporte = new Button();
             btnReporte = new controlBotonesMenuPrincipal();
-            panel15 = new Panel();
+            pnlDivisorUsuario = new Panel();
             panelUsuarios = new Panel();
             btnBitacora = new Button();
             btnGestionRoles = new Button();
             btnGestionUsuarios = new Button();
             btnGestionEmpleados = new Button();
             btnUsuarios = new controlBotonesMenuPrincipal();
-            panel16 = new Panel();
+            pnlDivisorVentas = new Panel();
             panel2 = new Panel();
             lblRol = new Label();
             lblUsuario = new Label();
@@ -74,12 +74,12 @@
             btnClientes = new Button();
             btnGestionVentas = new Button();
             btnVentas = new controlBotonesMenuPrincipal();
-            panel17 = new Panel();
+            pnlDivisorCompras = new Panel();
             panelCompras = new Panel();
             btnProveedores = new Button();
             btnGestionCompra = new Button();
             btnCompras = new controlBotonesMenuPrincipal();
-            panel13 = new Panel();
+            pnlDivisorInventario = new Panel();
             panelInventario = new Panel();
             btnRegistroPerdida = new Button();
             btnInventarioBodega = new Button();
@@ -329,20 +329,20 @@
             panelMenuLateral.AutoScroll = true;
             panelMenuLateral.BackColor = Color.FromArgb(189, 216, 235);
             panelMenuLateral.Controls.Add(pictureBox1);
-            panelMenuLateral.Controls.Add(panel14);
+            panelMenuLateral.Controls.Add(pnlDivisorReporteria);
             panelMenuLateral.Controls.Add(panelReporteria);
             panelMenuLateral.Controls.Add(btnReporte);
-            panelMenuLateral.Controls.Add(panel15);
+            panelMenuLateral.Controls.Add(pnlDivisorUsuario);
             panelMenuLateral.Controls.Add(panelUsuarios);
             panelMenuLateral.Controls.Add(btnUsuarios);
-            panelMenuLateral.Controls.Add(panel16);
+            panelMenuLateral.Controls.Add(pnlDivisorVentas);
             panelMenuLateral.Controls.Add(panel2);
             panelMenuLateral.Controls.Add(panelVentas);
             panelMenuLateral.Controls.Add(btnVentas);
-            panelMenuLateral.Controls.Add(panel17);
+            panelMenuLateral.Controls.Add(pnlDivisorCompras);
             panelMenuLateral.Controls.Add(panelCompras);
             panelMenuLateral.Controls.Add(btnCompras);
-            panelMenuLateral.Controls.Add(panel13);
+            panelMenuLateral.Controls.Add(pnlDivisorInventario);
             panelMenuLateral.Controls.Add(panelInventario);
             panelMenuLateral.Controls.Add(btnInventarios);
             panelMenuLateral.Controls.Add(panDiv);
@@ -366,14 +366,14 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // panel14
+            // pnlDivisorReporteria
             // 
-            panel14.BackColor = Color.White;
-            panel14.Dock = DockStyle.Top;
-            panel14.Location = new Point(0, 1075);
-            panel14.Name = "panel14";
-            panel14.Size = new Size(283, 2);
-            panel14.TabIndex = 21;
+            pnlDivisorReporteria.BackColor = Color.White;
+            pnlDivisorReporteria.Dock = DockStyle.Top;
+            pnlDivisorReporteria.Location = new Point(0, 1075);
+            pnlDivisorReporteria.Name = "pnlDivisorReporteria";
+            pnlDivisorReporteria.Size = new Size(283, 2);
+            pnlDivisorReporteria.TabIndex = 21;
             // 
             // panelReporteria
             // 
@@ -440,14 +440,14 @@
             btnReporte.Texto = "Reportería";
             btnReporte.Click += btnReporte_Click;
             // 
-            // panel15
+            // pnlDivisorUsuario
             // 
-            panel15.BackColor = Color.White;
-            panel15.Dock = DockStyle.Top;
-            panel15.Location = new Point(0, 913);
-            panel15.Name = "panel15";
-            panel15.Size = new Size(283, 2);
-            panel15.TabIndex = 22;
+            pnlDivisorUsuario.BackColor = Color.White;
+            pnlDivisorUsuario.Dock = DockStyle.Top;
+            pnlDivisorUsuario.Location = new Point(0, 913);
+            pnlDivisorUsuario.Name = "pnlDivisorUsuario";
+            pnlDivisorUsuario.Size = new Size(283, 2);
+            pnlDivisorUsuario.TabIndex = 22;
             // 
             // panelUsuarios
             // 
@@ -552,14 +552,14 @@
             btnUsuarios.Texto = "Usuarios";
             btnUsuarios.Click += btnUsuarios_Click;
             // 
-            // panel16
+            // pnlDivisorVentas
             // 
-            panel16.BackColor = Color.White;
-            panel16.Dock = DockStyle.Top;
-            panel16.Location = new Point(0, 671);
-            panel16.Name = "panel16";
-            panel16.Size = new Size(283, 2);
-            panel16.TabIndex = 23;
+            pnlDivisorVentas.BackColor = Color.White;
+            pnlDivisorVentas.Dock = DockStyle.Top;
+            pnlDivisorVentas.Location = new Point(0, 671);
+            pnlDivisorVentas.Name = "pnlDivisorVentas";
+            pnlDivisorVentas.Size = new Size(283, 2);
+            pnlDivisorVentas.TabIndex = 23;
             // 
             // panel2
             // 
@@ -709,14 +709,14 @@
             btnVentas.Texto = "Ventas";
             btnVentas.Click += btnVentas_Click;
             // 
-            // panel17
+            // pnlDivisorCompras
             // 
-            panel17.BackColor = Color.White;
-            panel17.Dock = DockStyle.Top;
-            panel17.Location = new Point(0, 429);
-            panel17.Name = "panel17";
-            panel17.Size = new Size(283, 2);
-            panel17.TabIndex = 24;
+            pnlDivisorCompras.BackColor = Color.White;
+            pnlDivisorCompras.Dock = DockStyle.Top;
+            pnlDivisorCompras.Location = new Point(0, 429);
+            pnlDivisorCompras.Name = "pnlDivisorCompras";
+            pnlDivisorCompras.Size = new Size(283, 2);
+            pnlDivisorCompras.TabIndex = 24;
             // 
             // panelCompras
             // 
@@ -783,14 +783,14 @@
             btnCompras.Texto = "Compras";
             btnCompras.Click += btnCompras_Click;
             // 
-            // panel13
+            // pnlDivisorInventario
             // 
-            panel13.BackColor = Color.White;
-            panel13.Dock = DockStyle.Top;
-            panel13.Location = new Point(0, 267);
-            panel13.Name = "panel13";
-            panel13.Size = new Size(283, 2);
-            panel13.TabIndex = 20;
+            pnlDivisorInventario.BackColor = Color.White;
+            pnlDivisorInventario.Dock = DockStyle.Top;
+            pnlDivisorInventario.Location = new Point(0, 267);
+            pnlDivisorInventario.Name = "pnlDivisorInventario";
+            pnlDivisorInventario.Size = new Size(283, 2);
+            pnlDivisorInventario.TabIndex = 20;
             // 
             // panelInventario
             // 
@@ -1277,11 +1277,11 @@
         private controlBotonesMenuPrincipal botonesMenuPrincipal1;
         private Panel panDiv;
         private controlBotonesMenuPrincipal btnCompra;
-        private Panel panel17;
-        private Panel panel16;
-        private Panel panel15;
-        private Panel panel13;
-        private Panel panel14;
+        private Panel pnlDivisorCompras;
+        private Panel pnlDivisorVentas;
+        private Panel pnlDivisorUsuario;
+        private Panel pnlDivisorInventario;
+        private Panel pnlDivisorReporteria;
         private controlBotonesMenuPrincipal btnUsuarios;
         private controlBotonesMenuPrincipal btnVentas;
         private controlBotonesMenuPrincipal btnCompras;
