@@ -16,9 +16,8 @@ namespace ModernMenuUI
         public bool Animacion = true;
         AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
-        // 1. Declarar una instancia de tu servicio. Hazlo privado y de solo lectura.
         private readonly CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
-
+        private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
         public frmMenuPrincipal()
         {
             InitializeComponent();
@@ -33,8 +32,18 @@ namespace ModernMenuUI
 
             // 4. Comprobar el estado inicial
             ActualizarEstadoVisual(_monitorConexion.HayConexionAhora());
+        }
 
 
+        // Mostrar paneles cerrados al cargar por primera vez el form
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
+            lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
+            ManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
+            panelvisible();
+            RegistrarBotonesConPermisos();
+            _servicioPermisos.AplicarPermisos();
         }
 
         private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
@@ -104,14 +113,7 @@ namespace ModernMenuUI
 
         }
 
-        // Mostrar paneles cerrados al cargar por primera vez el form
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
-            lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
-            ManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
-            panelvisible();
-        }
+  
 
         // Cerrar todos los submenu
         private void CerrarSubmenu()
@@ -183,9 +185,6 @@ namespace ModernMenuUI
             MenulateralAnimacion();
         }
 
-
-
-
         // Timers para Animar apneles en abrir y cerrar
         private void timerAbrir_Tick(object sender, EventArgs e)
         {
@@ -210,10 +209,9 @@ namespace ModernMenuUI
                 btnCerrar.ResumeLayout();
                 btnMiniMaxi.ResumeLayout();
                 btnMinimizar.ResumeLayout();
-
             }
-
         }
+
         private void timerCerrar_Tick(object sender, EventArgs e)
         {
             if (panelMenuLateral.Width > 101)
@@ -358,13 +356,6 @@ namespace ModernMenuUI
 
         }
 
-        private void btnAcciones_Click(object sender, EventArgs e)
-        {
-            CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-
-        }
-
         private void btnBitacora_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
@@ -494,5 +485,32 @@ namespace ModernMenuUI
         {
             AbrirCerrarPanel(panelReporteria);
         }
+
+        // Servicio de para ocultar Acciones visualmete en el sistema
+        private void RegistrarBotonesConPermisos()
+        {
+            // BOTONES DE MÓDULO (Lógica "OR")
+            _servicioPermisos.RegistrarBoton(btnInventarios, "select_inventario", "update_inventario", "create_inventario");
+            _servicioPermisos.RegistrarBoton(btnInventarioBodega, "select_inventario", "update_inventario", "create_inventario");
+            _servicioPermisos.RegistrarBoton(btnGestionInventario, "select_inventario", "update_inventario", "create_inventario");
+            //Mapeo Compras
+            _servicioPermisos.RegistrarBoton(btnCompras, "select_compra", "update_compra", "create_compra");
+            _servicioPermisos.RegistrarBoton(btnGestionCompra, "select_compra", "update_compra", "create_compra");
+            _servicioPermisos.RegistrarBoton(btnProveedores, "select_compra", "update_compra", "create_compra");
+            //Mapeo Ventas
+            _servicioPermisos.RegistrarBoton(btnVentas, "select_venta", "update_venta", "create_venta");
+            _servicioPermisos.RegistrarBoton(btnGestionVentas, "select_venta", "update_venta", "create_venta");
+            _servicioPermisos.RegistrarBoton(btnClientes, "select_venta", "update_venta", "create_venta");
+            //Mapeo Usuarios
+            _servicioPermisos.RegistrarBoton(btnUsuarios, "select_usuario", "update_usuario", "create_usuario");
+            _servicioPermisos.RegistrarBoton(btnGestionUsuarios, "select_usuario", "update_usuario", "create_usuario");
+            _servicioPermisos.RegistrarBoton(btnGestionRoles, "select_usuario", "update_usuario", "create_usuario");
+            _servicioPermisos.RegistrarBoton(btnBitacora, "select_usuario", "update_usuario", "create_usuario");
+            //Mapeo Reporteria
+            _servicioPermisos.RegistrarBoton(btnReporte, "select_reporte", "update_reporte", "create_reporte");
+            _servicioPermisos.RegistrarBoton(btnCrearReporte, "select_reporte", "update_reporte", "create_reporte");
+            _servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
+        }
+
     }
 }

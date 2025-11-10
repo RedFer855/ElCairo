@@ -22,6 +22,7 @@ namespace ModernMenuUI
 {
     public partial class frmProductos : Form
     {
+        private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
         private readonly ProductoRepositorio productoRepositorio;
         private Producto ProductoSeleccionado;
         Form formularioactivo = null;
@@ -47,6 +48,8 @@ namespace ModernMenuUI
             dgvProductos.AutoGenerateColumns = false;
 
             // --- AÑADIDO (Patrón frmEmpleado) ---
+            RegistrarBotonesConPermisos();
+            _servicioPermisos.AplicarPermisos();
             this.FormClosing += frmProductos_FormClosing;
         }
 
@@ -61,6 +64,7 @@ namespace ModernMenuUI
 
             RefrescarGrid();
             await IniciarSuscripcionProductos();
+           
 
         }
 
@@ -532,6 +536,15 @@ namespace ModernMenuUI
             {
                 ProductoSeleccionado = null;
             }
+        }
+
+        private void RegistrarBotonesConPermisos()
+        {
+            _servicioPermisos.RegistrarBoton(btnNuevoProducto, "insert_inventario");
+            _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
+
+            _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
+            _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
         }
     }
 }

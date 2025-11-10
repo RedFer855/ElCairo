@@ -67,14 +67,14 @@
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Titulo";
             // 
-            // BotonesMenuPrincipal
+            // controlBotonesMenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(189, 215, 238);
             Controls.Add(pnlTitulo);
             Controls.Add(pbxIcono);
-            Name = "BotonesMenuPrincipal";
+            Name = "controlBotonesMenuPrincipal";
             Size = new Size(300, 80);
             ((System.ComponentModel.ISupportInitialize)pbxIcono).EndInit();
             pnlTitulo.ResumeLayout(false);

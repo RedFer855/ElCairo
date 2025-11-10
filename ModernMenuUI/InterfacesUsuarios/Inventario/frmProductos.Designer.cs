@@ -53,7 +53,7 @@
             btnbuscar = new Button();
             btnNuevoProducto = new Button();
             btnSalir = new Button();
-            button1 = new Button();
+            btnAgregarMarca = new Button();
             gbxEstado = new GroupBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnCategoria = new Button();
@@ -69,8 +69,8 @@
             lblHora = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
             tableLayoutPanel1 = new TableLayoutPanel();
-            button2 = new Button();
-            button4 = new Button();
+            btnIngresarPerdida = new Button();
+            btnAgregarCategoria = new Button();
             btnEditarProducto = new Button();
             panel1 = new Panel();
             lstSugerencias = new ListBox();
@@ -324,18 +324,18 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
-            // button1
+            // btnAgregarMarca
             // 
-            button1.BackColor = Color.FromArgb(149, 195, 172);
-            button1.Dock = DockStyle.Fill;
-            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = SystemColors.ButtonFace;
-            button1.Location = new Point(194, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(185, 44);
-            button1.TabIndex = 21;
-            button1.Text = "Agregar Marca";
-            button1.UseVisualStyleBackColor = false;
+            btnAgregarMarca.BackColor = Color.FromArgb(149, 195, 172);
+            btnAgregarMarca.Dock = DockStyle.Fill;
+            btnAgregarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarMarca.ForeColor = SystemColors.ButtonFace;
+            btnAgregarMarca.Location = new Point(194, 3);
+            btnAgregarMarca.Name = "btnAgregarMarca";
+            btnAgregarMarca.Size = new Size(185, 44);
+            btnAgregarMarca.TabIndex = 21;
+            btnAgregarMarca.Text = "Agregar Marca";
+            btnAgregarMarca.UseVisualStyleBackColor = false;
             // 
             // gbxEstado
             // 
@@ -522,10 +522,10 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 157F));
-            tableLayoutPanel1.Controls.Add(button2, 2, 0);
-            tableLayoutPanel1.Controls.Add(button4, 1, 1);
+            tableLayoutPanel1.Controls.Add(btnIngresarPerdida, 2, 0);
+            tableLayoutPanel1.Controls.Add(btnAgregarCategoria, 1, 1);
             tableLayoutPanel1.Controls.Add(btnNuevoProducto, 0, 0);
-            tableLayoutPanel1.Controls.Add(button1, 1, 0);
+            tableLayoutPanel1.Controls.Add(btnAgregarMarca, 1, 0);
             tableLayoutPanel1.Controls.Add(btnSalir, 2, 1);
             tableLayoutPanel1.Controls.Add(btnEditarProducto, 0, 1);
             tableLayoutPanel1.Location = new Point(12, 563);
@@ -536,31 +536,31 @@
             tableLayoutPanel1.Size = new Size(540, 100);
             tableLayoutPanel1.TabIndex = 31;
             // 
-            // button2
+            // btnIngresarPerdida
             // 
-            button2.BackColor = Color.FromArgb(149, 195, 172);
-            button2.Dock = DockStyle.Fill;
-            button2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ButtonFace;
-            button2.Location = new Point(385, 3);
-            button2.Name = "button2";
-            button2.Size = new Size(152, 44);
-            button2.TabIndex = 23;
-            button2.Text = "Ingresar Perdida";
-            button2.UseVisualStyleBackColor = false;
+            btnIngresarPerdida.BackColor = Color.FromArgb(149, 195, 172);
+            btnIngresarPerdida.Dock = DockStyle.Fill;
+            btnIngresarPerdida.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnIngresarPerdida.ForeColor = SystemColors.ButtonFace;
+            btnIngresarPerdida.Location = new Point(385, 3);
+            btnIngresarPerdida.Name = "btnIngresarPerdida";
+            btnIngresarPerdida.Size = new Size(152, 44);
+            btnIngresarPerdida.TabIndex = 23;
+            btnIngresarPerdida.Text = "Ingresar Perdida";
+            btnIngresarPerdida.UseVisualStyleBackColor = false;
             // 
-            // button4
+            // btnAgregarCategoria
             // 
-            button4.BackColor = Color.FromArgb(149, 195, 172);
-            button4.Dock = DockStyle.Fill;
-            button4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button4.ForeColor = SystemColors.ButtonFace;
-            button4.Location = new Point(194, 53);
-            button4.Name = "button4";
-            button4.Size = new Size(185, 44);
-            button4.TabIndex = 22;
-            button4.Text = "Agregar Categoria";
-            button4.UseVisualStyleBackColor = false;
+            btnAgregarCategoria.BackColor = Color.FromArgb(149, 195, 172);
+            btnAgregarCategoria.Dock = DockStyle.Fill;
+            btnAgregarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarCategoria.ForeColor = SystemColors.ButtonFace;
+            btnAgregarCategoria.Location = new Point(194, 53);
+            btnAgregarCategoria.Name = "btnAgregarCategoria";
+            btnAgregarCategoria.Size = new Size(185, 44);
+            btnAgregarCategoria.TabIndex = 22;
+            btnAgregarCategoria.Text = "Agregar Categoria";
+            btnAgregarCategoria.UseVisualStyleBackColor = false;
             // 
             // btnEditarProducto
             // 
@@ -645,7 +645,7 @@
         private Button btnbuscar;
         private Button btnNuevoProducto;
         private Button btnSalir;
-        private Button button1;
+        private Button btnAgregarMarca;
         private GroupBox gbxEstado;
         private RadioButton rbMostrardeshabilitados;
         private RadioButton rbMostrarTodos;
@@ -654,7 +654,7 @@
         private Label lblHora;
         private System.Windows.Forms.Timer HoraFecha;
         private TableLayoutPanel tableLayoutPanel1;
-        private Button button4;
+        private Button btnAgregarCategoria;
         private Button btnEditarProducto;
         private Panel panel1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
@@ -667,7 +667,7 @@
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewCheckBoxColumn EstadoProducto;
-        private Button button2;
+        private Button btnIngresarPerdida;
         private ListBox lstSugerencias;
         private TextBox txtCategoria;
         private TextBox txtMarca;

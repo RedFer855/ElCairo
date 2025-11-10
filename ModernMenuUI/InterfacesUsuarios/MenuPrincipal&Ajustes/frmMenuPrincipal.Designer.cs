@@ -59,7 +59,6 @@
             panel15 = new Panel();
             panelUsuarios = new Panel();
             btnBitacora = new Button();
-            btnAcciones = new Button();
             btnGestionRoles = new Button();
             btnGestionUsuarios = new Button();
             btnGestionEmpleados = new Button();
@@ -85,7 +84,7 @@
             btnRegistroPerdida = new Button();
             btnInventarioBodega = new Button();
             btnGestionInventario = new Button();
-            btbStocks = new controlBotonesMenuPrincipal();
+            btnInventarios = new controlBotonesMenuPrincipal();
             panDiv = new Panel();
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
@@ -345,7 +344,7 @@
             panelMenuLateral.Controls.Add(btnCompras);
             panelMenuLateral.Controls.Add(panel13);
             panelMenuLateral.Controls.Add(panelInventario);
-            panelMenuLateral.Controls.Add(btbStocks);
+            panelMenuLateral.Controls.Add(btnInventarios);
             panelMenuLateral.Controls.Add(panDiv);
             panelMenuLateral.Controls.Add(panelMneuLateral);
             panelMenuLateral.Dock = DockStyle.Left;
@@ -360,7 +359,7 @@
             pictureBox1.Dock = DockStyle.Top;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(0, 1117);
+            pictureBox1.Location = new Point(0, 1077);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(283, 175);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -371,7 +370,7 @@
             // 
             panel14.BackColor = Color.White;
             panel14.Dock = DockStyle.Top;
-            panel14.Location = new Point(0, 1115);
+            panel14.Location = new Point(0, 1075);
             panel14.Name = "panel14";
             panel14.Size = new Size(283, 2);
             panel14.TabIndex = 21;
@@ -384,7 +383,7 @@
             panelReporteria.Controls.Add(btnReportesCreados);
             panelReporteria.Controls.Add(btnCrearReporte);
             panelReporteria.Dock = DockStyle.Top;
-            panelReporteria.Location = new Point(0, 1035);
+            panelReporteria.Location = new Point(0, 995);
             panelReporteria.Name = "panelReporteria";
             panelReporteria.Size = new Size(283, 80);
             panelReporteria.TabIndex = 10;
@@ -434,7 +433,7 @@
             btnReporte.ColorTexto = Color.FromArgb(87, 99, 110);
             btnReporte.Dock = DockStyle.Top;
             btnReporte.Imagen = (Image)resources.GetObject("btnReporte.Imagen");
-            btnReporte.Location = new Point(0, 955);
+            btnReporte.Location = new Point(0, 915);
             btnReporte.Name = "btnReporte";
             btnReporte.Size = new Size(283, 80);
             btnReporte.TabIndex = 30;
@@ -445,7 +444,7 @@
             // 
             panel15.BackColor = Color.White;
             panel15.Dock = DockStyle.Top;
-            panel15.Location = new Point(0, 953);
+            panel15.Location = new Point(0, 913);
             panel15.Name = "panel15";
             panel15.Size = new Size(283, 2);
             panel15.TabIndex = 22;
@@ -456,14 +455,13 @@
             panelUsuarios.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelUsuarios.BackColor = Color.FromArgb(238, 238, 238);
             panelUsuarios.Controls.Add(btnBitacora);
-            panelUsuarios.Controls.Add(btnAcciones);
             panelUsuarios.Controls.Add(btnGestionRoles);
             panelUsuarios.Controls.Add(btnGestionUsuarios);
             panelUsuarios.Controls.Add(btnGestionEmpleados);
             panelUsuarios.Dock = DockStyle.Top;
             panelUsuarios.Location = new Point(0, 753);
             panelUsuarios.Name = "panelUsuarios";
-            panelUsuarios.Size = new Size(283, 200);
+            panelUsuarios.Size = new Size(283, 160);
             panelUsuarios.TabIndex = 8;
             // 
             // btnBitacora
@@ -474,7 +472,7 @@
             btnBitacora.FlatStyle = FlatStyle.Flat;
             btnBitacora.Font = new Font("Itim", 11.25F);
             btnBitacora.ForeColor = Color.FromArgb(87, 99, 110);
-            btnBitacora.Location = new Point(0, 160);
+            btnBitacora.Location = new Point(0, 120);
             btnBitacora.Name = "btnBitacora";
             btnBitacora.Padding = new Padding(20, 0, 0, 0);
             btnBitacora.Size = new Size(283, 40);
@@ -483,24 +481,6 @@
             btnBitacora.TextAlign = ContentAlignment.MiddleLeft;
             btnBitacora.UseVisualStyleBackColor = false;
             btnBitacora.Click += btnBitacora_Click;
-            // 
-            // btnAcciones
-            // 
-            btnAcciones.BackColor = Color.FromArgb(202, 223, 255);
-            btnAcciones.Dock = DockStyle.Top;
-            btnAcciones.FlatAppearance.BorderColor = Color.White;
-            btnAcciones.FlatStyle = FlatStyle.Flat;
-            btnAcciones.Font = new Font("Itim", 11.25F);
-            btnAcciones.ForeColor = Color.FromArgb(87, 99, 110);
-            btnAcciones.Location = new Point(0, 120);
-            btnAcciones.Name = "btnAcciones";
-            btnAcciones.Padding = new Padding(20, 0, 0, 0);
-            btnAcciones.Size = new Size(283, 40);
-            btnAcciones.TabIndex = 5;
-            btnAcciones.Text = "Lista de Acciones";
-            btnAcciones.TextAlign = ContentAlignment.MiddleLeft;
-            btnAcciones.UseVisualStyleBackColor = false;
-            btnAcciones.Click += btnAcciones_Click;
             // 
             // btnGestionRoles
             // 
@@ -588,7 +568,7 @@
             panel2.Controls.Add(lblUsuario);
             panel2.Controls.Add(pictureBox2);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 1292);
+            panel2.Location = new Point(0, 1252);
             panel2.Name = "panel2";
             panel2.Size = new Size(283, 80);
             panel2.TabIndex = 11;
@@ -881,21 +861,21 @@
             btnGestionInventario.UseVisualStyleBackColor = false;
             btnGestionInventario.Click += btnGestionInventario_Click;
             // 
-            // btbStocks
+            // btnInventarios
             // 
-            btbStocks.BackColor = Color.FromArgb(189, 215, 238);
-            btbStocks.ColorClick = Color.FromArgb(200, 212, 222);
-            btbStocks.ColorHover = Color.FromArgb(170, 193, 214);
-            btbStocks.ColorNormal = Color.FromArgb(189, 215, 238);
-            btbStocks.ColorTexto = Color.FromArgb(87, 99, 110);
-            btbStocks.Dock = DockStyle.Top;
-            btbStocks.Imagen = (Image)resources.GetObject("btbStocks.Imagen");
-            btbStocks.Location = new Point(0, 67);
-            btbStocks.Name = "btbStocks";
-            btbStocks.Size = new Size(283, 80);
-            btbStocks.TabIndex = 29;
-            btbStocks.Texto = "Inventario";
-            btbStocks.Click += btbStocks_Click;
+            btnInventarios.BackColor = Color.FromArgb(189, 215, 238);
+            btnInventarios.ColorClick = Color.FromArgb(200, 212, 222);
+            btnInventarios.ColorHover = Color.FromArgb(170, 193, 214);
+            btnInventarios.ColorNormal = Color.FromArgb(189, 215, 238);
+            btnInventarios.ColorTexto = Color.FromArgb(87, 99, 110);
+            btnInventarios.Dock = DockStyle.Top;
+            btnInventarios.Imagen = (Image)resources.GetObject("btnInventarios.Imagen");
+            btnInventarios.Location = new Point(0, 67);
+            btnInventarios.Name = "btnInventarios";
+            btnInventarios.Size = new Size(283, 80);
+            btnInventarios.TabIndex = 29;
+            btnInventarios.Texto = "Inventario";
+            btnInventarios.Click += btbStocks_Click;
             // 
             // panDiv
             // 
@@ -1243,7 +1223,6 @@
         private Panel panelReporteria;
         private Button btnReportesCreados;
         private Button btnCrearReporte;
-        private Button btnAcciones;
         private Button btnGestionRoles;
         private Panel panelMneuLateral;
         private Button btnInventarioBodega;
@@ -1307,6 +1286,6 @@
         private controlBotonesMenuPrincipal btnVentas;
         private controlBotonesMenuPrincipal btnCompras;
         private controlBotonesMenuPrincipal btnReporte;
-        private controlBotonesMenuPrincipal btbStocks;
+        private controlBotonesMenuPrincipal btnInventarios;
     }
 }
