@@ -41,27 +41,6 @@ namespace CapaDeDatos.Repositorios
                 Console.WriteLine($"Error al insertar compra: {ex.Message}");
                 throw;
             }
-            /*
-
-             // 1) Insert compra
-                 // depende del nombre de la propiedad
-
-                // 2) Preparar detalles y hacer insert masivo
-                var detalles = new List<DetalleCompra>();
-                foreach (DataGridViewRow row in dgvCarrito.Rows)
-                {
-                    detalles.Add(new DetalleCompra {
-                        IdCompra = idCompra,
-                        IdProducto = Convert.ToInt32(row.Cells["codigo"].Value),
-                        Cantidad = Convert.ToInt32(row.Cells["cantidad"].Value),
-                        Precio = Convert.ToDecimal(row.Cells["precio"].Value),
-                        Subtotal = Convert.ToDecimal(row.Cells["precio"].Value) * Convert.ToInt32(row.Cells["cantidad"].Value)
-                    });
-                }
-                await client.From<DetalleCompra>().Insert(detalles).Execute();
-
-
-             */
         }
 
         public static async Task<int?> ObtenerCompraId(int idUsuario)
@@ -80,7 +59,7 @@ namespace CapaDeDatos.Repositorios
 
                 var compra = comprasResp.Models.FirstOrDefault();
                
-                return compra?.IdCompra; // ✅ devuelve el ID (int?)
+                return compra?.IdCompra; // agarra el int ? de la compra
             }
             catch (Exception ex)
             {
