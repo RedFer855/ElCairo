@@ -294,9 +294,23 @@ namespace ModernMenuUI
                 txtProducto.Text = null;
                 dgvProductos.ClearSelection();
                 txtPrecio.Text = null;
-                //ActualizarImagenCarrito();
+                ActualizarImagenCarrito();
             }
 
+        }
+        private void ActualizarImagenCarrito()
+        {
+            // Si no hay filas visibles (ni productos)
+            if (dgvCarrito.Rows.Count == 0)
+            {
+                pbxCarritoVacio.Visible = true;
+                //lblCarritoVacio.Visible = true;
+            }
+            else
+            {
+                pbxCarritoVacio.Visible = false;
+                //lblCarritoVacio.Visible = false;
+            }
         }
 
         private async void button2_Click(object sender, EventArgs e)
