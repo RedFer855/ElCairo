@@ -465,6 +465,9 @@
             dgvCarrito.RowTemplate.Height = 50;
             dgvCarrito.Size = new Size(802, 372);
             dgvCarrito.TabIndex = 1;
+            dgvCarrito.CellClick += dgvCarrito_CellClick;
+            dgvCarrito.CellMouseEnter += dgvCarrito_CellMouseEnter;
+            dgvCarrito.CellMouseLeave += dgvCarrito_CellMouseLeave;
             // 
             // dataGridViewTextBoxColumn1
             // 

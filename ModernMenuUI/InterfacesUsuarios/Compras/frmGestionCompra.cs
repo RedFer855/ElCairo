@@ -203,6 +203,110 @@ namespace ModernMenuUI
 
             }
         }
+        private void dgvCarrito_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 4)
+            {
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.LightBlue;
+            }
+        }
+
+        private void dgvCarrito_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 4)
+            {
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
+            }
+        }
+
+        private void dgvCarrito_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
+            if (e.RowIndex >= 0 && e.ColumnIndex == 5) // columna específica
+            {
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Gray; // color oscuro al presionar
+            }
+
+
+        }
+
+        private void dgvCarrito_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
+
+            if (e.RowIndex >= 0 && e.RowIndex < dgvCarrito.RowCount && e.ColumnIndex >= 4 && e.ColumnIndex <= 6 && e.ColumnIndex < dgvCarrito.ColumnCount)
+            {
+                // Restaurar color si lo necesitas
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
+
+                // Quitar la selección solo de esa celda
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Selected = false;
+
+            }
+
+        }
+
+        private void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvCarrito.RowCount)
+                return;
+
+            // Obtener codigoProducto desde la columna 0
+            if (!int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[0].Value?.ToString(), out int codigoProducto))
+                return;
+
+            // Obtener stock desde dgvProductos (suponiendo columna 5 es stock en dgvProductos)
+            int stock = 0;
+            for (int i = 0; i < dgvProductos.Rows.Count; i++)
+            {
+                var cellVal = dgvProductos.Rows[i].Cells[0].Value;
+                if (cellVal != null && int.TryParse(cellVal.ToString(), out int codigoProdGrid))
+                {
+                    if (codigoProdGrid == codigoProducto)
+                    {
+                        var stockVal = dgvProductos.Rows[i].Cells[5].Value; // ajusta si la columna stock no es la 5
+                        int.TryParse(stockVal?.ToString(), out stock);
+                        break;
+                    }
+                }
+            }
+
+            // Columna eliminar (imagen en la columna 4 según tu UI)
+            if (e.ColumnIndex == 4)
+            {
+                if (dgvCarrito.CurrentRow != null)
+                    dgvCarrito.Rows.RemoveAt(e.RowIndex);
+                return;
+            }
+
+            // NOTA: la columna de "cantidad" es la 3. Nunca escribas en las columnas de imagen (4,5,6) valores int.
+
+            // Columna restar (imagen en la columna 5)
+            if (e.ColumnIndex == 5)
+            {
+                if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
+                {
+                    if (cantidad > 1)
+                        dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1; // <- escribir en la columna 3 (Cantidad)
+                    else
+                        MessageBox.Show("La cantidad no puede ser menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return;
+            }
+
+            // Columna sumar (imagen en la columna 6)
+            if (e.ColumnIndex == 6)
+            {
+                if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
+                {
+                    if (cantidad < stock)
+                        dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad + 1; // <- escribir en la columna 3 (Cantidad)
+                    else
+                        MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return;
+            }
+        }
         private void AgregarAlCarrito(int codigoProducto, int cantidadAgregar)
         {
             Image Eliminar = Properties.Resources.eliminar__1_;
