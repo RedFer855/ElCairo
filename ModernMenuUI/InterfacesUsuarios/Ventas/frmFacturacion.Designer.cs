@@ -310,10 +310,10 @@
             // 
             pbxCarritoVacio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbxCarritoVacio.BackColor = Color.Transparent;
-            pbxCarritoVacio.Image = Properties.Resources.carro_vacio;
-            pbxCarritoVacio.Location = new Point(243, 99);
+            pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
+            pbxCarritoVacio.Location = new Point(209, 73);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(231, 99);
+            pbxCarritoVacio.Size = new Size(294, 148);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
