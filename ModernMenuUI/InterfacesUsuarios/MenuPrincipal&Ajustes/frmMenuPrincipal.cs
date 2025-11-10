@@ -2,6 +2,7 @@ using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
 using ModernMenuUI.InterfacesUsuarios.Compras;
+using ModernMenuUI.InterfacesUsuarios.Ventas;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -395,6 +396,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            clsManejarFormularios.Instancia.AbrirFormulario(new frmCierreDiario());
         }
 
 

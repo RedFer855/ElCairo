@@ -12,7 +12,7 @@ namespace CapaDeDatos.Repositorios
     public class DetallleVentaRepositorio
     {
         // INSERTAR DETALLE DE VENTA
-        public static async Task InsertarDetalleVenta(DetalleVenta nuevoDetalle)
+       /* public static async Task InsertarDetalleVenta(DetalleVenta nuevoDetalle)
         {
             try
             {
@@ -102,6 +102,6 @@ namespace CapaDeDatos.Repositorios
                 Console.WriteLine($"Error al insertar detalles de venta: {ex.Message}");
                 throw;
             }
-        }
+        }*/
     }
 }

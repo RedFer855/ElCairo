@@ -19,6 +19,8 @@ namespace ModernMenuUI
     public partial class frmFacturacion : Form
     {
         private readonly ProductoRepositorio _productoRepo;
+        
+
         public frmFacturacion()
         {
             InitializeComponent();
@@ -394,77 +396,98 @@ namespace ModernMenuUI
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
-            var Actual = supabase.Auth.CurrentUser;
-            if (Actual == null)
+            if (dgvCarrito.Rows.Count == 0)
             {
-                throw new Exception("No hay usuario autenticado en la sesión actual.");
+                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            //obteniendo el usuario
-            var respEmpleado = await supabase
-            .From<Usuario>()
-            .Select("id_empleado")
-            .Filter("user_id", Operator.Equals, Actual.Id.ToString())
-            .Get();
-
-            //obteniendo el id de la compra recien creada
-
-            /* var detalles = dgvCarrito.Rows
-              .Cast<DataGridViewRow>()
-              .Where(r => !r.IsNewRow)
-              .Select(r => new {
-                  id_producto = Convert.ToInt32(r.Cells["id_producto"].Value),
-                  cantidad = Convert.ToInt32(r.Cells["cantidad"].Value)
-              }).ToList();
-
-              string detallesJson = JsonSerializer.Serialize(detalles);*/
-
-
-            if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+            else
             {
-                MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
-                return;
-            }
+                int clienteId = 4; //por mientras, en lo que se configura la barra de busqueda
+                var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+                var Actual = supabase.Auth.CurrentUser;
 
-            int idEmpleado = respEmpleado.Models.First().IdEmpleado; // asegúrate del nombre de la propiedad
-
-
-            var venta = new Venta
-            {
-                IdEmpleado = idEmpleado,
-                IdCliente = 4,
-                IdRutasVenta = 1,
-                FechaVenta = DateTime.UtcNow
-            };
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
-                var ventaRepositorio = new VentaRepositorio();
-                await ventaRepositorio.InsertarVenta(venta);
-
-              
-                /*
-                await supabase.Rpc("registrar_detalle_compra", new
+                if (Actual == null)
                 {
-                    p_id_compra = idCompra,     
-                    p_detalles = JsonDocument.Parse(detallesJson).RootElement
-                });*/
+                    throw new Exception("No hay usuario autenticado en la sesión actual.");
+                }
 
-                dgvCarrito.Rows.Clear();
-                ActualizarTotales();
-                ActualizarImagenCarrito();
-                MessageBox.Show($"Venta registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+                //obteniendo el usuario
+                var respEmpleado = await supabase
+                .From<Usuario>()
+                .Select("id_empleado")
+                .Filter("user_id", Operator.Equals, Actual.Id.ToString())
+                .Get();
+
+                //obteniendo el id de la compra recien creada
+
+                var detalles = dgvCarrito.Rows
+                .Cast<DataGridViewRow>()
+                .Where(r => !r.IsNewRow)
+                .Select(r => new {
+                    id_producto = Convert.ToInt32(r.Cells[0].Value),
+                    cantidad_venta = Convert.ToInt32(r.Cells[3].Value)
+                }).ToList();
+
+                //string detallesJson = JsonSerializer.Serialize(detalles);
+                /*
+                 
+                    esta mierda no sirve de nada, supabase hace el json de un solo cuando se envia el valor 
+                    de la variable detalles al rpc
+
+                 */
+
+                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+                {
+                    MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
+                    return;
+                }
+
+                int idEmpleado = respEmpleado.Models.First().IdEmpleado;
+
+
+
+
+
+                var venta = new Venta
+                {
+                    IdEmpleado = idEmpleado,
+                    IdCliente = clienteId,
+                    IdRutasVenta = 1,
+                    FechaVenta = DateTime.UtcNow
+                };
+                try
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    var ventaRepositorio = new VentaRepositorio();
+                    await ventaRepositorio.InsertarVenta(venta);
+                    //MessageBox.Show(detallesJson);
+                    // se llama aqui para no crear registros fantasmas
+                    var ventaRepo = new VentaRepositorio();
+                    int? IdVenta = await ventaRepo.ObtenerVentaId(idEmpleado);
+                    if (IdVenta == null)
+                    {
+                        MessageBox.Show("No se pudo obtener el ID de la venta recién creada.");
+                        return;
+                    }
+                    await supabase.Rpc("registrar_detalle_venta", new
+                    {
+                        p_id_venta = IdVenta,
+                        p_detalles = detalles,
+                    });
+
+                    MessageBox.Show($"Venta registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //ActualizarImagenCarrito();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    this.Cursor = Cursors.Default;
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
-            }
+
         }
     }
     
