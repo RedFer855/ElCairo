@@ -395,7 +395,7 @@ namespace ModernMenuUI
         private void btnCierreDiario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
             clsManejarFormularios.Instancia.AbrirFormulario(new frmCierreDiario());
         }
 

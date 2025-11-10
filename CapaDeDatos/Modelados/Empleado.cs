@@ -34,6 +34,8 @@ namespace CapaDeDatos.Modelados
         
         [Column("estado_empleado")]
         public bool EstadoEmpleado { get; set; }
+
+        public string NombreCompleto => $"{Nombre} {Apellido}";
     }
 
 
