@@ -387,6 +387,7 @@ namespace ModernMenuUI
                 finally
                 {
                     this.Cursor = Cursors.Default;
+                    dgvCarrito.Rows.Clear();
                 }
             }
         }
