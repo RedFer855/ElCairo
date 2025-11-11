@@ -104,7 +104,7 @@ namespace ModernMenuUI
                 MessageBox.Show("Por favor, seleccione un producto de la lista para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        
+
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
@@ -284,6 +284,11 @@ namespace ModernMenuUI
         private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
         {
             await DesecharSuscripcion();
+        }
+
+        private void gbxEstado_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 

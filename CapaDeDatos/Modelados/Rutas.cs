@@ -13,16 +13,16 @@ namespace CapaDeDatos.Modelados
         public int IdRuta { get; set; }
 
         [Column("nombre_rutas")]
-        public string NombreRutasRuta { get; set; }
+        public string NombreRuta { get; set; }
 
         [Column("descripcion_ruta")]
-        public string DescripcionRutaRuta { get; set; }
+        public string DescripcionRuta { get; set; }
 
         [Column("latitud_ruta")]
-        public decimal LatitudRutaRuta { get; set; }
+        public decimal LatitudRuta { get; set; }
 
         [Column("longitud_ruta")]
-        public decimal LongitudRutaRuta { get; set; }
+        public decimal LongitudRuta { get; set; }
 
         [Column("id_empleado")]
         public int IdEmpleadoRuta { get; set; }
@@ -31,7 +31,7 @@ namespace CapaDeDatos.Modelados
         public int IdEstadoRuta { get; set; }
 
         [Column("estado_ruta")]
-        public bool EstadoRutaRuta { get; set; }
+        public bool EstadoRuta { get; set; }
     }
 
 }

@@ -10,9 +10,10 @@ namespace CapaDeDatos.Modelados
     [Table("fn_cierre_diario")]
     public class CierreDiarioResult : BaseModel
     {
-        [PrimaryKey("id_venta", false)]   // 👈 clave primaria
-        [Column("id_venta")]
+        [PrimaryKey("idventa", false)]
+        [Column("idventa")]
         public int IdVenta { get; set; }
+
 
         [Column("fecha_venta")]
         public DateTime FechaVenta { get; set; }

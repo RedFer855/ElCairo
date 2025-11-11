@@ -40,8 +40,10 @@
             btnSalir = new Button();
             button1 = new Button();
             label4 = new Label();
-            textBox4 = new TextBox();
             panel5 = new Panel();
+            cmbClientes = new ComboBox();
+            label10 = new Label();
+            cmbRutas = new ComboBox();
             label7 = new Label();
             label6 = new Label();
             btnFacturar = new Button();
@@ -65,6 +67,7 @@
             Sumar = new DataGridViewImageColumn();
             Eliminar = new DataGridViewImageColumn();
             panelBusqueda = new Panel();
+            lstSugerencias = new ListBox();
             txtBuscar = new TextBox();
             buscar = new Button();
             panel1 = new Panel();
@@ -142,34 +145,51 @@
             label4.AutoSize = true;
             label4.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.FromArgb(87, 99, 110);
-            label4.Location = new Point(11, 21);
+            label4.Location = new Point(60, 9);
             label4.Name = "label4";
-            label4.Size = new Size(95, 20);
+            label4.Size = new Size(52, 20);
             label4.TabIndex = 16;
-            label4.Text = "No. Factura:";
-            // 
-            // textBox4
-            // 
-            textBox4.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Enabled = false;
-            textBox4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox4.Location = new Point(104, 19);
-            textBox4.Margin = new Padding(3, 4, 3, 4);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(202, 24);
-            textBox4.TabIndex = 13;
+            label4.Text = "Rutas:";
             // 
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
+            panel5.Controls.Add(cmbClientes);
+            panel5.Controls.Add(label10);
+            panel5.Controls.Add(cmbRutas);
             panel5.Controls.Add(label4);
-            panel5.Controls.Add(textBox4);
             panel5.Location = new Point(14, 16);
             panel5.Margin = new Padding(3, 4, 3, 4);
             panel5.Name = "panel5";
             panel5.Size = new Size(331, 68);
             panel5.TabIndex = 14;
+            // 
+            // cmbClientes
+            // 
+            cmbClientes.FormattingEnabled = true;
+            cmbClientes.Location = new Point(202, 32);
+            cmbClientes.Name = "cmbClientes";
+            cmbClientes.Size = new Size(104, 28);
+            cmbClientes.TabIndex = 19;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.FromArgb(87, 99, 110);
+            label10.Location = new Point(202, 9);
+            label10.Name = "label10";
+            label10.Size = new Size(68, 20);
+            label10.TabIndex = 18;
+            label10.Text = "Clientes:";
+            // 
+            // cmbRutas
+            // 
+            cmbRutas.FormattingEnabled = true;
+            cmbRutas.Location = new Point(60, 32);
+            cmbRutas.Name = "cmbRutas";
+            cmbRutas.Size = new Size(104, 28);
+            cmbRutas.TabIndex = 17;
             // 
             // label7
             // 
@@ -464,6 +484,7 @@
             // 
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
+            panelBusqueda.Controls.Add(lstSugerencias);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(buscar);
             panelBusqueda.Location = new Point(352, 16);
@@ -472,17 +493,31 @@
             panelBusqueda.Size = new Size(510, 68);
             panelBusqueda.TabIndex = 9;
             // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.Location = new Point(22, 45);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(408, 44);
+            lstSugerencias.TabIndex = 18;
+            lstSugerencias.Visible = false;
+            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
+            lstSugerencias.Leave += lstSugerencias_Leave;
+            // 
             // txtBuscar
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
-            txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtBuscar.Font = new Font("Itim", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtBuscar.ForeColor = Color.Black;
             txtBuscar.Location = new Point(24, 19);
             txtBuscar.Margin = new Padding(3, 4, 3, 4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
             txtBuscar.Size = new Size(406, 24);
             txtBuscar.TabIndex = 1;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
             // buscar
             // 
@@ -803,14 +838,15 @@
             Controls.Add(btnFacturar);
             Controls.Add(panel4);
             Controls.Add(panelCarrito);
-            Controls.Add(panelBusqueda);
-            Controls.Add(panel1);
             Controls.Add(panel2);
+            Controls.Add(panel1);
+            Controls.Add(panelBusqueda);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 4, 3, 4);
             Name = "frmFacturacion";
             Text = "frmFacturacion";
+            FormClosing += frmFacturacion_FormClosing;
             Load += Gestion_de_Ventas_Load;
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
@@ -844,7 +880,6 @@
         private Button btnSalir;
         private Button button1;
         private Label label4;
-        private TextBox textBox4;
         private Panel panel5;
         private Label label7;
         private Label label6;
@@ -892,5 +927,9 @@
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
+        private ListBox lstSugerencias;
+        private ComboBox cmbRutas;
+        private ComboBox cmbClientes;
+        private Label label10;
     }
 }

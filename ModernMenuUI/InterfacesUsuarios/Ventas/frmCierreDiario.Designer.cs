@@ -253,6 +253,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmCierreDiario";
             Text = "frmCierreDiario";
+            FormClosing += frmCierreDiario_FormClosing;
             Load += frmCierreDiario_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvCierreDiario).EndInit();

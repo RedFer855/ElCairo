@@ -364,6 +364,7 @@
             gbxEstado.TabIndex = 28;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
+            gbxEstado.Enter += gbxEstado_Enter;
             // 
             // button3
             // 

@@ -1,7 +1,9 @@
-﻿using CapaDeDatos.Modelados;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using Microsoft.VisualBasic.ApplicationServices;
 using ModernMenuUI.Properties;
+using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,13 +15,16 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Postgrest.Constants;
+using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
     public partial class frmFacturacion : Form
     {
         private readonly ProductoRepositorio _productoRepo;
-        
+        private Supabase.Client? _supabaseClient;
+        private RealtimeChannel? _productoSubscription;
+        private List<Producto> _productosCache = new List<Producto>();
 
         public frmFacturacion()
         {
@@ -33,9 +38,113 @@ namespace ModernMenuUI
             clsAnmaciones.ActivarDoubleBuffering(dgvCarrito);
             clsAnmaciones.ActivarDoubleBuffering(dgvProductos);
             txtBuscar.PlaceholderText = "Buscar producto...";
-            txtBuscar.ForeColor = Color.White; // Esto cambia el color del texto normal
+            txtBuscar.ForeColor = Color.Black; // Esto cambia el color del texto normal
             dgvProductos.ClearSelection();
+            this.FormClosing += frmFacturacion_FormClosing;
 
+        }
+        private async Task DesecharSuscripcionProductosAsync()
+        {
+            if (_productoSubscription != null)
+            {
+                try
+                {
+                    await Task.Run(() => _productoSubscription.Unsubscribe());
+                    System.Diagnostics.Debug.WriteLine("Suscripción a Productos en Facturación desechada.");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al desuscribir productos en Facturación: {ex.Message}");
+                }
+
+                _productoSubscription = null;
+            }
+        }
+        private async Task IniciarSuscripcionProductosAsync()
+        {
+            await DesecharSuscripcionProductosAsync();
+
+            try
+            {
+                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
+
+                _productoSubscription = await _supabaseClient
+                    .From<Producto>()                    // 👈 tu modelo Producto
+                    .On(ListenType.All, (sender, change) =>
+                    {
+                        if (!this.IsHandleCreated || this.IsDisposed)
+                            return;
+
+                        // Volver al hilo de UI y recargar la lista de productos
+                        this.BeginInvoke((MethodInvoker)(async () =>
+                        {
+                            if (this.IsDisposed) return;
+                            await CargarProductosAsync();   // 👈 ya lo tienes hecho
+                        }));
+                    });
+
+                System.Diagnostics.Debug.WriteLine("Suscripción a Productos en Facturación creada.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al suscribir productos en Facturación: {ex.Message}");
+            }
+        }
+        private async Task CargarClientesAsync()
+        {
+            try
+            {
+                var supabase = await Conexion.GetClientAsync();
+
+                var resp = await supabase
+                    .From<Cliente>()
+                    .Get();
+
+                var lista = resp.Models.ToList();
+
+                if (lista.Count == 0)
+                {
+                    MessageBox.Show("No hay clientes disponibles en la base de datos.");
+                }
+
+                cmbClientes.DataSource = lista;
+                cmbClientes.DisplayMember = "NombreCliente"; // 👈 lo que se muestra
+                cmbClientes.ValueMember = "IdCliente";       // 👈 lo que se usa internamente
+                cmbClientes.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar clientes: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private async Task CargarRutasAsync()
+        {
+            try
+            {
+                var supabase = await Conexion.GetClientAsync();
+
+                var resp = await supabase
+                    .From<Ruta>()
+                    .Get();
+
+                var lista = resp.Models.ToList();
+
+                if (lista.Count == 0)
+                {
+                    MessageBox.Show("No hay rutas disponibles en la base de datos.");
+                }
+
+                cmbRutas.DataSource = lista;
+                cmbRutas.DisplayMember = "NombreRuta"; // 👈 Nombre visible
+                cmbRutas.ValueMember = "IdRuta";            // 👈 ID interno
+                cmbRutas.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar rutas: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -57,28 +166,25 @@ namespace ModernMenuUI
             // 2. Recorre cada fila en el DataGridView del carrito
             foreach (DataGridViewRow fila in dgvCarrito.Rows)
             {
-                // Asegúrate de que la fila no sea nula (pasa a veces)
                 if (fila.Cells[2].Value != null && fila.Cells[3].Value != null)
                 {
-                    // 3. Obtiene el Precio (de la celda 2) y la Cantidad (de la celda 3)
-                    // (Basado en tu método AgregarAlCarrito)
                     decimal precio = Convert.ToDecimal(fila.Cells[2].Value);
                     int cantidad = Convert.ToInt32(fila.Cells[3].Value);
 
-                    // 4. Suma el total de esta fila al subtotal general
                     subtotal += (precio * cantidad);
                 }
             }
 
-            // 5. Muestra los resultados en los TextBoxes
-            // "N2" formatea el número con 2 decimales (ej. "150.00")
+            // 3. Calcular impuesto del 15%
+            decimal impuesto = subtotal * 0.15m;
+
+            // 4. Calcular total (subtotal + impuesto)
+            decimal total = subtotal + impuesto;
+
+            // 5. Mostrar los resultados en los TextBox
             txtSubtotal.Text = subtotal.ToString("N2");
-
-            // Como aún no manejamos impuestos, el Total es igual al Subtotal
-            txtTotal.Text = subtotal.ToString("N2");
-
-            // Dejamos el impuesto en 0 por ahora
-            txtImpuesto.Text = (0.00).ToString("N2");
+            txtImpuesto.Text = impuesto.ToString("N2");
+            txtTotal.Text = total.ToString("N2");
         }
 
         private async Task CargarProductosAsync()
@@ -87,6 +193,8 @@ namespace ModernMenuUI
             {
                 // Llama al repositorio para obtener los productos reales
                 List<Producto> listaDeProductos = await _productoRepo.ObtenerTodosLosProductos();
+
+                _productosCache = listaDeProductos ?? new List<Producto>();
 
                 dgvProductos.Rows.Clear(); // Limpia las filas (como ya hacías)
 
@@ -248,6 +356,24 @@ namespace ModernMenuUI
 
         private void AgregarAlCarrito(int codigoProducto, int cantidadAgregar)
         {
+            int limiteProductos = 100;
+            int productosActuales = dgvCarrito.Rows.Count;
+
+            // Si ya llegó al límite y el producto no está en el carrito
+            bool productoYaExiste = dgvCarrito.Rows
+                .Cast<DataGridViewRow>()
+                .Any(r => !r.IsNewRow && (int)r.Cells[0].Value == codigoProducto);
+
+            if (productosActuales >= limiteProductos && !productoYaExiste)
+            {
+                MessageBox.Show(
+                    $"Solo puedes agregar hasta {limiteProductos} productos diferentes al carrito.",
+                    "Límite alcanzado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return; // ⛔ Detiene el método
+            }
             Image Eliminar = Properties.Resources.eliminar__1_;
             Image Restar = Properties.Resources.signo_menos__1_;
             Image Sumar = Properties.Resources.mas__2_;
@@ -318,7 +444,7 @@ namespace ModernMenuUI
                 if (nudCantidad.Value <= 0 || txtCodigo.Text == "" && txtProducto.Text == "")
                     MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
-                    AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(nudCantidad.Text));
+                AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(nudCantidad.Text));
                 nudCantidad.Value = 1;
                 txtCodigo.Text = null;
                 txtProducto.Text = null;
@@ -359,6 +485,18 @@ namespace ModernMenuUI
                 //lblCarritoVacio.Visible = false;
             }
         }
+        private void LimpiarCarrito()
+        {
+            dgvCarrito.Rows.Clear();      // borra todos los productos del carrito
+            ActualizarTotales();          // deja subtotal, total e impuesto en 0
+            ActualizarImagenCarrito();    // muestra la imagen de carrito vacío
+
+            txtCodigo.Text = "";
+            txtProducto.Text = "";
+            txtPrecio.Text = "";
+            nudCantidad.Value = 1;
+            dgvProductos.ClearSelection();
+        }
         private void label5_Click(object sender, EventArgs e)
         {
 
@@ -387,6 +525,9 @@ namespace ModernMenuUI
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
             await CargarProductosAsync();
+            await IniciarSuscripcionProductosAsync();
+            await CargarRutasAsync();
+            await CargarClientesAsync();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -402,7 +543,7 @@ namespace ModernMenuUI
             }
             else
             {
-                int clienteId = 4; //por mientras, en lo que se configura la barra de busqueda
+                 
                 var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
                 var Actual = supabase.Auth.CurrentUser;
 
@@ -423,7 +564,8 @@ namespace ModernMenuUI
                 var detalles = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Where(r => !r.IsNewRow)
-                .Select(r => new {
+                .Select(r => new
+                {
                     id_producto = Convert.ToInt32(r.Cells[0].Value),
                     cantidad_venta = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
@@ -444,15 +586,11 @@ namespace ModernMenuUI
 
                 int idEmpleado = respEmpleado.Models.First().IdEmpleado;
 
-
-
-
-
                 var venta = new Venta
                 {
                     IdEmpleado = idEmpleado,
-                    IdCliente = clienteId,
-                    IdRutasVenta = 1,
+                    IdCliente = (int)cmbClientes.SelectedValue,
+                    IdRutasVenta = (int)cmbRutas.SelectedValue,
                     FechaVenta = DateTime.UtcNow
                 };
                 try
@@ -474,7 +612,7 @@ namespace ModernMenuUI
                         p_id_venta = IdVenta,
                         p_detalles = detalles,
                     });
-
+                    LimpiarCarrito();
                     MessageBox.Show($"Venta registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //ActualizarImagenCarrito();
                 }
@@ -489,7 +627,72 @@ namespace ModernMenuUI
             }
 
         }
+
+        private async void frmFacturacion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            await DesecharSuscripcionProductosAsync();
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            string texto = txtBuscar.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(texto) || _productosCache == null || _productosCache.Count == 0)
+            {
+                lstSugerencias.Visible = false;
+                return;
+            }
+
+            // Buscar coincidencias por nombre
+            var resultados = _productosCache
+                .Where(p => p.NombreProducto.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                .Take(10) // máximo 10 sugerencias
+                .ToList();
+
+            if (resultados.Count == 0)
+            {
+                lstSugerencias.Visible = false;
+                return;
+            }
+
+            // Cargar sugerencias
+            lstSugerencias.DataSource = resultados;
+            lstSugerencias.DisplayMember = "NombreProducto";
+            lstSugerencias.ValueMember = "IdProducto";
+            lstSugerencias.Visible = true;
+        }
+
+        private void lstSugerencias_DoubleClick(object sender, EventArgs e)
+        {
+            if (lstSugerencias.SelectedItem is Producto producto)
+            {
+                // Llenar los textbox del producto
+                txtCodigo.Text = producto.IdProducto.ToString();
+                txtProducto.Text = producto.NombreProducto;
+                txtPrecio.Text = producto.PrecioVenta.ToString("N2");
+
+                // Buscar y seleccionar la fila correspondiente en dgvProductos
+                foreach (DataGridViewRow fila in dgvProductos.Rows)
+                {
+                    if (fila.Cells[0].Value != null && (int)fila.Cells[0].Value == producto.IdProducto)
+                    {
+                        fila.Selected = true;
+                        dgvProductos.CurrentCell = fila.Cells[0];
+                        break;
+                    }
+                }
+
+                // Ocultar las sugerencias
+                lstSugerencias.Visible = false;
+            }
+        }
+
+        private void lstSugerencias_Leave(object sender, EventArgs e)
+        {
+            lstSugerencias.Visible = false;
+            txtBuscar.Text = "";
+        }
     }
-    
+
 }
 
