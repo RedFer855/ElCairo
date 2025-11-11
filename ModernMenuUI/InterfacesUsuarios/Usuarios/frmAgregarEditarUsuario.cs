@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaDeDatos.Modelados;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
     public partial class frmAgregarEditarUsuario : Form
     {
         public frmAgregarEditarUsuario()
+        {
+            InitializeComponent();
+        }
+        public frmAgregarEditarUsuario(Usuario usuario)
         {
             InitializeComponent();
         }

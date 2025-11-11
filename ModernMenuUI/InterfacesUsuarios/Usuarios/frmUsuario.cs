@@ -3,6 +3,7 @@ using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion; // Para el monitor de red
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
+using ModernMenuUI.InterfacesUsuarios.Usuarios;
 using Supabase.Realtime; // Para Realtime
 using System;
 using System.Collections.Generic;
@@ -222,6 +223,16 @@ namespace ModernMenuUI
         private void btnNuevo_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnNuevo_Click_2(object sender, EventArgs e)
+        {
+            if (_usuarioSeleccionado != null)
+            {
+                frmAgregarEditarUsuario UserEdit = new frmAgregarEditarUsuario(_usuarioSeleccionado);
+                UserEdit.ShowDialog();
+                
+            }
         }
     }
 }
