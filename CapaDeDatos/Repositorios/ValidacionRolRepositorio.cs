@@ -71,7 +71,7 @@ namespace CapaDeDatos.Repositorios
             return accionesFiltradasResponse.Models;
         }
 
-        // 🔹 Construye el contexto completo
+        // Construye el contexto completo
         public async Task<UsuarioContexto> ConstruirContexto(string uuidUsuario, CancellationToken cancellationToken = default)
         {
             var rol = await ObtenerRolDeUsuario(uuidUsuario, cancellationToken);

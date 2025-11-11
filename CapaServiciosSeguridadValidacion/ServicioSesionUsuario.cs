@@ -11,34 +11,28 @@ namespace CapaServiciosSeguridadValidacion
 {
     public static class ServicioSesionUsuario
     {
-        // 1. CAMPOS EXISTENTES (No se tocan)
         private static User UsuarioActual;
         private static String Rol;
 
-        // 2. CAMPO NUEVO (Se añade)
-        // Guardará el contexto completo con permisos
+
         public static UsuarioContexto Contexto { get; private set; }
 
-        // 3. MÉTODO EXISTENTE (No se toca)
-        // Tu código antiguo puede seguir llamando a este método sin problemas.
+
         public static void IniciarSesion(User usuarioAutenticado, string rol)
         {
             UsuarioActual = usuarioAutenticado;
             Rol = rol;
         }
 
-        // 4. MÉTODO NUEVO (Se añade)
-        // Este es el que llamará tu 'frmInicioSesion'
         public static void IniciarSesion(User usuarioAutenticado, UsuarioContexto contexto)
         {
             UsuarioActual = usuarioAutenticado;
             Contexto = contexto; // Guarda el nuevo contexto
 
-            // (Opcional, pero recomendado)
-            // También actualiza el 'Rol' antiguo para mantener consistencia
+
             if (contexto != null && contexto.Rol != null)
             {
-                Rol = contexto.Rol.NombreRolRol; // Asumiendo que tu modelo Rol tiene 'NombreRolRol'
+                Rol = contexto.Rol.NombreRolRol; 
             }
         }
 
@@ -59,7 +53,7 @@ namespace CapaServiciosSeguridadValidacion
             return "Usuario Desconocido";
         }
 
-        // 6. OBTENER ROL (Se hace más inteligente)
+
         public static string ObtenerRolUsuario()
         {
             if (UsuarioActual == null)
