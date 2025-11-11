@@ -434,14 +434,10 @@ namespace ModernMenuUI
                 }
 
                 //obteniendo el usuario
-                var respEmpleado = await supabase
-                .From<Usuario>()
-                .Select("id_empleado")
-                .Filter("user_id", Operator.Equals, Actual.Id.ToString())
-                .Get();
+                var respEmpleado = await CompraRepositorio.getUserId(Actual.Id);
 
                 //obteniendo el id de la compra recien creada
-                
+                //esto no necesita estar en el repo ya que es una consulta de mi dgv, no de la base de datos.
                 var detalles = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Where(r => !r.IsNewRow)
@@ -450,26 +446,14 @@ namespace ModernMenuUI
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
 
-                //string detallesJson = JsonSerializer.Serialize(detalles);
-                /*
-                 
-                    esta mierda no sirve de nada, supabase hace el json de un solo cuando se envia el valor 
-                    de la variable detalles al rpc
-
-                 */
-
-                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+                if (respEmpleado == null)
                 {
                     MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
                     return;
                 }
 
-                int idEmpleado = respEmpleado.Models.First().IdUsuario;
+                int idEmpleado = respEmpleado.IdUsuario;
 
-               
-                
-                
-                
                 var compra = new Compra
                 {
                     IdEmpleado = idEmpleado,

@@ -68,5 +68,35 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
+        public static async Task<Usuario> getUserId(string user_id)
+        {
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+            if (user_id == null)
+            {
+                throw new Exception("No hay usuario autenticado en la sesión actual.");
+            }
+            try
+            {
+
+                var respEmpleado = await supabase
+                .From<Usuario>()
+                .Select("id_empleado")
+                .Filter("user_id", Operator.Equals, user_id)
+                .Get();
+
+                return respEmpleado.Models.FirstOrDefault(); 
+                /*como estoy consultando una lista y quiero la primera coincidencia
+                 debo de retornar un valor lista, no un valor de la varaible
+                 */
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"no se pudo buscar el usuario{ex.Message}");
+                return null;
+            }
+            
+            
+        }
     }
 }

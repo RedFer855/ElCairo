@@ -12,11 +12,15 @@ namespace CapaDeDatos.Modelados
         [PrimaryKey("id_bodega", false)]
         public int Id { get; set; }
 
+        [Column("Contrasenia_Bodega")]
+        public string ContraseniaBodega { get; set; }
+
+        [Column("estado_bodega")]
+
+        public bool EstadoBodega { get; set; }
+
         [Column("nombre_bodega")]
         public string NombreBodega { get; set; }
-
-        [Column("ubicacion")]
-        public string Ubicacion { get; set; }
     }
 
 }
