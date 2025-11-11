@@ -104,8 +104,6 @@ namespace ModernMenuUI
             .Where(p => p.EstadoProducto == estado)
             .ToList();
 
-            // (Aquí podrías añadir el filtro del buscador en el futuro)
-
             // 3. Asigna los datos filtrados al DataGridView
             dgvProductos.DataSource = listaFiltrada;
 
@@ -251,27 +249,7 @@ namespace ModernMenuUI
             if (e.RowIndex < 0 || e.RowIndex >= dgvCarrito.RowCount)
                 return;
 
-            // Obtener codigoProducto desde la columna 0
-            if (!int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[0].Value?.ToString(), out int codigoProducto))
-                return;
-
-            // Obtener stock desde dgvProductos (suponiendo columna 5 es stock en dgvProductos)
-            int stock = 0;
-            for (int i = 0; i < dgvProductos.Rows.Count; i++)
-            {
-                var cellVal = dgvProductos.Rows[i].Cells[0].Value;
-                if (cellVal != null && int.TryParse(cellVal.ToString(), out int codigoProdGrid))
-                {
-                    if (codigoProdGrid == codigoProducto)
-                    {
-                        var stockVal = dgvProductos.Rows[i].Cells[5].Value; // ajusta si la columna stock no es la 5
-                        int.TryParse(stockVal?.ToString(), out stock);
-                        break;
-                    }
-                }
-            }
-
-            // Columna eliminar (imagen en la columna 4 según tu UI)
+            // Columna eliminar (4)
             if (e.ColumnIndex == 4)
             {
                 if (dgvCarrito.CurrentRow != null)
@@ -279,33 +257,70 @@ namespace ModernMenuUI
                 return;
             }
 
-            // NOTA: la columna de "cantidad" es la 3. Nunca escribas en las columnas de imagen (4,5,6) valores int.
-
-            // Columna restar (imagen en la columna 5)
+            // Columna restar (5)
             if (e.ColumnIndex == 5)
             {
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
                     if (cantidad > 1)
-                        dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1; // <- escribir en la columna 3 (Cantidad)
+                        dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
                     else
                         MessageBox.Show("La cantidad no puede ser menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 return;
             }
 
-            // Columna sumar (imagen en la columna 6)
+            // Columna sumar (6)
             if (e.ColumnIndex == 6)
             {
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
-                    if (cantidad < stock)
-                        dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad + 1; // <- escribir en la columna 3 (Cantidad)
+                    if (cantidad < 400)
+                        dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad + 1;
                     else
-                        MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("La cantidad máxima por producto es 400.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 return;
             }
+        }
+       
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnSalir_Click_1(object sender, EventArgs e)
+        {
+            clsAnmaciones.NombreMenuPrincipal();
+            this.Close();
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            if (nudCantidad.Value <= 0)
+            {
+                MessageBox.Show("No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            } else if (nudCantidad.Value > 400)
+            {
+                MessageBox.Show("El límite de compra es de 400 unidades por producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            } else if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
+            {
+                MessageBox.Show("Por favor seleccione un producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(nudCantidad.Value));
+
+            // Reiniciar controles
+            nudCantidad.Value = 1;
+            txtCodigo.Text = null;
+            txtProducto.Text = null;
+            dgvProductos.ClearSelection();
+            txtPrecio.Text = null;
+            ActualizarImagenCarrito();
         }
         private void AgregarAlCarrito(int codigoProducto, int cantidadAgregar)
         {
@@ -326,15 +341,14 @@ namespace ModernMenuUI
 
             if (producto == null)
             {
-                MessageBox.Show("Producto no encontrado.");
+                MessageBox.Show("Producto no encontrado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string descripcion = producto.Cells[1].Value.ToString();
-            decimal precio = Convert.ToDecimal(producto.Cells[4].Value);
-            int stock = Convert.ToInt32(producto.Cells[5].Value);
+            decimal costo = Convert.ToDecimal(producto.Cells[4].Value);
 
-            // Revisar si ya está en el carrito
+            // Verificar si ya está en el carrito
             for (int i = 0; i < dgvCarrito.Rows.Count; i++)
             {
                 if ((int)dgvCarrito.Rows[i].Cells[0].Value == codigoProducto)
@@ -342,10 +356,11 @@ namespace ModernMenuUI
                     int cantidadActual = Convert.ToInt32(dgvCarrito.Rows[i].Cells[3].Value);
                     int nuevaCantidad = cantidadActual + cantidadAgregar;
 
-                    if (nuevaCantidad > stock)
+                    // 🔹 Límite máximo de 400
+                    if (nuevaCantidad > 400)
                     {
-                        dgvCarrito.Rows[i].Cells[3].Value = stock;
-                        MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("La cantidad máxima por producto es 400.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        dgvCarrito.Rows[i].Cells[3].Value = 400;
                     }
                     else
                     {
@@ -356,52 +371,16 @@ namespace ModernMenuUI
                 }
             }
 
-            // Si no está en el carrito, agregar nueva fila
-            int cantidadFinal = cantidadAgregar;
-            if (cantidadFinal > stock)
-            {
-                cantidadFinal = stock;
-                MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            // Si no está en el carrito, agregar nuevo producto
+            int cantidadFinal = Math.Min(cantidadAgregar, 400);
+            if (cantidadAgregar > 400)
+                MessageBox.Show("La cantidad máxima por producto es 400. Se ajustó automáticamente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-
-            dgvCarrito.Rows.Add(codigoProducto, descripcion, precio, cantidadFinal, Eliminar, Restar, Sumar);
-        }
-
-
-
-        private void btnSalir_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnSalir_Click_1(object sender, EventArgs e)
-        {
-            clsAnmaciones.NombreMenuPrincipal();
-            this.Close();
-        }
-
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
-            if (nudCantidad.Value <= 0)
-            {
-                MessageBox.Show($"No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                if (nudCantidad.Value <= 0 || txtCodigo.Text == "" && txtProducto.Text == "")
-                    MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
-                    AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(nudCantidad.Text));
-                nudCantidad.Value = 1;
-                txtCodigo.Text = null;
-                txtProducto.Text = null;
-                dgvProductos.ClearSelection();
-                txtPrecio.Text = null;
-                ActualizarImagenCarrito();
-            }
+            dgvCarrito.Rows.Add(codigoProducto, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
 
         }
+
+
         private void ActualizarImagenCarrito()
         {
             // Si no hay filas visibles (ni productos)

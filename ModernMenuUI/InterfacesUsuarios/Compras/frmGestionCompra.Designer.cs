@@ -414,6 +414,7 @@
             // dgvCarrito
             // 
             dgvCarrito.AllowUserToAddRows = false;
+            dgvCarrito.AllowUserToDeleteRows = false;
             dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCarrito.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvCarrito.BorderStyle = BorderStyle.None;
@@ -445,6 +446,7 @@
             dgvCarrito.Location = new Point(0, 0);
             dgvCarrito.Margin = new Padding(3, 4, 3, 4);
             dgvCarrito.Name = "dgvCarrito";
+            dgvCarrito.ReadOnly = true;
             dgvCarrito.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Control;
@@ -478,6 +480,7 @@
             dataGridViewTextBoxColumn1.HeaderText = "Código";
             dataGridViewTextBoxColumn1.MinimumWidth = 6;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -485,6 +488,7 @@
             dataGridViewTextBoxColumn2.HeaderText = "Producto";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -492,6 +496,7 @@
             dataGridViewTextBoxColumn3.HeaderText = "Precio";
             dataGridViewTextBoxColumn3.MinimumWidth = 6;
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -499,6 +504,7 @@
             dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
             dataGridViewTextBoxColumn4.MinimumWidth = 6;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // Restar
             // 
@@ -506,6 +512,7 @@
             Restar.HeaderText = "";
             Restar.MinimumWidth = 6;
             Restar.Name = "Restar";
+            Restar.ReadOnly = true;
             Restar.Resizable = DataGridViewTriState.True;
             Restar.Width = 50;
             // 
@@ -515,6 +522,7 @@
             Sumar.HeaderText = "";
             Sumar.MinimumWidth = 6;
             Sumar.Name = "Sumar";
+            Sumar.ReadOnly = true;
             Sumar.Resizable = DataGridViewTriState.True;
             Sumar.Width = 50;
             // 
@@ -524,6 +532,7 @@
             Eliminar.HeaderText = "";
             Eliminar.MinimumWidth = 6;
             Eliminar.Name = "Eliminar";
+            Eliminar.ReadOnly = true;
             Eliminar.Resizable = DataGridViewTriState.True;
             Eliminar.Width = 50;
             // 
@@ -741,6 +750,7 @@
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
             nudCantidad.Location = new Point(109, 175);
             nudCantidad.Margin = new Padding(3, 4, 3, 4);
+            nudCantidad.Maximum = new decimal(new int[] { 400, 0, 0, 0 });
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
             nudCantidad.Size = new Size(94, 40);
