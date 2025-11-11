@@ -212,6 +212,8 @@
             cmbRol.Name = "cmbRol";
             cmbRol.Size = new Size(351, 28);
             cmbRol.TabIndex = 34;
+            cmbRol.SelectedIndexChanged += cmbRol_SelectedIndexChanged;
+            cmbRol.DataContextChanged += cmbRol_DataContextChanged;
             // 
             // frmAgregarEditarUsuario
             // 
@@ -226,6 +228,7 @@
             MinimizeBox = false;
             Name = "frmAgregarEditarUsuario";
             Text = "Usuario";
+            Load += frmAgregarEditarUsuario_Load;
             panBarraControl.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

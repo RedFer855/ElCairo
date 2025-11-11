@@ -282,6 +282,7 @@
             dgvUsuario.RowTemplate.Height = 50;
             dgvUsuario.Size = new Size(786, 513);
             dgvUsuario.TabIndex = 1;
+            dgvUsuario.SelectionChanged += dgvUsuario_SelectionChanged;
             // 
             // dataGridViewTextBoxColumn1
             // 

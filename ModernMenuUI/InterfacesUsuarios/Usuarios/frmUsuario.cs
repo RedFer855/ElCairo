@@ -36,7 +36,7 @@ namespace ModernMenuUI
             dgvUsuario.AutoGenerateColumns = false;
 
             // 3. CONECTAMOS LOS EVENTOS MANUALMENTE
-            this.dgvUsuario.SelectionChanged += new System.EventHandler(this.dgvProductos_SelectionChanged);
+            this.dgvUsuario.SelectionChanged += new System.EventHandler(this.dgvUsuario_SelectionChanged);
             this.Load += new System.EventHandler(this.frmUsuario_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUsuario_FormClosing);
         }
@@ -197,23 +197,25 @@ namespace ModernMenuUI
             // Lógica para agregar
         }
 
-        private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvUsuario_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             // Clic en celda
-        }
-
-        private void dgvProductos_SelectionChanged(object sender, EventArgs e)
-        {
             if (dgvUsuario.SelectedRows.Count > 0)
             {
                 var filaSeleccionada = dgvUsuario.SelectedRows[0];
-                _usuarioSeleccionado = filaSeleccionada.DataBoundItem as Usuario;
+                Usuario user = filaSeleccionada.DataBoundItem as Usuario;
+
+                if (user != null)
+                {
+                    _usuarioSeleccionado = user;
+                }
             }
             else
             {
                 _usuarioSeleccionado = null;
             }
         }
+
 
         private void frmUsuario_Load_1(object sender, EventArgs e)
         {
@@ -231,7 +233,25 @@ namespace ModernMenuUI
             {
                 frmAgregarEditarUsuario UserEdit = new frmAgregarEditarUsuario(_usuarioSeleccionado);
                 UserEdit.ShowDialog();
-                
+
+            }
+        }
+
+        private void dgvUsuario_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvUsuario != null && dgvUsuario.SelectedRows.Count > 0)
+            {
+                var filaSeleccionada = dgvUsuario.SelectedRows[0];
+                var usuario = filaSeleccionada.DataBoundItem as Usuario;
+
+                if (usuario != null)
+                {
+                    _usuarioSeleccionado = usuario;
+                }
+            }
+            else
+            {
+                _usuarioSeleccionado = null;
             }
         }
     }
