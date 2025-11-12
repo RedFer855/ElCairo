@@ -1,4 +1,4 @@
-﻿using CapaDeDatos.Modelados;
+﻿using CapaDeDatos.Modelados.UsuariosEmpleados;
 using Supabase;
 using Supabase.Gotrue;
 using System;

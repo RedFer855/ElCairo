@@ -1,5 +1,4 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
 using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Supabase.Postgrest.Constants;
 using BCrypt.Net;
+using CapaDeDatos.Modelados.Inventario;
 
 namespace CapaDeDatos.Repositorios
 {

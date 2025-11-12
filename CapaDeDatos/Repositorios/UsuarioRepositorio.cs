@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
 using Supabase.Gotrue;
 using Supabase.Gotrue.Exceptions;
 using Supabase.Postgrest.Exceptions;

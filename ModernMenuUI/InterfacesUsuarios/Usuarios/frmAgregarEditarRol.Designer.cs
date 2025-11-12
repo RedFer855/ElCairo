@@ -679,7 +679,7 @@
             gbxCompras.Size = new Size(664, 114);
             gbxCompras.TabIndex = 2;
             gbxCompras.TabStop = false;
-            gbxCompras.Text = "Compras";
+            gbxCompras.Text = "Acciones";
             // 
             // btnDehabilitarCompras
             // 

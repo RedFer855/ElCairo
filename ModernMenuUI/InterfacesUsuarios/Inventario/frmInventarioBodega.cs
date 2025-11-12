@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;

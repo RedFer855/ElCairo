@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;

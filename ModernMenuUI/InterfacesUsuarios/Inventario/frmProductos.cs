@@ -1,10 +1,10 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion; // Añadido para el monitor
 using ModernMenuUI.ClasesUI;
-using Supabase; 
-using Supabase.Realtime; 
+using Supabase;
+using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading; // Añadido para CancellationTokenSource
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions; 
+using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {

@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Supabase.Realtime;

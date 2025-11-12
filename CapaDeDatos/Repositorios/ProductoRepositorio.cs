@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Productos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +19,7 @@ namespace CapaDeDatos.Repositorios
             try
             {
                 var client = await GetClient();
-
                 var queryBuilder = client.From<Producto>();
-
                 queryBuilder.Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
 
 
@@ -84,7 +82,7 @@ namespace CapaDeDatos.Repositorios
 
         public async Task<Producto> ModificarProducto(Producto editproducto, int idProd)
         {
-            // 1. Verificación de seguridad
+            
             if (editproducto == null)
             {
                 throw new ArgumentNullException(nameof(editproducto), "El producto a modificar no puede ser nulo.");
@@ -92,31 +90,22 @@ namespace CapaDeDatos.Repositorios
 
             try
             {
-                // 2. Obtiene la conexión
                 var client = await GetClient();
-
-                // 3. Realiza la operación de actualización
-                // .Where() selecciona la fila por el idProd
-                // .Update(editproducto) aplica todos los cambios del objeto 'editproducto' a esa fila
                 var response = await client.From<Producto>()
                     .Where(x => x.IdProducto == idProd)
                     .Update(editproducto);
 
-                // 4. Verifica y devuelve el producto modificado
                 if (response?.Models != null && response.Models.Count > 0)
                 {
-                    // Devuelve el primer producto de la respuesta (el actualizado)
+                    
                     return response.Models.First();
                 }
 
-                // Si la respuesta es nula o no contiene modelos, algo falló o no se encontró.
                 throw new Exception("La base de datos no devolvió el producto modificado o no se encontró el ID.");
             }
             catch (Exception ex)
             {
-                // 5. Manejo de errores
                 Console.WriteLine($"Error de Supabase al modificar producto: {ex.Message}");
-                // Relanza para que la UI (el formulario) pueda manejarlo
                 throw new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
             }
         }

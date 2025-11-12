@@ -1,4 +1,4 @@
-﻿using CapaDeDatos.Modelados;
+﻿using CapaDeDatos.Modelados.UsuariosEmpleados;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos; // Para Conexion
-using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion; // Para el monitor de red
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;

@@ -1,4 +1,4 @@
-﻿using CapaDeDatos.Modelados;
+﻿using CapaDeDatos.Modelados.Productos;
 using ModernMenuUI.ClasesUI;
 using System;
 using System.Collections.Generic;
