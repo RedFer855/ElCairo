@@ -545,6 +545,7 @@ namespace ModernMenuUI
 
             _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
+            _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
         }
     }
 }

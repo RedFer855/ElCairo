@@ -311,9 +311,9 @@
             pbxCarritoVacio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbxCarritoVacio.BackColor = Color.Transparent;
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
-            pbxCarritoVacio.Location = new Point(209, 73);
+            pbxCarritoVacio.Location = new Point(275, 81);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(294, 148);
+            pbxCarritoVacio.Size = new Size(159, 141);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;

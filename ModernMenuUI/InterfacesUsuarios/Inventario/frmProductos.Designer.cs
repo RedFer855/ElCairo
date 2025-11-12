@@ -68,20 +68,20 @@
             lblFecha = new Label();
             lblHora = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
-            tableLayoutPanel1 = new TableLayoutPanel();
             btnIngresarPerdida = new Button();
             btnAgregarCategoria = new Button();
             btnEditarProducto = new Button();
             panel1 = new Panel();
             lstSugerencias = new ListBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             panelBusqueda.SuspendLayout();
             gbxEstado.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panelCarrito
@@ -298,7 +298,6 @@
             // btnNuevoProducto
             // 
             btnNuevoProducto.BackColor = Color.FromArgb(149, 195, 172);
-            btnNuevoProducto.Dock = DockStyle.Fill;
             btnNuevoProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnNuevoProducto.ForeColor = SystemColors.ButtonFace;
             btnNuevoProducto.Location = new Point(3, 3);
@@ -312,7 +311,6 @@
             // btnSalir
             // 
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
-            btnSalir.Dock = DockStyle.Fill;
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
@@ -327,7 +325,6 @@
             // btnAgregarMarca
             // 
             btnAgregarMarca.BackColor = Color.FromArgb(149, 195, 172);
-            btnAgregarMarca.Dock = DockStyle.Fill;
             btnAgregarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarMarca.ForeColor = SystemColors.ButtonFace;
             btnAgregarMarca.Location = new Point(194, 3);
@@ -515,31 +512,9 @@
             HoraFecha.Enabled = true;
             HoraFecha.Tick += HoraFecha_Tick;
             // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 157F));
-            tableLayoutPanel1.Controls.Add(btnIngresarPerdida, 2, 0);
-            tableLayoutPanel1.Controls.Add(btnAgregarCategoria, 1, 1);
-            tableLayoutPanel1.Controls.Add(btnNuevoProducto, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnAgregarMarca, 1, 0);
-            tableLayoutPanel1.Controls.Add(btnSalir, 2, 1);
-            tableLayoutPanel1.Controls.Add(btnEditarProducto, 0, 1);
-            tableLayoutPanel1.Location = new Point(12, 563);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(540, 100);
-            tableLayoutPanel1.TabIndex = 31;
-            // 
             // btnIngresarPerdida
             // 
             btnIngresarPerdida.BackColor = Color.FromArgb(149, 195, 172);
-            btnIngresarPerdida.Dock = DockStyle.Fill;
             btnIngresarPerdida.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnIngresarPerdida.ForeColor = SystemColors.ButtonFace;
             btnIngresarPerdida.Location = new Point(385, 3);
@@ -552,7 +527,6 @@
             // btnAgregarCategoria
             // 
             btnAgregarCategoria.BackColor = Color.FromArgb(149, 195, 172);
-            btnAgregarCategoria.Dock = DockStyle.Fill;
             btnAgregarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCategoria.ForeColor = SystemColors.ButtonFace;
             btnAgregarCategoria.Location = new Point(194, 53);
@@ -565,7 +539,6 @@
             // btnEditarProducto
             // 
             btnEditarProducto.BackColor = Color.FromArgb(189, 215, 238);
-            btnEditarProducto.Dock = DockStyle.Fill;
             btnEditarProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditarProducto.ForeColor = Color.FromArgb(87, 99, 110);
             btnEditarProducto.Location = new Point(3, 53);
@@ -603,18 +576,32 @@
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
             lstSugerencias.SelectedIndexChanged += lstSugerencias_SelectedIndexChanged;
             // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            flowLayoutPanel1.Controls.Add(btnNuevoProducto);
+            flowLayoutPanel1.Controls.Add(btnAgregarMarca);
+            flowLayoutPanel1.Controls.Add(btnIngresarPerdida);
+            flowLayoutPanel1.Controls.Add(btnEditarProducto);
+            flowLayoutPanel1.Controls.Add(btnAgregarCategoria);
+            flowLayoutPanel1.Controls.Add(btnSalir);
+            flowLayoutPanel1.Location = new Point(12, 567);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(547, 100);
+            flowLayoutPanel1.TabIndex = 33;
+            // 
             // frmProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(918, 679);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(lstSugerencias);
             Controls.Add(gbxEstado);
             Controls.Add(panelBusqueda);
             Controls.Add(lblFecha);
             Controls.Add(lblHora);
-            Controls.Add(tableLayoutPanel1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProductos";
@@ -629,8 +616,8 @@
             gbxEstado.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -653,7 +640,6 @@
         private Label lblFecha;
         private Label lblHora;
         private System.Windows.Forms.Timer HoraFecha;
-        private TableLayoutPanel tableLayoutPanel1;
         private Button btnAgregarCategoria;
         private Button btnEditarProducto;
         private Panel panel1;
@@ -676,5 +662,6 @@
         private Label label1;
         private TableLayoutPanel tableLayoutPanel2;
         private Button btnCategoria;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }
