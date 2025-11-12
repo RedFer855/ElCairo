@@ -669,6 +669,7 @@
             nudCantidad.Size = new Size(183, 40);
             nudCantidad.TabIndex = 21;
             nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            nudCantidad.ValueChanged += nudCantidad_ValueChanged;
             // 
             // label9
             // 

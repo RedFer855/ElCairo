@@ -324,15 +324,16 @@ namespace ModernMenuUI
             if (e.ColumnIndex == 5)
             {
                 int cantidad = Convert.ToInt32(dgvCarrito.Rows[e.RowIndex].Cells[3].Value);
-                if (cantidad > 1)
-                {
-                    dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
-                    ActualizarTotales();
-                }
-                else
-                {
-                    MessageBox.Show("La cantidad no puede ser menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                 if (cantidad > 1)
+                 {
+                     dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
+                     ActualizarTotales();
+                 }
+                 else
+                 {
+                     MessageBox.Show("La cantidad no puede ser menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                 }
+                
             }
 
 
@@ -356,7 +357,7 @@ namespace ModernMenuUI
 
         private void AgregarAlCarrito(int codigoProducto, int cantidadAgregar)
         {
-            int limiteProductos = 100;
+            int limiteProductos = 3;
             int productosActuales = dgvCarrito.Rows.Count;
 
             // Si ya llegó al límite y el producto no está en el carrito
@@ -435,7 +436,7 @@ namespace ModernMenuUI
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (nudCantidad.Value <= 0)
+            /*if (nudCantidad.Value <= 0)
             {
                 MessageBox.Show($"No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -452,10 +453,18 @@ namespace ModernMenuUI
                 txtPrecio.Text = null;
                 ActualizarTotales();
                 ActualizarImagenCarrito();
-            }
-
+            }*/
+            AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(nudCantidad.Text));
+            nudCantidad.Value = 1;
+            txtCodigo.Text = null;
+            txtProducto.Text = null;
+            dgvProductos.ClearSelection();
+            txtPrecio.Text = null;
+            ActualizarTotales();
+            ActualizarImagenCarrito();
 
         }
+
 
         private void dgvCarrito_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -539,92 +548,69 @@ namespace ModernMenuUI
         {
             if (dgvCarrito.Rows.Count == 0)
             {
-                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
-            {
-                 
-                var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
-                var Actual = supabase.Auth.CurrentUser;
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+            var Actual = supabase.Auth.CurrentUser;
+            if (Actual == null)
+                throw new Exception("No hay usuario autenticado.");
 
-                if (Actual == null)
-                {
-                    throw new Exception("No hay usuario autenticado en la sesión actual.");
-                }
-
-                //obteniendo el usuario
-                var respEmpleado = await supabase
+            var respEmpleado = await supabase
                 .From<Usuario>()
                 .Select("id_empleado")
                 .Filter("user_id", Operator.Equals, Actual.Id.ToString())
                 .Get();
 
-                //obteniendo el id de la compra recien creada
+            if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+            {
+                MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
+                return;
+            }
 
-                var detalles = dgvCarrito.Rows
+            int idEmpleado = respEmpleado.Models.First().IdEmpleado;
+            int idCliente = (int)cmbClientes.SelectedValue;
+            int idRuta = (int)cmbRutas.SelectedValue;
+
+            // armar los detalles
+            var detalles = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Where(r => !r.IsNewRow)
                 .Select(r => new
                 {
                     id_producto = Convert.ToInt32(r.Cells[0].Value),
                     cantidad_venta = Convert.ToInt32(r.Cells[3].Value)
-                }).ToList();
+                })
+                .ToList();
 
-                //string detallesJson = JsonSerializer.Serialize(detalles);
-                /*
-                 
-                    esta mierda no sirve de nada, supabase hace el json de un solo cuando se envia el valor 
-                    de la variable detalles al rpc
+            // convertir los detalles a JSON
+            // var jsonDetalles = JsonSerializer.Serialize(detalles);
 
-                 */
+            // parámetros del RPC
+            var parametros = new
+            {
+                p_id_cliente = idCliente,
+                p_id_rutas = idRuta,
+                p_id_empleado = idEmpleado,
+                p_fecha_venta = DateTime.UtcNow,
+                p_detalles = detalles
 
-                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
-                {
-                    MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
-                    return;
-                }
+            };
+            try
+            {
+                
 
-                int idEmpleado = respEmpleado.Models.First().IdEmpleado;
+                // llamada al RPC
+                await supabase.Rpc("registrar_venta", parametros);
 
-                var venta = new Venta
-                {
-                    IdEmpleado = idEmpleado,
-                    IdCliente = (int)cmbClientes.SelectedValue,
-                    IdRutasVenta = (int)cmbRutas.SelectedValue,
-                    FechaVenta = DateTime.UtcNow
-                };
-                try
-                {
-                    this.Cursor = Cursors.WaitCursor;
-                    var ventaRepositorio = new VentaRepositorio();
-                    await ventaRepositorio.InsertarVenta(venta);
-                    //MessageBox.Show(detallesJson);
-                    // se llama aqui para no crear registros fantasmas
-                    var ventaRepo = new VentaRepositorio();
-                    int? IdVenta = await ventaRepo.ObtenerVentaId(idEmpleado);
-                    if (IdVenta == null)
-                    {
-                        MessageBox.Show("No se pudo obtener el ID de la venta recién creada.");
-                        return;
-                    }
-                    await supabase.Rpc("registrar_detalle_venta", new
-                    {
-                        p_id_venta = IdVenta,
-                        p_detalles = detalles,
-                    });
-                    LimpiarCarrito();
-                    MessageBox.Show($"Venta registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //ActualizarImagenCarrito();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    this.Cursor = Cursors.Default;
-                }
+                LimpiarCarrito();
+                MessageBox.Show("Venta registrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        
 
         }
 
@@ -691,6 +677,11 @@ namespace ModernMenuUI
         {
             lstSugerencias.Visible = false;
             txtBuscar.Text = "";
+        }
+
+        private void nudCantidad_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 
