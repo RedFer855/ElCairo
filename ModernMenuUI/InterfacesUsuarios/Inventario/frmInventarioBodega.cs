@@ -18,6 +18,7 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
+    
     public enum NivelStockFiltro
     {
         Todos,
@@ -27,7 +28,7 @@ namespace ModernMenuUI
     }
     public partial class frmInventarioBodega : Form
     {
-
+        private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
         // === REPOSITORIOS Y CLIENTE ===
         private readonly InventarioRepositorio _inventarioRepo = new InventarioRepositorio();
         private readonly BodegaRepositorio _bodegaRepo = new BodegaRepositorio();
@@ -48,6 +49,8 @@ namespace ModernMenuUI
 
             // Eventos de limpieza
             this.FormClosing += frmInventarioBodega_FormClosing;
+            RegistrarBotonesConPermisos();
+            _servicioPermisos.AplicarPermisos();
         }
         private async void frmInventarioBodega_Load(object sender, EventArgs e)
         {
@@ -329,6 +332,20 @@ namespace ModernMenuUI
             {
                 System.Diagnostics.Debug.WriteLine($"Error al cargar bodegas: {ex.Message}");
             }
+        }
+
+        private void btnCambiarBodega_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void RegistrarBotonesConPermisos()
+        {
+            // BOTONES DE MÓDULO (Lógica "OR")
+            _servicioPermisos.RegistrarBoton(btnCambiarBodega, "update_inventario");
+            _servicioPermisos.RegistrarBoton(btnCrearBodega, "update_inventario");
+
         }
     }
 }

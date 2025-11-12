@@ -40,7 +40,7 @@ namespace ModernMenuUI
                 // Abrir MenuPrincipal
                 frmMenuPrincipal formularioPrincipal = new frmMenuPrincipal();
                 formularioPrincipal.StartPosition = FormStartPosition.CenterScreen;
-                formularioPrincipal.WindowState = FormWindowState.Maximized;
+                //formularioPrincipal.WindowState = FormWindowState.Maximized;
                 formularioPrincipal.ShowDialog();
             }
         }

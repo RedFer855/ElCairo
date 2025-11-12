@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIniciosesion));
             panLogo = new Panel();
-            pictureBox2 = new PictureBox();
+            pbxContenedorImagen = new PictureBox();
             pictureBox1 = new PictureBox();
             panDatosIngreso = new Panel();
             btnVer = new Button();
@@ -49,7 +49,7 @@
             btnMinimizar = new Button();
             btnCerrar = new Button();
             panLogo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbxContenedorImagen).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panDatosIngreso.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCargando).BeginInit();
@@ -62,7 +62,7 @@
             // 
             panLogo.BackColor = Color.FromArgb(189, 215, 238);
             panLogo.BackgroundImage = Properties.Resources.imglogin;
-            panLogo.Controls.Add(pictureBox2);
+            panLogo.Controls.Add(pbxContenedorImagen);
             panLogo.Controls.Add(pictureBox1);
             panLogo.Dock = DockStyle.Left;
             panLogo.Location = new Point(0, 0);
@@ -72,18 +72,18 @@
             panLogo.TabIndex = 0;
             panLogo.MouseDown += panLogo_MouseDown;
             // 
-            // pictureBox2
+            // pbxContenedorImagen
             // 
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.Dock = DockStyle.Fill;
-            pictureBox2.Image = Properties.Resources.el_cairo_2__1__12;
-            pictureBox2.Location = new Point(0, 0);
-            pictureBox2.Margin = new Padding(3, 4, 3, 4);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(286, 429);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.TabIndex = 9;
-            pictureBox2.TabStop = false;
+            pbxContenedorImagen.BackColor = Color.Transparent;
+            pbxContenedorImagen.Dock = DockStyle.Fill;
+            pbxContenedorImagen.Image = Properties.Resources.el_cairo_2__1__12;
+            pbxContenedorImagen.Location = new Point(0, 0);
+            pbxContenedorImagen.Margin = new Padding(3, 4, 3, 4);
+            pbxContenedorImagen.Name = "pbxContenedorImagen";
+            pbxContenedorImagen.Size = new Size(286, 429);
+            pbxContenedorImagen.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxContenedorImagen.TabIndex = 9;
+            pbxContenedorImagen.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -331,7 +331,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormInicioUsurio";
             panLogo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbxContenedorImagen).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panDatosIngreso.ResumeLayout(false);
             panDatosIngreso.PerformLayout();
@@ -360,7 +360,7 @@
         private Button btnCerrar;
         private Label label3;
         private Button btnMinimizar;
-        private PictureBox pictureBox2;
+        private PictureBox pbxContenedorImagen;
         private Label lblMensajeError;
         private PictureBox pbxCargando;
         private Button btnVer;

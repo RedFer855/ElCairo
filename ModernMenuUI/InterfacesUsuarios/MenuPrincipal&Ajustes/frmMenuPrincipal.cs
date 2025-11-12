@@ -459,7 +459,7 @@ namespace ModernMenuUI
         private void HoraFecha_Tick(object sender, EventArgs e)
         {
             lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt", new CultureInfo("es-ES"));
-            lblFecha.Text = DateTime.Now.ToString("ddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
+            lblFecha.Text = DateTime.Now.ToString("dddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
         }
 
         private void pbxCalculadora_Click(object sender, EventArgs e)
