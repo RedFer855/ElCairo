@@ -12,8 +12,9 @@ namespace CapaDeDatos.Repositorios
     {
         private async Task<Client> GetClient()
         {
-            return await Conexion.ConnectWithTimeoutAsync(10);
+            return await Conexion.ConnectWithTimeoutAsync(3);
         }
+
         public async Task<List<Producto>> ObtenerTodosLosProductos(bool? estado = null, int? marcaId = null, int? categoriaId = null)
         {
             try
@@ -50,7 +51,7 @@ namespace CapaDeDatos.Repositorios
             catch (Exception ex)
             {
                 Console.WriteLine($"Error de Supabase al obtener productos: {ex.Message}");
-                throw;
+                throw new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
             }
         }
         public async Task<Producto> InsertarProducto(Producto nuevoProducto)
