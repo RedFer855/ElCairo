@@ -20,6 +20,7 @@ namespace ModernMenuUI
 
         private readonly UsuarioRepositorio _usuarioRepo;
         private Usuario _usuarioSeleccionado = null;
+        private Usuario _usuario_correo=null;
 
         private readonly ServicioVerificacionConexion _monitorConexion = new();
         private Supabase.Client? _supabaseClient;
@@ -197,24 +198,7 @@ namespace ModernMenuUI
             // Lógica para agregar
         }
 
-        private void dgvUsuario_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Clic en celda
-            if (dgvUsuario.SelectedRows.Count > 0)
-            {
-                var filaSeleccionada = dgvUsuario.SelectedRows[0];
-                Usuario user = filaSeleccionada.DataBoundItem as Usuario;
-
-                if (user != null)
-                {
-                    _usuarioSeleccionado = user;
-                }
-            }
-            else
-            {
-                _usuarioSeleccionado = null;
-            }
-        }
+       
 
 
         private void frmUsuario_Load_1(object sender, EventArgs e)
@@ -226,7 +210,26 @@ namespace ModernMenuUI
         {
 
         }
+        private void dgvUsuario_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvUsuario != null && dgvUsuario.SelectedRows.Count > 0)
+            {
+                var filaSeleccionada = dgvUsuario.SelectedRows[0];
+                //var hola = dgvUsuario.SelectedRows[2];
+                var usuario = filaSeleccionada.DataBoundItem as Usuario;
+                //var correo = hola.DataBoundItem as Usuario;
 
+                if (usuario != null /*&& correo != null*/)
+                {
+                    _usuarioSeleccionado = usuario;
+                  //  _usuario_correo = hola;
+                }
+            }
+            else
+            {
+                _usuarioSeleccionado = null;
+            }
+        }
         private void btnNuevo_Click_2(object sender, EventArgs e)
         {
             if (_usuarioSeleccionado != null)
@@ -237,22 +240,6 @@ namespace ModernMenuUI
             }
         }
 
-        private void dgvUsuario_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvUsuario != null && dgvUsuario.SelectedRows.Count > 0)
-            {
-                var filaSeleccionada = dgvUsuario.SelectedRows[0];
-                var usuario = filaSeleccionada.DataBoundItem as Usuario;
-
-                if (usuario != null)
-                {
-                    _usuarioSeleccionado = usuario;
-                }
-            }
-            else
-            {
-                _usuarioSeleccionado = null;
-            }
-        }
+        
     }
 }

@@ -43,8 +43,8 @@
             btnSalir = new Button();
             button1 = new Button();
             panel5 = new Panel();
-            btnBuscarCliente = new Button();
-            textBox4 = new TextBox();
+            btnGetProv = new Button();
+            txtBuscarProv = new TextBox();
             label4 = new Label();
             btnIngresarCompra = new Button();
             panel4 = new Panel();
@@ -94,6 +94,7 @@
             txtProducto = new TextBox();
             txtPrecio = new TextBox();
             btnAgregar = new Button();
+            lstSugerencias = new ListBox();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -147,8 +148,8 @@
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
-            panel5.Controls.Add(btnBuscarCliente);
-            panel5.Controls.Add(textBox4);
+            panel5.Controls.Add(btnGetProv);
+            panel5.Controls.Add(txtBuscarProv);
             panel5.Controls.Add(label4);
             panel5.Location = new Point(14, 5);
             panel5.Margin = new Padding(3, 4, 3, 4);
@@ -156,32 +157,35 @@
             panel5.Size = new Size(329, 68);
             panel5.TabIndex = 23;
             // 
-            // btnBuscarCliente
+            // btnGetProv
             // 
-            btnBuscarCliente.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBuscarCliente.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarCliente.BackgroundImage = (Image)resources.GetObject("btnBuscarCliente.BackgroundImage");
-            btnBuscarCliente.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarCliente.FlatAppearance.BorderSize = 0;
-            btnBuscarCliente.FlatStyle = FlatStyle.Flat;
-            btnBuscarCliente.Location = new Point(254, 20);
-            btnBuscarCliente.Margin = new Padding(3, 4, 3, 4);
-            btnBuscarCliente.Name = "btnBuscarCliente";
-            btnBuscarCliente.Size = new Size(55, 27);
-            btnBuscarCliente.TabIndex = 2;
-            btnBuscarCliente.UseVisualStyleBackColor = false;
+            btnGetProv.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnGetProv.BackColor = Color.FromArgb(168, 191, 212);
+            btnGetProv.BackgroundImage = (Image)resources.GetObject("btnGetProv.BackgroundImage");
+            btnGetProv.BackgroundImageLayout = ImageLayout.Zoom;
+            btnGetProv.FlatAppearance.BorderSize = 0;
+            btnGetProv.FlatStyle = FlatStyle.Flat;
+            btnGetProv.Location = new Point(271, 19);
+            btnGetProv.Margin = new Padding(3, 4, 3, 4);
+            btnGetProv.Name = "btnGetProv";
+            btnGetProv.Size = new Size(38, 27);
+            btnGetProv.TabIndex = 2;
+            btnGetProv.UseVisualStyleBackColor = false;
+            btnGetProv.Click += btnGetProv_Click;
             // 
-            // textBox4
+            // txtBuscarProv
             // 
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Enabled = false;
-            textBox4.Font = new Font("Itim", 13F);
-            textBox4.Location = new Point(77, 19);
-            textBox4.Margin = new Padding(3, 4, 3, 4);
-            textBox4.Name = "textBox4";
-            textBox4.ReadOnly = true;
-            textBox4.Size = new Size(169, 26);
-            textBox4.TabIndex = 22;
+            txtBuscarProv.BorderStyle = BorderStyle.None;
+            txtBuscarProv.Font = new Font("Itim", 13F);
+            txtBuscarProv.Location = new Point(94, 18);
+            txtBuscarProv.Margin = new Padding(3, 4, 3, 4);
+            txtBuscarProv.Name = "txtBuscarProv";
+            txtBuscarProv.Size = new Size(169, 26);
+            txtBuscarProv.TabIndex = 22;
+            txtBuscarProv.TextChanged += txtBuscar_TextChanged;
+            txtBuscarProv.KeyDown += txtBuscar_KeyDown;
+            txtBuscarProv.KeyUp += txtBuscar_KeyUp;
+            txtBuscarProv.Leave += txtBuscar_Leave;
             // 
             // label4
             // 
@@ -190,9 +194,10 @@
             label4.ForeColor = Color.FromArgb(87, 99, 110);
             label4.Location = new Point(11, 21);
             label4.Name = "label4";
-            label4.Size = new Size(61, 20);
+            label4.Size = new Size(83, 20);
             label4.TabIndex = 16;
-            label4.Text = "Cliente:";
+            label4.Text = "Proveedor:";
+            label4.Click += label4_Click;
             // 
             // btnIngresarCompra
             // 
@@ -867,12 +872,34 @@
             btnAgregar.UseVisualStyleBackColor = false;
             btnAgregar.Click += btnAgregar_Click;
             // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 24;
+            lstSugerencias.Location = new Point(17, 61);
+            lstSugerencias.Margin = new Padding(3, 4, 3, 4);
+            lstSugerencias.MaximumSize = new Size(914, 532);
+            lstSugerencias.MinimumSize = new Size(483, 29);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(483, 28);
+            lstSugerencias.TabIndex = 23;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.SelectedIndexChanged += lstSugerencias_SelectedIndexChanged;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            lstSugerencias.MouseDown += lstSugerencias_MouseDown;
+            lstSugerencias.MouseUp += lstSugerencias_MouseUp;
+            // 
             // frmGestionCompra
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(875, 905);
+            Controls.Add(lstSugerencias);
             Controls.Add(btnSalir);
             Controls.Add(button1);
             Controls.Add(panel5);
@@ -963,13 +990,14 @@
         private Button btnAgregar;
         private Panel panel7;
         private DataGridView dgvProductos;
-        private TextBox textBox4;
-        private Button btnBuscarCliente;
+        private TextBox txtBuscarProv;
+        private Button btnGetProv;
         private DataGridViewTextBoxColumn Codigos;
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Marca;
         private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
+        private ListBox lstSugerencias;
     }
 }

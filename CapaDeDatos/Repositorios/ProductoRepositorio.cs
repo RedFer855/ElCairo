@@ -55,6 +55,32 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
+        public async Task<List<Producto>> ObtenerProductosPorProveedorAsync(int idProveedor)
+        {
+            try
+            {
+                var client = await GetClient();
+
+                // 🔹 Trae todos los productos cuya marca pertenece al proveedor dado
+                var queryBuilder = client
+                    .From<Producto>()
+                    .Select("*, marca!inner(id_marca, nombre_marca, id_proveedor), categoria(*)")
+                    .Filter("marca.id_proveedor", Supabase.Postgrest.Constants.Operator.Equals, idProveedor)
+                    .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
+
+                var response = await queryBuilder.Get();
+
+                if (response != null && response.Models != null)
+                    return response.Models;
+
+                return new List<Producto>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error de Supabase al obtener productos por proveedor: {ex.Message}");
+                throw;
+            }
+        }
         public async Task<List<Producto>> ObtenerActivos(bool estado = true, int? marcaId = null, int? categoriaId = null)
         {
             try

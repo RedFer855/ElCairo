@@ -28,43 +28,45 @@ namespace ModernMenuUI
         private readonly ProductoRepositorio productoRepositorio;
         private Producto ProductoSeleccionado;
 
+        // --- NUEVO: Repositorio y lista maestra de proveedores ---
+        private readonly ProveedorRepositorio proveedorRepositorio;
+        private List<Proveedor> _listaMaestraProveedores = new List<Proveedor>();
+        private Proveedor ProveedorSeleccionado = null;
 
         private List<Producto> _listaMaestraProductos = new List<Producto>(); // <-- Tu lista, renombrada
         private Supabase.Realtime.RealtimeChannel? _productosSubscription;
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
+        private CancellationTokenSource _ctsBusqueda;
+        private string sugerenciaActual = "";
+        private bool _ignorarTextChanged = false;
+        private bool _usuarioSeleccionoConMouse = false;
+        private const int MAX_SUGGESTIONS = 10; // (Opcional, para el tamaño)
 
         public frmGestionCompra()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            // ===== ESTILO BARRA LATERAL (RowHeader) =====
             dgvProductos.RowHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#DCE6F1");
             dgvProductos.RowHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#57636e");
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 
             productoRepositorio = new ProductoRepositorio();
-            dgvProductos.AutoGenerateColumns = false;
-            //dgvProductos.Rows.Clear(); // Limpia las filas actuales
 
-            //dgvProductos.DefaultCellStyle.ForeColor = Color.DimGray;
-            /*
-                        dgvProductos.Rows.Add(1, "Manzana", 10, 20);
-                        dgvProductos.Rows.Add(2, "Pan", 5, 43);
-                        dgvProductos.Rows.Add(3, "Leche", 8, 70);
-                        dgvProductos.Rows.Add(4, "Pera", 10, 29);
-                        dgvProductos.Rows.Add(5, "Semitas", 5, 89);
-                        dgvProductos.Rows.Add(6, "Ensure", 8, 48);
-                        dgvProductos.Rows.Add(7, "Bolsa de Frijoles", 8, 90);*/
+            // --- Inicializa el repositorio de proveedores (asumo que existe) ---
+            proveedorRepositorio = new ProveedorRepositorio();
+
+            dgvProductos.AutoGenerateColumns = false;
         }
         private async void frmGestionCompra_Load(object sender, EventArgs e)
         {
-
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
 
+            // Cargamos proveedores para la búsqueda en memoria
+            await CargarProveedoresMaestros();
 
-            await CargarProductosMaestros();
+            //await CargarProductosMaestros();
 
             RefrescarGrid();
             await IniciarSuscripcionProductos();
@@ -94,6 +96,33 @@ namespace ModernMenuUI
                 this.Cursor = Cursors.Default;
             }
         }
+
+        // --- NUEVO: carga en memoria la lista de proveedores ---
+        private async Task CargarProveedoresMaestros()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+
+                // Intento: usar el repositorio (si no existe, reemplázalo por tu forma de obtener proveedores)
+                _listaMaestraProveedores = await proveedorRepositorio.ObtenerTodosLosProveedores(cts.Token);
+                // Si tu repositorio tiene otro método, ajusta aquí.
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al cargar proveedores", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
         private void RefrescarGrid()
         {
             this.Cursor = Cursors.WaitCursor;
@@ -228,7 +257,7 @@ namespace ModernMenuUI
 
         }
 
-        private void dgvCarrito_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        private void dgvCarrito_CellMouseUp(object sender, DataGridViewCellEventArgs e)
         {
 
 
@@ -262,12 +291,15 @@ namespace ModernMenuUI
             {
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
-                    if (cantidad > 1)
+                    /*if (cantidad > 1)
                         dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
                     else
                         MessageBox.Show("La cantidad no puede ser menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                */
                 }
+                dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
                 return;
+
             }
 
             // Columna sumar (6)
@@ -283,7 +315,7 @@ namespace ModernMenuUI
                 return;
             }
         }
-       
+
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
@@ -298,15 +330,17 @@ namespace ModernMenuUI
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (nudCantidad.Value <= 0)
+            /*if (nudCantidad.Value <= 0)
             {
                 MessageBox.Show("No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            } else if (nudCantidad.Value > 400)
+            } else */
+            if (nudCantidad.Value > 400)
             {
                 MessageBox.Show("El límite de compra es de 400 unidades por producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            } else if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
+            }
+            else if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
             {
                 MessageBox.Show("Por favor seleccione un producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -398,15 +432,24 @@ namespace ModernMenuUI
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            if (dgvCarrito.Rows.Count==0)
-            {   
+            if (dgvCarrito.Rows.Count == 0)
+            {
                 MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else {
-                int proveedrId = 3; //por mientras, en lo que se configura la barra de busqueda
+            else
+            {
+                // Ahora usamos el proveedor seleccionado desde la búsqueda
+                if (ProveedorSeleccionado == null)
+                {
+                    MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int proveedrId = ProveedorSeleccionado.IdProveedor;
+
                 var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
                 var Actual = supabase.Auth.CurrentUser;
-                
+
                 if (Actual == null)
                 {
                     throw new Exception("No hay usuario autenticado en la sesión actual.");
@@ -420,7 +463,8 @@ namespace ModernMenuUI
                 var detalles = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Where(r => !r.IsNewRow)
-                .Select(r => new {
+                .Select(r => new
+                {
                     id_producto = Convert.ToInt32(r.Cells[0].Value),
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
@@ -433,33 +477,21 @@ namespace ModernMenuUI
 
                 int idEmpleado = respEmpleado.IdUsuario;
 
-                var compra = new Compra
+                var parametros = new
                 {
-                    IdEmpleado = idEmpleado,
-                    IdProveedor = proveedrId,
-                    FechaCompra = DateTime.UtcNow
+                    p_id_empleado = idEmpleado,
+                    p_id_proveedor = proveedrId,
+                    p_fecha_compra = DateTime.UtcNow,
+                    p_detalles = detalles
                 };
                 try
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    var compraRepositorio = new CompraRepositorio();
-                    await compraRepositorio.InsertarCompra(compra);
-                    //MessageBox.Show(detallesJson);
-                    // se llama aqui para no crear registros fantasmas
-                    int? IdCompra = await CompraRepositorio.ObtenerCompraId(idEmpleado);
-                    if (IdCompra == null)
-                    {
-                        MessageBox.Show("No se pudo obtener el ID de la compra recién creada.");
-                        return;
-                    }
-                    await supabase.Rpc("registrar_detalle_compra", new
-                    {
-                        p_id_compra = IdCompra,
-                        p_detalles = detalles,
-                    });
+
+                    await supabase.Rpc("registrar_compra", parametros);
 
                     MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //ActualizarImagenCarrito();
+
                 }
                 catch (Exception ex)
                 {
@@ -476,6 +508,290 @@ namespace ModernMenuUI
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // ------------------ LÓGICA DE BÚSQUEDA DE PROVEEDORES (SUGERENCIAS) ------------------
+
+
+        // Método que filtra la lista maestra de proveedores (sin usar teléfono)
+        private List<Proveedor> BuscarProveedores(string textoBusqueda)
+        {
+            string busqueda = textoBusqueda?.ToLower().Trim() ?? "";
+
+            // Si está vacío, devolver todos los proveedores activos
+            if (string.IsNullOrEmpty(busqueda))
+            {
+                return _listaMaestraProveedores.Where(p => p.EstadoProveedor == true).ToList();
+            }
+
+            var resultados = _listaMaestraProveedores.Where(proveedor =>
+                    // Sólo activos
+                    proveedor.EstadoProveedor == true
+                    &&
+                    // Y que coincidan por nombre o dirección (no usamos teléfono)
+                    (
+                        (proveedor.NombreProveedor != null && proveedor.NombreProveedor.ToLower().Contains(busqueda)) ||
+                        (proveedor.DireccionProveedor != null && proveedor.DireccionProveedor.ToLower().Contains(busqueda))
+                    )
+                )
+                .ToList();
+
+            return resultados;
+        }
+
+        // Ajusta la altura del ListBox según número de resultados (máx MAX_SUGGESTIONS)
+        private void AjustarAlturaListBox(int numeroDeResultados)
+        {
+            int alturaItem = lstSugerencias.ItemHeight;
+            int alturaMaxima = (alturaItem * MAX_SUGGESTIONS) + 10;
+            int alturaNecesaria = (alturaItem * numeroDeResultados) + 10;
+            lstSugerencias.Height = Math.Min(alturaNecesaria, alturaMaxima);
+        }
+
+        // KeyUp en el TextBox de búsqueda (debe estar enlazado en el diseñador a txtBuscar_KeyUp)
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
+        {
+            // Ignorar las teclas de navegación para que no relancen la búsqueda
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                return;
+            }
+
+            _ctsBusqueda?.Cancel();
+            _ctsBusqueda = new CancellationTokenSource();
+
+            try
+            {
+
+                await Task.Delay(300, _ctsBusqueda.Token);
+
+                List<Proveedor> resultados = BuscarProveedores(txtBuscarProv.Text);
+                List<Proveedor> top10 = resultados.Take(10).ToList();
+
+                if (resultados.Count > 0 && !string.IsNullOrEmpty(txtBuscarProv.Text))
+                {
+                    lstSugerencias.DataSource = null;
+                    lstSugerencias.DataSource = top10;
+                    lstSugerencias.DisplayMember = "NombreProveedor";
+
+                    // Llama a la función para ajustar la altura
+                    AjustarAlturaListBox(resultados.Count);
+
+                    lstSugerencias.Visible = true;
+                }
+                else
+                {
+                    lstSugerencias.Visible = false;
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // Búsqueda cancelada (el usuario siguió tecleando), es normal.
+            }
+        }
+
+        // KeyDown para manejar navegación por la lista y la aceptación con Enter
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Si la lista no está visible, no hacer nada
+            if (!lstSugerencias.Visible) return;
+
+            if (e.KeyCode == Keys.Down)
+            {
+                // Mover selección hacia abajo
+                int newIndex = Math.Min(lstSugerencias.SelectedIndex + 1, lstSugerencias.Items.Count - 1);
+                if (newIndex >= 0)
+                    lstSugerencias.SelectedIndex = newIndex;
+
+                e.Handled = true; // Evita que el cursor del TextBox se mueva
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                // Mover selección hacia arriba
+                int newIndex = Math.Max(lstSugerencias.SelectedIndex - 1, 0);
+                if (newIndex >= 0)
+                    lstSugerencias.SelectedIndex = newIndex;
+                e.Handled = true; // Evita que el cursor del TextBox se mueva
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                if (lstSugerencias.SelectedItem != null)
+                {
+                    // Aceptar la selección
+                    Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
+                    txtBuscarProv.Text = proveedorSel.NombreProveedor;
+                    txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
+
+                    lstSugerencias.Visible = false;
+                    _ctsBusqueda?.Cancel(); // Cancela el KeyUp pendiente
+
+                    // Setea el proveedor seleccionado para usarlo al registrar la compra
+                    ProveedorSeleccionado = proveedorSel;
+
+                    e.Handled = true;
+                    e.SuppressKeyPress = true; // Evita el sonido "ding"
+                }
+            }
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            if (_ignorarTextChanged) return;
+            sugerenciaActual = "";
+            // Si el usuario edita el texto, limpiamos la selección previa
+            ProveedorSeleccionado = null;
+        }
+
+        private async void txtBuscar_Leave(object sender, EventArgs e)
+        {
+
+            await Task.Delay(150);
+
+            if (!lstSugerencias.Focused)
+            {
+                lstSugerencias.Visible = false;
+            }
+        }
+
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (lstSugerencias.SelectedItem != null)
+            {
+                Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
+                txtBuscarProv.Text = proveedorSel.NombreProveedor;
+                txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
+                lstSugerencias.Visible = false;
+                _ctsBusqueda?.Cancel();
+
+                // Guardar proveedor seleccionado
+                ProveedorSeleccionado = proveedorSel;
+            }
+        }
+
+        private void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && lstSugerencias.SelectedItem != null)
+            {
+                Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
+                if (proveedorSel != null)
+                {
+                    _ignorarTextChanged = true;
+                    txtBuscarProv.Text = proveedorSel.NombreProveedor;
+                    txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
+                    txtBuscarProv.SelectionLength = 0;
+                    _ignorarTextChanged = false;
+
+                    lstSugerencias.Visible = false;
+                    sugerenciaActual = "";
+
+                    // Guardar proveedor seleccionado
+                    ProveedorSeleccionado = proveedorSel;
+                }
+
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void lstSugerencias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Evita que cambie automáticamente si el usuario no hizo clic
+            if (!_usuarioSeleccionoConMouse) return;
+
+            if (lstSugerencias.SelectedItem != null)
+            {
+                Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
+                if (proveedorSel != null)
+                {
+                    txtBuscarProv.Text = proveedorSel.NombreProveedor;
+                    lstSugerencias.Visible = false;
+
+                    // Guardar proveedor seleccionado
+                    ProveedorSeleccionado = proveedorSel;
+                }
+            }
+        }
+
+        // Si quieres detectar que la selección fue por mouse (opcional)
+        private void lstSugerencias_MouseDown(object sender, MouseEventArgs e)
+        {
+            _usuarioSeleccionoConMouse = true;
+        }
+        private void lstSugerencias_MouseUp(object sender, MouseEventArgs e)
+        {
+            // Dejamos un pequeño retraso para evitar conflictos con Leave/Focus
+            Task.Run(async () =>
+            {
+                await Task.Delay(50);
+                _usuarioSeleccionoConMouse = false;
+            });
+        }
+
+        private async void btnGetProv_Click(object sender, EventArgs e)
+        {
+            string nombre = txtBuscarProv.Text?.Trim() ?? "";
+
+            if (string.IsNullOrEmpty(nombre))
+            {
+                MessageBox.Show("Ingrese el nombre del proveedor para buscar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                var id = await ProveedorRepositorio.ObtenerIdProveedorPorNombreAsync(nombre);
+
+                if (id == null)
+                {
+                    MessageBox.Show("No se encontró un proveedor con ese nombre.", "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Intentar obtener el proveedor desde la lista en memoria
+                ProveedorSeleccionado = _listaMaestraProveedores.FirstOrDefault(p => p.IdProveedor == id);
+
+                // Si no está en la lista maestra (cache), lo cargamos desde Supabase
+                if (ProveedorSeleccionado == null)
+                {
+                    ProveedorSeleccionado = await ProveedorRepositorio.CargarProveedorPorIdAsync(id.Value);
+                    // Opcional: agregar a la lista maestra para cache
+                    if (ProveedorSeleccionado != null)
+                    {
+                        _listaMaestraProveedores.Add(ProveedorSeleccionado);
+                    }
+                }
+
+                if (ProveedorSeleccionado != null)
+                {
+                    // Mostrar información
+                    MessageBox.Show($"Proveedor seleccionado:\nID: {ProveedorSeleccionado.IdProveedor}\nNombre: {ProveedorSeleccionado.NombreProveedor}",
+                        "Proveedor encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 🔹 Cargar los productos de este proveedor y actualizar el grid
+                    this.Cursor = Cursors.WaitCursor;
+                    try
+                    {
+                        var productosProveedor = await productoRepositorio.ObtenerProductosPorProveedorAsync(ProveedorSeleccionado.IdProveedor);
+
+                        _listaMaestraProductos = productosProveedor; // actualiza la lista interna
+                        RefrescarGrid(); // refresca el DataGridView
+                    }
+                    finally
+                    {
+                        this.Cursor = Cursors.Default;
+                    }
+                }
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
     }
 }

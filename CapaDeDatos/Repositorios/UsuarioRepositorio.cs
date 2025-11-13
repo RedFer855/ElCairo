@@ -5,30 +5,34 @@ using Supabase.Gotrue.Exceptions;
 using Supabase.Postgrest.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Supabase.Postgrest.Constants;
 
 namespace CapaDeDatos.Repositorios
 {
     public class UsuarioRepositorio
     {
-        private async Task<Supabase.Client> GetClient()
+        // Helper para obtener el cliente, igual que en EmpleadoRepositorio
+        public async Task<Supabase.Client> GetClient()
         {
             return await Conexion.ConnectWithTimeoutAsync(3);
         }
-
         public async Task<Session> RegistrarUsuario(string email, string password)
         {
             try
             {
                 var client = await GetClient();
+                // Opcionalmente puedes pasar datos extra aquí (ej. nombre)
+                // var options = new SignUpOptions { Data = new Dictionary<string, object> { { "nombre_completo", "..." } } };
                 var session = await client.Auth.SignUp(email, password);
                 return session;
             }
             catch (GotrueException ex)
             {
-
+                // Errores de registro (ej. "User already registered")
                 throw new Exception($"Error de registro: {ex.Message}", ex);
             }
             catch (System.Net.WebException ex)
@@ -45,7 +49,6 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
-
 
         public async Task<List<Usuario>> ObtenerTodosLosUsuarios(CancellationToken cancellationToken = default)
         {
@@ -73,25 +76,89 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-        public static async Task ActualizarUsuario(Usuario UsuarioActualizado)
+        public async Task ActualizarUsuario(Usuario usuarioActualizado)
+        {
+            /* try
+             {
+                 var client = await GetClient();
+
+                 // Actualiza en tu tabla usuario
+                      var response = await client
+                     .From<Usuario>()
+                     .Filter("user_id", Operator.Equals, usuarioActualizado.Uuid)
+                     .Update(usuarioActualizado);
+
+                 if (response.Models == null || response.Models.Count == 0)
+                     throw new Exception("No se pudo actualizar el usuario. Verifica el UUID.");
+
+                 // 🔹 Sincroniza también en Supabase Auth usando tu procedimiento almacenado
+                 var user = client.Auth.CurrentUser;
+                 if (user != null)
+                 {
+                     await client.Rpc("sync_usuario_email", new
+                     {
+                         p_user_id = user.Id,
+                         p_nuevo_email = usuarioActualizado.AliasUsuario
+                     });
+                 }
+             }
+             catch (PostgrestException ex)
+             {
+                 throw new Exception($"Error de base de datos al actualizar usuario: {ex.Message}", ex);
+             }
+             catch (Exception ex)
+             {
+                 throw new Exception("Error inesperado al actualizar el usuario.", ex);
+             }*/
+        }
+
+        /*private Usuario MapearCambiosAUsuario(string uuid, Dictionary<string, object> cambios)
+        {
+           /* var usuario = new Usuario
+            {
+                Uuid = uuid
+            };
+
+            if (cambios.ContainsKey("alias_usuario"))
+                usuario.AliasUsuario = cambios["alias_usuario"]?.ToString();
+
+            if (cambios.ContainsKey("id_rol"))
+                usuario.RolUsuario = Convert.ToInt32(cambios["id_rol"]);
+
+            if (cambios.ContainsKey("estado_usuario"))
+                usuario.EstadoUsuario = Convert.ToBoolean(cambios["estado_usuario"]);
+
+            if (cambios.ContainsKey("id_estado"))
+                usuario.IdEstado = Convert.ToInt32(cambios["id_estado"]);
+
+            return usuario;
+        }*/
+
+        public async Task ActualizarUsuarioParcial(string uuid, Dictionary<string, object> cambios)
         {
             try
             {
-                var client = await Conexion.ConnectWithTimeoutAsync(10);
-                await client.From<Usuario>().Update(UsuarioActualizado);
+                var client = await GetClient();
+
+                if (cambios == null || cambios.Count == 0)
+                    return; // Nada que actualizar
+
+                // Ejecuta un update directo pasando solo los campos cambiados
+                var response = await client
+                    .From<Usuario>()
+                    .Filter("user_id", Operator.Equals, uuid)
+                    .Update();
+
+                if (response.Models == null || response.Models.Count == 0)
+                    throw new Exception("No se pudo actualizar el usuario. Verifica el UUID o las políticas RLS.");
             }
-            catch (System.Net.WebException ex)
+            catch (PostgrestException ex)
             {
-                throw new Exception("Error de red al actualizar usuario: " + ex.Message, ex);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception("El servidor tardó demasiado en responder.", ex);
+                throw new Exception($"Error de base de datos al actualizar usuario: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error de Supabase al actualizar: {ex.Message}");
-                throw; //new Exception("Error al actualizar el empleado en la base de datos.", ex);
+                throw new Exception($"Error inesperado al actualizar el usuario: {ex.Message}", ex);
             }
         }
     }

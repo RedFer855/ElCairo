@@ -82,5 +82,8 @@ namespace CapaDeDatos.Modelados
         // "cantidad_producto" (integer)
         [Column("cantidad_producto")]
         public int CantidadProducto { get; set; }
+
+        [Column("id_proveedor")]
+        public int IdProveedorProducto { get; set; }
     }
 }
