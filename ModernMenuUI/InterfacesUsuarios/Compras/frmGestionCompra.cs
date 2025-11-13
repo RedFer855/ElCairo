@@ -63,12 +63,15 @@ namespace ModernMenuUI
         {
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
 
-            // Cargamos proveedores para la búsqueda en memoria
+
+            // Cargamos solo los proveedores al iniciar
             await CargarProveedoresMaestros();
 
-            //await CargarProductosMaestros();
+            // 🔹 Dejamos el DataGridView vacío hasta que se seleccione un proveedor
+            _listaMaestraProductos.Clear();
+            dgvProductos.DataSource = null;
 
-            RefrescarGrid();
+            // Mantiene la suscripción activa por si luego se quieren ver productos
             await IniciarSuscripcionProductos();
 
         }
@@ -208,8 +211,8 @@ namespace ModernMenuUI
                 {
                     if (this.IsDisposed) return;
                     System.Diagnostics.Debug.WriteLine("Red recuperada. Recargando Productos y Realtime...");
-                    await CargarProductosMaestros();
-                    RefrescarGrid();
+                    //await CargarProductosMaestros();
+                    //RefrescarGrid();
                     await IniciarSuscripcionProductos();
                 }));
             }
@@ -501,6 +504,7 @@ namespace ModernMenuUI
                 {
                     this.Cursor = Cursors.Default;
                     dgvCarrito.Rows.Clear();
+                    
                 }
             }
         }
