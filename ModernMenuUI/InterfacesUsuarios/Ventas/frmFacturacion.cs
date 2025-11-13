@@ -548,86 +548,78 @@ namespace ModernMenuUI
         {
             if (dgvCarrito.Rows.Count == 0)
             {
-                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor seleccione un producto", "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+            var Actual = supabase.Auth.CurrentUser;
+
+            if (Actual == null)
             {
+                throw new Exception("No hay usuario autenticado en la sesión actual.");
+            }
 
-                var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
-                var Actual = supabase.Auth.CurrentUser;
-
-                if (Actual == null)
-                {
-                    throw new Exception("No hay usuario autenticado en la sesión actual.");
-                }
-
-                //obteniendo el usuario
-                var respEmpleado = await supabase
+            // Obtener empleado logueado
+            var respEmpleado = await supabase
                 .From<Usuario>()
                 .Select("id_empleado")
                 .Filter("user_id", Operator.Equals, Actual.Id.ToString())
                 .Get();
 
-                //obteniendo el id de la compra recien creada
+            if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+            {
+                MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
+                return;
+            }
 
-                var detalles = dgvCarrito.Rows
+            int idEmpleado = respEmpleado.Models.First().IdEmpleado;
+
+            // Construir detalles de venta desde el carrito
+            var detalles = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Where(r => !r.IsNewRow)
                 .Select(r => new
                 {
                     id_producto = Convert.ToInt32(r.Cells[0].Value),
-                    cantidad_venta = Convert.ToInt32(r.Cells[3].Value)
-                }).ToList();
+                    cantidad_venta = Convert.ToInt32(r.Cells[3].Value),
+                    id_bodega = 2
+                })
+                .ToList();
 
-                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
-                {
-                    MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
-                    return;
-                }
+            // Parámetros EXACTOS del RPC registrar_venta
+            var parametros = new
+            {
+                p_id_cliente = (int)cmbClientes.SelectedValue,
+                p_id_rutas = (int)cmbRutas.SelectedValue,
+                p_id_empleado = idEmpleado,
+                p_fecha_venta = DateTime.UtcNow,
+                p_detalles = detalles
+            };
 
-                int idEmpleado = respEmpleado.Models.First().IdEmpleado;
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
 
-                var venta = new Venta
-                {
-                    IdEmpleado = idEmpleado,
-                    IdCliente = (int)cmbClientes.SelectedValue,
-                    IdRutasVenta = (int)cmbRutas.SelectedValue,
-                    FechaVenta = DateTime.UtcNow
-                };
-                try
-                {
-                    this.Cursor = Cursors.WaitCursor;
-                    var ventaRepositorio = new VentaRepositorio();
-                    await ventaRepositorio.InsertarVenta(venta);
-                    //MessageBox.Show(detallesJson);
-                    // se llama aqui para no crear registros fantasmas
-                    var ventaRepo = new VentaRepositorio();
-                    int? IdVenta = await ventaRepo.ObtenerVentaId(idEmpleado);
-                    if (IdVenta == null)
-                    {
-                        MessageBox.Show("No se pudo obtener el ID de la venta recién creada.");
-                        return;
-                    }
-                    await supabase.Rpc("registrar_detalle_venta", new
-                    {
-                        p_id_venta = IdVenta,
-                        p_detalles = detalles,
-                    });
-                    LimpiarCarrito();
-                    MessageBox.Show($"Venta registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //ActualizarImagenCarrito();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    this.Cursor = Cursors.Default;
-                }
+                // Llamada DIRECTA al RPC que hace TODO
+                await supabase.Rpc("registrar_venta", parametros);
 
+                MessageBox.Show("Venta registrada exitosamente", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                LimpiarCarrito();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+
         }
 
         private async void frmFacturacion_FormClosing(object sender, FormClosingEventArgs e)
