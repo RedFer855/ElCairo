@@ -3,6 +3,7 @@ using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;
+using ModernMenuUI.InterfacesUsuarios.Inventario;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -68,7 +69,7 @@ namespace ModernMenuUI
             lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
             ManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
-            
+
         }
 
         private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
@@ -138,7 +139,7 @@ namespace ModernMenuUI
 
         }
 
-  
+
 
         // Cerrar todos los submenu
         private void CerrarSubmenu()
@@ -337,7 +338,7 @@ namespace ModernMenuUI
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmProveedores());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
-            
+
 
         }
 
@@ -518,6 +519,8 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnInventarios, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnInventarioBodega, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnGestionInventario, "select_inventario", "update_inventario", "create_inventario");
+            _servicioPermisos.RegistrarBoton(btnRegistroPerdida, "select_inventario", "update_inventario", "create_inventario");
+            _servicioPermisos.RegistrarBoton(btnMarcas, "select_inventario", "update_inventario", "create_inventario");
             //Mapeo Compras
             _servicioPermisos.RegistrarBoton(btnCompras, "select_compra", "update_compra", "create_compra");
             _servicioPermisos.RegistrarBoton(btnGestionCompra, "select_compra", "update_compra", "create_compra");
@@ -536,8 +539,16 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnCrearReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
 
-         
+
+
+
         }
 
+        private void btnMarcas_Click(object sender, EventArgs e)
+        {
+            CerrarSubmenu();
+            ManejarFormularios.Instancia.AbrirFormulario(new frmMarcas());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+        }
     }
 }

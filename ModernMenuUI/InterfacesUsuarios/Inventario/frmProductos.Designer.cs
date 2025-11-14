@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI
 {
-    partial class frmMarcas
+    partial class frmProductos
     {
         /// <summary>
         /// Required designer variable.
@@ -31,10 +31,15 @@
             components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMarcas));
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProductos));
             panelCarrito = new Panel();
             panel10 = new Panel();
             dgvProductos = new DataGridView();
@@ -74,6 +79,7 @@
             panel1 = new Panel();
             lstSugerencias = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            button1 = new Button();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
@@ -126,15 +132,15 @@
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, PorcentajeGanancia, PrecioCompra, dataGridViewTextBoxColumn3, PrecioVenta, CantidadProducto, EstadoProducto });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle4.Padding = new Padding(5);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.White;
+            dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle9.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle9.Padding = new Padding(5);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle9.SelectionForeColor = Color.White;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
+            dgvProductos.DefaultCellStyle = dataGridViewCellStyle9;
             dgvProductos.Dock = DockStyle.Fill;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
@@ -142,14 +148,14 @@
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = SystemColors.Control;
+            dataGridViewCellStyle10.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle10.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
@@ -173,12 +179,13 @@
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewTextBoxColumn2.DataPropertyName = "NombreProducto";
             dataGridViewTextBoxColumn2.HeaderText = "Producto";
             dataGridViewTextBoxColumn2.MinimumWidth = 100;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 105;
             // 
             // Categoria
             // 
@@ -201,44 +208,58 @@
             // 
             // PorcentajeGanancia
             // 
+            PorcentajeGanancia.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             PorcentajeGanancia.DataPropertyName = "PorcentajeGananciaProducto";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            PorcentajeGanancia.DefaultCellStyle = dataGridViewCellStyle4;
             PorcentajeGanancia.FillWeight = 80F;
             PorcentajeGanancia.HeaderText = "Ganancia";
             PorcentajeGanancia.MinimumWidth = 95;
             PorcentajeGanancia.Name = "PorcentajeGanancia";
             PorcentajeGanancia.ReadOnly = true;
-            PorcentajeGanancia.Width = 95;
+            PorcentajeGanancia.Width = 107;
             // 
             // PrecioCompra
             // 
+            PrecioCompra.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             PrecioCompra.DataPropertyName = "PrecioCompra";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            PrecioCompra.DefaultCellStyle = dataGridViewCellStyle5;
             PrecioCompra.FillWeight = 80F;
             PrecioCompra.HeaderText = "Precio Compra";
             PrecioCompra.Name = "PrecioCompra";
             PrecioCompra.ReadOnly = true;
-            PrecioCompra.Width = 150;
+            PrecioCompra.Width = 141;
             // 
             // dataGridViewTextBoxColumn3
             // 
+            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dataGridViewTextBoxColumn3.DataPropertyName = "PrecioCosto";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle6;
             dataGridViewTextBoxColumn3.FillWeight = 80F;
             dataGridViewTextBoxColumn3.HeaderText = "Precio Costo";
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             dataGridViewTextBoxColumn3.ReadOnly = true;
-            dataGridViewTextBoxColumn3.Width = 130;
+            dataGridViewTextBoxColumn3.Width = 127;
             // 
             // PrecioVenta
             // 
+            PrecioVenta.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             PrecioVenta.DataPropertyName = "PrecioVenta";
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            PrecioVenta.DefaultCellStyle = dataGridViewCellStyle7;
             PrecioVenta.FillWeight = 80F;
             PrecioVenta.HeaderText = "Precio Venta";
             PrecioVenta.Name = "PrecioVenta";
             PrecioVenta.ReadOnly = true;
-            PrecioVenta.Width = 130;
+            PrecioVenta.Width = 127;
             // 
             // CantidadProducto
             // 
             CantidadProducto.DataPropertyName = "CantidadProducto";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            CantidadProducto.DefaultCellStyle = dataGridViewCellStyle8;
             CantidadProducto.HeaderText = "Cantidad";
             CantidadProducto.Name = "CantidadProducto";
             CantidadProducto.ReadOnly = true;
@@ -314,9 +335,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(385, 53);
+            btnSalir.Location = new Point(486, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(152, 44);
+            btnSalir.Size = new Size(140, 44);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -329,9 +350,9 @@
             btnAgregarMarca.ForeColor = SystemColors.ButtonFace;
             btnAgregarMarca.Location = new Point(194, 3);
             btnAgregarMarca.Name = "btnAgregarMarca";
-            btnAgregarMarca.Size = new Size(185, 44);
+            btnAgregarMarca.Size = new Size(140, 44);
             btnAgregarMarca.TabIndex = 21;
-            btnAgregarMarca.Text = "Agregar Marca";
+            btnAgregarMarca.Text = "Marcas";
             btnAgregarMarca.UseVisualStyleBackColor = false;
             // 
             // gbxEstado
@@ -520,12 +541,13 @@
             btnIngresarPerdida.BackColor = Color.FromArgb(149, 195, 172);
             btnIngresarPerdida.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnIngresarPerdida.ForeColor = SystemColors.ButtonFace;
-            btnIngresarPerdida.Location = new Point(385, 3);
+            btnIngresarPerdida.Location = new Point(340, 3);
             btnIngresarPerdida.Name = "btnIngresarPerdida";
-            btnIngresarPerdida.Size = new Size(152, 44);
+            btnIngresarPerdida.Size = new Size(140, 44);
             btnIngresarPerdida.TabIndex = 23;
-            btnIngresarPerdida.Text = "Ingresar Perdida";
+            btnIngresarPerdida.Text = "Perdidas";
             btnIngresarPerdida.UseVisualStyleBackColor = false;
+            btnIngresarPerdida.Click += btnIngresarPerdida_Click;
             // 
             // btnAgregarCategoria
             // 
@@ -534,9 +556,9 @@
             btnAgregarCategoria.ForeColor = SystemColors.ButtonFace;
             btnAgregarCategoria.Location = new Point(194, 53);
             btnAgregarCategoria.Name = "btnAgregarCategoria";
-            btnAgregarCategoria.Size = new Size(185, 44);
+            btnAgregarCategoria.Size = new Size(140, 44);
             btnAgregarCategoria.TabIndex = 22;
-            btnAgregarCategoria.Text = "Agregar Categoria";
+            btnAgregarCategoria.Text = "Categorias";
             btnAgregarCategoria.UseVisualStyleBackColor = false;
             // 
             // btnEditarProducto
@@ -585,15 +607,28 @@
             flowLayoutPanel1.Controls.Add(btnNuevoProducto);
             flowLayoutPanel1.Controls.Add(btnAgregarMarca);
             flowLayoutPanel1.Controls.Add(btnIngresarPerdida);
+            flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Controls.Add(btnEditarProducto);
             flowLayoutPanel1.Controls.Add(btnAgregarCategoria);
-            flowLayoutPanel1.Controls.Add(btnSalir);
+            flowLayoutPanel1.Controls.Add(button1);
             flowLayoutPanel1.Location = new Point(12, 567);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(547, 100);
+            flowLayoutPanel1.Size = new Size(634, 100);
             flowLayoutPanel1.TabIndex = 33;
             // 
-            // frmMarcas
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(149, 195, 172);
+            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.ForeColor = SystemColors.ButtonFace;
+            button1.Location = new Point(340, 53);
+            button1.Name = "button1";
+            button1.Size = new Size(140, 44);
+            button1.TabIndex = 24;
+            button1.Text = " Tamaños";
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // frmProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -607,8 +642,8 @@
             Controls.Add(lblHora);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmMarcas";
-            Text = "frmMarcas";
+            Name = "frmProductos";
+            Text = "frmProductos";
             Load += frmProductos_Load;
             panelCarrito.ResumeLayout(false);
             panel10.ResumeLayout(false);
@@ -656,6 +691,7 @@
         private TableLayoutPanel tableLayoutPanel2;
         private Button btnCategoria;
         private FlowLayoutPanel flowLayoutPanel1;
+        private Button button1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;

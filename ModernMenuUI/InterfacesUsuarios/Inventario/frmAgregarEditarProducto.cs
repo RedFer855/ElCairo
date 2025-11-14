@@ -18,7 +18,7 @@ namespace ModernMenuUI
         public frmAgregarEditarProducto()
         {
             InitializeComponent();
-            lblNombreModulo.Text = "AGREGAR EMPLEADO";
+            lblNombreModulo.Text = "AGREGAR PRODUCTO";
         }
 
         public frmAgregarEditarProducto(Producto productoseleccionado)

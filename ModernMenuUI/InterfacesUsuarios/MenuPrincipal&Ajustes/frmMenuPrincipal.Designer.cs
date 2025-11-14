@@ -81,6 +81,7 @@
             btnCompras = new controlBotonesMenuPrincipal();
             pnlDivisorInventario = new Panel();
             panelInventario = new Panel();
+            btnMarcas = new Button();
             btnRegistroPerdida = new Button();
             btnInventarioBodega = new Button();
             btnGestionInventario = new Button();
@@ -137,7 +138,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(300, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(964, 65);
+            panBarraControl.Size = new Size(874, 65);
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -148,7 +149,7 @@
             panel6.Controls.Add(panel12);
             panel6.Controls.Add(panel9);
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(791, 0);
+            panel6.Location = new Point(701, 0);
             panel6.Name = "panel6";
             panel6.RightToLeft = RightToLeft.Yes;
             panel6.Size = new Size(108, 65);
@@ -193,7 +194,7 @@
             btnNotificaciones.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             btnNotificaciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnNotificaciones.Image = (Image)resources.GetObject("btnNotificaciones.Image");
-            btnNotificaciones.Location = new Point(899, 0);
+            btnNotificaciones.Location = new Point(809, 0);
             btnNotificaciones.Name = "btnNotificaciones";
             btnNotificaciones.Size = new Size(65, 65);
             btnNotificaciones.TabIndex = 6;
@@ -204,7 +205,7 @@
             // panel3
             // 
             panel3.Dock = DockStyle.Right;
-            panel3.Location = new Point(964, 0);
+            panel3.Location = new Point(874, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(0, 65);
             panel3.TabIndex = 10;
@@ -261,7 +262,7 @@
             btnMinimizar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMinimizar.ForeColor = Color.FromArgb(167, 191, 211);
             btnMinimizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMinimizar.Location = new Point(964, 0);
+            btnMinimizar.Location = new Point(874, 0);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Padding = new Padding(11, 0, 0, 0);
             btnMinimizar.Size = new Size(0, 65);
@@ -280,7 +281,7 @@
             btnMiniMaxi.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMiniMaxi.ForeColor = Color.FromArgb(167, 191, 211);
             btnMiniMaxi.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMiniMaxi.Location = new Point(964, 0);
+            btnMiniMaxi.Location = new Point(874, 0);
             btnMiniMaxi.Name = "btnMiniMaxi";
             btnMiniMaxi.Padding = new Padding(11, 0, 0, 0);
             btnMiniMaxi.Size = new Size(0, 65);
@@ -300,7 +301,7 @@
             btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
             btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(964, 0);
+            btnCerrar.Location = new Point(874, 0);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(11, 0, 0, 0);
             btnCerrar.Size = new Size(0, 65);
@@ -337,7 +338,7 @@
             panelMenuLateral.Dock = DockStyle.Left;
             panelMenuLateral.Location = new Point(0, 0);
             panelMenuLateral.Name = "panelMenuLateral";
-            panelMenuLateral.Size = new Size(300, 761);
+            panelMenuLateral.Size = new Size(300, 773);
             panelMenuLateral.TabIndex = 0;
             panelMenuLateral.MouseDown += panelMenuLateral_MouseDown;
             // 
@@ -346,7 +347,7 @@
             pictureBox1.Dock = DockStyle.Top;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(0, 1077);
+            pictureBox1.Location = new Point(0, 1117);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(283, 175);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -357,7 +358,7 @@
             // 
             pnlDivisorReporteria.BackColor = Color.White;
             pnlDivisorReporteria.Dock = DockStyle.Top;
-            pnlDivisorReporteria.Location = new Point(0, 1075);
+            pnlDivisorReporteria.Location = new Point(0, 1115);
             pnlDivisorReporteria.Name = "pnlDivisorReporteria";
             pnlDivisorReporteria.Size = new Size(283, 2);
             pnlDivisorReporteria.TabIndex = 21;
@@ -370,7 +371,7 @@
             panelReporteria.Controls.Add(btnReportesCreados);
             panelReporteria.Controls.Add(btnCrearReporte);
             panelReporteria.Dock = DockStyle.Top;
-            panelReporteria.Location = new Point(0, 995);
+            panelReporteria.Location = new Point(0, 1035);
             panelReporteria.Name = "panelReporteria";
             panelReporteria.Size = new Size(283, 80);
             panelReporteria.TabIndex = 10;
@@ -420,7 +421,7 @@
             btnReporte.ColorTexto = Color.FromArgb(87, 99, 110);
             btnReporte.Dock = DockStyle.Top;
             btnReporte.Imagen = (Image)resources.GetObject("btnReporte.Imagen");
-            btnReporte.Location = new Point(0, 915);
+            btnReporte.Location = new Point(0, 955);
             btnReporte.Name = "btnReporte";
             btnReporte.Size = new Size(283, 80);
             btnReporte.TabIndex = 30;
@@ -431,7 +432,7 @@
             // 
             pnlDivisorUsuario.BackColor = Color.White;
             pnlDivisorUsuario.Dock = DockStyle.Top;
-            pnlDivisorUsuario.Location = new Point(0, 913);
+            pnlDivisorUsuario.Location = new Point(0, 953);
             pnlDivisorUsuario.Name = "pnlDivisorUsuario";
             pnlDivisorUsuario.Size = new Size(283, 2);
             pnlDivisorUsuario.TabIndex = 22;
@@ -446,7 +447,7 @@
             panelUsuarios.Controls.Add(btnGestionUsuarios);
             panelUsuarios.Controls.Add(btnGestionEmpleados);
             panelUsuarios.Dock = DockStyle.Top;
-            panelUsuarios.Location = new Point(0, 753);
+            panelUsuarios.Location = new Point(0, 793);
             panelUsuarios.Name = "panelUsuarios";
             panelUsuarios.Size = new Size(283, 160);
             panelUsuarios.TabIndex = 8;
@@ -532,7 +533,7 @@
             btnUsuarios.ColorTexto = Color.FromArgb(87, 99, 110);
             btnUsuarios.Dock = DockStyle.Top;
             btnUsuarios.Imagen = (Image)resources.GetObject("btnUsuarios.Imagen");
-            btnUsuarios.Location = new Point(0, 673);
+            btnUsuarios.Location = new Point(0, 713);
             btnUsuarios.Name = "btnUsuarios";
             btnUsuarios.Size = new Size(283, 80);
             btnUsuarios.TabIndex = 28;
@@ -543,7 +544,7 @@
             // 
             pnlDivisorVentas.BackColor = Color.White;
             pnlDivisorVentas.Dock = DockStyle.Top;
-            pnlDivisorVentas.Location = new Point(0, 671);
+            pnlDivisorVentas.Location = new Point(0, 711);
             pnlDivisorVentas.Name = "pnlDivisorVentas";
             pnlDivisorVentas.Size = new Size(283, 2);
             pnlDivisorVentas.TabIndex = 23;
@@ -555,7 +556,7 @@
             panel2.Controls.Add(lblUsuario);
             panel2.Controls.Add(pictureBox2);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 1252);
+            panel2.Location = new Point(0, 1292);
             panel2.Name = "panel2";
             panel2.Size = new Size(283, 80);
             panel2.TabIndex = 11;
@@ -603,7 +604,7 @@
             panelVentas.Controls.Add(btnClientes);
             panelVentas.Controls.Add(btnGestionVentas);
             panelVentas.Dock = DockStyle.Top;
-            panelVentas.Location = new Point(0, 511);
+            panelVentas.Location = new Point(0, 551);
             panelVentas.Name = "panelVentas";
             panelVentas.Size = new Size(283, 160);
             panelVentas.TabIndex = 6;
@@ -689,7 +690,7 @@
             btnVentas.ColorTexto = Color.FromArgb(87, 99, 110);
             btnVentas.Dock = DockStyle.Top;
             btnVentas.Imagen = (Image)resources.GetObject("btnVentas.Imagen");
-            btnVentas.Location = new Point(0, 431);
+            btnVentas.Location = new Point(0, 471);
             btnVentas.Name = "btnVentas";
             btnVentas.Size = new Size(283, 80);
             btnVentas.TabIndex = 27;
@@ -700,7 +701,7 @@
             // 
             pnlDivisorCompras.BackColor = Color.White;
             pnlDivisorCompras.Dock = DockStyle.Top;
-            pnlDivisorCompras.Location = new Point(0, 429);
+            pnlDivisorCompras.Location = new Point(0, 469);
             pnlDivisorCompras.Name = "pnlDivisorCompras";
             pnlDivisorCompras.Size = new Size(283, 2);
             pnlDivisorCompras.TabIndex = 24;
@@ -713,7 +714,7 @@
             panelCompras.Controls.Add(btnProveedores);
             panelCompras.Controls.Add(btnGestionCompra);
             panelCompras.Dock = DockStyle.Top;
-            panelCompras.Location = new Point(0, 349);
+            panelCompras.Location = new Point(0, 389);
             panelCompras.Name = "panelCompras";
             panelCompras.Size = new Size(283, 80);
             panelCompras.TabIndex = 4;
@@ -763,7 +764,7 @@
             btnCompras.ColorTexto = Color.FromArgb(87, 99, 110);
             btnCompras.Dock = DockStyle.Top;
             btnCompras.Imagen = (Image)resources.GetObject("btnCompras.Imagen");
-            btnCompras.Location = new Point(0, 269);
+            btnCompras.Location = new Point(0, 309);
             btnCompras.Name = "btnCompras";
             btnCompras.Size = new Size(283, 80);
             btnCompras.TabIndex = 26;
@@ -774,7 +775,7 @@
             // 
             pnlDivisorInventario.BackColor = Color.White;
             pnlDivisorInventario.Dock = DockStyle.Top;
-            pnlDivisorInventario.Location = new Point(0, 267);
+            pnlDivisorInventario.Location = new Point(0, 307);
             pnlDivisorInventario.Name = "pnlDivisorInventario";
             pnlDivisorInventario.Size = new Size(283, 2);
             pnlDivisorInventario.TabIndex = 20;
@@ -784,14 +785,34 @@
             panelInventario.AutoSize = true;
             panelInventario.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelInventario.BackColor = Color.FromArgb(238, 238, 238);
+            panelInventario.Controls.Add(btnMarcas);
             panelInventario.Controls.Add(btnRegistroPerdida);
             panelInventario.Controls.Add(btnInventarioBodega);
             panelInventario.Controls.Add(btnGestionInventario);
             panelInventario.Dock = DockStyle.Top;
             panelInventario.Location = new Point(0, 147);
             panelInventario.Name = "panelInventario";
-            panelInventario.Size = new Size(283, 120);
+            panelInventario.Size = new Size(283, 160);
             panelInventario.TabIndex = 2;
+            // 
+            // btnMarcas
+            // 
+            btnMarcas.BackColor = Color.FromArgb(202, 223, 255);
+            btnMarcas.Dock = DockStyle.Top;
+            btnMarcas.FlatAppearance.BorderColor = Color.White;
+            btnMarcas.FlatStyle = FlatStyle.Flat;
+            btnMarcas.Font = new Font("Itim", 11.25F);
+            btnMarcas.ForeColor = Color.FromArgb(87, 99, 110);
+            btnMarcas.Location = new Point(0, 120);
+            btnMarcas.Name = "btnMarcas";
+            btnMarcas.Padding = new Padding(20, 0, 0, 0);
+            btnMarcas.Size = new Size(283, 40);
+            btnMarcas.TabIndex = 4;
+            btnMarcas.Text = "Marcas";
+            btnMarcas.TextAlign = ContentAlignment.MiddleLeft;
+            btnMarcas.UseVisualStyleBackColor = false;
+            btnMarcas.Visible = false;
+            btnMarcas.Click += btnMarcas_Click;
             // 
             // btnRegistroPerdida
             // 
@@ -915,24 +936,24 @@
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(300, 65);
             panelFormHijo.Name = "panelFormHijo";
-            panelFormHijo.Size = new Size(964, 696);
+            panelFormHijo.Size = new Size(874, 708);
             panelFormHijo.TabIndex = 2;
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.Controls.Add(chart1, 0, 0);
             tableLayoutPanel1.Controls.Add(chart2, 1, 0);
-            tableLayoutPanel1.Location = new Point(34, 366);
+            tableLayoutPanel1.Location = new Point(20, 453);
             tableLayoutPanel1.MaximumSize = new Size(1550, 450);
             tableLayoutPanel1.MinimumSize = new Size(550, 200);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(900, 280);
+            tableLayoutPanel1.Size = new Size(832, 200);
             tableLayoutPanel1.TabIndex = 35;
             // 
             // chart1
@@ -952,7 +973,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chart1.Series.Add(series1);
-            chart1.Size = new Size(410, 240);
+            chart1.Size = new Size(376, 160);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
             // 
@@ -964,7 +985,7 @@
             chart2.Dock = DockStyle.Fill;
             legend2.Name = "Legend1";
             chart2.Legends.Add(legend2);
-            chart2.Location = new Point(470, 20);
+            chart2.Location = new Point(436, 20);
             chart2.Margin = new Padding(20);
             chart2.Name = "chart2";
             series2.ChartArea = "ChartArea1";
@@ -972,15 +993,14 @@
             series2.Name = "Series1";
             series2.YValuesPerPoint = 4;
             chart2.Series.Add(series2);
-            chart2.Size = new Size(410, 240);
+            chart2.Size = new Size(376, 160);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
             // 
             // pbxCalculadora
             // 
-            pbxCalculadora.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             pbxCalculadora.Image = Properties.Resources.calculadora;
-            pbxCalculadora.Location = new Point(34, 22);
+            pbxCalculadora.Location = new Point(34, 34);
             pbxCalculadora.Margin = new Padding(10);
             pbxCalculadora.Name = "pbxCalculadora";
             pbxCalculadora.Size = new Size(86, 100);
@@ -997,7 +1017,7 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 14.25F);
             lblHora.ForeColor = Color.DimGray;
-            lblHora.Location = new Point(20, 644);
+            lblHora.Location = new Point(20, 656);
             lblHora.Name = "lblHora";
             lblHora.RightToLeft = RightToLeft.Yes;
             lblHora.Size = new Size(59, 23);
@@ -1011,7 +1031,7 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 14.25F);
             lblFecha.ForeColor = Color.DimGray;
-            lblFecha.Location = new Point(20, 667);
+            lblFecha.Location = new Point(20, 679);
             lblFecha.Name = "lblFecha";
             lblFecha.RightToLeft = RightToLeft.Yes;
             lblFecha.Size = new Size(59, 23);
@@ -1035,9 +1055,9 @@
             panelNotificaciones.BackgroundImageLayout = ImageLayout.Center;
             panelNotificaciones.Controls.Add(lblNotificaciones);
             panelNotificaciones.Dock = DockStyle.Right;
-            panelNotificaciones.Location = new Point(1264, 65);
+            panelNotificaciones.Location = new Point(1174, 65);
             panelNotificaciones.Name = "panelNotificaciones";
-            panelNotificaciones.Size = new Size(0, 696);
+            panelNotificaciones.Size = new Size(0, 708);
             panelNotificaciones.TabIndex = 3;
             // 
             // lblNotificaciones
@@ -1061,7 +1081,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(224, 224, 224);
-            ClientSize = new Size(1264, 761);
+            ClientSize = new Size(1174, 773);
             Controls.Add(panelNotificaciones);
             Controls.Add(panelFormHijo);
             Controls.Add(panBarraControl);
@@ -1175,5 +1195,6 @@
         private controlBotonesMenuPrincipal btnReporte;
         private controlBotonesMenuPrincipal btnInventarios;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button btnMarcas;
     }
 }

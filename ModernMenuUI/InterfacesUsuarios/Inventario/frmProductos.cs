@@ -20,7 +20,7 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
-    public partial class frmMarcas : Form
+    public partial class frmProductos : Form
     {
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
         private readonly ProductoRepositorio productoRepositorio;
@@ -34,7 +34,7 @@ namespace ModernMenuUI
         private Supabase.Client? _supabaseClient;
 
 
-        public frmMarcas()
+        public frmProductos()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
@@ -550,7 +550,16 @@ namespace ModernMenuUI
 
         private void btnMarca_Click(object sender, EventArgs e)
         {
+            frmProductos marcas = new frmProductos();
+            marcas.ShowDialog();
 
         }
+
+
+        private void btnIngresarPerdida_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
