@@ -30,7 +30,7 @@ namespace CapaDeDatos.Repositorios
 
                 }
 
-                var response = await queryBuilder.Select("*").Get();
+                var response = await queryBuilder.Select("*, Proveedor:proveedores(*)").Get();
 
                 if (response?.Models != null)
                 {

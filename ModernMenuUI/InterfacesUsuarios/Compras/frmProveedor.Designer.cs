@@ -334,17 +334,18 @@
             tableLayoutPanel1.Size = new Size(591, 49);
             tableLayoutPanel1.TabIndex = 53;
             // 
-            // frmProveedores
+            // frmProveedor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(684, 590);
             Controls.Add(panel1);
             Controls.Add(groupBox1);
             Controls.Add(panelBusqueda);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmProveedores";
+            Name = "frmProveedor";
             Text = "frmProveedores";
             FormClosing += frmProveedores_FormClosing;
             Load += frmProveedores_Load;

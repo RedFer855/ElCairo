@@ -154,7 +154,7 @@
             // IdMarca
             // 
             IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            IdMarca.DataPropertyName = "IdMarca";
+            IdMarca.DataPropertyName = "NombreMarca";
             IdMarca.HeaderText = "Código";
             IdMarca.Name = "IdMarca";
             IdMarca.ReadOnly = true;
@@ -173,7 +173,7 @@
             // Proveedor
             // 
             Proveedor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Proveedor.DataPropertyName = "IdProveedor";
+            Proveedor.DataPropertyName = "NombreProveedor";
             Proveedor.HeaderText = "Proveedor";
             Proveedor.Name = "Proveedor";
             Proveedor.ReadOnly = true;

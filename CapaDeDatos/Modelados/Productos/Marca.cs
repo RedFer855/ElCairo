@@ -18,6 +18,16 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("id_proveedor")]
         public int IdProveedor { get; set; }
 
+        public Proveedor Proveedor { get; set; }
+
+        public string NombreProveedor
+        {
+            get
+            {
+                return Proveedor?.NombreProveedor ?? "Sin Proveedor";
+            }
+        }
+
         [Column("estado_marca")]
         public bool EstadoMarca { get; set; }
 
