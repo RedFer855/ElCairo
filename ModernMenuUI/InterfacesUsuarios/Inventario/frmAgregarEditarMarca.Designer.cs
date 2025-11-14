@@ -123,26 +123,26 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(423, 20);
+            pictureBox1.Location = new Point(423, 21);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(136, 158);
+            pictureBox1.Size = new Size(136, 157);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 21;
             pictureBox1.TabStop = false;
             // 
             // btnModificarMarca
             // 
-            btnModificarMarca.BackColor = Color.FromArgb(149, 195, 172);
+            btnModificarMarca.BackColor = Color.FromArgb(74, 148, 225);
             btnModificarMarca.BackgroundImageLayout = ImageLayout.None;
             btnModificarMarca.FlatAppearance.BorderSize = 0;
             btnModificarMarca.Font = new Font("Itim", 11.9999981F);
             btnModificarMarca.ForeColor = SystemColors.ButtonFace;
             btnModificarMarca.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarMarca.Location = new Point(166, 145);
+            btnModificarMarca.Location = new Point(114, 156);
             btnModificarMarca.Name = "btnModificarMarca";
-            btnModificarMarca.Size = new Size(89, 33);
+            btnModificarMarca.Size = new Size(72, 33);
             btnModificarMarca.TabIndex = 19;
-            btnModificarMarca.Text = "Modificar";
+            btnModificarMarca.Text = "Editar";
             btnModificarMarca.UseVisualStyleBackColor = false;
             // 
             // txtDni
@@ -163,7 +163,7 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(261, 145);
+            btnVolver.Location = new Point(192, 156);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(95, 33);
             btnVolver.TabIndex = 0;
@@ -179,7 +179,7 @@
             btnGuardarMarca.Font = new Font("Itim", 11.9999981F);
             btnGuardarMarca.ForeColor = SystemColors.ButtonFace;
             btnGuardarMarca.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarMarca.Location = new Point(71, 145);
+            btnGuardarMarca.Location = new Point(19, 156);
             btnGuardarMarca.Name = "btnGuardarMarca";
             btnGuardarMarca.Size = new Size(89, 33);
             btnGuardarMarca.TabIndex = 9;

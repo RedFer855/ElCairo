@@ -35,7 +35,7 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
-            rbMostrardeshabilitados = new RadioButton();
+            rbMostrarDeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
             rbMostrarHabilitados = new RadioButton();
             gbxEstado = new GroupBox();
@@ -46,13 +46,13 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnAgregarCategoria = new Button();
             dgvCategorias = new DataGridView();
+            panel10 = new Panel();
+            panelCarrito = new Panel();
+            panel1 = new Panel();
             IdMarca = new DataGridViewTextBoxColumn();
             Categoría = new DataGridViewTextBoxColumn();
             Descripcion = new DataGridViewTextBoxColumn();
             EstadoProducto = new DataGridViewCheckBoxColumn();
-            panel10 = new Panel();
-            panelCarrito = new Panel();
-            panel1 = new Panel();
             gbxEstado.SuspendLayout();
             panelBusqueda.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -88,15 +88,16 @@
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
             // 
-            // rbMostrardeshabilitados
+            // rbMostrarDeshabilitados
             // 
-            rbMostrardeshabilitados.AutoSize = true;
-            rbMostrardeshabilitados.Location = new Point(122, 22);
-            rbMostrardeshabilitados.Name = "rbMostrardeshabilitados";
-            rbMostrardeshabilitados.Size = new Size(121, 22);
-            rbMostrardeshabilitados.TabIndex = 30;
-            rbMostrardeshabilitados.Text = "Deshabilitados";
-            rbMostrardeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrarDeshabilitados.AutoSize = true;
+            rbMostrarDeshabilitados.Location = new Point(122, 22);
+            rbMostrarDeshabilitados.Name = "rbMostrarDeshabilitados";
+            rbMostrarDeshabilitados.Size = new Size(121, 22);
+            rbMostrarDeshabilitados.TabIndex = 30;
+            rbMostrarDeshabilitados.Text = "Deshabilitados";
+            rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrarDeshabilitados.CheckedChanged += rbMostrarDeshabilitados_CheckedChanged;
             // 
             // rbMostrarTodos
             // 
@@ -107,6 +108,7 @@
             rbMostrarTodos.TabIndex = 29;
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
+            rbMostrarTodos.CheckedChanged += rbMostrarTodos_CheckedChanged_1;
             // 
             // rbMostrarHabilitados
             // 
@@ -119,11 +121,12 @@
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
             rbMostrarHabilitados.UseVisualStyleBackColor = true;
+            rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
             // gbxEstado
             // 
             gbxEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            gbxEstado.Controls.Add(rbMostrardeshabilitados);
+            gbxEstado.Controls.Add(rbMostrarDeshabilitados);
             gbxEstado.Controls.Add(rbMostrarTodos);
             gbxEstado.Controls.Add(rbMostrarHabilitados);
             gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -158,6 +161,7 @@
             btnSeleccionarCategoria.TabIndex = 38;
             btnSeleccionarCategoria.Text = "Seleccionar Categoría";
             btnSeleccionarCategoria.UseVisualStyleBackColor = false;
+            btnSeleccionarCategoria.Click += btnSeleccionarCategoria_Click;
             // 
             // btnSalir
             // 
@@ -248,7 +252,7 @@
             dgvCategorias.ReadOnly = true;
             dgvCategorias.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
             dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
@@ -261,40 +265,7 @@
             dgvCategorias.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCategorias.Size = new Size(570, 262);
             dgvCategorias.TabIndex = 1;
-            // 
-            // IdMarca
-            // 
-            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            IdMarca.HeaderText = "Código";
-            IdMarca.Name = "IdMarca";
-            IdMarca.ReadOnly = true;
-            IdMarca.Width = 89;
-            // 
-            // Categoría
-            // 
-            Categoría.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Categoría.HeaderText = "Categoría";
-            Categoría.Name = "Categoría";
-            Categoría.ReadOnly = true;
-            Categoría.Width = 108;
-            // 
-            // Descripcion
-            // 
-            Descripcion.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Descripcion.HeaderText = "Descripción";
-            Descripcion.Name = "Descripcion";
-            Descripcion.ReadOnly = true;
-            // 
-            // EstadoProducto
-            // 
-            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoProducto.DataPropertyName = "EstadoProducto";
-            EstadoProducto.HeaderText = "Estado";
-            EstadoProducto.Name = "EstadoProducto";
-            EstadoProducto.ReadOnly = true;
-            EstadoProducto.Resizable = DataGridViewTriState.True;
-            EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoProducto.Width = 89;
+            dgvCategorias.CellDoubleClick += dgvCategorias_CellDoubleClick;
             // 
             // panel10
             // 
@@ -326,6 +297,42 @@
             panel1.Size = new Size(596, 289);
             panel1.TabIndex = 43;
             // 
+            // IdMarca
+            // 
+            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            IdMarca.DataPropertyName = "IdCategoria";
+            IdMarca.HeaderText = "Código";
+            IdMarca.Name = "IdMarca";
+            IdMarca.ReadOnly = true;
+            IdMarca.Width = 89;
+            // 
+            // Categoría
+            // 
+            Categoría.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Categoría.DataPropertyName = "NombreCategoria";
+            Categoría.HeaderText = "Categoría";
+            Categoría.Name = "Categoría";
+            Categoría.ReadOnly = true;
+            Categoría.Width = 108;
+            // 
+            // Descripcion
+            // 
+            Descripcion.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Descripcion.HeaderText = "Descripción";
+            Descripcion.Name = "Descripcion";
+            Descripcion.ReadOnly = true;
+            // 
+            // EstadoProducto
+            // 
+            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoProducto.DataPropertyName = "EstadoCategoria";
+            EstadoProducto.HeaderText = "Estado";
+            EstadoProducto.Name = "EstadoProducto";
+            EstadoProducto.ReadOnly = true;
+            EstadoProducto.Resizable = DataGridViewTriState.True;
+            EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
+            EstadoProducto.Width = 89;
+            // 
             // frmCategorias
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -343,6 +350,7 @@
             Name = "frmCategorias";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Categorías";
+            FormClosing += frmCategorias_FormClosing;
             Load += frmCategorias_Load;
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
@@ -360,7 +368,7 @@
 
         private TextBox txtBuscar;
         private Button btnbuscar;
-        private RadioButton rbMostrardeshabilitados;
+        private RadioButton rbMostrarDeshabilitados;
         private RadioButton rbMostrarTodos;
         private RadioButton rbMostrarHabilitados;
         private GroupBox gbxEstado;

@@ -87,6 +87,7 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
+            btnTAmanio = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
@@ -240,6 +241,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(btnTAmanio);
             panel1.Controls.Add(button6);
             panel1.Controls.Add(btnModificarProducto);
             panel1.Controls.Add(btnVolver);
@@ -288,17 +290,17 @@
             // 
             // btnModificarProducto
             // 
-            btnModificarProducto.BackColor = Color.FromArgb(149, 195, 172);
+            btnModificarProducto.BackColor = Color.FromArgb(74, 148, 225);
             btnModificarProducto.BackgroundImageLayout = ImageLayout.None;
             btnModificarProducto.FlatAppearance.BorderSize = 0;
             btnModificarProducto.Font = new Font("Itim", 11.9999981F);
             btnModificarProducto.ForeColor = SystemColors.ButtonFace;
             btnModificarProducto.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarProducto.Location = new Point(121, 379);
+            btnModificarProducto.Location = new Point(121, 377);
             btnModificarProducto.Name = "btnModificarProducto";
             btnModificarProducto.Size = new Size(89, 33);
             btnModificarProducto.TabIndex = 48;
-            btnModificarProducto.Text = "Modificar";
+            btnModificarProducto.Text = "Editar";
             btnModificarProducto.UseVisualStyleBackColor = false;
             // 
             // btnVolver
@@ -309,7 +311,7 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(216, 379);
+            btnVolver.Location = new Point(216, 377);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(95, 33);
             btnVolver.TabIndex = 46;
@@ -325,7 +327,7 @@
             btnGuardarProducto.Font = new Font("Itim", 11.9999981F);
             btnGuardarProducto.ForeColor = SystemColors.ButtonFace;
             btnGuardarProducto.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarProducto.Location = new Point(26, 379);
+            btnGuardarProducto.Location = new Point(27, 377);
             btnGuardarProducto.Name = "btnGuardarProducto";
             btnGuardarProducto.Size = new Size(89, 33);
             btnGuardarProducto.TabIndex = 47;
@@ -362,7 +364,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(444, 56);
+            pictureBox1.Location = new Point(444, 18);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(185, 291);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -387,8 +389,9 @@
             txtTamanio.Font = new Font("Itim", 11.9999981F);
             txtTamanio.Location = new Point(153, 258);
             txtTamanio.Name = "txtTamanio";
+            txtTamanio.PlaceholderText = "(Seleccione Buscar)";
             txtTamanio.ReadOnly = true;
-            txtTamanio.Size = new Size(275, 20);
+            txtTamanio.Size = new Size(221, 20);
             txtTamanio.TabIndex = 41;
             // 
             // label9
@@ -836,6 +839,19 @@
             textBox1.Size = new Size(197, 20);
             textBox1.TabIndex = 22;
             // 
+            // btnTAmanio
+            // 
+            btnTAmanio.BackColor = Color.FromArgb(168, 191, 212);
+            btnTAmanio.BackgroundImage = (Image)resources.GetObject("btnTAmanio.BackgroundImage");
+            btnTAmanio.BackgroundImageLayout = ImageLayout.Zoom;
+            btnTAmanio.FlatAppearance.BorderSize = 0;
+            btnTAmanio.FlatStyle = FlatStyle.Flat;
+            btnTAmanio.Location = new Point(380, 258);
+            btnTAmanio.Name = "btnTAmanio";
+            btnTAmanio.Size = new Size(48, 20);
+            btnTAmanio.TabIndex = 50;
+            btnTAmanio.UseVisualStyleBackColor = false;
+            // 
             // frmAgregarEditarProducto
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
@@ -849,6 +865,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmAgregarEditarProducto";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Producto";
             MouseDown += Editar_Producto_MouseDown;
             panBarraControl.ResumeLayout(false);
@@ -922,5 +939,6 @@
         private Button btnVolver;
         private Button btnGuardarProducto;
         private Button button6;
+        private Button btnTAmanio;
     }
 }
