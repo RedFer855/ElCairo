@@ -20,7 +20,7 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
-    public partial class frmProductos : Form
+    public partial class frmMarcas : Form
     {
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
         private readonly ProductoRepositorio productoRepositorio;
@@ -34,7 +34,7 @@ namespace ModernMenuUI
         private Supabase.Client? _supabaseClient;
 
 
-        public frmProductos()
+        public frmMarcas()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
@@ -64,7 +64,7 @@ namespace ModernMenuUI
 
             RefrescarGrid();
             await IniciarSuscripcionProductos();
-           
+
 
         }
 
@@ -346,7 +346,7 @@ namespace ModernMenuUI
 
             try
             {
-               
+
                 await Task.Delay(300, _ctsBusqueda.Token);
 
                 List<Producto> resultados = BuscarProductos(txtBuscar.Text);
@@ -546,6 +546,11 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
+        }
+
+        private void btnMarca_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
