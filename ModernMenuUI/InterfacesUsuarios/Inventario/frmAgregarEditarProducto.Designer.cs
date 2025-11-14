@@ -118,7 +118,7 @@
             lblNombreModulo.Size = new Size(641, 37);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "EDITAR PRODUCTO";
-            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;            
+            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label8
             // 
@@ -315,6 +315,7 @@
             btnVolver.TabIndex = 46;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
             // 
             // btnGuardarProducto
             // 
@@ -468,7 +469,7 @@
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(275, 50);
             groupBox1.TabIndex = 30;
-            groupBox1.TabStop = false;           
+            groupBox1.TabStop = false;
             // 
             // radioButton2
             // 

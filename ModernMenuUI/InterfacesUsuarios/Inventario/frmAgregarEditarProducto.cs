@@ -24,7 +24,7 @@ namespace ModernMenuUI
         public frmAgregarEditarProducto(Producto productoseleccionado)
         {
             InitializeComponent();
-            ProductoActual = productoseleccionado;  
+            ProductoActual = productoseleccionado;
             txtProducto.Text = productoseleccionado.NombreProducto;
             txtMarca.Text = productoseleccionado.NombreMarca;
             txtCategoria.Text = productoseleccionado.NombreCategoria;
@@ -38,6 +38,11 @@ namespace ModernMenuUI
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
             clsAnmaciones.MoverFormulario(this.Handle);
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
