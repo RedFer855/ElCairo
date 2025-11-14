@@ -309,6 +309,7 @@
             btnProveedores.Size = new Size(25, 24);
             btnProveedores.TabIndex = 2;
             btnProveedores.UseVisualStyleBackColor = false;
+            btnProveedores.Click += btnProveedores_Click;
             // 
             // label1
             // 

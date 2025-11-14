@@ -1,6 +1,6 @@
 ﻿namespace ModernMenuUI.InterfacesUsuarios.Compras
 {
-    partial class frmProveedores
+    partial class frmProveedor
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProveedores));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProveedor));
             panel1 = new Panel();
             panel10 = new Panel();
             dgvProveedores = new DataGridView();

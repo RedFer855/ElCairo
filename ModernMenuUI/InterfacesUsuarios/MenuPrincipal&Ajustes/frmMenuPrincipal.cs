@@ -337,7 +337,7 @@ namespace ModernMenuUI
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            ManejarFormularios.Instancia.AbrirFormulario(new frmProveedores());
+            ManejarFormularios.Instancia.AbrirFormulario(new InterfacesUsuarios.Compras.frmProveedor());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
 
 

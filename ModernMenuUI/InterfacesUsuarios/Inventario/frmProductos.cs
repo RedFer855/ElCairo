@@ -38,11 +38,6 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            dgvProductos.RowHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#DCE6F1");
-            dgvProductos.RowHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#57636e");
-            dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-
             productoRepositorio = new ProductoRepositorio();
             dgvProductos.AutoGenerateColumns = false;
 

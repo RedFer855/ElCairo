@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
-    public partial class Proveedores : Form
+    public partial class frmProveedores : Form
     {
-        public Proveedores()
+        public frmProveedores()
         {
             InitializeComponent();
         }

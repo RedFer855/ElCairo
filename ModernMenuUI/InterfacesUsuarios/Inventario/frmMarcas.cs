@@ -2,6 +2,7 @@
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
+using ModernMenuUI.InterfacesUsuarios.Compras;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -239,6 +240,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             {
                 RefrescarGrid();
             }
+        }
+
+        private void btnProveedores_Click(object sender, EventArgs e)
+        {
+            frmProveedores proveedores = new frmProveedores();  
+            proveedores.ShowDialog();   
         }
     }
 }

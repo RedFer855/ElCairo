@@ -17,7 +17,7 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI.InterfacesUsuarios.Compras
 {
-    public partial class frmProveedores : Form
+    public partial class frmProveedor : Form
     {
         // VARIABLES DE OBJETOS
         private readonly ProveedorRepositorio RepositorioProveedor;
@@ -26,7 +26,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         private Supabase.Client? _supabaseClient;
         private Proveedor ObjProveedor = null;
 
-        public frmProveedores()
+        public frmProveedor()
         {
             InitializeComponent();
             dgvProveedores.AutoGenerateColumns = false; // Asumiendo que se llama dgvProveedores

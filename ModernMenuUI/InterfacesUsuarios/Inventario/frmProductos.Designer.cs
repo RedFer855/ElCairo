@@ -149,7 +149,7 @@
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = SystemColors.Control;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle10.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle10.ForeColor = Color.FromArgb(102, 102, 102);
             dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(148, 168, 187);
