@@ -56,13 +56,13 @@ namespace ModernMenuUI
             dgvProductos.ClearSelection();
 
             this.FormClosing += frmGestionCompra_FormClosing;
-           // dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            // dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             //dgvProductos.Rows.Clear(); // Limpia las filas actuales
 
             //dgvProductos.DefaultCellStyle.ForeColor = Color.DimGray;
 
-           
+
         }
 
         private async Task CargarProductosAsync()
@@ -392,6 +392,11 @@ namespace ModernMenuUI
                         "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

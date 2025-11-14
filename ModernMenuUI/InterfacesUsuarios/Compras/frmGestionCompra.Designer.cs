@@ -38,7 +38,7 @@
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             btnSalir = new Button();
-            button1 = new Button();
+            btnImprimirOrden = new Button();
             panel5 = new Panel();
             btnBuscarCliente = new Button();
             textBox4 = new TextBox();
@@ -124,19 +124,20 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click_1;
             // 
-            // button1
+            // btnImprimirOrden
             // 
-            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.BackColor = Color.FromArgb(189, 215, 238);
-            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.FromArgb(87, 99, 110);
-            button1.Location = new Point(610, 816);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(153, 84);
-            button1.TabIndex = 24;
-            button1.Text = "Imprimir Orden";
-            button1.UseVisualStyleBackColor = false;
+            btnImprimirOrden.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnImprimirOrden.BackColor = Color.FromArgb(189, 215, 238);
+            btnImprimirOrden.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnImprimirOrden.ForeColor = Color.FromArgb(87, 99, 110);
+            btnImprimirOrden.Location = new Point(610, 816);
+            btnImprimirOrden.Margin = new Padding(3, 4, 3, 4);
+            btnImprimirOrden.Name = "btnImprimirOrden";
+            btnImprimirOrden.Size = new Size(153, 84);
+            btnImprimirOrden.TabIndex = 24;
+            btnImprimirOrden.Text = "Imprimir Orden";
+            btnImprimirOrden.UseVisualStyleBackColor = false;
+            btnImprimirOrden.Click += button1_Click;
             // 
             // panel5
             // 
@@ -803,7 +804,7 @@
             BackColor = Color.White;
             ClientSize = new Size(875, 905);
             Controls.Add(btnSalir);
-            Controls.Add(button1);
+            Controls.Add(btnImprimirOrden);
             Controls.Add(panel5);
             Controls.Add(button2);
             Controls.Add(panel4);
@@ -848,7 +849,7 @@
         #endregion
 
         private Button btnSalir;
-        private Button button1;
+        private Button btnImprimirOrden;
         private Panel panel5;
         private Label label4;
         private Button button2;
