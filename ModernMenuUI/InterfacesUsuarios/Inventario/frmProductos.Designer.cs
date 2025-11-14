@@ -79,7 +79,7 @@
             panel1 = new Panel();
             lstSugerencias = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            button1 = new Button();
+            btnTamanio = new Button();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
@@ -314,7 +314,6 @@
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
-            btnbuscar.Click += btnbuscar_Click;
             // 
             // btnNuevoProducto
             // 
@@ -613,23 +612,24 @@
             flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Controls.Add(btnEditarProducto);
             flowLayoutPanel1.Controls.Add(btnAgregarCategoria);
-            flowLayoutPanel1.Controls.Add(button1);
+            flowLayoutPanel1.Controls.Add(btnTamanio);
             flowLayoutPanel1.Location = new Point(12, 567);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(634, 100);
             flowLayoutPanel1.TabIndex = 33;
             // 
-            // button1
+            // btnTamanio
             // 
-            button1.BackColor = Color.FromArgb(149, 195, 172);
-            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = SystemColors.ButtonFace;
-            button1.Location = new Point(340, 53);
-            button1.Name = "button1";
-            button1.Size = new Size(140, 44);
-            button1.TabIndex = 24;
-            button1.Text = " Tamaños";
-            button1.UseVisualStyleBackColor = false;
+            btnTamanio.BackColor = Color.FromArgb(149, 195, 172);
+            btnTamanio.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTamanio.ForeColor = SystemColors.ButtonFace;
+            btnTamanio.Location = new Point(340, 53);
+            btnTamanio.Name = "btnTamanio";
+            btnTamanio.Size = new Size(140, 44);
+            btnTamanio.TabIndex = 24;
+            btnTamanio.Text = " Tamaños";
+            btnTamanio.UseVisualStyleBackColor = false;
+            btnTamanio.Click += btnTamanio_Click;
             // 
             // frmProductos
             // 
@@ -694,7 +694,7 @@
         private TableLayoutPanel tableLayoutPanel2;
         private Button btnCategoria;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button button1;
+        private Button btnTamanio;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;

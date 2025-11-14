@@ -14,7 +14,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading; // Añadido para CancellationTokenSource
+using System.Threading; 
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
@@ -28,8 +28,7 @@ namespace ModernMenuUI
         private Producto ProductoSeleccionado;
         Form formularioactivo = null;
 
-        // --- VARIABLES DE LISTA MAESTRA Y REALTIME (Patrón frmEmpleado) ---
-        private List<Producto> _listaMaestraProductos = new List<Producto>(); // <-- Tu lista, renombrada
+        private List<Producto> _listaMaestraProductos = new List<Producto>(); 
         private Supabase.Realtime.RealtimeChannel? _productosSubscription;
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
@@ -39,7 +38,6 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            // ===== ESTILO BARRA LATERAL (RowHeader) =====
             dgvProductos.RowHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#DCE6F1");
             dgvProductos.RowHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#57636e");
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -48,28 +46,29 @@ namespace ModernMenuUI
             productoRepositorio = new ProductoRepositorio();
             dgvProductos.AutoGenerateColumns = false;
 
-            // --- AÑADIDO (Patrón frmEmpleado) ---
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
             this.FormClosing += frmProductos_FormClosing;
         }
 
-        // --- frmProductos_Load (Patrón frmEmpleado) ---
         private async void frmProductos_Load(object sender, EventArgs e)
         {
-
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-
-
             await CargarProductosMaestros();
-
             RefrescarGrid();
             await IniciarSuscripcionProductos();
-
-
         }
 
-        // --- LÓGICA DE CARGA MAESTRA (Equivalente a CargarEmpleados) ---
+        private void RegistrarBotonesConPermisos()
+        {
+            _servicioPermisos.RegistrarBoton(btnNuevoProducto, "insert_inventario");
+            _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
+
+            _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
+            _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
+            _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
+        }
+
         private async Task CargarProductosMaestros()
         {
             try
@@ -77,8 +76,6 @@ namespace ModernMenuUI
                 this.Cursor = Cursors.WaitCursor;
                 this.Cursor = Cursors.WaitCursor;
 
-                // Carga TODOS los productos a tu lista de memoria
-                // Llamada original con un solo argumento (null = todos)
                 _listaMaestraProductos = await productoRepositorio.ObtenerTodosLosProductos(null);
             }
             catch (OperationCanceledException)
@@ -95,43 +92,38 @@ namespace ModernMenuUI
             }
         }
 
-        // --- NUEVO MÉTODO: Filtra la lista maestra y actualiza el Grid ---
+
         private void RefrescarGrid()
         {
             this.Cursor = Cursors.WaitCursor;
-            gbxEstado.Enabled = false; // Deshabilita los radio buttons
+            gbxEstado.Enabled = false; 
 
-            // 1. Determinar el filtro de estado
+          
             bool? estado = null;
             if (rbMostrarHabilitados.Checked) estado = true;
             if (rbMostrardeshabilitados.Checked) estado = false;
 
-            // 2. Filtrar la LISTA MAESTRA en memoria (LINQ)
             List<Producto> listaFiltrada;
 
             if (estado == null)
             {
-                listaFiltrada = _listaMaestraProductos; // Todos
+                listaFiltrada = _listaMaestraProductos;
             }
             else
             {
                 listaFiltrada = _listaMaestraProductos.Where(p => p.EstadoProducto == estado).ToList();
             }
 
-            // (Aquí podrías añadir el filtro del buscador en el futuro)
-
-            // 3. Asigna los datos filtrados al DataGridView
             dgvProductos.DataSource = null;
             dgvProductos.DataSource = listaFiltrada;
 
             if (dgvProductos.Rows.Count > 0)
                 dgvProductos.ClearSelection();
 
-            gbxEstado.Enabled = true; // Vuelve a habilitar
+            gbxEstado.Enabled = true;
             this.Cursor = Cursors.Default;
         }
 
-        // --- LÓGICA REALTIME (Patrón frmEmpleado) ---
 
         private async Task DesecharSuscripcion()
         {
@@ -170,9 +162,7 @@ namespace ModernMenuUI
                                 if (this.IsDisposed) return;
                                 System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en Productos.");
 
-                                // 1. Vuelve a cargar la lista maestra
                                 await CargarProductosMaestros();
-                                // 2. Refresca el grid con los filtros actuales
                                 RefrescarGrid();
                             }));
                         }
@@ -207,8 +197,6 @@ namespace ModernMenuUI
             }
         }
 
-        // --- EVENTOS DE FILTRO (Ahora llaman a RefrescarGrid) ---
-
         private void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -233,15 +221,11 @@ namespace ModernMenuUI
             }
         }
 
-        // --- EVENTOS CRUD (Patrón frmEmpleado) ---
-
         private async void btnNuevoProducto_Click(object sender, EventArgs e)
         {
             frmAgregarEditarProducto NuevoProducto = new frmAgregarEditarProducto();
             DialogResult resultado = NuevoProducto.ShowDialog();
 
-            // Refresco manual opcional (Realtime DEBERÍA manejarlo,
-            // pero si hay lag, puedes forzarlo)
             if (resultado == DialogResult.OK)
             {
                 await CargarProductosMaestros();
@@ -253,11 +237,9 @@ namespace ModernMenuUI
         {
             if (ProductoSeleccionado != null)
             {
-                // ¡CORREGIDO! Pasando el producto seleccionado
                 frmAgregarEditarProducto EditarProducto = new frmAgregarEditarProducto(ProductoSeleccionado);
                 DialogResult resultado = EditarProducto.ShowDialog();
 
-                // Refresco manual (siguiendo patrón frmEmpleado)
                 if (resultado == DialogResult.OK)
                 {
                     await CargarProductosMaestros();
@@ -277,7 +259,6 @@ namespace ModernMenuUI
 
             if (string.IsNullOrEmpty(busqueda))
             {
-                // Devuelve la lista filtrada por los radiobuttons
                 bool? estado = null;
                 if (rbMostrarHabilitados.Checked) estado = true;
                 if (rbMostrardeshabilitados.Checked) estado = false;
@@ -287,31 +268,25 @@ namespace ModernMenuUI
             }
 
             var resultados = _listaMaestraProductos.Where(producto =>
-                    // Filtra por estado PRIMERO
                     (rbMostrarTodos.Checked ||
                      (rbMostrarHabilitados.Checked && producto.EstadoProducto == true) ||
                      (rbMostrardeshabilitados.Checked && producto.EstadoProducto == false))
                     &&
-                    // Y LUEGO por texto
                     (
                         (producto.NombreProducto != null && producto.NombreProducto.ToLower().Contains(busqueda)) ||
                         (producto.Categoria.NombreCategoria != null && producto.Categoria.NombreCategoria.ToLower().Contains(busqueda)) ||
                         (producto.Marca.NombreMarca != null && producto.Marca.NombreMarca.ToLower().Contains(busqueda)) ||
                         (producto.CodigoBarraProducto != null && producto.CodigoBarraProducto.ToLower().Contains(busqueda))
                     )
-                )
-                //.Take(10) // Puedes descomentar esto si quieres limitar los resultados
-                .ToList();
+                ).ToList();
 
             return resultados;
         }
 
-        // --- CÓDIGO DE SOPORTE (Sin cambios) ---
-
         private void btnSalir_Click(object sender, EventArgs e)
         {
             clsAnmaciones.NombreMenuPrincipal();
-            this.Close(); // FormClosing se encargará de desechar la suscripción
+            this.Close();
         }
 
         private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
@@ -333,10 +308,8 @@ namespace ModernMenuUI
         private const int MAX_SUGGESTIONS = 10; // (Opcional, para el tamaño)
 
         // --- EVENTOS ---
-
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
         {
-            // Ignorar las teclas de navegación para que no relancen la búsqueda
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
                 return;
@@ -359,7 +332,6 @@ namespace ModernMenuUI
                     lstSugerencias.DataSource = top10;
                     lstSugerencias.DisplayMember = "NombreProducto";
 
-                    // Llama a la función para ajustar la altura
                     AjustarAlturaListBox(resultados.Count);
 
                     lstSugerencias.Visible = true;
@@ -406,7 +378,6 @@ namespace ModernMenuUI
                     txtBuscar.Text = productoSel.NombreProducto;
                     txtBuscar.SelectionStart = txtBuscar.Text.Length;
 
-                    // ¡SOLUCIÓN AL PROBLEMA 2!
                     lstSugerencias.Visible = false;
                     _ctsBusqueda?.Cancel(); // Cancela el KeyUp pendiente
                     SeleccionarProductoEnGrid(productoSel);
@@ -470,7 +441,6 @@ namespace ModernMenuUI
 
         private void lstSugerencias_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Evita que cambie automáticamente si el usuario no hizo clic
             if (!_usuarioSeleccionoConMouse) return;
 
             if (lstSugerencias.SelectedItem != null)
@@ -484,7 +454,6 @@ namespace ModernMenuUI
             }
         }
 
-
         private void AjustarAlturaListBox(int numeroDeResultados)
         {
             int alturaItem = lstSugerencias.ItemHeight;
@@ -497,28 +466,18 @@ namespace ModernMenuUI
         {
             if (productoBuscado == null) return;
 
-            // 1. Obtener la lista de datos que está en el DataGridView
             var listaDelGrid = dgvProductos.DataSource as List<Producto>;
             if (listaDelGrid == null) return; // No se puede buscar
 
-            // 2. Encontrar el ÍNDICE del producto en la lista (¡casi instantáneo!)
-            //    (Asegúrate de que 'IdProducto' sea tu llave primaria)
+
             int indice = listaDelGrid.FindIndex(p => p.IdProducto == productoBuscado.IdProducto);
 
-            // 3. Si se encuentra, seleccionar esa fila por su índice
             if (indice != -1 && indice < dgvProductos.Rows.Count)
             {
                 dgvProductos.ClearSelection();
                 dgvProductos.Rows[indice].Selected = true;
-
-                // Mueve el scroll para que la fila sea visible
                 dgvProductos.FirstDisplayedScrollingRowIndex = indice;
             }
-        }
-
-        private void btnbuscar_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
@@ -539,16 +498,7 @@ namespace ModernMenuUI
             }
         }
 
-        private void RegistrarBotonesConPermisos()
-        {
-            _servicioPermisos.RegistrarBoton(btnNuevoProducto, "insert_inventario");
-            _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
-
-            _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
-            _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
-            _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
-        }
-
+        // BOTONES
         private void btnMarca_Click(object sender, EventArgs e)
         {
             frmMarcas marcas = new frmMarcas();
@@ -556,10 +506,10 @@ namespace ModernMenuUI
 
         }
 
-
         private void btnIngresarPerdida_Click(object sender, EventArgs e)
         {
-
+            frmAgregarEditarProducto perdida = new frmAgregarEditarProducto();
+            perdida.ShowDialog();   
         }
 
         private void btnAgregarCategoria_Click(object sender, EventArgs e)
@@ -579,6 +529,12 @@ namespace ModernMenuUI
         {
             frmCategorias categorias = new frmCategorias();
             categorias.ShowDialog();
+        }
+
+        private void btnTamanio_Click(object sender, EventArgs e)
+        {
+            frmTamanios tamanio = new frmTamanios();
+            tamanio.ShowDialog();
         }
     }
 }
