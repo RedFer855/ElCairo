@@ -1,3 +1,4 @@
+using CapaDeDatos.Modelados.Reporteria.Reporteria;
 using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
@@ -546,8 +547,9 @@ namespace ModernMenuUI
 
         private void btnMarcas_Click(object sender, EventArgs e)
         {
+            bool tipo = true;
             CerrarSubmenu();
-            ManejarFormularios.Instancia.AbrirFormulario(new frmMarcas());
+            ManejarFormularios.Instancia.AbrirFormulario(new frmMarcas(tipo));
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
     }

@@ -28,36 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Proveedores));
             panel1 = new Panel();
             panelCarrito = new Panel();
-            dgvProductos = new DataGridView();
-            EstadoProducto = new DataGridViewCheckBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            Direccion = new DataGridViewTextBoxColumn();
-            Proveedor = new DataGridViewTextBoxColumn();
-            IdMarca = new DataGridViewTextBoxColumn();
             panel10 = new Panel();
+            dgvProductos = new DataGridView();
+            IdMarca = new DataGridViewTextBoxColumn();
+            Proveedor = new DataGridViewTextBoxColumn();
+            Direccion = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            EstadoProducto = new DataGridViewCheckBoxColumn();
             btnAgregarMarca = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            btnSalir = new Button();
             btnModificarMArca = new Button();
+            button1 = new Button();
+            btnSalir = new Button();
             gbxEstado = new GroupBox();
-            rbMostrarHabilitados = new RadioButton();
-            rbMostrarTodos = new RadioButton();
             rbMostrardeshabilitados = new RadioButton();
+            rbMostrarTodos = new RadioButton();
+            rbMostrarHabilitados = new RadioButton();
             btnbuscar = new Button();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            button1 = new Button();
             panel1.SuspendLayout();
             panelCarrito.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             gbxEstado.SuspendLayout();
             panelBusqueda.SuspendLayout();
@@ -83,37 +83,47 @@
             panelCarrito.Size = new Size(571, 263);
             panelCarrito.TabIndex = 13;
             // 
+            // panel10
+            // 
+            panel10.AutoScroll = true;
+            panel10.Controls.Add(dgvProductos);
+            panel10.Dock = DockStyle.Fill;
+            panel10.Location = new Point(0, 0);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(571, 263);
+            panel10.TabIndex = 17;
+            // 
             // dgvProductos
             // 
             dgvProductos.AllowUserToAddRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvProductos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvProductos.BorderStyle = BorderStyle.None;
             dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProductos.Columns.AddRange(new DataGridViewColumn[] { IdMarca, Proveedor, Direccion, dataGridViewTextBoxColumn4, EstadoProducto });
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.White;
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.Padding = new Padding(5);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle7.SelectionForeColor = Color.White;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvProductos.DefaultCellStyle = dataGridViewCellStyle3;
             dgvProductos.Dock = DockStyle.Fill;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
@@ -121,14 +131,14 @@
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
@@ -136,16 +146,26 @@
             dgvProductos.Size = new Size(571, 263);
             dgvProductos.TabIndex = 1;
             // 
-            // EstadoProducto
+            // IdMarca
             // 
-            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoProducto.DataPropertyName = "EstadoProducto";
-            EstadoProducto.HeaderText = "Estado";
-            EstadoProducto.Name = "EstadoProducto";
-            EstadoProducto.ReadOnly = true;
-            EstadoProducto.Resizable = DataGridViewTriState.True;
-            EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoProducto.Width = 89;
+            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            IdMarca.HeaderText = "Código";
+            IdMarca.Name = "IdMarca";
+            IdMarca.ReadOnly = true;
+            IdMarca.Width = 89;
+            // 
+            // Proveedor
+            // 
+            Proveedor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Proveedor.HeaderText = "Proveedor";
+            Proveedor.Name = "Proveedor";
+            Proveedor.ReadOnly = true;
+            // 
+            // Direccion
+            // 
+            Direccion.HeaderText = "Dirección";
+            Direccion.Name = "Direccion";
+            Direccion.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -157,36 +177,16 @@
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
-            // Direccion
+            // EstadoProducto
             // 
-            Direccion.HeaderText = "Dirección";
-            Direccion.Name = "Direccion";
-            Direccion.ReadOnly = true;
-            // 
-            // Proveedor
-            // 
-            Proveedor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Proveedor.HeaderText = "Proveedor";
-            Proveedor.Name = "Proveedor";
-            Proveedor.ReadOnly = true;
-            // 
-            // IdMarca
-            // 
-            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            IdMarca.HeaderText = "Código";
-            IdMarca.Name = "IdMarca";
-            IdMarca.ReadOnly = true;
-            IdMarca.Width = 89;
-            // 
-            // panel10
-            // 
-            panel10.AutoScroll = true;
-            panel10.Controls.Add(dgvProductos);
-            panel10.Dock = DockStyle.Fill;
-            panel10.Location = new Point(0, 0);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(571, 263);
-            panel10.TabIndex = 17;
+            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoProducto.DataPropertyName = "EstadoProducto";
+            EstadoProducto.HeaderText = "Estado";
+            EstadoProducto.Name = "EstadoProducto";
+            EstadoProducto.ReadOnly = true;
+            EstadoProducto.Resizable = DataGridViewTriState.True;
+            EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
+            EstadoProducto.Width = 89;
             // 
             // btnAgregarMarca
             // 
@@ -212,18 +212,6 @@
             flowLayoutPanel1.Size = new Size(604, 51);
             flowLayoutPanel1.TabIndex = 40;
             // 
-            // btnSalir
-            // 
-            btnSalir.BackColor = Color.FromArgb(148, 168, 187);
-            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSalir.ForeColor = SystemColors.ButtonFace;
-            btnSalir.Location = new Point(508, 3);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(91, 44);
-            btnSalir.TabIndex = 37;
-            btnSalir.Text = "Salir";
-            btnSalir.UseVisualStyleBackColor = false;
-            // 
             // btnModificarMArca
             // 
             btnModificarMArca.BackColor = Color.FromArgb(149, 195, 172);
@@ -235,6 +223,30 @@
             btnModificarMArca.TabIndex = 36;
             btnModificarMArca.Text = "Modificar Proveedor";
             btnModificarMArca.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(149, 195, 172);
+            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.ForeColor = SystemColors.ButtonFace;
+            button1.Location = new Point(323, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(179, 44);
+            button1.TabIndex = 38;
+            button1.Text = "Seleccionar Proveedor";
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // btnSalir
+            // 
+            btnSalir.BackColor = Color.FromArgb(148, 168, 187);
+            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSalir.ForeColor = SystemColors.ButtonFace;
+            btnSalir.Location = new Point(508, 3);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(91, 44);
+            btnSalir.TabIndex = 37;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = false;
             // 
             // gbxEstado
             // 
@@ -251,17 +263,15 @@
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
             // 
-            // rbMostrarHabilitados
+            // rbMostrardeshabilitados
             // 
-            rbMostrarHabilitados.AutoSize = true;
-            rbMostrarHabilitados.Checked = true;
-            rbMostrarHabilitados.Location = new Point(15, 21);
-            rbMostrarHabilitados.Name = "rbMostrarHabilitados";
-            rbMostrarHabilitados.Size = new Size(101, 22);
-            rbMostrarHabilitados.TabIndex = 28;
-            rbMostrarHabilitados.TabStop = true;
-            rbMostrarHabilitados.Text = "Habilitados";
-            rbMostrarHabilitados.UseVisualStyleBackColor = true;
+            rbMostrardeshabilitados.AutoSize = true;
+            rbMostrardeshabilitados.Location = new Point(122, 22);
+            rbMostrardeshabilitados.Name = "rbMostrardeshabilitados";
+            rbMostrardeshabilitados.Size = new Size(121, 22);
+            rbMostrardeshabilitados.TabIndex = 30;
+            rbMostrardeshabilitados.Text = "Deshabilitados";
+            rbMostrardeshabilitados.UseVisualStyleBackColor = true;
             // 
             // rbMostrarTodos
             // 
@@ -273,15 +283,17 @@
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
             // 
-            // rbMostrardeshabilitados
+            // rbMostrarHabilitados
             // 
-            rbMostrardeshabilitados.AutoSize = true;
-            rbMostrardeshabilitados.Location = new Point(122, 22);
-            rbMostrardeshabilitados.Name = "rbMostrardeshabilitados";
-            rbMostrardeshabilitados.Size = new Size(121, 22);
-            rbMostrardeshabilitados.TabIndex = 30;
-            rbMostrardeshabilitados.Text = "Deshabilitados";
-            rbMostrardeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrarHabilitados.AutoSize = true;
+            rbMostrarHabilitados.Checked = true;
+            rbMostrarHabilitados.Location = new Point(15, 21);
+            rbMostrarHabilitados.Name = "rbMostrarHabilitados";
+            rbMostrarHabilitados.Size = new Size(101, 22);
+            rbMostrarHabilitados.TabIndex = 28;
+            rbMostrarHabilitados.TabStop = true;
+            rbMostrarHabilitados.Text = "Habilitados";
+            rbMostrarHabilitados.UseVisualStyleBackColor = true;
             // 
             // btnbuscar
             // 
@@ -322,35 +334,27 @@
             txtBuscar.Size = new Size(317, 20);
             txtBuscar.TabIndex = 1;
             // 
-            // button1
-            // 
-            button1.BackColor = Color.FromArgb(149, 195, 172);
-            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = SystemColors.ButtonFace;
-            button1.Location = new Point(323, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(179, 44);
-            button1.TabIndex = 38;
-            button1.Text = "Seleccionar Proveedor";
-            button1.UseVisualStyleBackColor = false;
-            // 
             // Proveedores
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(628, 481);
             Controls.Add(panelBusqueda);
             Controls.Add(gbxEstado);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             MinimumSize = new Size(628, 481);
             Name = "Proveedores";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Proveedores";
             panel1.ResumeLayout(false);
             panelCarrito.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             panel10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();

@@ -138,7 +138,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(300, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(874, 65);
+            panBarraControl.Size = new Size(938, 65);
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -149,7 +149,7 @@
             panel6.Controls.Add(panel12);
             panel6.Controls.Add(panel9);
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(701, 0);
+            panel6.Location = new Point(765, 0);
             panel6.Name = "panel6";
             panel6.RightToLeft = RightToLeft.Yes;
             panel6.Size = new Size(108, 65);
@@ -194,7 +194,7 @@
             btnNotificaciones.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             btnNotificaciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnNotificaciones.Image = (Image)resources.GetObject("btnNotificaciones.Image");
-            btnNotificaciones.Location = new Point(809, 0);
+            btnNotificaciones.Location = new Point(873, 0);
             btnNotificaciones.Name = "btnNotificaciones";
             btnNotificaciones.Size = new Size(65, 65);
             btnNotificaciones.TabIndex = 6;
@@ -205,7 +205,7 @@
             // panel3
             // 
             panel3.Dock = DockStyle.Right;
-            panel3.Location = new Point(874, 0);
+            panel3.Location = new Point(938, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(0, 65);
             panel3.TabIndex = 10;
@@ -262,7 +262,7 @@
             btnMinimizar.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMinimizar.ForeColor = Color.FromArgb(167, 191, 211);
             btnMinimizar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMinimizar.Location = new Point(874, 0);
+            btnMinimizar.Location = new Point(938, 0);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Padding = new Padding(11, 0, 0, 0);
             btnMinimizar.Size = new Size(0, 65);
@@ -281,7 +281,7 @@
             btnMiniMaxi.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMiniMaxi.ForeColor = Color.FromArgb(167, 191, 211);
             btnMiniMaxi.ImageAlign = ContentAlignment.MiddleLeft;
-            btnMiniMaxi.Location = new Point(874, 0);
+            btnMiniMaxi.Location = new Point(938, 0);
             btnMiniMaxi.Name = "btnMiniMaxi";
             btnMiniMaxi.Padding = new Padding(11, 0, 0, 0);
             btnMiniMaxi.Size = new Size(0, 65);
@@ -301,7 +301,7 @@
             btnCerrar.ForeColor = Color.FromArgb(167, 191, 211);
             btnCerrar.Image = (Image)resources.GetObject("btnCerrar.Image");
             btnCerrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCerrar.Location = new Point(874, 0);
+            btnCerrar.Location = new Point(938, 0);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Padding = new Padding(11, 0, 0, 0);
             btnCerrar.Size = new Size(0, 65);
@@ -936,7 +936,7 @@
             panelFormHijo.Dock = DockStyle.Fill;
             panelFormHijo.Location = new Point(300, 65);
             panelFormHijo.Name = "panelFormHijo";
-            panelFormHijo.Size = new Size(874, 708);
+            panelFormHijo.Size = new Size(938, 708);
             panelFormHijo.TabIndex = 2;
             // 
             // tableLayoutPanel1
@@ -953,7 +953,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(832, 200);
+            tableLayoutPanel1.Size = new Size(896, 200);
             tableLayoutPanel1.TabIndex = 35;
             // 
             // chart1
@@ -973,7 +973,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chart1.Series.Add(series1);
-            chart1.Size = new Size(376, 160);
+            chart1.Size = new Size(408, 160);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
             // 
@@ -985,7 +985,7 @@
             chart2.Dock = DockStyle.Fill;
             legend2.Name = "Legend1";
             chart2.Legends.Add(legend2);
-            chart2.Location = new Point(436, 20);
+            chart2.Location = new Point(468, 20);
             chart2.Margin = new Padding(20);
             chart2.Name = "chart2";
             series2.ChartArea = "ChartArea1";
@@ -993,7 +993,7 @@
             series2.Name = "Series1";
             series2.YValuesPerPoint = 4;
             chart2.Series.Add(series2);
-            chart2.Size = new Size(376, 160);
+            chart2.Size = new Size(408, 160);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
             // 
@@ -1055,7 +1055,7 @@
             panelNotificaciones.BackgroundImageLayout = ImageLayout.Center;
             panelNotificaciones.Controls.Add(lblNotificaciones);
             panelNotificaciones.Dock = DockStyle.Right;
-            panelNotificaciones.Location = new Point(1174, 65);
+            panelNotificaciones.Location = new Point(1238, 65);
             panelNotificaciones.Name = "panelNotificaciones";
             panelNotificaciones.Size = new Size(0, 708);
             panelNotificaciones.TabIndex = 3;
@@ -1081,7 +1081,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(224, 224, 224);
-            ClientSize = new Size(1174, 773);
+            ClientSize = new Size(1238, 773);
             Controls.Add(panelNotificaciones);
             Controls.Add(panelFormHijo);
             Controls.Add(panBarraControl);

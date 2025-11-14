@@ -3,6 +3,7 @@ using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion; // Añadido para el monitor
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.InterfacesUsuarios.Inventario;
 using Supabase;
 using Supabase.Realtime;
 using System;
@@ -550,7 +551,7 @@ namespace ModernMenuUI
 
         private void btnMarca_Click(object sender, EventArgs e)
         {
-            frmProductos marcas = new frmProductos();
+            frmMarcas marcas = new frmMarcas();
             marcas.ShowDialog();
 
         }
@@ -561,5 +562,23 @@ namespace ModernMenuUI
 
         }
 
+        private void btnAgregarCategoria_Click(object sender, EventArgs e)
+        {
+            frmCategorias categorias = new frmCategorias();
+            categorias.ShowDialog();
+        }
+
+        private void btnAgregarMarca_Click(object sender, EventArgs e)
+        {
+            frmMarcas marcas = new frmMarcas();
+            marcas.ShowDialog();
+
+        }
+
+        private void btnCategoria_Click(object sender, EventArgs e)
+        {
+            frmCategorias categorias = new frmCategorias();
+            categorias.ShowDialog();
+        }
     }
 }

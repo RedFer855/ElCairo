@@ -15,8 +15,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         public frmMarcas()
         {
             InitializeComponent();
+            btnAgregarMarca.Visible = false;
+            btnModificarMArca.Visible = false;
+
         }
 
+        public frmMarcas(bool tipo)
+        {
+            InitializeComponent();
+            FormBorderStyle = FormBorderStyle.None;
 
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

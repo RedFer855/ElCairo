@@ -354,6 +354,7 @@
             btnAgregarMarca.TabIndex = 21;
             btnAgregarMarca.Text = "Marcas";
             btnAgregarMarca.UseVisualStyleBackColor = false;
+            btnAgregarMarca.Click += btnAgregarMarca_Click;
             // 
             // gbxEstado
             // 
@@ -408,6 +409,7 @@
             btnCategoria.Size = new Size(29, 24);
             btnCategoria.TabIndex = 38;
             btnCategoria.UseVisualStyleBackColor = false;
+            btnCategoria.Click += btnCategoria_Click;
             // 
             // txtMarca
             // 
@@ -560,6 +562,7 @@
             btnAgregarCategoria.TabIndex = 22;
             btnAgregarCategoria.Text = "Categorias";
             btnAgregarCategoria.UseVisualStyleBackColor = false;
+            btnAgregarCategoria.Click += btnAgregarCategoria_Click;
             // 
             // btnEditarProducto
             // 

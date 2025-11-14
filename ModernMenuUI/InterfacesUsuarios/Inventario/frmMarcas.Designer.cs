@@ -44,12 +44,12 @@
             btnAgregarMarca = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnModificarMArca = new Button();
-            button1 = new Button();
+            btnSeleccionarMarca = new Button();
             btnSalir = new Button();
             gbxEstado = new GroupBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             txtMarca = new TextBox();
-            btnMarca = new Button();
+            btnProveedores = new Button();
             label1 = new Label();
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
@@ -74,7 +74,7 @@
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 121);
             panel1.Name = "panel1";
-            panel1.Size = new Size(810, 282);
+            panel1.Size = new Size(692, 282);
             panel1.TabIndex = 34;
             // 
             // panelCarrito
@@ -84,7 +84,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 19);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(777, 243);
+            panelCarrito.Size = new Size(659, 243);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -94,7 +94,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(777, 243);
+            panel10.Size = new Size(659, 243);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -147,7 +147,7 @@
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(777, 243);
+            dgvProductos.Size = new Size(659, 243);
             dgvProductos.TabIndex = 1;
             // 
             // IdMarca
@@ -203,7 +203,7 @@
             flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnAgregarMarca);
             flowLayoutPanel1.Controls.Add(btnModificarMArca);
-            flowLayoutPanel1.Controls.Add(button1);
+            flowLayoutPanel1.Controls.Add(btnSeleccionarMarca);
             flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Location = new Point(12, 418);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -222,17 +222,17 @@
             btnModificarMArca.Text = "Modificar Marca";
             btnModificarMArca.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // btnSeleccionarMarca
             // 
-            button1.BackColor = Color.FromArgb(149, 195, 172);
-            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = SystemColors.ButtonFace;
-            button1.Location = new Point(268, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(153, 44);
-            button1.TabIndex = 38;
-            button1.Text = "Seleccionar Marca";
-            button1.UseVisualStyleBackColor = false;
+            btnSeleccionarMarca.BackColor = Color.FromArgb(149, 195, 172);
+            btnSeleccionarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSeleccionarMarca.ForeColor = SystemColors.ButtonFace;
+            btnSeleccionarMarca.Location = new Point(268, 3);
+            btnSeleccionarMarca.Name = "btnSeleccionarMarca";
+            btnSeleccionarMarca.Size = new Size(153, 44);
+            btnSeleccionarMarca.TabIndex = 38;
+            btnSeleccionarMarca.Text = "Seleccionar Marca";
+            btnSeleccionarMarca.UseVisualStyleBackColor = false;
             // 
             // btnSalir
             // 
@@ -245,6 +245,7 @@
             btnSalir.TabIndex = 37;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click;
             // 
             // gbxEstado
             // 
@@ -257,7 +258,7 @@
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(12, 62);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(810, 53);
+            gbxEstado.Size = new Size(692, 53);
             gbxEstado.TabIndex = 37;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -270,7 +271,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
             tableLayoutPanel2.Controls.Add(txtMarca, 1, 0);
-            tableLayoutPanel2.Controls.Add(btnMarca, 2, 0);
+            tableLayoutPanel2.Controls.Add(btnProveedores, 2, 0);
             tableLayoutPanel2.Controls.Add(label1, 0, 0);
             tableLayoutPanel2.Location = new Point(382, 17);
             tableLayoutPanel2.MaximumSize = new Size(420, 30);
@@ -278,7 +279,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(420, 30);
+            tableLayoutPanel2.Size = new Size(302, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
             // txtMarca
@@ -288,22 +289,22 @@
             txtMarca.Name = "txtMarca";
             txtMarca.PlaceholderText = "(Todos los Proveedores)";
             txtMarca.ReadOnly = true;
-            txtMarca.Size = new Size(282, 25);
+            txtMarca.Size = new Size(164, 25);
             txtMarca.TabIndex = 34;
             // 
-            // btnMarca
+            // btnProveedores
             // 
-            btnMarca.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMarca.BackColor = Color.FromArgb(168, 191, 212);
-            btnMarca.BackgroundImage = (Image)resources.GetObject("btnMarca.BackgroundImage");
-            btnMarca.BackgroundImageLayout = ImageLayout.Zoom;
-            btnMarca.FlatAppearance.BorderSize = 0;
-            btnMarca.FlatStyle = FlatStyle.Flat;
-            btnMarca.Location = new Point(392, 3);
-            btnMarca.Name = "btnMarca";
-            btnMarca.Size = new Size(25, 24);
-            btnMarca.TabIndex = 2;
-            btnMarca.UseVisualStyleBackColor = false;
+            btnProveedores.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnProveedores.BackColor = Color.FromArgb(168, 191, 212);
+            btnProveedores.BackgroundImage = (Image)resources.GetObject("btnProveedores.BackgroundImage");
+            btnProveedores.BackgroundImageLayout = ImageLayout.Zoom;
+            btnProveedores.FlatAppearance.BorderSize = 0;
+            btnProveedores.FlatStyle = FlatStyle.Flat;
+            btnProveedores.Location = new Point(274, 3);
+            btnProveedores.Name = "btnProveedores";
+            btnProveedores.Size = new Size(25, 24);
+            btnProveedores.TabIndex = 2;
+            btnProveedores.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -358,7 +359,7 @@
             panelBusqueda.MaximumSize = new Size(700, 43);
             panelBusqueda.MinimumSize = new Size(330, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(648, 43);
+            panelBusqueda.Size = new Size(530, 43);
             panelBusqueda.TabIndex = 38;
             // 
             // txtBuscar
@@ -370,7 +371,7 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Marcas...";
-            txtBuscar.Size = new Size(561, 20);
+            txtBuscar.Size = new Size(443, 20);
             txtBuscar.TabIndex = 1;
             // 
             // btnbuscar
@@ -381,7 +382,7 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(585, 12);
+            btnbuscar.Location = new Point(467, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
@@ -391,15 +392,19 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(834, 481);
+            BackColor = Color.White;
+            ClientSize = new Size(716, 481);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panelBusqueda);
             Controls.Add(gbxEstado);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             MinimumSize = new Size(716, 481);
             Name = "frmMarcas";
-            Text = "frmProductos";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Marcas";
             panel1.ResumeLayout(false);
             panelCarrito.ResumeLayout(false);
             panel10.ResumeLayout(false);
@@ -431,7 +436,7 @@
         private GroupBox gbxEstado;
         private TableLayoutPanel tableLayoutPanel2;
         private TextBox txtMarca;
-        private Button btnMarca;
+        private Button btnProveedores;
         private RadioButton rbMostrardeshabilitados;
         private RadioButton rbMostrarTodos;
         private RadioButton rbMostrarHabilitados;
@@ -439,6 +444,6 @@
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button btnbuscar;
-        private Button button1;
+        private Button btnSeleccionarMarca;
     }
 }
