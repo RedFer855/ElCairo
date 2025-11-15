@@ -61,12 +61,12 @@
             btnAgregarMarca = new Button();
             gbxEstado = new GroupBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            btnCategoria = new Button();
-            txtMarca = new TextBox();
+            txtFiltroMarca = new TextBox();
             label1 = new Label();
-            txtCategoria = new TextBox();
             label2 = new Label();
             btnMarca = new Button();
+            btnCategoria = new Button();
+            txtFiltroCategoria = new TextBox();
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
             rbMostrarHabilitados = new RadioButton();
@@ -80,6 +80,9 @@
             lstSugerencias = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnTamanio = new Button();
+            btnLimpiarFiltros = new Button();
+            pbxClean = new PictureBox();
+            pnlLimpiarFiltros = new Panel();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
@@ -88,6 +91,8 @@
             tableLayoutPanel2.SuspendLayout();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxClean).BeginInit();
+            pnlLimpiarFiltros.SuspendLayout();
             SuspendLayout();
             // 
             // panelCarrito
@@ -375,18 +380,18 @@
             // 
             tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel2.ColumnCount = 6;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 56F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 83F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 78F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 49F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 34F));
-            tableLayoutPanel2.Controls.Add(btnCategoria, 5, 0);
-            tableLayoutPanel2.Controls.Add(txtMarca, 1, 0);
-            tableLayoutPanel2.Controls.Add(label1, 0, 0);
-            tableLayoutPanel2.Controls.Add(txtCategoria, 4, 0);
-            tableLayoutPanel2.Controls.Add(label2, 3, 0);
-            tableLayoutPanel2.Controls.Add(btnMarca, 2, 0);
+            tableLayoutPanel2.Controls.Add(txtFiltroMarca, 4, 0);
+            tableLayoutPanel2.Controls.Add(label1, 3, 0);
+            tableLayoutPanel2.Controls.Add(label2, 0, 0);
+            tableLayoutPanel2.Controls.Add(btnMarca, 5, 0);
+            tableLayoutPanel2.Controls.Add(btnCategoria, 2, 0);
+            tableLayoutPanel2.Controls.Add(txtFiltroCategoria, 1, 0);
             tableLayoutPanel2.Location = new Point(375, 17);
             tableLayoutPanel2.MinimumSize = new Size(501, 30);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -395,36 +400,20 @@
             tableLayoutPanel2.Size = new Size(517, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
-            // btnCategoria
+            // txtFiltroMarca
             // 
-            btnCategoria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCategoria.BackColor = Color.FromArgb(168, 191, 212);
-            btnCategoria.BackgroundImage = (Image)resources.GetObject("btnCategoria.BackgroundImage");
-            btnCategoria.BackgroundImageLayout = ImageLayout.Zoom;
-            btnCategoria.FlatAppearance.BorderSize = 0;
-            btnCategoria.FlatStyle = FlatStyle.Flat;
-            btnCategoria.Location = new Point(485, 3);
-            btnCategoria.Name = "btnCategoria";
-            btnCategoria.Size = new Size(29, 24);
-            btnCategoria.TabIndex = 38;
-            btnCategoria.UseVisualStyleBackColor = false;
-            btnCategoria.Click += btnCategoria_Click;
-            // 
-            // txtMarca
-            // 
-            txtMarca.Dock = DockStyle.Fill;
-            txtMarca.Location = new Point(59, 3);
-            txtMarca.Name = "txtMarca";
-            txtMarca.PlaceholderText = "(Todas las Marcas)";
-            txtMarca.ReadOnly = true;
-            txtMarca.Size = new Size(152, 25);
-            txtMarca.TabIndex = 34;
+            txtFiltroMarca.Dock = DockStyle.Fill;
+            txtFiltroMarca.Location = new Point(326, 3);
+            txtFiltroMarca.Name = "txtFiltroMarca";
+            txtFiltroMarca.PlaceholderText = "(Todas las Marcas)";
+            txtFiltroMarca.ReadOnly = true;
+            txtFiltroMarca.Size = new Size(153, 25);
+            txtFiltroMarca.TabIndex = 34;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(3, 0);
+            label1.Location = new Point(277, 0);
             label1.MaximumSize = new Size(53, 30);
             label1.MinimumSize = new Size(53, 30);
             label1.Name = "label1";
@@ -433,21 +422,11 @@
             label1.Text = "Marca:";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // txtCategoria
-            // 
-            txtCategoria.Dock = DockStyle.Fill;
-            txtCategoria.Location = new Point(327, 3);
-            txtCategoria.Name = "txtCategoria";
-            txtCategoria.PlaceholderText = "(Todas las Categorías)";
-            txtCategoria.ReadOnly = true;
-            txtCategoria.Size = new Size(152, 25);
-            txtCategoria.TabIndex = 35;
-            // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(249, 0);
+            label2.Location = new Point(3, 0);
             label2.MaximumSize = new Size(77, 30);
             label2.MinimumSize = new Size(77, 30);
             label2.Name = "label2";
@@ -458,23 +437,48 @@
             // 
             // btnMarca
             // 
-            btnMarca.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnMarca.BackColor = Color.FromArgb(168, 191, 212);
             btnMarca.BackgroundImage = (Image)resources.GetObject("btnMarca.BackgroundImage");
             btnMarca.BackgroundImageLayout = ImageLayout.Zoom;
+            btnMarca.Dock = DockStyle.Fill;
             btnMarca.FlatAppearance.BorderSize = 0;
             btnMarca.FlatStyle = FlatStyle.Flat;
-            btnMarca.Location = new Point(217, 3);
+            btnMarca.Location = new Point(485, 3);
             btnMarca.Name = "btnMarca";
-            btnMarca.Size = new Size(26, 24);
+            btnMarca.Size = new Size(29, 24);
             btnMarca.TabIndex = 2;
             btnMarca.UseVisualStyleBackColor = false;
             btnMarca.Click += btnMarca_Click;
             // 
+            // btnCategoria
+            // 
+            btnCategoria.BackColor = Color.FromArgb(168, 191, 212);
+            btnCategoria.BackgroundImage = (Image)resources.GetObject("btnCategoria.BackgroundImage");
+            btnCategoria.BackgroundImageLayout = ImageLayout.Zoom;
+            btnCategoria.Dock = DockStyle.Fill;
+            btnCategoria.FlatAppearance.BorderSize = 0;
+            btnCategoria.FlatStyle = FlatStyle.Flat;
+            btnCategoria.Location = new Point(245, 3);
+            btnCategoria.Name = "btnCategoria";
+            btnCategoria.Size = new Size(26, 24);
+            btnCategoria.TabIndex = 38;
+            btnCategoria.UseVisualStyleBackColor = false;
+            btnCategoria.Click += btnCategoria_Click;
+            // 
+            // txtFiltroCategoria
+            // 
+            txtFiltroCategoria.Dock = DockStyle.Fill;
+            txtFiltroCategoria.Location = new Point(86, 3);
+            txtFiltroCategoria.Name = "txtFiltroCategoria";
+            txtFiltroCategoria.PlaceholderText = "(Todas las Categorías)";
+            txtFiltroCategoria.ReadOnly = true;
+            txtFiltroCategoria.Size = new Size(153, 25);
+            txtFiltroCategoria.TabIndex = 35;
+            // 
             // rbMostrardeshabilitados
             // 
             rbMostrardeshabilitados.AutoSize = true;
-            rbMostrardeshabilitados.Location = new Point(122, 22);
+            rbMostrardeshabilitados.Location = new Point(113, 22);
             rbMostrardeshabilitados.Name = "rbMostrardeshabilitados";
             rbMostrardeshabilitados.Size = new Size(121, 22);
             rbMostrardeshabilitados.TabIndex = 30;
@@ -485,7 +489,7 @@
             // rbMostrarTodos
             // 
             rbMostrarTodos.AutoSize = true;
-            rbMostrarTodos.Location = new Point(249, 22);
+            rbMostrarTodos.Location = new Point(240, 22);
             rbMostrarTodos.Name = "rbMostrarTodos";
             rbMostrarTodos.Size = new Size(120, 22);
             rbMostrarTodos.TabIndex = 29;
@@ -497,7 +501,7 @@
             // 
             rbMostrarHabilitados.AutoSize = true;
             rbMostrarHabilitados.Checked = true;
-            rbMostrarHabilitados.Location = new Point(15, 21);
+            rbMostrarHabilitados.Location = new Point(6, 22);
             rbMostrarHabilitados.Name = "rbMostrarHabilitados";
             rbMostrarHabilitados.Size = new Size(101, 22);
             rbMostrarHabilitados.TabIndex = 28;
@@ -631,12 +635,48 @@
             btnTamanio.UseVisualStyleBackColor = false;
             btnTamanio.Click += btnTamanio_Click;
             // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(3, 5);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(140, 32);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(157, 3);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(45, 34);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
+            // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(594, 12);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(205, 43);
+            pnlLimpiarFiltros.TabIndex = 36;
+            pnlLimpiarFiltros.Visible = false;
+            // 
             // frmProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(918, 679);
+            Controls.Add(pnlLimpiarFiltros);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(lstSugerencias);
             Controls.Add(gbxEstado);
@@ -644,6 +684,7 @@
             Controls.Add(lblFecha);
             Controls.Add(lblHora);
             Controls.Add(panel1);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProductos";
             Text = "frmProductos";
@@ -659,6 +700,8 @@
             tableLayoutPanel2.PerformLayout();
             panel1.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxClean).EndInit();
+            pnlLimpiarFiltros.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -686,8 +729,8 @@
         private Panel panel1;
         private Button btnIngresarPerdida;
         private ListBox lstSugerencias;
-        private TextBox txtCategoria;
-        private TextBox txtMarca;
+        private TextBox txtFiltroCategoria;
+        private TextBox txtFiltroMarca;
         private Button btnMarca;
         private Label label2;
         private Label label1;
@@ -705,5 +748,8 @@
         private DataGridViewTextBoxColumn PrecioCompra;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn EstadoProducto;
+        private Button btnLimpiarFiltros;
+        private PictureBox pbxClean;
+        private Panel pnlLimpiarFiltros;
     }
 }

@@ -154,7 +154,7 @@
             // IdMarca
             // 
             IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            IdMarca.DataPropertyName = "NombreMarca";
+            IdMarca.DataPropertyName = "IdMarca";
             IdMarca.HeaderText = "Código";
             IdMarca.Name = "IdMarca";
             IdMarca.ReadOnly = true;

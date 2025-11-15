@@ -25,6 +25,7 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             _usuarioRepo = new UsuarioRepositorio();
+           
         }
 
 
@@ -104,8 +105,9 @@ namespace ModernMenuUI
                                 MessageBox.Show("⚠️ El usuario no tiene acciones cargadas. El menú aparecerá vacío.");
                             }
                             else
-                            {
+                            { /*
                                 MessageBox.Show("✅ Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
+                                */
                             }
                         }
                         catch (Exception ex)
