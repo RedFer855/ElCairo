@@ -227,7 +227,7 @@ namespace ModernMenuUI
         private void AgregarAlCarrito(int codigoProducto, int cantidadAgregar)
         {
             // 🔹 Límite de productos distintos en el carrito
-            int limiteProductos = 3;
+            int limiteProductos = 100;
             int productosActuales = dgvCarrito.Rows.Count;
 
             bool productoYaExiste = dgvCarrito.Rows
@@ -400,36 +400,32 @@ namespace ModernMenuUI
         {
             List<clsOrdenCompra> itemsParaReporte = new List<clsOrdenCompra>();
 
-            // 2. Recorrer el DataGridView del carrito (dvgCarrito)
-            // ¡Asegúrate de que tu grid se llame 'dvgCarrito'!
+            // 2. Lee tu dgvCarrito fila por fila
             foreach (DataGridViewRow row in dgvCarrito.Rows)
             {
-                // Nos saltamos la última fila (que es para agregar nuevos)
                 if (row.IsNewRow) continue;
 
+                // 3. Convierte cada fila en un objeto clsOrdenCompra
                 clsOrdenCompra item = new clsOrdenCompra();
+                item.Codigo = row.Cells["colCodigo"].Value.ToString();
+                item.Producto = row.Cells["colProducto"].Value.ToString();
+                item.Precio = Convert.ToDecimal(row.Cells["colPrecio"].Value);
+                item.Cantidad = Convert.ToInt32(row.Cells["colCantidad"].Value);
 
-                // Asignamos los valores de las celdas.
-                // ¡CAMBIA ESTOS NOMBRES si tus columnas se llaman diferente!
-                item.Codigo = row.Cells["Codigo"].Value.ToString();
-                item.Producto = row.Cells["Producto"].Value.ToString();
-                item.Precio = Convert.ToDecimal(row.Cells["Precio"].Value);
-                item.Cantidad = Convert.ToInt32(row.Cells["Cantidad"].Value);
-
+                // 4. Añade el objeto a la lista
                 itemsParaReporte.Add(item);
             }
 
-            // 3. Obtener los totales de los TextBoxes o Labels
-            // ¡CAMBIA ESTOS NOMBRES por los nombres de tus labels/textboxes!
-            string sub = txtSubTotal.Text;     // Ej: "L189.00"
-            string imp = txtImpuesto.Text;     // Ej: "L28.35"
-            string total = txtTotal.Text;      // Ej: "L217.35"
+            // 5. Lee los totales (Subtotal, Impuesto, Total)
+            string sub = txtSubTotal.Text; // O el nombre de tu Label/TextBox
+            string imp = txtImpuesto.Text;
+            string total = txtTotal.Text;
 
-            // 4. Crear y mostrar el formulario del reporte, PASÁNDOLE LOS DATOS
-            // Esta línea ahora SÍ coincide con tu nuevo constructor
+            // 6. ¡AQUÍ OCURRE LA MAGIA!
+            //    Crea el nuevo formulario y le PASA la lista y los totales
             frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(itemsParaReporte, sub, imp, total);
 
-            // 5. Mostrar el formulario
+            // 7. Muestra el formulario
             frmReporte.ShowDialog();
         }
     }
