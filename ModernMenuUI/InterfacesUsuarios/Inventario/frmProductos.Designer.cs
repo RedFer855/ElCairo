@@ -55,7 +55,7 @@
             EstadoProducto = new DataGridViewCheckBoxColumn();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            btnbuscar = new Button();
+            btnBuscar = new Button();
             btnNuevoProducto = new Button();
             btnSalir = new Button();
             btnAgregarMarca = new Button();
@@ -284,7 +284,7 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnbuscar);
+            panelBusqueda.Controls.Add(btnBuscar);
             panelBusqueda.Location = new Point(12, 12);
             panelBusqueda.MaximumSize = new Size(885, 43);
             panelBusqueda.Name = "panelBusqueda";
@@ -303,22 +303,24 @@
             txtBuscar.Size = new Size(491, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyPress += txtBuscar_KeyPress;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
             txtBuscar.Leave += txtBuscar_Leave;
             // 
-            // btnbuscar
+            // btnBuscar
             // 
-            btnbuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(515, 12);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 20);
-            btnbuscar.TabIndex = 0;
-            btnbuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscar.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscar.BackgroundImage = (Image)resources.GetObject("btnBuscar.BackgroundImage");
+            btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscar.FlatAppearance.BorderSize = 0;
+            btnBuscar.FlatStyle = FlatStyle.Flat;
+            btnBuscar.Location = new Point(515, 12);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(48, 20);
+            btnBuscar.TabIndex = 0;
+            btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click;
             // 
             // btnNuevoProducto
             // 
@@ -606,6 +608,7 @@
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
             lstSugerencias.SelectedIndexChanged += lstSugerencias_SelectedIndexChanged;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
             // 
             // flowLayoutPanel1
             // 
@@ -713,7 +716,7 @@
         private DataGridView dgvProductos;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button btnbuscar;
+        private Button btnBuscar;
         private Button btnNuevoProducto;
         private Button btnSalir;
         private Button btnAgregarMarca;

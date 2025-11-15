@@ -947,13 +947,13 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.Controls.Add(chart1, 0, 0);
             tableLayoutPanel1.Controls.Add(chart2, 1, 0);
-            tableLayoutPanel1.Location = new Point(20, 453);
+            tableLayoutPanel1.Location = new Point(20, 392);
             tableLayoutPanel1.MaximumSize = new Size(1550, 450);
             tableLayoutPanel1.MinimumSize = new Size(550, 200);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(896, 200);
+            tableLayoutPanel1.Size = new Size(896, 261);
             tableLayoutPanel1.TabIndex = 35;
             // 
             // chart1
@@ -973,7 +973,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chart1.Series.Add(series1);
-            chart1.Size = new Size(408, 160);
+            chart1.Size = new Size(408, 221);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
             // 
@@ -993,7 +993,7 @@
             series2.Name = "Series1";
             series2.YValuesPerPoint = 4;
             chart2.Series.Add(series2);
-            chart2.Size = new Size(408, 160);
+            chart2.Size = new Size(408, 221);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
             // 

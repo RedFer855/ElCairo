@@ -1,7 +1,7 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
-using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion; // Añadido para el monitor
+using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
 using Supabase;
@@ -14,7 +14,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading; 
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
@@ -35,6 +35,13 @@ namespace ModernMenuUI
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
 
+        // VARIABLES
+        private CancellationTokenSource _ctsBusqueda;
+        private string sugerenciaActual = "";
+        private bool _ignorarTextChanged = false;
+        private bool _usuarioSeleccionoConMouse = false;
+        private const int MAX_SUGGESTIONS = 10; 
+
 
         public frmProductos()
         {
@@ -46,30 +53,120 @@ namespace ModernMenuUI
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
             this.FormClosing += frmProductos_FormClosing;
-            typeof(DataGridView).InvokeMember("DoubleBuffered",
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty, null, dgvProductos, new object[] { true });
+            typeof(DataGridView).InvokeMember("DoubleBuffered",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty, null, dgvProductos, new object[] { true });
             dgvProductos.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 241);
         }
 
         private async void frmProductos_Load(object sender, EventArgs e)
         {
-            
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
             await CargarProductosMaestros();
             RefrescarGrid();
             await IniciarSuscripcionProductos();
         }
 
+        // MAPEO
         private void RegistrarBotonesConPermisos()
         {
             _servicioPermisos.RegistrarBoton(btnNuevoProducto, "insert_inventario");
             _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
-
             _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
         }
 
+        // BUSCAR
+        private List<Producto> BuscarProductos(string textoBusqueda)
+        {
+            string busqueda = textoBusqueda.ToLower().Trim();
+
+
+            bool? estado = null;
+            if (rbMostrarHabilitados.Checked) estado = true;
+            if (rbMostrardeshabilitados.Checked) estado = false;
+
+            IEnumerable<Producto> listaFiltrada = _listaMaestraProductos;
+
+            if (estado.HasValue)
+            {
+                listaFiltrada = listaFiltrada.Where(p => p.EstadoProducto == estado.Value);
+            }
+
+            if (_filtroMarcaId.HasValue)
+            {
+                listaFiltrada = listaFiltrada.Where(p => p.IdMarca == _filtroMarcaId.Value);
+            }
+
+            if (_filtroCategoriaId.HasValue)
+            {
+                listaFiltrada = listaFiltrada.Where(p => p.IdCategoria == _filtroCategoriaId.Value);
+            }
+
+            if (string.IsNullOrEmpty(busqueda))
+            {
+                return listaFiltrada.ToList();
+            }
+
+            var resultados = listaFiltrada.Where(producto =>
+                    (producto.NombreProducto != null && producto.NombreProducto.ToLower().Contains(busqueda)) ||
+                    (producto.Categoria.NombreCategoria != null && producto.Categoria.NombreCategoria.ToLower().Contains(busqueda)) ||
+                    (producto.Marca.NombreMarca != null && producto.Marca.NombreMarca.ToLower().Contains(busqueda)) ||
+                    (producto.CodigoBarraProducto != null && producto.CodigoBarraProducto.ToLower().Contains(busqueda))
+                ).ToList();
+
+            return resultados;
+        }
+
+        // BUSCAR ESCANER
+        private bool EsCodigoBarra(string texto)
+        {
+            return texto.All(char.IsDigit) && texto.Length >= 8 && texto.Length <= 13;
+        }
+
+        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if (e.KeyChar == (char)Keys.Return || e.KeyChar == '\r')
+            {
+                string entrada = txtBuscar.Text.Trim();
+
+
+                if (EsCodigoBarra(entrada))
+                {
+                    btnBuscar.PerformClick();
+                    e.Handled = true;
+                }
+            }
+        }
+
+        // AJUSTE DE ALTURA DE SUGERENCIAS DE BUSQUEDA
+        private void AjustarAlturaListBox(int numeroDeResultados)
+        {
+            int alturaItem = lstSugerencias.ItemHeight;
+            int alturaMaxima = (alturaItem * MAX_SUGGESTIONS) + 10;
+            int alturaNecesaria = (alturaItem * numeroDeResultados) + 10;
+            lstSugerencias.Height = Math.Min(alturaNecesaria, alturaMaxima);
+        }
+
+        // SELECCIONAR PRODUCTOS EN GRID
+        private void SeleccionarProductoEnGrid(Producto productoBuscado)
+        {
+            if (productoBuscado == null) return;
+
+            var listaDelGrid = dgvProductos.DataSource as List<Producto>;
+            if (listaDelGrid == null) return; // No se puede buscar
+
+
+            int indice = listaDelGrid.FindIndex(p => p.IdProducto == productoBuscado.IdProducto);
+
+            if (indice != -1 && indice < dgvProductos.Rows.Count)
+            {
+                dgvProductos.ClearSelection();
+                dgvProductos.Rows[indice].Selected = true;
+                dgvProductos.FirstDisplayedScrollingRowIndex = indice;
+            }
+        }
+        // CARGAR TABLA REALTIME
         private async Task CargarProductosMaestros()
         {
             try
@@ -93,14 +190,14 @@ namespace ModernMenuUI
             }
         }
 
-
+        // REFRESCAR TABLA FILTROS DE ESTADO
         private void RefrescarGrid()
         {
             this.Cursor = Cursors.WaitCursor;
             gbxEstado.Enabled = false;
 
 
-            bool? estado = null; 
+            bool? estado = null;
             if (rbMostrarHabilitados.Checked) estado = true;
             if (rbMostrardeshabilitados.Checked) estado = false;
 
@@ -141,7 +238,7 @@ namespace ModernMenuUI
             this.Cursor = Cursors.Default;
         }
 
-
+        // SUSCRIPCION A REALTIME
         private async Task DesecharSuscripcion()
         {
             if (_productosSubscription != null)
@@ -197,6 +294,7 @@ namespace ModernMenuUI
             }
         }
 
+        // ESTADO DE RED EN TIEMPO REAL
         private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
         {
             if (!this.IsHandleCreated || this.IsDisposed) return;
@@ -214,6 +312,7 @@ namespace ModernMenuUI
             }
         }
 
+        // EVENTO DE CONTROLES
         private void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -269,54 +368,6 @@ namespace ModernMenuUI
             }
         }
 
-
-        private List<Producto> BuscarProductos(string textoBusqueda)
-        {
-            string busqueda = textoBusqueda.ToLower().Trim();
-
-          
-            bool? estado = null; 
-            if (rbMostrarHabilitados.Checked) estado = true;
-            if (rbMostrardeshabilitados.Checked) estado = false;
-
-            IEnumerable<Producto> listaFiltrada = _listaMaestraProductos;
-
-            if (estado.HasValue)
-            {
-                listaFiltrada = listaFiltrada.Where(p => p.EstadoProducto == estado.Value);
-            }
-
-            if (_filtroMarcaId.HasValue)
-            {
-                listaFiltrada = listaFiltrada.Where(p => p.IdMarca == _filtroMarcaId.Value);
-            }
-
-            if (_filtroCategoriaId.HasValue)
-            {
-                listaFiltrada = listaFiltrada.Where(p => p.IdCategoria == _filtroCategoriaId.Value);
-            }
-
-            if (string.IsNullOrEmpty(busqueda))
-            {
-                return listaFiltrada.ToList();
-            }
-
-            var resultados = listaFiltrada.Where(producto =>
-                    (producto.NombreProducto != null && producto.NombreProducto.ToLower().Contains(busqueda)) ||
-                    (producto.Categoria.NombreCategoria != null && producto.Categoria.NombreCategoria.ToLower().Contains(busqueda)) ||
-                    (producto.Marca.NombreMarca != null && producto.Marca.NombreMarca.ToLower().Contains(busqueda)) ||
-                    (producto.CodigoBarraProducto != null && producto.CodigoBarraProducto.ToLower().Contains(busqueda))
-                ).ToList();
-
-            return resultados;
-        }
-
-        private void btnSalir_Click(object sender, EventArgs e)
-        {
-            clsAnmaciones.NombreMenuPrincipal();
-            this.Close();
-        }
-
         private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
         {
             await DesecharSuscripcion();
@@ -328,12 +379,6 @@ namespace ModernMenuUI
             lblFecha.Text = DateTime.Now.ToString("dddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
         }
 
-        // --- VARIABLES ---
-        private CancellationTokenSource _ctsBusqueda;
-        private string sugerenciaActual = "";
-        private bool _ignorarTextChanged = false;
-        private bool _usuarioSeleccionoConMouse = false;
-        private const int MAX_SUGGESTIONS = 10; // (Opcional, para el tamaño)
 
         // --- EVENTOS ---
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
@@ -377,54 +422,43 @@ namespace ModernMenuUI
 
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
-            // Si la lista no está visible, no hacer nada
             if (!lstSugerencias.Visible) return;
 
             if (e.KeyCode == Keys.Down)
             {
-                // Mover selección hacia abajo
                 int newIndex = Math.Min(lstSugerencias.SelectedIndex + 1, lstSugerencias.Items.Count - 1);
                 if (newIndex >= 0)
                     lstSugerencias.SelectedIndex = newIndex;
 
-                e.Handled = true; // Evita que el cursor del TextBox se mueva
+                e.Handled = true; 
             }
             else if (e.KeyCode == Keys.Up)
             {
-                // Mover selección hacia arriba
                 int newIndex = Math.Max(lstSugerencias.SelectedIndex - 1, 0);
                 if (newIndex >= 0)
                     lstSugerencias.SelectedIndex = newIndex;
-                e.Handled = true; // Evita que el cursor del TextBox se mueva
+                e.Handled = true; 
             }
             else if (e.KeyCode == Keys.Enter)
             {
                 if (lstSugerencias.SelectedItem != null)
                 {
-                    // Aceptar la selección
                     Producto productoSel = lstSugerencias.SelectedItem as Producto;
                     txtBuscar.Text = productoSel.NombreProducto;
                     txtBuscar.SelectionStart = txtBuscar.Text.Length;
 
                     lstSugerencias.Visible = false;
-                    _ctsBusqueda?.Cancel(); // Cancela el KeyUp pendiente
+                    _ctsBusqueda?.Cancel(); 
                     SeleccionarProductoEnGrid(productoSel);
                     e.Handled = true;
-                    e.SuppressKeyPress = true; // Evita el sonido "ding"
+                    e.SuppressKeyPress = true; 
                 }
             }
         }
 
-        private void txtBuscar_TextChanged(object sender, EventArgs e)
-        {
-            if (_ignorarTextChanged) return;
-            sugerenciaActual = "";
-        }
-
         private async void txtBuscar_Leave(object sender, EventArgs e)
         {
-
-            await Task.Delay(150);
+            await Task.Delay(200);
 
             if (!lstSugerencias.Focused)
             {
@@ -474,7 +508,7 @@ namespace ModernMenuUI
             {
                 return;
             }
-               
+
 
             if (lstSugerencias.SelectedItem != null)
             {
@@ -484,32 +518,6 @@ namespace ModernMenuUI
                     txtBuscar.Text = productoSel.NombreProducto;
                     lstSugerencias.Visible = false;
                 }
-            }
-        }
-
-        private void AjustarAlturaListBox(int numeroDeResultados)
-        {
-            int alturaItem = lstSugerencias.ItemHeight;
-            int alturaMaxima = (alturaItem * MAX_SUGGESTIONS) + 10;
-            int alturaNecesaria = (alturaItem * numeroDeResultados) + 10;
-            lstSugerencias.Height = Math.Min(alturaNecesaria, alturaMaxima);
-        }
-
-        private void SeleccionarProductoEnGrid(Producto productoBuscado)
-        {
-            if (productoBuscado == null) return;
-
-            var listaDelGrid = dgvProductos.DataSource as List<Producto>;
-            if (listaDelGrid == null) return; // No se puede buscar
-
-
-            int indice = listaDelGrid.FindIndex(p => p.IdProducto == productoBuscado.IdProducto);
-
-            if (indice != -1 && indice < dgvProductos.Rows.Count)
-            {
-                dgvProductos.ClearSelection();
-                dgvProductos.Rows[indice].Selected = true;
-                dgvProductos.FirstDisplayedScrollingRowIndex = indice;
             }
         }
 
@@ -532,6 +540,12 @@ namespace ModernMenuUI
         }
 
         // BOTONES
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            clsAnmaciones.NombreMenuPrincipal();
+            this.Close();
+        }
+
         private void btnMarca_Click(object sender, EventArgs e)
         {
 
@@ -599,5 +613,34 @@ namespace ModernMenuUI
             RefrescarGrid();
         }
 
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string codigoBusqueda = txtBuscar.Text.Trim();
+
+            if (string.IsNullOrEmpty(codigoBusqueda))
+            {
+                return;
+            }
+
+            Producto productoEncontrado = _listaMaestraProductos.FirstOrDefault(p => (p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(codigoBusqueda)) || (p.NombreProducto != null && p.NombreProducto.Equals(codigoBusqueda, StringComparison.OrdinalIgnoreCase)));
+
+            if (productoEncontrado != null)
+            {
+                var listaResultadoUnico = new List<Producto> { productoEncontrado };
+
+                dgvProductos.DataSource = null;
+                dgvProductos.DataSource = listaResultadoUnico;
+
+                pnlLimpiarFiltros.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("Producto no encontrado.", "Búsqueda",
+                                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            txtBuscar.Clear();
+            lstSugerencias.Visible = false;
+        }
     }
 }

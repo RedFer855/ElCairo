@@ -25,7 +25,7 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             _usuarioRepo = new UsuarioRepositorio();
-           
+
         }
 
 
@@ -58,14 +58,14 @@ namespace ModernMenuUI
                 username = username.Trim();
                 password = password.Trim();
 
-                lblMensajeError.ForeColor = Color.DarkGray; 
+                lblMensajeError.ForeColor = Color.DarkGray;
                 lblMensajeError.Visible = true;
                 lblMensajeError.Text = "Procesando...";
 
                 try
                 {
 
-                    pbxCargando.Visible = true; 
+                    pbxCargando.Visible = true;
 
                     var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
                     var usuario = await supabase.Auth.SignIn(username, password);
@@ -73,7 +73,7 @@ namespace ModernMenuUI
 
                     if (usuario != null)
                     {
-                        lblMensajeError.ForeColor = Color.DarkGray; 
+                        lblMensajeError.ForeColor = Color.DarkGray;
                         lblMensajeError.Text = "Conectando al servidor...";
                         lblMensajeError.Visible = true;
 
@@ -83,12 +83,12 @@ namespace ModernMenuUI
                         await Task.Delay(300);
 
                         lblMensajeError.Text = "Validando Permisos...";
-                        await Task.Delay(500); 
+                        await Task.Delay(500);
 
                         lblMensajeError.ForeColor = Color.Green;
                         lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
-                        await Task.Delay(100); 
-                      
+                        await Task.Delay(100);
+
                         try
                         {
                             var uuidUsuario = Actual.Id;
@@ -112,10 +112,10 @@ namespace ModernMenuUI
                         }
                         catch (Exception ex)
                         {
-                            pbxCargando.Visible = false;  
+                            pbxCargando.Visible = false;
                             MessageBox.Show($"Error crítico al cargar permisos: {ex.Message}. Cierre la aplicación.", "Error de Permisos", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             LimpiarDatos(e, e);
-                            return; 
+                            return;
                         }
 
                         Form formcarga = new frmInicioBodega();
@@ -192,14 +192,14 @@ namespace ModernMenuUI
                     {
                         MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión." + ex.Message, "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    
+
                     LimpiarDatos(e, e);
                     lblMensajeError.Visible = false;
                 }
                 finally
                 {
-                    lblRecuperarContrasenia.Enabled = true;    
-                    btnAcceder.Enabled = true; 
+                    lblRecuperarContrasenia.Enabled = true;
+                    btnAcceder.Enabled = true;
                     this.Cursor = Cursors.Default;
                 }
             }
@@ -212,7 +212,7 @@ namespace ModernMenuUI
 
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized; 
+            this.WindowState = FormWindowState.Minimized;
         }
 
         private void panDatosIngreso_MouseDown(object sender, MouseEventArgs e)
@@ -227,12 +227,12 @@ namespace ModernMenuUI
 
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle); 
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void panLogo_MouseDown(object sender, MouseEventArgs e)
         {
-            clsAnmaciones.MoverFormulario(this.Handle); 
+            clsAnmaciones.MoverFormulario(this.Handle);
         }
 
         private void txtContra_Leave(object sender, EventArgs e)
@@ -269,7 +269,7 @@ namespace ModernMenuUI
 
         private void lblRecuperarContrasenia_MouseEnter(object sender, EventArgs e)
         {
-            lblRecuperarContrasenia.ForeColor = Color.Blue; 
+            lblRecuperarContrasenia.ForeColor = Color.Blue;
             lblRecuperarContrasenia.Font = new Font(lblRecuperarContrasenia.Font, FontStyle.Underline);
         }
 
@@ -284,7 +284,7 @@ namespace ModernMenuUI
         {
             frmRecuperacionContrasenia ContraNueva = new frmRecuperacionContrasenia();
             this.Visible = false;
-            ContraNueva.ShowDialog();   
+            ContraNueva.ShowDialog();
             this.Visible = true;
         }
 
@@ -292,7 +292,7 @@ namespace ModernMenuUI
         {
             if (txtContrasenia.Text != "CONTRASEÑA")
             {
-                txtContrasenia.UseSystemPasswordChar = false; 
+                txtContrasenia.UseSystemPasswordChar = false;
             }
         }
 
@@ -303,5 +303,7 @@ namespace ModernMenuUI
                 txtContrasenia.UseSystemPasswordChar = true;
             }
         }
+
+ 
     }
 }

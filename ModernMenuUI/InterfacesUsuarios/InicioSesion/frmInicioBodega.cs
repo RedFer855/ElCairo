@@ -59,7 +59,7 @@ namespace ModernMenuUI
                 btnAcceder.Enabled = true;
             }
         }
-        
+
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
@@ -81,7 +81,7 @@ namespace ModernMenuUI
             if (txtContrasenia.Text == "CONTRASEÑA")
             {
                 clsAnmaciones.PrivacidadIngresarDatos(txtContrasenia, "");
-            }           
+            }
         }
 
         private void txtContrasenia_Leave(object sender, EventArgs e)
@@ -106,6 +106,23 @@ namespace ModernMenuUI
             if (txtCodigoBodega.Text == "")
             {
                 txtCodigoBodega.Text = "CÓDIGO";
+            }
+        }
+
+
+        private void btnVer_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (txtContrasenia.Text != "CONTRASEÑA")
+            {
+                txtContrasenia.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void btnVer_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (txtContrasenia.Text != "CONTRASEÑA")
+            {
+                txtContrasenia.UseSystemPasswordChar = false;
             }
         }
     }

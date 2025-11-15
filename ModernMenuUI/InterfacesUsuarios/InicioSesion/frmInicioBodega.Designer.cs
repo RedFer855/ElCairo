@@ -30,29 +30,31 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInicioBodega));
             panLogo = new Panel();
+            btnVer = new Button();
+            panel2 = new Panel();
+            panel4 = new Panel();
             lblMensajeError = new Label();
             txtContrasenia = new TextBox();
-            txtCodigoBodega = new TextBox();
-            btnAcceder = new Button();
             panBarraControl = new Panel();
             label2 = new Label();
             btnMinimizar = new Button();
             btnCerrar = new Button();
+            txtCodigoBodega = new TextBox();
+            btnAcceder = new Button();
             panel1 = new Panel();
-            pictureBox1 = new PictureBox();
-            panel4 = new Panel();
-            panel2 = new Panel();
             pictureBox2 = new PictureBox();
+            pictureBox1 = new PictureBox();
             panLogo.SuspendLayout();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panLogo
             // 
             panLogo.BackColor = Color.FromArgb(15, 15, 15);
+            panLogo.Controls.Add(btnVer);
             panLogo.Controls.Add(panel2);
             panLogo.Controls.Add(panel4);
             panLogo.Controls.Add(lblMensajeError);
@@ -66,6 +68,38 @@
             panLogo.Name = "panLogo";
             panLogo.Size = new Size(536, 362);
             panLogo.TabIndex = 3;
+            // 
+            // btnVer
+            // 
+            btnVer.BackgroundImage = (Image)resources.GetObject("btnVer.BackgroundImage");
+            btnVer.BackgroundImageLayout = ImageLayout.Zoom;
+            btnVer.FlatStyle = FlatStyle.Flat;
+            btnVer.ForeColor = Color.FromArgb(15, 15, 15);
+            btnVer.Location = new Point(420, 124);
+            btnVer.Name = "btnVer";
+            btnVer.Size = new Size(37, 36);
+            btnVer.TabIndex = 21;
+            btnVer.UseVisualStyleBackColor = true;
+            btnVer.MouseDown += btnVer_MouseDown;
+            btnVer.MouseUp += btnVer_MouseUp;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.FromArgb(142, 142, 142);
+            panel2.Location = new Point(77, 162);
+            panel2.Margin = new Padding(3, 4, 3, 4);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(380, 3);
+            panel2.TabIndex = 20;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.FromArgb(142, 142, 142);
+            panel4.Location = new Point(77, 109);
+            panel4.Margin = new Padding(3, 4, 3, 4);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(380, 3);
+            panel4.TabIndex = 19;
             // 
             // lblMensajeError
             // 
@@ -90,42 +124,11 @@
             txtContrasenia.Location = new Point(77, 130);
             txtContrasenia.Margin = new Padding(4);
             txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.Size = new Size(380, 24);
+            txtContrasenia.Size = new Size(328, 24);
             txtContrasenia.TabIndex = 17;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContrasenia_Enter;
             txtContrasenia.Leave += txtContrasenia_Leave;
-            // 
-            // txtCodigoBodega
-            // 
-            txtCodigoBodega.BackColor = Color.FromArgb(15, 15, 15);
-            txtCodigoBodega.BorderStyle = BorderStyle.None;
-            txtCodigoBodega.Font = new Font("Century Gothic", 14.25F);
-            txtCodigoBodega.ForeColor = Color.FromArgb(142, 142, 142);
-            txtCodigoBodega.Location = new Point(77, 77);
-            txtCodigoBodega.Margin = new Padding(4);
-            txtCodigoBodega.Name = "txtCodigoBodega";
-            txtCodigoBodega.Size = new Size(380, 24);
-            txtCodigoBodega.TabIndex = 15;
-            txtCodigoBodega.Text = "CÓDIGO";
-            txtCodigoBodega.Enter += txtCodigoBodega_Enter;
-            txtCodigoBodega.Leave += txtCodigoBodega_Leave;
-            // 
-            // btnAcceder
-            // 
-            btnAcceder.BackColor = Color.FromArgb(40, 40, 40);
-            btnAcceder.FlatAppearance.BorderSize = 0;
-            btnAcceder.FlatStyle = FlatStyle.Flat;
-            btnAcceder.Font = new Font("Century Gothic", 14.25F);
-            btnAcceder.ForeColor = Color.White;
-            btnAcceder.Location = new Point(129, 272);
-            btnAcceder.Margin = new Padding(4);
-            btnAcceder.Name = "btnAcceder";
-            btnAcceder.Size = new Size(276, 51);
-            btnAcceder.TabIndex = 10;
-            btnAcceder.Text = "ACCEDER";
-            btnAcceder.UseVisualStyleBackColor = false;
-            btnAcceder.Click += btnAcceder_Click;
             // 
             // panBarraControl
             // 
@@ -191,6 +194,37 @@
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
             // 
+            // txtCodigoBodega
+            // 
+            txtCodigoBodega.BackColor = Color.FromArgb(15, 15, 15);
+            txtCodigoBodega.BorderStyle = BorderStyle.None;
+            txtCodigoBodega.Font = new Font("Century Gothic", 14.25F);
+            txtCodigoBodega.ForeColor = Color.FromArgb(142, 142, 142);
+            txtCodigoBodega.Location = new Point(77, 77);
+            txtCodigoBodega.Margin = new Padding(4);
+            txtCodigoBodega.Name = "txtCodigoBodega";
+            txtCodigoBodega.Size = new Size(380, 24);
+            txtCodigoBodega.TabIndex = 15;
+            txtCodigoBodega.Text = "CÓDIGO";
+            txtCodigoBodega.Enter += txtCodigoBodega_Enter;
+            txtCodigoBodega.Leave += txtCodigoBodega_Leave;
+            // 
+            // btnAcceder
+            // 
+            btnAcceder.BackColor = Color.FromArgb(40, 40, 40);
+            btnAcceder.FlatAppearance.BorderSize = 0;
+            btnAcceder.FlatStyle = FlatStyle.Flat;
+            btnAcceder.Font = new Font("Century Gothic", 14.25F);
+            btnAcceder.ForeColor = Color.White;
+            btnAcceder.Location = new Point(129, 272);
+            btnAcceder.Margin = new Padding(4);
+            btnAcceder.Name = "btnAcceder";
+            btnAcceder.Size = new Size(276, 51);
+            btnAcceder.TabIndex = 10;
+            btnAcceder.Text = "ACCEDER";
+            btnAcceder.UseVisualStyleBackColor = false;
+            btnAcceder.Click += btnAcceder_Click;
+            // 
             // panel1
             // 
             panel1.BackgroundImage = Properties.Resources.imglogin;
@@ -201,36 +235,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(269, 362);
             panel1.TabIndex = 6;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Dock = DockStyle.Top;
-            pictureBox1.Image = Properties.Resources.el_cairo_2__1__1__1_;
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(269, 204);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            // 
-            // panel4
-            // 
-            panel4.BackColor = Color.FromArgb(142, 142, 142);
-            panel4.Location = new Point(77, 109);
-            panel4.Margin = new Padding(3, 4, 3, 4);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(380, 3);
-            panel4.TabIndex = 19;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.FromArgb(142, 142, 142);
-            panel2.Location = new Point(77, 162);
-            panel2.Margin = new Padding(3, 4, 3, 4);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(380, 3);
-            panel2.TabIndex = 20;
             // 
             // pictureBox2
             // 
@@ -243,6 +247,18 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.Dock = DockStyle.Top;
+            pictureBox1.Image = Properties.Resources.el_cairo_2__1__1__1_;
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(269, 204);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // frmInicioBodega
             // 
@@ -261,8 +277,8 @@
             panLogo.PerformLayout();
             panBarraControl.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -281,5 +297,6 @@
         private Panel panel4;
         private Panel panel2;
         private PictureBox pictureBox2;
+        private Button btnVer;
     }
 }
