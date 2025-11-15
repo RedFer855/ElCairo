@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Repositorios;
+﻿using CapaDeDatos.Modelados;
+using CapaDeDatos.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,8 +38,20 @@ namespace ModernMenuUI
 
                 if (success)
                 {
+                    // Recuperar datos de la bodega logueada
+                    var bodega = await BodegaRepositorio.ObtenerBodegaPorIdAsync(codbodega);
+                    if (bodega==null)
+                    {
+                        MessageBox.Show("Error, bodega no encontrada");
+                    }
+                    Bodega id_bodega = new Bodega();
+                    
+
+                    // Guardar en la sesión global
+                    SessionData.IdBodegaActual = bodega.Id;
                     var formCarga = new frmPantallaDeCarga();
                     this.Visible = false;
+
                     formCarga.ShowDialog();
                     this.Close();
                 }
@@ -58,6 +71,10 @@ namespace ModernMenuUI
             {
                 btnAcceder.Enabled = true;
             }
+        }
+        public static class SessionData
+        {
+            public static int IdBodegaActual { get; set; }
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

@@ -32,6 +32,7 @@ namespace ModernMenuUI
         private readonly ProveedorRepositorio proveedorRepositorio;
         private List<Proveedor> _listaMaestraProveedores = new List<Proveedor>();
         private Proveedor ProveedorSeleccionado = null;
+        
 
         private List<Producto> _listaMaestraProductos = new List<Producto>(); // <-- Tu lista, renombrada
         private Supabase.Realtime.RealtimeChannel? _productosSubscription;
@@ -479,13 +480,15 @@ namespace ModernMenuUI
                 }
 
                 int idEmpleado = respEmpleado.IdUsuario;
+                int idBodega = frmInicioBodega.SessionData.IdBodegaActual;
 
                 var parametros = new
                 {
                     p_id_empleado = idEmpleado,
                     p_id_proveedor = proveedrId,
                     p_fecha_compra = DateTime.UtcNow,
-                    p_detalles = detalles
+                    p_detalles = detalles,
+                    p_id_bodega = idBodega,
                 };
                 try
                 {

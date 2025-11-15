@@ -57,6 +57,29 @@ namespace CapaDeDatos.Repositorios
                 return false;
             }
         }
+        public static async Task<Bodega?> ObtenerBodegaPorIdAsync(string idBodega)
+        {
+            try
+            {
+                var supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
+
+                var response = await supabaseClient
+                    .From<Bodega>()
+                    .Filter("id_bodega", Operator.Equals, idBodega)
+                    .Get();
+
+                var bodega = response.Models.FirstOrDefault();
+
+                // Si no existe la bodega, retornamos null
+                return bodega;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al obtener datos de la bodega: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
 
         protected static class PasswordHasher
         {
