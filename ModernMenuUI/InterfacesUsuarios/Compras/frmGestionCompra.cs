@@ -1,4 +1,10 @@
-﻿using System;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
+using CapaDeDatos.Reportes;
+using CapaDeDatos.Repositorios;
+using ModernMenuUI.InterfacesUsuarios.Compras;
+using Supabase.Realtime;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,11 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Supabase.Realtime;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
-using CapaDeDatos.Repositorios;
-using CapaDeDatos.Modelados;
-using CapaDeDatos.Datos;
 
 namespace ModernMenuUI
 {
@@ -396,7 +398,39 @@ namespace ModernMenuUI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            List<clsOrdenCompra> itemsParaReporte = new List<clsOrdenCompra>();
 
+            // 2. Recorrer el DataGridView del carrito (dvgCarrito)
+            // ¡Asegúrate de que tu grid se llame 'dvgCarrito'!
+            foreach (DataGridViewRow row in dgvCarrito.Rows)
+            {
+                // Nos saltamos la última fila (que es para agregar nuevos)
+                if (row.IsNewRow) continue;
+
+                clsOrdenCompra item = new clsOrdenCompra();
+
+                // Asignamos los valores de las celdas.
+                // ¡CAMBIA ESTOS NOMBRES si tus columnas se llaman diferente!
+                item.Codigo = row.Cells["Codigo"].Value.ToString();
+                item.Producto = row.Cells["Producto"].Value.ToString();
+                item.Precio = Convert.ToDecimal(row.Cells["Precio"].Value);
+                item.Cantidad = Convert.ToInt32(row.Cells["Cantidad"].Value);
+
+                itemsParaReporte.Add(item);
+            }
+
+            // 3. Obtener los totales de los TextBoxes o Labels
+            // ¡CAMBIA ESTOS NOMBRES por los nombres de tus labels/textboxes!
+            string sub = txtSubTotal.Text;     // Ej: "L189.00"
+            string imp = txtImpuesto.Text;     // Ej: "L28.35"
+            string total = txtTotal.Text;      // Ej: "L217.35"
+
+            // 4. Crear y mostrar el formulario del reporte, PASÁNDOLE LOS DATOS
+            // Esta línea ahora SÍ coincide con tu nuevo constructor
+            frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(itemsParaReporte, sub, imp, total);
+
+            // 5. Mostrar el formulario
+            frmReporte.ShowDialog();
         }
     }
 }

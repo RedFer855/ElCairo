@@ -28,12 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "frmReporteOrdenCompra";
+            reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            SuspendLayout();
+            // 
+            // reportViewer1
+            // 
+            reportViewer1.Location = new Point(0, 0);
+            reportViewer1.Name = "ReportViewer";
+            reportViewer1.ServerReport.BearerToken = null;
+            reportViewer1.Size = new Size(396, 246);
+            reportViewer1.TabIndex = 0;
+            // 
+            // frmReporteOrdenCompra
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Name = "frmReporteOrdenCompra";
+            Text = "frmReporteOrdenCompra";
+            Load += frmReporteOrdenCompra_Load;
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
     }
 }
