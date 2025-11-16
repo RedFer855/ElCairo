@@ -19,9 +19,15 @@ namespace ModernMenuUI
         public frmInicioBodega()
         {
             InitializeComponent();
+            this.Shown += (s, e) => txtCodigoBodega.Focus();
         }
 
-
+        private void LimpiarDatos()
+        {
+            txtContrasenia.Text = null;
+            txtCodigoBodega.Text = null;
+            txtCodigoBodega.Focus();
+        }
 
         private async void btnAcceder_Click(object sender, EventArgs e)
         {
@@ -30,13 +36,13 @@ namespace ModernMenuUI
 
             try
             {
-                // Puedes mostrar un pequeño mensaje o un spinner aquí
                 btnAcceder.Enabled = false;
 
                 bool success = await BodegaRepositorio.IniciarSesion(codbodega, contrasenia);
 
                 if (success)
                 {
+                    LimpiarDatos();
                     var formCarga = new frmPantallaDeCarga();
                     this.Visible = false;
                     formCarga.ShowDialog();
@@ -48,6 +54,7 @@ namespace ModernMenuUI
                     lblMensajeError.Text = "Código o contraseña incorrectos.";
                     codbodega = "";
                     contrasenia = "";
+                    LimpiarDatos();
                 }
             }
             catch (Exception ex)
@@ -124,6 +131,29 @@ namespace ModernMenuUI
             {
                 txtContrasenia.UseSystemPasswordChar = false;
             }
+        }
+
+        private void txtCodigoBodega_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                txtContrasenia.Focus();
+            }
+        }
+
+        private void txtContrasenia_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                btnAcceder.PerformClick();
+            }
+        }
+
+        private void frmInicioBodega_Load(object sender, EventArgs e)
+        {
+           
         }
     }
 }

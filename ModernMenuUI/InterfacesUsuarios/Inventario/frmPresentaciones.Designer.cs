@@ -29,21 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPresentaciones));
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            EstadoProducto = new DataGridViewCheckBoxColumn();
-            Direccion = new DataGridViewTextBoxColumn();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
-            Proveedor = new DataGridViewTextBoxColumn();
-            IdMarca = new DataGridViewTextBoxColumn();
             panelCarrito = new Panel();
             panel10 = new Panel();
             dgvPresentaciones = new DataGridView();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             gbxEstado = new GroupBox();
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
@@ -54,6 +49,10 @@
             button1 = new Button();
             btnSalir = new Button();
             panel1 = new Panel();
+            IdPresentacion = new DataGridViewTextBoxColumn();
+            NombrePresentacion = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            EstadoPresentacion = new DataGridViewCheckBoxColumn();
             panelBusqueda.SuspendLayout();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
@@ -62,23 +61,6 @@
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // EstadoProducto
-            // 
-            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoProducto.DataPropertyName = "EstadoProducto";
-            EstadoProducto.HeaderText = "Estado";
-            EstadoProducto.Name = "EstadoProducto";
-            EstadoProducto.ReadOnly = true;
-            EstadoProducto.Resizable = DataGridViewTriState.True;
-            EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoProducto.Width = 89;
-            // 
-            // Direccion
-            // 
-            Direccion.HeaderText = "Dirección";
-            Direccion.Name = "Direccion";
-            Direccion.ReadOnly = true;
             // 
             // panelBusqueda
             // 
@@ -119,21 +101,6 @@
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
             // 
-            // Proveedor
-            // 
-            Proveedor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Proveedor.HeaderText = "Proveedor";
-            Proveedor.Name = "Proveedor";
-            Proveedor.ReadOnly = true;
-            // 
-            // IdMarca
-            // 
-            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            IdMarca.HeaderText = "Código";
-            IdMarca.Name = "IdMarca";
-            IdMarca.ReadOnly = true;
-            IdMarca.Width = 89;
-            // 
             // panelCarrito
             // 
             panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -157,34 +124,34 @@
             // dgvPresentaciones
             // 
             dgvPresentaciones.AllowUserToAddRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvPresentaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvPresentaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvPresentaciones.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             dgvPresentaciones.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvPresentaciones.BorderStyle = BorderStyle.None;
             dgvPresentaciones.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvPresentaciones.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvPresentaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvPresentaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvPresentaciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPresentaciones.Columns.AddRange(new DataGridViewColumn[] { IdMarca, Proveedor, Direccion, dataGridViewTextBoxColumn4, EstadoProducto });
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.White;
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.Padding = new Padding(5);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle7.SelectionForeColor = Color.White;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            dgvPresentaciones.DefaultCellStyle = dataGridViewCellStyle7;
+            dgvPresentaciones.Columns.AddRange(new DataGridViewColumn[] { IdPresentacion, NombrePresentacion, dataGridViewTextBoxColumn4, EstadoPresentacion });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvPresentaciones.DefaultCellStyle = dataGridViewCellStyle3;
             dgvPresentaciones.Dock = DockStyle.Fill;
             dgvPresentaciones.EnableHeadersVisualStyles = false;
             dgvPresentaciones.GridColor = Color.FromArgb(189, 215, 238);
@@ -192,30 +159,20 @@
             dgvPresentaciones.Name = "dgvPresentaciones";
             dgvPresentaciones.ReadOnly = true;
             dgvPresentaciones.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvPresentaciones.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvPresentaciones.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvPresentaciones.RowHeadersWidth = 30;
             dgvPresentaciones.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvPresentaciones.RowTemplate.Height = 50;
             dgvPresentaciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPresentaciones.Size = new Size(648, 264);
             dgvPresentaciones.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn4.DataPropertyName = "NombreMarca";
-            dataGridViewTextBoxColumn4.FillWeight = 120F;
-            dataGridViewTextBoxColumn4.HeaderText = "Teléfono";
-            dataGridViewTextBoxColumn4.MinimumWidth = 100;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // gbxEstado
             // 
@@ -334,6 +291,45 @@
             panel1.Size = new Size(678, 291);
             panel1.TabIndex = 43;
             // 
+            // IdPresentacion
+            // 
+            IdPresentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            IdPresentacion.DataPropertyName = "IdPresentacion";
+            IdPresentacion.HeaderText = "Código";
+            IdPresentacion.Name = "IdPresentacion";
+            IdPresentacion.ReadOnly = true;
+            IdPresentacion.Width = 89;
+            // 
+            // NombrePresentacion
+            // 
+            NombrePresentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            NombrePresentacion.DataPropertyName = "NombrePresentacion";
+            NombrePresentacion.HeaderText = "Presentacion";
+            NombrePresentacion.Name = "NombrePresentacion";
+            NombrePresentacion.ReadOnly = true;
+            NombrePresentacion.Width = 131;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn4.DataPropertyName = "DetallePresentacion";
+            dataGridViewTextBoxColumn4.FillWeight = 120F;
+            dataGridViewTextBoxColumn4.HeaderText = "Detalles";
+            dataGridViewTextBoxColumn4.MinimumWidth = 100;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // EstadoPresentacion
+            // 
+            EstadoPresentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoPresentacion.DataPropertyName = "EstadoPresentacion";
+            EstadoPresentacion.HeaderText = "Estado";
+            EstadoPresentacion.Name = "EstadoPresentacion";
+            EstadoPresentacion.ReadOnly = true;
+            EstadoPresentacion.Resizable = DataGridViewTriState.True;
+            EstadoPresentacion.SortMode = DataGridViewColumnSortMode.Automatic;
+            EstadoPresentacion.Width = 89;
+            // 
             // frmPresentaciones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -364,18 +360,12 @@
         }
 
         #endregion
-
-        private DataGridViewCheckBoxColumn EstadoProducto;
-        private DataGridViewTextBoxColumn Direccion;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button btnbuscar;
-        private DataGridViewTextBoxColumn Proveedor;
-        private DataGridViewTextBoxColumn IdMarca;
         private Panel panelCarrito;
         private Panel panel10;
         private DataGridView dgvPresentaciones;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private GroupBox gbxEstado;
         private RadioButton rbMostrardeshabilitados;
         private RadioButton rbMostrarTodos;
@@ -386,5 +376,9 @@
         private Button button1;
         private Button btnSalir;
         private Panel panel1;
+        private DataGridViewTextBoxColumn IdPresentacion;
+        private DataGridViewTextBoxColumn NombrePresentacion;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewCheckBoxColumn EstadoPresentacion;
     }
 }

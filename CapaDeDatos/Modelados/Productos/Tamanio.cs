@@ -13,7 +13,7 @@ namespace CapaDeDatos.Modelados.Productos
         public int IdTamanio { get; set; }
 
         [Column("descripcion_tamanio")]
-        public string DescripcionTamanioTamanio { get; set; }
+        public string DescripcionTamanio { get; set; }
 
         [Column("unidad_medida")]
         public string UnidadMedidaTamanio { get; set; }

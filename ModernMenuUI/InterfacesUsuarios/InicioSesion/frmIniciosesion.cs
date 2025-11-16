@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ModernMenuUI
@@ -25,9 +26,8 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             _usuarioRepo = new UsuarioRepositorio();
-
+           
         }
-
 
         public void LimpiarDatos(object sender, EventArgs e)
         {
@@ -38,6 +38,7 @@ namespace ModernMenuUI
             txtContrasenia.Focus();
             txtUsuario.Focus();
         }
+
         private async void btnAcceder_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.AppStarting;
@@ -105,9 +106,9 @@ namespace ModernMenuUI
                                 MessageBox.Show("⚠️ El usuario no tiene acciones cargadas. El menú aparecerá vacío.");
                             }
                             else
-                            { /*
-                                MessageBox.Show("✅ Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
-                                */
+                            {   
+                                // MessageBox.Show("✅ Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
+                                
                             }
                         }
                         catch (Exception ex)
@@ -304,6 +305,22 @@ namespace ModernMenuUI
             }
         }
 
- 
+        private void txtUsuario_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                txtContrasenia.Focus();
+            }
+        }
+
+        private void txtContrasenia_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; 
+                btnAcceder.PerformClick(); 
+            }
+        }
     }
 }

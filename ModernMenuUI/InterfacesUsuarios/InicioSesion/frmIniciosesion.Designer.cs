@@ -115,7 +115,7 @@
             panDatosIngreso.Margin = new Padding(3, 4, 3, 4);
             panDatosIngreso.Name = "panDatosIngreso";
             panDatosIngreso.Size = new Size(605, 429);
-            panDatosIngreso.TabIndex = 1;
+            panDatosIngreso.TabIndex = 8;
             panDatosIngreso.MouseDown += panDatosIngreso_MouseDown;
             // 
             // btnVer
@@ -129,7 +129,7 @@
             btnVer.Location = new Point(492, 177);
             btnVer.Name = "btnVer";
             btnVer.Size = new Size(34, 34);
-            btnVer.TabIndex = 21;
+            btnVer.TabIndex = 5;
             btnVer.UseVisualStyleBackColor = false;
             btnVer.MouseDown += btnVer_MouseDown;
             btnVer.MouseUp += btnVer_MouseUp;
@@ -169,9 +169,10 @@
             txtContrasenia.Margin = new Padding(3, 4, 3, 4);
             txtContrasenia.Name = "txtContrasenia";
             txtContrasenia.Size = new Size(427, 24);
-            txtContrasenia.TabIndex = 3;
+            txtContrasenia.TabIndex = 4;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContra_Enter;
+            txtContrasenia.KeyDown += txtContrasenia_KeyDown;
             txtContrasenia.Leave += txtContra_Leave;
             // 
             // txtUsuario
@@ -184,9 +185,10 @@
             txtUsuario.Margin = new Padding(3, 4, 3, 4);
             txtUsuario.Name = "txtUsuario";
             txtUsuario.Size = new Size(480, 24);
-            txtUsuario.TabIndex = 2;
+            txtUsuario.TabIndex = 3;
             txtUsuario.Text = "USUARIO";
             txtUsuario.Enter += txtUsuario_Enter;
+            txtUsuario.KeyDown += txtUsuario_KeyDown;
             txtUsuario.Leave += txtUsuario_Leave;
             // 
             // lblRecuperarContrasenia
@@ -197,7 +199,7 @@
             lblRecuperarContrasenia.Location = new Point(201, 388);
             lblRecuperarContrasenia.Name = "lblRecuperarContrasenia";
             lblRecuperarContrasenia.Size = new Size(204, 20);
-            lblRecuperarContrasenia.TabIndex = 5;
+            lblRecuperarContrasenia.TabIndex = 7;
             lblRecuperarContrasenia.Text = "¿Has olvidado tu contraseña?";
             lblRecuperarContrasenia.Click += lblRecuperarContrasenia_Click;
             lblRecuperarContrasenia.MouseEnter += lblRecuperarContrasenia_MouseEnter;
@@ -252,7 +254,7 @@
             btnAcceder.Margin = new Padding(3, 4, 3, 4);
             btnAcceder.Name = "btnAcceder";
             btnAcceder.Size = new Size(478, 53);
-            btnAcceder.TabIndex = 4;
+            btnAcceder.TabIndex = 6;
             btnAcceder.Text = "ACCEDER";
             btnAcceder.UseVisualStyleBackColor = false;
             btnAcceder.Click += btnAcceder_Click;
@@ -265,7 +267,7 @@
             label3.Location = new Point(201, 12);
             label3.Name = "label3";
             label3.Size = new Size(185, 24);
-            label3.TabIndex = 7;
+            label3.TabIndex = 10;
             label3.Text = "INICIO DE SESIÓN";
             // 
             // panBarraControl
@@ -279,7 +281,7 @@
             panBarraControl.Margin = new Padding(3, 4, 3, 4);
             panBarraControl.Name = "panBarraControl";
             panBarraControl.Size = new Size(605, 47);
-            panBarraControl.TabIndex = 2;
+            panBarraControl.TabIndex = 9;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
             // btnMinimizar
@@ -295,7 +297,7 @@
             btnMinimizar.Margin = new Padding(3, 4, 3, 4);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Size = new Size(51, 47);
-            btnMinimizar.TabIndex = 0;
+            btnMinimizar.TabIndex = 1;
             btnMinimizar.UseVisualStyleBackColor = false;
             btnMinimizar.Click += btnMinimizar_Click;
             // 
@@ -312,7 +314,7 @@
             btnCerrar.Margin = new Padding(3, 4, 3, 4);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(51, 47);
-            btnCerrar.TabIndex = 1;
+            btnCerrar.TabIndex = 2;
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
             // 

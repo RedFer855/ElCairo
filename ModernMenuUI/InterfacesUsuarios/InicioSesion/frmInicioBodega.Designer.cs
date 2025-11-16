@@ -105,7 +105,7 @@
             // 
             lblMensajeError.BackColor = Color.Transparent;
             lblMensajeError.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblMensajeError.ForeColor = Color.FromArgb(214, 69, 102);
+            lblMensajeError.ForeColor = Color.FromArgb(134, 27, 45);
             lblMensajeError.Location = new Point(77, 238);
             lblMensajeError.Margin = new Padding(4, 0, 4, 0);
             lblMensajeError.Name = "lblMensajeError";
@@ -128,6 +128,7 @@
             txtContrasenia.TabIndex = 17;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContrasenia_Enter;
+            txtContrasenia.KeyDown += txtContrasenia_KeyDown;
             txtContrasenia.Leave += txtContrasenia_Leave;
             // 
             // panBarraControl
@@ -207,6 +208,7 @@
             txtCodigoBodega.TabIndex = 15;
             txtCodigoBodega.Text = "CÓDIGO";
             txtCodigoBodega.Enter += txtCodigoBodega_Enter;
+            txtCodigoBodega.KeyDown += txtCodigoBodega_KeyDown;
             txtCodigoBodega.Leave += txtCodigoBodega_Leave;
             // 
             // btnAcceder
@@ -273,6 +275,7 @@
             Name = "frmInicioBodega";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmInicioBodega";
+            Load += frmInicioBodega_Load;
             panLogo.ResumeLayout(false);
             panLogo.PerformLayout();
             panBarraControl.ResumeLayout(false);

@@ -54,7 +54,7 @@ namespace CapaDeDatos.Repositorios
                 bool ok = PasswordHasher.VerifyHash(bodega.ContraseniaBodega, passwordInput);
                 if (!ok)
                 {
-                    MessageBox.Show("Credenciales incorrectas");
+                    // MessageBox.Show("Credenciales incorrectas");
                     return false;
                 }
                 // Si llegó hasta aquí, el login fue exitoso

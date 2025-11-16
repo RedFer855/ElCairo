@@ -40,12 +40,17 @@
             btnAgregar = new Button();
             panel2 = new Panel();
             panel1 = new Panel();
-            button6 = new Button();
+            label21 = new Label();
+            pnlNota = new Panel();
+            label20 = new Label();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            btnGuardarProducto = new Button();
             btnModificarProducto = new Button();
             btnVolver = new Button();
-            btnGuardarProducto = new Button();
-            button5 = new Button();
-            btnBuscar = new Button();
+            btnBuscarTamanio = new Button();
+            btnBuscarPresentacion = new Button();
+            btnBuscarMarca = new Button();
+            btnBuscarCategoria = new Button();
             pictureBox1 = new PictureBox();
             label19 = new Label();
             txtTamanio = new TextBox();
@@ -56,8 +61,8 @@
             label12 = new Label();
             txtMarca = new TextBox();
             groupBox1 = new GroupBox();
-            radioButton2 = new RadioButton();
-            radioButton3 = new RadioButton();
+            rbDeshabilitado = new RadioButton();
+            rbHabilitado = new RadioButton();
             label13 = new Label();
             label14 = new Label();
             label15 = new Label();
@@ -87,11 +92,12 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
-            btnTAmanio = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
+            pnlNota.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
             gbxEstado.SuspendLayout();
@@ -105,7 +111,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(641, 37);
+            panBarraControl.Size = new Size(767, 37);
             panBarraControl.TabIndex = 2;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -116,7 +122,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(641, 37);
+            lblNombreModulo.Size = new Size(767, 37);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "EDITAR PRODUCTO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -235,19 +241,19 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 37);
             panel2.Name = "panel2";
-            panel2.Size = new Size(641, 418);
+            panel2.Size = new Size(767, 448);
             panel2.TabIndex = 12;
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(btnTAmanio);
-            panel1.Controls.Add(button6);
-            panel1.Controls.Add(btnModificarProducto);
-            panel1.Controls.Add(btnVolver);
-            panel1.Controls.Add(btnGuardarProducto);
-            panel1.Controls.Add(button5);
-            panel1.Controls.Add(btnBuscar);
+            panel1.Controls.Add(label21);
+            panel1.Controls.Add(pnlNota);
+            panel1.Controls.Add(flowLayoutPanel1);
+            panel1.Controls.Add(btnBuscarTamanio);
+            panel1.Controls.Add(btnBuscarPresentacion);
+            panel1.Controls.Add(btnBuscarMarca);
+            panel1.Controls.Add(btnBuscarCategoria);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(label19);
             panel1.Controls.Add(txtTamanio);
@@ -272,21 +278,66 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(641, 418);
+            panel1.Size = new Size(767, 448);
             panel1.TabIndex = 41;
             // 
-            // button6
+            // label21
             // 
-            button6.BackColor = Color.FromArgb(168, 191, 212);
-            button6.BackgroundImage = (Image)resources.GetObject("button6.BackgroundImage");
-            button6.BackgroundImageLayout = ImageLayout.Zoom;
-            button6.FlatAppearance.BorderSize = 0;
-            button6.FlatStyle = FlatStyle.Flat;
-            button6.Location = new Point(380, 226);
-            button6.Name = "button6";
-            button6.Size = new Size(48, 20);
-            button6.TabIndex = 49;
-            button6.UseVisualStyleBackColor = false;
+            label21.AutoSize = true;
+            label21.BackColor = Color.Transparent;
+            label21.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label21.ForeColor = Color.DimGray;
+            label21.Location = new Point(87, 336);
+            label21.Name = "label21";
+            label21.Size = new Size(281, 19);
+            label21.TabIndex = 54;
+            label21.Text = "Al crear el estado por defecto es activo.";
+            // 
+            // pnlNota
+            // 
+            pnlNota.Controls.Add(label20);
+            pnlNota.Location = new Point(446, 368);
+            pnlNota.Name = "pnlNota";
+            pnlNota.Size = new Size(300, 74);
+            pnlNota.TabIndex = 53;
+            // 
+            // label20
+            // 
+            label20.BackColor = Color.FromArgb(148, 168, 187);
+            label20.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label20.ForeColor = Color.White;
+            label20.Location = new Point(0, 8);
+            label20.Name = "label20";
+            label20.Size = new Size(300, 56);
+            label20.TabIndex = 52;
+            label20.Text = "Nota: Para ingresar Inventario de este \r\nproducto deberá realizarlo por medio \r\nde compra.";
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(btnGuardarProducto);
+            flowLayoutPanel1.Controls.Add(btnModificarProducto);
+            flowLayoutPanel1.Controls.Add(btnVolver);
+            flowLayoutPanel1.Location = new Point(34, 389);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(292, 47);
+            flowLayoutPanel1.TabIndex = 51;
+            // 
+            // btnGuardarProducto
+            // 
+            btnGuardarProducto.BackColor = Color.FromArgb(149, 195, 172);
+            btnGuardarProducto.BackgroundImageLayout = ImageLayout.None;
+            btnGuardarProducto.FlatAppearance.BorderSize = 0;
+            btnGuardarProducto.Font = new Font("Itim", 11.9999981F);
+            btnGuardarProducto.ForeColor = SystemColors.ButtonFace;
+            btnGuardarProducto.ImageAlign = ContentAlignment.BottomLeft;
+            btnGuardarProducto.Location = new Point(3, 3);
+            btnGuardarProducto.Name = "btnGuardarProducto";
+            btnGuardarProducto.Size = new Size(89, 40);
+            btnGuardarProducto.TabIndex = 47;
+            btnGuardarProducto.Text = "Guardar";
+            btnGuardarProducto.UseVisualStyleBackColor = false;
+            btnGuardarProducto.Visible = false;
+            btnGuardarProducto.Click += btnGuardarProducto_Click;
             // 
             // btnModificarProducto
             // 
@@ -296,9 +347,9 @@
             btnModificarProducto.Font = new Font("Itim", 11.9999981F);
             btnModificarProducto.ForeColor = SystemColors.ButtonFace;
             btnModificarProducto.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarProducto.Location = new Point(121, 377);
+            btnModificarProducto.Location = new Point(98, 3);
             btnModificarProducto.Name = "btnModificarProducto";
-            btnModificarProducto.Size = new Size(89, 33);
+            btnModificarProducto.Size = new Size(89, 40);
             btnModificarProducto.TabIndex = 48;
             btnModificarProducto.Text = "Editar";
             btnModificarProducto.UseVisualStyleBackColor = false;
@@ -311,62 +362,76 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(216, 377);
+            btnVolver.Location = new Point(193, 3);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(95, 33);
+            btnVolver.Size = new Size(64, 40);
             btnVolver.TabIndex = 46;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
             btnVolver.Click += btnVolver_Click;
             // 
-            // btnGuardarProducto
+            // btnBuscarTamanio
             // 
-            btnGuardarProducto.BackColor = Color.FromArgb(149, 195, 172);
-            btnGuardarProducto.BackgroundImageLayout = ImageLayout.None;
-            btnGuardarProducto.FlatAppearance.BorderSize = 0;
-            btnGuardarProducto.Font = new Font("Itim", 11.9999981F);
-            btnGuardarProducto.ForeColor = SystemColors.ButtonFace;
-            btnGuardarProducto.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarProducto.Location = new Point(27, 377);
-            btnGuardarProducto.Name = "btnGuardarProducto";
-            btnGuardarProducto.Size = new Size(89, 33);
-            btnGuardarProducto.TabIndex = 47;
-            btnGuardarProducto.Text = "Guardar";
-            btnGuardarProducto.UseVisualStyleBackColor = false;
-            btnGuardarProducto.Visible = false;
+            btnBuscarTamanio.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarTamanio.BackgroundImage = (Image)resources.GetObject("btnBuscarTamanio.BackgroundImage");
+            btnBuscarTamanio.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarTamanio.FlatAppearance.BorderSize = 0;
+            btnBuscarTamanio.FlatStyle = FlatStyle.Flat;
+            btnBuscarTamanio.Location = new Point(380, 267);
+            btnBuscarTamanio.Name = "btnBuscarTamanio";
+            btnBuscarTamanio.Size = new Size(48, 20);
+            btnBuscarTamanio.TabIndex = 50;
+            btnBuscarTamanio.UseVisualStyleBackColor = false;
+            btnBuscarTamanio.Click += btnBuscarTamanio_Click;
             // 
-            // button5
+            // btnBuscarPresentacion
             // 
-            button5.BackColor = Color.FromArgb(168, 191, 212);
-            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
-            button5.BackgroundImageLayout = ImageLayout.Zoom;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Location = new Point(380, 190);
-            button5.Name = "button5";
-            button5.Size = new Size(48, 20);
-            button5.TabIndex = 45;
-            button5.UseVisualStyleBackColor = false;
+            btnBuscarPresentacion.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarPresentacion.BackgroundImage = (Image)resources.GetObject("btnBuscarPresentacion.BackgroundImage");
+            btnBuscarPresentacion.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarPresentacion.FlatAppearance.BorderSize = 0;
+            btnBuscarPresentacion.FlatStyle = FlatStyle.Flat;
+            btnBuscarPresentacion.Location = new Point(380, 227);
+            btnBuscarPresentacion.Name = "btnBuscarPresentacion";
+            btnBuscarPresentacion.Size = new Size(48, 20);
+            btnBuscarPresentacion.TabIndex = 49;
+            btnBuscarPresentacion.UseVisualStyleBackColor = false;
+            btnBuscarPresentacion.Click += btnBuscarPresentacion_Click;
             // 
-            // btnBuscar
+            // btnBuscarMarca
             // 
-            btnBuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscar.BackgroundImage = (Image)resources.GetObject("btnBuscar.BackgroundImage");
-            btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscar.FlatAppearance.BorderSize = 0;
-            btnBuscar.FlatStyle = FlatStyle.Flat;
-            btnBuscar.Location = new Point(380, 158);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(48, 19);
-            btnBuscar.TabIndex = 44;
-            btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscarMarca.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarMarca.BackgroundImage = (Image)resources.GetObject("btnBuscarMarca.BackgroundImage");
+            btnBuscarMarca.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarMarca.FlatAppearance.BorderSize = 0;
+            btnBuscarMarca.FlatStyle = FlatStyle.Flat;
+            btnBuscarMarca.Location = new Point(380, 186);
+            btnBuscarMarca.Name = "btnBuscarMarca";
+            btnBuscarMarca.Size = new Size(48, 20);
+            btnBuscarMarca.TabIndex = 45;
+            btnBuscarMarca.UseVisualStyleBackColor = false;
+            btnBuscarMarca.Click += btnBuscarMarca_Click;
+            // 
+            // btnBuscarCategoria
+            // 
+            btnBuscarCategoria.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarCategoria.BackgroundImage = (Image)resources.GetObject("btnBuscarCategoria.BackgroundImage");
+            btnBuscarCategoria.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarCategoria.FlatAppearance.BorderSize = 0;
+            btnBuscarCategoria.FlatStyle = FlatStyle.Flat;
+            btnBuscarCategoria.Location = new Point(380, 147);
+            btnBuscarCategoria.Name = "btnBuscarCategoria";
+            btnBuscarCategoria.Size = new Size(48, 20);
+            btnBuscarCategoria.TabIndex = 44;
+            btnBuscarCategoria.UseVisualStyleBackColor = false;
+            btnBuscarCategoria.Click += btnBuscarCategoria_Click;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(444, 18);
+            pictureBox1.Location = new Point(446, 28);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(185, 291);
+            pictureBox1.Size = new Size(300, 300);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 43;
             pictureBox1.TabStop = false;
@@ -376,7 +441,7 @@
             label19.AutoSize = true;
             label19.Font = new Font("Itim", 11.9999981F);
             label19.ForeColor = Color.FromArgb(87, 99, 110);
-            label19.Location = new Point(76, 259);
+            label19.Location = new Point(76, 267);
             label19.Name = "label19";
             label19.Size = new Size(66, 19);
             label19.TabIndex = 42;
@@ -387,7 +452,7 @@
             txtTamanio.BackColor = Color.White;
             txtTamanio.BorderStyle = BorderStyle.None;
             txtTamanio.Font = new Font("Itim", 11.9999981F);
-            txtTamanio.Location = new Point(153, 258);
+            txtTamanio.Location = new Point(153, 267);
             txtTamanio.Name = "txtTamanio";
             txtTamanio.PlaceholderText = "(Seleccione Buscar)";
             txtTamanio.ReadOnly = true;
@@ -399,7 +464,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Itim", 11.9999981F);
             label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(68, 293);
+            label9.Location = new Point(503, 377);
             label9.Name = "label9";
             label9.Size = new Size(76, 19);
             label9.TabIndex = 40;
@@ -409,19 +474,21 @@
             // 
             txtCantidad.BackColor = Color.White;
             txtCantidad.BorderStyle = BorderStyle.None;
+            txtCantidad.Enabled = false;
             txtCantidad.Font = new Font("Itim", 11.9999981F);
-            txtCantidad.Location = new Point(153, 292);
+            txtCantidad.Location = new Point(585, 376);
             txtCantidad.Name = "txtCantidad";
             txtCantidad.ReadOnly = true;
-            txtCantidad.Size = new Size(275, 20);
+            txtCantidad.Size = new Size(116, 20);
             txtCantidad.TabIndex = 39;
+            txtCantidad.Text = "0";
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Itim", 11.9999981F);
             label11.ForeColor = Color.FromArgb(87, 99, 110);
-            label11.Location = new Point(13, 126);
+            label11.Location = new Point(446, 414);
             label11.Name = "label11";
             label11.Size = new Size(133, 19);
             label11.TabIndex = 38;
@@ -432,7 +499,7 @@
             txtPresentacion.BackColor = Color.White;
             txtPresentacion.BorderStyle = BorderStyle.None;
             txtPresentacion.Font = new Font("Itim", 11.9999981F);
-            txtPresentacion.Location = new Point(153, 225);
+            txtPresentacion.Location = new Point(153, 227);
             txtPresentacion.Name = "txtPresentacion";
             txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
             txtPresentacion.ReadOnly = true;
@@ -444,7 +511,7 @@
             label12.AutoSize = true;
             label12.Font = new Font("Itim", 11.9999981F);
             label12.ForeColor = Color.FromArgb(87, 99, 110);
-            label12.Location = new Point(47, 225);
+            label12.Location = new Point(40, 226);
             label12.Name = "label12";
             label12.Size = new Size(102, 19);
             label12.TabIndex = 32;
@@ -455,7 +522,7 @@
             txtMarca.BackColor = Color.White;
             txtMarca.BorderStyle = BorderStyle.None;
             txtMarca.Font = new Font("Itim", 11.9999981F);
-            txtMarca.Location = new Point(153, 191);
+            txtMarca.Location = new Point(153, 187);
             txtMarca.Name = "txtMarca";
             txtMarca.PlaceholderText = "(Seleccione Buscar)";
             txtMarca.ReadOnly = true;
@@ -464,44 +531,44 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(radioButton2);
-            groupBox1.Controls.Add(radioButton3);
+            groupBox1.Controls.Add(rbDeshabilitado);
+            groupBox1.Controls.Add(rbHabilitado);
             groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(153, 316);
+            groupBox1.Location = new Point(153, 293);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(275, 50);
+            groupBox1.Size = new Size(275, 38);
             groupBox1.TabIndex = 30;
             groupBox1.TabStop = false;
             // 
-            // radioButton2
+            // rbDeshabilitado
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(97, 21);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(82, 23);
-            radioButton2.TabIndex = 29;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Inactivo";
-            radioButton2.UseVisualStyleBackColor = true;
+            rbDeshabilitado.AutoSize = true;
+            rbDeshabilitado.Location = new Point(89, 15);
+            rbDeshabilitado.Name = "rbDeshabilitado";
+            rbDeshabilitado.Size = new Size(82, 23);
+            rbDeshabilitado.TabIndex = 29;
+            rbDeshabilitado.Text = "Inactivo";
+            rbDeshabilitado.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // rbHabilitado
             // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(8, 21);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(70, 23);
-            radioButton3.TabIndex = 28;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "Activo";
-            radioButton3.UseVisualStyleBackColor = true;
+            rbHabilitado.AutoSize = true;
+            rbHabilitado.Checked = true;
+            rbHabilitado.Location = new Point(7, 15);
+            rbHabilitado.Name = "rbHabilitado";
+            rbHabilitado.Size = new Size(70, 23);
+            rbHabilitado.TabIndex = 28;
+            rbHabilitado.TabStop = true;
+            rbHabilitado.Text = "Activo";
+            rbHabilitado.UseVisualStyleBackColor = true;
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Itim", 11.9999981F);
             label13.ForeColor = Color.FromArgb(87, 99, 110);
-            label13.Location = new Point(89, 191);
+            label13.Location = new Point(87, 187);
             label13.Name = "label13";
             label13.Size = new Size(55, 19);
             label13.TabIndex = 27;
@@ -512,7 +579,7 @@
             label14.AutoSize = true;
             label14.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label14.ForeColor = Color.FromArgb(87, 99, 110);
-            label14.Location = new Point(82, 336);
+            label14.Location = new Point(82, 309);
             label14.Name = "label14";
             label14.Size = new Size(60, 19);
             label14.TabIndex = 26;
@@ -523,7 +590,7 @@
             label15.AutoSize = true;
             label15.Font = new Font("Itim", 11.9999981F);
             label15.ForeColor = Color.FromArgb(87, 99, 110);
-            label15.Location = new Point(68, 158);
+            label15.Location = new Point(63, 146);
             label15.Name = "label15";
             label15.Size = new Size(79, 19);
             label15.TabIndex = 25;
@@ -534,7 +601,7 @@
             txtCategoria.BackColor = Color.White;
             txtCategoria.BorderStyle = BorderStyle.None;
             txtCategoria.Font = new Font("Itim", 11.9999981F);
-            txtCategoria.Location = new Point(153, 158);
+            txtCategoria.Location = new Point(153, 147);
             txtCategoria.Name = "txtCategoria";
             txtCategoria.PlaceholderText = "(Seleccione Buscar)";
             txtCategoria.ReadOnly = true;
@@ -545,19 +612,21 @@
             // 
             txtPrecioCompra.BackColor = Color.White;
             txtPrecioCompra.BorderStyle = BorderStyle.None;
+            txtPrecioCompra.Enabled = false;
             txtPrecioCompra.Font = new Font("Itim", 11.9999981F);
-            txtPrecioCompra.Location = new Point(153, 126);
+            txtPrecioCompra.Location = new Point(585, 414);
             txtPrecioCompra.Name = "txtPrecioCompra";
             txtPrecioCompra.ReadOnly = true;
-            txtPrecioCompra.Size = new Size(275, 20);
+            txtPrecioCompra.Size = new Size(116, 20);
             txtPrecioCompra.TabIndex = 22;
+            txtPrecioCompra.Text = "0";
             // 
             // label16
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Itim", 11.9999981F);
             label16.ForeColor = Color.FromArgb(87, 99, 110);
-            label16.Location = new Point(23, 18);
+            label16.Location = new Point(19, 29);
             label16.Name = "label16";
             label16.Size = new Size(123, 19);
             label16.TabIndex = 19;
@@ -568,10 +637,9 @@
             txtCodBarra.BackColor = Color.White;
             txtCodBarra.BorderStyle = BorderStyle.None;
             txtCodBarra.Font = new Font("Itim", 11.9999981F);
-            txtCodBarra.Location = new Point(153, 18);
+            txtCodBarra.Location = new Point(153, 27);
             txtCodBarra.Name = "txtCodBarra";
             txtCodBarra.PlaceholderText = "(Ingrese o Escanee el Código)";
-            txtCodBarra.ReadOnly = true;
             txtCodBarra.Size = new Size(275, 20);
             txtCodBarra.TabIndex = 18;
             // 
@@ -580,7 +648,7 @@
             label17.AutoSize = true;
             label17.Font = new Font("Itim", 11.9999981F);
             label17.ForeColor = Color.FromArgb(87, 99, 110);
-            label17.Location = new Point(27, 91);
+            label17.Location = new Point(22, 107);
             label17.Name = "label17";
             label17.Size = new Size(120, 19);
             label17.TabIndex = 16;
@@ -591,7 +659,7 @@
             label18.AutoSize = true;
             label18.Font = new Font("Itim", 11.9999981F);
             label18.ForeColor = Color.FromArgb(87, 99, 110);
-            label18.Location = new Point(71, 56);
+            label18.Location = new Point(66, 67);
             label18.Name = "label18";
             label18.Size = new Size(76, 19);
             label18.TabIndex = 15;
@@ -602,9 +670,8 @@
             txtNombreProducto.BackColor = Color.White;
             txtNombreProducto.BorderStyle = BorderStyle.None;
             txtNombreProducto.Font = new Font("Itim", 11.9999981F);
-            txtNombreProducto.Location = new Point(153, 56);
+            txtNombreProducto.Location = new Point(153, 67);
             txtNombreProducto.Name = "txtNombreProducto";
-            txtNombreProducto.ReadOnly = true;
             txtNombreProducto.Size = new Size(275, 20);
             txtNombreProducto.TabIndex = 13;
             // 
@@ -613,9 +680,8 @@
             txtPrecioVenta.BackColor = Color.White;
             txtPrecioVenta.BorderStyle = BorderStyle.None;
             txtPrecioVenta.Font = new Font("Itim", 11.9999981F);
-            txtPrecioVenta.Location = new Point(153, 91);
+            txtPrecioVenta.Location = new Point(153, 107);
             txtPrecioVenta.Name = "txtPrecioVenta";
-            txtPrecioVenta.ReadOnly = true;
             txtPrecioVenta.Size = new Size(275, 20);
             txtPrecioVenta.TabIndex = 12;
             // 
@@ -839,25 +905,12 @@
             textBox1.Size = new Size(197, 20);
             textBox1.TabIndex = 22;
             // 
-            // btnTAmanio
-            // 
-            btnTAmanio.BackColor = Color.FromArgb(168, 191, 212);
-            btnTAmanio.BackgroundImage = (Image)resources.GetObject("btnTAmanio.BackgroundImage");
-            btnTAmanio.BackgroundImageLayout = ImageLayout.Zoom;
-            btnTAmanio.FlatAppearance.BorderSize = 0;
-            btnTAmanio.FlatStyle = FlatStyle.Flat;
-            btnTAmanio.Location = new Point(380, 258);
-            btnTAmanio.Name = "btnTAmanio";
-            btnTAmanio.Size = new Size(48, 20);
-            btnTAmanio.TabIndex = 50;
-            btnTAmanio.UseVisualStyleBackColor = false;
-            // 
             // frmAgregarEditarProducto
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(641, 455);
+            ClientSize = new Size(767, 485);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -873,6 +926,8 @@
             panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            pnlNota.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -894,7 +949,7 @@
         private Label label4;
         private TextBox textBox2;
         private TextBox textBox1;
-        private RadioButton radioButton2;
+        private RadioButton rbDeshabilitado;
         private RadioButton rbActivo;
         private Label label6;
         private Label label5;
@@ -917,7 +972,7 @@
         private Label label12;
         private TextBox txtMarca;
         private GroupBox groupBox1;
-        private RadioButton radioButton3;
+        private RadioButton rbHabilitado;
         private Label label13;
         private Label label14;
         private Label label15;
@@ -933,12 +988,16 @@
         private Label label19;
         private TextBox txtTamanio;
         private PictureBox pictureBox1;
-        private Button button5;
-        private Button btnBuscar;
+        private Button btnBuscarMarca;
+        private Button btnBuscarCategoria;
         private Button btnModificarProducto;
         private Button btnVolver;
         private Button btnGuardarProducto;
-        private Button button6;
-        private Button btnTAmanio;
+        private Button btnBuscarPresentacion;
+        private Button btnBuscarTamanio;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Label label20;
+        private Panel pnlNota;
+        private Label label21;
     }
 }

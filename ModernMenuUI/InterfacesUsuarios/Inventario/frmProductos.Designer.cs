@@ -171,6 +171,7 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
+            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewTextBoxColumn1.DataPropertyName = "CodigoBarraProducto";
             dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
@@ -180,7 +181,7 @@
             dataGridViewTextBoxColumn1.MinimumWidth = 65;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 65;
+            dataGridViewTextBoxColumn1.Width = 89;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -213,12 +214,14 @@
             // 
             // CantidadProducto
             // 
+            CantidadProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             CantidadProducto.DataPropertyName = "CantidadProducto";
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             CantidadProducto.DefaultCellStyle = dataGridViewCellStyle4;
             CantidadProducto.HeaderText = "Cantidad";
             CantidadProducto.Name = "CantidadProducto";
             CantidadProducto.ReadOnly = true;
+            CantidadProducto.Width = 105;
             // 
             // PrecioVenta
             // 
@@ -271,13 +274,14 @@
             // 
             // EstadoProducto
             // 
+            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             EstadoProducto.DataPropertyName = "EstadoProducto";
             EstadoProducto.HeaderText = "Estado";
             EstadoProducto.Name = "EstadoProducto";
             EstadoProducto.ReadOnly = true;
             EstadoProducto.Resizable = DataGridViewTriState.True;
             EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoProducto.Width = 80;
+            EstadoProducto.Width = 89;
             // 
             // panelBusqueda
             // 
@@ -644,7 +648,7 @@
             btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLimpiarFiltros.ForeColor = Color.White;
             btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
-            btnLimpiarFiltros.Location = new Point(3, 5);
+            btnLimpiarFiltros.Location = new Point(12, 5);
             btnLimpiarFiltros.Name = "btnLimpiarFiltros";
             btnLimpiarFiltros.Size = new Size(140, 32);
             btnLimpiarFiltros.TabIndex = 34;
@@ -665,9 +669,10 @@
             // pnlLimpiarFiltros
             // 
             pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(594, 12);
+            pnlLimpiarFiltros.Location = new Point(604, 12);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
             pnlLimpiarFiltros.Size = new Size(205, 43);
             pnlLimpiarFiltros.TabIndex = 36;
@@ -741,6 +746,9 @@
         private Button btnCategoria;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnTamanio;
+        private Button btnLimpiarFiltros;
+        private PictureBox pbxClean;
+        private Panel pnlLimpiarFiltros;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;
@@ -751,8 +759,5 @@
         private DataGridViewTextBoxColumn PrecioCompra;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn EstadoProducto;
-        private Button btnLimpiarFiltros;
-        private PictureBox pbxClean;
-        private Panel pnlLimpiarFiltros;
     }
 }
