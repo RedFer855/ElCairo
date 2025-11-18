@@ -102,37 +102,60 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
-       /* public async Task ActualizarStockProducto(int idProducto, int cantidadVendida)
+        public async Task<List<Producto>> ObtenerProductosPorProveedorAsync(int idProveedor)
         {
             try
             {
-                var client = await GetClient();
+                var supabase = await Conexion.GetClientAsync();
 
-                // 1. LEER el producto (usando el DTO limpio)
-                var response = await client.From<ProductoDTO>() // <-- USA EL DTO
-                    .Filter("id_producto", Operator.Equals, idProducto)
-                    .Single();
+                var response = await supabase
+                    .From<Producto>()
+                    .Select("*")
+                    // Filtramos por el ID del proveedor
+                    .Filter("id_proveedor", Supabase.Postgrest.Constants.Operator.Equals, idProveedor)
+                    // Y que estén activos
+                    .Filter("estado_producto", Supabase.Postgrest.Constants.Operator.Equals, "true")
+                    .Order("nombre_producto", Supabase.Postgrest.Constants.Ordering.Ascending)
+                    .Get();
 
-                if (response != null)
-                {
-                    // 2. CALCULAR el nuevo stock
-                    int stockNuevo = response.cantidad_producto - cantidadVendida;
-                    if (stockNuevo < 0) stockNuevo = 0;
-
-                    // 3. ACTUALIZAR el modelo DTO
-                    response.cantidad_producto = stockNuevo;
-
-                    // 4. GUARDAR el modelo DTO
-                    //    (Esto ahora funcionará porque [JsonPropertyName]
-                    //     forzará el envío de "cantidad_producto" en minúscula)
-                    await client.From<ProductoDTO>() // <-- USA EL DTO
-                        .Update(response);
-                }
+                return response.Models;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al actualizar stock: {ex.Message}");
+                throw new Exception($"Error al filtrar productos por proveedor: {ex.Message}");
             }
-        }*/
+        }
+        /* public async Task ActualizarStockProducto(int idProducto, int cantidadVendida)
+         {
+             try
+             {
+                 var client = await GetClient();
+
+                 // 1. LEER el producto (usando el DTO limpio)
+                 var response = await client.From<ProductoDTO>() // <-- USA EL DTO
+                     .Filter("id_producto", Operator.Equals, idProducto)
+                     .Single();
+
+                 if (response != null)
+                 {
+                     // 2. CALCULAR el nuevo stock
+                     int stockNuevo = response.cantidad_producto - cantidadVendida;
+                     if (stockNuevo < 0) stockNuevo = 0;
+
+                     // 3. ACTUALIZAR el modelo DTO
+                     response.cantidad_producto = stockNuevo;
+
+                     // 4. GUARDAR el modelo DTO
+                     //    (Esto ahora funcionará porque [JsonPropertyName]
+                     //     forzará el envío de "cantidad_producto" en minúscula)
+                     await client.From<ProductoDTO>() // <-- USA EL DTO
+                         .Update(response);
+                 }
+             }
+             catch (Exception ex)
+             {
+                 Console.WriteLine($"Error al actualizar stock: {ex.Message}");
+             }
+         }*/
     }
 }

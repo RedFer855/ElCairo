@@ -16,6 +16,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
     public partial class frmAgregarEditarProveedor : Form
     {
         private Proveedor _proveedorActual;
+        private ProveedorRepositorio _proveedorRepo = new ProveedorRepositorio();
         public frmAgregarEditarProveedor()
         {
             InitializeComponent();
@@ -89,7 +90,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                             IdEstadoProveedor = rbActivo.Checked ? 1 : 2 // Asumiendo 1=Activo, 2=Inactivo
                         };
 
-                        await ProveedorRepositorio.InsertarProveedor(nuevoProveedor);
+                        await _proveedorRepo.InsertarProveedor(nuevoProveedor);
                         MessageBox.Show("¡Proveedor guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
@@ -102,7 +103,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                         _proveedorActual.EstadoProveedor = rbActivo.Checked;
                         _proveedorActual.IdEstadoProveedor = rbActivo.Checked ? 1 : 2;
 
-                        await ProveedorRepositorio.ActualizarProveedor(_proveedorActual);
+                        await _proveedorRepo.ActualizarProveedor(_proveedorActual);
                         MessageBox.Show("¡Proveedor actualizado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 

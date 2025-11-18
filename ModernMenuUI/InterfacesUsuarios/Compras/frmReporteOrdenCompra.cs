@@ -17,14 +17,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         private string _subtotal;
         private string _impuesto;
         private string _totalGeneral;
+        private string _nombreProveedor;
 
-        public frmReporteOrdenCompra(List<clsOrdenCompra> items, string sub, string imp, string total)
+        public frmReporteOrdenCompra(List<clsOrdenCompra> items, string sub, string imp, string total, string proveedor)
         {
             InitializeComponent();
             _listaItems = items;
             _subtotal = sub;
             _impuesto = imp;
             _totalGeneral = total;
+            _nombreProveedor = proveedor;
 
             QuestPDF.Settings.License = LicenseType.Community;
         }
@@ -73,6 +75,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                                         // Fecha (justo debajo del título)
                                         col.Item().Text($"Fecha de Emisión: {fechaActual}")
                                             .FontSize(12);
+
+                                        col.Item().Text($"Proveedor: {_nombreProveedor}")
+                                            .FontSize(14).SemiBold().FontColor(Colors.Grey.Darken2).AlignCenter();
                                     });
                                 // ---------------------------------------------
 
@@ -160,6 +165,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                             worksheet.Cell("A1").Style.Font.FontSize = 16;
 
                             worksheet.Cell("A2").Value = $"Fecha de Emisión: {fechaActual}";
+
+                            worksheet.Cell("A3").Value = $"Proveedor: {_nombreProveedor}";
+                            worksheet.Cell("A3").Style.Font.Bold = true;
                             // ---------------------------------------------
 
                             // --- CAMBIO: Movemos la tabla para que empiece en A4 ---

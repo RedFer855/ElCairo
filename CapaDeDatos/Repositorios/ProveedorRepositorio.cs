@@ -10,85 +10,107 @@ namespace CapaDeDatos.Repositorios
 {
     public class ProveedorRepositorio
     {
-        // INSERTAR UN PROVEEDOR (Estático)
-        public static async Task InsertarProveedor(Proveedor nuevoProveedor)
+        // 1. Obtener TODOS los proveedores (para guardar en caché)
+        public async Task<List<Proveedor>> ObtenerTodosLosProveedores()
         {
             try
             {
-                var client = await Conexion.ConnectWithTimeoutAsync(10);
-                await client.From<Proveedor>().Insert(nuevoProveedor);
-            }
-            catch (System.Net.WebException ex)
-            {
-                throw new Exception("Error de red al guardar proveedor: " + ex.Message, ex);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception("El servidor tardó demasiado en responder.", ex);
+                var supabase = await Conexion.GetClientAsync();
+
+                // Traemos todos los proveedores que estén activos (estado_proveedor = true)
+                // Si quieres traer también los inactivos, quita el .Filter
+                var response = await supabase
+                    .From<Proveedor>()
+                    .Select("*")
+                    .Filter("estado_proveedor", Supabase.Postgrest.Constants.Operator.Equals, "true")
+                    .Order("nombre_proveedor", Supabase.Postgrest.Constants.Ordering.Ascending)
+                    .Get();
+
+                return response.Models;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error de Supabase: {ex.Message}");
-                throw; // Relanza la excepción original
+                // Es buena práctica lanzar la excepción para manejarla en el formulario
+                throw new Exception($"Error al obtener proveedores: {ex.Message}");
             }
         }
 
-        // ACTUALIZAR UN PROVEEDOR (Estático)
-        public static async Task ActualizarProveedor(Proveedor proveedorActualizado)
+        // 2. Buscar proveedores por coincidencia de nombre (Búsqueda directa a la BD)
+        // NOTA: Como ya tienes una lista en memoria en el form, este método es opcional,
+        // pero útil si la lista es demasiado grande.
+        public async Task<List<Proveedor>> BuscarProveedoresPorNombre(string terminoBusqueda)
         {
             try
             {
-                var client = await Conexion.ConnectWithTimeoutAsync(10);
-                await client.From<Proveedor>().Update(proveedorActualizado);
-            }
-            catch (System.Net.WebException ex)
-            {
-                throw new Exception("Error de red al actualizar proveedor: " + ex.Message, ex);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception("El servidor tardó demasiado en responder.", ex);
+                var supabase = await Conexion.GetClientAsync();
+
+                var response = await supabase
+                    .From<Proveedor>()
+                    .Select("*")
+                    .Filter("estado_proveedor", Supabase.Postgrest.Constants.Operator.Equals, "true")
+                    .Filter("nombre_proveedor", Supabase.Postgrest.Constants.Operator.ILike, $"%{terminoBusqueda}%") // ILike es Case Insensitive
+                    .Get();
+
+                return response.Models;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error de Supabase: {ex.Message}");
-                throw;
+                throw new Exception($"Error buscando proveedor: {ex.Message}");
             }
         }
 
-        // Método de instancia para obtener el cliente
-        private async Task<Supabase.Client> GetClient()
-        {
-            return await Conexion.ConnectWithTimeoutAsync();
-        }
-
-        // OBTENER TODOS LOS PROVEEDORES (Método de instancia)
-        public async Task<List<Proveedor>> ObtenerTodosLosProveedores(CancellationToken cancellationToken = default)
+        // 3. Obtener un proveedor por su ID (útil para validaciones)
+        public async Task<Proveedor> ObtenerProveedorPorId(int id)
         {
             try
             {
-                var client = await GetClient();
-                var queryBuilder = client.From<Proveedor>();
-                queryBuilder.Order("id_proveedor", Supabase.Postgrest.Constants.Ordering.Ascending);
+                var supabase = await Conexion.GetClientAsync();
 
-                var response = await queryBuilder.Get(cancellationToken);
+                var response = await supabase
+                    .From<Proveedor>()
+                    .Select("*")
+                    .Filter("id_proveedor", Supabase.Postgrest.Constants.Operator.Equals, id)
+                    .Single();
 
-                return response.Models ?? new List<Proveedor>();
-            }
-            catch (OperationCanceledException ex) when (cancellationToken.IsCancellationRequested)
-            {
-                throw new TimeoutException("La consulta de proveedores fue cancelada por timeout.", ex);
+                return response;
             }
             catch (Exception ex)
             {
-                throw new Exception("No se pudieron cargar los proveedores. Verifique la conexión.", ex);
+                return null;
             }
         }
+        public async Task InsertarProveedor(Proveedor nuevoProveedor)
+        {
+            try
+            {
+                var supabase = await Conexion.GetClientAsync();
 
-        // (Opcional) MÉTODO ELIMINAR (Estático)
-        // public static async Task EliminarProveedor(int id)
-        // {
-        //     ... (lógica de eliminación) ...
-        // }
+                // Supabase inserta el objeto y devuelve la respuesta
+                await supabase
+                    .From<Proveedor>()
+                    .Insert(nuevoProveedor);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al insertar proveedor: {ex.Message}");
+            }
+        }
+        public async Task ActualizarProveedor(Proveedor proveedorEditar)
+        {
+            try
+            {
+                var supabase = await Conexion.GetClientAsync();
+
+                // Actualiza el registro donde coincida el ID
+                await supabase
+                    .From<Proveedor>()
+                    .Update(proveedorEditar);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al actualizar proveedor: {ex.Message}");
+            }
+        }
+       
     }
 }

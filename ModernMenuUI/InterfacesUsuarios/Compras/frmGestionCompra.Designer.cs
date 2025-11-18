@@ -40,8 +40,9 @@
             btnSalir = new Button();
             btnImprimirOrden = new Button();
             panel5 = new Panel();
-            btnBuscarCliente = new Button();
-            textBox4 = new TextBox();
+            lstSugerencias = new ListBox();
+            btnBuscarProv = new Button();
+            txtProveedor = new TextBox();
             label4 = new Label();
             button2 = new Button();
             panel4 = new Panel();
@@ -142,8 +143,9 @@
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
-            panel5.Controls.Add(btnBuscarCliente);
-            panel5.Controls.Add(textBox4);
+            panel5.Controls.Add(lstSugerencias);
+            panel5.Controls.Add(btnBuscarProv);
+            panel5.Controls.Add(txtProveedor);
             panel5.Controls.Add(label4);
             panel5.Location = new Point(14, 5);
             panel5.Margin = new Padding(3, 4, 3, 4);
@@ -151,43 +153,57 @@
             panel5.Size = new Size(329, 68);
             panel5.TabIndex = 23;
             // 
-            // btnBuscarCliente
+            // lstSugerencias
             // 
-            btnBuscarCliente.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBuscarCliente.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarCliente.BackgroundImage = (Image)resources.GetObject("btnBuscarCliente.BackgroundImage");
-            btnBuscarCliente.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarCliente.FlatAppearance.BorderSize = 0;
-            btnBuscarCliente.FlatStyle = FlatStyle.Flat;
-            btnBuscarCliente.Location = new Point(254, 20);
-            btnBuscarCliente.Margin = new Padding(3, 4, 3, 4);
-            btnBuscarCliente.Name = "btnBuscarCliente";
-            btnBuscarCliente.Size = new Size(55, 27);
-            btnBuscarCliente.TabIndex = 2;
-            btnBuscarCliente.UseVisualStyleBackColor = false;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.Location = new Point(95, 36);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(153, 64);
+            lstSugerencias.TabIndex = 22;
+            lstSugerencias.Visible = false;
+            lstSugerencias.Click += lstSugerencias_Click;
             // 
-            // textBox4
+            // btnBuscarProv
             // 
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Enabled = false;
-            textBox4.Font = new Font("Itim", 13F);
-            textBox4.Location = new Point(77, 19);
-            textBox4.Margin = new Padding(3, 4, 3, 4);
-            textBox4.Name = "textBox4";
-            textBox4.ReadOnly = true;
-            textBox4.Size = new Size(169, 26);
-            textBox4.TabIndex = 22;
+            btnBuscarProv.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscarProv.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarProv.BackgroundImage = (Image)resources.GetObject("btnBuscarProv.BackgroundImage");
+            btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarProv.FlatAppearance.BorderSize = 0;
+            btnBuscarProv.FlatStyle = FlatStyle.Flat;
+            btnBuscarProv.Location = new Point(254, 6);
+            btnBuscarProv.Margin = new Padding(3, 4, 3, 4);
+            btnBuscarProv.Name = "btnBuscarProv";
+            btnBuscarProv.Size = new Size(55, 27);
+            btnBuscarProv.TabIndex = 2;
+            btnBuscarProv.UseVisualStyleBackColor = false;
+            btnBuscarProv.Click += btnBuscarProv_Click;
+            // 
+            // txtProveedor
+            // 
+            txtProveedor.BorderStyle = BorderStyle.None;
+            txtProveedor.Font = new Font("Itim", 13F);
+            txtProveedor.ForeColor = Color.Black;
+            txtProveedor.Location = new Point(92, 4);
+            txtProveedor.Margin = new Padding(3, 4, 3, 4);
+            txtProveedor.Name = "txtProveedor";
+            txtProveedor.PlaceholderText = "(Buscar Proveedor)";
+            txtProveedor.Size = new Size(154, 26);
+            txtProveedor.TabIndex = 22;
+            txtProveedor.TextChanged += txtProveedor_TextChanged;
+            txtProveedor.KeyPress += txtProveedor_KeyPress;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.FromArgb(87, 99, 110);
-            label4.Location = new Point(11, 21);
+            label4.Location = new Point(3, 4);
             label4.Name = "label4";
-            label4.Size = new Size(61, 20);
+            label4.Size = new Size(83, 20);
             label4.TabIndex = 16;
-            label4.Text = "Cliente:";
+            label4.Text = "Proveedor:";
+            label4.Click += label4_Click;
             // 
             // button2
             // 
@@ -891,8 +907,8 @@
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
-        private TextBox textBox4;
-        private Button btnBuscarCliente;
+        private TextBox txtProveedor;
+        private Button btnBuscarProv;
         private DataGridViewTextBoxColumn colCodigo;
         private DataGridViewTextBoxColumn colProducto;
         private DataGridViewTextBoxColumn colPrecio;
@@ -900,5 +916,6 @@
         private DataGridViewImageColumn Restar;
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
+        private ListBox lstSugerencias;
     }
 }

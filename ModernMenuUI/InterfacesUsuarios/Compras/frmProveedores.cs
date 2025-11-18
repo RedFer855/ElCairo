@@ -41,7 +41,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 this.Cursor = Cursors.WaitCursor;
                 using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3)))
                 {
-                    List<Proveedor> listaDeProveedores = await _proveedorRepo.ObtenerTodosLosProveedores(cts.Token);
+                    List<Proveedor> listaDeProveedores = await _proveedorRepo.ObtenerTodosLosProveedores();
                     dgvProveedores.DataSource = null;
                     dgvProveedores.DataSource = listaDeProveedores;
                 }
