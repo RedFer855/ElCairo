@@ -592,9 +592,9 @@ namespace ModernMenuUI
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
-            MessageBox.Show($"ID Bodega Actual: {SessionData.IdBodegaActual}\n" +
+           /* MessageBox.Show($"ID Bodega Actual: {SessionData.IdBodegaActual}\n" +
                     $"Método que voy a llamar: CargarProductosDeBodegaAsync",
-                    "Diagnóstico", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    "Diagnóstico", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
 
             await CargarProductosDeBodega();
             // await CargarProductosAsync();
