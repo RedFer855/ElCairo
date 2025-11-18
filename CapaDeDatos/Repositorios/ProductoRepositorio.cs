@@ -110,5 +110,59 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
             }
         }
+
+        public async Task<List<Producto>> ObtenerProductosPorProveedorAsync(int idProveedor)
+        {
+            try
+            {
+                var client = await GetClient();
+
+                // 🔹 Trae todos los productos cuya marca pertenece al proveedor dado
+                var queryBuilder = client
+                    .From<Producto>()
+                    .Select("*, marca!inner(id_marca, nombre_marca, id_proveedor), categoria(*)")
+                    .Filter("marca.id_proveedor", Supabase.Postgrest.Constants.Operator.Equals, idProveedor)
+                    .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
+
+                var response = await queryBuilder.Get();
+
+                if (response != null && response.Models != null)
+                    return response.Models;
+
+                return new List<Producto>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error de Supabase al obtener productos por proveedor: {ex.Message}");
+                throw;
+            }
+        }
+        public async Task<List<Producto>> ObtenerActivos(bool estado = true, int? marcaId = null, int? categoriaId = null)
+        {
+            try
+            {
+                var client = await GetClient();
+                var query = client.From<Producto>()
+                                  .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
+
+                // Solo productos activos
+                query = query.Filter("estado_producto", Supabase.Postgrest.Constants.Operator.Equals, estado.ToString().ToLower());//estado a string por que postgresql no maneja datos bool en sus consultas
+
+                if (marcaId.HasValue && marcaId.Value > 0)
+                    query = query.Filter("id_marca", Supabase.Postgrest.Constants.Operator.Equals, marcaId.Value);
+
+                if (categoriaId.HasValue && categoriaId.Value > 0)
+                    query = query.Filter("id_categoria", Supabase.Postgrest.Constants.Operator.Equals, categoriaId.Value);
+
+                var response = await query.Select("*, marca(*), categoria(*)").Get();
+
+                return response?.Models ?? new List<Producto>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener productos activos: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

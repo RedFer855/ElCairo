@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Repositorios;
+﻿using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Repositorios;
 using ModernMenuUI.ClasesUI;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,15 @@ namespace ModernMenuUI
 {
     public partial class frmInicioBodega : Form
     {
-        static String CodBodega = "1";
-        static String Contrasenia = "1";
         public frmInicioBodega()
         {
             InitializeComponent();
             this.Shown += (s, e) => txtCodigoBodega.Focus();
         }
-
+        public static class SessionData
+        {
+            public static int IdBodegaActual { get; set; }
+        }
         private void LimpiarDatos()
         {
             txtContrasenia.Text = null;
@@ -36,15 +38,27 @@ namespace ModernMenuUI
 
             try
             {
+                // Puedes mostrar un pequeño mensaje o un spinner aquí
                 btnAcceder.Enabled = false;
 
                 bool success = await BodegaRepositorio.IniciarSesion(codbodega, contrasenia);
 
                 if (success)
                 {
-                    LimpiarDatos();
+                    // Recuperar datos de la bodega logueada
+                    var bodega = await BodegaRepositorio.ObtenerBodegaPorIdAsync(codbodega);
+                    if (bodega == null)
+                    {
+                        MessageBox.Show("Error, bodega no encontrada");
+                    }
+                    Bodega id_bodega = new Bodega();
+
+
+                    // Guardar en la sesión global
+                    SessionData.IdBodegaActual = bodega.IdBodega;
                     var formCarga = new frmPantallaDeCarga();
                     this.Visible = false;
+
                     formCarga.ShowDialog();
                     this.Close();
                 }
@@ -54,18 +68,18 @@ namespace ModernMenuUI
                     lblMensajeError.Text = "Código o contraseña incorrectos.";
                     codbodega = "";
                     contrasenia = "";
-                    LimpiarDatos();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al intentar iniciar sesión: {ex.Message}");
+                MessageBox.Show("Error al intentar iniciar sesión.", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
             finally
             {
                 btnAcceder.Enabled = true;
             }
         }
+
 
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -149,11 +163,6 @@ namespace ModernMenuUI
                 e.SuppressKeyPress = true;
                 btnAcceder.PerformClick();
             }
-        }
-
-        private void frmInicioBodega_Load(object sender, EventArgs e)
-        {
-           
         }
     }
 }

@@ -275,7 +275,6 @@
             Name = "frmInicioBodega";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmInicioBodega";
-            Load += frmInicioBodega_Load;
             panLogo.ResumeLayout(false);
             panLogo.PerformLayout();
             panBarraControl.ResumeLayout(false);

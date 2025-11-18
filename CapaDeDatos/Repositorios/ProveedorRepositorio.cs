@@ -83,5 +83,70 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-    }
+        public static async Task<int?> ObtenerIdProveedorPorNombreAsync(string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre)) return null;
+
+            try
+            {
+                var client = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+                //buscando por el nombre exacto
+                var respExact = await client
+                .From<Proveedor>()
+                .Where(p => p.NombreProveedor == nombre)
+                .Limit(1)
+                .Get();
+
+                var provExact = respExact.Models?.FirstOrDefault();
+                if (provExact != null)
+                    return provExact.IdProveedor;
+
+                var respLike = await client
+                    .From<Proveedor>()
+                    .Filter(p => p.NombreProveedor, Supabase.Postgrest.Constants.Operator.ILike, $"%{nombre}%")
+                    .Limit(1)
+                    .Get();
+
+                var provLike = respLike.Models?.FirstOrDefault();
+                if (provLike != null)
+                    return provLike.IdProveedor;
+
+                // No encontrado
+                return null;
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show("La consulta fue cancelada o excedió el tiempo de espera.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error consultando proveedores: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        /// Carga desde Supabase el proveedor por id (usado si no lo tenemos en memoria).
+        /// Retorna null si no se encuentra.
+
+        public static async Task<Proveedor> CargarProveedorPorIdAsync(int idProveedor)
+        {
+            try
+            {
+                var client = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+                var resp = await client
+                    .From<Proveedor>()
+                    .Where(p => p.IdProveedor == idProveedor)
+                    .Limit(1)
+                    .Get();
+                MessageBox.Show(resp.ToString());
+
+                return resp.Models?.FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
 }

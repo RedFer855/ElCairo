@@ -32,7 +32,6 @@ namespace CapaDeDatos.Repositorios
             {
                 var supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
 
-                // Filtrar por ID de bodega (seguro contra inyecciones)
                 var bodegas = await supabaseClient
                     .From<Bodega>()
                     .Filter("id_bodega", Operator.Equals, idBodega)
@@ -54,16 +53,39 @@ namespace CapaDeDatos.Repositorios
                 bool ok = PasswordHasher.VerifyHash(bodega.ContraseniaBodega, passwordInput);
                 if (!ok)
                 {
-                    // MessageBox.Show("Credenciales incorrectas");
+ 
                     return false;
                 }
-                // Si llegó hasta aquí, el login fue exitoso
+
                 return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al buscar Bodega: {ex.Message}");
                 return false;
+            }
+        }
+
+        public static async Task<Bodega?> ObtenerBodegaPorIdAsync(string idBodega)
+        {
+            try
+            {
+                var supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
+
+                var response = await supabaseClient
+                    .From<Bodega>()
+                    .Filter("id_bodega", Operator.Equals, idBodega)
+                    .Get();
+
+                var bodega = response.Models.FirstOrDefault();
+
+                return bodega;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al obtener datos de la bodega: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
         }
 

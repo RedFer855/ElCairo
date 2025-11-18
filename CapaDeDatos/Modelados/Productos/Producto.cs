@@ -10,7 +10,7 @@ namespace CapaDeDatos.Modelados.Productos
     public class Producto : BaseModel
     {
         // "id_producto" es la Primary Key
-        [PrimaryKey("id_producto", false)] 
+        [PrimaryKey("id_producto", false)]
         public int IdProducto { get; set; }
 
         // "nombre_producto" (character varying)
@@ -67,20 +67,19 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("precio_venta")]
         public decimal PrecioVenta { get; set; }
 
-        // "porcentaje_ganancia_producto" (numeric)
         [Column("porcentaje_ganancia_producto")]
         public decimal PorcentajeGananciaProducto { get; set; }
 
-        // "id_estado" (integer)
         [Column("id_estado")]
         public int IdEstado { get; set; }
 
-        // "estado_producto" (boolean)
         [Column("estado_producto")]
         public bool EstadoProducto { get; set; }
 
-        // "cantidad_producto" (integer)
         [Column("cantidad_producto")]
         public int CantidadProducto { get; set; }
+
+        [Column("id_proveedor")]
+        public int IdProveedorProducto { get; set; }
     }
 }

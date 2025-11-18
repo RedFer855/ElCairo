@@ -40,10 +40,10 @@
             btnSalir = new Button();
             button1 = new Button();
             panel5 = new Panel();
-            btnBuscarCliente = new Button();
-            textBox4 = new TextBox();
+            btnBuscarProv = new Button();
+            txtBuscarProv = new TextBox();
             label4 = new Label();
-            button2 = new Button();
+            btnAgregarCompra = new Button();
             panel4 = new Panel();
             panel9 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -76,6 +76,8 @@
             dgvProductos = new DataGridView();
             Codigos = new DataGridViewTextBoxColumn();
             Producto = new DataGridViewTextBoxColumn();
+            Marca = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
             Precio = new DataGridViewTextBoxColumn();
             Stock = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
@@ -89,6 +91,7 @@
             txtProducto = new TextBox();
             txtPrecio = new TextBox();
             btnAgregar = new Button();
+            lstSugerencias = new ListBox();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -139,38 +142,41 @@
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
-            panel5.Controls.Add(btnBuscarCliente);
-            panel5.Controls.Add(textBox4);
+            panel5.Controls.Add(btnBuscarProv);
+            panel5.Controls.Add(txtBuscarProv);
             panel5.Controls.Add(label4);
             panel5.Location = new Point(12, 4);
             panel5.Name = "panel5";
-            panel5.Size = new Size(288, 51);
+            panel5.Size = new Size(338, 51);
             panel5.TabIndex = 23;
             // 
-            // btnBuscarCliente
+            // btnBuscarProv
             // 
-            btnBuscarCliente.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBuscarCliente.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarCliente.BackgroundImage = (Image)resources.GetObject("btnBuscarCliente.BackgroundImage");
-            btnBuscarCliente.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarCliente.FlatAppearance.BorderSize = 0;
-            btnBuscarCliente.FlatStyle = FlatStyle.Flat;
-            btnBuscarCliente.Location = new Point(222, 15);
-            btnBuscarCliente.Name = "btnBuscarCliente";
-            btnBuscarCliente.Size = new Size(48, 20);
-            btnBuscarCliente.TabIndex = 2;
-            btnBuscarCliente.UseVisualStyleBackColor = false;
+            btnBuscarProv.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscarProv.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarProv.BackgroundImage = (Image)resources.GetObject("btnBuscarProv.BackgroundImage");
+            btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarProv.FlatAppearance.BorderSize = 0;
+            btnBuscarProv.FlatStyle = FlatStyle.Flat;
+            btnBuscarProv.Location = new Point(272, 15);
+            btnBuscarProv.Name = "btnBuscarProv";
+            btnBuscarProv.Size = new Size(48, 20);
+            btnBuscarProv.TabIndex = 2;
+            btnBuscarProv.UseVisualStyleBackColor = false;
+            btnBuscarProv.Click += btnBuscarProv_Click;
             // 
-            // textBox4
+            // txtBuscarProv
             // 
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Enabled = false;
-            textBox4.Font = new Font("Itim", 13F);
-            textBox4.Location = new Point(67, 14);
-            textBox4.Name = "textBox4";
-            textBox4.ReadOnly = true;
-            textBox4.Size = new Size(148, 21);
-            textBox4.TabIndex = 22;
+            txtBuscarProv.BorderStyle = BorderStyle.None;
+            txtBuscarProv.Font = new Font("Itim", 13F);
+            txtBuscarProv.Location = new Point(73, 14);
+            txtBuscarProv.Name = "txtBuscarProv";
+            txtBuscarProv.Size = new Size(193, 21);
+            txtBuscarProv.TabIndex = 22;
+            txtBuscarProv.TextChanged += txtBuscar_TextChanged;
+            txtBuscarProv.KeyDown += txtBuscar_KeyDown;
+            txtBuscarProv.KeyUp += txtBuscar_KeyUp;
+            txtBuscarProv.Leave += txtBuscar_Leave;
             // 
             // label4
             // 
@@ -179,22 +185,23 @@
             label4.ForeColor = Color.FromArgb(87, 99, 110);
             label4.Location = new Point(10, 16);
             label4.Name = "label4";
-            label4.Size = new Size(51, 17);
+            label4.Size = new Size(66, 17);
             label4.TabIndex = 16;
-            label4.Text = "Cliente:";
+            label4.Text = "Proveedor:";
             // 
-            // button2
+            // btnAgregarCompra
             // 
-            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.BackColor = Color.FromArgb(149, 195, 172);
-            button2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ButtonFace;
-            button2.Location = new Point(420, 612);
-            button2.Name = "button2";
-            button2.Size = new Size(108, 63);
-            button2.TabIndex = 25;
-            button2.Text = "Ingresar Compra";
-            button2.UseVisualStyleBackColor = false;
+            btnAgregarCompra.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnAgregarCompra.BackColor = Color.FromArgb(149, 195, 172);
+            btnAgregarCompra.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarCompra.ForeColor = SystemColors.ButtonFace;
+            btnAgregarCompra.Location = new Point(420, 612);
+            btnAgregarCompra.Name = "btnAgregarCompra";
+            btnAgregarCompra.Size = new Size(108, 63);
+            btnAgregarCompra.TabIndex = 25;
+            btnAgregarCompra.Text = "Ingresar Compra";
+            btnAgregarCompra.UseVisualStyleBackColor = false;
+            btnAgregarCompra.Click += btnAgregarCompra_Click;
             // 
             // panel4
             // 
@@ -431,6 +438,10 @@
             dgvCarrito.RowTemplate.Height = 50;
             dgvCarrito.Size = new Size(702, 279);
             dgvCarrito.TabIndex = 1;
+            dgvCarrito.CellClick += dgvCarrito_CellClick;
+            dgvCarrito.CellMouseDown += dgvCarrito_CellMouseDown;
+            dgvCarrito.CellMouseEnter += dgvCarrito_CellMouseEnter;
+            dgvCarrito.CellMouseLeave += dgvCarrito_CellMouseLeave;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -489,9 +500,9 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnBuscarProductos);
-            panelBusqueda.Location = new Point(306, 4);
+            panelBusqueda.Location = new Point(356, 4);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(448, 51);
+            panelBusqueda.Size = new Size(398, 51);
             panelBusqueda.TabIndex = 18;
             // 
             // txtBuscar
@@ -502,7 +513,7 @@
             txtBuscar.Location = new Point(21, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(353, 20);
+            txtBuscar.Size = new Size(303, 20);
             txtBuscar.TabIndex = 1;
             // 
             // btnBuscarProductos
@@ -513,7 +524,7 @@
             btnBuscarProductos.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarProductos.FlatAppearance.BorderSize = 0;
             btnBuscarProductos.FlatStyle = FlatStyle.Flat;
-            btnBuscarProductos.Location = new Point(380, 13);
+            btnBuscarProductos.Location = new Point(330, 13);
             btnBuscarProductos.Name = "btnBuscarProductos";
             btnBuscarProductos.Size = new Size(48, 20);
             btnBuscarProductos.TabIndex = 0;
@@ -524,9 +535,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel7);
-            panel1.Location = new Point(306, 61);
+            panel1.Location = new Point(356, 61);
             panel1.Name = "panel1";
-            panel1.Size = new Size(448, 234);
+            panel1.Size = new Size(398, 234);
             panel1.TabIndex = 19;
             // 
             // panel7
@@ -537,7 +548,7 @@
             panel7.Controls.Add(dgvProductos);
             panel7.Location = new Point(21, 12);
             panel7.Name = "panel7";
-            panel7.Size = new Size(407, 210);
+            panel7.Size = new Size(357, 210);
             panel7.TabIndex = 12;
             // 
             // dgvProductos
@@ -558,7 +569,7 @@
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvProductos.ColumnHeadersHeight = 40;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { Codigos, Producto, Precio, Stock });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { Codigos, Producto, Marca, Categoria, Precio, Stock });
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = Color.White;
             dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -584,32 +595,56 @@
             dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 40;
-            dgvProductos.Size = new Size(407, 210);
+            dgvProductos.Size = new Size(357, 210);
             dgvProductos.TabIndex = 0;
+            dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
             // Codigos
             // 
+            Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Codigos.DataPropertyName = "IdProducto";
             dataGridViewCellStyle6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle6.Padding = new Padding(0, 1, 0, 0);
             Codigos.DefaultCellStyle = dataGridViewCellStyle6;
             Codigos.FillWeight = 90F;
             Codigos.HeaderText = "Código";
             Codigos.Name = "Codigos";
+            Codigos.Width = 89;
             // 
             // Producto
             // 
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Producto.DataPropertyName = "NombreProducto";
             Producto.FillWeight = 200F;
             Producto.HeaderText = "Producto";
             Producto.Name = "Producto";
             // 
+            // Marca
+            // 
+            Marca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Marca.DataPropertyName = "NombreMarca";
+            Marca.HeaderText = "Marca";
+            Marca.Name = "Marca";
+            // 
+            // Categoria
+            // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Categoria.DataPropertyName = "NombreCategoria";
+            Categoria.HeaderText = "Categoria";
+            Categoria.Name = "Categoria";
+            // 
             // Precio
             // 
+            Precio.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Precio.DataPropertyName = "PrecioCompra";
             Precio.FillWeight = 80F;
             Precio.HeaderText = "Precio";
             Precio.Name = "Precio";
             // 
             // Stock
             // 
+            Stock.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Stock.DataPropertyName = "CantidadProducto";
             Stock.FillWeight = 80F;
             Stock.HeaderText = "Stock";
             Stock.Name = "Stock";
@@ -629,7 +664,7 @@
             panel2.Controls.Add(btnAgregar);
             panel2.Location = new Point(12, 61);
             panel2.Name = "panel2";
-            panel2.Size = new Size(288, 234);
+            panel2.Size = new Size(338, 234);
             panel2.TabIndex = 20;
             // 
             // nudCantidad
@@ -749,16 +784,33 @@
             btnAgregar.UseVisualStyleBackColor = false;
             btnAgregar.Click += btnAgregar_Click;
             // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(85, 40);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(193, 4);
+            lstSugerencias.TabIndex = 27;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.SelectedValueChanged += lstSugerencias_SelectedIndexChanged;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            lstSugerencias.MouseDown += lstSugerencias_MouseDown;
+            lstSugerencias.MouseUp += lstSugerencias_MouseUp;
+            // 
             // frmGestionCompra
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(766, 679);
+            Controls.Add(lstSugerencias);
             Controls.Add(btnSalir);
             Controls.Add(button1);
             Controls.Add(panel5);
-            Controls.Add(button2);
+            Controls.Add(btnAgregarCompra);
             Controls.Add(panel4);
             Controls.Add(panelCarrito);
             Controls.Add(panelBusqueda);
@@ -768,6 +820,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmGestionCompra";
             Text = "frmGestionCompra";
+            Load += frmGestionCompra_Load;
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
             panel4.ResumeLayout(false);
@@ -801,7 +854,7 @@
         private Button button1;
         private Panel panel5;
         private Label label4;
-        private Button button2;
+        private Button btnAgregarCompra;
         private Panel panel4;
         private Panel panel9;
         private TableLayoutPanel tableLayoutPanel1;
@@ -843,11 +896,14 @@
         private Button btnAgregar;
         private Panel panel7;
         private DataGridView dgvProductos;
+        private TextBox txtBuscarProv;
+        private Button btnBuscarProv;
         private DataGridViewTextBoxColumn Codigos;
         private DataGridViewTextBoxColumn Producto;
+        private DataGridViewTextBoxColumn Marca;
+        private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
-        private TextBox textBox4;
-        private Button btnBuscarCliente;
+        private ListBox lstSugerencias;
     }
 }
