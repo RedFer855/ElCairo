@@ -3,7 +3,9 @@ using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
 using Microsoft.VisualBasic.ApplicationServices;
 using ModernMenuUI.Properties;
+using ModernMenuUI.Utilidades;
 using Supabase.Realtime;
+using Supabase.Realtime.PostgresChanges;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +18,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Postgrest.Constants;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
+using Supabase.Realtime.Interfaces;
+
 
 namespace ModernMenuUI
 {
@@ -25,11 +29,13 @@ namespace ModernMenuUI
         private Supabase.Client? _supabaseClient;
         private RealtimeChannel? _productoSubscription;
         private List<Producto> _productosCache = new List<Producto>();
+        private InventarioRepositorio _inventarioRepo = new InventarioRepositorio();
 
         public frmFacturacion()
         {
             InitializeComponent();
-            _productoRepo = new ProductoRepositorio();
+            // _productoRepo = new ProductoRepositorio();
+            _inventarioRepo = new InventarioRepositorio();
             // ===== ESTILO BARRA LATERAL (RowHeader) =====
             dgvProductos.RowHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#DCE6F1");
             dgvProductos.RowHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#57636e");
@@ -43,6 +49,41 @@ namespace ModernMenuUI
             this.FormClosing += frmFacturacion_FormClosing;
 
         }
+        private async Task CargarProductosDeBodega()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                // 1. Obtener el ID de la bodega desde la sesión (Login)
+                int idBodega = SessionData.IdBodegaActual;
+
+                // 2. Obtener SOLO los productos de esa bodega
+                _productosCache = await _inventarioRepo.ObtenerProductosDeBodega(idBodega);
+
+                // 3. Mostrar en el Grid
+                dgvProductos.DataSource = null;
+                dgvProductos.Rows.Clear();
+
+                foreach (var p in _productosCache)
+                {
+                    dgvProductos.Rows.Add(
+                        p.IdProducto,
+                        p.NombreProducto,
+                        p.PrecioCompra, // O PrecioVenta
+                        p.StockEnBodega // <--- ¡OJO! Usamos el stock específico de esta bodega
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
         private async Task DesecharSuscripcionProductosAsync()
         {
             if (_productoSubscription != null)
@@ -50,7 +91,7 @@ namespace ModernMenuUI
                 try
                 {
                     await Task.Run(() => _productoSubscription.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción a Productos en Facturación desechada.");
+                    System.Diagnostics.Debug.WriteLine("Suscripción a Inventario en Facturación desechada.");
                 }
                 catch (Exception ex)
                 {
@@ -66,28 +107,46 @@ namespace ModernMenuUI
 
             try
             {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
+                _supabaseClient = await Conexion.GetClientAsync();
 
+                // Obtenemos el ID de la bodega actual para filtrar
+                int idBodega = SessionData.IdBodegaActual;
+
+                // CAMBIO 1: Escuchamos la tabla 'inventario', no 'producto'
+                // CAMBIO 2: Filtramos para escuchar solo cambios en NUESTRA bodega
                 _productoSubscription = await _supabaseClient
-                    .From<Producto>()                    // 👈 tu modelo Producto
-                    .On(ListenType.All, (sender, change) =>
-                    {
+                    .From<Inventario>()
+                   .On(ListenType.All, (IRealtimeChannel sender, PostgresChangesResponse change) =>
+                   {
+                       // Verificar si el cambio ocurrió en nuestra bodega
+                       // (Supabase a veces envía todo el canal, así que validamos por si acaso)
+                       var modeloCambiado = change.Model<Inventario>();
+                       if (modeloCambiado != null && modeloCambiado.IdBodega != idBodega)
+                        {
+                            // Si el cambio fue en otra bodega, no hacemos nada
+                            return;
+                        }
+
                         if (!this.IsHandleCreated || this.IsDisposed)
                             return;
 
-                        // Volver al hilo de UI y recargar la lista de productos
+                        // Volver al hilo de UI y recargar la lista
                         this.BeginInvoke((MethodInvoker)(async () =>
                         {
                             if (this.IsDisposed) return;
-                            await CargarProductosAsync();   // 👈 ya lo tienes hecho
+
+                            System.Diagnostics.Debug.WriteLine("Cambio de stock detectado. Recargando...");
+
+                            // CAMBIO 3: Llamamos al NUEVO método que filtra por bodega
+                            await CargarProductosDeBodega();
                         }));
                     });
 
-                System.Diagnostics.Debug.WriteLine("Suscripción a Productos en Facturación creada.");
+                System.Diagnostics.Debug.WriteLine($"Suscripción a Inventario (Bodega {idBodega}) iniciada.");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir productos en Facturación: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error al suscribir inventario: {ex.Message}");
             }
         }
         private async Task CargarClientesAsync()
@@ -533,7 +592,12 @@ namespace ModernMenuUI
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
-            await CargarProductosAsync();
+            MessageBox.Show($"ID Bodega Actual: {SessionData.IdBodegaActual}\n" +
+                    $"Método que voy a llamar: CargarProductosDeBodegaAsync",
+                    "Diagnóstico", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            await CargarProductosDeBodega();
+            // await CargarProductosAsync();
             await IniciarSuscripcionProductosAsync();
             await CargarRutasAsync();
             await CargarClientesAsync();
@@ -548,76 +612,102 @@ namespace ModernMenuUI
         {
             if (dgvCarrito.Rows.Count == 0)
             {
-                MessageBox.Show("Por favor seleccione un producto", "Advertencia",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El carrito está vacío. Agregue productos para facturar.",
+                    "Carrito Vacio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
-            var Actual = supabase.Auth.CurrentUser;
-
-            if (Actual == null)
+            if (cmbClientes.SelectedValue == null)
             {
-                throw new Exception("No hay usuario autenticado en la sesión actual.");
-            }
-
-            // Obtener empleado logueado
-            var respEmpleado = await supabase
-                .From<Usuario>()
-                .Select("id_empleado")
-                .Filter("user_id", Operator.Equals, Actual.Id.ToString())
-                .Get();
-
-            if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
-            {
-                MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
+                MessageBox.Show("Debe seleccionar un Cliente.", "Faltan Datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int idEmpleado = respEmpleado.Models.First().IdEmpleado;
-
-            // Construir detalles de venta desde el carrito
-            var detalles = dgvCarrito.Rows
-                .Cast<DataGridViewRow>()
-                .Where(r => !r.IsNewRow)
-                .Select(r => new
-                {
-                    id_producto = Convert.ToInt32(r.Cells[0].Value),
-                    cantidad_venta = Convert.ToInt32(r.Cells[3].Value),
-                    id_bodega = 2
-                })
-                .ToList();
-
-            // Parámetros EXACTOS del RPC registrar_venta
-            var parametros = new
+            if (cmbRutas.SelectedValue == null)
             {
-                p_id_cliente = (int)cmbClientes.SelectedValue,
-                p_id_rutas = (int)cmbRutas.SelectedValue,
-                p_id_empleado = idEmpleado,
-                p_fecha_venta = DateTime.UtcNow,
-                p_detalles = detalles
-            };
+                MessageBox.Show("Debe seleccionar una Ruta.", "Faltan Datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validar que haya sesión de bodega iniciada
+            if (SessionData.IdBodegaActual == 0)
+            {
+                MessageBox.Show("Error de Sesión: No se detecta la bodega actual. Cierre e inicie sesión nuevamente.",
+                    "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             try
             {
-                this.Cursor = Cursors.WaitCursor;
+                this.Cursor = Cursors.WaitCursor; // Poner relojito
 
-                // Llamada DIRECTA al RPC que hace TODO
+                // 2. OBTENER CLIENTE DE SUPABASE
+                var supabase = await Conexion.GetClientAsync();
+                var usuarioAuth = supabase.Auth.CurrentUser;
+
+                if (usuarioAuth == null) throw new Exception("No hay usuario autenticado en el sistema.");
+
+                // 3. OBTENER ID DEL EMPLEADO (Vendedor)
+                var respEmpleado = await supabase
+                    .From<Usuario>()
+                    .Select("id_empleado")
+                    .Filter("user_id", Operator.Equals, usuarioAuth.Id)
+                    .Get();
+
+                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+                {
+                    MessageBox.Show("El usuario actual no tiene un 'id_empleado' vinculado en la base de datos.");
+                    return;
+                }
+
+                int idEmpleado = respEmpleado.Models.First().IdEmpleado;
+
+                // 4. OBTENER EL ID DE LA BODEGA ACTUAL (¡CORREGIDO!)
+                int idBodegaVenta = SessionData.IdBodegaActual;
+
+                // 5. PREPARAR LOS DETALLES DE LA VENTA (JSON)
+                // Recorremos el carrito y armamos la lista para enviar a la base de datos
+                var detallesVenta = dgvCarrito.Rows
+                    .Cast<DataGridViewRow>()
+                    .Where(r => !r.IsNewRow)
+                    .Select(r => new
+                    {
+                        id_producto = Convert.ToInt32(r.Cells[0].Value),    // Columna 0: ID Producto
+                        cantidad_venta = Convert.ToInt32(r.Cells[3].Value), // Columna 3: Cantidad
+                        id_bodega = idBodegaVenta                           // <--- ¡USAMOS LA BODEGA CORRECTA!
+                    })
+                    .ToList();
+
+                // 6. ARMAR LOS PARÁMETROS PARA EL STORED PROCEDURE (RPC)
+                var parametros = new
+                {
+                    p_id_cliente = (int)cmbClientes.SelectedValue,
+                    p_id_rutas = (int)cmbRutas.SelectedValue,
+                    p_id_empleado = idEmpleado,
+                    p_fecha_venta = DateTime.UtcNow,
+                    p_detalles = detallesVenta
+                };
+
+                // 7. ENVIAR A LA BASE DE DATOS (EJECUTAR VENTA)
                 await supabase.Rpc("registrar_venta", parametros);
 
-                MessageBox.Show("Venta registrada exitosamente", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // 8. FINALIZAR
+                this.Cursor = Cursors.Default;
+                MessageBox.Show("¡Venta registrada exitosamente!", "Venta Realizada", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Limpiar todo para la siguiente venta
                 LimpiarCarrito();
+
+                // Recargar el inventario para ver que el stock bajó
+                await CargarProductosDeBodega();
+
+                // (OPCIONAL) AQUÍ PODRÍAS LLAMAR A TU REPORTE DE FACTURA
+                // GenerarFacturaPDF(); 
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al registrar la venta: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
                 this.Cursor = Cursors.Default;
+                MessageBox.Show($"Ocurrió un error al registrar la venta:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

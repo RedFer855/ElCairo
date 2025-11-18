@@ -93,5 +93,9 @@ namespace CapaDeDatos.Modelados
         // "cantidad_producto" (integer)
         [Column("cantidad_producto")]
         public int CantidadProducto { get; set; }
+
+
+
+        public int StockEnBodega { get; set; }
     }
 }

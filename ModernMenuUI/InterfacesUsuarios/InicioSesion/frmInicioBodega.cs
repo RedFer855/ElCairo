@@ -7,13 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaDeDatos.Datos;       // Necesario para Conexion
+using CapaDeDatos.Modelados;   // Necesario para el modelo Bodega
+using ModernMenuUI.Utilidades; // Necesario para SessionData
+
 
 namespace ModernMenuUI
 {
     public partial class frmInicioBodega : Form
     {
-        static String CodBodega = "1";
-        static String Contrasenia = "1";
+       // static String CodBodega = "1";
+        //static String Contrasenia = "1";
         public frmInicioBodega()
         {
             InitializeComponent();
@@ -22,22 +26,76 @@ namespace ModernMenuUI
 
 
 
-        private void btnAcceder_Click(object sender, EventArgs e)
+        private async void btnAcceder_Click(object sender, EventArgs e)
         {
-            String codbodega = txtCodigoBodega.Text;
-            String contrasenia = txtContrasenia.Text;
-            if (contrasenia == Contrasenia && codbodega == CodBodega)
-            {
-                Form formcarga = new frmPantallaDeCarga();
-                this.Visible = false;
-                formcarga.ShowDialog();
-                this.Close();
-            }
-            else
-            {
-                lblMensajeError.Visible = true;
+            string inputCodigo = txtCodigoBodega.Text.Trim();
+            string inputPass = txtContrasenia.Text.Trim();
 
+            // Validaciones básicas
+            if (inputCodigo == "CÓDIGO" || string.IsNullOrEmpty(inputCodigo) ||
+                inputPass == "CONTRASEÑA" || string.IsNullOrEmpty(inputPass))
+            {
+                lblMensajeError.Text = "Ingrese los datos.";
+                lblMensajeError.Visible = true;
+                return;
             }
+
+            // Intentar convertir el código a número (porque id_bodega es numérico)
+            if (!int.TryParse(inputCodigo, out int idBodegaBuscado))
+            {
+                lblMensajeError.Text = "El código debe ser un número (ID de bodega).";
+                lblMensajeError.Visible = true;
+                return;
+            }
+
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var supabase = await Conexion.GetClientAsync();
+
+                // Buscamos por ID y por Contraseña exacta
+                var result = await supabase
+                    .From<Bodega>()
+                    .Select("*")
+                    .Filter("id_bodega", Supabase.Postgrest.Constants.Operator.Equals, idBodegaBuscado)
+                    .Filter("Contrasenia_Bodega", Supabase.Postgrest.Constants.Operator.Equals, inputPass)
+                    .Single();
+
+                if (result != null)
+                {
+                    // LOGIN CORRECTO
+                    SessionData.IdBodegaActual = result.IdBodega;
+                    SessionData.NombreBodegaActual = result.NombreBodega;
+
+                    Form formcarga = new frmPantallaDeCarga();
+                    this.Visible = false;
+                    formcarga.ShowDialog();
+                    this.Close();
+                }
+            }
+            catch (Exception)
+            {
+                lblMensajeError.Text = "Datos incorrectos.";
+                lblMensajeError.Visible = true;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+            /* String codbodega = txtCodigoBodega.Text;
+             String contrasenia = txtContrasenia.Text;
+             if (contrasenia == Contrasenia && codbodega == CodBodega)
+             {
+                 Form formcarga = new frmPantallaDeCarga();
+                 this.Visible = false;
+                 formcarga.ShowDialog();
+                 this.Close();
+             }
+             else
+             {
+                 lblMensajeError.Visible = true;
+
+             }*/
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

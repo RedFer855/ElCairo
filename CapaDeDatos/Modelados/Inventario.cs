@@ -9,20 +9,19 @@ namespace CapaDeDatos.Modelados
     [Table("inventario")]
     public class Inventario : BaseModel
     {
-        [PrimaryKey("id_inventario", false)]
-        public int IdInventario { get; set; }
-
-        [Column("id_producto")]
-        public int IdProductoInventario { get; set; }
+        // 👇 ESTA ES LA QUE TE FALTA O ESTÁ MAL ESCRITA
+        [PrimaryKey("id_producto", false)]
+        public int IdProducto { get; set; }
 
         [Column("id_bodega")]
-        public int IdBodegaInventario { get; set; }
+        public int IdBodega { get; set; }
 
+        // Esta la usamos para obtener la cantidad real
         [Column("stock_producto_bodega")]
-        public int StockProductoBodegaInventario { get; set; }
+        public int StockActual { get; set; }
 
         [Column("stock_minimo_producto_bodega")]
-        public int StockMinimoProductoBodegaInventario { get; set; }
+        public int StockMinimo { get; set; }
     }
 
 }
