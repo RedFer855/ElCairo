@@ -39,7 +39,6 @@ namespace ModernMenuUI
             txtCategoria.Text = productoseleccionado.NombreCategoria;
             txtPrecio.Text = productoseleccionado.PrecioCosto.ToString();
             txtPrecioCompra.Text = productoseleccionado.PrecioCompra.ToString();
-            txtTamanio.Text = productoseleccionado.IdTamanio.ToString();
             txtPrecioVenta.Text = productoseleccionado.PrecioVenta.ToString();
             txtCodBarra.Text = productoseleccionado.CodigoBarraProducto;
             txtPresentacion.Text = productoseleccionado.IdPresentacion.ToString();
