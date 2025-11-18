@@ -40,6 +40,9 @@
             btnAgregar = new Button();
             panel2 = new Panel();
             panel1 = new Panel();
+            comboBox1 = new ComboBox();
+            label22 = new Label();
+            numericUpDown1 = new NumericUpDown();
             label21 = new Label();
             pnlNota = new Panel();
             label20 = new Label();
@@ -90,19 +93,16 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
-            numericUpDown1 = new NumericUpDown();
-            label22 = new Label();
-            comboBox1 = new ComboBox();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             pnlNota.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
             gbxEstado.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
             // panBarraControl
@@ -283,6 +283,34 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(767, 448);
             panel1.TabIndex = 41;
+            // 
+            // comboBox1
+            // 
+            comboBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
+            comboBox1.Location = new Point(338, 269);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(90, 27);
+            comboBox1.TabIndex = 57;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Itim", 11.9999981F);
+            label22.ForeColor = Color.FromArgb(87, 99, 110);
+            label22.Location = new Point(254, 271);
+            label22.Name = "label22";
+            label22.Size = new Size(78, 19);
+            label22.TabIndex = 56;
+            label22.Text = "Unidades:";
+            // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(159, 269);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(89, 22);
+            numericUpDown1.TabIndex = 55;
             // 
             // label21
             // 
@@ -883,33 +911,6 @@
             textBox1.Size = new Size(197, 20);
             textBox1.TabIndex = 22;
             // 
-            // numericUpDown1
-            // 
-            numericUpDown1.Location = new Point(159, 269);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(89, 22);
-            numericUpDown1.TabIndex = 55;
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("Itim", 11.9999981F);
-            label22.ForeColor = Color.FromArgb(87, 99, 110);
-            label22.Location = new Point(254, 271);
-            label22.Name = "label22";
-            label22.Size = new Size(78, 19);
-            label22.TabIndex = 56;
-            label22.Text = "Unidades:";
-            // 
-            // comboBox1
-            // 
-            comboBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(338, 269);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(90, 27);
-            comboBox1.TabIndex = 57;
-            // 
             // frmAgregarEditarProducto
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
@@ -931,6 +932,7 @@
             panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             pnlNota.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -938,7 +940,6 @@
             groupBox1.PerformLayout();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
         }
 
