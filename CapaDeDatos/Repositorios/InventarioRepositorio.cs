@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Modelados.Inventario.Bodega_;
 using CapaDeDatos.Modelados.ModeladosVistas;
 using Supabase.Realtime;
 using System;

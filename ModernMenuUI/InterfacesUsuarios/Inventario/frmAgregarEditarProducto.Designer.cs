@@ -40,6 +40,8 @@
             btnAgregar = new Button();
             panel2 = new Panel();
             panel1 = new Panel();
+            label22 = new Label();
+            comboBox1 = new ComboBox();
             label21 = new Label();
             pnlNota = new Panel();
             label20 = new Label();
@@ -47,7 +49,6 @@
             btnGuardarProducto = new Button();
             btnModificarProducto = new Button();
             btnVolver = new Button();
-            btnBuscarTamanio = new Button();
             btnBuscarPresentacion = new Button();
             btnBuscarMarca = new Button();
             btnBuscarCategoria = new Button();
@@ -247,10 +248,11 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(label22);
+            panel1.Controls.Add(comboBox1);
             panel1.Controls.Add(label21);
             panel1.Controls.Add(pnlNota);
             panel1.Controls.Add(flowLayoutPanel1);
-            panel1.Controls.Add(btnBuscarTamanio);
             panel1.Controls.Add(btnBuscarPresentacion);
             panel1.Controls.Add(btnBuscarMarca);
             panel1.Controls.Add(btnBuscarCategoria);
@@ -280,6 +282,27 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(767, 448);
             panel1.TabIndex = 41;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Itim", 11.9999981F);
+            label22.ForeColor = Color.FromArgb(87, 99, 110);
+            label22.Location = new Point(252, 267);
+            label22.Name = "label22";
+            label22.Size = new Size(78, 19);
+            label22.TabIndex = 56;
+            label22.Text = "Unidades:";
+            // 
+            // comboBox1
+            // 
+            comboBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
+            comboBox1.Location = new Point(334, 264);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(94, 27);
+            comboBox1.TabIndex = 55;
             // 
             // label21
             // 
@@ -370,20 +393,6 @@
             btnVolver.UseVisualStyleBackColor = false;
             btnVolver.Click += btnVolver_Click;
             // 
-            // btnBuscarTamanio
-            // 
-            btnBuscarTamanio.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarTamanio.BackgroundImage = (Image)resources.GetObject("btnBuscarTamanio.BackgroundImage");
-            btnBuscarTamanio.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarTamanio.FlatAppearance.BorderSize = 0;
-            btnBuscarTamanio.FlatStyle = FlatStyle.Flat;
-            btnBuscarTamanio.Location = new Point(380, 267);
-            btnBuscarTamanio.Name = "btnBuscarTamanio";
-            btnBuscarTamanio.Size = new Size(48, 20);
-            btnBuscarTamanio.TabIndex = 50;
-            btnBuscarTamanio.UseVisualStyleBackColor = false;
-            btnBuscarTamanio.Click += btnBuscarTamanio_Click;
-            // 
             // btnBuscarPresentacion
             // 
             btnBuscarPresentacion.BackColor = Color.FromArgb(168, 191, 212);
@@ -441,22 +450,22 @@
             label19.AutoSize = true;
             label19.Font = new Font("Itim", 11.9999981F);
             label19.ForeColor = Color.FromArgb(87, 99, 110);
-            label19.Location = new Point(76, 267);
+            label19.Location = new Point(45, 267);
             label19.Name = "label19";
-            label19.Size = new Size(66, 19);
+            label19.Size = new Size(84, 19);
             label19.TabIndex = 42;
-            label19.Text = "Tamaño:";
+            label19.Text = "Contenido:";
             // 
             // txtTamanio
             // 
             txtTamanio.BackColor = Color.White;
             txtTamanio.BorderStyle = BorderStyle.None;
             txtTamanio.Font = new Font("Itim", 11.9999981F);
-            txtTamanio.Location = new Point(153, 267);
+            txtTamanio.Location = new Point(152, 267);
             txtTamanio.Name = "txtTamanio";
-            txtTamanio.PlaceholderText = "(Seleccione Buscar)";
+            txtTamanio.PlaceholderText = "(Cantidad...)";
             txtTamanio.ReadOnly = true;
-            txtTamanio.Size = new Size(221, 20);
+            txtTamanio.Size = new Size(92, 20);
             txtTamanio.TabIndex = 41;
             // 
             // label9
@@ -501,7 +510,7 @@
             txtPresentacion.Font = new Font("Itim", 11.9999981F);
             txtPresentacion.Location = new Point(153, 227);
             txtPresentacion.Name = "txtPresentacion";
-            txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
+            txtPresentacion.PlaceholderText = "(Buscar una Presentación)";
             txtPresentacion.ReadOnly = true;
             txtPresentacion.Size = new Size(221, 20);
             txtPresentacion.TabIndex = 37;
@@ -524,7 +533,7 @@
             txtMarca.Font = new Font("Itim", 11.9999981F);
             txtMarca.Location = new Point(153, 187);
             txtMarca.Name = "txtMarca";
-            txtMarca.PlaceholderText = "(Seleccione Buscar)";
+            txtMarca.PlaceholderText = "(Buscar una Marca)";
             txtMarca.ReadOnly = true;
             txtMarca.Size = new Size(221, 20);
             txtMarca.TabIndex = 31;
@@ -603,7 +612,7 @@
             txtCategoria.Font = new Font("Itim", 11.9999981F);
             txtCategoria.Location = new Point(153, 147);
             txtCategoria.Name = "txtCategoria";
-            txtCategoria.PlaceholderText = "(Seleccione Buscar)";
+            txtCategoria.PlaceholderText = "(Buscar una Categoría)";
             txtCategoria.ReadOnly = true;
             txtCategoria.Size = new Size(221, 20);
             txtCategoria.TabIndex = 23;
@@ -672,6 +681,7 @@
             txtNombreProducto.Font = new Font("Itim", 11.9999981F);
             txtNombreProducto.Location = new Point(153, 67);
             txtNombreProducto.Name = "txtNombreProducto";
+            txtNombreProducto.PlaceholderText = "(Nombre)";
             txtNombreProducto.Size = new Size(275, 20);
             txtNombreProducto.TabIndex = 13;
             // 
@@ -994,10 +1004,11 @@
         private Button btnVolver;
         private Button btnGuardarProducto;
         private Button btnBuscarPresentacion;
-        private Button btnBuscarTamanio;
         private FlowLayoutPanel flowLayoutPanel1;
         private Label label20;
         private Panel pnlNota;
         private Label label21;
+        private ComboBox comboBox1;
+        private Label label22;
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos.Modelados.Inventario
+namespace CapaDeDatos.Modelados.Inventario.Bodega_
 {
     [Table("anaquel_bodega")]
     public class AnaquelBodega : BaseModel

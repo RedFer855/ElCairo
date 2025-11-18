@@ -1,6 +1,6 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Repositorios;
+using CapaDeDatos.Modelados.Inventario.Bodega_;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using Supabase.Interfaces;
@@ -319,6 +319,7 @@ namespace ModernMenuUI
         {
             try
             {
+
                 List<Bodega> bodegas = await _bodegaRepo.ObtenerTodasLasBodegasAsync();
                 bodegas.Insert(0, new Bodega { IdBodega = 0, NombreBodega = "Todas" });
 

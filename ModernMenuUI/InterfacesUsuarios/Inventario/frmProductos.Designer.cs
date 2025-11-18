@@ -47,6 +47,7 @@
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            Contenido = new DataGridViewTextBoxColumn();
             CantidadProducto = new DataGridViewTextBoxColumn();
             PrecioVenta = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
@@ -136,7 +137,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, Contenido, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.White;
             dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -212,6 +213,15 @@
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
+            // Contenido
+            // 
+            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Contenido.DataPropertyName = "ContenidoProducto";
+            Contenido.HeaderText = "Contenido Neto";
+            Contenido.Name = "Contenido";
+            Contenido.ReadOnly = true;
+            Contenido.Width = 138;
+            // 
             // CantidadProducto
             // 
             CantidadProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -233,7 +243,7 @@
             PrecioVenta.HeaderText = "Precio Venta";
             PrecioVenta.Name = "PrecioVenta";
             PrecioVenta.ReadOnly = true;
-            PrecioVenta.Width = 127;
+            PrecioVenta.Width = 117;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -245,7 +255,7 @@
             dataGridViewTextBoxColumn3.HeaderText = "Precio Costo";
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             dataGridViewTextBoxColumn3.ReadOnly = true;
-            dataGridViewTextBoxColumn3.Width = 127;
+            dataGridViewTextBoxColumn3.Width = 117;
             // 
             // PrecioCompra
             // 
@@ -257,7 +267,7 @@
             PrecioCompra.HeaderText = "Precio Compra";
             PrecioCompra.Name = "PrecioCompra";
             PrecioCompra.ReadOnly = true;
-            PrecioCompra.Width = 141;
+            PrecioCompra.Width = 130;
             // 
             // PorcentajeGanancia
             // 
@@ -753,6 +763,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn Contenido;
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;

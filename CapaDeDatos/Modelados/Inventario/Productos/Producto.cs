@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos.Modelados.Productos
+namespace CapaDeDatos.Modelados.Inventario.Productos
 {
     [Table("producto")]
     public class Producto : BaseModel
@@ -52,8 +52,8 @@ namespace CapaDeDatos.Modelados.Productos
         public int IdPresentacion { get; set; }
 
         // "id_tamanio" (integer)
-        [Column("id_tamanio")]
-        public int IdTamanio { get; set; }
+        [Column("contenido_producto")]
+        public string ContenidoProducto { get; set; }
 
         // "precio_compra" (numeric) -> decimal es mejor para dinero
         [Column("precio_compra")]

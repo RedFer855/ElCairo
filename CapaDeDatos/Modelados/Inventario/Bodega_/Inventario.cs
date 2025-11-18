@@ -1,11 +1,11 @@
-﻿using CapaDeDatos.Modelados.Productos;
+﻿using CapaDeDatos.Modelados.Inventario.Productos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos.Modelados.Inventario
+namespace CapaDeDatos.Modelados.Inventario.Bodega_
 {
     [Table("inventario")]
     public class Inventario : BaseModel

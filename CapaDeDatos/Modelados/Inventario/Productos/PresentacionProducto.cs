@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeDatos.Modelados.Productos
+namespace CapaDeDatos.Modelados.Inventario.Productos
 {
     [Table("presentacion_producto")]
     public class PresentacionProducto : BaseModel

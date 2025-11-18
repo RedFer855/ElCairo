@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Supabase.Postgrest.Constants;
 using BCrypt.Net;
-using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Modelados.Inventario.Bodega_;
 
 namespace CapaDeDatos.Repositorios
 {

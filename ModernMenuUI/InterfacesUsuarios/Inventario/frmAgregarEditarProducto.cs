@@ -1,4 +1,4 @@
-﻿using CapaDeDatos.Modelados.Productos;
+﻿using CapaDeDatos.Modelados.Inventario.Productos;
 using CapaDeDatos.Repositorios;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
@@ -39,7 +39,7 @@ namespace ModernMenuUI
             txtCategoria.Text = productoseleccionado.NombreCategoria;
             txtPrecio.Text = productoseleccionado.PrecioCosto.ToString();
             txtPrecioCompra.Text = productoseleccionado.PrecioCompra.ToString();
-            txtTamanio.Text = productoseleccionado.IdTamanio.ToString();
+            txtTamanio.Text = productoseleccionado.ContenidoProducto.ToString();
             txtPrecioVenta.Text = productoseleccionado.PrecioVenta.ToString();
             txtCodBarra.Text = productoseleccionado.CodigoBarraProducto;
             txtPresentacion.Text = productoseleccionado.IdPresentacion.ToString();
@@ -138,8 +138,7 @@ namespace ModernMenuUI
                     IdMarca = _idMarcaSeleccionada,
                     IdCategoria = _idCategoriaSeleccionada,
                     IdPresentacion = _idPresentacionSeleccionada,
-                    IdTamanio = _idTamanioSeleccionado,
-
+                    ContenidoProducto = txtTamanio.Text,
                     PrecioCompra = precioCompra,
                     PrecioCosto = precioCosto,
                     PrecioVenta = precioVenta,
