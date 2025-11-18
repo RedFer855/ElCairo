@@ -65,6 +65,7 @@
             btnUsuarios = new controlBotonesMenuPrincipal();
             pnlDivisorVentas = new Panel();
             panel2 = new Panel();
+            lblBodega = new Label();
             lblRol = new Label();
             lblUsuario = new Label();
             pictureBox2 = new PictureBox();
@@ -552,6 +553,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(167, 191, 211);
+            panel2.Controls.Add(lblBodega);
             panel2.Controls.Add(lblRol);
             panel2.Controls.Add(lblUsuario);
             panel2.Controls.Add(pictureBox2);
@@ -561,25 +563,36 @@
             panel2.Size = new Size(283, 80);
             panel2.TabIndex = 11;
             // 
+            // lblBodega
+            // 
+            lblBodega.AutoSize = true;
+            lblBodega.Font = new Font("Itim", 11.25F);
+            lblBodega.ForeColor = Color.White;
+            lblBodega.Location = new Point(106, 55);
+            lblBodega.Name = "lblBodega";
+            lblBodega.Size = new Size(131, 18);
+            lblBodega.TabIndex = 11;
+            lblBodega.Text = "Bodega: Mi Bodega";
+            // 
             // lblRol
             // 
             lblRol.AutoSize = true;
-            lblRol.Font = new Font("Itim", 12F);
+            lblRol.Font = new Font("Itim", 11.25F);
             lblRol.ForeColor = Color.White;
-            lblRol.Location = new Point(84, 40);
+            lblRol.Location = new Point(106, 32);
             lblRol.Name = "lblRol";
-            lblRol.Size = new Size(85, 19);
+            lblRol.Size = new Size(79, 18);
             lblRol.TabIndex = 10;
             lblRol.Text = "Rol: Admin";
             // 
             // lblUsuario
             // 
             lblUsuario.AutoSize = true;
-            lblUsuario.Font = new Font("Itim", 12F);
+            lblUsuario.Font = new Font("Itim", 11.25F);
             lblUsuario.ForeColor = Color.White;
-            lblUsuario.Location = new Point(84, 14);
+            lblUsuario.Location = new Point(106, 6);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(143, 19);
+            lblUsuario.Size = new Size(135, 18);
             lblUsuario.TabIndex = 9;
             lblUsuario.Text = "Fernando Barahona";
             // 
@@ -589,7 +602,7 @@
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
             pictureBox2.Location = new Point(0, 0);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(78, 80);
+            pictureBox2.Size = new Size(100, 80);
             pictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
@@ -1196,5 +1209,6 @@
         private controlBotonesMenuPrincipal btnInventarios;
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnMarcas;
+        private Label lblBodega;
     }
 }

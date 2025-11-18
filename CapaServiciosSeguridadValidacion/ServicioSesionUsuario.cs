@@ -1,4 +1,6 @@
-﻿using CapaDeDatos.Modelados.UsuariosEmpleados;
+﻿using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
+using CapaDeDatos.Repositorios;
 using Supabase;
 using Supabase.Gotrue;
 using System;
@@ -11,79 +13,100 @@ namespace CapaServiciosSeguridadValidacion
 {
     public static class ServicioSesionUsuario
     {
+        // Usuario autenticado
         private static User UsuarioActual;
-        private static String Rol;
 
-
+        // Contexto con roles y permisos
         public static UsuarioContexto Contexto { get; private set; }
 
+        // Bodega seleccionada
+        public static Bodega BodegaActual { get; private set; }
 
-        public static void IniciarSesion(User usuarioAutenticado, string rol)
-        {
-            UsuarioActual = usuarioAutenticado;
-            Rol = rol;
-        }
+        // Rol del usuario
+        private static string Rol;
 
+        /// <summary>
+        /// Inicializa sesión con usuario y contexto.
+        /// </summary>
         public static void IniciarSesion(User usuarioAutenticado, UsuarioContexto contexto)
         {
             UsuarioActual = usuarioAutenticado;
-            Contexto = contexto; // Guarda el nuevo contexto
-
+            Contexto = contexto;
 
             if (contexto != null && contexto.Rol != null)
             {
-                Rol = contexto.Rol.NombreRolRol; 
+                Rol = contexto.Rol.NombreRolRol;
             }
         }
 
-        // 5. MÉTODO CERRAR SESIÓN (Se actualiza)
+        /// <summary>
+        /// Asigna la bodega actual seleccionada.
+        /// </summary>
+        public static void AsignarBodegaActual(Bodega bodega)
+        {
+            BodegaActual = bodega;
+        }
+
+        /// <summary>
+        /// Cierra sesión y limpia toda la información.
+        /// </summary>
         public static void CerrarSesion()
         {
             UsuarioActual = null;
-            Rol = null; // Limpia el campo antiguo
-            Contexto = null; // <-- AÑADIDO: Limpia el campo nuevo
+            Contexto = null;
+            Rol = null;
+            BodegaActual = null;
         }
 
+        /// <summary>
+        /// Obtiene el email del usuario actual.
+        /// </summary>
         public static string ObtenerEmailUsuario()
         {
-            if (UsuarioActual != null)
-            {
-                return UsuarioActual.Email;
-            }
-            return "Usuario Desconocido";
+            return UsuarioActual?.Email ?? "Usuario Desconocido";
         }
 
-
+        /// <summary>
+        /// Obtiene el rol del usuario actual.
+        /// </summary>
         public static string ObtenerRolUsuario()
         {
-            if (UsuarioActual == null)
-            {
-                return "Rol Desconocido";
-            }
+            if (UsuarioActual == null) return "Rol Desconocido";
 
-            // Prioridad 1: Intenta usar el nuevo Contexto
-            if (Contexto != null && Contexto.Rol != null)
-            {
-                return "Rol: " + Contexto.Rol.NombreRolRol;
-            }
+            if (Contexto?.Rol != null) return "Rol: " + Contexto.Rol.NombreRolRol;
 
-            // Prioridad 2: Si no, usa el string 'Rol' antiguo
-            if (!string.IsNullOrEmpty(Rol))
-            {
-                return "Rol: " + Rol;
-            }
+            if (!string.IsNullOrEmpty(Rol)) return "Rol: " + Rol;
 
             return "Rol no asignado";
         }
 
+        /// <summary>
+        /// Obtiene el ID del usuario actual.
+        /// </summary>
         public static string ObtenerIdUsuario()
         {
             return UsuarioActual?.Id ?? string.Empty;
         }
 
-        public static bool SesionActiva
+        /// <summary>
+        /// Indica si hay sesión activa.
+        /// </summary>
+        public static bool SesionActiva => UsuarioActual != null;
+
+        /// <summary>
+        /// Devuelve el nombre de la bodega actual.
+        /// </summary>
+        public static string ObtenerNombreBodega()
         {
-            get { return UsuarioActual != null; }
+            return "Bodega: " + BodegaActual?.NombreBodega ?? "Bodega Desconocida";
+        }
+
+        /// <summary>
+        /// Devuelve el ID de la bodega actual.
+        /// </summary>
+        public static int ObtenerIdBodega()
+        {
+            return BodegaActual?.IdBodega ?? -1;
         }
     }
 }

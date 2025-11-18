@@ -375,9 +375,9 @@
             pbxCarritoVacio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbxCarritoVacio.BackColor = Color.Transparent;
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
-            pbxCarritoVacio.Location = new Point(274, 96);
+            pbxCarritoVacio.Location = new Point(286, 106);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(148, 126);
+            pbxCarritoVacio.Size = new Size(123, 110);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
@@ -794,6 +794,7 @@
             lstSugerencias.Name = "lstSugerencias";
             lstSugerencias.Size = new Size(193, 4);
             lstSugerencias.TabIndex = 27;
+            lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
             lstSugerencias.SelectedValueChanged += lstSugerencias_SelectedIndexChanged;
             lstSugerencias.KeyDown += lstSugerencias_KeyDown;
@@ -802,6 +803,7 @@
             // 
             // frmGestionCompra
             // 
+            AccessibleRole = AccessibleRole.None;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;

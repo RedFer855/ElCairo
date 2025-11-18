@@ -166,7 +166,7 @@ namespace ModernMenuUI
 
         private void btnBuscarCategoria_Click(object sender, EventArgs e)
         {
-            frmCategorias categoriaSeleccionada = new frmCategorias();  
+            frmCategorias categoriaSeleccionada = new frmCategorias();
             categoriaSeleccionada.ShowDialog();
         }
 
@@ -182,10 +182,9 @@ namespace ModernMenuUI
             presentacionSeleccionada.ShowDialog();
         }
 
-        private void btnBuscarTamanio_Click(object sender, EventArgs e)
+        private void label19_Click(object sender, EventArgs e)
         {
-            frmTamanios tamanioSeleccionado = new frmTamanios();
-            tamanioSeleccionado.ShowDialog();
+
         }
     }
 }

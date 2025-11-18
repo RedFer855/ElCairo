@@ -593,11 +593,6 @@ namespace ModernMenuUI
             }
         }
 
-        private void btnTamanio_Click(object sender, EventArgs e)
-        {
-            frmTamanios tamanio = new frmTamanios();
-            tamanio.ShowDialog();
-        }
 
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {

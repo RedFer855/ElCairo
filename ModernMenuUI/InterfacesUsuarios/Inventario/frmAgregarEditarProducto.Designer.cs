@@ -47,13 +47,11 @@
             btnGuardarProducto = new Button();
             btnModificarProducto = new Button();
             btnVolver = new Button();
-            btnBuscarTamanio = new Button();
             btnBuscarPresentacion = new Button();
             btnBuscarMarca = new Button();
             btnBuscarCategoria = new Button();
             pictureBox1 = new PictureBox();
             label19 = new Label();
-            txtTamanio = new TextBox();
             label9 = new Label();
             txtCantidad = new TextBox();
             label11 = new Label();
@@ -92,6 +90,9 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
+            numericUpDown1 = new NumericUpDown();
+            label22 = new Label();
+            comboBox1 = new ComboBox();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
@@ -101,6 +102,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
             gbxEstado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
             // panBarraControl
@@ -247,16 +249,17 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(comboBox1);
+            panel1.Controls.Add(label22);
+            panel1.Controls.Add(numericUpDown1);
             panel1.Controls.Add(label21);
             panel1.Controls.Add(pnlNota);
             panel1.Controls.Add(flowLayoutPanel1);
-            panel1.Controls.Add(btnBuscarTamanio);
             panel1.Controls.Add(btnBuscarPresentacion);
             panel1.Controls.Add(btnBuscarMarca);
             panel1.Controls.Add(btnBuscarCategoria);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(label19);
-            panel1.Controls.Add(txtTamanio);
             panel1.Controls.Add(label9);
             panel1.Controls.Add(txtCantidad);
             panel1.Controls.Add(label11);
@@ -370,20 +373,6 @@
             btnVolver.UseVisualStyleBackColor = false;
             btnVolver.Click += btnVolver_Click;
             // 
-            // btnBuscarTamanio
-            // 
-            btnBuscarTamanio.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarTamanio.BackgroundImage = (Image)resources.GetObject("btnBuscarTamanio.BackgroundImage");
-            btnBuscarTamanio.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarTamanio.FlatAppearance.BorderSize = 0;
-            btnBuscarTamanio.FlatStyle = FlatStyle.Flat;
-            btnBuscarTamanio.Location = new Point(380, 267);
-            btnBuscarTamanio.Name = "btnBuscarTamanio";
-            btnBuscarTamanio.Size = new Size(48, 20);
-            btnBuscarTamanio.TabIndex = 50;
-            btnBuscarTamanio.UseVisualStyleBackColor = false;
-            btnBuscarTamanio.Click += btnBuscarTamanio_Click;
-            // 
             // btnBuscarPresentacion
             // 
             btnBuscarPresentacion.BackColor = Color.FromArgb(168, 191, 212);
@@ -441,23 +430,12 @@
             label19.AutoSize = true;
             label19.Font = new Font("Itim", 11.9999981F);
             label19.ForeColor = Color.FromArgb(87, 99, 110);
-            label19.Location = new Point(76, 267);
+            label19.Location = new Point(58, 269);
             label19.Name = "label19";
-            label19.Size = new Size(66, 19);
+            label19.Size = new Size(84, 19);
             label19.TabIndex = 42;
-            label19.Text = "Tamaño:";
-            // 
-            // txtTamanio
-            // 
-            txtTamanio.BackColor = Color.White;
-            txtTamanio.BorderStyle = BorderStyle.None;
-            txtTamanio.Font = new Font("Itim", 11.9999981F);
-            txtTamanio.Location = new Point(153, 267);
-            txtTamanio.Name = "txtTamanio";
-            txtTamanio.PlaceholderText = "(Seleccione Buscar)";
-            txtTamanio.ReadOnly = true;
-            txtTamanio.Size = new Size(221, 20);
-            txtTamanio.TabIndex = 41;
+            label19.Text = "Contenido:";
+            label19.Click += label19_Click;
             // 
             // label9
             // 
@@ -905,6 +883,33 @@
             textBox1.Size = new Size(197, 20);
             textBox1.TabIndex = 22;
             // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(159, 269);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(89, 22);
+            numericUpDown1.TabIndex = 55;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Itim", 11.9999981F);
+            label22.ForeColor = Color.FromArgb(87, 99, 110);
+            label22.Location = new Point(254, 271);
+            label22.Name = "label22";
+            label22.Size = new Size(78, 19);
+            label22.TabIndex = 56;
+            label22.Text = "Unidades:";
+            // 
+            // comboBox1
+            // 
+            comboBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(338, 269);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(90, 27);
+            comboBox1.TabIndex = 57;
+            // 
             // frmAgregarEditarProducto
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
@@ -933,6 +938,7 @@
             groupBox1.PerformLayout();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
         }
 
@@ -986,7 +992,6 @@
         private TextBox txtPrecioVenta;
         private RadioButton radioButton1;
         private Label label19;
-        private TextBox txtTamanio;
         private PictureBox pictureBox1;
         private Button btnBuscarMarca;
         private Button btnBuscarCategoria;
@@ -994,10 +999,12 @@
         private Button btnVolver;
         private Button btnGuardarProducto;
         private Button btnBuscarPresentacion;
-        private Button btnBuscarTamanio;
         private FlowLayoutPanel flowLayoutPanel1;
         private Label label20;
         private Panel pnlNota;
         private Label label21;
+        private ComboBox comboBox1;
+        private Label label22;
+        private NumericUpDown numericUpDown1;
     }
 }

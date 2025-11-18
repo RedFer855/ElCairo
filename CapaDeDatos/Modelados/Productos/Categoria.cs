@@ -15,6 +15,9 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("nombre_categoria")]
         public string NombreCategoria { get; set; }
 
+        [Column("descripcion_categoria")]
+        public string DescripcionCategoria { get; set; }
+
         [Column("estado_categoria")]
         public bool EstadoCategoria { get; set; }
 

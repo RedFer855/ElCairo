@@ -1,6 +1,7 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using Supabase.Interfaces;
@@ -51,9 +52,11 @@ namespace ModernMenuUI
             this.FormClosing += frmInventarioBodega_FormClosing;
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
+           
         }
         private async void frmInventarioBodega_Load(object sender, EventArgs e)
         {
+
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
 
             try
@@ -66,14 +69,17 @@ namespace ModernMenuUI
                 return;
             }
 
+            await CargarInventarioGridAsync(); // Carga el Grid
+            txtBodegaActual.Text = ServicioSesionUsuario.ObtenerNombreBodega();
             // Cargar datos iniciales
             await CargarComboBoxesEstado();
             await CargarBodegasComboBox();
-            await CargarInventarioGridAsync(); // Carga el Grid
+         
 
             // Iniciar suscripciones Realtime
             await IniciarSuscripcionInventario();
             await IniciarSuscripcionBodegas();
+            
         }
 
         private void FiltrarYColorear()

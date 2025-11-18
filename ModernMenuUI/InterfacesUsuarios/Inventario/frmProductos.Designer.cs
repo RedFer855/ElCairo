@@ -45,8 +45,9 @@
             dgvProductos = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
+            Contenido = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
             CantidadProducto = new DataGridViewTextBoxColumn();
             PrecioVenta = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
@@ -61,12 +62,12 @@
             btnAgregarMarca = new Button();
             gbxEstado = new GroupBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            txtFiltroMarca = new TextBox();
             label1 = new Label();
-            label2 = new Label();
+            txtFiltroMarca = new TextBox();
             btnMarca = new Button();
             btnCategoria = new Button();
             txtFiltroCategoria = new TextBox();
+            label2 = new Label();
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
             rbMostrarHabilitados = new RadioButton();
@@ -79,10 +80,10 @@
             panel1 = new Panel();
             lstSugerencias = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            btnTamanio = new Button();
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             pnlLimpiarFiltros = new Panel();
+            label3 = new Label();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
@@ -102,7 +103,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 17);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(866, 407);
+            panelCarrito.Size = new Size(718, 407);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -112,7 +113,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(866, 407);
+            panel10.Size = new Size(718, 407);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -136,7 +137,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Categoria, dataGridViewTextBoxColumn4, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Contenido, dataGridViewTextBoxColumn4, Categoria, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.White;
             dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -165,7 +166,7 @@
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(866, 407);
+            dgvProductos.Size = new Size(718, 407);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -193,14 +194,12 @@
             dataGridViewTextBoxColumn2.ReadOnly = true;
             dataGridViewTextBoxColumn2.Width = 105;
             // 
-            // Categoria
+            // Contenido
             // 
-            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Categoria.DataPropertyName = "NombreCategoria";
-            Categoria.HeaderText = "Categoría";
-            Categoria.MinimumWidth = 120;
-            Categoria.Name = "Categoria";
-            Categoria.ReadOnly = true;
+            Contenido.DataPropertyName = "ContenidoProducto";
+            Contenido.HeaderText = "Contenido";
+            Contenido.Name = "Contenido";
+            Contenido.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -211,6 +210,15 @@
             dataGridViewTextBoxColumn4.MinimumWidth = 100;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // Categoria
+            // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Categoria.DataPropertyName = "NombreCategoria";
+            Categoria.HeaderText = "Categoría";
+            Categoria.MinimumWidth = 120;
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
             // 
             // CantidadProducto
             // 
@@ -291,8 +299,9 @@
             panelBusqueda.Controls.Add(btnBuscar);
             panelBusqueda.Location = new Point(12, 12);
             panelBusqueda.MaximumSize = new Size(885, 43);
+            panelBusqueda.MinimumSize = new Size(250, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(576, 43);
+            panelBusqueda.Size = new Size(428, 43);
             panelBusqueda.TabIndex = 14;
             // 
             // txtBuscar
@@ -304,7 +313,7 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(491, 20);
+            txtBuscar.Size = new Size(343, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyPress += txtBuscar_KeyPress;
@@ -319,7 +328,7 @@
             btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscar.FlatAppearance.BorderSize = 0;
             btnBuscar.FlatStyle = FlatStyle.Flat;
-            btnBuscar.Location = new Point(515, 12);
+            btnBuscar.Location = new Point(367, 12);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(48, 20);
             btnBuscar.TabIndex = 0;
@@ -345,7 +354,7 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(486, 3);
+            btnSalir.Location = new Point(340, 53);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(140, 44);
             btnSalir.TabIndex = 18;
@@ -358,7 +367,7 @@
             btnAgregarMarca.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarMarca.ForeColor = SystemColors.ButtonFace;
-            btnAgregarMarca.Location = new Point(194, 3);
+            btnAgregarMarca.Location = new Point(340, 3);
             btnAgregarMarca.Name = "btnAgregarMarca";
             btnAgregarMarca.Size = new Size(140, 44);
             btnAgregarMarca.TabIndex = 21;
@@ -377,7 +386,7 @@
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(12, 61);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(894, 53);
+            gbxEstado.Size = new Size(746, 53);
             gbxEstado.TabIndex = 28;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -386,60 +395,46 @@
             // 
             tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel2.ColumnCount = 6;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 83F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 94F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 49F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 33F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 67F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 34F));
-            tableLayoutPanel2.Controls.Add(txtFiltroMarca, 4, 0);
             tableLayoutPanel2.Controls.Add(label1, 3, 0);
-            tableLayoutPanel2.Controls.Add(label2, 0, 0);
+            tableLayoutPanel2.Controls.Add(txtFiltroMarca, 4, 0);
             tableLayoutPanel2.Controls.Add(btnMarca, 5, 0);
             tableLayoutPanel2.Controls.Add(btnCategoria, 2, 0);
             tableLayoutPanel2.Controls.Add(txtFiltroCategoria, 1, 0);
+            tableLayoutPanel2.Controls.Add(label2, 0, 0);
             tableLayoutPanel2.Location = new Point(375, 17);
-            tableLayoutPanel2.MinimumSize = new Size(501, 30);
+            tableLayoutPanel2.MinimumSize = new Size(350, 30);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(517, 30);
+            tableLayoutPanel2.Size = new Size(372, 30);
             tableLayoutPanel2.TabIndex = 39;
-            // 
-            // txtFiltroMarca
-            // 
-            txtFiltroMarca.Dock = DockStyle.Fill;
-            txtFiltroMarca.Location = new Point(326, 3);
-            txtFiltroMarca.Name = "txtFiltroMarca";
-            txtFiltroMarca.PlaceholderText = "(Todas las Marcas)";
-            txtFiltroMarca.ReadOnly = true;
-            txtFiltroMarca.Size = new Size(153, 25);
-            txtFiltroMarca.TabIndex = 34;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(277, 0);
-            label1.MaximumSize = new Size(53, 30);
-            label1.MinimumSize = new Size(53, 30);
+            label1.Dock = DockStyle.Fill;
+            label1.Location = new Point(202, 0);
             label1.Name = "label1";
-            label1.Size = new Size(53, 30);
-            label1.TabIndex = 36;
-            label1.Text = "Marca:";
+            label1.Size = new Size(61, 30);
+            label1.TabIndex = 40;
+            label1.Text = "Marcas:";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // txtFiltroMarca
             // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(3, 0);
-            label2.MaximumSize = new Size(77, 30);
-            label2.MinimumSize = new Size(77, 30);
-            label2.Name = "label2";
-            label2.Size = new Size(77, 30);
-            label2.TabIndex = 37;
-            label2.Text = "Categoría:";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
+            txtFiltroMarca.Dock = DockStyle.Fill;
+            txtFiltroMarca.Location = new Point(269, 3);
+            txtFiltroMarca.Name = "txtFiltroMarca";
+            txtFiltroMarca.PlaceholderText = "(Todas)";
+            txtFiltroMarca.ReadOnly = true;
+            txtFiltroMarca.Size = new Size(66, 25);
+            txtFiltroMarca.TabIndex = 34;
             // 
             // btnMarca
             // 
@@ -449,9 +444,9 @@
             btnMarca.Dock = DockStyle.Fill;
             btnMarca.FlatAppearance.BorderSize = 0;
             btnMarca.FlatStyle = FlatStyle.Flat;
-            btnMarca.Location = new Point(485, 3);
+            btnMarca.Location = new Point(341, 3);
             btnMarca.Name = "btnMarca";
-            btnMarca.Size = new Size(29, 24);
+            btnMarca.Size = new Size(28, 24);
             btnMarca.TabIndex = 2;
             btnMarca.UseVisualStyleBackColor = false;
             btnMarca.Click += btnMarca_Click;
@@ -464,9 +459,9 @@
             btnCategoria.Dock = DockStyle.Fill;
             btnCategoria.FlatAppearance.BorderSize = 0;
             btnCategoria.FlatStyle = FlatStyle.Flat;
-            btnCategoria.Location = new Point(245, 3);
+            btnCategoria.Location = new Point(169, 3);
             btnCategoria.Name = "btnCategoria";
-            btnCategoria.Size = new Size(26, 24);
+            btnCategoria.Size = new Size(27, 24);
             btnCategoria.TabIndex = 38;
             btnCategoria.UseVisualStyleBackColor = false;
             btnCategoria.Click += btnCategoria_Click;
@@ -474,12 +469,23 @@
             // txtFiltroCategoria
             // 
             txtFiltroCategoria.Dock = DockStyle.Fill;
-            txtFiltroCategoria.Location = new Point(86, 3);
+            txtFiltroCategoria.Location = new Point(97, 3);
             txtFiltroCategoria.Name = "txtFiltroCategoria";
-            txtFiltroCategoria.PlaceholderText = "(Todas las Categorías)";
+            txtFiltroCategoria.PlaceholderText = "(Todas)";
             txtFiltroCategoria.ReadOnly = true;
-            txtFiltroCategoria.Size = new Size(153, 25);
+            txtFiltroCategoria.Size = new Size(66, 25);
             txtFiltroCategoria.TabIndex = 35;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Fill;
+            label2.Location = new Point(3, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(88, 30);
+            label2.TabIndex = 39;
+            label2.Text = "Categorías:";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // rbMostrardeshabilitados
             // 
@@ -522,7 +528,7 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(878, 642);
+            lblFecha.Location = new Point(730, 642);
             lblFecha.Name = "lblFecha";
             lblFecha.Size = new Size(22, 25);
             lblFecha.TabIndex = 30;
@@ -535,7 +541,7 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(878, 616);
+            lblHora.Location = new Point(730, 616);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(28, 33);
             lblHora.TabIndex = 29;
@@ -549,10 +555,10 @@
             // 
             // btnIngresarPerdida
             // 
-            btnIngresarPerdida.BackColor = Color.FromArgb(149, 195, 172);
+            btnIngresarPerdida.BackColor = Color.FromArgb(204, 116, 131);
             btnIngresarPerdida.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnIngresarPerdida.ForeColor = SystemColors.ButtonFace;
-            btnIngresarPerdida.Location = new Point(340, 3);
+            btnIngresarPerdida.Location = new Point(194, 3);
             btnIngresarPerdida.Name = "btnIngresarPerdida";
             btnIngresarPerdida.Size = new Size(140, 44);
             btnIngresarPerdida.TabIndex = 23;
@@ -593,7 +599,7 @@
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
-            panel1.Size = new Size(894, 437);
+            panel1.Size = new Size(746, 437);
             panel1.TabIndex = 32;
             // 
             // lstSugerencias
@@ -605,9 +611,9 @@
             lstSugerencias.ItemHeight = 19;
             lstSugerencias.Location = new Point(30, 45);
             lstSugerencias.MaximumSize = new Size(800, 400);
-            lstSugerencias.MinimumSize = new Size(423, 23);
+            lstSugerencias.MinimumSize = new Size(165, 23);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(491, 23);
+            lstSugerencias.Size = new Size(343, 23);
             lstSugerencias.TabIndex = 2;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -618,29 +624,15 @@
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnNuevoProducto);
-            flowLayoutPanel1.Controls.Add(btnAgregarMarca);
             flowLayoutPanel1.Controls.Add(btnIngresarPerdida);
-            flowLayoutPanel1.Controls.Add(btnSalir);
+            flowLayoutPanel1.Controls.Add(btnAgregarMarca);
             flowLayoutPanel1.Controls.Add(btnEditarProducto);
             flowLayoutPanel1.Controls.Add(btnAgregarCategoria);
-            flowLayoutPanel1.Controls.Add(btnTamanio);
+            flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Location = new Point(12, 567);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(634, 100);
+            flowLayoutPanel1.Size = new Size(490, 100);
             flowLayoutPanel1.TabIndex = 33;
-            // 
-            // btnTamanio
-            // 
-            btnTamanio.BackColor = Color.FromArgb(149, 195, 172);
-            btnTamanio.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnTamanio.ForeColor = SystemColors.ButtonFace;
-            btnTamanio.Location = new Point(340, 53);
-            btnTamanio.Name = "btnTamanio";
-            btnTamanio.Size = new Size(140, 44);
-            btnTamanio.TabIndex = 24;
-            btnTamanio.Text = " Tamaños";
-            btnTamanio.UseVisualStyleBackColor = false;
-            btnTamanio.Click += btnTamanio_Click;
             // 
             // btnLimpiarFiltros
             // 
@@ -648,9 +640,9 @@
             btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLimpiarFiltros.ForeColor = Color.White;
             btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
-            btnLimpiarFiltros.Location = new Point(12, 5);
+            btnLimpiarFiltros.Location = new Point(3, 5);
             btnLimpiarFiltros.Name = "btnLimpiarFiltros";
-            btnLimpiarFiltros.Size = new Size(140, 32);
+            btnLimpiarFiltros.Size = new Size(117, 32);
             btnLimpiarFiltros.TabIndex = 34;
             btnLimpiarFiltros.Text = "Limpiar Filtros";
             btnLimpiarFiltros.UseVisualStyleBackColor = false;
@@ -659,9 +651,9 @@
             // pbxClean
             // 
             pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
-            pbxClean.Location = new Point(157, 3);
+            pbxClean.Location = new Point(121, 8);
             pbxClean.Name = "pbxClean";
-            pbxClean.Size = new Size(45, 34);
+            pbxClean.Size = new Size(45, 24);
             pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
             pbxClean.TabIndex = 35;
             pbxClean.TabStop = false;
@@ -672,18 +664,32 @@
             pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(604, 12);
+            pnlLimpiarFiltros.Location = new Point(446, 12);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
-            pnlLimpiarFiltros.Size = new Size(205, 43);
+            pnlLimpiarFiltros.Size = new Size(166, 43);
             pnlLimpiarFiltros.TabIndex = 36;
             pnlLimpiarFiltros.Visible = false;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.DimGray;
+            label3.Location = new Point(627, 17);
+            label3.Name = "label3";
+            label3.RightToLeft = RightToLeft.Yes;
+            label3.Size = new Size(132, 36);
+            label3.TabIndex = 37;
+            label3.Text = ":Total de Productos\r\n110\r\n";
             // 
             // frmProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(918, 679);
+            ClientSize = new Size(770, 679);
+            Controls.Add(label3);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(lstSugerencias);
@@ -740,24 +746,25 @@
         private TextBox txtFiltroCategoria;
         private TextBox txtFiltroMarca;
         private Button btnMarca;
-        private Label label2;
-        private Label label1;
         private TableLayoutPanel tableLayoutPanel2;
         private Button btnCategoria;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button btnTamanio;
         private Button btnLimpiarFiltros;
         private PictureBox pbxClean;
         private Panel pnlLimpiarFiltros;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Categoria;
+        private DataGridViewTextBoxColumn Contenido;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn PrecioCompra;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn EstadoProducto;
+        private Label label2;
+        private Label label1;
+        private Label label3;
     }
 }

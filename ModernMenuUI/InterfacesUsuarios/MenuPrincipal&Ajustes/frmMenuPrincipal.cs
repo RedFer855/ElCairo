@@ -1,4 +1,5 @@
 using CapaDeDatos.Modelados.Reporteria.Reporteria;
+using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
@@ -20,18 +21,17 @@ namespace ModernMenuUI
         private Form formularioactivo = null;
         private readonly CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
+
+
         public frmMenuPrincipal()
         {
             InitializeComponent();
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
-
             _monitorConexion = new ServicioVerificacionConexion();
-
             // 3. Suscribirse al evento que dispara el servicio
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-
             // 4. Comprobar el estado inicial
             ActualizarEstadoVisual(_monitorConexion.HayConexionAhora());
             RegistrarBotonesConPermisos();
@@ -71,6 +71,8 @@ namespace ModernMenuUI
             ManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
             panelvisible();
 
+            // Ahora puedes mostrar en un label
+            lblBodega.Text = ServicioSesionUsuario.ObtenerNombreBodega();
         }
 
         private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
@@ -416,7 +418,6 @@ namespace ModernMenuUI
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
         }
 
-
         private void btnDevoluciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
@@ -539,10 +540,6 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnCrearReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
-
-
-
-
         }
 
         private void btnMarcas_Click(object sender, EventArgs e)
@@ -552,5 +549,6 @@ namespace ModernMenuUI
             ManejarFormularios.Instancia.AbrirFormulario(new frmMarcas(tipo));
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
+
     }
 }

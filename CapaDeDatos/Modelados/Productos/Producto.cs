@@ -63,7 +63,9 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("precio_costo")]
         public decimal PrecioCosto { get; set; }
 
-        // "precio_venta" (numeric)
+        [Column("contenido_producto")]
+        public string ContenidoProducto { get; set; }   
+        
         [Column("precio_venta")]
         public decimal PrecioVenta { get; set; }
 

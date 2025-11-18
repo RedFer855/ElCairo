@@ -1,5 +1,6 @@
 ﻿using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using System;
 using System.Collections.Generic;
@@ -47,10 +48,13 @@ namespace ModernMenuUI
                 {
                     // Recuperar datos de la bodega logueada
                     var bodega = await BodegaRepositorio.ObtenerBodegaPorIdAsync(codbodega);
-                    if (bodega == null)
+
+
+                    if (bodega != null)
                     {
-                        MessageBox.Show("Error, bodega no encontrada");
+                        ServicioSesionUsuario.AsignarBodegaActual(bodega);
                     }
+
                     Bodega id_bodega = new Bodega();
 
 
