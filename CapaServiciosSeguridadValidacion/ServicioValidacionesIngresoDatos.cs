@@ -11,8 +11,8 @@ namespace CapaServiciosSeguridadValidacion
     {
         private static readonly int[] LongitudesCodigoBarraPermitidas = new[] { 8, 12, 13 };
 
-        public static readonly List<Func<Producto, (bool Error, string Mensaje)>> ListaValidacionesProducto =
-            new List<Func<Producto, (bool Error, string Mensaje)>>()
+        public static readonly List<Func<ProductoInsertar, (bool Error, string Mensaje)>> ListaValidacionesProducto =
+            new List<Func<ProductoInsertar, (bool Error, string Mensaje)>>()
             {
                 p => CodigoBarraValido(p.CodigoBarraProducto, LongitudesCodigoBarraPermitidas),
                 p => ValidarCampoVacio(p.NombreProducto, "el nombre del producto"),
@@ -26,7 +26,7 @@ namespace CapaServiciosSeguridadValidacion
                 p => ValidarEnteroValido(p.CantidadProducto, "Cantidad")
             };
 
-        public static (bool Error, string Mensaje) EjecutarValidacionesProducto(Producto producto)
+        public static (bool Error, string Mensaje) EjecutarValidacionesProducto(ProductoInsertar producto)
         {
             foreach (var regla in ListaValidacionesProducto)
             {

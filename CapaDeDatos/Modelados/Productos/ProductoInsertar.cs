@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Supabase.Postgrest.Attributes; // Asegúrese de tener esto para [Table] y [Column]
-using Supabase.Postgrest.Models;
-using JsonIgnoreAttribute = Newtonsoft.Json.JsonIgnoreAttribute;
-
 
 namespace CapaDeDatos.Modelados.Productos
 {
     [Table("producto")]
-    public class Producto : BaseModel
+    public class ProductoInsertar : BaseModel
     {
         [PrimaryKey("id_producto", false)]
         public int IdProducto { get; set; }
@@ -23,26 +17,15 @@ namespace CapaDeDatos.Modelados.Productos
 
         [Column("id_marca")]
         public int IdMarca { get; set; }
-        public Marca Marca { get; set; }
-
-        public string NombreMarca => Marca?.NombreMarca ?? "Sin Marca";
 
         [Column("id_categoria")]
         public int IdCategoria { get; set; }
-        [Column("categoria")]
-        public Categoria Categoria { get; set; }
-
-        public string NombreCategoria => Categoria?.NombreCategoria ?? "Sin Categoria";
 
         [Column("codigo_barra_producto")]
         public string CodigoBarraProducto { get; set; }
 
         [Column("id_presentacion")]
         public int IdPresentacion { get; set; }
-
-        public Presentacion Presentacion { get; set; }
-
-        public string NombrePresentacion => Presentacion?.NombrePresentacion ?? "Sin Presentación";
 
         [Column("precio_compra")]
         public decimal PrecioCompra { get; set; }
@@ -71,4 +54,5 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("id_proveedor")]
         public int IdProveedorProducto { get; set; }
     }
+
 }

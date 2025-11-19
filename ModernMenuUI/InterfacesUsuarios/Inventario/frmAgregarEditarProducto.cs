@@ -21,7 +21,6 @@ namespace ModernMenuUI
         private int _idMarcaSeleccionada;
         private int _idCategoriaSeleccionada;
         private int _idPresentacionSeleccionada;
-        private int _idTamanioSeleccionado;
 
         public frmAgregarEditarProducto()
         {
@@ -78,19 +77,19 @@ namespace ModernMenuUI
         {
             try
             {
-                // Construir objeto Producto solo con valores del formulario
-                Producto temp = new Producto
+                // CONSTRUIR OBJETO SOLO CON LO NECESARIO PARA GUARDAR EN BD
+                ProductoInsertar temp = new ProductoInsertar
                 {
                     NombreProducto = txtNombreProducto.Text.Trim(),
                     CodigoBarraProducto = txtCodBarra.Text.Trim(),
+
                     IdMarca = _idMarcaSeleccionada,
                     IdCategoria = _idCategoriaSeleccionada,
                     IdPresentacion = _idPresentacionSeleccionada,
-                    IdTamanio = _idTamanioSeleccionado,
                     ContenidoProducto = $"{txtContenido.Text.Trim()} {cmbUnidadContenido.SelectedItem?.ToString().Trim()}".Trim()
                 };
 
-                // Ejecutar validaciones (TODO se maneja en la clase)
+                // VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(temp);
                 if (resultado.Error)
                 {
@@ -98,16 +97,16 @@ namespace ModernMenuUI
                     return;
                 }
 
-                // Asignar estado después de pasar validaciones
+                // ASIGNAR ESTADO
                 temp.EstadoProducto = rbHabilitado.Checked;
                 temp.IdEstado = rbHabilitado.Checked ? 1 : 0;
 
-                // Guardar en la BD
+                // GUARDAR EN BD
                 btnGuardarProducto.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
                 ProductoRepositorio repo = new ProductoRepositorio();
-                var resultadoInsert = await repo.InsertarProducto(temp);
+                var resultInsert = await repo.InsertarProducto(temp);
 
                 MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();

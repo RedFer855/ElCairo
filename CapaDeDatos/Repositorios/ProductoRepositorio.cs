@@ -54,53 +54,48 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
             }
         }
-        public async Task<Producto> InsertarProducto(Producto nuevoProducto)
+        public async Task<ProductoInsertar> InsertarProducto(ProductoInsertar nuevoProducto)
         {
             if (nuevoProducto == null)
-            {
                 throw new ArgumentNullException(nameof(nuevoProducto), "El producto a insertar no puede ser nulo.");
-            }
 
             try
             {
                 var client = await GetClient();
 
-                var response = await client.From<Producto>().Insert(nuevoProducto);
+                var response = await client
+                    .From<ProductoInsertar>()
+                    .Insert(nuevoProducto);
 
                 if (response?.Models != null && response.Models.Count > 0)
-                {
                     return response.Models.First();
-                }
 
                 throw new Exception("La base de datos no devolvió el producto insertado.");
             }
             catch (Exception ex)
-            { 
+            {
                 Console.WriteLine($"Error de Supabase al insertar producto: {ex.Message}");
-                throw new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
+                throw;// new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
             }
         }
 
-        public async Task<Producto> ModificarProducto(Producto editproducto, int idProd)
+
+        public async Task<ProductoInsertar> ModificarProducto(ProductoInsertar editProducto, int idProd)
         {
-            
-            if (editproducto == null)
-            {
-                throw new ArgumentNullException(nameof(editproducto), "El producto a modificar no puede ser nulo.");
-            }
+            if (editProducto == null)
+                throw new ArgumentNullException(nameof(editProducto), "El producto a modificar no puede ser nulo.");
 
             try
             {
                 var client = await GetClient();
-                var response = await client.From<Producto>()
+
+                var response = await client
+                    .From<ProductoInsertar>()
                     .Where(x => x.IdProducto == idProd)
-                    .Update(editproducto);
+                    .Update(editProducto);
 
                 if (response?.Models != null && response.Models.Count > 0)
-                {
-                    
                     return response.Models.First();
-                }
 
                 throw new Exception("La base de datos no devolvió el producto modificado o no se encontró el ID.");
             }
@@ -110,6 +105,7 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
             }
         }
+
 
         public async Task<List<Producto>> ObtenerProductosPorProveedorAsync(int idProveedor)
         {
