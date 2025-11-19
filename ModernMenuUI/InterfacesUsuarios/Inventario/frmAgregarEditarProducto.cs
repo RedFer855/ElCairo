@@ -3,7 +3,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
-using System;
+using System;   
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
