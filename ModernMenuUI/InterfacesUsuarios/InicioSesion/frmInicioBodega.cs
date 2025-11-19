@@ -14,8 +14,6 @@ namespace ModernMenuUI
 {
     public partial class frmInicioBodega : Form
     {
-        static String CodBodega = "1";
-        static String Contrasenia = "1";
         public frmInicioBodega()
         {
             InitializeComponent();

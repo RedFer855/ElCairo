@@ -261,22 +261,6 @@ namespace ModernMenuUI
 
         }
 
-        private void dgvCarrito_CellMouseUp(object sender, DataGridViewCellEventArgs e)
-        {
-
-
-            if (e.RowIndex >= 0 && e.RowIndex < dgvCarrito.RowCount && e.ColumnIndex >= 4 && e.ColumnIndex <= 6 && e.ColumnIndex < dgvCarrito.ColumnCount)
-            {
-                // Restaurar color si lo necesitas
-                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
-
-                // Quitar la selección solo de esa celda
-                dgvCarrito[e.ColumnIndex, e.RowIndex].Selected = false;
-
-            }
-
-        }
-
         private void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.RowIndex >= dgvCarrito.RowCount)
@@ -318,12 +302,6 @@ namespace ModernMenuUI
                 }
                 return;
             }
-        }
-
-
-        private void btnSalir_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void btnSalir_Click_1(object sender, EventArgs e)
@@ -498,6 +476,7 @@ namespace ModernMenuUI
 
                     MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+
                 }
                 catch (Exception ex)
                 {
@@ -507,7 +486,12 @@ namespace ModernMenuUI
                 {
                     this.Cursor = Cursors.Default;
                     dgvCarrito.Rows.Clear();
-                    
+                    ProveedorSeleccionado = null;
+                    txtBuscarProv.Text = "";                  
+                    _listaMaestraProductos.Clear();
+                    dgvProductos.DataSource = null;
+                    dgvProductos.Rows.Clear();   
+                    ActualizarImagenCarrito();
                 }
             }
         }
@@ -780,7 +764,7 @@ namespace ModernMenuUI
                     MessageBox.Show($"Proveedor seleccionado:\nID: {ProveedorSeleccionado.IdProveedor}\nNombre: {ProveedorSeleccionado.NombreProveedor}",
                         "Proveedor encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // 🔹 Cargar los productos de este proveedor y actualizar el grid
+                    // Cargar los productos de este proveedor y actualizar el grid
                     this.Cursor = Cursors.WaitCursor;
                     try
                     {

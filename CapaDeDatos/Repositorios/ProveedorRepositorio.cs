@@ -125,8 +125,6 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-        /// Carga desde Supabase el proveedor por id (usado si no lo tenemos en memoria).
-        /// Retorna null si no se encuentra.
 
         public static async Task<Proveedor> CargarProveedorPorIdAsync(int idProveedor)
         {
