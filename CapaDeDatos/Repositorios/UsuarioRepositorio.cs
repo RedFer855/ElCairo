@@ -75,6 +75,21 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudieron cargar los usuarios. Verifique la conexión.", ex);
             }
         }
+        public async Task UsuarioEmailUpdate(string Email)
+        {
+            try
+            {
+                var client = await GetClient();
+
+                var attrs = new UserAttributes { Email = Email };
+                var response = await client.Auth.Update(attrs);
+
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show($"Error al actualizar Email {ex.Message}");
+            }
+        }
 
         public async Task ActualizarUsuario(Usuario usuarioActualizado)
         {
