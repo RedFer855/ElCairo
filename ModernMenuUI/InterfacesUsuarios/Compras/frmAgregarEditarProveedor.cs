@@ -22,7 +22,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             InitializeComponent();
             _proveedorActual = null;
         }
-
+       
         public frmAgregarEditarProveedor(Proveedor proveedor)
         {
             InitializeComponent();

@@ -157,7 +157,7 @@ namespace ModernMenuUI
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCodigo.Text) ||
-        string.IsNullOrWhiteSpace(txtProducto.Text))
+                string.IsNullOrWhiteSpace(txtProducto.Text))
             {
                 MessageBox.Show("Por favor seleccione un producto.",
                     "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -415,46 +415,54 @@ namespace ModernMenuUI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // 1. VALIDAR CARRITO VACÍO
             if (dgvCarrito.Rows.Count == 0)
             {
-                MessageBox.Show("El carrito está vacío.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El carrito está vacío. Agregue productos para generar la orden.",
+                                "Carrito Vacío", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (_proveedorSeleccionado == null)
+
+            // 2. VALIDAR PROVEEDOR (Usando el Label o la Variable)
+            // Si el label dice "---" o está vacío, es que no se ha seleccionado a nadie
+            if (lblProveedorActual.Text == "---" || string.IsNullOrEmpty(lblProveedorActual.Text) || _proveedorSeleccionado == null)
             {
-                MessageBox.Show("Por favor seleccione un proveedor antes de generar el reporte.", "Falta Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtProveedor.Focus();
+                MessageBox.Show("Por favor busque y seleccione un proveedor antes de generar el reporte.",
+                                "Falta Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtProveedor.Focus(); // Mandamos el cursor al buscador
                 return;
             }
+
             List<clsOrdenCompra> itemsParaReporte = new List<clsOrdenCompra>();
 
-            // 2. Lee tu dgvCarrito fila por fila
+            // 3. LEER EL CARRITO FILA POR FILA
             foreach (DataGridViewRow row in dgvCarrito.Rows)
             {
                 if (row.IsNewRow) continue;
 
-                // 3. Convierte cada fila en un objeto clsOrdenCompra
                 clsOrdenCompra item = new clsOrdenCompra();
+                // Asegúrate que los nombres de columnas ("colCodigo", etc.) sean los de tu diseño
                 item.Codigo = row.Cells["colCodigo"].Value.ToString();
                 item.Producto = row.Cells["colProducto"].Value.ToString();
                 item.Precio = Convert.ToDecimal(row.Cells["colPrecio"].Value);
                 item.Cantidad = Convert.ToInt32(row.Cells["colCantidad"].Value);
 
-                // 4. Añade el objeto a la lista
                 itemsParaReporte.Add(item);
             }
 
-            // 5. Lee los totales (Subtotal, Impuesto, Total)
-            string sub = txtSubTotal.Text; // O el nombre de tu Label/TextBox
+            // 4. LEER LOS TOTALES
+            string sub = txtSubTotal.Text;
             string imp = txtImpuesto.Text;
             string total = txtTotal.Text;
-            string nombreProveedor = _proveedorSeleccionado.NombreProveedor;
 
-            // 6. ¡AQUÍ OCURRE LA MAGIA!
-            //    Crea el nuevo formulario y le PASA la lista y los totales
+            // 5. OBTENER EL NOMBRE DEL PROVEEDOR (DESDE EL LABEL)
+            // Aquí tomamos exactamente lo que el usuario ve en el Label de selección
+            string nombreProveedor = lblProveedorActual.Text;
+
+            // 6. CREAR Y MOSTRAR EL REPORTE
+            // Pasamos los 5 argumentos: Lista, Subtotal, Impuesto, Total, Proveedor
             frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(itemsParaReporte, sub, imp, total, nombreProveedor);
 
-            // 7. Muestra el formulario
             frmReporte.ShowDialog();
         }
 
@@ -519,17 +527,142 @@ namespace ModernMenuUI
         {
 
         }
+        private void LimpiarCarrito()
+        {
+            // 1. Borrar todas las filas del DataGridView del carrito
+            dgvCarrito.Rows.Clear();
 
+            // 2. Recalcular los totales (al estar vacío, se pondrán en 0.00)
+            ActualizarTotales();
+
+            // 3. Mostrar la imagen de "Carrito Vacío" (si tienes ese método implementado)
+            ActualizarImagenCarrito();
+
+            // 4. Limpiar los campos de selección de producto (Opcional, por estética)
+            txtCodigo.Text = "";
+            txtProducto.Text = "";
+            txtPrecio.Text = "";
+            nudCantidad.Value = 1;
+
+            // 5. Quitar la selección de la tabla de productos
+            dgvProductos.ClearSelection();
+            lblProveedorActual.Text = "---";
+            _proveedorSeleccionado = null;
+            txtProveedor.Text = "";
+        }
+        
+
+        private bool ValidarYLimpiarCarrito(string nuevoProveedorNombre)
+        {
+            // 1. VERIFICAR SI EL CARRITO ESTÁ REALMENTE VACÍO
+            // (Contamos solo las filas que no son la fila nueva de ingreso)
+            int cantidadProductos = 0;
+            foreach (DataGridViewRow row in dgvCarrito.Rows)
+            {
+                if (!row.IsNewRow) cantidadProductos++;
+            }
+
+            // Si no hay productos, no hay conflicto. Pasa adelante.
+            if (cantidadProductos == 0) return true;
+
+            // 2. OBTENER EL PROVEEDOR ACTUAL (DESDE EL LABEL)
+            // Limpiamos cualquier prefijo por si acaso tu label dice "Proveedor: Kevin"
+            string proveedorActual = lblProveedorActual.Text
+                                        .Replace("Proveedor:", "")
+                                        .Replace("Proveedor Actual:", "")
+                                        .Trim();
+            /*MessageBox.Show($"COMPARACIÓN DE SEGURIDAD:\n\n" +
+                    $"Label (Limpio): '{proveedorActual}'\n" +
+                    $"Nuevo Intento: '{nuevoProveedorNombre}'\n\n" +
+                    $"¿Son iguales?: {proveedorActual.Equals(nuevoProveedorNombre.Trim(), StringComparison.OrdinalIgnoreCase)}");*/
+
+            // Si el label dice "---" o está vacío, asumimos que no hay dueño.
+            if (string.IsNullOrEmpty(proveedorActual) || proveedorActual == "---") return true;
+
+            // 3. COMPARACIÓN: ¿Es el mismo proveedor?
+            if (proveedorActual.Equals(nuevoProveedorNombre.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                return true; // Son iguales, no hacemos nada.
+            }
+
+            // 4. ¡CONFLICTO DETECTADO! (Hay productos y los nombres son diferentes)
+            var respuesta = MessageBox.Show(
+                $"El carrito tiene productos de: {proveedorActual}.\n" +
+                $"Estás intentando cambiar a: {nuevoProveedorNombre}.\n\n" +
+                "Si cambias, EL CARRITO SE VACIARÁ.\n" +
+                "¿Deseas continuar?",
+                "Cambio de Proveedor",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (respuesta == DialogResult.Yes)
+            {
+                LimpiarCarrito();
+                return true; // Usuario aceptó borrar y continuar
+            }
+            else
+            {
+                // Usuario dijo NO. Revertimos el buscador al nombre original.
+                txtProveedor.Text = proveedorActual;
+                return false; // Cancelamos la búsqueda
+            }
+            /* // 1. Si el carrito está vacío, no hay problema, dejamos pasar.
+             if (dgvCarrito.Rows.Count == 0)
+             {
+                 return true;
+             }
+
+             // 2. Si ya hay un proveedor seleccionado, verificamos si es el mismo
+             if (_proveedorSeleccionado != null)
+             {
+                 // Si el nombre es igual (ignorando mayúsculas), no hacemos nada, dejamos pasar.
+                 if (_proveedorSeleccionado.NombreProveedor.Equals(nuevoProveedorNombre, StringComparison.OrdinalIgnoreCase))
+                 {
+                     return true;
+                 }
+             }
+
+             // 3. ¡CONFLICTO! Hay productos y el usuario quiere cambiar de proveedor.
+             var respuesta = MessageBox.Show(
+                 $"El carrito actual tiene productos del proveedor: {(_proveedorSeleccionado?.NombreProveedor ?? "Desconocido")}.\n\n" +
+                 "Una Orden de Compra no puede mezclar proveedores.\n" +
+                 "Si continúas, EL CARRITO SE VACIARÁ automáticamente.\n\n" +
+                 $"¿Deseas cambiar al proveedor '{nuevoProveedorNombre}' y borrar el carrito?",
+                 "Cambio de Proveedor Detectado",
+                 MessageBoxButtons.YesNo,
+                 MessageBoxIcon.Warning);
+
+             if (respuesta == DialogResult.Yes)
+             {
+                 // 4. Usuario dijo SÍ: Limpiamos todo y dejamos pasar.
+                 LimpiarCarrito();
+                 return true;
+             }
+             else
+             {
+                 // 5. Usuario dijo NO: Cancelamos la operación.
+                 if (_proveedorSeleccionado != null)
+                 {
+                     txtProveedor.Text = _proveedorSeleccionado.NombreProveedor;
+                 }
+                 return false;
+             }*/
+        }
+        
         private async void btnBuscarProv_Click(object sender, EventArgs e)
         {
             string nombreBusqueda = txtProveedor.Text.Trim();
 
+            // 1. CASO: BUSCADOR VACÍO (RESETEAR)
             if (string.IsNullOrEmpty(nombreBusqueda))
             {
-                // Si limpian la caja y dan buscar, recargamos TODOS los productos
-                await CargarProductosAsync(); // O CargarProductosAsync() según tu método original
+                // Si hay productos, preguntamos antes de limpiar
+                if (!ValidarYLimpiarCarrito("")) return;
+
+                await CargarProductosAsync();
                 RefrescarGrid();
-                _proveedorSeleccionado = null; // Reseteamos la selección
+                _proveedorSeleccionado = null;
+                lblProveedorActual.Text = "---"; // Reseteamos el label
                 return;
             }
 
@@ -537,48 +670,63 @@ namespace ModernMenuUI
 
             try
             {
-                // 1. Si ya tenemos un proveedor seleccionado con el mouse y el texto coincide, lo usamos.
-                // Si no, buscamos en la base de datos por nombre.
-                if (_proveedorSeleccionado == null ||
-                    !_proveedorSeleccionado.NombreProveedor.Equals(nombreBusqueda, StringComparison.OrdinalIgnoreCase))
-                {
-                    // Usamos el repositorio de proveedores para buscar el ID por nombre
-                    // (Asegúrate de que este método exista en tu ProveedorRepositorio, 
-                    // si no, dímelo y te lo paso, estaba en tu "Codigo 2" como ObtenerIdProveedorPorNombreAsync)
-                    var proveedoresEncontrados = await proveedorRepositorio.BuscarProveedoresPorNombre(nombreBusqueda);
+                // Variable temporal para el proveedor encontrado
+                Proveedor proveedorEncontrado = null;
 
-                    if (proveedoresEncontrados != null && proveedoresEncontrados.Count > 0)
+                // 2. BUSCAR EL PROVEEDOR (EN MEMORIA O EN BD)
+
+                // A) Si ya es el que tenemos en la variable interna
+                if (_proveedorSeleccionado != null &&
+                    _proveedorSeleccionado.NombreProveedor.Equals(nombreBusqueda, StringComparison.OrdinalIgnoreCase))
+                {
+                    proveedorEncontrado = _proveedorSeleccionado;
+                }
+                // B) Si no, buscamos en la base de datos
+                else
+                {
+                    var resultados = await proveedorRepositorio.BuscarProveedoresPorNombre(nombreBusqueda);
+
+                    if (resultados != null && resultados.Count > 0)
                     {
-                        // Tomamos el primero que coincida
-                        _proveedorSeleccionado = proveedoresEncontrados.First();
+                        proveedorEncontrado = resultados.First();
                     }
                     else
                     {
                         MessageBox.Show("No se encontró ningún proveedor con ese nombre.", "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Cursor = Cursors.Default;
-                        return;
+                        return; // Salimos aquí, el cursor se restaura en el finally
                     }
                 }
 
-                // 2. Una vez tenemos el proveedor, buscamos sus productos
+                // 3. VALIDACIÓN DE SEGURIDAD (EL CAMBIO IMPORTANTE)
+                // Validamos usando el nombre REAL del proveedor que encontramos en la BD
+                if (!ValidarYLimpiarCarrito(proveedorEncontrado.NombreProveedor))
+                {
+                    return; // El usuario dijo "No" a borrar el carrito
+                }
+
+                // 4. APLICAR CAMBIOS (Solo si pasó la validación)
+                _proveedorSeleccionado = proveedorEncontrado;
+                lblProveedorActual.Text = _proveedorSeleccionado.NombreProveedor; // Actualizamos el Label Visual
+
+                // 5. CARGAR PRODUCTOS DEL PROVEEDOR
                 var productosDelProveedor = await _productoRepo.ObtenerProductosPorProveedorAsync(_proveedorSeleccionado.IdProveedor);
 
                 if (productosDelProveedor.Count > 0)
                 {
-                    // 3. Actualizamos la lista maestra y el grid
-                    _productosCache = productosDelProveedor; // Reemplazamos la memoria actual
+                    _productosCache = productosDelProveedor; // Actualizamos memoria
 
-                    // Actualizar el DataSource
-                    /* dgvProductos.DataSource = null;
-                     dgvProductos.DataSource = _productosCache;*/
+                    // CORRECCIÓN: NO usamos DataSource directo, usamos tu método auxiliar
                     RefrescarGrid();
 
                     MessageBox.Show($"Se encontraron {productosDelProveedor.Count} productos de {_proveedorSeleccionado.NombreProveedor}.", "Filtro Aplicado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show($"El proveedor {_proveedorSeleccionado.NombreProveedor} no tiene productos registrados o activos.", "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dgvProductos.DataSource = null; // Limpiar grid
+                    MessageBox.Show($"El proveedor {_proveedorSeleccionado.NombreProveedor} no tiene productos registrados.", "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Limpiamos la tabla visualmente
+                    dgvProductos.DataSource = null;
+                    dgvProductos.Rows.Clear();
                 }
 
             }
@@ -590,6 +738,77 @@ namespace ModernMenuUI
             {
                 this.Cursor = Cursors.Default;
             }
+            /* string nombreBusqueda = txtProveedor.Text.Trim();
+
+              if (!ValidarYLimpiarCarrito(nombreBusqueda))
+              {
+                  return; // Si el usuario dijo "No", cancelamos todo aquí.
+              }
+
+              if (string.IsNullOrEmpty(nombreBusqueda))
+              {
+                  // Si limpian la caja y dan buscar, recargamos TODOS los productos
+                  await CargarProductosAsync(); 
+                  RefrescarGrid();
+                  _proveedorSeleccionado = null; // Reseteamos la selección
+                  return;
+              }
+
+              this.Cursor = Cursors.WaitCursor;
+
+              try
+              {
+                  // 1. Si ya tenemos un proveedor seleccionado con el mouse y el texto coincide, lo usamos.
+                  if (_proveedorSeleccionado == null ||
+                      !_proveedorSeleccionado.NombreProveedor.Equals(nombreBusqueda, StringComparison.OrdinalIgnoreCase))
+                  {
+                      // Usamos el repositorio de proveedores para buscar el ID por nombre
+                      var proveedoresEncontrados = await proveedorRepositorio.BuscarProveedoresPorNombre(nombreBusqueda);
+
+                      if (proveedoresEncontrados != null && proveedoresEncontrados.Count > 0)
+                      {
+                          // Tomamos el primero que coincida
+                          _proveedorSeleccionado = proveedoresEncontrados.First();
+                      }
+                      else
+                      {
+                          MessageBox.Show("No se encontró ningún proveedor con ese nombre.", "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                          this.Cursor = Cursors.Default;
+                          return;
+                      }
+                  }
+
+                  // 2. Una vez tenemos el proveedor, buscamos sus productos
+                  var productosDelProveedor = await _productoRepo.ObtenerProductosPorProveedorAsync(_proveedorSeleccionado.IdProveedor);
+
+                  if (productosDelProveedor.Count > 0)
+                  {
+                      // 3. Actualizamos la lista maestra y el grid
+                      _productosCache = productosDelProveedor; // Reemplazamos la memoria actual
+
+                      // Actualizar el DataSource
+                       dgvProductos.DataSource = null;
+                       dgvProductos.DataSource = _productosCache;
+                      RefrescarGrid();
+                      lblProveedorActual.Text = _proveedorSeleccionado.NombreProveedor;
+
+                      MessageBox.Show($"Se encontraron {productosDelProveedor.Count} productos de {_proveedorSeleccionado.NombreProveedor}.", "Filtro Aplicado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                  }
+                  else
+                  {
+                      MessageBox.Show($"El proveedor {_proveedorSeleccionado.NombreProveedor} no tiene productos registrados o activos.", "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                      dgvProductos.DataSource = null; // Limpiar grid
+                  }
+
+              }
+              catch (Exception ex)
+              {
+                  MessageBox.Show($"Error al filtrar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+              }
+              finally
+              {
+                  this.Cursor = Cursors.Default;
+              }*/
         }
         private void RefrescarGrid()
         {
@@ -616,6 +835,41 @@ namespace ModernMenuUI
             {
                 dgvProductos.ClearSelection();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e)
+        {
+           /* if (lstSugerencias.SelectedItem is Proveedor nuevoProveedor)
+            {
+                // Validamos contra el proveedor ANTERIOR (que todavía está en _proveedorSeleccionado)
+                if (!ValidarYLimpiarCarrito(nuevoProveedor.NombreProveedor))
+                {
+                    // Si el usuario dijo "NO", ocultamos la lista y restauramos el texto viejo
+                    lstSugerencias.Visible = false;
+                    if (_proveedorSeleccionado != null)
+                        txtProveedor.Text = _proveedorSeleccionado.NombreProveedor;
+                    return;
+                }
+
+                // Si pasó la validación (dijo "SÍ" o el carrito estaba vacío):
+                _proveedorSeleccionado = nuevoProveedor;
+                txtProveedor.Text = nuevoProveedor.NombreProveedor;
+
+                // Ocultamos la lista
+                lstSugerencias.Visible = false;
+
+            }*/
+           
+        }
+
+        private void lstSugerencias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

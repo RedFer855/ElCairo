@@ -39,11 +39,10 @@
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             btnSalir = new Button();
             button1 = new Button();
-            label4 = new Label();
             panel5 = new Panel();
-            cmbClientes = new ComboBox();
+            lstClientes = new ListBox();
+            txtCliente = new TextBox();
             label10 = new Label();
-            cmbRutas = new ComboBox();
             label7 = new Label();
             label6 = new Label();
             btnFacturar = new Button();
@@ -140,56 +139,54 @@
             button1.Text = "Imprimir Cotización";
             button1.UseVisualStyleBackColor = false;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.ForeColor = Color.FromArgb(87, 99, 110);
-            label4.Location = new Point(60, 9);
-            label4.Name = "label4";
-            label4.Size = new Size(52, 20);
-            label4.TabIndex = 16;
-            label4.Text = "Rutas:";
-            // 
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
-            panel5.Controls.Add(cmbClientes);
+            panel5.Controls.Add(lstClientes);
+            panel5.Controls.Add(txtCliente);
             panel5.Controls.Add(label10);
-            panel5.Controls.Add(cmbRutas);
-            panel5.Controls.Add(label4);
             panel5.Location = new Point(14, 16);
             panel5.Margin = new Padding(3, 4, 3, 4);
             panel5.Name = "panel5";
             panel5.Size = new Size(331, 68);
             panel5.TabIndex = 14;
             // 
-            // cmbClientes
+            // lstClientes
             // 
-            cmbClientes.FormattingEnabled = true;
-            cmbClientes.Location = new Point(202, 32);
-            cmbClientes.Name = "cmbClientes";
-            cmbClientes.Size = new Size(104, 28);
-            cmbClientes.TabIndex = 19;
+            lstClientes.FormattingEnabled = true;
+            lstClientes.Location = new Point(79, 45);
+            lstClientes.Name = "lstClientes";
+            lstClientes.Size = new Size(233, 44);
+            lstClientes.TabIndex = 18;
+            lstClientes.Visible = false;
+            lstClientes.MouseClick += lstClientes_MouseClick;
+            lstClientes.KeyDown += lstClientes_KeyDown;
+            // 
+            // txtCliente
+            // 
+            txtCliente.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtCliente.BorderStyle = BorderStyle.None;
+            txtCliente.Font = new Font("Itim", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCliente.ForeColor = Color.Black;
+            txtCliente.Location = new Point(79, 18);
+            txtCliente.Margin = new Padding(3, 4, 3, 4);
+            txtCliente.Name = "txtCliente";
+            txtCliente.PlaceholderText = "Buscar Clientes...";
+            txtCliente.Size = new Size(233, 24);
+            txtCliente.TabIndex = 19;
+            txtCliente.TextChanged += txtCliente_TextChanged;
+            txtCliente.KeyDown += txtCliente_KeyDown;
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label10.ForeColor = Color.FromArgb(87, 99, 110);
-            label10.Location = new Point(202, 9);
+            label10.Location = new Point(12, 22);
             label10.Name = "label10";
             label10.Size = new Size(68, 20);
             label10.TabIndex = 18;
             label10.Text = "Clientes:";
-            // 
-            // cmbRutas
-            // 
-            cmbRutas.FormattingEnabled = true;
-            cmbRutas.Location = new Point(60, 32);
-            cmbRutas.Name = "cmbRutas";
-            cmbRutas.Size = new Size(104, 28);
-            cmbRutas.TabIndex = 17;
             // 
             // label7
             // 
@@ -880,7 +877,6 @@
 
         private Button btnSalir;
         private Button button1;
-        private Label label4;
         private Panel panel5;
         private Label label7;
         private Label label6;
@@ -929,8 +925,8 @@
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
         private ListBox lstSugerencias;
-        private ComboBox cmbRutas;
-        private ComboBox cmbClientes;
         private Label label10;
+        private TextBox txtCliente;
+        private ListBox lstClientes;
     }
 }

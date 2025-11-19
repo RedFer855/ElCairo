@@ -44,6 +44,8 @@
             btnBuscarProv = new Button();
             txtProveedor = new TextBox();
             label4 = new Label();
+            lblProveedorActual = new Label();
+            label10 = new Label();
             button2 = new Button();
             panel4 = new Panel();
             panel9 = new Panel();
@@ -162,6 +164,8 @@
             lstSugerencias.TabIndex = 22;
             lstSugerencias.Visible = false;
             lstSugerencias.Click += lstSugerencias_Click;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.SelectedIndexChanged += lstSugerencias_SelectedIndexChanged;
             // 
             // btnBuscarProv
             // 
@@ -205,6 +209,28 @@
             label4.Text = "Proveedor:";
             label4.Click += label4_Click;
             // 
+            // lblProveedorActual
+            // 
+            lblProveedorActual.AutoSize = true;
+            lblProveedorActual.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblProveedorActual.ForeColor = Color.FromArgb(87, 99, 110);
+            lblProveedorActual.Location = new Point(238, 260);
+            lblProveedorActual.Name = "lblProveedorActual";
+            lblProveedorActual.Size = new Size(27, 20);
+            lblProveedorActual.TabIndex = 24;
+            lblProveedorActual.Text = "---";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.FromArgb(87, 99, 110);
+            label10.Location = new Point(187, 235);
+            label10.Name = "label10";
+            label10.Size = new Size(133, 20);
+            label10.TabIndex = 23;
+            label10.Text = "Proveedor Actual:";
+            // 
             // button2
             // 
             button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -218,6 +244,7 @@
             button2.TabIndex = 25;
             button2.Text = "Ingresar Compra";
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // panel4
             // 
@@ -675,7 +702,9 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(lblProveedorActual);
             panel2.Controls.Add(nudCantidad);
+            panel2.Controls.Add(label10);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(txtCodigo);
@@ -803,7 +832,7 @@
             btnAgregar.Font = new Font("Itim", 18.25F);
             btnAgregar.ForeColor = SystemColors.ButtonFace;
             btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(83, 235);
+            btnAgregar.Location = new Point(23, 235);
             btnAgregar.Margin = new Padding(3, 4, 3, 4);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Padding = new Padding(46, 0, 0, 0);
@@ -917,5 +946,7 @@
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
         private ListBox lstSugerencias;
+        private Label lblProveedorActual;
+        private Label label10;
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CapaDeDatos.Datos;       // Necesario para Conexion
 using CapaDeDatos.Modelados;   // Necesario para el modelo Bodega
 using ModernMenuUI.Utilidades; // Necesario para SessionData
+using BCrypt.Net;
 
 
 namespace ModernMenuUI
@@ -24,14 +25,12 @@ namespace ModernMenuUI
 
         }
 
-
-
         private async void btnAcceder_Click(object sender, EventArgs e)
         {
             string inputCodigo = txtCodigoBodega.Text.Trim();
             string inputPass = txtContrasenia.Text.Trim();
 
-            // Validaciones básicas
+            // 1. Validaciones básicas
             if (inputCodigo == "CÓDIGO" || string.IsNullOrEmpty(inputCodigo) ||
                 inputPass == "CONTRASEÑA" || string.IsNullOrEmpty(inputPass))
             {
@@ -40,10 +39,10 @@ namespace ModernMenuUI
                 return;
             }
 
-            // Intentar convertir el código a número (porque id_bodega es numérico)
+            // 2. Convertir ID
             if (!int.TryParse(inputCodigo, out int idBodegaBuscado))
             {
-                lblMensajeError.Text = "El código debe ser un número (ID de bodega).";
+                lblMensajeError.Text = "El código debe ser un número.";
                 lblMensajeError.Visible = true;
                 return;
             }
@@ -53,49 +52,61 @@ namespace ModernMenuUI
                 this.Cursor = Cursors.WaitCursor;
                 var supabase = await Conexion.GetClientAsync();
 
-                // Buscamos por ID y por Contraseña exacta
+                // 3. CAMBIO IMPORTANTE: Solo buscamos por ID, NO por contraseña
                 var result = await supabase
                     .From<Bodega>()
                     .Select("*")
                     .Filter("id_bodega", Supabase.Postgrest.Constants.Operator.Equals, idBodegaBuscado)
-                    .Filter("Contrasenia_Bodega", Supabase.Postgrest.Constants.Operator.Equals, inputPass)
-                    .Single();
+                    .Single(); // Traemos la bodega (con su contraseña encriptada)
 
                 if (result != null)
                 {
-                    // LOGIN CORRECTO
-                    SessionData.IdBodegaActual = result.IdBodega;
-                    SessionData.NombreBodegaActual = result.NombreBodega;
+                    // 4. VERIFICAR LA CONTRASEÑA ENCRIPTADA
+                    // BCrypt compara tu texto ("1234") con el hash ("$2a$06...") y nos dice si coinciden.
+                    bool passwordEsCorrecta = false;
 
-                    Form formcarga = new frmPantallaDeCarga();
-                    this.Visible = false;
-                    formcarga.ShowDialog();
-                    this.Close();
+                    try
+                    {
+                        // Intenta verificar como Hash BCrypt
+                        passwordEsCorrecta = BCrypt.Net.BCrypt.Verify(inputPass, result.ContraseniaBodega);
+                    }
+                    catch
+                    {
+                        // Si falla (por ejemplo, si la contraseña en la BD es texto plano "1234" y no un hash)
+                        // hacemos una comparación simple como respaldo.
+                        if (inputPass == result.ContraseniaBodega) passwordEsCorrecta = true;
+                    }
+
+                    if (passwordEsCorrecta)
+                    {
+                        // --- LOGIN CORRECTO ---
+                        SessionData.IdBodegaActual = result.IdBodega;
+                        SessionData.NombreBodegaActual = result.NombreBodega;
+
+                        Form formcarga = new frmPantallaDeCarga();
+                        this.Visible = false;
+                        formcarga.ShowDialog();
+                        this.Close();
+                    }
+                    else
+                    {
+                        // Contraseña incorrecta
+                        lblMensajeError.Text = "Contraseña incorrecta.";
+                        lblMensajeError.Visible = true;
+                    }
                 }
             }
             catch (Exception)
             {
-                lblMensajeError.Text = "Datos incorrectos.";
+                // Si no encuentra el ID de la bodega
+                lblMensajeError.Text = "La bodega no existe.";
                 lblMensajeError.Visible = true;
             }
             finally
             {
                 this.Cursor = Cursors.Default;
             }
-            /* String codbodega = txtCodigoBodega.Text;
-             String contrasenia = txtContrasenia.Text;
-             if (contrasenia == Contrasenia && codbodega == CodBodega)
-             {
-                 Form formcarga = new frmPantallaDeCarga();
-                 this.Visible = false;
-                 formcarga.ShowDialog();
-                 this.Close();
-             }
-             else
-             {
-                 lblMensajeError.Visible = true;
-
-             }*/
+            
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

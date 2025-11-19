@@ -30,6 +30,9 @@ namespace ModernMenuUI
         private RealtimeChannel? _productoSubscription;
         private List<Producto> _productosCache = new List<Producto>();
         private InventarioRepositorio _inventarioRepo = new InventarioRepositorio();
+        private ClienteRepositorio _clienteRepo = new ClienteRepositorio();
+        private List<Cliente> _todosLosClientes = new List<Cliente>(); // La caché
+        private Cliente _clienteSeleccionado = null; // Aquí guardaremos al elegido
 
         public frmFacturacion()
         {
@@ -122,25 +125,25 @@ namespace ModernMenuUI
                        // (Supabase a veces envía todo el canal, así que validamos por si acaso)
                        var modeloCambiado = change.Model<Inventario>();
                        if (modeloCambiado != null && modeloCambiado.IdBodega != idBodega)
-                        {
-                            // Si el cambio fue en otra bodega, no hacemos nada
-                            return;
-                        }
+                       {
+                           // Si el cambio fue en otra bodega, no hacemos nada
+                           return;
+                       }
 
-                        if (!this.IsHandleCreated || this.IsDisposed)
-                            return;
+                       if (!this.IsHandleCreated || this.IsDisposed)
+                           return;
 
-                        // Volver al hilo de UI y recargar la lista
-                        this.BeginInvoke((MethodInvoker)(async () =>
-                        {
-                            if (this.IsDisposed) return;
+                       // Volver al hilo de UI y recargar la lista
+                       this.BeginInvoke((MethodInvoker)(async () =>
+                       {
+                           if (this.IsDisposed) return;
 
-                            System.Diagnostics.Debug.WriteLine("Cambio de stock detectado. Recargando...");
+                           System.Diagnostics.Debug.WriteLine("Cambio de stock detectado. Recargando...");
 
-                            // CAMBIO 3: Llamamos al NUEVO método que filtra por bodega
-                            await CargarProductosDeBodega();
-                        }));
-                    });
+                           // CAMBIO 3: Llamamos al NUEVO método que filtra por bodega
+                           await CargarProductosDeBodega();
+                       }));
+                   });
 
                 System.Diagnostics.Debug.WriteLine($"Suscripción a Inventario (Bodega {idBodega}) iniciada.");
             }
@@ -149,7 +152,7 @@ namespace ModernMenuUI
                 System.Diagnostics.Debug.WriteLine($"Error al suscribir inventario: {ex.Message}");
             }
         }
-        private async Task CargarClientesAsync()
+        /*private async Task CargarClientesAsync()
         {
             try
             {
@@ -176,8 +179,8 @@ namespace ModernMenuUI
                 MessageBox.Show("Error al cargar clientes: " + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-        private async Task CargarRutasAsync()
+        }*/
+       /* private async Task CargarRutasAsync()
         {
             try
             {
@@ -204,7 +207,7 @@ namespace ModernMenuUI
                 MessageBox.Show("Error al cargar rutas: " + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+        }*/
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
@@ -246,7 +249,7 @@ namespace ModernMenuUI
             txtTotal.Text = total.ToString("N2");
         }
 
-        private async Task CargarProductosAsync()
+        /*private async Task CargarProductosAsync()
         {
             try
             {
@@ -279,7 +282,7 @@ namespace ModernMenuUI
             {
                 MessageBox.Show($"Error al cargar productos: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+        }*/
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
@@ -383,16 +386,16 @@ namespace ModernMenuUI
             if (e.ColumnIndex == 5)
             {
                 int cantidad = Convert.ToInt32(dgvCarrito.Rows[e.RowIndex].Cells[3].Value);
-                 if (cantidad > 1)
-                 {
-                     dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
-                     ActualizarTotales();
-                 }
-                 else
-                 {
-                     MessageBox.Show("La cantidad no puede ser menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                 }
-                
+                if (cantidad > 1)
+                {
+                    dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
+                    ActualizarTotales();
+                }
+                else
+                {
+                    MessageBox.Show("La cantidad no puede ser menor a 1", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
             }
 
 
@@ -592,15 +595,27 @@ namespace ModernMenuUI
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
-           /* MessageBox.Show($"ID Bodega Actual: {SessionData.IdBodegaActual}\n" +
-                    $"Método que voy a llamar: CargarProductosDeBodegaAsync",
-                    "Diagnóstico", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
+            /* MessageBox.Show($"ID Bodega Actual: {SessionData.IdBodegaActual}\n" +
+                     $"Método que voy a llamar: CargarProductosDeBodegaAsync",
+                     "Diagnóstico", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
 
             await CargarProductosDeBodega();
             // await CargarProductosAsync();
+            try
+            {
+                // Asegúrate de tener _clienteRepo instanciado arriba
+                _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
+
+                // Opcional: Mensaje para verificar si cargaron
+                // MessageBox.Show($"Se cargaron {_todosLosClientes.Count} clientes."); 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar clientes: " + ex.Message);
+            }
             await IniciarSuscripcionProductosAsync();
-            await CargarRutasAsync();
-            await CargarClientesAsync();
+           // await CargarRutasAsync();
+            //await CargarClientesAsync();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -613,41 +628,38 @@ namespace ModernMenuUI
             if (dgvCarrito.Rows.Count == 0)
             {
                 MessageBox.Show("El carrito está vacío. Agregue productos para facturar.",
-                    "Carrito Vacio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                "Carrito Vacio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (cmbClientes.SelectedValue == null)
+            // 2. VALIDACIÓN DEL CLIENTE (Usando la variable del buscador)
+            if (_clienteSeleccionado == null)
             {
-                MessageBox.Show("Debe seleccionar un Cliente.", "Faltan Datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe buscar y seleccionar un Cliente.",
+                                "Falta Cliente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtBuscar.Focus(); // (O el nombre de tu textbox de cliente)
                 return;
             }
 
-            if (cmbRutas.SelectedValue == null)
-            {
-                MessageBox.Show("Debe seleccionar una Ruta.", "Faltan Datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Validar que haya sesión de bodega iniciada
+            // 3. VALIDACIÓN DE SESIÓN DE BODEGA
             if (SessionData.IdBodegaActual == 0)
             {
-                MessageBox.Show("Error de Sesión: No se detecta la bodega actual. Cierre e inicie sesión nuevamente.",
-                    "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error de Sesión: No se detecta la bodega actual.",
+                                "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            // (YA NO VALIDAMOS LA RUTA AQUÍ PORQUE DIJISTE QUE ES OPCIONAL)
 
             try
             {
-                this.Cursor = Cursors.WaitCursor; // Poner relojito
+                this.Cursor = Cursors.WaitCursor;
 
-                // 2. OBTENER CLIENTE DE SUPABASE
+                // --- OBTENER DATOS DE USUARIO/EMPLEADO ---
                 var supabase = await Conexion.GetClientAsync();
                 var usuarioAuth = supabase.Auth.CurrentUser;
+                if (usuarioAuth == null) throw new Exception("No hay usuario autenticado.");
 
-                if (usuarioAuth == null) throw new Exception("No hay usuario autenticado en el sistema.");
-
-                // 3. OBTENER ID DEL EMPLEADO (Vendedor)
                 var respEmpleado = await supabase
                     .From<Usuario>()
                     .Select("id_empleado")
@@ -656,58 +668,60 @@ namespace ModernMenuUI
 
                 if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
                 {
-                    MessageBox.Show("El usuario actual no tiene un 'id_empleado' vinculado en la base de datos.");
+                    MessageBox.Show("El usuario actual no tiene un 'id_empleado' vinculado.");
                     return;
                 }
-
                 int idEmpleado = respEmpleado.Models.First().IdEmpleado;
 
-                // 4. OBTENER EL ID DE LA BODEGA ACTUAL (¡CORREGIDO!)
+                // --- PREPARAR DETALLES ---
                 int idBodegaVenta = SessionData.IdBodegaActual;
 
-                // 5. PREPARAR LOS DETALLES DE LA VENTA (JSON)
-                // Recorremos el carrito y armamos la lista para enviar a la base de datos
                 var detallesVenta = dgvCarrito.Rows
                     .Cast<DataGridViewRow>()
                     .Where(r => !r.IsNewRow)
                     .Select(r => new
                     {
-                        id_producto = Convert.ToInt32(r.Cells[0].Value),    // Columna 0: ID Producto
-                        cantidad_venta = Convert.ToInt32(r.Cells[3].Value), // Columna 3: Cantidad
-                        id_bodega = idBodegaVenta                           // <--- ¡USAMOS LA BODEGA CORRECTA!
+                        id_producto = Convert.ToInt32(r.Cells[0].Value),
+                        cantidad_venta = Convert.ToInt32(r.Cells[3].Value),
+                        id_bodega = idBodegaVenta
                     })
                     .ToList();
 
-                // 6. ARMAR LOS PARÁMETROS PARA EL STORED PROCEDURE (RPC)
+                // --- ARMAR PARÁMETROS ---
                 var parametros = new
                 {
-                    p_id_cliente = (int)cmbClientes.SelectedValue,
-                    p_id_rutas = (int)cmbRutas.SelectedValue,
+                    p_id_cliente = _clienteSeleccionado.IdCliente, // ID del cliente seleccionado
+
+                    // CAMBIO AQUÍ: Enviamos null a la ruta
+                    p_id_rutas = (int?)null,
+                    // NOTA: Si Supabase te da error diciendo que "id_ruta no puede ser null", 
+                    // cambia la línea de arriba por: p_id_rutas = 1,
+
                     p_id_empleado = idEmpleado,
                     p_fecha_venta = DateTime.UtcNow,
                     p_detalles = detallesVenta
                 };
 
-                // 7. ENVIAR A LA BASE DE DATOS (EJECUTAR VENTA)
+                // --- ENVIAR A SUPABASE ---
                 await supabase.Rpc("registrar_venta", parametros);
 
-                // 8. FINALIZAR
+                // --- FINALIZAR ---
                 this.Cursor = Cursors.Default;
-                MessageBox.Show("¡Venta registrada exitosamente!", "Venta Realizada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"¡Venta registrada a {_clienteSeleccionado.NombreCliente} exitosamente!",
+                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Limpiar todo para la siguiente venta
                 LimpiarCarrito();
 
-                // Recargar el inventario para ver que el stock bajó
-                await CargarProductosDeBodega();
+                // Limpiar el cliente seleccionado también
+                txtBuscar.Text = ""; // (O txtBuscarCliente si cambiaste el nombre)
+                _clienteSeleccionado = null;
 
-                // (OPCIONAL) AQUÍ PODRÍAS LLAMAR A TU REPORTE DE FACTURA
-                // GenerarFacturaPDF(); 
+                await CargarProductosDeBodega(); // Asegúrate que este nombre coincida con tu método
             }
             catch (Exception ex)
             {
                 this.Cursor = Cursors.Default;
-                MessageBox.Show($"Ocurrió un error al registrar la venta:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al registrar venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -780,6 +794,82 @@ namespace ModernMenuUI
         private void nudCantidad_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+        private void SeleccionarCliente(Cliente cliente)
+        {
+            txtCliente.Text = cliente.NombreCliente;
+            _clienteSeleccionado = cliente; // ¡IMPORTANTE! Guardamos el objeto
+            lstClientes.Visible = false;
+            txtCliente.SelectionStart = txtCliente.Text.Length; // Cursor al final
+            txtCliente.Focus();
+        }
+
+        private void txtCliente_TextChanged(object sender, EventArgs e)
+        {
+            //MessageBox.Show("Clientes cargados: " + _todosLosClientes.Count);
+            string texto = txtCliente.Text.ToLower().Trim();
+
+            if (string.IsNullOrEmpty(texto))
+            {
+                lstClientes.Visible = false;
+                _clienteSeleccionado = null; // Limpiamos si borra el texto
+                return;
+            }
+
+            // Filtramos la lista en memoria
+            var resultados = _todosLosClientes
+                .Where(c => c.NombreCliente.ToLower().Contains(texto))
+                .ToList();
+            if (resultados.Count > 0)
+            {
+                lstClientes.DataSource = null;
+                lstClientes.DataSource = resultados;
+                lstClientes.DisplayMember = "NombreCliente";
+                lstClientes.ValueMember = "IdCliente";
+
+                // Ajuste visual de altura
+                int alturaItem = lstClientes.ItemHeight;
+                lstClientes.Height = Math.Min((resultados.Count * alturaItem) + 10, 150);
+
+                lstClientes.Visible = true;
+            }
+            else
+            {
+                lstClientes.Visible = false;
+            }
+        }
+
+        private void lstClientes_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (lstClientes.SelectedItem is Cliente cliente)
+            {
+                SeleccionarCliente(cliente);
+            }
+        }
+
+        private void txtCliente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Down && lstClientes.Visible)
+            {
+                lstClientes.Focus();
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                if (lstClientes.Visible && lstClientes.Items.Count > 0)
+                {
+                    var cliente = (Cliente)lstClientes.Items[0];
+                    SeleccionarCliente(cliente);
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
+
+        private void lstClientes_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && lstClientes.SelectedItem != null)
+            {
+                SeleccionarCliente((Cliente)lstClientes.SelectedItem);
+            }
         }
     }
 
