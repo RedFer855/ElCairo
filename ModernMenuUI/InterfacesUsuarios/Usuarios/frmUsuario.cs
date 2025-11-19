@@ -4,6 +4,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion; // Para el monitor de red
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.InterfacesUsuarios.Usuarios;
 using Supabase.Realtime; // Para Realtime
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,6 @@ namespace ModernMenuUI
 
         private readonly UsuarioRepositorio _usuarioRepo;
         private Usuario _usuarioSeleccionado = null;
-
         private readonly ServicioVerificacionConexion _monitorConexion = new();
         private Supabase.Client? _supabaseClient;
         private RealtimeChannel? _canalRealtime;
@@ -223,6 +223,16 @@ namespace ModernMenuUI
         private void btnNuevo_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnNuevo_Click_2(object sender, EventArgs e)
+        {
+            if (_usuarioSeleccionado != null)
+            {
+                frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado);
+                usuario.ShowDialog();
+                    
+            }
         }
     }
 }

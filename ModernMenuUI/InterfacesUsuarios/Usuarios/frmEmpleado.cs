@@ -174,13 +174,13 @@ namespace ModernMenuUI
             Empleados.ShowDialog();
         }
 
-        private void btnNuevo_Click(object sender, EventArgs e)
+        private async void btnNuevo_Click(object sender, EventArgs e)
         {
             if (EmpleadoSeleccionado != null)
             {
                 frmAgregarEditarEmpleado EmpleadosEditar = new frmAgregarEditarEmpleado(EmpleadoSeleccionado);
                 EmpleadosEditar.ShowDialog();
-                CargarEmpleados();
+                await CargarEmpleados();
             }
             else
             {

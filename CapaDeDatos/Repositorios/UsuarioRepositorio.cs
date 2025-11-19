@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Supabase.Postgrest.Constants;
 
 namespace CapaDeDatos.Repositorios
 {
@@ -73,6 +74,45 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
+        public async Task UsuarioEmail(string Email_Nuevo)
+        {
+            try
+            {
+                var client = await GetClient();
+
+                var attrs = new UserAttributes { Email = Email_Nuevo };
+                var response = await client.Auth.Update(attrs);
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show($"Error al actualizar el correo {ex.Message}");
+            }
+        }
+
+        public async Task OtrosValores(CambiosUsuario cambios)
+        {
+            CambiosUsuario cambiosUsuario = cambios;
+            try
+            {
+                var client = await GetClient();
+                var ActualizarUser = await client
+                                           .From<Usuario>()
+                                           .Where(u => u.IdUsuario == cambiosUsuario.IdEmpleado)
+                                           .Update(new Usuario
+                                           {
+                                               RolUsuario = cambiosUsuario.NuevoRol,
+                                               EstadoUsuario = cambiosUsuario.NuevoEstado
+                                           }
+                                           );
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Error al actualizar el rol o el estado del Usuario {ex.Message}");
+            }
+        }
+       
+
         public static async Task ActualizarUsuario(Usuario UsuarioActualizado)
         {
             try
@@ -115,6 +155,39 @@ namespace CapaDeDatos.Repositorios
             {
                 throw new Exception("No se pudo cargar el usuario. Verifique la conexión.", ex);
             }
+        }
+
+        public async Task<List<Rol>> ObtenerTodosLosUsuariosRoles(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = await GetClient();
+
+                var queryBuilder = client.From<Rol>()
+                                         .Order("nombre_rol", Supabase.Postgrest.Constants.Ordering.Ascending);
+
+                var response = await queryBuilder.Get(cancellationToken);
+                return response.Models ?? new List<Rol>();
+            }
+            catch (PostgrestException ex)
+            {
+                throw new Exception($"Error de base de datos al cargar usuarios: {ex.Message}", ex);
+            }
+            catch (OperationCanceledException)
+            {
+                throw new TimeoutException("La consulta de usuarios fue cancelada por timeout.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudieron cargar los usuarios. Verifique la conexión.", ex);
+            }
+        }
+
+        public class CambiosUsuario
+        {
+            public int IdEmpleado { get; set; }
+            public int NuevoRol { get; set; }
+            public bool NuevoEstado { get; set; }
         }
     }
 }
