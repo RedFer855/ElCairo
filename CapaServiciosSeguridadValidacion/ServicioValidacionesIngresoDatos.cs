@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Modelados.Productos;
+﻿using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Productos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,27 @@ namespace CapaServiciosSeguridadValidacion
             }
             return (false, "");
         }
+        public static readonly List<Func<Empleado, (bool Error, string Mensaje)>> ListaValidacionesEmpleado =
+    new List<Func<Empleado, (bool Error, string Mensaje)>>()
+    {
+        e => ValidarCampoVacio(e.Nombre, "el nombre del empleado"),
+        e => ValidarCampoVacio(e.Apellido, "el apellido del empleado"),
+        e => ValidarCampoVacio(e.Dni, "el DNI"),
+        e => ValidarCampoVacio(e.Telefono, "el teléfono"),
+        e => ValidarCampoVacio(e.Email, "el correo electrónico"),
+        e => ValidarCampoVacio(e.Direccion, "la dirección"),
+    };
+
+        public static (bool Error, string Mensaje) EjecutarValidacionesEmpleado(Empleado empleado)
+        {
+            foreach (var regla in ListaValidacionesEmpleado)
+            {
+                var resultado = regla(empleado);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
+
 
         // --- Validaciones individuales ---
         public static (bool Error, string Mensaje) ValidarCampoVacio(string valor, string nombreCampo)
