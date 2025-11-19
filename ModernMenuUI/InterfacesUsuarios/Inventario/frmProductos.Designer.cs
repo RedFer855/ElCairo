@@ -48,6 +48,7 @@
             Contenido = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
+            Presentacion = new DataGridViewTextBoxColumn();
             CantidadProducto = new DataGridViewTextBoxColumn();
             PrecioVenta = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
@@ -137,7 +138,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Contenido, dataGridViewTextBoxColumn4, Categoria, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Contenido, dataGridViewTextBoxColumn4, Categoria, Presentacion, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.White;
             dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -196,14 +197,16 @@
             // 
             // Contenido
             // 
+            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             Contenido.DataPropertyName = "ContenidoProducto";
             Contenido.HeaderText = "Contenido";
             Contenido.Name = "Contenido";
             Contenido.ReadOnly = true;
+            Contenido.Width = 113;
             // 
             // dataGridViewTextBoxColumn4
             // 
-            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
             dataGridViewTextBoxColumn4.DataPropertyName = "NombreMarca";
             dataGridViewTextBoxColumn4.FillWeight = 120F;
             dataGridViewTextBoxColumn4.HeaderText = "Marca";
@@ -213,12 +216,22 @@
             // 
             // Categoria
             // 
-            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             Categoria.DataPropertyName = "NombreCategoria";
             Categoria.HeaderText = "Categoría";
             Categoria.MinimumWidth = 120;
             Categoria.Name = "Categoria";
             Categoria.ReadOnly = true;
+            Categoria.Width = 120;
+            // 
+            // Presentacion
+            // 
+            Presentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Presentacion.DataPropertyName = "NombrePresentacion";
+            Presentacion.HeaderText = "Presentación";
+            Presentacion.Name = "Presentacion";
+            Presentacion.ReadOnly = true;
+            Presentacion.Width = 131;
             // 
             // CantidadProducto
             // 
@@ -752,19 +765,20 @@
         private Button btnLimpiarFiltros;
         private PictureBox pbxClean;
         private Panel pnlLimpiarFiltros;
+        private Label label2;
+        private Label label1;
+        private Label label3;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Contenido;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn Categoria;
+        private DataGridViewTextBoxColumn Presentacion;
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn PrecioCompra;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn EstadoProducto;
-        private Label label2;
-        private Label label1;
-        private Label label3;
     }
 }

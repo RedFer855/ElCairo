@@ -26,5 +26,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             this.Close();
         }
+
+        private void btnBuscarProv_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

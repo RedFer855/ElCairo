@@ -318,6 +318,7 @@
             // Descripcion
             // 
             Descripcion.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Descripcion.DataPropertyName = "DescripcionCategoria";
             Descripcion.HeaderText = "Descripción";
             Descripcion.Name = "Descripcion";
             Descripcion.ReadOnly = true;

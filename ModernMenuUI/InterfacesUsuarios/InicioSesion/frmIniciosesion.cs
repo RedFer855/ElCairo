@@ -26,7 +26,7 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             _usuarioRepo = new UsuarioRepositorio();
-           
+
         }
 
         public void LimpiarDatos(object sender, EventArgs e)
@@ -106,9 +106,9 @@ namespace ModernMenuUI
                                 MessageBox.Show("⚠️ El usuario no tiene acciones cargadas. El menú aparecerá vacío.");
                             }
                             else
-                            {   
+                            {
                                 // MessageBox.Show("✅ Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
-                                
+
                             }
                         }
                         catch (Exception ex)
@@ -303,6 +303,8 @@ namespace ModernMenuUI
             {
                 txtContrasenia.UseSystemPasswordChar = true;
             }
+
+            txtContrasenia.Focus(); 
         }
 
         private void txtUsuario_KeyDown(object sender, KeyEventArgs e)
@@ -318,9 +320,10 @@ namespace ModernMenuUI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                e.SuppressKeyPress = true; 
-                btnAcceder.PerformClick(); 
+                e.SuppressKeyPress = true;
+                btnAcceder.PerformClick();
             }
         }
+
     }
 }

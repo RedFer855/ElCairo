@@ -328,6 +328,14 @@ namespace ModernMenuUI
 
         }
 
+        private void btnCategorias_Click(object sender, EventArgs e)
+        {
+            bool tipo = true;
+            CerrarSubmenu();
+            ManejarFormularios.Instancia.AbrirFormulario(new frmCategorias(tipo));
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+        }
+
         private void btnGestionCompra_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
@@ -518,11 +526,13 @@ namespace ModernMenuUI
         private void RegistrarBotonesConPermisos()
         {
             // BOTONES DE MÓDULO (Lógica "OR")
+            //Mapeo Inventario
             _servicioPermisos.RegistrarBoton(btnInventarios, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnInventarioBodega, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnGestionInventario, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnRegistroPerdida, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnMarcas, "select_inventario", "update_inventario", "create_inventario");
+            _servicioPermisos.RegistrarBoton(btnCategorias, "select_inventario", "update_inventario", "create_inventario");
             //Mapeo Compras
             _servicioPermisos.RegistrarBoton(btnCompras, "select_compra", "update_compra", "create_compra");
             _servicioPermisos.RegistrarBoton(btnGestionCompra, "select_compra", "update_compra", "create_compra");
@@ -550,5 +560,6 @@ namespace ModernMenuUI
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
 
+      
     }
 }

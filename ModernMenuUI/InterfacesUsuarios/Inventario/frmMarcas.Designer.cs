@@ -43,7 +43,7 @@
             EstadoProducto = new DataGridViewCheckBoxColumn();
             btnAgregarMarca = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            btnModificarMArca = new Button();
+            btnModificarMarca = new Button();
             btnSeleccionarMarca = new Button();
             btnSalir = new Button();
             gbxEstado = new GroupBox();
@@ -200,12 +200,13 @@
             btnAgregarMarca.TabIndex = 35;
             btnAgregarMarca.Text = "Agregar Marca";
             btnAgregarMarca.UseVisualStyleBackColor = false;
+            btnAgregarMarca.Click += btnAgregarMarca_Click;
             // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnAgregarMarca);
-            flowLayoutPanel1.Controls.Add(btnModificarMArca);
+            flowLayoutPanel1.Controls.Add(btnModificarMarca);
             flowLayoutPanel1.Controls.Add(btnSeleccionarMarca);
             flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Location = new Point(12, 418);
@@ -213,17 +214,17 @@
             flowLayoutPanel1.Size = new Size(527, 51);
             flowLayoutPanel1.TabIndex = 36;
             // 
-            // btnModificarMArca
+            // btnModificarMarca
             // 
-            btnModificarMArca.BackColor = Color.FromArgb(149, 195, 172);
-            btnModificarMArca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnModificarMArca.ForeColor = SystemColors.ButtonFace;
-            btnModificarMArca.Location = new Point(133, 3);
-            btnModificarMArca.Name = "btnModificarMArca";
-            btnModificarMArca.Size = new Size(129, 44);
-            btnModificarMArca.TabIndex = 36;
-            btnModificarMArca.Text = "Modificar Marca";
-            btnModificarMArca.UseVisualStyleBackColor = false;
+            btnModificarMarca.BackColor = Color.FromArgb(149, 195, 172);
+            btnModificarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnModificarMarca.ForeColor = SystemColors.ButtonFace;
+            btnModificarMarca.Location = new Point(133, 3);
+            btnModificarMarca.Name = "btnModificarMarca";
+            btnModificarMarca.Size = new Size(129, 44);
+            btnModificarMarca.TabIndex = 36;
+            btnModificarMarca.Text = "Modificar Marca";
+            btnModificarMarca.UseVisualStyleBackColor = false;
             // 
             // btnSeleccionarMarca
             // 
@@ -437,7 +438,7 @@
         private DataGridView dgvMarcas;
         private Button btnAgregarMarca;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button btnModificarMArca;
+        private Button btnModificarMarca;
         private Button btnSalir;
         private GroupBox gbxEstado;
         private TableLayoutPanel tableLayoutPanel2;

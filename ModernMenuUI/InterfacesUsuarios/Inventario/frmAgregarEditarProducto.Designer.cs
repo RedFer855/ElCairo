@@ -40,9 +40,9 @@
             btnAgregar = new Button();
             panel2 = new Panel();
             panel1 = new Panel();
-            comboBox1 = new ComboBox();
+            txtContenido = new TextBox();
+            cmbUnidadContenido = new ComboBox();
             label22 = new Label();
-            numericUpDown1 = new NumericUpDown();
             label21 = new Label();
             pnlNota = new Panel();
             label20 = new Label();
@@ -97,7 +97,6 @@
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             pnlNota.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -249,9 +248,9 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(comboBox1);
+            panel1.Controls.Add(txtContenido);
+            panel1.Controls.Add(cmbUnidadContenido);
             panel1.Controls.Add(label22);
-            panel1.Controls.Add(numericUpDown1);
             panel1.Controls.Add(label21);
             panel1.Controls.Add(pnlNota);
             panel1.Controls.Add(flowLayoutPanel1);
@@ -284,33 +283,38 @@
             panel1.Size = new Size(767, 448);
             panel1.TabIndex = 41;
             // 
-            // comboBox1
+            // txtContenido
             // 
-            comboBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
-            comboBox1.Location = new Point(338, 269);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(90, 27);
-            comboBox1.TabIndex = 57;
+            txtContenido.BackColor = Color.White;
+            txtContenido.BorderStyle = BorderStyle.None;
+            txtContenido.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtContenido.Location = new Point(153, 270);
+            txtContenido.Name = "txtContenido";
+            txtContenido.PlaceholderText = "(Cantidad)";
+            txtContenido.ReadOnly = true;
+            txtContenido.Size = new Size(120, 20);
+            txtContenido.TabIndex = 58;
+            // 
+            // cmbUnidadContenido
+            // 
+            cmbUnidadContenido.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbUnidadContenido.FormattingEnabled = true;
+            cmbUnidadContenido.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
+            cmbUnidadContenido.Location = new Point(363, 269);
+            cmbUnidadContenido.Name = "cmbUnidadContenido";
+            cmbUnidadContenido.Size = new Size(65, 26);
+            cmbUnidadContenido.TabIndex = 57;
             // 
             // label22
             // 
             label22.AutoSize = true;
             label22.Font = new Font("Itim", 11.9999981F);
             label22.ForeColor = Color.FromArgb(87, 99, 110);
-            label22.Location = new Point(254, 271);
+            label22.Location = new Point(279, 271);
             label22.Name = "label22";
             label22.Size = new Size(78, 19);
             label22.TabIndex = 56;
             label22.Text = "Unidades:";
-            // 
-            // numericUpDown1
-            // 
-            numericUpDown1.Location = new Point(159, 269);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(89, 22);
-            numericUpDown1.TabIndex = 55;
             // 
             // label21
             // 
@@ -327,9 +331,9 @@
             // pnlNota
             // 
             pnlNota.Controls.Add(label20);
-            pnlNota.Location = new Point(446, 368);
+            pnlNota.Location = new Point(446, 349);
             pnlNota.Name = "pnlNota";
-            pnlNota.Size = new Size(300, 74);
+            pnlNota.Size = new Size(300, 87);
             pnlNota.TabIndex = 53;
             // 
             // label20
@@ -337,11 +341,11 @@
             label20.BackColor = Color.FromArgb(148, 168, 187);
             label20.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label20.ForeColor = Color.White;
-            label20.Location = new Point(0, 8);
+            label20.Location = new Point(0, 0);
             label20.Name = "label20";
-            label20.Size = new Size(300, 56);
+            label20.Size = new Size(300, 84);
             label20.TabIndex = 52;
-            label20.Text = "Nota: Para ingresar Inventario de este \r\nproducto deberá realizarlo por medio \r\nde compra.";
+            label20.Text = "Nota: Para ingresar Inventario de este \r\nproducto, y establecer cantidades \r\nmínimas de inventario deberá realizarlo \r\npor medio de compra.";
             // 
             // flowLayoutPanel1
             // 
@@ -350,7 +354,7 @@
             flowLayoutPanel1.Controls.Add(btnVolver);
             flowLayoutPanel1.Location = new Point(34, 389);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(292, 47);
+            flowLayoutPanel1.Size = new Size(261, 47);
             flowLayoutPanel1.TabIndex = 51;
             // 
             // btnGuardarProducto
@@ -463,7 +467,6 @@
             label19.Size = new Size(84, 19);
             label19.TabIndex = 42;
             label19.Text = "Contenido:";
-            label19.Click += label19_Click;
             // 
             // label9
             // 
@@ -504,7 +507,7 @@
             // 
             txtPresentacion.BackColor = Color.White;
             txtPresentacion.BorderStyle = BorderStyle.None;
-            txtPresentacion.Font = new Font("Itim", 11.9999981F);
+            txtPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPresentacion.Location = new Point(153, 227);
             txtPresentacion.Name = "txtPresentacion";
             txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
@@ -932,7 +935,6 @@
             panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             pnlNota.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -1004,8 +1006,8 @@
         private Label label20;
         private Panel pnlNota;
         private Label label21;
-        private ComboBox comboBox1;
+        private ComboBox cmbUnidadContenido;
         private Label label22;
-        private NumericUpDown numericUpDown1;
+        private TextBox txtContenido;
     }
 }

@@ -18,6 +18,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmMarcas : Form
     {
+        private int _idMarcaSeleccionada;
         private readonly MarcaRepositorio marcaRepositorio;
         private List<Marca> _listaMaestraMarcas = new List<Marca>();
         private Supabase.Realtime.RealtimeChannel? _marcasSubscription;
@@ -28,11 +29,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             InitializeComponent();
             btnAgregarMarca.Visible = false;
-            btnModificarMArca.Visible = false;
+            btnModificarMarca.Visible = false;
             this.DoubleBuffered = true;
             marcaRepositorio = new MarcaRepositorio();
             dgvMarcas.AutoGenerateColumns = false;
             this.FormClosing += frmMarcas_FormClosing;
+            btnModificarMarca.Visible = false;
+            btnAgregarMarca.Visible = false;
+              
         }
 
         public frmMarcas(bool tipo)
@@ -43,6 +47,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             marcaRepositorio = new MarcaRepositorio();
             dgvMarcas.AutoGenerateColumns = false;
             this.FormClosing += frmMarcas_FormClosing;
+            btnSeleccionarMarca.Visible = false;
         }
 
         private async void frmMarcas_Load(object sender, EventArgs e)
@@ -244,8 +249,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
-            frmProveedores proveedores = new frmProveedores();  
-            proveedores.ShowDialog();   
+            frmProveedores proveedores = new frmProveedores();
+            proveedores.ShowDialog();
+        }
+
+        private void btnAgregarMarca_Click(object sender, EventArgs e)
+        {
+            frmAgregarEditarMarca nuevaMarca = new frmAgregarEditarMarca(); 
+            nuevaMarca.ShowDialog();    
         }
     }
 }

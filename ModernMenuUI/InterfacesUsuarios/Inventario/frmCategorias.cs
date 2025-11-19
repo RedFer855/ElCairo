@@ -32,6 +32,20 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             categoriaRepositorio = new CategoriaRepositorio();
             dgvCategorias.AutoGenerateColumns = false; // Asumiendo dgvCategorias
             this.FormClosing += frmCategorias_FormClosing;
+            btnAgregarCategoria.Visible = false;
+            btnModificarCategoria.Visible = false;
+        }
+
+        public frmCategorias(bool tipo)
+        {
+            InitializeComponent();
+
+            this.DoubleBuffered = true;
+            categoriaRepositorio = new CategoriaRepositorio();
+            FormBorderStyle = FormBorderStyle.None;
+            dgvCategorias.AutoGenerateColumns = false; // Asumiendo dgvCategorias
+            this.FormClosing += frmCategorias_FormClosing;
+            btnSeleccionarCategoria.Visible = false;
         }
 
         private async void frmCategorias_Load(object sender, EventArgs e)

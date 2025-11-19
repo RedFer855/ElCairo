@@ -33,7 +33,7 @@
             lblNombreModulo = new Label();
             panel2 = new Panel();
             textBox1 = new TextBox();
-            btnbuscar = new Button();
+            btnBuscarProv = new Button();
             pictureBox1 = new PictureBox();
             btnModificarMarca = new Button();
             txtDni = new TextBox();
@@ -79,7 +79,7 @@
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
             panel2.Controls.Add(textBox1);
-            panel2.Controls.Add(btnbuscar);
+            panel2.Controls.Add(btnBuscarProv);
             panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(btnModificarMarca);
             panel2.Controls.Add(txtDni);
@@ -107,18 +107,19 @@
             textBox1.Size = new Size(201, 20);
             textBox1.TabIndex = 24;
             // 
-            // btnbuscar
+            // btnBuscarProv
             // 
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(357, 46);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 21);
-            btnbuscar.TabIndex = 23;
-            btnbuscar.UseVisualStyleBackColor = false;
+            btnBuscarProv.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarProv.BackgroundImage = (Image)resources.GetObject("btnBuscarProv.BackgroundImage");
+            btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarProv.FlatAppearance.BorderSize = 0;
+            btnBuscarProv.FlatStyle = FlatStyle.Flat;
+            btnBuscarProv.Location = new Point(357, 46);
+            btnBuscarProv.Name = "btnBuscarProv";
+            btnBuscarProv.Size = new Size(48, 21);
+            btnBuscarProv.TabIndex = 23;
+            btnBuscarProv.UseVisualStyleBackColor = false;
+            btnBuscarProv.Click += btnBuscarProv_Click;
             // 
             // pictureBox1
             // 
@@ -294,7 +295,7 @@
         private Label label2;
         private Label label1;
         public Label lblNombreModulo;
-        private Button btnbuscar;
+        private Button btnBuscarProv;
         private TextBox textBox1;
     }
 }

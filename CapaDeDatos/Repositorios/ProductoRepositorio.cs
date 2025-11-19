@@ -39,7 +39,7 @@ namespace CapaDeDatos.Repositorios
                     queryBuilder = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)queryBuilder.Where(x => x.IdCategoria == categoriaId.Value);
                 }
 
-                var response = await queryBuilder.Select("*, marca(*), categoria(*)").Get();
+                var response = await queryBuilder.Select("*,presentacion(*), marca(*), categoria(*))").Get();
 
                 if (response != null && response.Models != null)
                 {
@@ -154,7 +154,7 @@ namespace CapaDeDatos.Repositorios
                 if (categoriaId.HasValue && categoriaId.Value > 0)
                     query = query.Filter("id_categoria", Supabase.Postgrest.Constants.Operator.Equals, categoriaId.Value);
 
-                var response = await query.Select("*, marca(*), categoria(*)").Get();
+                var response = await query.Select("*, marca(*), categoria(*),presentacion(*)").Get();
 
                 return response?.Models ?? new List<Producto>();
             }

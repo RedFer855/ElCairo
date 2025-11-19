@@ -50,6 +50,16 @@ namespace CapaDeDatos.Modelados.Productos
         // "id_presentacion" (integer)
         [Column("id_presentacion")]
         public int IdPresentacion { get; set; }
+        [Column("presentacion")]
+        public Presentacion Presentacion { get; set; }
+
+        public string NombrePresentacion
+        {
+            get
+            {
+                return Presentacion?.NombrePresentacion ?? "Sin Presentación";
+            }
+        }
 
         // "id_tamanio" (integer)
         [Column("id_tamanio")]
