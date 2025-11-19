@@ -40,18 +40,18 @@
             btnSalir = new Button();
             button1 = new Button();
             label4 = new Label();
-            textBox4 = new TextBox();
+            txtCliente = new TextBox();
             panel5 = new Panel();
             label7 = new Label();
             label6 = new Label();
-            button2 = new Button();
+            btnFacturar = new Button();
             panel8 = new Panel();
-            textBox3 = new TextBox();
+            txtTotal = new TextBox();
             panel6 = new Panel();
-            textBox2 = new TextBox();
+            txtSubtotal = new TextBox();
             label5 = new Label();
             panel3 = new Panel();
-            textBox1 = new TextBox();
+            txtImpuesto = new TextBox();
             panelCarrito = new Panel();
             panel10 = new Panel();
             pbxCarritoVacio = new PictureBox();
@@ -88,6 +88,8 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
             panel9 = new Panel();
+            lstClientes = new ListBox();
+            lstSugerencias = new ListBox();
             panel5.SuspendLayout();
             panel8.SuspendLayout();
             panel6.SuspendLayout();
@@ -142,26 +144,27 @@
             label4.ForeColor = Color.FromArgb(87, 99, 110);
             label4.Location = new Point(10, 16);
             label4.Name = "label4";
-            label4.Size = new Size(78, 17);
+            label4.Size = new Size(51, 17);
             label4.TabIndex = 16;
-            label4.Text = "No. Factura:";
+            label4.Text = "Cliente:";
             // 
-            // textBox4
+            // txtCliente
             // 
-            textBox4.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Enabled = false;
-            textBox4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox4.Location = new Point(91, 14);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(177, 20);
-            textBox4.TabIndex = 13;
+            txtCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtCliente.BorderStyle = BorderStyle.None;
+            txtCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCliente.Location = new Point(58, 14);
+            txtCliente.Name = "txtCliente";
+            txtCliente.Size = new Size(210, 20);
+            txtCliente.TabIndex = 13;
+            txtCliente.TextChanged += txtCliente_TextChanged;
+            txtCliente.KeyDown += txtCliente_KeyDown;
             // 
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
             panel5.Controls.Add(label4);
-            panel5.Controls.Add(textBox4);
+            panel5.Controls.Add(txtCliente);
             panel5.Location = new Point(12, 12);
             panel5.Name = "panel5";
             panel5.Size = new Size(290, 51);
@@ -189,65 +192,65 @@
             label6.TabIndex = 19;
             label6.Text = "Total:";
             // 
-            // button2
+            // btnFacturar
             // 
-            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.BackColor = Color.FromArgb(149, 195, 172);
-            button2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ButtonFace;
-            button2.Location = new Point(420, 604);
-            button2.Name = "button2";
-            button2.Size = new Size(108, 63);
-            button2.TabIndex = 16;
-            button2.Text = "Facturar";
-            button2.UseVisualStyleBackColor = false;
+            btnFacturar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnFacturar.BackColor = Color.FromArgb(149, 195, 172);
+            btnFacturar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnFacturar.ForeColor = SystemColors.ButtonFace;
+            btnFacturar.Location = new Point(420, 604);
+            btnFacturar.Name = "btnFacturar";
+            btnFacturar.Size = new Size(108, 63);
+            btnFacturar.TabIndex = 16;
+            btnFacturar.Text = "Facturar";
+            btnFacturar.UseVisualStyleBackColor = false;
+            btnFacturar.Click += btnFacturar_Click;
             // 
             // panel8
             // 
             panel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel8.Controls.Add(textBox3);
+            panel8.Controls.Add(txtTotal);
             panel8.Controls.Add(label6);
             panel8.Location = new Point(269, 3);
             panel8.Name = "panel8";
             panel8.Size = new Size(108, 51);
             panel8.TabIndex = 24;
             // 
-            // textBox3
+            // txtTotal
             // 
-            textBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Enabled = false;
-            textBox3.Font = new Font("Itim", 18F);
-            textBox3.Location = new Point(0, 17);
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "L0,00";
-            textBox3.ReadOnly = true;
-            textBox3.Size = new Size(108, 29);
-            textBox3.TabIndex = 24;
+            txtTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTotal.BorderStyle = BorderStyle.None;
+            txtTotal.Enabled = false;
+            txtTotal.Font = new Font("Itim", 18F);
+            txtTotal.Location = new Point(0, 17);
+            txtTotal.Name = "txtTotal";
+            txtTotal.PlaceholderText = "L0,00";
+            txtTotal.ReadOnly = true;
+            txtTotal.Size = new Size(108, 29);
+            txtTotal.TabIndex = 24;
             // 
             // panel6
             // 
             panel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel6.Controls.Add(textBox2);
+            panel6.Controls.Add(txtSubtotal);
             panel6.Controls.Add(label5);
             panel6.Location = new Point(22, 3);
             panel6.Name = "panel6";
             panel6.Size = new Size(110, 51);
             panel6.TabIndex = 23;
-            panel6.Paint += panel6_Paint;
             // 
-            // textBox2
+            // txtSubtotal
             // 
-            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Enabled = false;
-            textBox2.Font = new Font("Itim", 18F);
-            textBox2.Location = new Point(0, 17);
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "L0,00";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(110, 29);
-            textBox2.TabIndex = 23;
+            txtSubtotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtSubtotal.BorderStyle = BorderStyle.None;
+            txtSubtotal.Enabled = false;
+            txtSubtotal.Font = new Font("Itim", 18F);
+            txtSubtotal.Location = new Point(0, 17);
+            txtSubtotal.Name = "txtSubtotal";
+            txtSubtotal.PlaceholderText = "L0,00";
+            txtSubtotal.ReadOnly = true;
+            txtSubtotal.Size = new Size(110, 29);
+            txtSubtotal.TabIndex = 23;
             // 
             // label5
             // 
@@ -259,31 +262,29 @@
             label5.Size = new Size(60, 17);
             label5.TabIndex = 18;
             label5.Text = "Subtotal:";
-            label5.Click += label5_Click;
             // 
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(textBox1);
+            panel3.Controls.Add(txtImpuesto);
             panel3.Controls.Add(label7);
             panel3.Location = new Point(166, 3);
             panel3.Name = "panel3";
             panel3.Size = new Size(73, 51);
             panel3.TabIndex = 22;
             // 
-            // textBox1
+            // txtImpuesto
             // 
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Enabled = false;
-            textBox1.Font = new Font("Itim", 18F);
-            textBox1.Location = new Point(0, 17);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "L0,00";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(73, 29);
-            textBox1.TabIndex = 22;
-            textBox1.TextChanged += textBox1_TextChanged;
+            txtImpuesto.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtImpuesto.BorderStyle = BorderStyle.None;
+            txtImpuesto.Enabled = false;
+            txtImpuesto.Font = new Font("Itim", 18F);
+            txtImpuesto.Location = new Point(0, 17);
+            txtImpuesto.Name = "txtImpuesto";
+            txtImpuesto.PlaceholderText = "L0,00";
+            txtImpuesto.ReadOnly = true;
+            txtImpuesto.Size = new Size(73, 29);
+            txtImpuesto.TabIndex = 22;
             // 
             // panelCarrito
             // 
@@ -317,7 +318,6 @@
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
-            pbxCarritoVacio.Click += pictureBox2_Click;
             // 
             // pbxCarrito
             // 
@@ -328,7 +328,6 @@
             pbxCarrito.Size = new Size(40, 40);
             pbxCarrito.TabIndex = 2;
             pbxCarrito.TabStop = false;
-            pbxCarrito.Click += pictureBox1_Click;
             // 
             // dgvCarrito
             // 
@@ -377,7 +376,6 @@
             dgvCarrito.Size = new Size(700, 260);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
-            dgvCarrito.CellContentClick += dgvCarrito_CellContentClick;
             dgvCarrito.CellMouseDown += dgvCarrito_CellMouseDown;
             dgvCarrito.CellMouseEnter += dgvCarrito_CellMouseEnter;
             dgvCarrito.CellMouseLeave += dgvCarrito_CellMouseLeave;
@@ -456,6 +454,7 @@
             txtBuscar.PlaceholderText = "Buscar Productos...";
             txtBuscar.Size = new Size(355, 20);
             txtBuscar.TabIndex = 1;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
             // buscar
             // 
@@ -470,7 +469,6 @@
             buscar.Size = new Size(48, 20);
             buscar.TabIndex = 0;
             buscar.UseVisualStyleBackColor = false;
-            buscar.Click += buscar_Click;
             // 
             // panel1
             // 
@@ -724,7 +722,6 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Size = new Size(402, 63);
             tableLayoutPanel1.TabIndex = 0;
-            tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
             // 
             // panel4
             // 
@@ -746,6 +743,28 @@
             panel9.Size = new Size(30, 0);
             panel9.TabIndex = 1;
             // 
+            // lstClientes
+            // 
+            lstClientes.FormattingEnabled = true;
+            lstClientes.ItemHeight = 15;
+            lstClientes.Location = new Point(70, 46);
+            lstClientes.Name = "lstClientes";
+            lstClientes.Size = new Size(210, 19);
+            lstClientes.TabIndex = 18;
+            lstClientes.MouseClick += lstClientes_MouseClick;
+            lstClientes.KeyDown += lstClientes_KeyDown;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 15;
+            lstSugerencias.Location = new Point(329, 46);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(355, 19);
+            lstSugerencias.TabIndex = 19;
+            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
+            lstSugerencias.Leave += lstSugerencias_Leave;
+            // 
             // frmFacturacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -753,10 +772,12 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.White;
             ClientSize = new Size(766, 679);
+            Controls.Add(lstSugerencias);
+            Controls.Add(lstClientes);
             Controls.Add(btnSalir);
             Controls.Add(button1);
             Controls.Add(panel5);
-            Controls.Add(button2);
+            Controls.Add(btnFacturar);
             Controls.Add(panel4);
             Controls.Add(panelCarrito);
             Controls.Add(panelBusqueda);
@@ -766,6 +787,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmFacturacion";
             Text = "frmFacturacion";
+            FormClosing += frmFacturacion_FormClosing;
             Load += Gestion_de_Ventas_Load;
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
@@ -799,11 +821,11 @@
         private Button btnSalir;
         private Button button1;
         private Label label4;
-        private TextBox textBox4;
+        private TextBox txtCliente;
         private Panel panel5;
         private Label label7;
         private Label label6;
-        private Button button2;
+        private Button btnFacturar;
         private Panel panelCarrito;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
@@ -826,9 +848,9 @@
         private Panel panel3;
         private Panel panel8;
         private Panel panel6;
-        private TextBox textBox1;
-        private TextBox textBox3;
-        private TextBox textBox2;
+        private TextBox txtImpuesto;
+        private TextBox txtTotal;
+        private TextBox txtSubtotal;
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel4;
         private Panel panel9;
@@ -847,5 +869,7 @@
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
+        private ListBox lstClientes;
+        private ListBox lstSugerencias;
     }
 }

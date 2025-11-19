@@ -70,5 +70,7 @@ namespace CapaDeDatos.Modelados.Productos
 
         [Column("id_proveedor")]
         public int IdProveedorProducto { get; set; }
+
+        public int StockEnBodega { get; set; }
     }
 }
