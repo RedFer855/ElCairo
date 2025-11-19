@@ -61,15 +61,6 @@ namespace ModernMenuUI
                     Form formcarga = new frmPantallaDeCarga();
                     this.Visible = false;
                     formcarga.ShowDialog();
-                    this.Close();
-
-                    // Guardar en la sesión global
-                    SessionData.IdBodegaActual = bodega.IdBodega;
-                    var formCarga = new frmPantallaDeCarga();
-                    this.Visible = false;
-
-                    formCarga.ShowDialog();
-                    this.Close();
                 }
                 else
                 {

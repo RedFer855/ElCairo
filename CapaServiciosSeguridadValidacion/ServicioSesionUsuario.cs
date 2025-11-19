@@ -25,9 +25,6 @@ namespace CapaServiciosSeguridadValidacion
         // Rol del usuario
         private static string Rol;
 
-        /// <summary>
-        /// Inicializa sesión con usuario y contexto.
-        /// </summary>
         public static void IniciarSesion(User usuarioAutenticado, UsuarioContexto contexto)
         {
             UsuarioActual = usuarioAutenticado;
@@ -39,17 +36,11 @@ namespace CapaServiciosSeguridadValidacion
             }
         }
 
-        /// <summary>
-        /// Asigna la bodega actual seleccionada.
-        /// </summary>
+
         public static void AsignarBodegaActual(Bodega bodega)
         {
             BodegaActual = bodega;
         }
-
-        /// <summary>
-        /// Cierra sesión y limpia toda la información.
-        /// </summary>
         public static void CerrarSesion()
         {
             UsuarioActual = null;
@@ -58,17 +49,11 @@ namespace CapaServiciosSeguridadValidacion
             BodegaActual = null;
         }
 
-        /// <summary>
-        /// Obtiene el email del usuario actual.
-        /// </summary>
         public static string ObtenerEmailUsuario()
         {
             return UsuarioActual?.Email ?? "Usuario Desconocido";
         }
 
-        /// <summary>
-        /// Obtiene el rol del usuario actual.
-        /// </summary>
         public static string ObtenerRolUsuario()
         {
             if (UsuarioActual == null) return "Rol Desconocido";
@@ -80,30 +65,18 @@ namespace CapaServiciosSeguridadValidacion
             return "Rol no asignado";
         }
 
-        /// <summary>
-        /// Obtiene el ID del usuario actual.
-        /// </summary>
         public static string ObtenerIdUsuario()
         {
             return UsuarioActual?.Id ?? string.Empty;
         }
 
-        /// <summary>
-        /// Indica si hay sesión activa.
-        /// </summary>
         public static bool SesionActiva => UsuarioActual != null;
 
-        /// <summary>
-        /// Devuelve el nombre de la bodega actual.
-        /// </summary>
         public static string ObtenerNombreBodega()
         {
             return "Bodega: " + BodegaActual?.NombreBodega ?? "Bodega Desconocida";
         }
 
-        /// <summary>
-        /// Devuelve el ID de la bodega actual.
-        /// </summary>
         public static int ObtenerIdBodega()
         {
             return BodegaActual?.IdBodega ?? -1;
