@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Supabase.Postgrest.Constants;
 
 namespace CapaDeDatos.Repositorios
 {
@@ -111,32 +112,25 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-        public async Task<List<Producto>> ObtenerProductosPorProveedorAsync(int idProveedor)
+       
+        public async Task<List<Producto>> ObtenerProductosPorMarcasAsync(List<int> idMarcas)
         {
-            try
-            {
-                var client = await GetClient();
-
-                // 🔹 Trae todos los productos cuya marca pertenece al proveedor dado
-                var queryBuilder = client
-                    .From<Producto>()
-                    .Select("*, marca!inner(id_marca, nombre_marca, id_proveedor), categoria(*)")
-                    .Filter("marca.id_proveedor", Supabase.Postgrest.Constants.Operator.Equals, idProveedor)
-                    .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
-
-                var response = await queryBuilder.Get();
-
-                if (response != null && response.Models != null)
-                    return response.Models;
-
+            if (idMarcas == null || idMarcas.Count == 0)
                 return new List<Producto>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error de Supabase al obtener productos por proveedor: {ex.Message}");
-                throw;
-            }
+
+            var client = await Conexion.ConnectWithTimeoutAsync(10);
+
+            var resp = await client
+                            .From<Producto>()
+                            .Select("*, marca(*), categoria(*)")     // 👈 IMPORTANTE: JOIN
+                            .Filter("id_marca", Operator.In, idMarcas)
+                            .Get();
+
+
+            return resp.Models ?? new List<Producto>();
         }
+
+
         public async Task<List<Producto>> ObtenerActivos(bool estado = true, int? marcaId = null, int? categoriaId = null)
         {
             try
