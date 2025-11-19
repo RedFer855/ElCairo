@@ -51,7 +51,7 @@ namespace CapaDeDatos.Repositorios
             catch (Exception ex)
             {
                 Console.WriteLine($"Error de Supabase al obtener productos: {ex.Message}");
-                throw new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
+                throw;// new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
             }
         }
         public async Task<ProductoInsertar> InsertarProducto(ProductoInsertar nuevoProducto)

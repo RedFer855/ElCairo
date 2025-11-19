@@ -2,7 +2,6 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
-using ModernMenuUI.Utilidades; // Necesario para SessionData
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

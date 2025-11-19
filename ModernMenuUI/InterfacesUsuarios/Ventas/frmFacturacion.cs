@@ -8,7 +8,6 @@ using CapaDeDatos.Repositorios;
 using Microsoft.VisualBasic.ApplicationServices;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.Properties;
-using ModernMenuUI.Utilidades;
 using Supabase.Realtime;
 using Supabase.Realtime.Interfaces;
 using Supabase.Realtime.PostgresChanges;
@@ -99,35 +98,27 @@ namespace ModernMenuUI
             {
                 _supabaseClient = await Conexion.GetClientAsync();
 
-                // Obtenemos el ID de la bodega actual para filtrar
-                int idBodega = SessionData.IdBodegaActual;
+                int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
 
-                // CAMBIO 1: Escuchamos la tabla 'inventario', no 'producto'
-                // CAMBIO 2: Filtramos para escuchar solo cambios en NUESTRA bodega
                 _productoSubscription = await _supabaseClient
                     .From<Inventario>()
                    .On(ListenType.All, (IRealtimeChannel sender, PostgresChangesResponse change) =>
                    {
-                       // Verificar si el cambio ocurrió en nuestra bodega
-                       // (Supabase a veces envía todo el canal, así que validamos por si acaso)
                        var modeloCambiado = change.Model<Inventario>();
                        if (modeloCambiado != null && modeloCambiado.IdBodegaInventario != idBodega)
                        {
-                           // Si el cambio fue en otra bodega, no hacemos nada
                            return;
                        }
 
                        if (!this.IsHandleCreated || this.IsDisposed)
                            return;
 
-                       // Volver al hilo de UI y recargar la lista
                        this.BeginInvoke((MethodInvoker)(async () =>
                        {
                            if (this.IsDisposed) return;
 
                            System.Diagnostics.Debug.WriteLine("Cambio de stock detectado. Recargando...");
 
-                           // CAMBIO 3: Llamamos al NUEVO método que filtra por bodega
                            await CargarProductosDeBodega();
                        }));
                    });
@@ -142,10 +133,8 @@ namespace ModernMenuUI
 
         private void ActualizarTotales()
         {
-            // 1. Inicia el subtotal en 0
             decimal subtotal = 0;
 
-            // 2. Recorre cada fila en el DataGridView del carrito
             foreach (DataGridViewRow fila in dgvCarrito.Rows)
             {
                 if (fila.Cells[2].Value != null && fila.Cells[3].Value != null)
@@ -157,13 +146,10 @@ namespace ModernMenuUI
                 }
             }
 
-            // 3. Calcular impuesto del 15%
             decimal impuesto = subtotal * 0.15m;
 
-            // 4. Calcular total (subtotal + impuesto)
             decimal total = subtotal + impuesto;
 
-            // 5. Mostrar los resultados en los TextBox
             txtSubtotal.Text = subtotal.ToString("N2");
             txtImpuesto.Text = impuesto.ToString("N2");
             txtTotal.Text = total.ToString("N2");
@@ -176,7 +162,7 @@ namespace ModernMenuUI
                 this.Cursor = Cursors.WaitCursor;
 
                 // 1. Obtener el ID de la bodega desde la sesión (Login)
-                int idBodega = SessionData.IdBodegaActual;
+                int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
 
                 // 2. Obtener SOLO los productos de esa bodega
                 _productosCache = await _inventarioRepo.ObtenerProductosDeBodega(idBodega);
@@ -640,7 +626,7 @@ namespace ModernMenuUI
             }
 
             // 3. VALIDACIÓN DE SESIÓN DE BODEGA
-            if (SessionData.IdBodegaActual == 0)
+            if (CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega() == -1)
             {
                 MessageBox.Show("Error de Sesión: No se detecta la bodega actual.",
                                 "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -672,7 +658,7 @@ namespace ModernMenuUI
                 int idEmpleado = respEmpleado.Models.First().IdUsuario;
 
                 // --- PREPARAR DETALLES ---
-                int idBodegaVenta = SessionData.IdBodegaActual;
+                int idBodegaVenta = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
 
                 var detallesVenta = dgvCarrito.Rows
                     .Cast<DataGridViewRow>()
@@ -688,13 +674,8 @@ namespace ModernMenuUI
                 // --- ARMAR PARÁMETROS ---
                 var parametros = new
                 {
-                    p_id_cliente = _clienteSeleccionado.Id, // ID del cliente seleccionado
-
-                    // CAMBIO AQUÍ: Enviamos null a la ruta
+                    p_id_cliente = _clienteSeleccionado.Id,
                     p_id_rutas = (int?)null,
-                    // NOTA: Si Supabase te da error diciendo que "id_ruta no puede ser null", 
-                    // cambia la línea de arriba por: p_id_rutas = 1,
-
                     p_id_empleado = idEmpleado,
                     p_fecha_venta = DateTime.UtcNow,
                     p_detalles = detallesVenta
@@ -710,11 +691,10 @@ namespace ModernMenuUI
 
                 LimpiarCarrito();
 
-                // Limpiar el cliente seleccionado también
-                txtBuscar.Text = ""; // (O txtBuscarCliente si cambiaste el nombre)
+                txtBuscar.Text = ""; 
                 _clienteSeleccionado = null;
 
-                await CargarProductosDeBodega(); // Asegúrate que este nombre coincida con tu método
+                await CargarProductosDeBodega();
             }
             catch (Exception ex)
             {
