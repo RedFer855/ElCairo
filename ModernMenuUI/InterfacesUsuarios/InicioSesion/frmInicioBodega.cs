@@ -2,6 +2,7 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.Utilidades; // Necesario para SessionData
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ModernMenuUI.Utilidades; // Necesario para SessionData
 
 namespace ModernMenuUI
 {
@@ -58,6 +58,10 @@ namespace ModernMenuUI
 
                     Bodega id_bodega = new Bodega();
 
+                    Form formcarga = new frmPantallaDeCarga();
+                    this.Visible = false;
+                    formcarga.ShowDialog();
+                    this.Close();
 
                     // Guardar en la sesión global
                     SessionData.IdBodegaActual = bodega.IdBodega;
