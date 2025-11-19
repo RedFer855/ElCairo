@@ -225,11 +225,20 @@ namespace ModernMenuUI
 
         }
 
-        private void btnNuevo_Click_2(object sender, EventArgs e)
+        private async void btnNuevo_Click_2(object sender, EventArgs e)
         {
+            var client = await Conexion.GetClientAsync();
+            var authUser = client.Auth.CurrentUser;
+
+            var usuarioActualSistema = await client
+                .From<Usuario>()
+                .Where(u => u.Uuid == authUser.Id)
+                .Single();
+
             if (_usuarioSeleccionado != null)
             {
-                frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado);
+
+                frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
                 usuario.ShowDialog();
                     
             }

@@ -95,45 +95,21 @@ namespace CapaDeDatos.Repositorios
             try
             {
                 var client = await GetClient();
-                var ActualizarUser = await client
-                                           .From<Usuario>()
-                                           .Where(u => u.IdUsuario == cambiosUsuario.IdEmpleado)
-                                           .Update(new Usuario
-                                           {
-                                               RolUsuario = cambiosUsuario.NuevoRol,
-                                               EstadoUsuario = cambiosUsuario.NuevoEstado
-                                           }
-                                           );
-                
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Error al actualizar el rol o el estado del Usuario {ex.Message}");
-            }
-        }
-       
-
-        public static async Task ActualizarUsuario(Usuario UsuarioActualizado)
-        {
-            try
-            {
-                var client = await Conexion.ConnectWithTimeoutAsync(10);
-                await client.From<Usuario>().Update(UsuarioActualizado);
-            }
-            catch (System.Net.WebException ex)
-            {
-                throw new Exception("Error de red al actualizar usuario: " + ex.Message, ex);
-            }
-            catch (TimeoutException ex)
-            {
-                throw new Exception("El servidor tardó demasiado en responder.", ex);
+                var result = await client .From<Usuario>()
+                                        .Where(u => u.IdUsuario == cambiosUsuario.IdEmpleado)
+                                        .Set(u => u.RolUsuario, cambiosUsuario.NuevoRol)
+                                        .Set(u => u.EstadoUsuario, cambiosUsuario.NuevoEstado)
+                                        .Update();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error de Supabase al actualizar: {ex.Message}");
-                throw; //new Exception("Error al actualizar el empleado en la base de datos.", ex);
+                MessageBox.Show($"Error al actualizar el rol o el estado del Usuario {ex.Message}");
             }
-        }
+            finally
+            {
+                MessageBox.Show("Usuario actualizado exitosamente");
+            }
+        }       
 
         public async Task<Usuario> ObtenerDatosUsuario(string uuid, CancellationToken cancellationToken = default)
         {
@@ -157,17 +133,14 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
+        //esto es para obtener los roles y despues cargarlos en el dgv, falta hacer un join para cargar solo los nombres 
         public async Task<List<Rol>> ObtenerTodosLosUsuariosRoles(CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = await GetClient();
-
-                var queryBuilder = client.From<Rol>()
-                                         .Order("nombre_rol", Supabase.Postgrest.Constants.Ordering.Ascending);
-
-                var response = await queryBuilder.Get(cancellationToken);
-                return response.Models ?? new List<Rol>();
+                var roles = await client.From<Rol>().Get();
+                return roles.Models;
             }
             catch (PostgrestException ex)
             {
@@ -180,6 +153,30 @@ namespace CapaDeDatos.Repositorios
             catch (Exception ex)
             {
                 throw new Exception("No se pudieron cargar los usuarios. Verifique la conexión.", ex);
+            }
+        }
+
+        public async Task<List<Rol>> ObtenerRolesSegunUsuario(int rolUsuarioActual)
+        {
+            try
+            {
+                var client = await GetClient();
+                var roles = await client.From<Rol>().Get();
+                var lista = roles.Models;
+
+                // Si es Administrador (1)
+                if (rolUsuarioActual == 1)
+                {
+                    // Solo vendedor (2) y cajero (3)
+                    lista = lista.Where(r => r.IdRol == 2 || r.IdRol == 3).ToList();
+                }
+
+                // Si es SuperAdmin (4), devolver todos
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al cargar roles: {ex.Message}");
             }
         }
 

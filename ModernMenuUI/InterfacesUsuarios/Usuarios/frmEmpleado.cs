@@ -1,9 +1,11 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.InterfacesUsuarios.Usuarios;
 using Supabase;
 using Supabase.Realtime;
 using Supabase.Realtime.Interfaces;
@@ -81,22 +83,22 @@ namespace ModernMenuUI
                     {
                         try
                         {
-               
+
                             if (this == null || this.IsDisposed || !this.IsHandleCreated)
                             {
                                 System.Diagnostics.Debug.WriteLine("Evento Realtime ignorado: formulario cerrado o no inicializado.");
                                 return;
                             }
 
-                  
+
                             this.BeginInvoke((MethodInvoker)(async () =>
                             {
-                                if (this.IsDisposed) return; 
+                                if (this.IsDisposed) return;
                                 System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en la tabla Empleados.");
                                 await CargarEmpleados();
                             }));
 
-                           
+
                         }
                         catch (Exception ex)
                         {
@@ -227,6 +229,27 @@ namespace ModernMenuUI
             else
             {
                 EmpleadoSeleccionado = null;
+            }
+        }
+
+        private async void btnCrearUsuario_Click(object sender, EventArgs e)
+        {
+            var client = await Conexion.GetClientAsync();
+            var authUser = client.Auth.CurrentUser;
+
+            var usuarioActualSistema = await client
+                .From<Usuario>()
+                .Where(u => u.Uuid == authUser.Id)
+                .Single();
+            if (EmpleadoSeleccionado != null)
+            {
+                frmCrearUsuario empleadoCrear= new frmCrearUsuario(EmpleadoSeleccionado,usuarioActualSistema);
+                empleadoCrear.ShowDialog();
+                await CargarEmpleados();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un empleado de la lista para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
