@@ -29,8 +29,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             this.DoubleBuffered = true;
             presentacionRepositorio = new PresentacionRepositorio();
             dgvPresentaciones.AutoGenerateColumns = false;
-
-           
             btnAgregarPresentacion.Visible = false;
             btnModificarPresentacion.Visible = false;
 
@@ -52,6 +50,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 btnSeleccionarPresentacion.Visible = false;
                
             }
+            FormBorderStyle = FormBorderStyle.None; 
         }
 
         private async void frmPresentaciones_Load(object sender, EventArgs e)

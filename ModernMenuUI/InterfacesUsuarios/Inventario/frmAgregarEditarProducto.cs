@@ -125,8 +125,15 @@ namespace ModernMenuUI
 
         private void btnBuscarCategoria_Click(object sender, EventArgs e)
         {
-            frmCategorias categoriaSeleccionada = new frmCategorias();
-            categoriaSeleccionada.ShowDialog();
+            using (var categoriasForm = new frmCategorias())
+            {
+                if (categoriasForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Suponiendo que tu frmCategorias tiene la propiedad pública CategoriaSeleccionada
+                    txtCategoria.Text = categoriasForm.CategoriaSeleccionada.NombreCategoria;
+                    _idCategoriaSeleccionada = categoriasForm.CategoriaSeleccionada.IdCategoria;
+                }
+            }
         }
 
         private void btnBuscarMarca_Click(object sender, EventArgs e)
@@ -143,8 +150,14 @@ namespace ModernMenuUI
 
         private void btnBuscarPresentacion_Click(object sender, EventArgs e)
         {
-            frmPresentaciones presentacionSeleccionada = new frmPresentaciones();
-            presentacionSeleccionada.ShowDialog();
+            using (var presentacionesForm = new frmPresentaciones())
+            {
+                if (presentacionesForm.ShowDialog() == DialogResult.OK)
+                {
+                    txtPresentacion.Text = presentacionesForm.PresentacionSeleccionada.NombrePresentacion;
+                    _idPresentacionSeleccionada = presentacionesForm.PresentacionSeleccionada.IdPresentacionProducto;
+                }
+            }
         }
 
         private void CargarPresentacionEnControles(string presentacion)

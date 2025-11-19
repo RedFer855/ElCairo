@@ -291,7 +291,6 @@
             txtContenido.Location = new Point(153, 270);
             txtContenido.Name = "txtContenido";
             txtContenido.PlaceholderText = "(Cantidad)";
-            txtContenido.ReadOnly = true;
             txtContenido.Size = new Size(120, 20);
             txtContenido.TabIndex = 58;
             // 
@@ -426,7 +425,7 @@
             btnBuscarMarca.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarMarca.FlatAppearance.BorderSize = 0;
             btnBuscarMarca.FlatStyle = FlatStyle.Flat;
-            btnBuscarMarca.Location = new Point(380, 186);
+            btnBuscarMarca.Location = new Point(380, 187);
             btnBuscarMarca.Name = "btnBuscarMarca";
             btnBuscarMarca.Size = new Size(48, 20);
             btnBuscarMarca.TabIndex = 45;

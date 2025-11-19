@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPresentaciones));
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
@@ -124,34 +124,34 @@
             // dgvPresentaciones
             // 
             dgvPresentaciones.AllowUserToAddRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvPresentaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvPresentaciones.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvPresentaciones.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             dgvPresentaciones.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvPresentaciones.BorderStyle = BorderStyle.None;
             dgvPresentaciones.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvPresentaciones.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvPresentaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvPresentaciones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvPresentaciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvPresentaciones.Columns.AddRange(new DataGridViewColumn[] { IdPresentacion, NombrePresentacion, dataGridViewTextBoxColumn4, EstadoPresentacion });
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.White;
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.Padding = new Padding(5);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle7.SelectionForeColor = Color.White;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            dgvPresentaciones.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvPresentaciones.DefaultCellStyle = dataGridViewCellStyle3;
             dgvPresentaciones.Dock = DockStyle.Fill;
             dgvPresentaciones.EnableHeadersVisualStyles = false;
             dgvPresentaciones.GridColor = Color.FromArgb(189, 215, 238);
@@ -159,14 +159,14 @@
             dgvPresentaciones.Name = "dgvPresentaciones";
             dgvPresentaciones.ReadOnly = true;
             dgvPresentaciones.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvPresentaciones.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvPresentaciones.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvPresentaciones.RowHeadersWidth = 30;
             dgvPresentaciones.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvPresentaciones.RowTemplate.Height = 50;
@@ -278,6 +278,7 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnAgregarPresentacion);
             flowLayoutPanel1.Controls.Add(btnModificarPresentacion);
             flowLayoutPanel1.Controls.Add(btnSeleccionarPresentacion);
