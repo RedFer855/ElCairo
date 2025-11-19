@@ -235,13 +235,20 @@ namespace ModernMenuUI
                 .Where(u => u.Uuid == authUser.Id)
                 .Single();
 
-            if (_usuarioSeleccionado != null)
+            if (_usuarioSeleccionado == null)
             {
-
+                MessageBox.Show("Por favor, seleccione un usuario de la lista antes de continuar.",
+                                "Seleccione un usuario",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
                 frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
                 usuario.ShowDialog();
-                    
             }
+            
         }
     }
 }

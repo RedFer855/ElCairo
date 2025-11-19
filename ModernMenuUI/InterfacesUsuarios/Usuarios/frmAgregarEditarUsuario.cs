@@ -20,25 +20,18 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
         public frmAgregarEditarUsuario(Usuario editado, Usuario actual)
         {
             InitializeComponent();
-            usuarioEditado = editado;               // Usuario que será editado
-            usuarioActualSistema = actual;          // Usuario logueado
+            usuarioEditado = editado;
+            usuarioActualSistema = actual;
         }
 
         private async void frmAgregarEditarUsuario_Load(object sender, EventArgs e)
         {
             UsuarioRepositorio userRepo = new UsuarioRepositorio();
 
-            // Obtener todos los roles
+            // Obtener todos los roles sin filtrar
             var roles = await userRepo.ObtenerTodosLosUsuariosRoles();
-            int rolActualSistema = usuarioActualSistema.RolUsuario;
 
-            // Si el usuario logueado es Admin (1), solo mostrar vendedor y cajero
-            if (rolActualSistema == 1)
-            {
-                roles = roles.Where(r => r.IdRol == 2 || r.IdRol == 3).ToList();
-            }
-
-            // Cargar roles en el combo
+            // Cargar roles completos al combo (para evitar SelectedValue null)
             cmbRol.DataSource = roles;
             cmbRol.DisplayMember = "NombreRol";
             cmbRol.ValueMember = "IdRol";
@@ -48,6 +41,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
             {
                 txtCorreo.Text = usuarioEditado.AliasUsuario;
                 rdbActivo.Checked = usuarioEditado.EstadoUsuario;
+
+                // Seleccionar el rol actual del usuario editado
                 cmbRol.SelectedValue = usuarioEditado.RolUsuario;
             }
         }
@@ -56,16 +51,22 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
         {
             UsuarioRepositorio userRepo = new UsuarioRepositorio();
 
-            // Usuario logueado
             int idActual = usuarioActualSistema.IdUsuario;
             int rolActual = usuarioActualSistema.RolUsuario;
 
-            // Usuario editado
             int idEditado = usuarioEditado.IdUsuario;
             int rolOriginalEditado = usuarioEditado.RolUsuario;
 
-            // Nuevos valores
-            int nuevoRol = (int)cmbRol.SelectedValue;
+            // ----------------------------
+            // VALIDACIÓN: SelectedValue seguro
+            // ----------------------------
+            if (cmbRol.SelectedValue == null)
+            {
+                MessageBox.Show("Debes seleccionar un rol válido antes de guardar.");
+                return;
+            }
+
+            int nuevoRol = Convert.ToInt32(cmbRol.SelectedValue);
             bool nuevoEstado = rdbActivo.Checked;
 
             var cambios = new UsuarioRepositorio.CambiosUsuario
@@ -81,7 +82,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
             //               VALIDACIONES DE PERMISOS
             // -----------------------------------------------------
 
-            // 1. Un admin NO puede cambiar su propio rol
+            // 1. Admin NO puede cambiar su propio rol
             if (esAdmin && idActual == idEditado)
             {
                 MessageBox.Show("No puedes cambiar tu propio rol.");

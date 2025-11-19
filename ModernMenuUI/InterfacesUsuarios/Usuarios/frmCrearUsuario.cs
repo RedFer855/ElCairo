@@ -51,9 +51,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
                 UsuarioRepositorio user = new UsuarioRepositorio();
                 
                 await user.RegistrarUsuario(correo, contra);
-                MessageBox.Show("Confirme su correo en su bandeja del email de su empleado.");
+                MessageBox.Show("Confirme su correo con el link de validación enviado\n al correo relacionado.");
 
-                this.Close();
+                //this.Close();
                
             }
         }

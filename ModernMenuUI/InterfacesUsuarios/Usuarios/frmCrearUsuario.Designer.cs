@@ -129,10 +129,12 @@
             // 
             txtCorreo.BackColor = Color.White;
             txtCorreo.BorderStyle = BorderStyle.None;
+            txtCorreo.Enabled = false;
             txtCorreo.Font = new Font("Itim", 13F);
             txtCorreo.Location = new Point(174, 75);
             txtCorreo.Margin = new Padding(3, 4, 3, 4);
             txtCorreo.Name = "txtCorreo";
+            txtCorreo.ReadOnly = true;
             txtCorreo.Size = new Size(250, 26);
             txtCorreo.TabIndex = 5;
             // 
@@ -186,14 +188,14 @@
             txtContrasenia.Size = new Size(250, 26);
             txtContrasenia.TabIndex = 33;
             // 
-            // CrearUsuario
+            // frmCrearUsuario
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(472, 388);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
-            Name = "CrearUsuario";
+            Name = "frmCrearUsuario";
             Text = "CrearUsuario";
             Load += CrearUsuario_Load;
             panBarraControl.ResumeLayout(false);

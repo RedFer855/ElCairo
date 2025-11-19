@@ -233,6 +233,7 @@
             // dgvUsuario
             // 
             dgvUsuario.AllowUserToAddRows = false;
+            dgvUsuario.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
@@ -268,6 +269,7 @@
             dgvUsuario.Location = new Point(0, 0);
             dgvUsuario.Margin = new Padding(3, 4, 3, 4);
             dgvUsuario.Name = "dgvUsuario";
+            dgvUsuario.ReadOnly = true;
             dgvUsuario.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
@@ -293,6 +295,7 @@
             dataGridViewTextBoxColumn1.HeaderText = "Id";
             dataGridViewTextBoxColumn1.MinimumWidth = 6;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
             dataGridViewTextBoxColumn1.Resizable = DataGridViewTriState.True;
             // 
             // dataGridViewTextBoxColumn2
@@ -302,6 +305,7 @@
             dataGridViewTextBoxColumn2.HeaderText = "Usuario";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // Categoria
             // 
@@ -310,6 +314,7 @@
             Categoria.HeaderText = "Rol";
             Categoria.MinimumWidth = 6;
             Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
             // 
             // EstadoUsuario
             // 
@@ -318,6 +323,7 @@
             EstadoUsuario.HeaderText = "Estado";
             EstadoUsuario.MinimumWidth = 6;
             EstadoUsuario.Name = "EstadoUsuario";
+            EstadoUsuario.ReadOnly = true;
             EstadoUsuario.Resizable = DataGridViewTriState.True;
             EstadoUsuario.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
