@@ -81,7 +81,7 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(385, 301);
+            btnVolver.Location = new Point(307, 301);
             btnVolver.Margin = new Padding(3, 4, 3, 4);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(109, 49);
@@ -122,7 +122,7 @@
             btnGuardarEmpleado.Font = new Font("Itim", 11.9999981F);
             btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
             btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarEmpleado.Location = new Point(31, 301);
+            btnGuardarEmpleado.Location = new Point(174, 301);
             btnGuardarEmpleado.Margin = new Padding(3, 4, 3, 4);
             btnGuardarEmpleado.Name = "btnGuardarEmpleado";
             btnGuardarEmpleado.Size = new Size(118, 49);

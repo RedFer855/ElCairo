@@ -245,8 +245,8 @@ namespace ModernMenuUI
             }
             else
             {
-                //frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
-                //usuario.ShowDialog();
+                frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
+                usuario.ShowDialog();
             }
 
 
