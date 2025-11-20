@@ -34,7 +34,12 @@ namespace CapaDeDatos.Datos
                 throw new ApplicationException("SUPABASE_URL o SUPABASE_KEY no están configuradas.");
             }
 
-            var options = new SupabaseOptions { AutoRefreshToken = true, AutoConnectRealtime = true };
+            var options = new SupabaseOptions
+            {
+                AutoRefreshToken = false,
+                AutoConnectRealtime = true,
+                SessionHandler = null // <-- ESTO ES LO IMPORTANTE
+            };
             _supabaseClient = new Client(supabaseUrl, supabaseKey, options);
             await _supabaseClient.InitializeAsync();
 
