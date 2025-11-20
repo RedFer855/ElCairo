@@ -4,6 +4,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion; // Para el monitor de red
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.InterfacesUsuarios.Usuarios;
 using Supabase.Realtime; // Para Realtime
 using System;
 using System.Collections.Generic;
@@ -221,6 +222,33 @@ namespace ModernMenuUI
 
         private void btnNuevo_Click_1(object sender, EventArgs e)
         {
+
+        }
+
+        private async void btnNuevo_Click_2(object sender, EventArgs e)
+        {
+            var client = await Conexion.GetClientAsync();
+            var authUser = client.Auth.CurrentUser;
+
+            var usuarioActualSistema = await client
+                .From<Usuario>()
+                .Where(u => u.Uuid == authUser.Id)
+                .Single();
+
+            if (_usuarioSeleccionado == null)
+            {
+                MessageBox.Show("Por favor, seleccione un usuario de la lista antes de continuar.",
+                                "Seleccione un usuario",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                //frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
+                //usuario.ShowDialog();
+            }
+
 
         }
     }
