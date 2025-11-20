@@ -459,28 +459,29 @@ namespace ModernMenuUI
                 return;
             }
 
-            // 2. VALIDAR PROVEEDOR (Usando el Label o la Variable)
-            // Si el label dice "---" o está vacío, es que no se ha seleccionado a nadie
-            if (lblProveedorActual.Text == "---" || string.IsNullOrEmpty(lblProveedorActual.Text) || _proveedorSeleccionado == null)
+            // 2. VALIDAR QUE HAYA ALGO ESCRITO EN EL TEXTBOX
+            // Ahora validamos el texto visual, no la variable interna
+            if (string.IsNullOrWhiteSpace(txtProveedor.Text))
             {
-                MessageBox.Show("Por favor busque y seleccione un proveedor antes de generar el reporte.",
+                MessageBox.Show("Por favor escriba o seleccione un proveedor antes de generar el reporte.",
                                 "Falta Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtProveedor.Focus(); // Mandamos el cursor al buscador
+                txtProveedor.Focus();
                 return;
             }
+
+            // 3. OBTENER EL NOMBRE DEL USUARIO
             this.Cursor = Cursors.WaitCursor;
-            string nombreUsuario = await ObtenerNombreUsuarioActual(); 
+            string nombreUsuario = await ObtenerNombreUsuarioActual();
             this.Cursor = Cursors.Default;
 
             List<clsOrdenCompra> itemsParaReporte = new List<clsOrdenCompra>();
 
-            // 3. LEER EL CARRITO FILA POR FILA
+            // 4. LEER EL CARRITO
             foreach (DataGridViewRow row in dgvCarrito.Rows)
             {
                 if (row.IsNewRow) continue;
 
                 clsOrdenCompra item = new clsOrdenCompra();
-                // Asegúrate que los nombres de columnas ("colCodigo", etc.) sean los de tu diseño
                 item.Codigo = row.Cells["colCodigo"].Value.ToString();
                 item.Producto = row.Cells["colProducto"].Value.ToString();
                 item.Precio = Convert.ToDecimal(row.Cells["colPrecio"].Value);
@@ -489,20 +490,78 @@ namespace ModernMenuUI
                 itemsParaReporte.Add(item);
             }
 
-            // 4. LEER LOS TOTALES
+            // 5. LEER LOS TOTALES
             string sub = txtSubTotal.Text;
             string imp = txtImpuesto.Text;
             string total = txtTotal.Text;
 
-            // 5. OBTENER EL NOMBRE DEL PROVEEDOR (DESDE EL LABEL)
-            // Aquí tomamos exactamente lo que el usuario ve en el Label de selección
-            string nombreProveedor = lblProveedorActual.Text;
+            // 6. OBTENER EL PROVEEDOR (DESDE EL TEXTBOX)
+            // Aquí tomamos lo que sea que hayas escrito en la caja
+            string nombreProveedor = txtProveedor.Text.Trim();
 
-            // 6. CREAR Y MOSTRAR EL REPORTE
-            // Pasamos los 5 argumentos: Lista, Subtotal, Impuesto, Total, Proveedor
-            frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(itemsParaReporte, sub, imp, total, nombreProveedor, nombreUsuario);
+            // 7. CREAR Y MOSTRAR EL REPORTE
+            frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(
+                itemsParaReporte,
+                sub,
+                imp,
+                total,
+                nombreProveedor, // <-- Se va lo que escribiste
+                nombreUsuario
+            );
 
             frmReporte.ShowDialog();
+            /* // 1. VALIDAR CARRITO VACÍO
+             if (dgvCarrito.Rows.Count == 0)
+             {
+                 MessageBox.Show("El carrito está vacío. Agregue productos para generar la orden.",
+                                 "Carrito Vacío", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                 return;
+             }
+
+             // 2. VALIDAR PROVEEDOR (Usando el Label o la Variable)
+             // Si el label dice "---" o está vacío, es que no se ha seleccionado a nadie
+             if (lblProveedorActual.Text == "---" || string.IsNullOrEmpty(lblProveedorActual.Text) || _proveedorSeleccionado == null)
+             {
+                 MessageBox.Show("Por favor busque y seleccione un proveedor antes de generar el reporte.",
+                                 "Falta Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                 txtProveedor.Focus(); // Mandamos el cursor al buscador
+                 return;
+             }
+             this.Cursor = Cursors.WaitCursor;
+             string nombreUsuario = await ObtenerNombreUsuarioActual(); 
+             this.Cursor = Cursors.Default;
+
+             List<clsOrdenCompra> itemsParaReporte = new List<clsOrdenCompra>();
+
+             // 3. LEER EL CARRITO FILA POR FILA
+             foreach (DataGridViewRow row in dgvCarrito.Rows)
+             {
+                 if (row.IsNewRow) continue;
+
+                 clsOrdenCompra item = new clsOrdenCompra();
+                 // Asegúrate que los nombres de columnas ("colCodigo", etc.) sean los de tu diseño
+                 item.Codigo = row.Cells["colCodigo"].Value.ToString();
+                 item.Producto = row.Cells["colProducto"].Value.ToString();
+                 item.Precio = Convert.ToDecimal(row.Cells["colPrecio"].Value);
+                 item.Cantidad = Convert.ToInt32(row.Cells["colCantidad"].Value);
+
+                 itemsParaReporte.Add(item);
+             }
+
+             // 4. LEER LOS TOTALES
+             string sub = txtSubTotal.Text;
+             string imp = txtImpuesto.Text;
+             string total = txtTotal.Text;
+
+             // 5. OBTENER EL NOMBRE DEL PROVEEDOR (DESDE EL LABEL)
+             // Aquí tomamos exactamente lo que el usuario ve en el Label de selección
+             string nombreProveedor = lblProveedorActual.Text;
+
+             // 6. CREAR Y MOSTRAR EL REPORTE
+             // Pasamos los 5 argumentos: Lista, Subtotal, Impuesto, Total, Proveedor
+             frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(itemsParaReporte, sub, imp, total, nombreProveedor, nombreUsuario);
+
+             frmReporte.ShowDialog();*/
         }
 
         private void txtProveedor_TextChanged(object sender, EventArgs e)
