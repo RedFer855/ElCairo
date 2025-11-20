@@ -253,6 +253,16 @@ namespace ModernMenuUI.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap logo_ElCairo {
+            get {
+                object obj = ResourceManager.GetObject("logo_ElCairo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mas__1_ {
             get {
                 object obj = ResourceManager.GetObject("mas (1)", resourceCulture);

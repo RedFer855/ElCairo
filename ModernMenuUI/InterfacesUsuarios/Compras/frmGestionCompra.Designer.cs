@@ -41,7 +41,7 @@
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             btnSalir = new Button();
-            button1 = new Button();
+            btnImprimirOrden = new Button();
             panel5 = new Panel();
             btnBuscarProv = new Button();
             txtBuscarProv = new TextBox();
@@ -77,6 +77,13 @@
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
+            Codigos = new DataGridViewTextBoxColumn();
+            Producto = new DataGridViewTextBoxColumn();
+            Marca = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
+            Precio = new DataGridViewTextBoxColumn();
+            Stock = new DataGridViewTextBoxColumn();
+            CodigoBarra = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
             textBox1 = new TextBox();
             label10 = new Label();
@@ -91,13 +98,6 @@
             txtPrecio = new TextBox();
             btnAgregar = new Button();
             lstSugerencias = new ListBox();
-            CodigoBarra = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            Marca = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
-            Precio = new DataGridViewTextBoxColumn();
-            Stock = new DataGridViewTextBoxColumn();
-            Codigos = new DataGridViewTextBoxColumn();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -124,7 +124,7 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(674, 612);
+            btnSalir.Location = new Point(821, 645);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(80, 63);
             btnSalir.TabIndex = 26;
@@ -132,18 +132,19 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click_1;
             // 
-            // button1
+            // btnImprimirOrden
             // 
-            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.BackColor = Color.FromArgb(189, 215, 238);
-            button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.FromArgb(87, 99, 110);
-            button1.Location = new Point(534, 612);
-            button1.Name = "button1";
-            button1.Size = new Size(134, 63);
-            button1.TabIndex = 24;
-            button1.Text = "Imprimir Orden";
-            button1.UseVisualStyleBackColor = false;
+            btnImprimirOrden.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnImprimirOrden.BackColor = Color.FromArgb(189, 215, 238);
+            btnImprimirOrden.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnImprimirOrden.ForeColor = Color.FromArgb(87, 99, 110);
+            btnImprimirOrden.Location = new Point(681, 645);
+            btnImprimirOrden.Name = "btnImprimirOrden";
+            btnImprimirOrden.Size = new Size(134, 63);
+            btnImprimirOrden.TabIndex = 24;
+            btnImprimirOrden.Text = "Imprimir Orden";
+            btnImprimirOrden.UseVisualStyleBackColor = false;
+            btnImprimirOrden.Click += btnImprimirOrden_Click;
             // 
             // panel5
             // 
@@ -201,7 +202,7 @@
             btnAgregarCompra.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarCompra.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCompra.ForeColor = SystemColors.ButtonFace;
-            btnAgregarCompra.Location = new Point(420, 612);
+            btnAgregarCompra.Location = new Point(567, 645);
             btnAgregarCompra.Name = "btnAgregarCompra";
             btnAgregarCompra.Size = new Size(108, 63);
             btnAgregarCompra.TabIndex = 25;
@@ -216,9 +217,9 @@
             panel4.BackColor = Color.FromArgb(189, 215, 238);
             panel4.Controls.Add(panel9);
             panel4.Controls.Add(tableLayoutPanel1);
-            panel4.Location = new Point(12, 612);
+            panel4.Location = new Point(12, 645);
             panel4.Name = "panel4";
-            panel4.Size = new Size(402, 63);
+            panel4.Size = new Size(549, 63);
             panel4.TabIndex = 22;
             // 
             // panel9
@@ -247,7 +248,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(402, 63);
+            tableLayoutPanel1.Size = new Size(549, 63);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // panel8
@@ -255,9 +256,9 @@
             panel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel8.Controls.Add(txtTotal);
             panel8.Controls.Add(label6);
-            panel8.Location = new Point(265, 3);
+            panel8.Location = new Point(368, 3);
             panel8.Name = "panel8";
-            panel8.Size = new Size(106, 51);
+            panel8.Size = new Size(150, 51);
             panel8.TabIndex = 24;
             // 
             // txtTotal
@@ -270,7 +271,7 @@
             txtTotal.Name = "txtTotal";
             txtTotal.PlaceholderText = "L0,00";
             txtTotal.ReadOnly = true;
-            txtTotal.Size = new Size(106, 29);
+            txtTotal.Size = new Size(150, 29);
             txtTotal.TabIndex = 24;
             // 
             // label6
@@ -290,9 +291,9 @@
             panel3.Controls.Add(txtImpuesto);
             panel3.Controls.Add(label7);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(163, 3);
+            panel3.Location = new Point(226, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(72, 57);
+            panel3.Size = new Size(103, 57);
             panel3.TabIndex = 22;
             // 
             // txtImpuesto
@@ -305,7 +306,7 @@
             txtImpuesto.Name = "txtImpuesto";
             txtImpuesto.PlaceholderText = "L0,00";
             txtImpuesto.ReadOnly = true;
-            txtImpuesto.Size = new Size(72, 29);
+            txtImpuesto.Size = new Size(103, 29);
             txtImpuesto.TabIndex = 22;
             // 
             // label7
@@ -325,9 +326,9 @@
             panel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel6.Controls.Add(txtSubTotal);
             panel6.Controls.Add(label5);
-            panel6.Location = new Point(22, 3);
+            panel6.Location = new Point(29, 3);
             panel6.Name = "panel6";
-            panel6.Size = new Size(108, 51);
+            panel6.Size = new Size(153, 51);
             panel6.TabIndex = 23;
             // 
             // txtSubTotal
@@ -340,7 +341,7 @@
             txtSubTotal.Name = "txtSubTotal";
             txtSubTotal.PlaceholderText = "L0,00";
             txtSubTotal.ReadOnly = true;
-            txtSubTotal.Size = new Size(108, 29);
+            txtSubTotal.Size = new Size(153, 29);
             txtSubTotal.TabIndex = 23;
             // 
             // label5
@@ -362,7 +363,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(12, 301);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(742, 305);
+            panelCarrito.Size = new Size(889, 338);
             panelCarrito.TabIndex = 21;
             // 
             // panel10
@@ -373,7 +374,7 @@
             panel10.Controls.Add(dgvCarrito);
             panel10.Location = new Point(20, 11);
             panel10.Name = "panel10";
-            panel10.Size = new Size(702, 279);
+            panel10.Size = new Size(849, 312);
             panel10.TabIndex = 17;
             // 
             // pbxCarritoVacio
@@ -383,7 +384,7 @@
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
             pbxCarritoVacio.Location = new Point(286, 106);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(123, 110);
+            pbxCarritoVacio.Size = new Size(270, 143);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
@@ -451,7 +452,7 @@
             dgvCarrito.RowsDefaultCellStyle = dataGridViewCellStyle5;
             dgvCarrito.RowTemplate.Height = 50;
             dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCarrito.Size = new Size(702, 279);
+            dgvCarrito.Size = new Size(849, 312);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
             dgvCarrito.CellMouseDown += dgvCarrito_CellMouseDown;
@@ -534,7 +535,7 @@
             panelBusqueda.Controls.Add(btnBuscarProductos);
             panelBusqueda.Location = new Point(356, 4);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(398, 51);
+            panelBusqueda.Size = new Size(545, 51);
             panelBusqueda.TabIndex = 18;
             // 
             // txtBuscar
@@ -545,7 +546,7 @@
             txtBuscar.Location = new Point(21, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(303, 20);
+            txtBuscar.Size = new Size(450, 20);
             txtBuscar.TabIndex = 1;
             // 
             // btnBuscarProductos
@@ -556,7 +557,7 @@
             btnBuscarProductos.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarProductos.FlatAppearance.BorderSize = 0;
             btnBuscarProductos.FlatStyle = FlatStyle.Flat;
-            btnBuscarProductos.Location = new Point(330, 13);
+            btnBuscarProductos.Location = new Point(477, 13);
             btnBuscarProductos.Name = "btnBuscarProductos";
             btnBuscarProductos.Size = new Size(48, 20);
             btnBuscarProductos.TabIndex = 0;
@@ -569,7 +570,7 @@
             panel1.Controls.Add(panel7);
             panel1.Location = new Point(356, 61);
             panel1.Name = "panel1";
-            panel1.Size = new Size(398, 234);
+            panel1.Size = new Size(545, 234);
             panel1.TabIndex = 19;
             // 
             // panel7
@@ -580,7 +581,7 @@
             panel7.Controls.Add(dgvProductos);
             panel7.Location = new Point(21, 12);
             panel7.Name = "panel7";
-            panel7.Size = new Size(357, 210);
+            panel7.Size = new Size(504, 210);
             panel7.TabIndex = 12;
             // 
             // dgvProductos
@@ -602,7 +603,7 @@
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dgvProductos.ColumnHeadersHeight = 40;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { CodigoBarra, Producto, Marca, Categoria, Precio, Stock, Codigos });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { Codigos, Producto, Marca, Categoria, Precio, Stock, CodigoBarra });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.White;
             dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -636,9 +637,87 @@
             dgvProductos.RowsDefaultCellStyle = dataGridViewCellStyle11;
             dgvProductos.RowTemplate.Height = 40;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(357, 210);
+            dgvProductos.Size = new Size(504, 210);
             dgvProductos.TabIndex = 0;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
+            // 
+            // Codigos
+            // 
+            Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Codigos.DataPropertyName = "IdProducto";
+            dataGridViewCellStyle7.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle7.Padding = new Padding(0, 1, 0, 0);
+            Codigos.DefaultCellStyle = dataGridViewCellStyle7;
+            Codigos.FillWeight = 90F;
+            Codigos.HeaderText = "Código";
+            Codigos.MinimumWidth = 6;
+            Codigos.Name = "Codigos";
+            Codigos.ReadOnly = true;
+            Codigos.Width = 89;
+            // 
+            // Producto
+            // 
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Producto.DataPropertyName = "NombreProducto";
+            Producto.FillWeight = 200F;
+            Producto.HeaderText = "Producto";
+            Producto.MinimumWidth = 6;
+            Producto.Name = "Producto";
+            Producto.ReadOnly = true;
+            Producto.Width = 105;
+            // 
+            // Marca
+            // 
+            Marca.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Marca.DataPropertyName = "NombreMarca";
+            Marca.HeaderText = "Marca";
+            Marca.MinimumWidth = 6;
+            Marca.Name = "Marca";
+            Marca.ReadOnly = true;
+            Marca.Width = 84;
+            // 
+            // Categoria
+            // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Categoria.DataPropertyName = "NombreCategoria";
+            Categoria.HeaderText = "Categoria";
+            Categoria.MinimumWidth = 6;
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
+            Categoria.Width = 108;
+            // 
+            // Precio
+            // 
+            Precio.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Precio.DataPropertyName = "PrecioCompra";
+            Precio.FillWeight = 80F;
+            Precio.HeaderText = "Precio";
+            Precio.MinimumWidth = 6;
+            Precio.Name = "Precio";
+            Precio.ReadOnly = true;
+            Precio.Width = 84;
+            // 
+            // Stock
+            // 
+            Stock.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Stock.DataPropertyName = "CantidadProducto";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Stock.DefaultCellStyle = dataGridViewCellStyle8;
+            Stock.FillWeight = 80F;
+            Stock.HeaderText = "Stock";
+            Stock.MinimumWidth = 6;
+            Stock.Name = "Stock";
+            Stock.ReadOnly = true;
+            Stock.Width = 80;
+            // 
+            // CodigoBarra
+            // 
+            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            CodigoBarra.DataPropertyName = "CodigoBarraProducto";
+            CodigoBarra.HeaderText = "Código de Barra";
+            CodigoBarra.Name = "CodigoBarra";
+            CodigoBarra.ReadOnly = true;
+            CodigoBarra.Width = 152;
             // 
             // panel2
             // 
@@ -816,94 +895,16 @@
             lstSugerencias.MouseDown += lstSugerencias_MouseDown;
             lstSugerencias.MouseUp += lstSugerencias_MouseUp;
             // 
-            // CodigoBarra
-            // 
-            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            CodigoBarra.DataPropertyName = "CodigoBarraProducto";
-            CodigoBarra.HeaderText = "Código de Barra";
-            CodigoBarra.Name = "CodigoBarra";
-            CodigoBarra.ReadOnly = true;
-            CodigoBarra.Width = 152;
-            // 
-            // Producto
-            // 
-            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Producto.DataPropertyName = "NombreProducto";
-            Producto.FillWeight = 200F;
-            Producto.HeaderText = "Producto";
-            Producto.MinimumWidth = 6;
-            Producto.Name = "Producto";
-            Producto.ReadOnly = true;
-            Producto.Width = 105;
-            // 
-            // Marca
-            // 
-            Marca.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Marca.DataPropertyName = "NombreMarca";
-            Marca.HeaderText = "Marca";
-            Marca.MinimumWidth = 6;
-            Marca.Name = "Marca";
-            Marca.ReadOnly = true;
-            Marca.Width = 84;
-            // 
-            // Categoria
-            // 
-            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Categoria.DataPropertyName = "NombreCategoria";
-            Categoria.HeaderText = "Categoria";
-            Categoria.MinimumWidth = 6;
-            Categoria.Name = "Categoria";
-            Categoria.ReadOnly = true;
-            Categoria.Width = 108;
-            // 
-            // Precio
-            // 
-            Precio.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Precio.DataPropertyName = "PrecioCompra";
-            Precio.FillWeight = 80F;
-            Precio.HeaderText = "Precio";
-            Precio.MinimumWidth = 6;
-            Precio.Name = "Precio";
-            Precio.ReadOnly = true;
-            Precio.Width = 84;
-            // 
-            // Stock
-            // 
-            Stock.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Stock.DataPropertyName = "CantidadProducto";
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Stock.DefaultCellStyle = dataGridViewCellStyle7;
-            Stock.FillWeight = 80F;
-            Stock.HeaderText = "Stock";
-            Stock.MinimumWidth = 6;
-            Stock.Name = "Stock";
-            Stock.ReadOnly = true;
-            Stock.Width = 80;
-            // 
-            // Codigos
-            // 
-            Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Codigos.DataPropertyName = "IdProducto";
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.Padding = new Padding(0, 1, 0, 0);
-            Codigos.DefaultCellStyle = dataGridViewCellStyle8;
-            Codigos.FillWeight = 90F;
-            Codigos.HeaderText = "Código";
-            Codigos.MinimumWidth = 6;
-            Codigos.Name = "Codigos";
-            Codigos.ReadOnly = true;
-            Codigos.Width = 89;
-            // 
             // frmGestionCompra
             // 
             AccessibleRole = AccessibleRole.None;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(766, 679);
+            ClientSize = new Size(913, 712);
             Controls.Add(lstSugerencias);
             Controls.Add(btnSalir);
-            Controls.Add(button1);
+            Controls.Add(btnImprimirOrden);
             Controls.Add(panel5);
             Controls.Add(btnAgregarCompra);
             Controls.Add(panel4);
@@ -946,7 +947,7 @@
         #endregion
 
         private Button btnSalir;
-        private Button button1;
+        private Button btnImprimirOrden;
         private Panel panel5;
         private Label label4;
         private Button btnAgregarCompra;
@@ -996,12 +997,12 @@
         private DataGridViewImageColumn Eliminar;
         private Label label10;
         private TextBox textBox1;
-        private DataGridViewTextBoxColumn CodigoBarra;
+        private DataGridViewTextBoxColumn Codigos;
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Marca;
         private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
-        private DataGridViewTextBoxColumn Codigos;
+        private DataGridViewTextBoxColumn CodigoBarra;
     }
 }

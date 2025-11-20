@@ -4,6 +4,7 @@ using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.InterfacesUsuarios.Compras;
 using Supabase;
 using Supabase.Realtime;
 using System;
@@ -18,6 +19,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Postgrest.Constants;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
+using CapaDominio.Reportes;
+
 
 namespace ModernMenuUI
 {
@@ -257,9 +260,10 @@ namespace ModernMenuUI
 
         private void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            // Validar que se hizo clic dentro de una fila válida
             if (e.RowIndex < 0 || e.RowIndex >= dgvCarrito.RowCount) return;
 
-            // Columna eliminar (4)
+            // --- COLUMNA 4: ELIMINAR ---
             if (e.ColumnIndex == 4)
             {
                 if (dgvCarrito.CurrentRow != null)
@@ -267,9 +271,10 @@ namespace ModernMenuUI
                 return;
             }
 
-            // Columna restar (5)
+            // --- COLUMNA 5: RESTAR ---
             if (e.ColumnIndex == 5)
             {
+                // Leemos la cantidad actual (Celda 3)
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
                     if (cantidad > 1)
@@ -284,7 +289,7 @@ namespace ModernMenuUI
                 return;
             }
 
-            // Columna sumar (6)
+            // --- COLUMNA 6: SUMAR (Posición Original) ---
             if (e.ColumnIndex == 6)
             {
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
@@ -298,60 +303,62 @@ namespace ModernMenuUI
             }
         }
 
-        private void AgregarAlCarrito(int codigoProducto, int cantidadAgregar)
+        private void AgregarAlCarrito(string codigoBarra, int cantidadAgregar)
         {
+            // 1. Validaciones básicas
+            if (string.IsNullOrWhiteSpace(codigoBarra)) return;
+            string codigoBuscado = codigoBarra.Trim();
+
+            // 2. Recursos
             Image Eliminar = Properties.Resources.eliminar__1_;
             Image Restar = Properties.Resources.signo_menos__1_;
             Image Sumar = Properties.Resources.mas__2_;
 
+            // 3. Buscar producto en la Grilla de Productos (dgvProductos)
             DataGridViewRow producto = null;
-            for (int i = 0; i < dgvProductos.Rows.Count; i++)
+            foreach (DataGridViewRow fila in dgvProductos.Rows)
             {
-                if (dgvProductos.Rows[i].Cells[0].Value is int id && id == codigoProducto)
+                string valCelda = fila.Cells[0].Value?.ToString();
+                if (!string.IsNullOrEmpty(valCelda) &&
+                    valCelda.Trim().Equals(codigoBuscado, StringComparison.OrdinalIgnoreCase))
                 {
-                    producto = dgvProductos.Rows[i];
+                    producto = fila;
                     break;
                 }
             }
 
             if (producto == null)
             {
-                MessageBox.Show("Producto no encontrado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Producto '{codigoBarra}' no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // 4. Obtener datos
             string descripcion = producto.Cells[1].Value?.ToString() ?? "";
             decimal costo = 0;
             decimal.TryParse(producto.Cells[4].Value?.ToString(), out costo);
 
-            // Verificar si ya está en el carrito
-            for (int i = 0; i < dgvCarrito.Rows.Count; i++)
+            // 5. Verificar si ya existe en el Carrito (para sumar)
+            foreach (DataGridViewRow filaCarrito in dgvCarrito.Rows)
             {
-                if (dgvCarrito.Rows[i].Cells[0].Value is int idCarrito && idCarrito == codigoProducto)
+                string codCarrito = filaCarrito.Cells[0].Value?.ToString();
+                if (codCarrito != null && codCarrito.Equals(codigoBuscado, StringComparison.OrdinalIgnoreCase))
                 {
-                    int cantidadActual = Convert.ToInt32(dgvCarrito.Rows[i].Cells[3].Value);
-                    int nuevaCantidad = cantidadActual + cantidadAgregar;
+                    int cantActual = Convert.ToInt32(filaCarrito.Cells[3].Value);
+                    int nuevaCant = cantActual + cantidadAgregar;
 
-                    if (nuevaCantidad > 400)
-                    {
-                        MessageBox.Show("La cantidad máxima por producto es 400.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        dgvCarrito.Rows[i].Cells[3].Value = 400;
-                    }
-                    else
-                    {
-                        dgvCarrito.Rows[i].Cells[3].Value = nuevaCantidad;
-                    }
+                    if (nuevaCant > 400) nuevaCant = 400;
 
-                    return;
+                    filaCarrito.Cells[3].Value = nuevaCant;
+                    return; // Ya actualizamos, salimos.
                 }
             }
 
-            // Si no está en el carrito, agregar nuevo producto
+            // 6. Agregar nueva fila (ESTRUCTURA ORIGINAL DE 7 COLUMNAS)
             int cantidadFinal = Math.Min(cantidadAgregar, 400);
-            if (cantidadAgregar > 400)
-                MessageBox.Show("La cantidad máxima por producto es 400. Se ajustó automáticamente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            dgvCarrito.Rows.Add(codigoProducto, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
+            // Índices: 0=Código, 1=Desc, 2=Precio, 3=Cant, 4=Del, 5=Restar, 6=Sumar
+            dgvCarrito.Rows.Add(codigoBuscado, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -374,7 +381,16 @@ namespace ModernMenuUI
                 return;
             }
 
-            AgregarAlCarrito(Convert.ToInt32(txtCodigo.Text), Convert.ToInt32(nudCantidad.Value));
+            // Validación de texto vacío
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
+            {
+                MessageBox.Show("Por favor seleccione un producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // --- CAMBIO AQUÍ ---
+            // Pasamos txtCodigo.Text directamente (es string), ya no lo convertimos a Int32
+            AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
             // Reiniciar controles
             nudCantidad.Value = 1;
@@ -739,5 +755,79 @@ namespace ModernMenuUI
             await HandleBuscarProveedorAsync();
         }
         #endregion
+
+        private async void btnImprimirOrden_Click(object sender, EventArgs e)
+        {
+            // 1. VALIDAR CARRITO VACÍO
+            if (dgvCarrito.Rows.Count == 0)
+            {
+                MessageBox.Show("El carrito está vacío. Agregue productos para generar la orden.",
+                                "Carrito Vacío", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. VALIDAR QUE HAYA ALGO ESCRITO EN EL TEXTBOX
+            // Ahora validamos el texto visual, no la variable interna
+            if (string.IsNullOrWhiteSpace(txtBuscarProv.Text))
+            {
+                MessageBox.Show("Por favor escriba o seleccione un proveedor antes de generar el reporte.",
+                                "Falta Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtBuscarProv.Focus();
+                return;
+            }
+
+            // 3. OBTENER EL NOMBRE DEL USUARIO
+            this.Cursor = Cursors.WaitCursor;
+            string nombreUsuario = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
+            this.Cursor = Cursors.Default;
+
+            List<OrdenCompra> itemsParaReporte = new List<OrdenCompra>();
+
+            // 4. LEER EL CARRITO (CORREGIDO)
+            foreach (DataGridViewRow row in dgvCarrito.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                OrdenCompra item = new OrdenCompra();
+
+                // --- CAMBIOS AQUÍ: Usar índices en lugar de nombres ---
+                // Índice 0: Código de Barra (String)
+                item.Codigo = row.Cells[0].Value?.ToString() ?? "";
+
+                // Índice 1: Descripción/Producto
+                item.Producto = row.Cells[1].Value?.ToString() ?? "";
+
+                // Índice 2: Precio/Costo
+                item.Precio = Convert.ToDecimal(row.Cells[2].Value ?? 0);
+
+                // Índice 3: Cantidad
+                item.Cantidad = Convert.ToInt32(row.Cells[3].Value ?? 0);
+
+                itemsParaReporte.Add(item);
+            }
+
+            // ... (El resto del método paso 5, 6 y 7 queda igual) ...
+
+            // 5. LEER LOS TOTALES
+            string sub = txtSubTotal.Text;
+            string imp = txtImpuesto.Text;
+            string total = txtTotal.Text;
+
+            // 6. OBTENER EL PROVEEDOR
+            string nombreProveedor = txtBuscarProv.Text.Trim();
+
+            // 7. CREAR Y MOSTRAR EL REPORTE
+            frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(
+                itemsParaReporte,
+                sub,
+                imp,
+                total,
+                nombreProveedor,
+                nombreUsuario
+            );
+
+            frmReporte.ShowDialog();
+        }
     }
+    
 }

@@ -10,11 +10,14 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="QuestPDF" Version="2025.7.4" />
     <PackageReference Include="WinForms.DataVisualization" Version="1.10.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CapaDeDatos\CapaDeDatos.csproj" />
+    <ProjectReference Include="..\CapaDominio\CapaDominio.csproj" />
     <ProjectReference Include="..\CapaServiciosSeguridadValidacion\CapaServiciosSeguridadValidacion.csproj" />
   </ItemGroup>
 

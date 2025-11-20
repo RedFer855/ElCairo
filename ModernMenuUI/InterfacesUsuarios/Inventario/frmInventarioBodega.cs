@@ -52,7 +52,7 @@ namespace ModernMenuUI
             this.FormClosing += frmInventarioBodega_FormClosing;
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
-           
+
         }
         private async void frmInventarioBodega_Load(object sender, EventArgs e)
         {
@@ -74,12 +74,12 @@ namespace ModernMenuUI
             // Cargar datos iniciales
             await CargarComboBoxesEstado();
             await CargarBodegasComboBox();
-         
+
 
             // Iniciar suscripciones Realtime
             await IniciarSuscripcionInventario();
             await IniciarSuscripcionBodegas();
-            
+
         }
 
         private void FiltrarYColorear()
@@ -351,6 +351,11 @@ namespace ModernMenuUI
             // BOTONES DE MÓDULO (Lógica "OR")
             _servicioPermisos.RegistrarBoton(btnCambiarBodega, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnCrearBodega, "update_inventario");
+
+        }
+
+        private void btnCrearBodega_Click(object sender, EventArgs e)
+        {
 
         }
     }

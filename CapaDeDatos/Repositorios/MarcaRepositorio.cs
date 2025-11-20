@@ -86,9 +86,6 @@ namespace CapaDeDatos.Repositorios
             try
             {
                 var client = await Conexion.ConnectWithTimeoutAsync(10);
-
-                // Al tener [PrimaryKey] en el modelo, .Update() genera automáticamente
-                // el "WHERE id_marca = marcaEditar.IdMarca"
                 var response = await client
                     .From<MarcaInsertar>()
                     .Update(marcaEditar);
