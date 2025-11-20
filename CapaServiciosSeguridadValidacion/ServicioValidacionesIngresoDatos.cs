@@ -36,27 +36,46 @@ namespace CapaServiciosSeguridadValidacion
             }
             return (false, "");
         }
+
         public static readonly List<Func<Empleado, (bool Error, string Mensaje)>> ListaValidacionesEmpleado =
-    new List<Func<Empleado, (bool Error, string Mensaje)>>()
-    {
-        e => ValidarCampoVacio(e.Nombre, "el nombre del empleado"),
-        e => ValidarCampoVacio(e.Apellido, "el apellido del empleado"),
-        e => ValidarCampoVacio(e.Dni, "el DNI"),
-        e => ValidarCampoVacio(e.Telefono, "el teléfono"),
-        e => ValidarCampoVacio(e.Email, "el correo electrónico"),
-        e => ValidarCampoVacio(e.Direccion, "la dirección"),
-    };
+        new List<Func<Empleado, (bool Error, string Mensaje)>>()
+        {
+            e => ValidarCampoVacio(e.Nombre, "el nombre del empleado"),
+            e => ValidarCampoVacio(e.Apellido, "el apellido del empleado"),
+            e => ValidarCampoVacio(e.Dni, "el DNI"),
+            e => ValidarCampoVacio(e.Telefono, "el teléfono"),
+            e => ValidarCampoVacio(e.Email, "el correo electrónico"),
+            e => ValidarCampoVacio(e.Direccion, "la dirección"),
+        };
 
         public static (bool Error, string Mensaje) EjecutarValidacionesEmpleado(Empleado empleado)
         {
             foreach (var regla in ListaValidacionesEmpleado)
             {
-                var resultado = regla(empleado);
-                if (resultado.Error) return resultado;
+                    var resultado = regla(empleado);
+                    if (resultado.Error) return resultado;
             }
             return (false, "");
         }
 
+
+        // --- VALIDACIONES MARCA (NUEVO) ---
+        public static readonly List<Func<MarcaInsertar, (bool Error, string Mensaje)>> ListaValidacionesMarca =
+            new List<Func<MarcaInsertar, (bool Error, string Mensaje)>>()
+            {
+        // Aquí validamos que el nombre no esté vacío
+        m => ValidarCampoVacio(m.NombreMarca, "el nombre de la marca")
+            };
+
+        public static (bool Error, string Mensaje) EjecutarValidacionesMarca(MarcaInsertar _marca)
+        {
+            foreach (var regla in ListaValidacionesMarca)
+            {
+                var resultado = regla(_marca);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
 
         // --- Validaciones individuales ---
         public static (bool Error, string Mensaje) ValidarCampoVacio(string valor, string nombreCampo)

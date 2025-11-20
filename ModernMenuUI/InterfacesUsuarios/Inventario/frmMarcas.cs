@@ -24,6 +24,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         private Supabase.Realtime.RealtimeChannel? _marcasSubscription;
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
+        private Marca _marcaSeleccionada;
         public Marca MarcaSeleccionada { get; private set; }
         public frmMarcas()
         {
@@ -36,7 +37,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             this.FormClosing += frmMarcas_FormClosing;
             btnModificarMarca.Visible = false;
             btnAgregarMarca.Visible = false;
-              
+
         }
 
         public frmMarcas(bool tipo)
@@ -253,10 +254,54 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             proveedores.ShowDialog();
         }
 
-        private void btnAgregarMarca_Click(object sender, EventArgs e)
+        private async void btnAgregarMarca_Click(object sender, EventArgs e)
         {
-            frmAgregarEditarMarca nuevaMarca = new frmAgregarEditarMarca(); 
-            nuevaMarca.ShowDialog();    
+            frmAgregarEditarMarca _nuevaMarca = new frmAgregarEditarMarca();
+
+            DialogResult resultado = _nuevaMarca.ShowDialog();
+
+            if (resultado == DialogResult.OK)
+            {
+
+                await CargarMarcasMaestras();
+
+                RefrescarGrid();
+
+            }
+        }
+
+        private void dgvMarcas_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvMarcas.SelectedRows.Count > 0)
+            {
+                // Asignamos a la variable con guion bajo
+                _marcaSeleccionada = dgvMarcas.SelectedRows[0].DataBoundItem as Marca;
+            }
+            else
+            {
+                _marcaSeleccionada = null;
+            }
+        }
+
+        private async void btnModificarMarca_Click(object sender, EventArgs e)
+        {
+            // Verificamos la variable _marcaSeleccionada
+            if (_marcaSeleccionada != null)
+            {
+                // Pasamos _marcaSeleccionada al constructor
+                frmAgregarEditarMarca editarForm = new frmAgregarEditarMarca(_marcaSeleccionada);
+                DialogResult resultado = editarForm.ShowDialog();
+
+                if (resultado == DialogResult.OK)
+                {
+                    await CargarMarcasMaestras();
+                    RefrescarGrid();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una marca primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

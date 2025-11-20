@@ -52,13 +52,14 @@
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            btnSeleccionarProveedor = new Button();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProveedores).BeginInit();
             groupBox1.SuspendLayout();
             panelBusqueda.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -135,6 +136,7 @@
             dgvProveedores.Size = new Size(623, 365);
             dgvProveedores.TabIndex = 1;
             dgvProveedores.SelectionChanged += dgvProveedores_SelectionChanged;
+            dgvProveedores.DoubleClick += dgvProveedores_DoubleClick;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -194,11 +196,10 @@
             // btnSalir
             // 
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
-            btnSalir.Dock = DockStyle.Fill;
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(470, 3);
+            btnSalir.Location = new Point(498, 3);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(118, 43);
             btnSalir.TabIndex = 18;
@@ -209,12 +210,11 @@
             // btnAgregarProveedor
             // 
             btnAgregarProveedor.BackColor = Color.FromArgb(149, 195, 172);
-            btnAgregarProveedor.Dock = DockStyle.Fill;
             btnAgregarProveedor.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarProveedor.ForeColor = SystemColors.ButtonFace;
-            btnAgregarProveedor.Location = new Point(3, 3);
+            btnAgregarProveedor.Location = new Point(192, 3);
             btnAgregarProveedor.Name = "btnAgregarProveedor";
-            btnAgregarProveedor.Size = new Size(221, 43);
+            btnAgregarProveedor.Size = new Size(158, 43);
             btnAgregarProveedor.TabIndex = 22;
             btnAgregarProveedor.Text = "Agregar Proveedor";
             btnAgregarProveedor.UseVisualStyleBackColor = false;
@@ -223,12 +223,11 @@
             // btnEditarProveedor
             // 
             btnEditarProveedor.BackColor = Color.FromArgb(189, 215, 238);
-            btnEditarProveedor.Dock = DockStyle.Fill;
             btnEditarProveedor.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditarProveedor.ForeColor = Color.FromArgb(87, 99, 110);
-            btnEditarProveedor.Location = new Point(230, 3);
+            btnEditarProveedor.Location = new Point(356, 3);
             btnEditarProveedor.Name = "btnEditarProveedor";
-            btnEditarProveedor.Size = new Size(234, 43);
+            btnEditarProveedor.Size = new Size(136, 43);
             btnEditarProveedor.TabIndex = 20;
             btnEditarProveedor.Text = "EditarProveedor";
             btnEditarProveedor.UseVisualStyleBackColor = false;
@@ -317,22 +316,29 @@
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
             // 
-            // tableLayoutPanel1
+            // flowLayoutPanel1
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 48.6081352F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 51.3918648F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 123F));
-            tableLayoutPanel1.Controls.Add(btnAgregarProveedor, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnSalir, 2, 0);
-            tableLayoutPanel1.Controls.Add(btnEditarProveedor, 1, 0);
-            tableLayoutPanel1.Location = new Point(12, 529);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(591, 49);
-            tableLayoutPanel1.TabIndex = 53;
+            flowLayoutPanel1.Controls.Add(btnSeleccionarProveedor);
+            flowLayoutPanel1.Controls.Add(btnAgregarProveedor);
+            flowLayoutPanel1.Controls.Add(btnEditarProveedor);
+            flowLayoutPanel1.Controls.Add(btnSalir);
+            flowLayoutPanel1.Location = new Point(12, 535);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(641, 53);
+            flowLayoutPanel1.TabIndex = 53;
+            // 
+            // btnSeleccionarProveedor
+            // 
+            btnSeleccionarProveedor.BackColor = Color.FromArgb(149, 195, 172);
+            btnSeleccionarProveedor.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSeleccionarProveedor.ForeColor = SystemColors.ButtonFace;
+            btnSeleccionarProveedor.Location = new Point(3, 3);
+            btnSeleccionarProveedor.Name = "btnSeleccionarProveedor";
+            btnSeleccionarProveedor.Size = new Size(183, 43);
+            btnSeleccionarProveedor.TabIndex = 23;
+            btnSeleccionarProveedor.Text = "Seleccionar Proveedor";
+            btnSeleccionarProveedor.UseVisualStyleBackColor = false;
+            btnSeleccionarProveedor.Click += btnSeleccionarProveedor_Click;
             // 
             // frmProveedor
             // 
@@ -340,10 +346,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(684, 590);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
             Controls.Add(groupBox1);
             Controls.Add(panelBusqueda);
-            Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProveedor";
             Text = "frmProveedores";
@@ -356,7 +362,7 @@
             groupBox1.PerformLayout();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -375,11 +381,12 @@
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button btnbuscar;
-        private TableLayoutPanel tableLayoutPanel1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn dataGridViewTextBoxColumn3;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Button btnSeleccionarProveedor;
     }
 }

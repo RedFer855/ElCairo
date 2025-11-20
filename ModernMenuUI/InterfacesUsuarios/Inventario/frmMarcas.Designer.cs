@@ -150,6 +150,7 @@
             dgvMarcas.Size = new Size(659, 243);
             dgvMarcas.TabIndex = 1;
             dgvMarcas.CellDoubleClick += dgvMarcas_CellDoubleClick;
+            dgvMarcas.SelectionChanged += dgvMarcas_SelectionChanged;
             // 
             // IdMarca
             // 
@@ -198,7 +199,7 @@
             btnAgregarMarca.Name = "btnAgregarMarca";
             btnAgregarMarca.Size = new Size(124, 44);
             btnAgregarMarca.TabIndex = 35;
-            btnAgregarMarca.Text = "Agregar Marca";
+            btnAgregarMarca.Text = "Nueva Marca";
             btnAgregarMarca.UseVisualStyleBackColor = false;
             btnAgregarMarca.Click += btnAgregarMarca_Click;
             // 
@@ -225,6 +226,7 @@
             btnModificarMarca.TabIndex = 36;
             btnModificarMarca.Text = "Modificar Marca";
             btnModificarMarca.UseVisualStyleBackColor = false;
+            btnModificarMarca.Click += btnModificarMarca_Click;
             // 
             // btnSeleccionarMarca
             // 

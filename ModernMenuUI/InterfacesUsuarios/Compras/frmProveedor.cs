@@ -26,12 +26,24 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         private Supabase.Client? _supabaseClient;
         private Proveedor ObjProveedor = null;
 
+        public Proveedor ProveedorSeleccionado { get; private set; }
+
         public frmProveedor()
         {
             InitializeComponent();
             dgvProveedores.AutoGenerateColumns = false; // Asumiendo que se llama dgvProveedores
             RepositorioProveedor = new ProveedorRepositorio();
             this.FormClosing += frmProveedores_FormClosing;
+
+        }
+
+        public frmProveedor(bool tipo)
+        {
+            InitializeComponent();
+            dgvProveedores.AutoGenerateColumns = false; // Asumiendo que se llama dgvProveedores
+            RepositorioProveedor = new ProveedorRepositorio();
+            this.FormClosing += frmProveedores_FormClosing;
+            FormBorderStyle = FormBorderStyle.None;
         }
 
         // CARGAR FORMULARIO
@@ -202,6 +214,33 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             else
             {
                 ObjProveedor = null;
+            }
+        }
+
+        private void btnSeleccionarProveedor_Click(object sender, EventArgs e)
+        {
+            if (dgvProveedores.SelectedRows.Count > 0)
+            {
+                ProveedorSeleccionado = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un proveedor de la lista.");
+            }
+        }
+
+        private void dgvProveedores_DoubleClick(object sender, EventArgs e)
+        {
+            if (dgvProveedores.SelectedRows.Count > 0)
+            {
+                // Asignamos el objeto de la fila seleccionada a la propiedad pública
+                ProveedorSeleccionado = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
+
+                // Cerramos con OK para que el formulario padre sepa que hubo selección
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
     }

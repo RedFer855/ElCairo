@@ -35,10 +35,11 @@
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             btnSalir = new Button();
             button1 = new Button();
             panel5 = new Panel();
@@ -76,13 +77,6 @@
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
-            CodigoBarra = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            Marca = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
-            Precio = new DataGridViewTextBoxColumn();
-            Stock = new DataGridViewTextBoxColumn();
-            Codigos = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
             textBox1 = new TextBox();
             label10 = new Label();
@@ -97,6 +91,13 @@
             txtPrecio = new TextBox();
             btnAgregar = new Button();
             lstSugerencias = new ListBox();
+            CodigoBarra = new DataGridViewTextBoxColumn();
+            Producto = new DataGridViewTextBoxColumn();
+            Marca = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
+            Precio = new DataGridViewTextBoxColumn();
+            Stock = new DataGridViewTextBoxColumn();
+            Codigos = new DataGridViewTextBoxColumn();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -602,15 +603,15 @@
             dgvProductos.ColumnHeadersHeight = 40;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvProductos.Columns.AddRange(new DataGridViewColumn[] { CodigoBarra, Producto, Marca, Categoria, Precio, Stock, Codigos });
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.White;
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            dataGridViewCellStyle8.Padding = new Padding(5);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = Color.White;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.White;
+            dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle9.ForeColor = Color.White;
+            dataGridViewCellStyle9.Padding = new Padding(5);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle9.SelectionForeColor = Color.White;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
+            dgvProductos.DefaultCellStyle = dataGridViewCellStyle9;
             dgvProductos.Dock = DockStyle.Fill;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
@@ -618,97 +619,26 @@
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = SystemColors.Control;
-            dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle9.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            dgvProductos.RowHeadersWidth = 40;
-            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.BackColor = Color.White;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = SystemColors.Control;
+            dataGridViewCellStyle10.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle10.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle10.SelectionForeColor = Color.White;
-            dgvProductos.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dgvProductos.RowHeadersWidth = 40;
+            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle11.BackColor = Color.White;
+            dataGridViewCellStyle11.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle11.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle11.SelectionForeColor = Color.White;
+            dgvProductos.RowsDefaultCellStyle = dataGridViewCellStyle11;
             dgvProductos.RowTemplate.Height = 40;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProductos.Size = new Size(357, 210);
             dgvProductos.TabIndex = 0;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
-            // 
-            // CodigoBarra
-            // 
-            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            CodigoBarra.HeaderText = "Código de Barra";
-            CodigoBarra.Name = "CodigoBarra";
-            CodigoBarra.ReadOnly = true;
-            CodigoBarra.Width = 152;
-            // 
-            // Producto
-            // 
-            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Producto.DataPropertyName = "NombreProducto";
-            Producto.FillWeight = 200F;
-            Producto.HeaderText = "Producto";
-            Producto.MinimumWidth = 6;
-            Producto.Name = "Producto";
-            Producto.ReadOnly = true;
-            Producto.Width = 105;
-            // 
-            // Marca
-            // 
-            Marca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Marca.DataPropertyName = "NombreMarca";
-            Marca.HeaderText = "Marca";
-            Marca.MinimumWidth = 6;
-            Marca.Name = "Marca";
-            Marca.ReadOnly = true;
-            // 
-            // Categoria
-            // 
-            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Categoria.DataPropertyName = "NombreCategoria";
-            Categoria.HeaderText = "Categoria";
-            Categoria.MinimumWidth = 6;
-            Categoria.Name = "Categoria";
-            Categoria.ReadOnly = true;
-            // 
-            // Precio
-            // 
-            Precio.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Precio.DataPropertyName = "PrecioCompra";
-            Precio.FillWeight = 80F;
-            Precio.HeaderText = "Precio";
-            Precio.MinimumWidth = 6;
-            Precio.Name = "Precio";
-            Precio.ReadOnly = true;
-            // 
-            // Stock
-            // 
-            Stock.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Stock.DataPropertyName = "CantidadProducto";
-            Stock.FillWeight = 80F;
-            Stock.HeaderText = "Stock";
-            Stock.MinimumWidth = 6;
-            Stock.Name = "Stock";
-            Stock.ReadOnly = true;
-            // 
-            // Codigos
-            // 
-            Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Codigos.DataPropertyName = "IdProducto";
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.Padding = new Padding(0, 1, 0, 0);
-            Codigos.DefaultCellStyle = dataGridViewCellStyle7;
-            Codigos.FillWeight = 90F;
-            Codigos.HeaderText = "Código";
-            Codigos.MinimumWidth = 6;
-            Codigos.Name = "Codigos";
-            Codigos.ReadOnly = true;
-            Codigos.Width = 89;
             // 
             // panel2
             // 
@@ -795,7 +725,6 @@
             txtCodigo.ReadOnly = true;
             txtCodigo.Size = new Size(192, 21);
             txtCodigo.TabIndex = 18;
-            txtCodigo.TextChanged += txtCodigo_TextChanged;
             // 
             // label3
             // 
@@ -886,6 +815,84 @@
             lstSugerencias.KeyDown += lstSugerencias_KeyDown;
             lstSugerencias.MouseDown += lstSugerencias_MouseDown;
             lstSugerencias.MouseUp += lstSugerencias_MouseUp;
+            // 
+            // CodigoBarra
+            // 
+            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            CodigoBarra.DataPropertyName = "CodigoBarraProducto";
+            CodigoBarra.HeaderText = "Código de Barra";
+            CodigoBarra.Name = "CodigoBarra";
+            CodigoBarra.ReadOnly = true;
+            CodigoBarra.Width = 152;
+            // 
+            // Producto
+            // 
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Producto.DataPropertyName = "NombreProducto";
+            Producto.FillWeight = 200F;
+            Producto.HeaderText = "Producto";
+            Producto.MinimumWidth = 6;
+            Producto.Name = "Producto";
+            Producto.ReadOnly = true;
+            Producto.Width = 105;
+            // 
+            // Marca
+            // 
+            Marca.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Marca.DataPropertyName = "NombreMarca";
+            Marca.HeaderText = "Marca";
+            Marca.MinimumWidth = 6;
+            Marca.Name = "Marca";
+            Marca.ReadOnly = true;
+            Marca.Width = 84;
+            // 
+            // Categoria
+            // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Categoria.DataPropertyName = "NombreCategoria";
+            Categoria.HeaderText = "Categoria";
+            Categoria.MinimumWidth = 6;
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
+            Categoria.Width = 108;
+            // 
+            // Precio
+            // 
+            Precio.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Precio.DataPropertyName = "PrecioCompra";
+            Precio.FillWeight = 80F;
+            Precio.HeaderText = "Precio";
+            Precio.MinimumWidth = 6;
+            Precio.Name = "Precio";
+            Precio.ReadOnly = true;
+            Precio.Width = 84;
+            // 
+            // Stock
+            // 
+            Stock.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Stock.DataPropertyName = "CantidadProducto";
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Stock.DefaultCellStyle = dataGridViewCellStyle7;
+            Stock.FillWeight = 80F;
+            Stock.HeaderText = "Stock";
+            Stock.MinimumWidth = 6;
+            Stock.Name = "Stock";
+            Stock.ReadOnly = true;
+            Stock.Width = 80;
+            // 
+            // Codigos
+            // 
+            Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Codigos.DataPropertyName = "IdProducto";
+            dataGridViewCellStyle8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle8.Padding = new Padding(0, 1, 0, 0);
+            Codigos.DefaultCellStyle = dataGridViewCellStyle8;
+            Codigos.FillWeight = 90F;
+            Codigos.HeaderText = "Código";
+            Codigos.MinimumWidth = 6;
+            Codigos.Name = "Codigos";
+            Codigos.ReadOnly = true;
+            Codigos.Width = 89;
             // 
             // frmGestionCompra
             // 
@@ -979,12 +986,6 @@
         private DataGridView dgvProductos;
         private TextBox txtBuscarProv;
         private Button btnBuscarProv;
-        private DataGridViewTextBoxColumn Codigos;
-        private DataGridViewTextBoxColumn Producto;
-        private DataGridViewTextBoxColumn Marca;
-        private DataGridViewTextBoxColumn Categoria;
-        private DataGridViewTextBoxColumn Precio;
-        private DataGridViewTextBoxColumn Stock;
         private ListBox lstSugerencias;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -996,5 +997,11 @@
         private Label label10;
         private TextBox textBox1;
         private DataGridViewTextBoxColumn CodigoBarra;
+        private DataGridViewTextBoxColumn Producto;
+        private DataGridViewTextBoxColumn Marca;
+        private DataGridViewTextBoxColumn Categoria;
+        private DataGridViewTextBoxColumn Precio;
+        private DataGridViewTextBoxColumn Stock;
+        private DataGridViewTextBoxColumn Codigos;
     }
 }

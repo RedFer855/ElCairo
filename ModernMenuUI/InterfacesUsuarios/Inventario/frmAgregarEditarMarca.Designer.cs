@@ -32,23 +32,25 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarMarca));
             lblNombreModulo = new Label();
             panel2 = new Panel();
-            textBox1 = new TextBox();
-            btnBuscarProv = new Button();
-            pictureBox1 = new PictureBox();
-            btnModificarMarca = new Button();
-            txtDni = new TextBox();
-            btnVolver = new Button();
+            flpAjustarBotones = new FlowLayoutPanel();
             btnGuardarMarca = new Button();
+            btnVolver = new Button();
+            btnModificarMarca = new Button();
+            txtProveedor = new TextBox();
+            btnBuscarProv = new Button();
+            pbxImagenMarca = new PictureBox();
+            txtNombreMarca = new TextBox();
             gbxEstado = new GroupBox();
             rbInactivo = new RadioButton();
             rbActivo = new RadioButton();
-            label5 = new Label();
+            lblEstado = new Label();
             label8 = new Label();
             label2 = new Label();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            flpAjustarBotones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxImagenMarca).BeginInit();
             gbxEstado.SuspendLayout();
             SuspendLayout();
             // 
@@ -78,15 +80,13 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
-            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(flpAjustarBotones);
+            panel2.Controls.Add(txtProveedor);
             panel2.Controls.Add(btnBuscarProv);
-            panel2.Controls.Add(pictureBox1);
-            panel2.Controls.Add(btnModificarMarca);
-            panel2.Controls.Add(txtDni);
-            panel2.Controls.Add(btnVolver);
-            panel2.Controls.Add(btnGuardarMarca);
+            panel2.Controls.Add(pbxImagenMarca);
+            panel2.Controls.Add(txtNombreMarca);
             panel2.Controls.Add(gbxEstado);
-            panel2.Controls.Add(label5);
+            panel2.Controls.Add(lblEstado);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(label2);
             panel2.Dock = DockStyle.Fill;
@@ -96,16 +96,75 @@
             panel2.TabIndex = 16;
             panel2.Paint += panel2_Paint;
             // 
-            // textBox1
+            // flpAjustarBotones
             // 
-            textBox1.BackColor = Color.White;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(150, 47);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "(Seleccione Buscar)";
-            textBox1.Size = new Size(201, 20);
-            textBox1.TabIndex = 24;
+            flpAjustarBotones.Controls.Add(btnGuardarMarca);
+            flpAjustarBotones.Controls.Add(btnVolver);
+            flpAjustarBotones.Controls.Add(btnModificarMarca);
+            flpAjustarBotones.Location = new Point(19, 152);
+            flpAjustarBotones.Name = "flpAjustarBotones";
+            flpAjustarBotones.Size = new Size(295, 37);
+            flpAjustarBotones.TabIndex = 25;
+            // 
+            // btnGuardarMarca
+            // 
+            btnGuardarMarca.BackColor = Color.FromArgb(149, 195, 172);
+            btnGuardarMarca.BackgroundImageLayout = ImageLayout.None;
+            btnGuardarMarca.FlatAppearance.BorderSize = 0;
+            btnGuardarMarca.Font = new Font("Itim", 11.9999981F);
+            btnGuardarMarca.ForeColor = SystemColors.ButtonFace;
+            btnGuardarMarca.ImageAlign = ContentAlignment.BottomLeft;
+            btnGuardarMarca.Location = new Point(3, 3);
+            btnGuardarMarca.Name = "btnGuardarMarca";
+            btnGuardarMarca.Size = new Size(89, 33);
+            btnGuardarMarca.TabIndex = 9;
+            btnGuardarMarca.Text = "Guardar";
+            btnGuardarMarca.UseVisualStyleBackColor = false;
+            btnGuardarMarca.Visible = false;
+            btnGuardarMarca.Click += btnGuardarMarca_Click;
+            // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
+            btnVolver.BackgroundImageLayout = ImageLayout.None;
+            btnVolver.FlatAppearance.BorderSize = 0;
+            btnVolver.Font = new Font("Itim", 11.9999981F);
+            btnVolver.ForeColor = SystemColors.ButtonFace;
+            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
+            btnVolver.Location = new Point(98, 3);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(95, 33);
+            btnVolver.TabIndex = 0;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
+            // 
+            // btnModificarMarca
+            // 
+            btnModificarMarca.BackColor = Color.FromArgb(74, 148, 225);
+            btnModificarMarca.BackgroundImageLayout = ImageLayout.None;
+            btnModificarMarca.FlatAppearance.BorderSize = 0;
+            btnModificarMarca.Font = new Font("Itim", 11.9999981F);
+            btnModificarMarca.ForeColor = SystemColors.ButtonFace;
+            btnModificarMarca.ImageAlign = ContentAlignment.BottomLeft;
+            btnModificarMarca.Location = new Point(199, 3);
+            btnModificarMarca.Name = "btnModificarMarca";
+            btnModificarMarca.Size = new Size(72, 33);
+            btnModificarMarca.TabIndex = 19;
+            btnModificarMarca.Text = "Editar";
+            btnModificarMarca.UseVisualStyleBackColor = false;
+            btnModificarMarca.Click += btnModificarMarca_Click;
+            // 
+            // txtProveedor
+            // 
+            txtProveedor.BackColor = Color.White;
+            txtProveedor.BorderStyle = BorderStyle.None;
+            txtProveedor.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtProveedor.Location = new Point(150, 47);
+            txtProveedor.Name = "txtProveedor";
+            txtProveedor.PlaceholderText = "(Seleccione Buscar)";
+            txtProveedor.Size = new Size(201, 20);
+            txtProveedor.TabIndex = 24;
             // 
             // btnBuscarProv
             // 
@@ -121,72 +180,25 @@
             btnBuscarProv.UseVisualStyleBackColor = false;
             btnBuscarProv.Click += btnBuscarProv_Click;
             // 
-            // pictureBox1
+            // pbxImagenMarca
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(423, 21);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(136, 157);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 21;
-            pictureBox1.TabStop = false;
+            pbxImagenMarca.Image = (Image)resources.GetObject("pbxImagenMarca.Image");
+            pbxImagenMarca.Location = new Point(423, 21);
+            pbxImagenMarca.Name = "pbxImagenMarca";
+            pbxImagenMarca.Size = new Size(136, 157);
+            pbxImagenMarca.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxImagenMarca.TabIndex = 21;
+            pbxImagenMarca.TabStop = false;
             // 
-            // btnModificarMarca
+            // txtNombreMarca
             // 
-            btnModificarMarca.BackColor = Color.FromArgb(74, 148, 225);
-            btnModificarMarca.BackgroundImageLayout = ImageLayout.None;
-            btnModificarMarca.FlatAppearance.BorderSize = 0;
-            btnModificarMarca.Font = new Font("Itim", 11.9999981F);
-            btnModificarMarca.ForeColor = SystemColors.ButtonFace;
-            btnModificarMarca.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarMarca.Location = new Point(114, 156);
-            btnModificarMarca.Name = "btnModificarMarca";
-            btnModificarMarca.Size = new Size(72, 33);
-            btnModificarMarca.TabIndex = 19;
-            btnModificarMarca.Text = "Editar";
-            btnModificarMarca.UseVisualStyleBackColor = false;
-            // 
-            // txtDni
-            // 
-            txtDni.BackColor = Color.White;
-            txtDni.BorderStyle = BorderStyle.None;
-            txtDni.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDni.Location = new Point(150, 20);
-            txtDni.Name = "txtDni";
-            txtDni.Size = new Size(255, 20);
-            txtDni.TabIndex = 1;
-            // 
-            // btnVolver
-            // 
-            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
-            btnVolver.BackgroundImageLayout = ImageLayout.None;
-            btnVolver.FlatAppearance.BorderSize = 0;
-            btnVolver.Font = new Font("Itim", 11.9999981F);
-            btnVolver.ForeColor = SystemColors.ButtonFace;
-            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(192, 156);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(95, 33);
-            btnVolver.TabIndex = 0;
-            btnVolver.Text = "Volver";
-            btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
-            // 
-            // btnGuardarMarca
-            // 
-            btnGuardarMarca.BackColor = Color.FromArgb(149, 195, 172);
-            btnGuardarMarca.BackgroundImageLayout = ImageLayout.None;
-            btnGuardarMarca.FlatAppearance.BorderSize = 0;
-            btnGuardarMarca.Font = new Font("Itim", 11.9999981F);
-            btnGuardarMarca.ForeColor = SystemColors.ButtonFace;
-            btnGuardarMarca.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarMarca.Location = new Point(19, 156);
-            btnGuardarMarca.Name = "btnGuardarMarca";
-            btnGuardarMarca.Size = new Size(89, 33);
-            btnGuardarMarca.TabIndex = 9;
-            btnGuardarMarca.Text = "Guardar";
-            btnGuardarMarca.UseVisualStyleBackColor = false;
-            btnGuardarMarca.Visible = false;
+            txtNombreMarca.BackColor = Color.White;
+            txtNombreMarca.BorderStyle = BorderStyle.None;
+            txtNombreMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNombreMarca.Location = new Point(150, 20);
+            txtNombreMarca.Name = "txtNombreMarca";
+            txtNombreMarca.Size = new Size(255, 20);
+            txtNombreMarca.TabIndex = 1;
             // 
             // gbxEstado
             // 
@@ -203,7 +215,7 @@
             // rbInactivo
             // 
             rbInactivo.AutoSize = true;
-            rbInactivo.Location = new Point(124, 18);
+            rbInactivo.Location = new Point(119, 15);
             rbInactivo.Name = "rbInactivo";
             rbInactivo.Size = new Size(82, 23);
             rbInactivo.TabIndex = 8;
@@ -214,7 +226,7 @@
             // rbActivo
             // 
             rbActivo.AutoSize = true;
-            rbActivo.Location = new Point(8, 19);
+            rbActivo.Location = new Point(6, 15);
             rbActivo.Name = "rbActivo";
             rbActivo.Size = new Size(70, 23);
             rbActivo.TabIndex = 7;
@@ -222,16 +234,16 @@
             rbActivo.Text = "Activo";
             rbActivo.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // lblEstado
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.FromArgb(87, 99, 110);
-            label5.Location = new Point(87, 91);
-            label5.Name = "label5";
-            label5.Size = new Size(57, 18);
-            label5.TabIndex = 18;
-            label5.Text = "Estado:";
+            lblEstado.AutoSize = true;
+            lblEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblEstado.ForeColor = Color.FromArgb(87, 99, 110);
+            lblEstado.Location = new Point(87, 91);
+            lblEstado.Name = "lblEstado";
+            lblEstado.Size = new Size(57, 18);
+            lblEstado.TabIndex = 18;
+            lblEstado.Text = "Estado:";
             // 
             // label8
             // 
@@ -272,7 +284,8 @@
             panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            flpAjustarBotones.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxImagenMarca).EndInit();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
             ResumeLayout(false);
@@ -281,21 +294,22 @@
         #endregion
 
         private Panel panel2;
-        private PictureBox pictureBox1;
+        private PictureBox pbxImagenMarca;
         private Button btnModificarMarca;
         private TextBox txtNombre;
-        private TextBox txtDni;
+        private TextBox txtNombreMarca;
         private Button btnVolver;
         private Button btnGuardarMarca;
         private GroupBox gbxEstado;
         private RadioButton rbInactivo;
         private RadioButton rbActivo;
-        private Label label5;
+        private Label lblEstado;
         private Label label8;
         private Label label2;
         private Label label1;
         public Label lblNombreModulo;
         private Button btnBuscarProv;
-        private TextBox textBox1;
+        private TextBox txtProveedor;
+        private FlowLayoutPanel flpAjustarBotones;
     }
 }

@@ -24,22 +24,22 @@ namespace ModernMenuUI
     public partial class frmGestionCompra : Form
     {
         #region Campos
-        private readonly ProductoRepositorio productoRepositorio;
-        private readonly ProveedorRepositorio proveedorRepositorio;
+        private readonly ProductoRepositorio _productoRepositorio;
+        private readonly ProveedorRepositorio _proveedorRepositorio;
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
 
         private List<Proveedor> _listaMaestraProveedores = new List<Proveedor>();
         private List<Producto> _listaMaestraProductos = new List<Producto>();
 
-        private Producto ProductoSeleccionado;
-        private Proveedor ProveedorSeleccionado = null;
+        private Producto _productoSeleccionado;
+        private Proveedor _proveedorSeleccionado = null;
 
         private Supabase.Client? _supabaseClient;
         private Supabase.Realtime.RealtimeChannel? _productosSubscription;
         private CancellationTokenSource _ctsBusqueda;
         private bool _ignorarTextChanged = false;
         private bool _usuarioSeleccionoConMouse = false;
-        private string sugerenciaActual = "";
+        private string _sugerenciaActual = "";
         private const int MAX_SUGGESTIONS = 10;
         #endregion
 
@@ -55,8 +55,8 @@ namespace ModernMenuUI
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 
-            productoRepositorio = new ProductoRepositorio();
-            proveedorRepositorio = new ProveedorRepositorio();
+            _productoRepositorio = new ProductoRepositorio();
+            _proveedorRepositorio = new ProveedorRepositorio();
 
             dgvProductos.AutoGenerateColumns = false;
         }
@@ -77,7 +77,7 @@ namespace ModernMenuUI
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-                _listaMaestraProductos = await productoRepositorio.ObtenerActivos(true);
+                _listaMaestraProductos = await _productoRepositorio.ObtenerActivos(true);
             }
             catch (OperationCanceledException)
             {
@@ -99,7 +99,7 @@ namespace ModernMenuUI
             {
                 this.Cursor = Cursors.WaitCursor;
                 var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-                _listaMaestraProveedores = await proveedorRepositorio.ObtenerTodosLosProveedores(cts.Token);
+                _listaMaestraProveedores = await _proveedorRepositorio.ObtenerTodosLosProveedores(cts.Token);
             }
             catch (OperationCanceledException)
             {
@@ -395,13 +395,13 @@ namespace ModernMenuUI
                 return;
             }
 
-            if (ProveedorSeleccionado == null)
+            if (_proveedorSeleccionado == null)
             {
                 MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int proveedrId = ProveedorSeleccionado.IdProveedor;
+            int proveedrId = _proveedorSeleccionado.IdProveedor;
 
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
             var Actual = supabase.Auth.CurrentUser;
@@ -454,7 +454,7 @@ namespace ModernMenuUI
             {
                 this.Cursor = Cursors.Default;
                 dgvCarrito.Rows.Clear();
-                ProveedorSeleccionado = null;
+                _proveedorSeleccionado = null;
                 txtBuscarProv.Text = "";
                 _listaMaestraProductos.Clear();
                 dgvProductos.DataSource = null;
@@ -488,8 +488,7 @@ namespace ModernMenuUI
                         (!string.IsNullOrEmpty(proveedor.NombreProveedor) && proveedor.NombreProveedor.ToLower().Contains(busqueda)) ||
                         (!string.IsNullOrEmpty(proveedor.DireccionProveedor) && proveedor.DireccionProveedor.ToLower().Contains(busqueda))
                     )
-                )
-                .ToList();
+                ).ToList();
 
             return resultados;
         }
@@ -566,7 +565,7 @@ namespace ModernMenuUI
                     txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
                     lstSugerencias.Visible = false;
                     _ctsBusqueda?.Cancel();
-                    ProveedorSeleccionado = proveedorSel;
+                    _proveedorSeleccionado = proveedorSel;
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
@@ -576,8 +575,8 @@ namespace ModernMenuUI
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             if (_ignorarTextChanged) return;
-            sugerenciaActual = "";
-            ProveedorSeleccionado = null;
+            _sugerenciaActual = "";
+            _proveedorSeleccionado = null;
         }
 
         private async void txtBuscar_Leave(object sender, EventArgs e)
@@ -598,7 +597,7 @@ namespace ModernMenuUI
                 txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
                 lstSugerencias.Visible = false;
                 _ctsBusqueda?.Cancel();
-                ProveedorSeleccionado = proveedorSel;
+                _proveedorSeleccionado = proveedorSel;
             }
         }
 
@@ -616,8 +615,8 @@ namespace ModernMenuUI
                     _ignorarTextChanged = false;
 
                     lstSugerencias.Visible = false;
-                    sugerenciaActual = "";
-                    ProveedorSeleccionado = proveedorSel;
+                    _sugerenciaActual = "";
+                    _proveedorSeleccionado = proveedorSel;
                 }
 
                 e.Handled = true;
@@ -636,7 +635,7 @@ namespace ModernMenuUI
                 {
                     txtBuscarProv.Text = proveedorSel.NombreProveedor;
                     lstSugerencias.Visible = false;
-                    ProveedorSeleccionado = proveedorSel;
+                    _proveedorSeleccionado = proveedorSel;
                 }
             }
         }
@@ -681,24 +680,24 @@ namespace ModernMenuUI
                 }
 
                 // 2. Cargar proveedor (desde memoria o Supabase)
-                ProveedorSeleccionado = _listaMaestraProveedores
+                _proveedorSeleccionado = _listaMaestraProveedores
                     .FirstOrDefault(p => p.IdProveedor == idProveedor.Value);
 
-                if (ProveedorSeleccionado == null)
+                if (_proveedorSeleccionado == null)
                 {
-                    ProveedorSeleccionado = await ProveedorRepositorio.CargarProveedorPorIdAsync(idProveedor.Value);
-                    if (ProveedorSeleccionado != null)
-                        _listaMaestraProveedores.Add(ProveedorSeleccionado);
+                    _proveedorSeleccionado = await ProveedorRepositorio.CargarProveedorPorIdAsync(idProveedor.Value);
+                    if (_proveedorSeleccionado != null)
+                        _listaMaestraProveedores.Add(_proveedorSeleccionado);
                 }
 
-                if (ProveedorSeleccionado == null)
+                if (_proveedorSeleccionado == null)
                 {
                     MessageBox.Show("Error cargando la información del proveedor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 // 3. Obtener marcas asociadas al proveedor
-                var marcas = await MarcaRepositorio.ObtenerMarcasPorProveedorAsync(ProveedorSeleccionado.IdProveedor);
+                var marcas = await MarcaRepositorio.ObtenerMarcasPorProveedorAsync(_proveedorSeleccionado.IdProveedor);
 
                 if (marcas == null || marcas.Count == 0)
                 {
@@ -708,7 +707,7 @@ namespace ModernMenuUI
 
                 // 4. Obtener productos por hoja de marcas
                 var idMarcas = marcas.Select(m => m.IdMarca).ToList();
-                var productos = await productoRepositorio.ObtenerProductosPorMarcasAsync(idMarcas);
+                var productos = await _productoRepositorio.ObtenerProductosPorMarcasAsync(idMarcas);
 
                 // 5. Actualizar grid
                 _listaMaestraProductos = productos;
@@ -716,7 +715,7 @@ namespace ModernMenuUI
 
                 // Opcional (si quieres mostrar mensaje)
                 MessageBox.Show(
-                    $"Proveedor seleccionado:\nID: {ProveedorSeleccionado.IdProveedor}\nNombre: {ProveedorSeleccionado.NombreProveedor}",
+                    $"Proveedor seleccionado:\nID: {_proveedorSeleccionado.IdProveedor}\nNombre: {_proveedorSeleccionado.NombreProveedor}",
                     "Proveedor encontrado",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
@@ -740,10 +739,5 @@ namespace ModernMenuUI
             await HandleBuscarProveedorAsync();
         }
         #endregion
-
-        private void txtCodigo_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
