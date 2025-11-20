@@ -66,7 +66,7 @@ namespace ModernMenuUI
             dgvProductos.ClearSelection();
             this.Load += Gestion_de_Ventas_Load;
             this.FormClosing += frmFacturacion_FormClosing;
-           
+
         }
 
 
@@ -246,64 +246,64 @@ namespace ModernMenuUI
             txtCliente.Focus();
         }
 
-       /* private async Task DesecharSuscripcionProductosAsync()
-        {
-            if (_productoSubscription != null)
-            {
-                try
-                {
-                    await Task.Run(() => _productoSubscription.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción a Inventario en Facturación desechada.");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error al desuscribir productos en Facturación: {ex.Message}");
-                }
+        /* private async Task DesecharSuscripcionProductosAsync()
+         {
+             if (_productoSubscription != null)
+             {
+                 try
+                 {
+                     await Task.Run(() => _productoSubscription.Unsubscribe());
+                     System.Diagnostics.Debug.WriteLine("Suscripción a Inventario en Facturación desechada.");
+                 }
+                 catch (Exception ex)
+                 {
+                     System.Diagnostics.Debug.WriteLine($"Error al desuscribir productos en Facturación: {ex.Message}");
+                 }
 
-                _productoSubscription = null;
-            }
-        }*/
+                 _productoSubscription = null;
+             }
+         }*/
 
-       /* private async Task IniciarSuscripcionProductosAsync()
-        {
-            await DesecharSuscripcionProductosAsync();
+        /* private async Task IniciarSuscripcionProductosAsync()
+         {
+             await DesecharSuscripcionProductosAsync();
 
-            try
-            {
-                _supabaseClient = await Conexion.GetClientAsync();
+             try
+             {
+                 _supabaseClient = await Conexion.GetClientAsync();
 
-                int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
+                 int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
 
-                _productoSubscription = await _supabaseClient
-                    .From<Inventario>()
-                   .On(ListenType.All, (IRealtimeChannel sender, PostgresChangesResponse change) =>
-                   {
-                       var modeloCambiado = change.Model<Inventario>();
-                       if (modeloCambiado != null && modeloCambiado.IdBodegaInventario != idBodega)
-                       {
-                           return;
-                       }
+                 _productoSubscription = await _supabaseClient
+                     .From<Inventario>()
+                    .On(ListenType.All, (IRealtimeChannel sender, PostgresChangesResponse change) =>
+                    {
+                        var modeloCambiado = change.Model<Inventario>();
+                        if (modeloCambiado != null && modeloCambiado.IdBodegaInventario != idBodega)
+                        {
+                            return;
+                        }
 
-                       if (!this.IsHandleCreated || this.IsDisposed)
-                           return;
+                        if (!this.IsHandleCreated || this.IsDisposed)
+                            return;
 
-                       this.BeginInvoke((MethodInvoker)(async () =>
-                       {
-                           if (this.IsDisposed) return;
+                        this.BeginInvoke((MethodInvoker)(async () =>
+                        {
+                            if (this.IsDisposed) return;
 
-                           System.Diagnostics.Debug.WriteLine("Cambio de stock detectado. Recargando...");
+                            System.Diagnostics.Debug.WriteLine("Cambio de stock detectado. Recargando...");
 
-                           await CargarProductosDeBodega();
-                       }));
-                   });
+                            await CargarProductosDeBodega();
+                        }));
+                    });
 
-                System.Diagnostics.Debug.WriteLine($"Suscripción a Inventario (Bodega {idBodega}) iniciada.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir inventario: {ex.Message}");
-            }
-        }*/
+                 System.Diagnostics.Debug.WriteLine($"Suscripción a Inventario (Bodega {idBodega}) iniciada.");
+             }
+             catch (Exception ex)
+             {
+                 System.Diagnostics.Debug.WriteLine($"Error al suscribir inventario: {ex.Message}");
+             }
+         }*/
 
         private void ActualizarTotales()
         {
@@ -509,27 +509,27 @@ namespace ModernMenuUI
                 lstSugerencias.Visible = false;
                 txtBuscar.Text = "";
             }
-                /*if (lstSugerencias.SelectedItem is Producto producto)
+            /*if (lstSugerencias.SelectedItem is Producto producto)
+            {
+                // Llenar los textbox del producto
+                txtCodigo.Text = producto.IdProducto.ToString();
+                txtProducto.Text = producto.NombreProducto;
+                txtPrecio.Text = producto.PrecioVenta.ToString("N2");
+
+                // Buscar y seleccionar la fila correspondiente en dgvProductos
+                foreach (DataGridViewRow fila in dgvProductos.Rows)
                 {
-                    // Llenar los textbox del producto
-                    txtCodigo.Text = producto.IdProducto.ToString();
-                    txtProducto.Text = producto.NombreProducto;
-                    txtPrecio.Text = producto.PrecioVenta.ToString("N2");
-
-                    // Buscar y seleccionar la fila correspondiente en dgvProductos
-                    foreach (DataGridViewRow fila in dgvProductos.Rows)
+                    if (fila.Cells[0].Value != null && (int)fila.Cells[0].Value == producto.IdProducto)
                     {
-                        if (fila.Cells[0].Value != null && (int)fila.Cells[0].Value == producto.IdProducto)
-                        {
-                            fila.Selected = true;
-                            dgvProductos.CurrentCell = fila.Cells[0];
-                            break;
-                        }
+                        fila.Selected = true;
+                        dgvProductos.CurrentCell = fila.Cells[0];
+                        break;
                     }
+                }
 
-                    // Ocultar las sugerencias
-                    lstSugerencias.Visible = false;
-                }*/
+                // Ocultar las sugerencias
+                lstSugerencias.Visible = false;
+            }*/
         }
 
         private void txtBuscar_TextChanged(object sender, EventArgs e)
@@ -926,7 +926,7 @@ namespace ModernMenuUI
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
-           // MessageBox.Show("¡El formulario ha cargado y va a suscribirse!");
+            //MessageBox.Show("¡El formulario ha cargado y va a suscribirse!");
             // 1. Carga inicial
             await CargarProductosDeBodega();
 
@@ -952,28 +952,28 @@ namespace ModernMenuUI
              catch (Exception ex) { /* manejo error */
         }
 
-           // await CargarRutasAsync();
+        // await CargarRutasAsync();
 
-            // 2. ACTIVAR REALTIME (Igual que en frmCategorias)*/
-            //await _gestorInventario.SuscribirAsync();
+        // 2. ACTIVAR REALTIME (Igual que en frmCategorias)*/
+        //await _gestorInventario.SuscribirAsync();
 
 
 
-           
-            /* await CargarProductosDeBodega();
-             // await CargarProductosAsync();
-             try
-             {
-                 // Asegúrate de tener _clienteRepo instanciado arriba
-                 _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
-             }
-             catch (Exception ex)
-             {
-                 MessageBox.Show("Error al cargar clientes: " + ex.Message);
-             }
-             await IniciarSuscripcionProductosAsync();*/
 
-        
+        /* await CargarProductosDeBodega();
+         // await CargarProductosAsync();
+         try
+         {
+             // Asegúrate de tener _clienteRepo instanciado arriba
+             _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
+         }
+         catch (Exception ex)
+         {
+             MessageBox.Show("Error al cargar clientes: " + ex.Message);
+         }
+         await IniciarSuscripcionProductosAsync();*/
+
+
 
         private async void btnFacturar_Click(object sender, EventArgs e)
         {
@@ -1069,6 +1069,88 @@ namespace ModernMenuUI
             {
                 this.Cursor = Cursors.Default;
                 MessageBox.Show($"Error al registrar venta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 1. Si la lista no se ve, no hacemos nada (dejamos que el evento fluya)
+            if (!lstSugerencias.Visible) return;
+
+            // --- FLECHA ABAJO (Bajar en la lista) ---
+            if (e.KeyCode == Keys.Down)
+            {
+                // Calcula el siguiente índice sin pasarse del final
+                int newIndex = Math.Min(lstSugerencias.SelectedIndex + 1, lstSugerencias.Items.Count - 1);
+
+                if (newIndex >= 0)
+                    lstSugerencias.SelectedIndex = newIndex;
+
+                e.Handled = true; // Evita que el cursor se mueva en el TextBox
+            }
+            // --- FLECHA ARRIBA (Subir en la lista) ---
+            else if (e.KeyCode == Keys.Up)
+            {
+                // Calcula el índice anterior sin bajar de 0
+                int newIndex = Math.Max(lstSugerencias.SelectedIndex - 1, 0);
+
+                if (newIndex >= 0)
+                    lstSugerencias.SelectedIndex = newIndex;
+
+                e.Handled = true;
+            }
+            // --- ENTER (Seleccionar producto para facturar) ---
+            else if (e.KeyCode == Keys.Enter)
+            {
+                if (lstSugerencias.SelectedItem != null)
+                {
+                    // A. Obtener el objeto seleccionado
+                    Producto productoSel = lstSugerencias.SelectedItem as Producto;
+
+                    if (productoSel != null)
+                    {
+                        // B. Llenar los campos de facturación automáticamente
+                        txtCodigo.Text = productoSel.IdProducto.ToString();
+                        txtProducto.Text = productoSel.NombreProducto;
+                        txtPrecio.Text = productoSel.PrecioVenta.ToString("N2"); // Formato moneda
+
+                        // C. Seleccionarlo visualmente en el Grid (Opcional, por estética)
+                        SeleccionarProductoEnGrid(productoSel.IdProducto);
+
+                        // D. Preparar para agregar cantidad
+                        nudCantidad.Value = 1;
+                        nudCantidad.Focus();     // Mover el foco a cantidad
+                        nudCantidad.Select(0, nudCantidad.Text.Length); // Seleccionar el número "1" para sobrescribir fácil
+                    }
+
+                    // E. Limpieza final
+                    lstSugerencias.Visible = false;
+                    txtBuscar.Text = ""; // Limpiamos el buscador para la siguiente búsqueda
+
+                    // F. Detener el "Ding" y el evento
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
+        private void SeleccionarProductoEnGrid(int idProducto)
+        {
+            // Validar que el grid tenga datos
+            if (dgvProductos.Rows.Count == 0) return;
+
+            dgvProductos.ClearSelection();
+
+            foreach (DataGridViewRow fila in dgvProductos.Rows)
+            {
+                // Asumiendo que la celda 0 es el ID
+                if (fila.Cells[0].Value != null && Convert.ToInt32(fila.Cells[0].Value) == idProducto)
+                {
+                    fila.Selected = true;
+
+                    // Hace scroll hasta la fila para asegurar que se vea
+                    dgvProductos.FirstDisplayedScrollingRowIndex = fila.Index;
+                    break;
+                }
             }
         }
     }

@@ -493,6 +493,7 @@
             txtBuscar.Size = new Size(406, 24);
             txtBuscar.TabIndex = 1;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
             // 
             // buscar
             // 
