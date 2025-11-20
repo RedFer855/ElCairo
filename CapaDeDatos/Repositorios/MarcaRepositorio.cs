@@ -44,5 +44,17 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
             }
         }
+        public static async Task<List<Marca>> ObtenerMarcasPorProveedorAsync(int idProveedor)
+        {
+            var client = await Conexion.ConnectWithTimeoutAsync(10);
+
+            var resp = await client
+                .From<Marca>()
+                .Where(m => m.IdProveedor == idProveedor)
+                .Get();
+
+            return resp.Models ?? new List<Marca>();
+        }
+
     }
 }

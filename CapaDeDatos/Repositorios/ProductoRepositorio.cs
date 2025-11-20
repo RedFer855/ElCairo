@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Supabase.Postgrest.Constants;
 
 namespace CapaDeDatos.Repositorios
 {
@@ -133,6 +134,23 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
+        public async Task<List<Producto>> ObtenerProductosPorMarcasAsync(List<int> idMarcas)
+        {
+            if (idMarcas == null || idMarcas.Count == 0)
+                return new List<Producto>();
+
+            var client = await Conexion.ConnectWithTimeoutAsync(10);
+
+            var resp = await client
+                            .From<Producto>()
+                            .Select("*, marca(*), categoria(*)")     // 👈 IMPORTANTE: JOIN
+                            .Filter("id_marca", Operator.In, idMarcas)
+                            .Get();
+
+
+            return resp.Models ?? new List<Producto>();
+        }
+
         public async Task<List<Producto>> ObtenerActivos(bool estado = true, int? marcaId = null, int? categoriaId = null)
         {
             try

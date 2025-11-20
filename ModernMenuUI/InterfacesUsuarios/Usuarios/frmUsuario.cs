@@ -64,7 +64,6 @@ namespace ModernMenuUI
 
         // --- 5. LÓGICA DE CARGA DE DATOS ---
 
-        // (Este es tu método 'CargarDatosAsync' original)
         private async Task CargarDatosAsync(CancellationToken ct = default)
         {
             try
