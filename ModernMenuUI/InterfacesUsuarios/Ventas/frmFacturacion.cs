@@ -5,6 +5,7 @@ using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Modelados.Ventas;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic.ApplicationServices;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.Properties;
@@ -27,6 +28,7 @@ using System.Threading.Tasks;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms;
+using static ModernMenuUI.frmInicioBodega;
 using static Supabase.Postgrest.Constants;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
@@ -43,9 +45,13 @@ namespace ModernMenuUI
         private List<Cliente> _todosLosClientes = new List<Cliente>(); // La caché
         private Cliente _clienteSeleccionado = null; // Aquí guardaremos al elegido
 
+        private GestorRealtime<Inventario> _gestorInventario;
+        private GestorRealtime<Producto> _gestorProducto;
+
         public frmFacturacion()
         {
             InitializeComponent();
+            ConfigurarFormulario();
             // _productoRepo = new ProductoRepositorio();
             _inventarioRepo = new InventarioRepositorio();
             // ===== ESTILO BARRA LATERAL (RowHeader) =====
@@ -58,11 +64,179 @@ namespace ModernMenuUI
             txtBuscar.PlaceholderText = "Buscar producto...";
             txtBuscar.ForeColor = Color.Black; // Esto cambia el color del texto normal
             dgvProductos.ClearSelection();
+            this.Load += Gestion_de_Ventas_Load;
             this.FormClosing += frmFacturacion_FormClosing;
+           
         }
 
 
         // FUNCIONES
+        private void RefrescarGridVisualmente()
+        {
+            // Si el usuario está buscando, reaplicamos filtro sobre la memoria actualizada
+            if (!string.IsNullOrEmpty(txtBuscar.Text.Trim()))
+            {
+                txtBuscar_TextChanged(null, null);
+            }
+            else
+            {
+                // Si no, refrescamos todo el grid con la memoria actualizada
+                RefrescarGrid(_productosCache);
+            }
+        }
+        private void ConfigurarFormulario()
+        {
+            this.DoubleBuffered = true;
+            this.FormClosing -= frmFacturacion_FormClosing;
+            this.FormClosing += frmFacturacion_FormClosing;
+
+            // =======================================================
+            // 1. GESTOR DE INVENTARIO (Para cambios de STOCK)
+            // =======================================================
+            _gestorInventario = new GestorRealtime<Inventario>();
+
+            _gestorInventario.OnCambioBaseDatos += (change) =>
+            {
+                try
+                {
+                    var cambioInv = change.Model<Inventario>();
+                    // Validar bodega
+                    if (cambioInv != null && cambioInv.IdBodegaInventario == SessionData.IdBodegaActual)
+                    {
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            // Buscar producto en memoria (Cache)
+                            var prod = _productosCache.FirstOrDefault(p => p.IdProducto == cambioInv.IdProductoInventario);
+
+                            if (prod != null)
+                            {
+                                // ACTUALIZAR MEMORIA (STOCK)
+                                prod.StockEnBodega = cambioInv.StockProductoBodegaInventario;
+                                RefrescarGridVisualmente(); // Repintar
+                                System.Diagnostics.Debug.WriteLine($"Realtime: Stock actualizado a {prod.StockEnBodega}");
+                            }
+                            else
+                            {
+                                // Si no existe en lista (producto nuevo en inventario), recarga completa
+                                RecargarInterfaz();
+                            }
+                        }));
+                    }
+                }
+                catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Error RT Inventario: " + ex.Message); }
+            };
+
+            // =======================================================
+            // 2. GESTOR DE PRODUCTO (Para cambios de PRECIO/NOMBRE)
+            // =======================================================
+            _gestorProducto = new GestorRealtime<Producto>(); // <--- Instancia nueva
+
+            _gestorProducto.OnCambioBaseDatos += (change) =>
+            {
+                try
+                {
+                    var cambioProd = change.Model<Producto>();
+                    if (cambioProd != null)
+                    {
+                        this.Invoke((MethodInvoker)(() =>
+                        {
+                            // Buscar producto en memoria
+                            var prod = _productosCache.FirstOrDefault(p => p.IdProducto == cambioProd.IdProducto);
+
+                            if (prod != null)
+                            {
+                                // ACTUALIZAR MEMORIA (DATOS BASE)
+                                // Actualizamos lo que suele cambiar el administrador
+                                prod.NombreProducto = cambioProd.NombreProducto;
+                                prod.PrecioVenta = cambioProd.PrecioVenta;
+                                prod.PrecioCompra = cambioProd.PrecioCompra;
+
+                                RefrescarGridVisualmente(); // Repintar
+                                System.Diagnostics.Debug.WriteLine($"Realtime: Producto '{prod.NombreProducto}' actualizado.");
+                            }
+                            else
+                            {
+                                // Producto nuevo creado globalmente -> Recargar para ver si entra en esta bodega
+                                RecargarInterfaz();
+                            }
+                        }));
+                    }
+                }
+                catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Error RT Producto: " + ex.Message); }
+            };
+
+            // Manejo de reconexión (Basta con uno o ambos)
+            _gestorInventario.OnReconexionExitosa += () => this.Invoke((MethodInvoker)(() => RecargarInterfaz()));
+        }
+        /* private void ConfigurarFormulario()
+         {
+             this.DoubleBuffered = true;
+             this.FormClosing += frmFacturacion_FormClosing;
+
+             // 1. Instanciar Gestor
+             _gestorInventario = new GestorRealtime<Inventario>();
+
+             // 2. Suscribir evento de cambio
+             _gestorInventario.OnCambioBaseDatos += (change) =>
+             {
+                 var dato = change.Model<Inventario>();
+                 // Validar que el cambio sea de nuestra bodega actual
+                 if (dato == null || dato.IdBodegaInventario == SessionData.IdBodegaActual)
+                 {
+                     System.Diagnostics.Debug.WriteLine($"Stock actualizado: {change.Event}");
+                     RecargarInterfaz();
+                 }
+             };
+
+             // 3. Reconexión
+             _gestorInventario.OnReconexionExitosa += () =>
+             {
+                 System.Diagnostics.Debug.WriteLine("Reconexión -> Recargando Inventario");
+                 RecargarInterfaz();
+             };
+         }*/
+        private void RecargarInterfaz()
+        {
+            // Validaciones de seguridad de hilos (Thread Safety)
+            if (this.IsDisposed || !this.IsHandleCreated) return;
+
+            this.BeginInvoke((MethodInvoker)(async () =>
+            {
+                if (this.IsDisposed) return;
+
+                await Task.Delay(500);
+
+                // Recargamos los datos de la BD
+                await CargarProductosDeBodega();
+
+                // Aplicamos el filtro actual (si el usuario estaba buscando algo, no se lo quitamos)
+                string textoBusqueda = txtBuscar.Text.Trim();
+                if (!string.IsNullOrEmpty(textoBusqueda))
+                {
+                    txtBuscar_TextChanged(null, null); // Re-aplica el filtro
+                }
+                else
+                {
+                    RefrescarGrid(_productosCache); // Muestra todo
+                }
+            }));
+        }
+        private void RefrescarGrid(List<Producto> listaMostrar)
+        {
+            dgvProductos.DataSource = null; // Si usabas DataSource directo, limpiar
+            dgvProductos.Rows.Clear();
+
+            foreach (var p in listaMostrar)
+            {
+                dgvProductos.Rows.Add(
+                    p.IdProducto,
+                    p.NombreProducto,
+                    p.PrecioCompra, // O PrecioVenta
+                    p.StockEnBodega
+                );
+            }
+            dgvProductos.ClearSelection();
+        }
         private void SeleccionarCliente(Cliente cliente)
         {
             txtCliente.Text = cliente.Nombre;
@@ -72,7 +246,7 @@ namespace ModernMenuUI
             txtCliente.Focus();
         }
 
-        private async Task DesecharSuscripcionProductosAsync()
+       /* private async Task DesecharSuscripcionProductosAsync()
         {
             if (_productoSubscription != null)
             {
@@ -88,9 +262,9 @@ namespace ModernMenuUI
 
                 _productoSubscription = null;
             }
-        }
+        }*/
 
-        private async Task IniciarSuscripcionProductosAsync()
+       /* private async Task IniciarSuscripcionProductosAsync()
         {
             await DesecharSuscripcionProductosAsync();
 
@@ -129,7 +303,7 @@ namespace ModernMenuUI
             {
                 System.Diagnostics.Debug.WriteLine($"Error al suscribir inventario: {ex.Message}");
             }
-        }
+        }*/
 
         private void ActualizarTotales()
         {
@@ -290,32 +464,111 @@ namespace ModernMenuUI
 
         private void lstSugerencias_DoubleClick(object sender, EventArgs e)
         {
-            if (lstSugerencias.SelectedItem is Producto producto)
+            if (lstSugerencias.SelectedItem is Producto productoSeleccionado)
             {
-                // Llenar los textbox del producto
-                txtCodigo.Text = producto.IdProducto.ToString();
-                txtProducto.Text = producto.NombreProducto;
-                txtPrecio.Text = producto.PrecioVenta.ToString("N2");
+                int idBuscado = productoSeleccionado.IdProducto;
 
-                // Buscar y seleccionar la fila correspondiente en dgvProductos
+                // 2. Recorrer el DataGridView para encontrar la fila
+                bool encontrado = false;
+
                 foreach (DataGridViewRow fila in dgvProductos.Rows)
                 {
-                    if (fila.Cells[0].Value != null && (int)fila.Cells[0].Value == producto.IdProducto)
+                    // Asegúrate de que la celda 0 es el ID (ajusta el índice si es diferente)
+                    if (fila.Cells[0].Value != null &&
+                        Convert.ToInt32(fila.Cells[0].Value) == idBuscado)
                     {
+                        // ¡ENCONTRADO!
+
+                        // A. Limpiar selecciones anteriores
+                        dgvProductos.ClearSelection();
+
+                        // B. Seleccionar la fila
                         fila.Selected = true;
+
+                        // C. Hacer scroll hasta la fila (poniendo la celda activa)
                         dgvProductos.CurrentCell = fila.Cells[0];
-                        break;
+
+                        // D. Llenar los campos de texto automáticamente (Opcional pero recomendado)
+                        txtCodigo.Text = productoSeleccionado.IdProducto.ToString();
+                        txtProducto.Text = productoSeleccionado.NombreProducto;
+                        txtPrecio.Text = productoSeleccionado.PrecioVenta.ToString();
+                        nudCantidad.Value = 1; // Resetear cantidad
+                        nudCantidad.Focus();   // Mover foco para que solo tenga que dar Enter
+
+                        encontrado = true;
+                        break; // Salimos del ciclo
                     }
                 }
 
-                // Ocultar las sugerencias
+                if (!encontrado)
+                {
+                    MessageBox.Show("El producto no se encuentra visible en la lista actual (tal vez tiene stock 0 o está filtrado).", "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                // 3. Ocultar la lista de sugerencias
                 lstSugerencias.Visible = false;
+                txtBuscar.Text = "";
             }
+                /*if (lstSugerencias.SelectedItem is Producto producto)
+                {
+                    // Llenar los textbox del producto
+                    txtCodigo.Text = producto.IdProducto.ToString();
+                    txtProducto.Text = producto.NombreProducto;
+                    txtPrecio.Text = producto.PrecioVenta.ToString("N2");
+
+                    // Buscar y seleccionar la fila correspondiente en dgvProductos
+                    foreach (DataGridViewRow fila in dgvProductos.Rows)
+                    {
+                        if (fila.Cells[0].Value != null && (int)fila.Cells[0].Value == producto.IdProducto)
+                        {
+                            fila.Selected = true;
+                            dgvProductos.CurrentCell = fila.Cells[0];
+                            break;
+                        }
+                    }
+
+                    // Ocultar las sugerencias
+                    lstSugerencias.Visible = false;
+                }*/
         }
 
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
-            string texto = txtBuscar.Text.Trim();
+            string texto = txtBuscar.Text.ToLower().Trim();
+
+            // 1. Validaciones iniciales
+            if (string.IsNullOrWhiteSpace(texto) || _productosCache == null || _productosCache.Count == 0)
+            {
+                lstSugerencias.Visible = false;
+                return;
+            }
+
+            // 2. Filtrar la lista (Busca coincidencias parciales)
+            var resultados = _productosCache
+                .Where(p => p.NombreProducto != null && p.NombreProducto.ToLower().Contains(texto))
+                .Take(10) // Máximo 10 sugerencias
+                .ToList();
+
+            // 3. Si no hay resultados, ocultamos
+            if (resultados.Count == 0)
+            {
+                lstSugerencias.Visible = false;
+                return;
+            }
+
+            // 4. Mostrar resultados (IMPORTANTE: El orden de estas líneas)
+            lstSugerencias.DataSource = null; // <--- ¡Limpiar antes de asignar!
+            lstSugerencias.DataSource = resultados;
+            lstSugerencias.DisplayMember = "NombreProducto";
+            lstSugerencias.ValueMember = "IdProducto";
+
+            // 5. Ajuste visual (Altura dinámica)
+            int alturaItem = lstSugerencias.ItemHeight;
+            // Calcula altura: (cantidad * altura de item) + un pequeño borde. Máximo 150px.
+            lstSugerencias.Height = Math.Min((resultados.Count * alturaItem) + 5, 150);
+
+            lstSugerencias.Visible = true;
+            /*string texto = txtBuscar.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(texto) || _productosCache == null || _productosCache.Count == 0)
             {
@@ -339,12 +592,14 @@ namespace ModernMenuUI
             lstSugerencias.DataSource = resultados;
             lstSugerencias.DisplayMember = "NombreProducto";
             lstSugerencias.ValueMember = "IdProducto";
-            lstSugerencias.Visible = true;
+            lstSugerencias.Visible = true;*/
         }
 
         private async void frmFacturacion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            await DesecharSuscripcionProductosAsync();
+            //await DesecharSuscripcionProductosAsync();
+            await _gestorInventario.DesuscribirAsync();
+            await _gestorProducto.DesuscribirAsync();
         }
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
@@ -544,12 +799,99 @@ namespace ModernMenuUI
         {
             if (lstClientes.SelectedItem is Cliente cliente)
             {
-                SeleccionarCliente(cliente);
+                // 1. Llenar el TextBox visualmente (Nombre + Apellido)
+                txtCliente.Text = $"{cliente.Nombre} {cliente.Apellido}";
+
+                // 2. Guardar el objeto en la variable para usarlo al Facturar
+                _clienteSeleccionado = cliente;
+
+                // 3. Ocultar la lista
+                lstClientes.Visible = false;
             }
+            /*if (lstClientes.SelectedItem is Cliente cliente)
+            {
+                SeleccionarCliente(cliente);
+            }*/
         }
         private void txtCliente_TextChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show("Clientes cargados: " + _todosLosClientes.Count);
+            string texto = txtCliente.Text.ToLower().Trim();
+
+            // 1. Si está vacío, ocultamos la lista y limpiamos la selección
+            if (string.IsNullOrEmpty(texto))
+            {
+                lstClientes.Visible = false;
+                _clienteSeleccionado = null;
+                return;
+            }
+
+            // 2. Filtrar la lista en memoria (Por Nombre o Apellido)
+            // Usamos el modelo nuevo de la rama master (Nombre, Apellido)
+            var resultados = _todosLosClientes
+                .Where(c => (c.Nombre != null && c.Nombre.ToLower().Contains(texto)) ||
+                            (c.Apellido != null && c.Apellido.ToLower().Contains(texto)))
+                .Take(10) // Limitamos a 10 para que no sea una lista gigante
+                .ToList();
+
+            // 3. Mostrar resultados
+            if (resultados.Count > 0)
+            {
+                lstClientes.DataSource = null;
+                lstClientes.DataSource = resultados;
+
+                // IMPORTANTE: Configurar qué mostrar
+                // Como queremos ver Nombre y Apellido, a veces es mejor sobreescribir el método ToString()
+                // en la clase Cliente, pero por ahora mostraremos solo el Nombre.
+                lstClientes.DisplayMember = "Nombre";
+                lstClientes.ValueMember = "Id";
+
+                // Ajustar altura visualmente
+                int alturaItem = lstClientes.ItemHeight;
+                lstClientes.Height = Math.Min((resultados.Count * alturaItem) + 10, 150);
+
+                lstClientes.Visible = true;
+                lstClientes.BringToFront(); // Asegura que flote encima
+            }
+            else
+            {
+                lstClientes.Visible = false;
+            }
+            /* string texto = txtBuscar.Text.Trim();
+
+             if (string.IsNullOrWhiteSpace(texto) || _todosLosClientes == null)
+             {
+                 lstSugerencias.Visible = false;
+                 _clienteSeleccionado = null;
+                 return;
+             }
+
+             // 1. FILTRAR (Usando .Nombre y .Apellido)
+             var resultados = _todosLosClientes
+                 .Where(c => (c.Nombre != null && c.Nombre.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                             (c.Apellido != null && c.Apellido.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0))
+                 .Take(10)
+                 .ToList();
+
+             if (resultados.Count > 0)
+             {
+                 lstSugerencias.DataSource = null;
+                 lstSugerencias.DataSource = resultados;
+
+                 // 2. CAMBIO IMPORTANTE: Usar los nombres de propiedades NUEVOS
+                 lstSugerencias.DisplayMember = "Nombre"; // Propiedad de tu clase
+                 lstSugerencias.ValueMember = "Id";       // Propiedad de tu clase
+
+                 lstSugerencias.Visible = true;
+                 lstSugerencias.Height = Math.Min((resultados.Count * 20) + 10, 150); // Ajuste visual simple
+                 lstSugerencias.BringToFront();
+             }
+             else
+             {
+                 lstSugerencias.Visible = false;
+             }*/
+
+
+            /*//MessageBox.Show("Clientes cargados: " + _todosLosClientes.Count);
             string texto = txtCliente.Text.ToLower().Trim();
 
             if (string.IsNullOrEmpty(texto))
@@ -579,33 +921,59 @@ namespace ModernMenuUI
             else
             {
                 lstClientes.Visible = false;
-            }
+            }*/
         }
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
-            /* MessageBox.Show($"ID Bodega Actual: {SessionData.IdBodegaActual}\n" +
-          $"Método que voy a llamar: CargarProductosDeBodegaAsync",
-          "Diagnóstico", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
-
+            MessageBox.Show("¡El formulario ha cargado y va a suscribirse!");
+            // 1. Carga inicial
             await CargarProductosDeBodega();
-            // await CargarProductosAsync();
+
+            // 2. Carga de clientes (tu código original)
             try
             {
-                // Asegúrate de tener _clienteRepo instanciado arriba
                 _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
+                lstSugerencias.Visible = false;
+            }
+            catch { }
 
-                // Opcional: Mensaje para verificar si cargaron
-                // MessageBox.Show($"Se cargaron {_todosLosClientes.Count} clientes."); 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar clientes: " + ex.Message);
-            }
-            await IniciarSuscripcionProductosAsync();
-            // await CargarRutasAsync();
-            //await CargarClientesAsync();
+            // 3. IMPORTANTE: Iniciar la escucha de Realtime
+            System.Diagnostics.Debug.WriteLine("Iniciando suscripción a Realtime...");
+            await _gestorInventario.SuscribirAsync();
+            await _gestorProducto.SuscribirAsync();
+            /* await CargarProductosDeBodega();
+
+             try
+             {
+                 _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
+                 lstSugerencias.Visible = false;
+             }
+             catch (Exception ex) { /* manejo error */
         }
+
+           // await CargarRutasAsync();
+
+            // 2. ACTIVAR REALTIME (Igual que en frmCategorias)*/
+            //await _gestorInventario.SuscribirAsync();
+
+
+
+           
+            /* await CargarProductosDeBodega();
+             // await CargarProductosAsync();
+             try
+             {
+                 // Asegúrate de tener _clienteRepo instanciado arriba
+                 _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error al cargar clientes: " + ex.Message);
+             }
+             await IniciarSuscripcionProductosAsync();*/
+
+        
 
         private async void btnFacturar_Click(object sender, EventArgs e)
         {
@@ -691,7 +1059,8 @@ namespace ModernMenuUI
 
                 LimpiarCarrito();
 
-                txtBuscar.Text = ""; 
+                txtBuscar.Text = "";
+                txtCliente.Text = "";
                 _clienteSeleccionado = null;
 
                 await CargarProductosDeBodega();
