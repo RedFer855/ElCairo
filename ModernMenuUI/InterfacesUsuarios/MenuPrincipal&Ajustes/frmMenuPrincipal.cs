@@ -6,6 +6,7 @@ using Microsoft.VisualBasic;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
+using ModernMenuUI.InterfacesUsuarios.Reporteria;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -411,8 +412,8 @@ namespace ModernMenuUI
         private void btnCrearReporte_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            ManejarFormularios.Instancia.AbrirFormulario(new frmCrearReporte());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
-
         }
 
         private void btnReportesCreados_Click(object sender, EventArgs e)

@@ -16,5 +16,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Reporteria
         {
             InitializeComponent();
         }
+
+        private void btnReporteInventarioBajo_Click(object sender, EventArgs e)
+        {
+            frmAbrirReporte AbrirReporte = new frmAbrirReporte();
+            AbrirReporte.ShowDialog();
+        }
+
+        private void btnReporteInventarioBajo_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }

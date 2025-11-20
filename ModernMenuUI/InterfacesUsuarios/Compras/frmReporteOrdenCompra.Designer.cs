@@ -122,7 +122,7 @@
             // btnPdf
             // 
             btnPdf.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnPdf.BackColor = Color.FromArgb(149, 195, 172);
+            btnPdf.BackColor = Color.FromArgb(228, 158, 144);
             btnPdf.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnPdf.ForeColor = Color.White;
             btnPdf.ImageAlign = ContentAlignment.TopCenter;

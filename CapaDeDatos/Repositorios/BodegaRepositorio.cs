@@ -101,5 +101,15 @@ namespace CapaDeDatos.Repositorios
                 return BCrypt.Net.BCrypt.Verify(passwordInput, storedHash);
             }
         }
+
+        public async Task<List<Bodega>> ObtenerBodegasActivas()
+        {
+            var client = await GetClient();
+            var response = await client.From<Bodega>()
+                .Where(b => b.EstadoBodega == true) // Asume que el modelo Bodega tiene 'EstadoBodega'
+                .Get();
+            return response.Models.OrderBy(b => b.NombreBodega).ToList();
+        }
+
     }
 }
