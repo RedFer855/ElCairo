@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Supabase.Postgrest.Constants;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
@@ -69,6 +70,41 @@ namespace ModernMenuUI
             //dgvProductos.DefaultCellStyle.ForeColor = Color.DimGray;
 
 
+        }
+       
+        private async Task<string> ObtenerNombreUsuarioActual()
+        {
+            try
+            {
+                var supabase = await Conexion.GetClientAsync();
+                var authUser = supabase.Auth.CurrentUser;
+
+                if (authUser == null) return "Usuario Invitado";
+
+                // Buscamos directamente en la tabla 'usuario' usando el ID de Auth
+                // y traemos el campo 'alias_usuario'
+                var respUsuario = await supabase
+                    .From<Usuario>()
+                    .Select("alias_usuario") // Solo necesitamos esta columna
+                    .Filter("user_id", Operator.Equals, authUser.Id)
+                    .Single();
+
+                if (respUsuario != null && !string.IsNullOrEmpty(respUsuario.AliasUsuario))
+                {
+                    // ¡ÉXITO! Devolvemos el alias (ej. "juanperez2025")
+                    return respUsuario.AliasUsuario;
+                }
+
+                // Si no tiene alias, devolvemos el email como respaldo
+                return authUser.Email;
+            }
+            catch (Exception ex)
+            {
+                // Si falla la base de datos, al menos mostramos el email de la sesión actual
+                var client = CapaDeDatos.Datos.Conexion.GetClientAsync().Result;
+                var email = client?.Auth.CurrentUser?.Email;
+                return email ?? $"Error: {ex.Message}";
+            }
         }
 
         private async Task CargarProductosAsync()
@@ -413,7 +449,7 @@ namespace ModernMenuUI
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             // 1. VALIDAR CARRITO VACÍO
             if (dgvCarrito.Rows.Count == 0)
@@ -432,6 +468,9 @@ namespace ModernMenuUI
                 txtProveedor.Focus(); // Mandamos el cursor al buscador
                 return;
             }
+            this.Cursor = Cursors.WaitCursor;
+            string nombreUsuario = await ObtenerNombreUsuarioActual(); 
+            this.Cursor = Cursors.Default;
 
             List<clsOrdenCompra> itemsParaReporte = new List<clsOrdenCompra>();
 
@@ -461,7 +500,7 @@ namespace ModernMenuUI
 
             // 6. CREAR Y MOSTRAR EL REPORTE
             // Pasamos los 5 argumentos: Lista, Subtotal, Impuesto, Total, Proveedor
-            frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(itemsParaReporte, sub, imp, total, nombreProveedor);
+            frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(itemsParaReporte, sub, imp, total, nombreProveedor, nombreUsuario);
 
             frmReporte.ShowDialog();
         }
@@ -651,7 +690,82 @@ namespace ModernMenuUI
         
         private async void btnBuscarProv_Click(object sender, EventArgs e)
         {
-            string nombreBusqueda = txtProveedor.Text.Trim();
+            string nombreBusqueda = txtProveedor.Text.Trim(); // Tu textbox de búsqueda
+
+            // 1. Si limpian la caja, reseteamos todo
+            if (string.IsNullOrEmpty(nombreBusqueda))
+            {
+                if (!ValidarYLimpiarCarrito("")) return; // Validamos antes de borrar
+
+                await CargarProductosAsync(); // Carga todos
+                RefrescarGrid();
+                _proveedorSeleccionado = null;
+                lblProveedorActual.Text = "---";
+                return;
+            }
+
+            this.Cursor = Cursors.WaitCursor;
+
+            try
+            {
+                // 2. BUSCAR EN LA LISTA DE MEMORIA (Es más rápido que ir a la BD)
+                // Buscamos el objeto proveedor que coincida con el nombre escrito
+                var proveedorEncontrado = _todosLosProveedores
+                    .FirstOrDefault(p => p.NombreProveedor.Equals(nombreBusqueda, StringComparison.OrdinalIgnoreCase));
+
+                // Si no está en memoria (raro), lo buscamos en BD por si acaso
+                if (proveedorEncontrado == null)
+                {
+                    var resultadosBD = await proveedorRepositorio.BuscarProveedoresPorNombre(nombreBusqueda);
+                    if (resultadosBD != null && resultadosBD.Count > 0)
+                        proveedorEncontrado = resultadosBD.First();
+                }
+
+                // Si después de todo no existe...
+                if (proveedorEncontrado == null)
+                {
+                    MessageBox.Show("No se encontró ese proveedor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Cursor = Cursors.Default;
+                    return;
+                }
+
+                // 3. VALIDACIÓN DE SEGURIDAD (El momento clave)
+                // Comparamos el nombre del proveedor encontrado contra el Label actual
+                if (!ValidarYLimpiarCarrito(proveedorEncontrado.NombreProveedor))
+                {
+                    this.Cursor = Cursors.Default;
+                    return; // Usuario canceló
+                }
+
+                // 4. APLICAR EL CAMBIO (Usuario aceptó o carrito estaba vacío)
+                _proveedorSeleccionado = proveedorEncontrado;
+                lblProveedorActual.Text = _proveedorSeleccionado.NombreProveedor; // Actualizamos el Label Visual
+
+                // 5. FILTRAR PRODUCTOS
+                var productosDelProveedor = await _productoRepo.ObtenerCatalogoPorProveedorAsync(_proveedorSeleccionado.IdProveedor);
+
+                if (productosDelProveedor.Count > 0)
+                {
+                    _productosCache = productosDelProveedor;
+                    RefrescarGrid();
+                    MessageBox.Show($"Filtro aplicado: {_proveedorSeleccionado.NombreProveedor}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"El proveedor {_proveedorSeleccionado.NombreProveedor} no tiene productos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dgvProductos.DataSource = null;
+                    dgvProductos.Rows.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+            /*string nombreBusqueda = txtProveedor.Text.Trim();
 
             // 1. CASO: BUSCADOR VACÍO (RESETEAR)
             if (string.IsNullOrEmpty(nombreBusqueda))
@@ -737,78 +851,8 @@ namespace ModernMenuUI
             finally
             {
                 this.Cursor = Cursors.Default;
-            }
-            /* string nombreBusqueda = txtProveedor.Text.Trim();
+            }*/
 
-              if (!ValidarYLimpiarCarrito(nombreBusqueda))
-              {
-                  return; // Si el usuario dijo "No", cancelamos todo aquí.
-              }
-
-              if (string.IsNullOrEmpty(nombreBusqueda))
-              {
-                  // Si limpian la caja y dan buscar, recargamos TODOS los productos
-                  await CargarProductosAsync(); 
-                  RefrescarGrid();
-                  _proveedorSeleccionado = null; // Reseteamos la selección
-                  return;
-              }
-
-              this.Cursor = Cursors.WaitCursor;
-
-              try
-              {
-                  // 1. Si ya tenemos un proveedor seleccionado con el mouse y el texto coincide, lo usamos.
-                  if (_proveedorSeleccionado == null ||
-                      !_proveedorSeleccionado.NombreProveedor.Equals(nombreBusqueda, StringComparison.OrdinalIgnoreCase))
-                  {
-                      // Usamos el repositorio de proveedores para buscar el ID por nombre
-                      var proveedoresEncontrados = await proveedorRepositorio.BuscarProveedoresPorNombre(nombreBusqueda);
-
-                      if (proveedoresEncontrados != null && proveedoresEncontrados.Count > 0)
-                      {
-                          // Tomamos el primero que coincida
-                          _proveedorSeleccionado = proveedoresEncontrados.First();
-                      }
-                      else
-                      {
-                          MessageBox.Show("No se encontró ningún proveedor con ese nombre.", "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                          this.Cursor = Cursors.Default;
-                          return;
-                      }
-                  }
-
-                  // 2. Una vez tenemos el proveedor, buscamos sus productos
-                  var productosDelProveedor = await _productoRepo.ObtenerProductosPorProveedorAsync(_proveedorSeleccionado.IdProveedor);
-
-                  if (productosDelProveedor.Count > 0)
-                  {
-                      // 3. Actualizamos la lista maestra y el grid
-                      _productosCache = productosDelProveedor; // Reemplazamos la memoria actual
-
-                      // Actualizar el DataSource
-                       dgvProductos.DataSource = null;
-                       dgvProductos.DataSource = _productosCache;
-                      RefrescarGrid();
-                      lblProveedorActual.Text = _proveedorSeleccionado.NombreProveedor;
-
-                      MessageBox.Show($"Se encontraron {productosDelProveedor.Count} productos de {_proveedorSeleccionado.NombreProveedor}.", "Filtro Aplicado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                  }
-                  else
-                  {
-                      MessageBox.Show($"El proveedor {_proveedorSeleccionado.NombreProveedor} no tiene productos registrados o activos.", "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                      dgvProductos.DataSource = null; // Limpiar grid
-                  }
-
-              }
-              catch (Exception ex)
-              {
-                  MessageBox.Show($"Error al filtrar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-              }
-              finally
-              {
-                  this.Cursor = Cursors.Default;
-              }*/
         }
         private void RefrescarGrid()
         {

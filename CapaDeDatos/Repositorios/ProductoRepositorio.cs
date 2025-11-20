@@ -102,29 +102,60 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
-        public async Task<List<Producto>> ObtenerProductosPorProveedorAsync(int idProveedor)
+        public async Task<List<Producto>> ObtenerCatalogoPorProveedorAsync(int idProveedor)
         {
             try
             {
                 var supabase = await Conexion.GetClientAsync();
 
-                var response = await supabase
-                    .From<Producto>()
-                    .Select("*")
-                    // Filtramos por el ID del proveedor
-                    .Filter("id_proveedor", Supabase.Postgrest.Constants.Operator.Equals, idProveedor)
-                    // Y que estén activos
-                    .Filter("estado_producto", Supabase.Postgrest.Constants.Operator.Equals, "true")
-                    .Order("nombre_producto", Supabase.Postgrest.Constants.Ordering.Ascending)
-                    .Get();
+                // Parámetros para la función SQL
+                var parametros = new Dictionary<string, object>
+        {
+            { "p_id_proveedor", idProveedor }
+        };
 
-                return response.Models;
+                // Llamada a RPC (Remote Procedure Call)
+                var response = await supabase.Rpc("obtener_productos_por_proveedor", parametros);
+
+                // Deserializar la respuesta (Supabase devuelve un JSON con los productos)
+                if (response.Content != null)
+                {
+                    var listaProductos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Producto>>(response.Content);
+                    return listaProductos ?? new List<Producto>();
+                }
+
+                return new List<Producto>();
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error al filtrar productos por proveedor: {ex.Message}");
+                // Si falla, retornamos lista vacía para no romper el flujo
+                System.Diagnostics.Debug.WriteLine("Error filtrando por proveedor: " + ex.Message);
+                return new List<Producto>();
             }
         }
+        /*  public async Task<List<Producto>> ObtenerProductosPorProveedorAsync(int idProveedor)
+          {
+              try
+              {
+                  var supabase = await Conexion.GetClientAsync();
+
+                  var response = await supabase
+                      .From<Producto>()
+                      .Select("*")
+                      // Filtramos por el ID del proveedor
+                      .Filter("id_proveedor", Supabase.Postgrest.Constants.Operator.Equals, idProveedor)
+                      // Y que estén activos
+                      .Filter("estado_producto", Supabase.Postgrest.Constants.Operator.Equals, "true")
+                      .Order("nombre_producto", Supabase.Postgrest.Constants.Ordering.Ascending)
+                      .Get();
+
+                  return response.Models;
+              }
+              catch (Exception ex)
+              {
+                  throw new Exception($"Error al filtrar productos por proveedor: {ex.Message}");
+              }
+          }*/
         /* public async Task ActualizarStockProducto(int idProducto, int cantidadVendida)
          {
              try
