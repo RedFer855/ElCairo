@@ -76,13 +76,16 @@
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
-            Codigos = new DataGridViewTextBoxColumn();
+            CodigoBarra = new DataGridViewTextBoxColumn();
             Producto = new DataGridViewTextBoxColumn();
             Marca = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
             Precio = new DataGridViewTextBoxColumn();
             Stock = new DataGridViewTextBoxColumn();
+            Codigos = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
+            textBox1 = new TextBox();
+            label10 = new Label();
             nudCantidad = new NumericUpDown();
             label9 = new Label();
             label8 = new Label();
@@ -120,10 +123,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(770, 816);
-            btnSalir.Margin = new Padding(3, 4, 3, 4);
+            btnSalir.Location = new Point(674, 612);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(91, 84);
+            btnSalir.Size = new Size(80, 63);
             btnSalir.TabIndex = 26;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -135,10 +137,9 @@
             button1.BackColor = Color.FromArgb(189, 215, 238);
             button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.FromArgb(87, 99, 110);
-            button1.Location = new Point(610, 816);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(534, 612);
             button1.Name = "button1";
-            button1.Size = new Size(153, 84);
+            button1.Size = new Size(134, 63);
             button1.TabIndex = 24;
             button1.Text = "Imprimir Orden";
             button1.UseVisualStyleBackColor = false;
@@ -149,10 +150,9 @@
             panel5.Controls.Add(btnBuscarProv);
             panel5.Controls.Add(txtBuscarProv);
             panel5.Controls.Add(label4);
-            panel5.Location = new Point(14, 5);
-            panel5.Margin = new Padding(3, 4, 3, 4);
+            panel5.Location = new Point(12, 4);
             panel5.Name = "panel5";
-            panel5.Size = new Size(386, 68);
+            panel5.Size = new Size(338, 51);
             panel5.TabIndex = 23;
             // 
             // btnBuscarProv
@@ -163,10 +163,9 @@
             btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarProv.FlatAppearance.BorderSize = 0;
             btnBuscarProv.FlatStyle = FlatStyle.Flat;
-            btnBuscarProv.Location = new Point(311, 20);
-            btnBuscarProv.Margin = new Padding(3, 4, 3, 4);
+            btnBuscarProv.Location = new Point(272, 15);
             btnBuscarProv.Name = "btnBuscarProv";
-            btnBuscarProv.Size = new Size(55, 27);
+            btnBuscarProv.Size = new Size(48, 20);
             btnBuscarProv.TabIndex = 2;
             btnBuscarProv.UseVisualStyleBackColor = false;
             btnBuscarProv.Click += btnBuscarProv_Click;
@@ -175,10 +174,9 @@
             // 
             txtBuscarProv.BorderStyle = BorderStyle.None;
             txtBuscarProv.Font = new Font("Itim", 13F);
-            txtBuscarProv.Location = new Point(83, 19);
-            txtBuscarProv.Margin = new Padding(3, 4, 3, 4);
+            txtBuscarProv.Location = new Point(73, 14);
             txtBuscarProv.Name = "txtBuscarProv";
-            txtBuscarProv.Size = new Size(221, 26);
+            txtBuscarProv.Size = new Size(193, 21);
             txtBuscarProv.TabIndex = 22;
             txtBuscarProv.TextChanged += txtBuscar_TextChanged;
             txtBuscarProv.KeyDown += txtBuscar_KeyDown;
@@ -190,9 +188,9 @@
             label4.AutoSize = true;
             label4.Font = new Font("Comic Sans MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.FromArgb(87, 99, 110);
-            label4.Location = new Point(11, 21);
+            label4.Location = new Point(10, 16);
             label4.Name = "label4";
-            label4.Size = new Size(83, 20);
+            label4.Size = new Size(66, 17);
             label4.TabIndex = 16;
             label4.Text = "Proveedor:";
             // 
@@ -202,10 +200,9 @@
             btnAgregarCompra.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarCompra.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCompra.ForeColor = SystemColors.ButtonFace;
-            btnAgregarCompra.Location = new Point(480, 816);
-            btnAgregarCompra.Margin = new Padding(3, 4, 3, 4);
+            btnAgregarCompra.Location = new Point(420, 612);
             btnAgregarCompra.Name = "btnAgregarCompra";
-            btnAgregarCompra.Size = new Size(123, 84);
+            btnAgregarCompra.Size = new Size(108, 63);
             btnAgregarCompra.TabIndex = 25;
             btnAgregarCompra.Text = "Ingresar Compra";
             btnAgregarCompra.UseVisualStyleBackColor = false;
@@ -218,19 +215,17 @@
             panel4.BackColor = Color.FromArgb(189, 215, 238);
             panel4.Controls.Add(panel9);
             panel4.Controls.Add(tableLayoutPanel1);
-            panel4.Location = new Point(14, 816);
-            panel4.Margin = new Padding(3, 4, 3, 4);
+            panel4.Location = new Point(12, 612);
             panel4.Name = "panel4";
-            panel4.Size = new Size(459, 84);
+            panel4.Size = new Size(402, 63);
             panel4.TabIndex = 22;
             // 
             // panel9
             // 
             panel9.Dock = DockStyle.Left;
-            panel9.Location = new Point(0, 84);
-            panel9.Margin = new Padding(3, 4, 3, 4);
+            panel9.Location = new Point(0, 63);
             panel9.Name = "panel9";
-            panel9.Size = new Size(34, 0);
+            panel9.Size = new Size(30, 0);
             panel9.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -248,11 +243,10 @@
             tableLayoutPanel1.Controls.Add(panel6, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(459, 84);
+            tableLayoutPanel1.Size = new Size(402, 63);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // panel8
@@ -260,10 +254,9 @@
             panel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel8.Controls.Add(txtTotal);
             panel8.Controls.Add(label6);
-            panel8.Location = new Point(304, 4);
-            panel8.Margin = new Padding(3, 4, 3, 4);
+            panel8.Location = new Point(265, 3);
             panel8.Name = "panel8";
-            panel8.Size = new Size(123, 68);
+            panel8.Size = new Size(106, 51);
             panel8.TabIndex = 24;
             // 
             // txtTotal
@@ -272,12 +265,11 @@
             txtTotal.BorderStyle = BorderStyle.None;
             txtTotal.Enabled = false;
             txtTotal.Font = new Font("Itim", 18F);
-            txtTotal.Location = new Point(0, 23);
-            txtTotal.Margin = new Padding(3, 4, 3, 4);
+            txtTotal.Location = new Point(0, 17);
             txtTotal.Name = "txtTotal";
             txtTotal.PlaceholderText = "L0,00";
             txtTotal.ReadOnly = true;
-            txtTotal.Size = new Size(123, 36);
+            txtTotal.Size = new Size(106, 29);
             txtTotal.TabIndex = 24;
             // 
             // label6
@@ -288,7 +280,7 @@
             label6.ForeColor = Color.Black;
             label6.Location = new Point(0, 0);
             label6.Name = "label6";
-            label6.Size = new Size(50, 20);
+            label6.Size = new Size(42, 17);
             label6.TabIndex = 19;
             label6.Text = "Total:";
             // 
@@ -297,10 +289,9 @@
             panel3.Controls.Add(txtImpuesto);
             panel3.Controls.Add(label7);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(187, 4);
-            panel3.Margin = new Padding(3, 4, 3, 4);
+            panel3.Location = new Point(163, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(84, 76);
+            panel3.Size = new Size(72, 57);
             panel3.TabIndex = 22;
             // 
             // txtImpuesto
@@ -309,12 +300,11 @@
             txtImpuesto.Dock = DockStyle.Fill;
             txtImpuesto.Enabled = false;
             txtImpuesto.Font = new Font("Itim", 18F);
-            txtImpuesto.Location = new Point(0, 20);
-            txtImpuesto.Margin = new Padding(3, 4, 3, 4);
+            txtImpuesto.Location = new Point(0, 17);
             txtImpuesto.Name = "txtImpuesto";
             txtImpuesto.PlaceholderText = "L0,00";
             txtImpuesto.ReadOnly = true;
-            txtImpuesto.Size = new Size(84, 36);
+            txtImpuesto.Size = new Size(72, 29);
             txtImpuesto.TabIndex = 22;
             // 
             // label7
@@ -325,7 +315,7 @@
             label7.ForeColor = Color.Black;
             label7.Location = new Point(0, 0);
             label7.Name = "label7";
-            label7.Size = new Size(78, 20);
+            label7.Size = new Size(63, 17);
             label7.TabIndex = 21;
             label7.Text = "Impuesto:";
             // 
@@ -334,10 +324,9 @@
             panel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel6.Controls.Add(txtSubTotal);
             panel6.Controls.Add(label5);
-            panel6.Location = new Point(25, 4);
-            panel6.Margin = new Padding(3, 4, 3, 4);
+            panel6.Location = new Point(22, 3);
             panel6.Name = "panel6";
-            panel6.Size = new Size(125, 68);
+            panel6.Size = new Size(108, 51);
             panel6.TabIndex = 23;
             // 
             // txtSubTotal
@@ -346,12 +335,11 @@
             txtSubTotal.BorderStyle = BorderStyle.None;
             txtSubTotal.Enabled = false;
             txtSubTotal.Font = new Font("Itim", 18F);
-            txtSubTotal.Location = new Point(0, 23);
-            txtSubTotal.Margin = new Padding(3, 4, 3, 4);
+            txtSubTotal.Location = new Point(0, 17);
             txtSubTotal.Name = "txtSubTotal";
             txtSubTotal.PlaceholderText = "L0,00";
             txtSubTotal.ReadOnly = true;
-            txtSubTotal.Size = new Size(125, 36);
+            txtSubTotal.Size = new Size(108, 29);
             txtSubTotal.TabIndex = 23;
             // 
             // label5
@@ -362,7 +350,7 @@
             label5.ForeColor = Color.Black;
             label5.Location = new Point(0, 0);
             label5.Name = "label5";
-            label5.Size = new Size(74, 20);
+            label5.Size = new Size(60, 17);
             label5.TabIndex = 18;
             label5.Text = "Subtotal:";
             // 
@@ -371,10 +359,9 @@
             panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(14, 401);
-            panelCarrito.Margin = new Padding(3, 4, 3, 4);
+            panelCarrito.Location = new Point(12, 301);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(848, 407);
+            panelCarrito.Size = new Size(742, 305);
             panelCarrito.TabIndex = 21;
             // 
             // panel10
@@ -383,10 +370,9 @@
             panel10.Controls.Add(pbxCarritoVacio);
             panel10.Controls.Add(pbxCarrito);
             panel10.Controls.Add(dgvCarrito);
-            panel10.Location = new Point(23, 15);
-            panel10.Margin = new Padding(3, 4, 3, 4);
+            panel10.Location = new Point(20, 11);
             panel10.Name = "panel10";
-            panel10.Size = new Size(802, 372);
+            panel10.Size = new Size(702, 279);
             panel10.TabIndex = 17;
             // 
             // pbxCarritoVacio
@@ -394,10 +380,9 @@
             pbxCarritoVacio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbxCarritoVacio.BackColor = Color.Transparent;
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
-            pbxCarritoVacio.Location = new Point(327, 141);
-            pbxCarritoVacio.Margin = new Padding(3, 4, 3, 4);
+            pbxCarritoVacio.Location = new Point(286, 106);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(141, 147);
+            pbxCarritoVacio.Size = new Size(123, 110);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
@@ -407,9 +392,8 @@
             pbxCarrito.BackColor = Color.Transparent;
             pbxCarrito.Image = (Image)resources.GetObject("pbxCarrito.Image");
             pbxCarrito.Location = new Point(0, 0);
-            pbxCarrito.Margin = new Padding(3, 4, 3, 4);
             pbxCarrito.Name = "pbxCarrito";
-            pbxCarrito.Size = new Size(46, 53);
+            pbxCarrito.Size = new Size(40, 40);
             pbxCarrito.TabIndex = 2;
             pbxCarrito.TabStop = false;
             // 
@@ -426,7 +410,7 @@
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.Transparent;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvCarrito.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
@@ -446,7 +430,6 @@
             dgvCarrito.EnableHeadersVisualStyles = false;
             dgvCarrito.GridColor = Color.FromArgb(189, 215, 238);
             dgvCarrito.Location = new Point(0, 0);
-            dgvCarrito.Margin = new Padding(3, 4, 3, 4);
             dgvCarrito.Name = "dgvCarrito";
             dgvCarrito.ReadOnly = true;
             dgvCarrito.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -461,12 +444,13 @@
             dgvCarrito.RowHeadersWidth = 51;
             dgvCarrito.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle5.BackColor = Color.White;
-            dataGridViewCellStyle5.ForeColor = Color.Teal;
-            dataGridViewCellStyle5.SelectionBackColor = Color.Teal;
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
             dataGridViewCellStyle5.SelectionForeColor = Color.White;
             dgvCarrito.RowsDefaultCellStyle = dataGridViewCellStyle5;
             dgvCarrito.RowTemplate.Height = 50;
-            dgvCarrito.Size = new Size(802, 372);
+            dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCarrito.Size = new Size(702, 279);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
             dgvCarrito.CellMouseDown += dgvCarrito_CellMouseDown;
@@ -511,6 +495,7 @@
             // Restar
             // 
             Restar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Restar.Description = "Sumar";
             Restar.HeaderText = "";
             Restar.MinimumWidth = 6;
             Restar.Name = "Restar";
@@ -521,6 +506,7 @@
             // Sumar
             // 
             Sumar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Sumar.Description = "Restar";
             Sumar.HeaderText = "";
             Sumar.MinimumWidth = 6;
             Sumar.Name = "Sumar";
@@ -531,6 +517,7 @@
             // Eliminar
             // 
             Eliminar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Eliminar.Description = "Eliminar";
             Eliminar.HeaderText = "";
             Eliminar.MinimumWidth = 6;
             Eliminar.Name = "Eliminar";
@@ -544,10 +531,9 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnBuscarProductos);
-            panelBusqueda.Location = new Point(407, 5);
-            panelBusqueda.Margin = new Padding(3, 4, 3, 4);
+            panelBusqueda.Location = new Point(356, 4);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(455, 68);
+            panelBusqueda.Size = new Size(398, 51);
             panelBusqueda.TabIndex = 18;
             // 
             // txtBuscar
@@ -555,11 +541,10 @@
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(24, 19);
-            txtBuscar.Margin = new Padding(3, 4, 3, 4);
+            txtBuscar.Location = new Point(21, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(346, 24);
+            txtBuscar.Size = new Size(303, 20);
             txtBuscar.TabIndex = 1;
             // 
             // btnBuscarProductos
@@ -570,10 +555,9 @@
             btnBuscarProductos.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarProductos.FlatAppearance.BorderSize = 0;
             btnBuscarProductos.FlatStyle = FlatStyle.Flat;
-            btnBuscarProductos.Location = new Point(377, 17);
-            btnBuscarProductos.Margin = new Padding(3, 4, 3, 4);
+            btnBuscarProductos.Location = new Point(330, 13);
             btnBuscarProductos.Name = "btnBuscarProductos";
-            btnBuscarProductos.Size = new Size(55, 27);
+            btnBuscarProductos.Size = new Size(48, 20);
             btnBuscarProductos.TabIndex = 0;
             btnBuscarProductos.UseVisualStyleBackColor = false;
             // 
@@ -582,10 +566,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel7);
-            panel1.Location = new Point(407, 81);
-            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Location = new Point(356, 61);
             panel1.Name = "panel1";
-            panel1.Size = new Size(455, 312);
+            panel1.Size = new Size(398, 234);
             panel1.TabIndex = 19;
             // 
             // panel7
@@ -594,10 +577,9 @@
             panel7.AutoSize = true;
             panel7.BackColor = Color.FromArgb(189, 215, 238);
             panel7.Controls.Add(dgvProductos);
-            panel7.Location = new Point(24, 16);
-            panel7.Margin = new Padding(3, 4, 3, 4);
+            panel7.Location = new Point(21, 12);
             panel7.Name = "panel7";
-            panel7.Size = new Size(408, 280);
+            panel7.Size = new Size(357, 210);
             panel7.TabIndex = 12;
             // 
             // dgvProductos
@@ -613,13 +595,13 @@
             dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle6.SelectionBackColor = Color.Transparent;
             dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dgvProductos.ColumnHeadersHeight = 40;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { Codigos, Producto, Marca, Categoria, Precio, Stock });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { CodigoBarra, Producto, Marca, Categoria, Precio, Stock, Codigos });
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = Color.White;
             dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -633,7 +615,6 @@
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
             dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Margin = new Padding(3, 4, 3, 4);
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -645,41 +626,37 @@
             dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
             dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            dgvProductos.RowHeadersWidth = 51;
+            dgvProductos.RowHeadersWidth = 40;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle10.BackColor = Color.White;
-            dataGridViewCellStyle10.ForeColor = Color.Teal;
-            dataGridViewCellStyle10.SelectionBackColor = Color.Teal;
+            dataGridViewCellStyle10.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(148, 168, 187);
             dataGridViewCellStyle10.SelectionForeColor = Color.White;
             dgvProductos.RowsDefaultCellStyle = dataGridViewCellStyle10;
             dgvProductos.RowTemplate.Height = 40;
-            dgvProductos.Size = new Size(408, 280);
+            dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvProductos.Size = new Size(357, 210);
             dgvProductos.TabIndex = 0;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
-            // Codigos
+            // CodigoBarra
             // 
-            Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Codigos.DataPropertyName = "IdProducto";
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.Padding = new Padding(0, 1, 0, 0);
-            Codigos.DefaultCellStyle = dataGridViewCellStyle7;
-            Codigos.FillWeight = 90F;
-            Codigos.HeaderText = "Código";
-            Codigos.MinimumWidth = 6;
-            Codigos.Name = "Codigos";
-            Codigos.ReadOnly = true;
-            Codigos.Width = 106;
+            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            CodigoBarra.HeaderText = "Código de Barra";
+            CodigoBarra.Name = "CodigoBarra";
+            CodigoBarra.ReadOnly = true;
+            CodigoBarra.Width = 152;
             // 
             // Producto
             // 
-            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             Producto.DataPropertyName = "NombreProducto";
             Producto.FillWeight = 200F;
             Producto.HeaderText = "Producto";
             Producto.MinimumWidth = 6;
             Producto.Name = "Producto";
             Producto.ReadOnly = true;
+            Producto.Width = 105;
             // 
             // Marca
             // 
@@ -719,9 +696,25 @@
             Stock.Name = "Stock";
             Stock.ReadOnly = true;
             // 
+            // Codigos
+            // 
+            Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Codigos.DataPropertyName = "IdProducto";
+            dataGridViewCellStyle7.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle7.Padding = new Padding(0, 1, 0, 0);
+            Codigos.DefaultCellStyle = dataGridViewCellStyle7;
+            Codigos.FillWeight = 90F;
+            Codigos.HeaderText = "Código";
+            Codigos.MinimumWidth = 6;
+            Codigos.Name = "Codigos";
+            Codigos.ReadOnly = true;
+            Codigos.Width = 89;
+            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(label10);
             panel2.Controls.Add(nudCantidad);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(label8);
@@ -732,32 +725,52 @@
             panel2.Controls.Add(txtProducto);
             panel2.Controls.Add(txtPrecio);
             panel2.Controls.Add(btnAgregar);
-            panel2.Location = new Point(14, 81);
-            panel2.Margin = new Padding(3, 4, 3, 4);
+            panel2.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            panel2.Location = new Point(12, 61);
             panel2.Name = "panel2";
-            panel2.Size = new Size(386, 312);
+            panel2.Size = new Size(338, 234);
             panel2.TabIndex = 20;
+            // 
+            // textBox1
+            // 
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Itim", 13F);
+            textBox1.Location = new Point(115, 136);
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(192, 21);
+            textBox1.TabIndex = 23;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.FromArgb(87, 99, 110);
+            label10.Location = new Point(10, 136);
+            label10.Name = "label10";
+            label10.Size = new Size(96, 18);
+            label10.TabIndex = 22;
+            label10.Text = "Precio Nuevo:";
             // 
             // nudCantidad
             // 
             nudCantidad.Font = new Font("Itim", 16.25F);
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
-            nudCantidad.Location = new Point(109, 175);
-            nudCantidad.Margin = new Padding(3, 4, 3, 4);
+            nudCantidad.Location = new Point(88, 168);
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
-            nudCantidad.Size = new Size(94, 40);
+            nudCantidad.Size = new Size(65, 33);
             nudCantidad.TabIndex = 21;
             nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Comic Sans MS", 12F);
+            label9.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(11, 12);
+            label9.Location = new Point(10, 9);
             label9.Name = "label9";
-            label9.Size = new Size(193, 28);
+            label9.Size = new Size(189, 25);
             label9.TabIndex = 20;
             label9.Text = "Datos del Producto:";
             // 
@@ -766,9 +779,9 @@
             label8.AutoSize = true;
             label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
-            label8.Location = new Point(11, 61);
+            label8.Location = new Point(51, 46);
             label8.Name = "label8";
-            label8.Size = new Size(72, 23);
+            label8.Size = new Size(58, 18);
             label8.TabIndex = 19;
             label8.Text = "Código:";
             // 
@@ -777,21 +790,21 @@
             txtCodigo.BorderStyle = BorderStyle.None;
             txtCodigo.Enabled = false;
             txtCodigo.Font = new Font("Itim", 13F);
-            txtCodigo.Location = new Point(109, 61);
-            txtCodigo.Margin = new Padding(3, 4, 3, 4);
+            txtCodigo.Location = new Point(115, 46);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
-            txtCodigo.Size = new Size(200, 26);
+            txtCodigo.Size = new Size(192, 21);
             txtCodigo.TabIndex = 18;
+            txtCodigo.TextChanged += txtCodigo_TextChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(87, 99, 110);
-            label3.Location = new Point(13, 181);
+            label3.Location = new Point(10, 177);
             label3.Name = "label3";
-            label3.Size = new Size(90, 23);
+            label3.Size = new Size(72, 18);
             label3.TabIndex = 17;
             label3.Text = "Cantidad:";
             // 
@@ -800,20 +813,20 @@
             label2.AutoSize = true;
             label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(87, 99, 110);
-            label2.Location = new Point(13, 139);
+            label2.Location = new Point(10, 106);
             label2.Name = "label2";
-            label2.Size = new Size(67, 23);
+            label2.Size = new Size(98, 18);
             label2.TabIndex = 16;
-            label2.Text = "Precio:";
+            label2.Text = "Precio Actual:";
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(11, 100);
+            label1.Location = new Point(37, 78);
             label1.Name = "label1";
-            label1.Size = new Size(90, 23);
+            label1.Size = new Size(72, 18);
             label1.TabIndex = 15;
             label1.Text = "Producto:";
             // 
@@ -822,11 +835,10 @@
             txtProducto.BorderStyle = BorderStyle.None;
             txtProducto.Enabled = false;
             txtProducto.Font = new Font("Itim", 13F);
-            txtProducto.Location = new Point(109, 100);
-            txtProducto.Margin = new Padding(3, 4, 3, 4);
+            txtProducto.Location = new Point(115, 75);
             txtProducto.Name = "txtProducto";
             txtProducto.ReadOnly = true;
-            txtProducto.Size = new Size(200, 26);
+            txtProducto.Size = new Size(192, 21);
             txtProducto.TabIndex = 13;
             // 
             // txtPrecio
@@ -834,11 +846,10 @@
             txtPrecio.BorderStyle = BorderStyle.None;
             txtPrecio.Enabled = false;
             txtPrecio.Font = new Font("Itim", 13F);
-            txtPrecio.Location = new Point(109, 139);
-            txtPrecio.Margin = new Padding(3, 4, 3, 4);
+            txtPrecio.Location = new Point(115, 104);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.ReadOnly = true;
-            txtPrecio.Size = new Size(200, 26);
+            txtPrecio.Size = new Size(192, 21);
             txtPrecio.TabIndex = 12;
             // 
             // btnAgregar
@@ -850,11 +861,10 @@
             btnAgregar.Font = new Font("Itim", 18.25F);
             btnAgregar.ForeColor = SystemColors.ButtonFace;
             btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(83, 235);
-            btnAgregar.Margin = new Padding(3, 4, 3, 4);
+            btnAgregar.Location = new Point(165, 168);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Padding = new Padding(46, 0, 0, 0);
-            btnAgregar.Size = new Size(162, 61);
+            btnAgregar.Padding = new Padding(40, 0, 0, 0);
+            btnAgregar.Size = new Size(142, 44);
             btnAgregar.TabIndex = 10;
             btnAgregar.Text = "Añadir";
             btnAgregar.UseVisualStyleBackColor = false;
@@ -865,11 +875,10 @@
             lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lstSugerencias.ForeColor = Color.DimGray;
             lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 23;
-            lstSugerencias.Location = new Point(97, 53);
-            lstSugerencias.Margin = new Padding(3, 4, 3, 4);
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(85, 40);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(220, 27);
+            lstSugerencias.Size = new Size(193, 4);
             lstSugerencias.TabIndex = 27;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -881,10 +890,10 @@
             // frmGestionCompra
             // 
             AccessibleRole = AccessibleRole.None;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(875, 905);
+            ClientSize = new Size(766, 679);
             Controls.Add(lstSugerencias);
             Controls.Add(btnSalir);
             Controls.Add(button1);
@@ -897,7 +906,6 @@
             Controls.Add(panel2);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "frmGestionCompra";
             Text = "frmGestionCompra";
             Load += frmGestionCompra_Load;
@@ -952,13 +960,6 @@
         private PictureBox pbxCarritoVacio;
         private PictureBox pbxCarrito;
         private DataGridView dgvCarrito;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewImageColumn Restar;
-        private DataGridViewImageColumn Sumar;
-        private DataGridViewImageColumn Eliminar;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button btnBuscarProductos;
@@ -985,5 +986,15 @@
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
         private ListBox lstSugerencias;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewImageColumn Restar;
+        private DataGridViewImageColumn Sumar;
+        private DataGridViewImageColumn Eliminar;
+        private Label label10;
+        private TextBox textBox1;
+        private DataGridViewTextBoxColumn CodigoBarra;
     }
 }

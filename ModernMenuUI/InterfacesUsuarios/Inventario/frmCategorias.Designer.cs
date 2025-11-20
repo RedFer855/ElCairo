@@ -46,13 +46,13 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnAgregarCategoria = new Button();
             dgvCategorias = new DataGridView();
-            panel10 = new Panel();
-            panelCarrito = new Panel();
-            panel1 = new Panel();
             IdMarca = new DataGridViewTextBoxColumn();
             Categoría = new DataGridViewTextBoxColumn();
             Descripcion = new DataGridViewTextBoxColumn();
             EstadoProducto = new DataGridViewCheckBoxColumn();
+            panel10 = new Panel();
+            panelCarrito = new Panel();
+            panel1 = new Panel();
             gbxEstado.SuspendLayout();
             panelBusqueda.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -212,6 +212,7 @@
             btnAgregarCategoria.TabIndex = 35;
             btnAgregarCategoria.Text = "Agregar Categoría";
             btnAgregarCategoria.UseVisualStyleBackColor = false;
+            btnAgregarCategoria.Click += btnAgregarCategoria_Click;
             // 
             // dgvCategorias
             // 
@@ -267,36 +268,6 @@
             dgvCategorias.TabIndex = 1;
             dgvCategorias.CellDoubleClick += dgvCategorias_CellDoubleClick;
             // 
-            // panel10
-            // 
-            panel10.AutoScroll = true;
-            panel10.Controls.Add(dgvCategorias);
-            panel10.Dock = DockStyle.Fill;
-            panel10.Location = new Point(0, 0);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(570, 262);
-            panel10.TabIndex = 17;
-            // 
-            // panelCarrito
-            // 
-            panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
-            panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(15, 14);
-            panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(570, 262);
-            panelCarrito.TabIndex = 13;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(12, 122);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(596, 289);
-            panel1.TabIndex = 43;
-            // 
             // IdMarca
             // 
             IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -333,6 +304,36 @@
             EstadoProducto.Resizable = DataGridViewTriState.True;
             EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
             EstadoProducto.Width = 89;
+            // 
+            // panel10
+            // 
+            panel10.AutoScroll = true;
+            panel10.Controls.Add(dgvCategorias);
+            panel10.Dock = DockStyle.Fill;
+            panel10.Location = new Point(0, 0);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(570, 262);
+            panel10.TabIndex = 17;
+            // 
+            // panelCarrito
+            // 
+            panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
+            panelCarrito.Controls.Add(panel10);
+            panelCarrito.Location = new Point(15, 14);
+            panelCarrito.Name = "panelCarrito";
+            panelCarrito.Size = new Size(570, 262);
+            panelCarrito.TabIndex = 13;
+            // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(panelCarrito);
+            panel1.Location = new Point(12, 122);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(596, 289);
+            panel1.TabIndex = 43;
             // 
             // frmCategorias
             // 

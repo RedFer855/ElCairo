@@ -429,7 +429,7 @@ namespace ModernMenuUI
             }
 
             int idEmpleado = respEmpleado.IdUsuario;
-            int idBodega = frmInicioBodega.SessionData.IdBodegaActual;
+            int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
 
             var parametros = new
             {
@@ -740,5 +740,10 @@ namespace ModernMenuUI
             await HandleBuscarProveedorAsync();
         }
         #endregion
+
+        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
