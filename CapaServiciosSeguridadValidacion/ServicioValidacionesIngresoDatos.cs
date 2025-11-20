@@ -125,5 +125,16 @@ namespace CapaServiciosSeguridadValidacion
             }
             return (true, $"{nombreCampo} debe ser un número entero válido.");
         }
+        public static (bool Error, string Mensaje) ValidarSoloNumeros(string valor, string nombreCampo)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                return (true, $"Debe ingresar {nombreCampo}.");
+
+            if (!valor.All(char.IsDigit))
+                return (true, $"{nombreCampo} solo debe contener números.");
+
+            return (false, "");
+        }
+
     }
 }

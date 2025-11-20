@@ -65,7 +65,7 @@ namespace ModernMenuUI
         // FUNCIONES
         private void SeleccionarCliente(Cliente cliente)
         {
-            txtCliente.Text = cliente.Nombre;
+            txtCliente.Text = cliente.NombreCliente;
             _clienteSeleccionado = cliente; // ¡IMPORTANTE! Guardamos el objeto
             lstClientes.Visible = false;
             txtCliente.SelectionStart = txtCliente.Text.Length; // Cursor al final
@@ -561,7 +561,7 @@ namespace ModernMenuUI
 
             // Filtramos la lista en memoria
             var resultados = _todosLosClientes
-                .Where(c => c.Nombre.ToLower().Contains(texto))
+                .Where(c => c.NombreCliente.ToLower().Contains(texto))
                 .ToList();
             if (resultados.Count > 0)
             {
@@ -674,7 +674,7 @@ namespace ModernMenuUI
                 // --- ARMAR PARÁMETROS ---
                 var parametros = new
                 {
-                    p_id_cliente = _clienteSeleccionado.Id,
+                    p_id_cliente = _clienteSeleccionado.IdCliente,
                     p_id_rutas = (int?)null,
                     p_id_empleado = idEmpleado,
                     p_fecha_venta = DateTime.UtcNow,
@@ -686,7 +686,7 @@ namespace ModernMenuUI
 
                 // --- FINALIZAR ---
                 this.Cursor = Cursors.Default;
-                MessageBox.Show($"¡Venta registrada a {_clienteSeleccionado.Nombre} exitosamente!",
+                MessageBox.Show($"¡Venta registrada a {_clienteSeleccionado.NombreCliente} exitosamente!",
                                 "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LimpiarCarrito();
