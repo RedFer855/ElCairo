@@ -106,7 +106,7 @@ namespace CapaDeDatos.Repositorios
             catch (Exception ex)
             {
                 Console.WriteLine($"Error de Supabase al modificar producto: {ex.Message}");
-                throw new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
+                throw;// new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
             }
         }
 

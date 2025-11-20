@@ -126,7 +126,7 @@ namespace ModernMenuUI
 
                 // 3. ASIGNAR ESTADO
                 _productoInsertar.EstadoProducto = rbHabilitado.Checked;
-                _productoInsertar.IdEstado = rbHabilitado.Checked ? 1 : 0;
+                _productoInsertar.IdEstado = rbHabilitado.Checked ? 1 : 2;
 
                 // 4. PREPARAR INTERFAZ
                 btnGuardarProducto.Enabled = false;
