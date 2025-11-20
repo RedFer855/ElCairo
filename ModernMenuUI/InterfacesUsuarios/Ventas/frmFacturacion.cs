@@ -926,7 +926,7 @@ namespace ModernMenuUI
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("¡El formulario ha cargado y va a suscribirse!");
+           // MessageBox.Show("¡El formulario ha cargado y va a suscribirse!");
             // 1. Carga inicial
             await CargarProductosDeBodega();
 
