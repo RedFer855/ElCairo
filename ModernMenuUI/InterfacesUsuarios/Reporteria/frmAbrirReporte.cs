@@ -71,6 +71,76 @@ namespace ModernMenuUI.InterfacesUsuarios.Reporteria
 
             using (var sfd = new SaveFileDialog())
             {
+                sfd.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                sfd.FileName = $"Stock_Critico_{cmbBodegas.Text}_{DateTime.Now:yyyyMMdd}.xlsx";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var workbook = new XLWorkbook())
+                        {
+                            var worksheet = workbook.Worksheets.Add("Stock Crítico");
+
+                            // --- 1. ENCABEZADO PERSONALIZADO ---
+                            worksheet.Cell("A1").Value = $"Reporte de Stock Crítico - Bodega: {cmbBodegas.Text}";
+                            worksheet.Range("A1:E1").Merge(); // Unir celdas para el título
+
+                            // Estilos del Título
+                            var tituloEstilo = worksheet.Cell("A1").Style;
+                            tituloEstilo.Font.Bold = true;
+                            tituloEstilo.Font.FontSize = 14;
+                            tituloEstilo.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                            tituloEstilo.Fill.BackgroundColor = XLColor.LightBlue;
+
+                            // Fecha
+                            worksheet.Cell("A2").Value = $"Fecha de Generación: {DateTime.Now:dd/MM/yyyy}";
+
+                            // --- 2. PREPARAR DATOS (PROYECCIÓN ANÓNIMA) ---
+                            // Hacemos esto para controlar el orden de las columnas y encabezados
+                            var reporteExcel = _datosStockCritico.Select(x => new
+                            {
+                                Código = x.CodigoBarraProducto ?? "S/C",
+                                Producto = x.NombreProducto,
+                                Stock_Actual = x.CantidadActual,
+                                Mínimo = x.StockMinimo,
+                                Diferencia = x.Diferencia
+                            }).ToList();
+
+                            // --- 3. INSERTAR TABLA (Desde celda A4) ---
+                            // InsertTable crea automáticamente los encabezados basados en las propiedades del objeto anónimo
+                            var table = worksheet.Cell(4, 1).InsertTable(reporteExcel);
+
+                            // --- 4. ESTILO DE TABLA ---
+                            table.Theme = XLTableTheme.TableStyleMedium9; // Estilo azul profesional
+
+                            // Ajustar anchos de columna automáticamente
+                            worksheet.Columns().AdjustToContents();
+
+                            // Guardar archivo
+                            workbook.SaveAs(sfd.FileName);
+                        }
+
+                        MessageBox.Show("Reporte de Excel guardado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Opcional: Abrir el archivo automáticamente
+                        try { Process.Start(new ProcessStartInfo(sfd.FileName) { UseShellExecute = true }); } catch { }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al exportar Excel: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        // --- BOTÓN PDF (QuestPDF) ---
+        private void btnExportarPDF_Click(object sender, EventArgs e)
+        {
+            if (!_datosStockCritico.Any()) return;
+
+            using (var sfd = new SaveFileDialog())
+            {
                 sfd.Filter = "Archivo PDF (*.pdf)|*.pdf";
                 sfd.FileName = $"Reporte_Stock_Critico_{cmbBodegas.Text}_{DateTime.Now:yyyyMMdd}.pdf";
 
@@ -168,99 +238,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Reporteria
                     catch (Exception ex)
                     {
                         MessageBox.Show($"Error al guardar el PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-        }
-
-        // --- BOTÓN PDF (QuestPDF) ---
-        private void btnExportarPDF_Click(object sender, EventArgs e)
-        {
-            if (!_datosStockCritico.Any()) return;
-
-            using (var sfd = new SaveFileDialog())
-            {
-                sfd.Filter = "Archivo PDF (*.pdf)|*.pdf";
-                sfd.FileName = $"Stock_Critico_{cmbBodegas.Text}_{DateTime.Now:yyyyMMdd}.pdf";
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        // Crear documento PDF
-                        Document.Create(container =>
-                        {
-                            container.Page(page =>
-                            {
-                                page.Margin(30);
-                                page.Size(PageSizes.A4);
-
-                                // --- ENCABEZADO DEL PDF ---
-                                page.Header().Row(row =>
-                                {
-                                    row.RelativeItem().Column(col =>
-                                    {
-                                        col.Item().Text("Reporte Stock Crítico").FontSize(20).SemiBold().FontColor(Colors.Blue.Medium);
-                                        col.Item().Text($"Bodega: {cmbBodegas.Text}").FontSize(14);
-                                        col.Item().Text($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}").FontSize(10).FontColor(Colors.Grey.Medium);
-                                    });
-                                });
-
-                                // --- CONTENIDO (TABLA) ---
-                                page.Content().PaddingVertical(10).Table(table =>
-                                {
-                                    // Definir columnas (Anchos relativos)
-                                    table.ColumnsDefinition(columns =>
-                                    {
-                                        columns.RelativeColumn(3); // Producto
-                                        columns.RelativeColumn(1); // Actual
-                                        columns.RelativeColumn(1); // Mínimo
-                                        columns.RelativeColumn(1); // Diferencia
-                                    });
-
-                                    // Cabeceras de la tabla
-                                    table.Header(header =>
-                                    {
-                                        header.Cell().Element(CellStyle).Text("Producto");
-                                        header.Cell().Element(CellStyle).Text("Actual");
-                                        header.Cell().Element(CellStyle).Text("Mínimo");
-                                        header.Cell().Element(CellStyle).Text("Diferencia");
-
-                                        // Estilo local para cabeceras
-                                        static IContainer CellStyle(IContainer container)
-                                        {
-                                            return container.Background(Colors.Grey.Lighten3).Padding(5).BorderBottom(1).BorderColor(Colors.Grey.Darken1);
-                                        }
-                                    });
-
-                                    // Filas de datos
-                                    foreach (var item in _datosStockCritico)
-                                    {
-                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(5).Text(item.NombreProducto);
-                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(5).AlignRight().Text(item.CantidadActual.ToString());
-                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(5).AlignRight().Text(item.StockMinimo.ToString());
-
-                                        // Resaltar la diferencia en rojo
-                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(5).AlignRight().Text(item.Diferencia.ToString()).FontColor(Colors.Red.Medium).Bold();
-                                    }
-                                });
-
-                                // --- PIE DE PÁGINA ---
-                                page.Footer().AlignCenter().Text(x =>
-                                {
-                                    x.Span("Página ");
-                                    x.CurrentPageNumber();
-                                });
-                            });
-                        }).GeneratePdf(sfd.FileName);
-
-                        MessageBox.Show("PDF generado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        // Abrir archivo
-                        Process.Start(new ProcessStartInfo(sfd.FileName) { UseShellExecute = true });
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error al generar PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

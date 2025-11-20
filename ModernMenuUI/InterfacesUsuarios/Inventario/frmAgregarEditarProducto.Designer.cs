@@ -387,6 +387,7 @@
             btnModificarProducto.TabIndex = 48;
             btnModificarProducto.Text = "Editar";
             btnModificarProducto.UseVisualStyleBackColor = false;
+            btnModificarProducto.Click += btnModificarProducto_Click;
             // 
             // btnVolver
             // 

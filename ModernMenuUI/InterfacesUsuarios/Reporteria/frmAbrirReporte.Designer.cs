@@ -28,15 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             dgvStockCritico = new DataGridView();
-            CodigoBarra = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            CantidadActual = new DataGridViewTextBoxColumn();
-            StockMinimo = new DataGridViewTextBoxColumn();
             btnExportarPDF = new Button();
             btnExportarExcel = new Button();
             panel1 = new Panel();
@@ -44,6 +40,11 @@
             label1 = new Label();
             cmbBodegas = new ComboBox();
             btnGenerarReporte = new Button();
+            CodigoBarra = new DataGridViewTextBoxColumn();
+            Producto = new DataGridViewTextBoxColumn();
+            CantidadActual = new DataGridViewTextBoxColumn();
+            StockMinimo = new DataGridViewTextBoxColumn();
+            Diferencia = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvStockCritico).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -51,85 +52,55 @@
             // dgvStockCritico
             // 
             dgvStockCritico.AllowUserToAddRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvStockCritico.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvStockCritico.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvStockCritico.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvStockCritico.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             dgvStockCritico.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvStockCritico.BorderStyle = BorderStyle.None;
             dgvStockCritico.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvStockCritico.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvStockCritico.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvStockCritico.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvStockCritico.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStockCritico.Columns.AddRange(new DataGridViewColumn[] { CodigoBarra, Producto, CantidadActual, StockMinimo });
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.White;
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.Padding = new Padding(5);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle7.SelectionForeColor = Color.White;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            dgvStockCritico.DefaultCellStyle = dataGridViewCellStyle7;
+            dgvStockCritico.Columns.AddRange(new DataGridViewColumn[] { CodigoBarra, Producto, CantidadActual, StockMinimo, Diferencia });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvStockCritico.DefaultCellStyle = dataGridViewCellStyle3;
             dgvStockCritico.EnableHeadersVisualStyles = false;
             dgvStockCritico.GridColor = Color.FromArgb(189, 215, 238);
             dgvStockCritico.Location = new Point(12, 125);
             dgvStockCritico.Name = "dgvStockCritico";
             dgvStockCritico.ReadOnly = true;
             dgvStockCritico.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvStockCritico.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvStockCritico.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvStockCritico.RowHeadersWidth = 30;
             dgvStockCritico.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvStockCritico.RowTemplate.Height = 50;
             dgvStockCritico.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvStockCritico.Size = new Size(778, 363);
             dgvStockCritico.TabIndex = 2;
-            // 
-            // CodigoBarra
-            // 
-            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            CodigoBarra.DataPropertyName = "CodigoBarraProducto";
-            CodigoBarra.HeaderText = "CodigoBarra";
-            CodigoBarra.Name = "CodigoBarra";
-            CodigoBarra.ReadOnly = true;
-            // 
-            // Producto
-            // 
-            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Producto.DataPropertyName = "NombreProducto";
-            Producto.HeaderText = "Producto";
-            Producto.Name = "Producto";
-            Producto.ReadOnly = true;
-            // 
-            // CantidadActual
-            // 
-            CantidadActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            CantidadActual.HeaderText = "Cantidad Actual";
-            CantidadActual.Name = "CantidadActual";
-            CantidadActual.ReadOnly = true;
-            // 
-            // StockMinimo
-            // 
-            StockMinimo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            StockMinimo.HeaderText = "Cantidad Mínima";
-            StockMinimo.Name = "StockMinimo";
-            StockMinimo.ReadOnly = true;
             // 
             // btnExportarPDF
             // 
@@ -217,6 +188,45 @@
             btnGenerarReporte.UseVisualStyleBackColor = false;
             btnGenerarReporte.Click += btnGenerarReporte_Click_1;
             // 
+            // CodigoBarra
+            // 
+            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            CodigoBarra.DataPropertyName = "CodigoBarraProducto";
+            CodigoBarra.HeaderText = "CodigoBarra";
+            CodigoBarra.Name = "CodigoBarra";
+            CodigoBarra.ReadOnly = true;
+            // 
+            // Producto
+            // 
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Producto.DataPropertyName = "NombreProducto";
+            Producto.HeaderText = "Producto";
+            Producto.Name = "Producto";
+            Producto.ReadOnly = true;
+            // 
+            // CantidadActual
+            // 
+            CantidadActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            CantidadActual.DataPropertyName = "CantidadActual";
+            CantidadActual.HeaderText = "Cantidad Actual";
+            CantidadActual.Name = "CantidadActual";
+            CantidadActual.ReadOnly = true;
+            // 
+            // StockMinimo
+            // 
+            StockMinimo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            StockMinimo.DataPropertyName = "StockMinimo";
+            StockMinimo.HeaderText = "Cantidad Mínima";
+            StockMinimo.Name = "StockMinimo";
+            StockMinimo.ReadOnly = true;
+            // 
+            // Diferencia
+            // 
+            Diferencia.DataPropertyName = "Diferencia";
+            Diferencia.HeaderText = "Diferencia";
+            Diferencia.Name = "Diferencia";
+            Diferencia.ReadOnly = true;
+            // 
             // frmAbrirReporte
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -230,6 +240,9 @@
             Controls.Add(btnExportarExcel);
             Controls.Add(btnExportarPDF);
             Controls.Add(dgvStockCritico);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmAbrirReporte";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmAbrirReporte";
@@ -250,10 +263,11 @@
         public Label lblNombreReporte;
         public Label label1;
         private ComboBox cmbBodegas;
+        private Button btnGenerarReporte;
         private DataGridViewTextBoxColumn CodigoBarra;
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn CantidadActual;
         private DataGridViewTextBoxColumn StockMinimo;
-        private Button btnGenerarReporte;
+        private DataGridViewTextBoxColumn Diferencia;
     }
 }

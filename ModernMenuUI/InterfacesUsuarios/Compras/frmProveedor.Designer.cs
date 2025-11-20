@@ -318,6 +318,7 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnSeleccionarProveedor);
             flowLayoutPanel1.Controls.Add(btnAgregarProveedor);
             flowLayoutPanel1.Controls.Add(btnEditarProveedor);

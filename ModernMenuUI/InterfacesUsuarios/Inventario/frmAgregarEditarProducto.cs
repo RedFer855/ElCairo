@@ -17,10 +17,11 @@ namespace ModernMenuUI
 {
     public partial class frmAgregarEditarProducto : Form
     {
-        private Producto _productoActual;
+        private Producto _productoSeleccionado;
         private int _idMarcaSeleccionada;
         private int _idCategoriaSeleccionada;
         private int _idPresentacionSeleccionada;
+       
 
         public frmAgregarEditarProducto()
         {
@@ -34,7 +35,7 @@ namespace ModernMenuUI
         {
 
             InitializeComponent();
-            _productoActual = productoseleccionado;
+            _productoSeleccionado = productoseleccionado;
             txtNombreProducto.Text = productoseleccionado.NombreProducto;
             txtMarca.Text = productoseleccionado.NombreMarca;
             txtCategoria.Text = productoseleccionado.NombreCategoria;
@@ -44,6 +45,9 @@ namespace ModernMenuUI
             txtCodBarra.Text = productoseleccionado.CodigoBarraProducto;
             txtPresentacion.Text = productoseleccionado.NombrePresentacion.ToString();
             txtCantidad.Text = productoseleccionado.CantidadProducto.ToString();
+            _idMarcaSeleccionada = productoseleccionado.IdMarca;
+            _idCategoriaSeleccionada = productoseleccionado.IdCategoria;
+            _idPresentacionSeleccionada = productoseleccionado.IdPresentacion;
 
             if (productoseleccionado.EstadoProducto)
             {
@@ -77,8 +81,25 @@ namespace ModernMenuUI
         {
             try
             {
-                // CONSTRUIR OBJETO SOLO CON LO NECESARIO PARA GUARDAR EN BD
-                ProductoInsertar temp = new ProductoInsertar
+                // VARIABLES PARA LOS DATOS NUMÉRICOS
+                decimal precioCompra = 0;
+                decimal precioVenta = 0;
+                decimal precioCosto = 0;
+                int cantidad = 0;
+
+                // --- LÓGICA DE PROTECCIÓN DE DATOS ---
+                // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos (NO borrarlos)
+                if (_productoSeleccionado != null)
+                {
+                    precioCompra = _productoSeleccionado.PrecioCompra;
+                    precioVenta = _productoSeleccionado.PrecioVenta;
+                    precioCosto = _productoSeleccionado.PrecioCosto;
+                    cantidad = _productoSeleccionado.CantidadProducto;
+                }
+                // Si es NUEVO, se van en 0 (porque se calculan luego o inician vacíos)
+
+                // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
+                ProductoInsertar _productoInsertar = new ProductoInsertar
                 {
                     NombreProducto = txtNombreProducto.Text.Trim(),
                     CodigoBarraProducto = txtCodBarra.Text.Trim(),
@@ -86,29 +107,49 @@ namespace ModernMenuUI
                     IdMarca = _idMarcaSeleccionada,
                     IdCategoria = _idCategoriaSeleccionada,
                     IdPresentacion = _idPresentacionSeleccionada,
-                    ContenidoProducto = $"{txtContenido.Text.Trim()} {cmbUnidadContenido.SelectedItem?.ToString().Trim()}".Trim()
+                    ContenidoProducto = $"{txtContenido.Text.Trim()} {cmbUnidadContenido.SelectedItem?.ToString().Trim()}".Trim(),
+
+                    // --- ASIGNACIÓN SEGURA (Desde el objeto original, no del TXT) ---
+                    PrecioCompra = precioCompra,
+                    PrecioVenta = precioVenta,
+                    PrecioCosto = precioCosto,
+                    CantidadProducto = cantidad
                 };
 
-                // VALIDACIONES
-                var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(temp);
+                // 2. VALIDACIONES
+                var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(_productoInsertar);
                 if (resultado.Error)
                 {
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // ASIGNAR ESTADO
-                temp.EstadoProducto = rbHabilitado.Checked;
-                temp.IdEstado = rbHabilitado.Checked ? 1 : 0;
+                // 3. ASIGNAR ESTADO
+                _productoInsertar.EstadoProducto = rbHabilitado.Checked;
+                _productoInsertar.IdEstado = rbHabilitado.Checked ? 1 : 0;
 
-                // GUARDAR EN BD
+                // 4. PREPARAR INTERFAZ
                 btnGuardarProducto.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
                 ProductoRepositorio repo = new ProductoRepositorio();
-                var resultInsert = await repo.InsertarProducto(temp);
 
-                MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // --- 5. LÓGICA DECISIVA ---
+                if (_productoSeleccionado == null)
+                {
+                    // === MODO INSERTAR ===
+                    await repo.InsertarProducto(_productoInsertar);
+                    MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    // === MODO ACTUALIZAR ===
+                    _productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
+                    await repo.ActualizarProducto(_productoInsertar);
+                    MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
@@ -190,6 +231,12 @@ namespace ModernMenuUI
                 txtContenido.Text = "";
                 cmbUnidadContenido.SelectedIndex = -1;
             }
+        }
+
+        private void btnModificarProducto_Click(object sender, EventArgs e)
+        {
+            btnGuardarProducto.Visible = true;
+            btnModificarProducto.Visible = false;
         }
     }
 }

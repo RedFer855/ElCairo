@@ -81,19 +81,22 @@ namespace CapaDeDatos.Repositorios
         }
 
 
-        public async Task<ProductoInsertar> ModificarProducto(ProductoInsertar editProducto, int idProd)
+        public async Task<ProductoInsertar> ActualizarProducto(ProductoInsertar _productoEditar)
         {
-            if (editProducto == null)
-                throw new ArgumentNullException(nameof(editProducto), "El producto a modificar no puede ser nulo.");
+            if (_productoEditar == null)
+                throw new ArgumentNullException(nameof(_productoEditar), "El producto a modificar no puede ser nulo.");
 
             try
             {
                 var client = await GetClient();
 
+                // OPTIMIZACIÓN:
+                // 1. No necesitamos pasar el ID aparte, ya viene dentro de '_productoEditar.IdProducto'.
+                // 2. No necesitamos .Where(), Supabase usa el [PrimaryKey] del modelo para saber a quién actualizar.
+
                 var response = await client
                     .From<ProductoInsertar>()
-                    .Where(x => x.IdProducto == idProd)
-                    .Update(editProducto);
+                    .Update(_productoEditar);
 
                 if (response?.Models != null && response.Models.Count > 0)
                     return response.Models.First();
