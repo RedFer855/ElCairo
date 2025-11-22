@@ -13,20 +13,20 @@ namespace CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion
 
     public class ServicioVerificacionConexion1
     {
-        // --- ESTO ES LO QUE TE FALTABA (El Singleton) ---
+
         private static readonly ServicioVerificacionConexion1 _instancia = new ServicioVerificacionConexion1();
         public static ServicioVerificacionConexion1 Instancia => _instancia;
-        // ------------------------------------------------
+
 
         public event Action<NetworkStatus> EstadoDeRedCambiado;
         private NetworkStatus _ultimoEstado;
 
-        // Constructor privado para que nadie haga "new ServicioVerificacionConexion()"
+
         private ServicioVerificacionConexion1()
         {
             NetworkChange.NetworkAvailabilityChanged += (s, e) => VerificarConexion();
-            _ultimoEstado = NetworkStatus.SinRed; // Estado inicial asumiendo lo peor
-            VerificarConexion(); // Chequeo inicial
+            _ultimoEstado = NetworkStatus.SinRed; 
+            VerificarConexion(); 
         }
 
         public async void VerificarConexion()

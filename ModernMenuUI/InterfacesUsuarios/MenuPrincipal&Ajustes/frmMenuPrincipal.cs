@@ -1,7 +1,6 @@
 using CapaDeDatos.Modelados.Reporteria.Reporteria;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
-using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;
@@ -20,7 +19,7 @@ namespace ModernMenuUI
         public bool Animacion = true;
         AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
-        private readonly CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
+        private readonly ServicioVerificacionConexion _monitorConexion;
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
 
 
