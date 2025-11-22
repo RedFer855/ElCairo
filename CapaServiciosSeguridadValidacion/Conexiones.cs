@@ -4,54 +4,90 @@ using System.Threading.Tasks;
 
 namespace CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion
 {
-    public enum NetworkStatus1
-    {
-        Internet,
-        RedSinInternet,
-        SinRed
-    }
-
     public class ServicioVerificacionConexion1
     {
-
         private static readonly ServicioVerificacionConexion1 _instancia = new ServicioVerificacionConexion1();
         public static ServicioVerificacionConexion1 Instancia => _instancia;
-
-
         public event Action<NetworkStatus> EstadoDeRedCambiado;
+        private readonly System.Timers.Timer _timerVerificacion;
         private NetworkStatus _ultimoEstado;
-
+        private bool _verificandoActualmente = false;
 
         private ServicioVerificacionConexion1()
         {
-            NetworkChange.NetworkAvailabilityChanged += (s, e) => VerificarConexion();
+            _timerVerificacion = new System.Timers.Timer(3000);
+            _timerVerificacion.Elapsed += async (s, e) => await VerificarConexionCompleta();
+            _timerVerificacion.AutoReset = true;
+
+            NetworkChange.NetworkAvailabilityChanged += (s, e) =>
+            {
+                Task.Run(() => VerificarConexionCompleta());
+            };
+
             _ultimoEstado = NetworkStatus.SinRed; 
-            VerificarConexion(); 
+            Task.Run(() => VerificarConexionCompleta());
         }
 
-        public async void VerificarConexion()
+        // Método público para forzar verificación si fuera necesario
+        public void ForzarVerificacion()
         {
-            bool hayRed = NetworkInterface.GetIsNetworkAvailable();
+            Task.Run(() => VerificarConexionCompleta());
+        }
+
+        private async Task VerificarConexionCompleta()
+        {
+            if (_verificandoActualmente) return;
+            _verificandoActualmente = true;
+
             NetworkStatus nuevoEstado;
 
-            if (!hayRed)
+            try
             {
-                nuevoEstado = NetworkStatus.SinRed;
-            }
-            else
-            {
-                bool hayInternet = await PingGoogle();
-                nuevoEstado = hayInternet ? NetworkStatus.Internet : NetworkStatus.RedSinInternet;
-            }
+                // PASO 1: Verificar Hardware
+                if (!NetworkInterface.GetIsNetworkAvailable())
+                {
+                    nuevoEstado = NetworkStatus.SinRed;
+                    _timerVerificacion.Stop();
+                }
+                else
+                {
+                    // PASO 2: Verificar Internet real (Ping a Google)
+                    bool hayInternet = await PingInternetAsync();
 
-            if (nuevoEstado != _ultimoEstado)
+                    if (hayInternet)
+                    {
+                        nuevoEstado = NetworkStatus.Internet;
+                        // Si ya tenemos internet, apagamos el timer (GestorRealtime ya reconectará)
+                        _timerVerificacion.Stop();
+                    }
+                    else
+                    {
+                        nuevoEstado = NetworkStatus.RedSinInternet;
+                        // Estamos en AMARILLO: Encendemos timer para detectar cuando vuelva
+                        if (!_timerVerificacion.Enabled) _timerVerificacion.Start();
+                    }
+                }
+
+                // PASO 3: Notificar solo si hubo cambio
+                if (_ultimoEstado != nuevoEstado)
+                {
+                    _ultimoEstado = nuevoEstado;
+                    // Esto disparará el evento en GestorRealtime -> AlCambiarRed
+                    EstadoDeRedCambiado?.Invoke(nuevoEstado);
+                }
+            }
+            catch
             {
-                _ultimoEstado = nuevoEstado;
-                EstadoDeRedCambiado?.Invoke(nuevoEstado);
+                // Manejo silencioso
+            }
+            finally
+            {
+                _verificandoActualmente = false;
             }
         }
 
-        private async Task<bool> PingGoogle()
+        // Ping Asíncrono (No congela la app)
+        private async Task<bool> PingInternetAsync()
         {
             try
             {
