@@ -171,8 +171,8 @@
             // 
             // frmReporteOrdenCompra
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(788, 502);
             Controls.Add(panel1);
@@ -180,6 +180,7 @@
             Controls.Add(btnPdf);
             Controls.Add(panelCarrito);
             Name = "frmReporteOrdenCompra";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Reporte de Compra";
             Load += frmReporteOrdenCompra_Load;
             panelCarrito.ResumeLayout(false);

@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarCategoria));
             Panel panBarraControl;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarCategoria));
+            lblNombreModulo = new Label();
             lblEstado = new Label();
             rbActivo = new RadioButton();
             flpAjustarBotones = new FlowLayoutPanel();
@@ -43,15 +44,37 @@
             gbxEstado = new GroupBox();
             label8 = new Label();
             label2 = new Label();
-            lblNombreModulo = new Label();
             panel2 = new Panel();
             panBarraControl = new Panel();
+            panBarraControl.SuspendLayout();
             flpAjustarBotones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxImagenMarca).BeginInit();
             gbxEstado.SuspendLayout();
-            panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
+            // 
+            // panBarraControl
+            // 
+            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
+            panBarraControl.Controls.Add(lblNombreModulo);
+            panBarraControl.Dock = DockStyle.Top;
+            panBarraControl.ForeColor = Color.Coral;
+            panBarraControl.Location = new Point(0, 0);
+            panBarraControl.Name = "panBarraControl";
+            panBarraControl.Size = new Size(677, 37);
+            panBarraControl.TabIndex = 19;
+            // 
+            // lblNombreModulo
+            // 
+            lblNombreModulo.Dock = DockStyle.Fill;
+            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNombreModulo.ForeColor = Color.White;
+            lblNombreModulo.Location = new Point(0, 0);
+            lblNombreModulo.Name = "lblNombreModulo";
+            lblNombreModulo.Size = new Size(677, 37);
+            lblNombreModulo.TabIndex = 14;
+            lblNombreModulo.Text = "EDITAR CATEGORÍA";
+            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblEstado
             // 
@@ -209,29 +232,6 @@
             label2.TabIndex = 14;
             label2.Text = "Descripción:";
             // 
-            // lblNombreModulo
-            // 
-            lblNombreModulo.Dock = DockStyle.Fill;
-            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNombreModulo.ForeColor = Color.White;
-            lblNombreModulo.Location = new Point(0, 0);
-            lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(677, 37);
-            lblNombreModulo.TabIndex = 14;
-            lblNombreModulo.Text = "EDITAR CATEGORÍA";
-            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // panBarraControl
-            // 
-            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
-            panBarraControl.Controls.Add(lblNombreModulo);
-            panBarraControl.Dock = DockStyle.Top;
-            panBarraControl.ForeColor = Color.Coral;
-            panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(677, 37);
-            panBarraControl.TabIndex = 19;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
@@ -251,19 +251,19 @@
             // 
             // frmAgregarEditarCategoria
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(677, 328);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             Name = "frmAgregarEditarCategoria";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Categorías";
+            panBarraControl.ResumeLayout(false);
             flpAjustarBotones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxImagenMarca).EndInit();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
-            panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);

@@ -264,8 +264,8 @@
             // 
             // frmInicioBodega
             // 
-            AutoScaleDimensions = new SizeF(9F, 19F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(805, 362);
             Controls.Add(panLogo);
             Controls.Add(panel1);

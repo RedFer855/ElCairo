@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ModernMenuUI.ClasesUI;
 
 namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 {
@@ -16,6 +17,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
     {
         private Usuario _usuarioEditado;          // Usuario que se está editando
         private Usuario _usuarioActualSistema;    // Usuario logueado
+        private AnimadorPanel _animadorPanel;
 
         public frmAgregarEditarUsuario()
         {

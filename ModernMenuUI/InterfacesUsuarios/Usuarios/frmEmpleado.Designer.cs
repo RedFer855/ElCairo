@@ -55,8 +55,8 @@
             btnAgregarEmpleado = new Button();
             btnNuevo = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
-            button4 = new Button();
             btnCrearUsuario = new Button();
+            button4 = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).BeginInit();
             panel10.SuspendLayout();
             panel1.SuspendLayout();
@@ -101,7 +101,6 @@
             dgvEmpleados.EnableHeadersVisualStyles = false;
             dgvEmpleados.GridColor = Color.FromArgb(189, 215, 238);
             dgvEmpleados.Location = new Point(0, 0);
-            dgvEmpleados.Margin = new Padding(3, 4, 3, 4);
             dgvEmpleados.Name = "dgvEmpleados";
             dgvEmpleados.ReadOnly = true;
             dgvEmpleados.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -117,7 +116,7 @@
             dgvEmpleados.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvEmpleados.RowTemplate.Height = 50;
             dgvEmpleados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEmpleados.Size = new Size(809, 533);
+            dgvEmpleados.Size = new Size(708, 400);
             dgvEmpleados.TabIndex = 1;
             dgvEmpleados.CellContentClick += dgvEmpleados_CellContentClick;
             dgvEmpleados.SelectionChanged += dgvEmpleados_SelectionChanged;
@@ -134,7 +133,7 @@
             dataGridViewTextBoxColumn1.MinimumWidth = 45;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 81;
+            dataGridViewTextBoxColumn1.Width = 70;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -145,7 +144,7 @@
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 116;
+            dataGridViewTextBoxColumn2.Width = 96;
             // 
             // Categoria
             // 
@@ -156,7 +155,7 @@
             Categoria.MinimumWidth = 6;
             Categoria.Name = "Categoria";
             Categoria.ReadOnly = true;
-            Categoria.Width = 119;
+            Categoria.Width = 99;
             // 
             // PorcentajeGanancia
             // 
@@ -167,7 +166,7 @@
             PorcentajeGanancia.MinimumWidth = 6;
             PorcentajeGanancia.Name = "PorcentajeGanancia";
             PorcentajeGanancia.ReadOnly = true;
-            PorcentajeGanancia.Width = 121;
+            PorcentajeGanancia.Width = 101;
             // 
             // Email
             // 
@@ -198,17 +197,16 @@
             dataGridViewTextBoxColumn3.ReadOnly = true;
             dataGridViewTextBoxColumn3.Resizable = DataGridViewTriState.True;
             dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
-            dataGridViewTextBoxColumn3.Width = 105;
+            dataGridViewTextBoxColumn3.Width = 89;
             // 
             // panel10
             // 
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
             panel10.Controls.Add(dgvEmpleados);
-            panel10.Location = new Point(21, 17);
-            panel10.Margin = new Padding(3, 4, 3, 4);
+            panel10.Location = new Point(18, 13);
             panel10.Name = "panel10";
-            panel10.Size = new Size(809, 533);
+            panel10.Size = new Size(708, 400);
             panel10.TabIndex = 17;
             // 
             // txtBuscar
@@ -216,11 +214,10 @@
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(21, 16);
-            txtBuscar.Margin = new Padding(3, 4, 3, 4);
+            txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Usuarios...";
-            txtBuscar.Size = new Size(721, 24);
+            txtBuscar.Size = new Size(631, 20);
             txtBuscar.TabIndex = 1;
             // 
             // panel1
@@ -228,10 +225,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
-            panel1.Location = new Point(14, 172);
-            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Location = new Point(12, 129);
             panel1.Name = "panel1";
-            panel1.Size = new Size(848, 569);
+            panel1.Size = new Size(742, 427);
             panel1.TabIndex = 45;
             // 
             // btnbuscar
@@ -242,10 +238,9 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(775, 16);
-            btnbuscar.Margin = new Padding(3, 4, 3, 4);
+            btnbuscar.Location = new Point(678, 12);
             btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(55, 27);
+            btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
             // 
@@ -255,19 +250,17 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(14, 16);
-            panelBusqueda.Margin = new Padding(3, 4, 3, 4);
+            panelBusqueda.Location = new Point(12, 12);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(848, 57);
+            panelBusqueda.Size = new Size(742, 43);
             panelBusqueda.TabIndex = 46;
             // 
             // rdbDeshabilitados
             // 
             rdbDeshabilitados.AutoSize = true;
-            rdbDeshabilitados.Location = new Point(390, 28);
-            rdbDeshabilitados.Margin = new Padding(3, 4, 3, 4);
+            rdbDeshabilitados.Location = new Point(341, 21);
             rdbDeshabilitados.Name = "rdbDeshabilitados";
-            rdbDeshabilitados.Size = new Size(220, 27);
+            rdbDeshabilitados.Size = new Size(178, 22);
             rdbDeshabilitados.TabIndex = 30;
             rdbDeshabilitados.Text = "Mostrar Deshabilitados";
             rdbDeshabilitados.UseVisualStyleBackColor = true;
@@ -276,10 +269,9 @@
             // 
             rdbHabilitados.AutoSize = true;
             rdbHabilitados.Checked = true;
-            rdbHabilitados.Location = new Point(181, 28);
-            rdbHabilitados.Margin = new Padding(3, 4, 3, 4);
+            rdbHabilitados.Location = new Point(158, 21);
             rdbHabilitados.Name = "rdbHabilitados";
-            rdbHabilitados.Size = new Size(194, 27);
+            rdbHabilitados.Size = new Size(156, 22);
             rdbHabilitados.TabIndex = 29;
             rdbHabilitados.TabStop = true;
             rdbHabilitados.Text = "Mostrar Habilitados";
@@ -288,10 +280,9 @@
             // rdbTodos
             // 
             rdbTodos.AutoSize = true;
-            rdbTodos.Location = new Point(21, 28);
-            rdbTodos.Margin = new Padding(3, 4, 3, 4);
+            rdbTodos.Location = new Point(18, 21);
             rdbTodos.Name = "rdbTodos";
-            rdbTodos.Size = new Size(150, 27);
+            rdbTodos.Size = new Size(120, 22);
             rdbTodos.TabIndex = 28;
             rdbTodos.Text = "Mostrar Todos";
             rdbTodos.UseVisualStyleBackColor = true;
@@ -304,11 +295,9 @@
             groupBox1.Controls.Add(rdbTodos);
             groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(14, 89);
-            groupBox1.Margin = new Padding(3, 4, 3, 4);
+            groupBox1.Location = new Point(12, 67);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(848, 71);
+            groupBox1.Size = new Size(742, 53);
             groupBox1.TabIndex = 47;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtro";
@@ -320,10 +309,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(251, 4);
-            btnSalir.Margin = new Padding(3, 4, 3, 4);
+            btnSalir.Location = new Point(220, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(143, 58);
+            btnSalir.Size = new Size(125, 44);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -335,10 +323,9 @@
             btnAgregarEmpleado.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarEmpleado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarEmpleado.ForeColor = SystemColors.ButtonFace;
-            btnAgregarEmpleado.Location = new Point(3, 4);
-            btnAgregarEmpleado.Margin = new Padding(3, 4, 3, 4);
+            btnAgregarEmpleado.Location = new Point(3, 3);
             btnAgregarEmpleado.Name = "btnAgregarEmpleado";
-            btnAgregarEmpleado.Size = new Size(241, 58);
+            btnAgregarEmpleado.Size = new Size(211, 44);
             btnAgregarEmpleado.TabIndex = 22;
             btnAgregarEmpleado.Text = "Agregar Empleado";
             btnAgregarEmpleado.UseVisualStyleBackColor = false;
@@ -350,10 +337,9 @@
             btnNuevo.BackColor = Color.FromArgb(189, 215, 238);
             btnNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnNuevo.ForeColor = Color.FromArgb(87, 99, 110);
-            btnNuevo.Location = new Point(3, 70);
-            btnNuevo.Margin = new Padding(3, 4, 3, 4);
+            btnNuevo.Location = new Point(3, 53);
             btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(241, 59);
+            btnNuevo.Size = new Size(211, 44);
             btnNuevo.TabIndex = 20;
             btnNuevo.Text = "Editar Empleado";
             btnNuevo.UseVisualStyleBackColor = false;
@@ -369,25 +355,13 @@
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
             tableLayoutPanel1.Controls.Add(btnAgregarEmpleado, 0, 0);
             tableLayoutPanel1.Controls.Add(btnNuevo, 0, 1);
-            tableLayoutPanel1.Location = new Point(14, 756);
-            tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
+            tableLayoutPanel1.Location = new Point(12, 567);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(398, 133);
+            tableLayoutPanel1.Size = new Size(348, 100);
             tableLayoutPanel1.TabIndex = 48;
-            // 
-            // button4
-            // 
-            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button4.Location = new Point(587, 131);
-            button4.Margin = new Padding(3, 4, 3, 4);
-            button4.Name = "button4";
-            button4.Size = new Size(86, 31);
-            button4.TabIndex = 44;
-            button4.Text = "button4";
-            button4.UseVisualStyleBackColor = true;
             // 
             // btnCrearUsuario
             // 
@@ -395,21 +369,30 @@
             btnCrearUsuario.BackColor = Color.FromArgb(149, 195, 172);
             btnCrearUsuario.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCrearUsuario.ForeColor = SystemColors.ButtonFace;
-            btnCrearUsuario.Location = new Point(251, 71);
-            btnCrearUsuario.Margin = new Padding(3, 4, 3, 4);
+            btnCrearUsuario.Location = new Point(220, 53);
             btnCrearUsuario.Name = "btnCrearUsuario";
-            btnCrearUsuario.Size = new Size(144, 58);
+            btnCrearUsuario.Size = new Size(125, 44);
             btnCrearUsuario.TabIndex = 23;
             btnCrearUsuario.Text = "Crear Usuario";
             btnCrearUsuario.UseVisualStyleBackColor = false;
             btnCrearUsuario.Click += btnCrearUsuario_Click;
             // 
+            // button4
+            // 
+            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button4.Location = new Point(514, 98);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 44;
+            button4.Text = "button4";
+            button4.UseVisualStyleBackColor = true;
+            // 
             // frmEmpleado
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(875, 905);
+            ClientSize = new Size(766, 679);
             Controls.Add(panel1);
             Controls.Add(panelBusqueda);
             Controls.Add(groupBox1);
@@ -417,7 +400,6 @@
             Controls.Add(button4);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "frmEmpleado";
             Text = "frmEmpleado";
             Load += FrmEmpleados_Load;

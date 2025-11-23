@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarPresentacion));
             Panel panBarraControl;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarPresentacion));
+            lblNombreModulo = new Label();
             panel2 = new Panel();
             flpAjustarBotones = new FlowLayoutPanel();
             btnGuardarCategoria = new Button();
@@ -44,14 +45,36 @@
             lblEstado = new Label();
             label8 = new Label();
             label2 = new Label();
-            lblNombreModulo = new Label();
             panBarraControl = new Panel();
+            panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             flpAjustarBotones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxImagenMarca).BeginInit();
             gbxEstado.SuspendLayout();
-            panBarraControl.SuspendLayout();
             SuspendLayout();
+            // 
+            // panBarraControl
+            // 
+            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
+            panBarraControl.Controls.Add(lblNombreModulo);
+            panBarraControl.Dock = DockStyle.Top;
+            panBarraControl.ForeColor = Color.Coral;
+            panBarraControl.Location = new Point(0, 0);
+            panBarraControl.Name = "panBarraControl";
+            panBarraControl.Size = new Size(657, 37);
+            panBarraControl.TabIndex = 21;
+            // 
+            // lblNombreModulo
+            // 
+            lblNombreModulo.Dock = DockStyle.Fill;
+            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNombreModulo.ForeColor = Color.White;
+            lblNombreModulo.Location = new Point(0, 0);
+            lblNombreModulo.Name = "lblNombreModulo";
+            lblNombreModulo.Size = new Size(657, 37);
+            lblNombreModulo.TabIndex = 14;
+            lblNombreModulo.Text = "EDITAR PRESENTACIÓN";
+            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
@@ -226,45 +249,22 @@
             label2.TabIndex = 14;
             label2.Text = "Descripción:";
             // 
-            // lblNombreModulo
-            // 
-            lblNombreModulo.Dock = DockStyle.Fill;
-            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNombreModulo.ForeColor = Color.White;
-            lblNombreModulo.Location = new Point(0, 0);
-            lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(657, 37);
-            lblNombreModulo.TabIndex = 14;
-            lblNombreModulo.Text = "EDITAR PRESENTACIÓN";
-            lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // panBarraControl
-            // 
-            panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
-            panBarraControl.Controls.Add(lblNombreModulo);
-            panBarraControl.Dock = DockStyle.Top;
-            panBarraControl.ForeColor = Color.Coral;
-            panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(657, 37);
-            panBarraControl.TabIndex = 21;
-            // 
             // frmAgregarEditarPresentacion
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(657, 320);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Name = "frmAgregarEditarPresentacion";
             Text = "Presentación";
+            panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             flpAjustarBotones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxImagenMarca).EndInit();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
-            panBarraControl.ResumeLayout(false);
             ResumeLayout(false);
         }
 

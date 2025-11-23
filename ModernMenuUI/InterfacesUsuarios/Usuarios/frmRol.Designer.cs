@@ -324,10 +324,10 @@
             label2.TabIndex = 0;
             label2.Text = "ROLES CREADOS POR EL ADMINISTRADOR";
             // 
-            // frmRoles
+            // frmRol
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(766, 679);
             Controls.Add(panel5);
             Controls.Add(pnlContenedorRoles);
@@ -336,7 +336,7 @@
             Controls.Add(panel1);
             Controls.Add(panel10);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmRoles";
+            Name = "frmRol";
             Text = "frmRoles";
             pnlContenedorRoles.ResumeLayout(false);
             panel10.ResumeLayout(false);

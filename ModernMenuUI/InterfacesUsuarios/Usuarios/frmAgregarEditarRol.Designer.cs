@@ -86,19 +86,19 @@
             checkBox16 = new CheckBox();
             checkBox17 = new CheckBox();
             checkBox18 = new CheckBox();
+            gbxInventario = new GroupBox();
+            btnDehabilitarInventario = new Button();
+            checkBox11 = new CheckBox();
+            checkBox12 = new CheckBox();
+            checkBox13 = new CheckBox();
+            checkBox8 = new CheckBox();
+            checkBox9 = new CheckBox();
+            checkBox10 = new CheckBox();
+            checkBox7 = new CheckBox();
+            checkBox6 = new CheckBox();
+            checkBox1 = new CheckBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnCerrar = new Button();
-            checkBox1 = new CheckBox();
-            checkBox6 = new CheckBox();
-            checkBox7 = new CheckBox();
-            checkBox10 = new CheckBox();
-            checkBox9 = new CheckBox();
-            checkBox8 = new CheckBox();
-            checkBox13 = new CheckBox();
-            checkBox12 = new CheckBox();
-            checkBox11 = new CheckBox();
-            btnDehabilitarInventario = new Button();
-            gbxInventario = new GroupBox();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel1.SuspendLayout();
@@ -109,8 +109,8 @@
             gbxUsuarios.SuspendLayout();
             gbxVentas.SuspendLayout();
             gbxCompras.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
             gbxInventario.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panBarraControl
@@ -787,6 +787,133 @@
             checkBox18.Text = "Accion E";
             checkBox18.UseVisualStyleBackColor = true;
             // 
+            // gbxInventario
+            // 
+            gbxInventario.Controls.Add(btnDehabilitarInventario);
+            gbxInventario.Controls.Add(checkBox11);
+            gbxInventario.Controls.Add(checkBox12);
+            gbxInventario.Controls.Add(checkBox13);
+            gbxInventario.Controls.Add(checkBox8);
+            gbxInventario.Controls.Add(checkBox9);
+            gbxInventario.Controls.Add(checkBox10);
+            gbxInventario.Controls.Add(checkBox7);
+            gbxInventario.Controls.Add(checkBox6);
+            gbxInventario.Controls.Add(checkBox1);
+            gbxInventario.Dock = DockStyle.Top;
+            gbxInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxInventario.ForeColor = Color.FromArgb(107, 122, 135);
+            gbxInventario.Location = new Point(0, 0);
+            gbxInventario.Name = "gbxInventario";
+            gbxInventario.Size = new Size(664, 114);
+            gbxInventario.TabIndex = 1;
+            gbxInventario.TabStop = false;
+            gbxInventario.Text = "Inventario";
+            // 
+            // btnDehabilitarInventario
+            // 
+            btnDehabilitarInventario.BackColor = Color.FromArgb(198, 99, 99);
+            btnDehabilitarInventario.BackgroundImageLayout = ImageLayout.None;
+            btnDehabilitarInventario.FlatAppearance.BorderSize = 0;
+            btnDehabilitarInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDehabilitarInventario.ForeColor = SystemColors.ButtonFace;
+            btnDehabilitarInventario.ImageAlign = ContentAlignment.BottomLeft;
+            btnDehabilitarInventario.Location = new Point(537, 33);
+            btnDehabilitarInventario.Name = "btnDehabilitarInventario";
+            btnDehabilitarInventario.Size = new Size(95, 49);
+            btnDehabilitarInventario.TabIndex = 11;
+            btnDehabilitarInventario.Text = "Deshabilitar Modulo";
+            btnDehabilitarInventario.UseVisualStyleBackColor = false;
+            // 
+            // checkBox11
+            // 
+            checkBox11.AutoSize = true;
+            checkBox11.Location = new Point(424, 72);
+            checkBox11.Name = "checkBox11";
+            checkBox11.Size = new Size(83, 22);
+            checkBox11.TabIndex = 8;
+            checkBox11.Text = "Accion E";
+            checkBox11.UseVisualStyleBackColor = true;
+            // 
+            // checkBox12
+            // 
+            checkBox12.AutoSize = true;
+            checkBox12.Location = new Point(424, 47);
+            checkBox12.Name = "checkBox12";
+            checkBox12.Size = new Size(83, 22);
+            checkBox12.TabIndex = 7;
+            checkBox12.Text = "Accion E";
+            checkBox12.UseVisualStyleBackColor = true;
+            // 
+            // checkBox13
+            // 
+            checkBox13.AutoSize = true;
+            checkBox13.Location = new Point(424, 22);
+            checkBox13.Name = "checkBox13";
+            checkBox13.Size = new Size(83, 22);
+            checkBox13.TabIndex = 6;
+            checkBox13.Text = "Accion E";
+            checkBox13.UseVisualStyleBackColor = true;
+            // 
+            // checkBox8
+            // 
+            checkBox8.AutoSize = true;
+            checkBox8.Location = new Point(209, 72);
+            checkBox8.Name = "checkBox8";
+            checkBox8.Size = new Size(83, 22);
+            checkBox8.TabIndex = 5;
+            checkBox8.Text = "Accion E";
+            checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            checkBox9.AutoSize = true;
+            checkBox9.Location = new Point(209, 47);
+            checkBox9.Name = "checkBox9";
+            checkBox9.Size = new Size(83, 22);
+            checkBox9.TabIndex = 4;
+            checkBox9.Text = "Accion E";
+            checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox10
+            // 
+            checkBox10.AutoSize = true;
+            checkBox10.Location = new Point(209, 22);
+            checkBox10.Name = "checkBox10";
+            checkBox10.Size = new Size(83, 22);
+            checkBox10.TabIndex = 3;
+            checkBox10.Text = "Accion E";
+            checkBox10.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            checkBox7.AutoSize = true;
+            checkBox7.Location = new Point(17, 72);
+            checkBox7.Name = "checkBox7";
+            checkBox7.Size = new Size(83, 22);
+            checkBox7.TabIndex = 2;
+            checkBox7.Text = "Accion E";
+            checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            checkBox6.AutoSize = true;
+            checkBox6.Location = new Point(17, 47);
+            checkBox6.Name = "checkBox6";
+            checkBox6.Size = new Size(83, 22);
+            checkBox6.TabIndex = 1;
+            checkBox6.Text = "Accion E";
+            checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(17, 22);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(83, 22);
+            checkBox1.TabIndex = 0;
+            checkBox1.Text = "Accion E";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 4;
@@ -823,137 +950,10 @@
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
             // 
-            // checkBox1
+            // frmAgregarEditarRol
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(17, 22);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(83, 22);
-            checkBox1.TabIndex = 0;
-            checkBox1.Text = "Accion E";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            checkBox6.AutoSize = true;
-            checkBox6.Location = new Point(17, 47);
-            checkBox6.Name = "checkBox6";
-            checkBox6.Size = new Size(83, 22);
-            checkBox6.TabIndex = 1;
-            checkBox6.Text = "Accion E";
-            checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox7
-            // 
-            checkBox7.AutoSize = true;
-            checkBox7.Location = new Point(17, 72);
-            checkBox7.Name = "checkBox7";
-            checkBox7.Size = new Size(83, 22);
-            checkBox7.TabIndex = 2;
-            checkBox7.Text = "Accion E";
-            checkBox7.UseVisualStyleBackColor = true;
-            // 
-            // checkBox10
-            // 
-            checkBox10.AutoSize = true;
-            checkBox10.Location = new Point(209, 22);
-            checkBox10.Name = "checkBox10";
-            checkBox10.Size = new Size(83, 22);
-            checkBox10.TabIndex = 3;
-            checkBox10.Text = "Accion E";
-            checkBox10.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            checkBox9.AutoSize = true;
-            checkBox9.Location = new Point(209, 47);
-            checkBox9.Name = "checkBox9";
-            checkBox9.Size = new Size(83, 22);
-            checkBox9.TabIndex = 4;
-            checkBox9.Text = "Accion E";
-            checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox8
-            // 
-            checkBox8.AutoSize = true;
-            checkBox8.Location = new Point(209, 72);
-            checkBox8.Name = "checkBox8";
-            checkBox8.Size = new Size(83, 22);
-            checkBox8.TabIndex = 5;
-            checkBox8.Text = "Accion E";
-            checkBox8.UseVisualStyleBackColor = true;
-            // 
-            // checkBox13
-            // 
-            checkBox13.AutoSize = true;
-            checkBox13.Location = new Point(424, 22);
-            checkBox13.Name = "checkBox13";
-            checkBox13.Size = new Size(83, 22);
-            checkBox13.TabIndex = 6;
-            checkBox13.Text = "Accion E";
-            checkBox13.UseVisualStyleBackColor = true;
-            // 
-            // checkBox12
-            // 
-            checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(424, 47);
-            checkBox12.Name = "checkBox12";
-            checkBox12.Size = new Size(83, 22);
-            checkBox12.TabIndex = 7;
-            checkBox12.Text = "Accion E";
-            checkBox12.UseVisualStyleBackColor = true;
-            // 
-            // checkBox11
-            // 
-            checkBox11.AutoSize = true;
-            checkBox11.Location = new Point(424, 72);
-            checkBox11.Name = "checkBox11";
-            checkBox11.Size = new Size(83, 22);
-            checkBox11.TabIndex = 8;
-            checkBox11.Text = "Accion E";
-            checkBox11.UseVisualStyleBackColor = true;
-            // 
-            // btnDehabilitarInventario
-            // 
-            btnDehabilitarInventario.BackColor = Color.FromArgb(198, 99, 99);
-            btnDehabilitarInventario.BackgroundImageLayout = ImageLayout.None;
-            btnDehabilitarInventario.FlatAppearance.BorderSize = 0;
-            btnDehabilitarInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDehabilitarInventario.ForeColor = SystemColors.ButtonFace;
-            btnDehabilitarInventario.ImageAlign = ContentAlignment.BottomLeft;
-            btnDehabilitarInventario.Location = new Point(537, 33);
-            btnDehabilitarInventario.Name = "btnDehabilitarInventario";
-            btnDehabilitarInventario.Size = new Size(95, 49);
-            btnDehabilitarInventario.TabIndex = 11;
-            btnDehabilitarInventario.Text = "Deshabilitar Modulo";
-            btnDehabilitarInventario.UseVisualStyleBackColor = false;
-            // 
-            // gbxInventario
-            // 
-            gbxInventario.Controls.Add(btnDehabilitarInventario);
-            gbxInventario.Controls.Add(checkBox11);
-            gbxInventario.Controls.Add(checkBox12);
-            gbxInventario.Controls.Add(checkBox13);
-            gbxInventario.Controls.Add(checkBox8);
-            gbxInventario.Controls.Add(checkBox9);
-            gbxInventario.Controls.Add(checkBox10);
-            gbxInventario.Controls.Add(checkBox7);
-            gbxInventario.Controls.Add(checkBox6);
-            gbxInventario.Controls.Add(checkBox1);
-            gbxInventario.Dock = DockStyle.Top;
-            gbxInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            gbxInventario.ForeColor = Color.FromArgb(107, 122, 135);
-            gbxInventario.Location = new Point(0, 0);
-            gbxInventario.Name = "gbxInventario";
-            gbxInventario.Size = new Size(664, 114);
-            gbxInventario.TabIndex = 1;
-            gbxInventario.TabStop = false;
-            gbxInventario.Text = "Inventario";
-            // 
-            // frmEditarRol
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(766, 636);
             Controls.Add(tableLayoutPanel1);
@@ -964,7 +964,7 @@
             Controls.Add(label8);
             Controls.Add(txtNombreRol);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmEditarRol";
+            Name = "frmAgregarEditarRol";
             Text = "frmEditarRol";
             panBarraControl.ResumeLayout(false);
             panel1.ResumeLayout(false);
@@ -982,9 +982,9 @@
             gbxVentas.PerformLayout();
             gbxCompras.ResumeLayout(false);
             gbxCompras.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
             gbxInventario.ResumeLayout(false);
             gbxInventario.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }

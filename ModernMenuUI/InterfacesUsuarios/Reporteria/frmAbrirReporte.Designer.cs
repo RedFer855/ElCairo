@@ -33,6 +33,11 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             dgvStockCritico = new DataGridView();
+            CodigoBarra = new DataGridViewTextBoxColumn();
+            Producto = new DataGridViewTextBoxColumn();
+            CantidadActual = new DataGridViewTextBoxColumn();
+            StockMinimo = new DataGridViewTextBoxColumn();
+            Diferencia = new DataGridViewTextBoxColumn();
             btnExportarPDF = new Button();
             btnExportarExcel = new Button();
             panel1 = new Panel();
@@ -40,11 +45,6 @@
             label1 = new Label();
             cmbBodegas = new ComboBox();
             btnGenerarReporte = new Button();
-            CodigoBarra = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            CantidadActual = new DataGridViewTextBoxColumn();
-            StockMinimo = new DataGridViewTextBoxColumn();
-            Diferencia = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvStockCritico).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -101,6 +101,45 @@
             dgvStockCritico.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvStockCritico.Size = new Size(778, 363);
             dgvStockCritico.TabIndex = 2;
+            // 
+            // CodigoBarra
+            // 
+            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            CodigoBarra.DataPropertyName = "CodigoBarraProducto";
+            CodigoBarra.HeaderText = "CodigoBarra";
+            CodigoBarra.Name = "CodigoBarra";
+            CodigoBarra.ReadOnly = true;
+            // 
+            // Producto
+            // 
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Producto.DataPropertyName = "NombreProducto";
+            Producto.HeaderText = "Producto";
+            Producto.Name = "Producto";
+            Producto.ReadOnly = true;
+            // 
+            // CantidadActual
+            // 
+            CantidadActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            CantidadActual.DataPropertyName = "CantidadActual";
+            CantidadActual.HeaderText = "Cantidad Actual";
+            CantidadActual.Name = "CantidadActual";
+            CantidadActual.ReadOnly = true;
+            // 
+            // StockMinimo
+            // 
+            StockMinimo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            StockMinimo.DataPropertyName = "StockMinimo";
+            StockMinimo.HeaderText = "Cantidad Mínima";
+            StockMinimo.Name = "StockMinimo";
+            StockMinimo.ReadOnly = true;
+            // 
+            // Diferencia
+            // 
+            Diferencia.DataPropertyName = "Diferencia";
+            Diferencia.HeaderText = "Diferencia";
+            Diferencia.Name = "Diferencia";
+            Diferencia.ReadOnly = true;
             // 
             // btnExportarPDF
             // 
@@ -188,49 +227,10 @@
             btnGenerarReporte.UseVisualStyleBackColor = false;
             btnGenerarReporte.Click += btnGenerarReporte_Click_1;
             // 
-            // CodigoBarra
-            // 
-            CodigoBarra.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            CodigoBarra.DataPropertyName = "CodigoBarraProducto";
-            CodigoBarra.HeaderText = "CodigoBarra";
-            CodigoBarra.Name = "CodigoBarra";
-            CodigoBarra.ReadOnly = true;
-            // 
-            // Producto
-            // 
-            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Producto.DataPropertyName = "NombreProducto";
-            Producto.HeaderText = "Producto";
-            Producto.Name = "Producto";
-            Producto.ReadOnly = true;
-            // 
-            // CantidadActual
-            // 
-            CantidadActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            CantidadActual.DataPropertyName = "CantidadActual";
-            CantidadActual.HeaderText = "Cantidad Actual";
-            CantidadActual.Name = "CantidadActual";
-            CantidadActual.ReadOnly = true;
-            // 
-            // StockMinimo
-            // 
-            StockMinimo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            StockMinimo.DataPropertyName = "StockMinimo";
-            StockMinimo.HeaderText = "Cantidad Mínima";
-            StockMinimo.Name = "StockMinimo";
-            StockMinimo.ReadOnly = true;
-            // 
-            // Diferencia
-            // 
-            Diferencia.DataPropertyName = "Diferencia";
-            Diferencia.HeaderText = "Diferencia";
-            Diferencia.Name = "Diferencia";
-            Diferencia.ReadOnly = true;
-            // 
             // frmAbrirReporte
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(802, 557);
             Controls.Add(btnGenerarReporte);

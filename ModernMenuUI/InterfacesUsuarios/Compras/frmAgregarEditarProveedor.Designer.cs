@@ -264,8 +264,8 @@
             // 
             // frmAgregarEditarProveedor
             // 
-            AutoScaleDimensions = new SizeF(7F, 14F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(688, 290);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
@@ -274,6 +274,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmAgregarEditarProveedor";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Proveedor";
             Load += frmAgregarEditarProveedor_Load;
             panBarraControl.ResumeLayout(false);
