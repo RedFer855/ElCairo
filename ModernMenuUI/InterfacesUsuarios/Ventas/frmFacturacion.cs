@@ -370,6 +370,96 @@ namespace ModernMenuUI
             int limiteProductos = 3;
             int productosActuales = dgvCarrito.Rows.Count;
 
+            // 1. VALIDACIÓN DE LÍMITE DE PRODUCTOS DIFERENTES
+            // Si ya llegó al límite y el producto no está en el carrito
+            bool productoYaExiste = dgvCarrito.Rows
+                .Cast<DataGridViewRow>()
+                .Any(r => !r.IsNewRow && (int)r.Cells[0].Value == codigoProducto);
+
+            if (productosActuales >= limiteProductos && !productoYaExiste)
+            {
+                MessageBox.Show(
+                    $"Solo puedes agregar hasta {limiteProductos} productos diferentes al carrito.",
+                    "Límite alcanzado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            Image Eliminar = Properties.Resources.eliminar__1_;
+            Image Restar = Properties.Resources.signo_menos__1_;
+            Image Sumar = Properties.Resources.mas__2_;
+
+            // 2. BUSCAR PRODUCTO EN EL GRID DE PRODUCTOS (Origen)
+            DataGridViewRow producto = null;
+            for (int i = 0; i < dgvProductos.Rows.Count; i++)
+            {
+                if ((int)dgvProductos.Rows[i].Cells[0].Value == codigoProducto)
+                {
+                    producto = dgvProductos.Rows[i];
+                    break;
+                }
+            }
+
+            if (producto == null)
+            {
+                MessageBox.Show("Producto no encontrado.");
+                return;
+            }
+
+            string descripcion = producto.Cells[1].Value.ToString();
+            decimal precio = Convert.ToDecimal(producto.Cells[2].Value);
+            int stock = Convert.ToInt32(producto.Cells[3].Value);
+
+            // 3. NUEVA VALIDACIÓN CRÍTICA: Si el stock es 0, DETENER TODO AQUÍ.
+            if (stock <= 0)
+            {
+                MessageBox.Show($"No hay stock disponible para este producto.", "Stock Agotado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Esto evita que se agregue al carrito
+            }
+
+            // 4. REVISAR SI YA ESTÁ EN EL CARRITO (Actualizar cantidad)
+            for (int i = 0; i < dgvCarrito.Rows.Count; i++)
+            {
+                if ((int)dgvCarrito.Rows[i].Cells[0].Value == codigoProducto)
+                {
+                    int cantidadActual = Convert.ToInt32(dgvCarrito.Rows[i].Cells[3].Value);
+                    int nuevaCantidad = cantidadActual + cantidadAgregar;
+
+                    if (nuevaCantidad > stock)
+                    {
+                        // Si se pasa del stock, lo topamos al máximo posible
+                        dgvCarrito.Rows[i].Cells[3].Value = stock;
+                        MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        dgvCarrito.Rows[i].Cells[3].Value = nuevaCantidad;
+                    }
+
+                    return; // Salimos porque ya actualizamos la fila existente
+                }
+            }
+
+            // 5. SI NO ESTÁ EN EL CARRITO, AGREGAR NUEVA FILA
+            int cantidadFinal = cantidadAgregar;
+
+            // Ajustar si pide más de lo que hay
+            if (cantidadFinal > stock)
+            {
+                cantidadFinal = stock;
+                MessageBox.Show($"Stock insuficiente. Solo se agregaron {stock} unidades.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            // Validacion final de seguridad: Solo agregar si la cantidad es mayor a 0
+            if (cantidadFinal > 0)
+            {
+                dgvCarrito.Rows.Add(codigoProducto, descripcion, precio, cantidadFinal, Eliminar, Restar, Sumar);
+            }
+            /*int limiteProductos = 3;
+            int productosActuales = dgvCarrito.Rows.Count;
+
             // Si ya llegó al límite y el producto no está en el carrito
             bool productoYaExiste = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
@@ -440,7 +530,7 @@ namespace ModernMenuUI
                 MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            dgvCarrito.Rows.Add(codigoProducto, descripcion, precio, cantidadFinal, Eliminar, Restar, Sumar);
+            dgvCarrito.Rows.Add(codigoProducto, descripcion, precio, cantidadFinal, Eliminar, Restar, Sumar);*/
         }
 
         private void LimpiarCarrito()
@@ -993,7 +1083,7 @@ namespace ModernMenuUI
             {
                 MessageBox.Show("Debe buscar y seleccionar un Cliente.",
                                 "Falta Cliente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtBuscar.Focus(); // (O el nombre de tu textbox de cliente)
+                txtCliente.Focus(); 
                 return;
             }
 
