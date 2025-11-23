@@ -353,6 +353,7 @@
             Controls.Add(panelBusqueda);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProveedor";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmProveedores";
             FormClosing += frmProveedores_FormClosing;
             Load += frmProveedores_Load;
