@@ -4,6 +4,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
+using ModernMenuUI.ServiciosUI;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +19,7 @@ namespace ModernMenuUI
 {
     public partial class frmProductos : Form
     {
+        private BuscadorInteractivo<Producto> _buscadorCtrl;
         // VARIABLES DE UI Y LOGICA DE NEGOCIO
         private int? _filtroMarcaId = null;
         private int? _filtroCategoriaId = null;
@@ -347,7 +349,7 @@ namespace ModernMenuUI
                 {
                     lstSugerencias.DataSource = null;
                     lstSugerencias.DataSource = top10;
-                    lstSugerencias.DisplayMember = "NombreProducto";
+                    //lstSugerencias.DisplayMember = "NombreProducto";
 
                     AjustarAlturaListBox(resultados.Count);
 
@@ -388,7 +390,7 @@ namespace ModernMenuUI
                 if (lstSugerencias.SelectedItem != null)
                 {
                     Producto productoSel = lstSugerencias.SelectedItem as Producto;
-                    txtBuscar.Text = productoSel.NombreProducto;
+                    txtBuscar.Text = productoSel.ToString();
                     txtBuscar.SelectionStart = txtBuscar.Text.Length;
 
                     lstSugerencias.Visible = false;
@@ -414,7 +416,7 @@ namespace ModernMenuUI
             if (lstSugerencias.SelectedItem != null)
             {
                 Producto productoSel = lstSugerencias.SelectedItem as Producto;
-                txtBuscar.Text = productoSel.NombreProducto;
+                txtBuscar.Text = productoSel.ToString();
                 txtBuscar.SelectionStart = txtBuscar.Text.Length;
                 lstSugerencias.Visible = false;
                 _ctsBusqueda?.Cancel();
@@ -431,7 +433,7 @@ namespace ModernMenuUI
                 if (productoSel != null)
                 {
                     _ignorarTextChanged = true;
-                    txtBuscar.Text = productoSel.NombreProducto;
+                    txtBuscar.Text = productoSel.ToString();
                     txtBuscar.SelectionStart = txtBuscar.Text.Length;
                     txtBuscar.SelectionLength = 0;
                     _ignorarTextChanged = false;
@@ -454,7 +456,7 @@ namespace ModernMenuUI
                 Producto productoSel = lstSugerencias.SelectedItem as Producto;
                 if (productoSel != null)
                 {
-                    txtBuscar.Text = productoSel.NombreProducto;
+                    txtBuscar.Text = productoSel.ToString();
                     lstSugerencias.Visible = false;
                 }
             }
@@ -545,28 +547,46 @@ namespace ModernMenuUI
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            string codigoBusqueda = txtBuscar.Text.Trim();
+            string busqueda = txtBuscar.Text.Trim();
 
-            if (string.IsNullOrEmpty(codigoBusqueda)) return;
+            if (string.IsNullOrEmpty(busqueda)) return;
 
-            Producto productoEncontrado = _listaMaestraProductos.FirstOrDefault(p =>
-                (p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(codigoBusqueda)) ||
-                (p.NombreProducto != null && p.NombreProducto.Equals(codigoBusqueda, StringComparison.OrdinalIgnoreCase)));
+            // 1. Primero intentamos buscar EXACTAMENTE por Código de Barras (Prioridad Alta)
+            // Usamos FirstOrDefault porque el código de barras debería ser único.
+            Producto productoPorCodigo = _listaMaestraProductos.FirstOrDefault(p =>
+                p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(busqueda));
 
-            if (productoEncontrado != null)
+            if (productoPorCodigo != null)
             {
-                var listaResultadoUnico = new List<Producto> { productoEncontrado };
-
-                dgvProductos.DataSource = null;
-                dgvProductos.DataSource = listaResultadoUnico;
-
+                // Si encontramos por código, mostramos solo ese
+                dgvProductos.DataSource = new List<Producto> { productoPorCodigo };
                 pnlLimpiarFiltros.Visible = true;
             }
             else
             {
-                MessageBox.Show("Producto no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // 2. Si no es código, buscamos por TEXTO CONCATENADO (Nombre + Marca + Presentación...)
+                // Usamos 'Where' en lugar de 'FirstOrDefault' para traer TODAS las coincidencias
+                // y usamos .ToString() para buscar en toda la información junta.
+
+                var productosEncontrados = _listaMaestraProductos.Where(p =>
+                    p.ToString().IndexOf(busqueda, StringComparison.OrdinalIgnoreCase) >= 0
+                ).ToList();
+
+                if (productosEncontrados.Count > 0)
+                {
+                    dgvProductos.DataSource = null; // Limpiamos primero
+                    dgvProductos.DataSource = productosEncontrados; // Mostramos todos los que coincidan
+                    pnlLimpiarFiltros.Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron productos con esa descripción.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Opcional: Si no encuentra nada, ¿quieres recargar todo?
+                    // RefrescarGrid(); 
+                }
             }
 
+            // Limpieza final de UI
             txtBuscar.Clear();
             lstSugerencias.Visible = false;
         }

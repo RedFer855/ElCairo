@@ -369,7 +369,7 @@
             dgvCarrito.Name = "dgvCarrito";
             dgvCarrito.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
             dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
@@ -513,7 +513,7 @@
             dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;

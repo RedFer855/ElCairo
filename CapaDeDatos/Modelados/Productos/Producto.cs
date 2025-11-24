@@ -72,5 +72,12 @@ namespace CapaDeDatos.Modelados.Productos
         public int IdProveedorProducto { get; set; }
 
         public int StockEnBodega { get; set; }
+
+        public override string ToString()
+        {
+            // Esto une las palabras con espacio, ignorando las que sean nulas o vacías
+            return string.Join(" ", new[] { NombreProducto, NombreMarca, NombrePresentacion, ContenidoProducto }
+                   .Where(s => !string.IsNullOrEmpty(s)));
+        }
     }
 }
