@@ -66,14 +66,14 @@
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
-            // FormPantallaDeCarga
+            // frmPantallaDeCarga
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(800, 450);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "FormPantallaDeCarga";
+            Name = "frmPantallaDeCarga";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormPantallaDeCarga";
             panel1.ResumeLayout(false);

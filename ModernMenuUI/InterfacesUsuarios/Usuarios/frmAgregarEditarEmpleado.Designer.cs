@@ -376,8 +376,8 @@
             // 
             // frmAgregarEditarEmpleado
             // 
-            AutoScaleDimensions = new SizeF(7F, 14F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(651, 462);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);

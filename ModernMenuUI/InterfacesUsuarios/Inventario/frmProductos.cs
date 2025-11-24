@@ -1,47 +1,41 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
-using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
+using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
-using Supabase;
-using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
     public partial class frmProductos : Form
     {
+        // VARIABLES DE UI Y LOGICA DE NEGOCIO
         private int? _filtroMarcaId = null;
         private int? _filtroCategoriaId = null;
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
         private readonly ProductoRepositorio productoRepositorio;
         private Producto ProductoSeleccionado;
-        Form formularioactivo = null;
+
+        // NUEVA VARIABLE GESTOR REALTIME
+        private GestorRealtime<Producto> _gestorRealtime;
 
         private List<Producto> _listaMaestraProductos = new List<Producto>();
-        private Supabase.Realtime.RealtimeChannel? _productosSubscription;
-        private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
-        private Supabase.Client? _supabaseClient;
 
-        // VARIABLES
+        // VARIABLES DE BUSQUEDA
         private CancellationTokenSource _ctsBusqueda;
         private string sugerenciaActual = "";
         private bool _ignorarTextChanged = false;
         private bool _usuarioSeleccionoConMouse = false;
-        private const int MAX_SUGGESTIONS = 10; 
-
+        private const int MAX_SUGGESTIONS = 10;
 
         public frmProductos()
         {
@@ -53,19 +47,64 @@ namespace ModernMenuUI
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
             this.FormClosing += frmProductos_FormClosing;
-            typeof(DataGridView).InvokeMember("DoubleBuffered",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty, null, dgvProductos, new object[] { true });
+
+            // Hack para DoubleBuffered en Grid
+            typeof(DataGridView).InvokeMember("DoubleBuffered",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.SetProperty,
+                null, dgvProductos, new object[] { true });
+
             dgvProductos.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 241);
+
+            // --- CONFIGURACION GESTOR REALTIME (NUEVO) ---
+            _gestorRealtime = new GestorRealtime<Producto>();
+
+            // Evento: Cuando hay cambios en la BD (Insert/Update/Delete)
+            _gestorRealtime.OnCambioBaseDatos += (change) =>
+            {
+                System.Diagnostics.Debug.WriteLine($"Cambio BD detectado: {change.Event}");
+                RecargarInterfaz();
+            };
+
+            // Evento: Cuando vuelve el internet y se reconecta
+            _gestorRealtime.OnReconexionExitosa += () =>
+            {
+                System.Diagnostics.Debug.WriteLine("Reconexión exitosa -> Recargando Grid Productos");
+                RecargarInterfaz();
+            };
         }
 
         private async void frmProductos_Load(object sender, EventArgs e)
         {
-            _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
+            // Carga inicial de datos
             await CargarProductosMaestros();
             RefrescarGrid();
-            await IniciarSuscripcionProductos();
+
+            // Iniciar suscripción Realtime
+            await _gestorRealtime.SuscribirAsync();
         }
 
-        // MAPEO
+        private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Limpiar suscripción al cerrar
+            await _gestorRealtime.DesuscribirAsync();
+        }
+
+        // METODO AUXILIAR PARA RECARGAR DESDE HILOS SEGUROS
+        private void RecargarInterfaz()
+        {
+            if (this.IsDisposed || !this.IsHandleCreated) return;
+
+            this.BeginInvoke((MethodInvoker)(async () =>
+            {
+                if (this.IsDisposed) return;
+                await CargarProductosMaestros();
+                RefrescarGrid();
+            }));
+        }
+
+        // MAPEO PERMISOS
         private void RegistrarBotonesConPermisos()
         {
             _servicioPermisos.RegistrarBoton(btnNuevoProducto, "insert_inventario");
@@ -75,11 +114,10 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
         }
 
-        // BUSCAR
+        // BUSCAR LOGICA
         private List<Producto> BuscarProductos(string textoBusqueda)
         {
             string busqueda = textoBusqueda.ToLower().Trim();
-
 
             bool? estado = null;
             if (rbMostrarHabilitados.Checked) estado = true;
@@ -125,11 +163,9 @@ namespace ModernMenuUI
 
         private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
         {
-
             if (e.KeyChar == (char)Keys.Return || e.KeyChar == '\r')
             {
                 string entrada = txtBuscar.Text.Trim();
-
 
                 if (EsCodigoBarra(entrada))
                 {
@@ -154,8 +190,7 @@ namespace ModernMenuUI
             if (productoBuscado == null) return;
 
             var listaDelGrid = dgvProductos.DataSource as List<Producto>;
-            if (listaDelGrid == null) return; // No se puede buscar
-
+            if (listaDelGrid == null) return;
 
             int indice = listaDelGrid.FindIndex(p => p.IdProducto == productoBuscado.IdProducto);
 
@@ -166,23 +201,23 @@ namespace ModernMenuUI
                 dgvProductos.FirstDisplayedScrollingRowIndex = indice;
             }
         }
-        // CARGAR TABLA REALTIME
+
+        // CARGAR TABLA 
         private async Task CargarProductosMaestros()
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-                this.Cursor = Cursors.WaitCursor;
-
                 _listaMaestraProductos = await productoRepositorio.ObtenerTodosLosProductos(null);
             }
             catch (OperationCanceledException)
             {
-                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Manejo silencioso o log
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al cargar productos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Solo mostramos mensaje si es un error crítico no controlado por el Gestor
+                System.Diagnostics.Debug.WriteLine($"Error cargar productos: {ex.Message}");
             }
             finally
             {
@@ -195,7 +230,6 @@ namespace ModernMenuUI
         {
             this.Cursor = Cursors.WaitCursor;
             gbxEstado.Enabled = false;
-
 
             bool? estado = null;
             if (rbMostrarHabilitados.Checked) estado = true;
@@ -238,103 +272,20 @@ namespace ModernMenuUI
             this.Cursor = Cursors.Default;
         }
 
-        // SUSCRIPCION A REALTIME
-        private async Task DesecharSuscripcion()
-        {
-            if (_productosSubscription != null)
-            {
-                try
-                {
-                    await Task.Run(() => _productosSubscription.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción de Productos desechada.");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción Productos: {ex.Message}");
-                }
-                _productosSubscription = null;
-            }
-        }
-
-        private async Task IniciarSuscripcionProductos()
-        {
-            await DesecharSuscripcion();
-
-            try
-            {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
-
-                _productosSubscription = await _supabaseClient.From<Producto>()
-                    .On(ListenType.All, (sender, change) =>
-                    {
-                        try
-                        {
-                            if (this == null || this.IsDisposed || !this.IsHandleCreated) return;
-
-                            this.BeginInvoke((MethodInvoker)(async () =>
-                            {
-                                if (this.IsDisposed) return;
-                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en Productos.");
-
-                                await CargarProductosMaestros();
-                                RefrescarGrid();
-                            }));
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime Productos: {ex.Message}");
-                        }
-                    });
-
-                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime (Productos) creada.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime (Productos): {ex.Message}");
-            }
-        }
-
-        // ESTADO DE RED EN TIEMPO REAL
-        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
-        {
-            if (!this.IsHandleCreated || this.IsDisposed) return;
-
-            if (status == NetworkStatus.Internet)
-            {
-                this.BeginInvoke((MethodInvoker)(async () =>
-                {
-                    if (this.IsDisposed) return;
-                    System.Diagnostics.Debug.WriteLine("Red recuperada. Recargando Productos y Realtime...");
-                    await CargarProductosMaestros();
-                    RefrescarGrid();
-                    await IniciarSuscripcionProductos();
-                }));
-            }
-        }
-
         // EVENTO DE CONTROLES
         private void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
         {
-            if (((RadioButton)sender).Checked)
-            {
-                RefrescarGrid();
-            }
+            if (((RadioButton)sender).Checked) RefrescarGrid();
         }
 
         private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
         {
-            if (((RadioButton)sender).Checked)
-            {
-                RefrescarGrid();
-            }
+            if (((RadioButton)sender).Checked) RefrescarGrid();
         }
 
         private void rbMostrardeshabilitados_CheckedChanged(object sender, EventArgs e)
         {
-            if (((RadioButton)sender).Checked)
-            {
-                RefrescarGrid();
-            }
+            if (((RadioButton)sender).Checked) RefrescarGrid();
         }
 
         private async void btnNuevoProducto_Click(object sender, EventArgs e)
@@ -368,19 +319,13 @@ namespace ModernMenuUI
             }
         }
 
-        private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            await DesecharSuscripcion();
-        }
-
         private void HoraFecha_Tick(object sender, EventArgs e)
         {
             lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt", new CultureInfo("es-ES"));
             lblFecha.Text = DateTime.Now.ToString("dddd dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"));
         }
 
-
-        // --- EVENTOS ---
+        // --- EVENTOS BUSQUEDA ---
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
@@ -393,7 +338,6 @@ namespace ModernMenuUI
 
             try
             {
-
                 await Task.Delay(300, _ctsBusqueda.Token);
 
                 List<Producto> resultados = BuscarProductos(txtBuscar.Text);
@@ -416,7 +360,7 @@ namespace ModernMenuUI
             }
             catch (TaskCanceledException)
             {
-                // Búsqueda cancelada (el usuario siguió tecleando), es normal.
+                // Búsqueda cancelada
             }
         }
 
@@ -430,14 +374,14 @@ namespace ModernMenuUI
                 if (newIndex >= 0)
                     lstSugerencias.SelectedIndex = newIndex;
 
-                e.Handled = true; 
+                e.Handled = true;
             }
             else if (e.KeyCode == Keys.Up)
             {
                 int newIndex = Math.Max(lstSugerencias.SelectedIndex - 1, 0);
                 if (newIndex >= 0)
                     lstSugerencias.SelectedIndex = newIndex;
-                e.Handled = true; 
+                e.Handled = true;
             }
             else if (e.KeyCode == Keys.Enter)
             {
@@ -448,10 +392,10 @@ namespace ModernMenuUI
                     txtBuscar.SelectionStart = txtBuscar.Text.Length;
 
                     lstSugerencias.Visible = false;
-                    _ctsBusqueda?.Cancel(); 
+                    _ctsBusqueda?.Cancel();
                     SeleccionarProductoEnGrid(productoSel);
                     e.Handled = true;
-                    e.SuppressKeyPress = true; 
+                    e.SuppressKeyPress = true;
                 }
             }
         }
@@ -459,7 +403,6 @@ namespace ModernMenuUI
         private async void txtBuscar_Leave(object sender, EventArgs e)
         {
             await Task.Delay(200);
-
             if (!lstSugerencias.Focused)
             {
                 lstSugerencias.Visible = false;
@@ -504,11 +447,7 @@ namespace ModernMenuUI
 
         private void lstSugerencias_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!_usuarioSeleccionoConMouse)
-            {
-                return;
-            }
-
+            if (!_usuarioSeleccionoConMouse) return;
 
             if (lstSugerencias.SelectedItem != null)
             {
@@ -539,7 +478,7 @@ namespace ModernMenuUI
             }
         }
 
-        // BOTONES
+        // BOTONES ACCIONES
         private void btnSalir_Click(object sender, EventArgs e)
         {
             clsAnmaciones.NombreMenuPrincipal();
@@ -548,7 +487,6 @@ namespace ModernMenuUI
 
         private void btnMarca_Click(object sender, EventArgs e)
         {
-
             using (var marcasForm = new frmMarcas())
             {
                 if (marcasForm.ShowDialog() == DialogResult.OK)
@@ -558,7 +496,6 @@ namespace ModernMenuUI
                     RefrescarGrid();
                 }
             }
-
         }
 
         private void btnIngresarPerdida_Click(object sender, EventArgs e)
@@ -577,7 +514,6 @@ namespace ModernMenuUI
         {
             frmMarcas marcas = new frmMarcas();
             marcas.ShowDialog();
-
         }
 
         private void btnCategoria_Click(object sender, EventArgs e)
@@ -592,7 +528,6 @@ namespace ModernMenuUI
                 }
             }
         }
-
 
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
@@ -612,12 +547,11 @@ namespace ModernMenuUI
         {
             string codigoBusqueda = txtBuscar.Text.Trim();
 
-            if (string.IsNullOrEmpty(codigoBusqueda))
-            {
-                return;
-            }
+            if (string.IsNullOrEmpty(codigoBusqueda)) return;
 
-            Producto productoEncontrado = _listaMaestraProductos.FirstOrDefault(p => (p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(codigoBusqueda)) || (p.NombreProducto != null && p.NombreProducto.Equals(codigoBusqueda, StringComparison.OrdinalIgnoreCase)));
+            Producto productoEncontrado = _listaMaestraProductos.FirstOrDefault(p =>
+                (p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(codigoBusqueda)) ||
+                (p.NombreProducto != null && p.NombreProducto.Equals(codigoBusqueda, StringComparison.OrdinalIgnoreCase)));
 
             if (productoEncontrado != null)
             {
@@ -630,8 +564,7 @@ namespace ModernMenuUI
             }
             else
             {
-                MessageBox.Show("Producto no encontrado.", "Búsqueda",
-                                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Producto no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             txtBuscar.Clear();

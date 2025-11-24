@@ -1,7 +1,6 @@
 using CapaDeDatos.Modelados.Reporteria.Reporteria;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
-using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using Microsoft.VisualBasic;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;
@@ -20,13 +19,23 @@ namespace ModernMenuUI
         public bool Animacion = true;
         AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
-        private readonly CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion.ServicioVerificacionConexion _monitorConexion;
+        private readonly ServicioVerificacionConexion _monitorConexion;
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
+        
+        // Variables para almacenar los tamaños calculados una sola vez
+        private int _anchoMenuAbierto;
+        private int _anchoMenuCerrado;
+        private AnimadorPanel _animadorNotificaciones; // Instancia para notificaciones
+
+        // Tolerancia para la comparación
+        private const int TOLERANCIA = 5;
 
 
         public frmMenuPrincipal()
         {
             InitializeComponent();
+            ConfigurarMenu();
+            ConfigurarNotificaciones();
             animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
@@ -74,6 +83,28 @@ namespace ModernMenuUI
 
             // Ahora puedes mostrar en un label
             lblBodega.Text = ServicioSesionUsuario.ObtenerNombreBodega();
+        }
+        private void ConfigurarNotificaciones()
+        {
+            int anchoMaximoNotif = CalculadoraResolucion.ObtenerAnchoNotificaciones();
+            // overlay = true evita que cambien los tamaños (Dock) y por tanto el re-layout del panelFormHijo
+            _animadorNotificaciones = new AnimadorPanel(panelNotificaciones, 0, anchoMaximoNotif, 50, true);
+            // ya no forzamos panelNotificaciones.Width = 0 aquí
+        }
+
+        private void ConfigurarMenu()
+        {
+            // 1. LLAMADA A LA CLASE: Obtenemos los tamaños según el monitor actual
+            var dimensiones = CalculadoraResolucion.ObtenerDimensionesOptimas();
+
+            _anchoMenuAbierto = dimensiones.AnchoAbierto;
+            _anchoMenuCerrado = dimensiones.AnchoCerrado;
+
+            // 2. Estado inicial: Empezamos abiertos (según tu indicación)
+            panelMenuLateral.Width = _anchoMenuAbierto;
+
+            // Debug: Para que veas en consola cuánto calculó
+            Console.WriteLine($"Resolución detectada. Menu Abierto: {_anchoMenuAbierto}, Cerrado: {_anchoMenuCerrado}");
         }
 
         private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
@@ -171,43 +202,35 @@ namespace ModernMenuUI
             }
         }
 
-        private readonly int designFormWidth = 1920;   // ancho de referencia (Full HD)
-        private readonly int designMenuOpen = 300;     // menú abierto en diseño
-        private readonly int designMenuClosed = 100;   // menú cerrado en diseño
-
         private void MenulateralAnimacion()
         {
-            panelFormHijo.Invalidate(false);
+            AlternarMenu();
+        }
+
+        private void AlternarMenu()
+        {
+            lblEstadoConexion.Visible = false;
+            btnNotificaciones.Visible = false;
             panelFormHijo.Visible = false;
+            panelFormHijo.SuspendLayout();
 
-            // Calcula proporciones según el ancho actual del formulario
-            double ratioOpen = (double)designMenuOpen / designFormWidth;
-            double ratioClosed = (double)designMenuClosed / designFormWidth;
+            bool estaAbierto = Math.Abs(panelMenuLateral.Width - _anchoMenuAbierto) <= TOLERANCIA;
 
-            int targetOpen = Math.Max(designMenuOpen, (int)Math.Round(this.Width * ratioOpen));
-            int targetClosed = Math.Max(designMenuClosed, (int)Math.Round(this.Width * ratioClosed));
-
-            // tolerancia para comparar (evita problemas de igualdad/redondeo)
-            int tol = 8;
-
-            // Si actualmente estamos cerca del estado abierto -> achicamos.
-            // Si estamos ya cerca del cerrado -> lo abrimos.
-            if (Math.Abs(panelMenuLateral.Width - targetOpen) <= tol)
+            if (estaAbierto)
             {
-                // achicar (cerrar)
-                panelMenuLateral.Width = targetClosed;
                 CerrarSubmenu();
+                panelMenuLateral.Width = _anchoMenuCerrado;
             }
             else
             {
-                // abrir (si no estaba en abierto lo ponemos en abierto)
-                panelMenuLateral.Width = targetOpen;
+                panelMenuLateral.Width = _anchoMenuAbierto;
             }
 
-            panelFormHijo.Update();
+            panelFormHijo.ResumeLayout();
             panelFormHijo.Visible = true;
+            btnNotificaciones.Visible = true;
+            lblEstadoConexion.Visible = true;
         }
-
 
         // Ocultar Men� Lateral
         private void btnAbrirMenu_Click(object sender, EventArgs e)
@@ -298,17 +321,36 @@ namespace ModernMenuUI
 
         private void btnNotificaciones_Click(object sender, EventArgs e)
         {
-            if (panelNotificaciones.Width == 0)
+            try
             {
-                btnNotificaciones.Enabled = false;
-                animadorPanel.Abrir();
-                btnNotificaciones.Enabled = true;
+                var parent = panelNotificaciones.Parent;
+                bool estaCerrado;
+
+                if (parent == null)
+                {
+                    // Si no hay parent, basa la comprobación en Visible
+                    estaCerrado = !panelNotificaciones.Visible;
+                }
+                else
+                {
+                    // Cerrado si no es visible o si está completamente fuera a la derecha
+                    estaCerrado = !panelNotificaciones.Visible || panelNotificaciones.Left >= parent.ClientSize.Width - 1;
+                }
+
+                if (estaCerrado)
+                {
+                    btnNotificaciones.Enabled = false;
+                    _animadorNotificaciones?.Abrir();
+                    btnNotificaciones.Enabled = true;
+                }
+                else
+                {
+                    _animadorNotificaciones?.Cerrar();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                btnNotificaciones.Enabled = false;
-                animadorPanel.Cerrar();
-                btnNotificaciones.Enabled = true;
+                System.Diagnostics.Debug.WriteLine($"btnNotificaciones_Click error: {ex.Message}");
             }
         }
 
@@ -568,7 +610,5 @@ namespace ModernMenuUI
             ManejarFormularios.Instancia.AbrirFormulario(new frmMarcas(tipo));
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
-
-     
     }
 }

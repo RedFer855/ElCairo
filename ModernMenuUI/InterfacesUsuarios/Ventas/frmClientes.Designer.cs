@@ -70,10 +70,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
-            panel1.Location = new Point(16, 193);
-            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Location = new Point(14, 145);
             panel1.Name = "panel1";
-            panel1.Size = new Size(845, 517);
+            panel1.Size = new Size(739, 388);
             panel1.TabIndex = 33;
             // 
             // panel10
@@ -81,10 +80,9 @@
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
             panel10.Controls.Add(dgvClientes);
-            panel10.Location = new Point(18, 25);
-            panel10.Margin = new Padding(3, 4, 3, 4);
+            panel10.Location = new Point(16, 19);
             panel10.Name = "panel10";
-            panel10.Size = new Size(802, 467);
+            panel10.Size = new Size(702, 350);
             panel10.TabIndex = 17;
             // 
             // dgvClientes
@@ -124,7 +122,6 @@
             dgvClientes.EnableHeadersVisualStyles = false;
             dgvClientes.GridColor = Color.FromArgb(189, 215, 238);
             dgvClientes.Location = new Point(0, 0);
-            dgvClientes.Margin = new Padding(3, 4, 3, 4);
             dgvClientes.Name = "dgvClientes";
             dgvClientes.ReadOnly = true;
             dgvClientes.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -144,7 +141,7 @@
             dataGridViewCellStyle6.SelectionForeColor = Color.White;
             dgvClientes.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvClientes.RowTemplate.Height = 50;
-            dgvClientes.Size = new Size(802, 467);
+            dgvClientes.Size = new Size(702, 350);
             dgvClientes.TabIndex = 1;
             dgvClientes.SelectionChanged += dgvClientes_SelectionChanged;
             // 
@@ -217,10 +214,9 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(14, 32);
-            panelBusqueda.Margin = new Padding(3, 4, 3, 4);
+            panelBusqueda.Location = new Point(12, 24);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(845, 57);
+            panelBusqueda.Size = new Size(739, 43);
             panelBusqueda.TabIndex = 37;
             // 
             // txtBuscar
@@ -228,11 +224,10 @@
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(21, 16);
-            txtBuscar.Margin = new Padding(3, 4, 3, 4);
+            txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Clientes...";
-            txtBuscar.Size = new Size(744, 24);
+            txtBuscar.Size = new Size(651, 20);
             txtBuscar.TabIndex = 1;
             // 
             // btnbuscar
@@ -243,10 +238,9 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(771, 16);
-            btnbuscar.Margin = new Padding(3, 4, 3, 4);
+            btnbuscar.Location = new Point(675, 12);
             btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(55, 27);
+            btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
             // 
@@ -258,11 +252,9 @@
             groupBox1.Controls.Add(rdbTodos);
             groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(14, 115);
-            groupBox1.Margin = new Padding(3, 4, 3, 4);
+            groupBox1.Location = new Point(12, 86);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(848, 71);
+            groupBox1.Size = new Size(742, 53);
             groupBox1.TabIndex = 38;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtro";
@@ -270,10 +262,9 @@
             // rdbDeshabilitados
             // 
             rdbDeshabilitados.AutoSize = true;
-            rdbDeshabilitados.Location = new Point(390, 28);
-            rdbDeshabilitados.Margin = new Padding(3, 4, 3, 4);
+            rdbDeshabilitados.Location = new Point(341, 21);
             rdbDeshabilitados.Name = "rdbDeshabilitados";
-            rdbDeshabilitados.Size = new Size(220, 27);
+            rdbDeshabilitados.Size = new Size(178, 22);
             rdbDeshabilitados.TabIndex = 30;
             rdbDeshabilitados.Text = "Mostrar Deshabilitados";
             rdbDeshabilitados.UseVisualStyleBackColor = true;
@@ -282,10 +273,9 @@
             // 
             rdbHabilitados.AutoSize = true;
             rdbHabilitados.Checked = true;
-            rdbHabilitados.Location = new Point(181, 28);
-            rdbHabilitados.Margin = new Padding(3, 4, 3, 4);
+            rdbHabilitados.Location = new Point(158, 21);
             rdbHabilitados.Name = "rdbHabilitados";
-            rdbHabilitados.Size = new Size(194, 27);
+            rdbHabilitados.Size = new Size(156, 22);
             rdbHabilitados.TabIndex = 29;
             rdbHabilitados.TabStop = true;
             rdbHabilitados.Text = "Mostrar Habilitados";
@@ -294,10 +284,9 @@
             // rdbTodos
             // 
             rdbTodos.AutoSize = true;
-            rdbTodos.Location = new Point(21, 28);
-            rdbTodos.Margin = new Padding(3, 4, 3, 4);
+            rdbTodos.Location = new Point(18, 21);
             rdbTodos.Name = "rdbTodos";
-            rdbTodos.Size = new Size(150, 27);
+            rdbTodos.Size = new Size(120, 22);
             rdbTodos.TabIndex = 28;
             rdbTodos.Text = "Mostrar Todos";
             rdbTodos.UseVisualStyleBackColor = true;
@@ -312,13 +301,12 @@
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
             tableLayoutPanel1.Controls.Add(btnEditar, 1, 1);
             tableLayoutPanel1.Controls.Add(btnCliente, 0, 0);
-            tableLayoutPanel1.Location = new Point(16, 732);
-            tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
+            tableLayoutPanel1.Location = new Point(14, 549);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(368, 133);
+            tableLayoutPanel1.Size = new Size(322, 100);
             tableLayoutPanel1.TabIndex = 39;
             // 
             // btnFactura
@@ -327,10 +315,9 @@
             btnFactura.BackColor = Color.FromArgb(149, 195, 172);
             btnFactura.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnFactura.ForeColor = SystemColors.ButtonFace;
-            btnFactura.Location = new Point(3, 70);
-            btnFactura.Margin = new Padding(3, 4, 3, 4);
+            btnFactura.Location = new Point(3, 53);
             btnFactura.Name = "btnFactura";
-            btnFactura.Size = new Size(221, 59);
+            btnFactura.Size = new Size(193, 44);
             btnFactura.TabIndex = 23;
             btnFactura.Text = "Factura con Cliente";
             btnFactura.UseVisualStyleBackColor = false;
@@ -342,10 +329,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(233, 4);
-            btnSalir.Margin = new Padding(3, 4, 3, 4);
+            btnSalir.Location = new Point(204, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(131, 58);
+            btnSalir.Size = new Size(115, 44);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -357,10 +343,9 @@
             btnEditar.BackColor = Color.FromArgb(189, 215, 238);
             btnEditar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditar.ForeColor = Color.FromArgb(87, 99, 110);
-            btnEditar.Location = new Point(233, 70);
-            btnEditar.Margin = new Padding(3, 4, 3, 4);
+            btnEditar.Location = new Point(204, 53);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(131, 59);
+            btnEditar.Size = new Size(115, 44);
             btnEditar.TabIndex = 20;
             btnEditar.Text = "Editar Cliente";
             btnEditar.UseVisualStyleBackColor = false;
@@ -372,10 +357,9 @@
             btnCliente.BackColor = Color.FromArgb(149, 195, 172);
             btnCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCliente.ForeColor = SystemColors.ButtonFace;
-            btnCliente.Location = new Point(3, 4);
-            btnCliente.Margin = new Padding(3, 4, 3, 4);
+            btnCliente.Location = new Point(3, 3);
             btnCliente.Name = "btnCliente";
-            btnCliente.Size = new Size(223, 58);
+            btnCliente.Size = new Size(195, 44);
             btnCliente.TabIndex = 22;
             btnCliente.Text = "Agregar Cliente";
             btnCliente.UseVisualStyleBackColor = false;
@@ -383,15 +367,14 @@
             // 
             // frmClientes
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(875, 905);
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(766, 679);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(groupBox1);
             Controls.Add(panelBusqueda);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "frmClientes";
             Text = "frmClientes";
             FormClosing += frmClientes_FormClosing;

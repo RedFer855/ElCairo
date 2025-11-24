@@ -81,14 +81,14 @@
             labelAnimaciones.TabIndex = 3;
             labelAnimaciones.Text = "Ajustes de Interfaz Gráfica:";
             // 
-            // Ajustes
+            // frmAjustes
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(748, 624);
             Controls.Add(panelAjustes);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Ajustes";
+            Name = "frmAjustes";
             Text = "Ajus";
             panelAjustes.ResumeLayout(false);
             panelAjustes.PerformLayout();

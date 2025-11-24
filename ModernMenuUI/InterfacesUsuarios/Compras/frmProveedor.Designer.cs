@@ -343,8 +343,8 @@
             // 
             // frmProveedor
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(684, 590);
             Controls.Add(flowLayoutPanel1);
@@ -353,6 +353,7 @@
             Controls.Add(panelBusqueda);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProveedor";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmProveedores";
             FormClosing += frmProveedores_FormClosing;
             Load += frmProveedores_Load;
