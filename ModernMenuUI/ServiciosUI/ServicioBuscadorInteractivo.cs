@@ -2,27 +2,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ModernMenuUI.ServiciosUI
 {
     public class BuscadorInteractivo<T> where T : class
     {
-        // Controles que vamos a manipular
+        // --- CONTROLES ---
         private readonly TextBox _txtBuscar;
         private readonly ListBox _lstSugerencias;
         private readonly DataGridView _dgvResultados;
 
-        // Lógica
+        // --- LÓGICA Y VARIABLES ---
         private GestorBusqueda<T> _gestorLogico;
         private CancellationTokenSource _cts;
 
-        // Configuraciones (Delegados)
+        // --- DELEGADOS ---
         private readonly Func<T, string, bool> _criterioExacto;
         private readonly Func<T, string, bool> _criterioParcial;
-        private readonly Func<T, string> _formatoVisualLista; // Cómo se ve en el ListBox (ToString)
+        private readonly Func<T, string> _formatoVisualLista;
+        private readonly Action<bool> _notificadorEstado;
+        private readonly Func<string, bool> _detectorCodigoBarra;
 
+        // --- CONSTRUCTOR ---
         public BuscadorInteractivo(
             TextBox txt,
             ListBox lst,
@@ -30,16 +34,20 @@ namespace ModernMenuUI.ServiciosUI
             IEnumerable<T> datosIniciales,
             Func<T, string, bool> criterioExacto,
             Func<T, string, bool> criterioParcial,
-            Func<T, string> formatoVisualLista) // Personalizar el ToString
+            Func<T, string> formatoVisualLista,
+            Action<bool> notificadorEstado = null,
+            Func<string, bool> detectorCodigoBarra = null)
         {
             _txtBuscar = txt;
             _lstSugerencias = lst;
             _dgvResultados = dgv;
+
             _criterioExacto = criterioExacto;
             _criterioParcial = criterioParcial;
             _formatoVisualLista = formatoVisualLista;
+            _notificadorEstado = notificadorEstado;
+            _detectorCodigoBarra = detectorCodigoBarra;
 
-            // Inicializar lógica
             ActualizarDatosMaestros(datosIniciales);
         }
 
@@ -48,89 +56,112 @@ namespace ModernMenuUI.ServiciosUI
             _gestorLogico = new GestorBusqueda<T>(nuevosDatos);
         }
 
-        // --- EVENTO 1: KeyUp (Escribir con delay) ---
+        // --- EVENTO 1: KeyUp (Manual) ---
         public async Task ManejarKeyUpAsync(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) return;
 
+            // 1. Cancelamos cualquier búsqueda anterior
             _cts?.Cancel();
             _cts = new CancellationTokenSource();
 
             try
             {
-                await Task.Delay(300, _cts.Token); // Delay anti-lag
-                EjecutarBusqueda();
+                // 2. Esperamos 300ms
+                await Task.Delay(300, _cts.Token);
+
+                // 3. Ejecutamos búsqueda (Mostrar Sugerencias)
+                EjecutarBusqueda(forzarGrid: false);
             }
             catch (TaskCanceledException) { }
         }
 
-        // --- EVENTO 2: KeyDown (Navegar flechas y Enter) ---
+        // --- EVENTO 2: KeyDown (Escáner/Navegación) ---
         public void ManejarKeyDown(KeyEventArgs e)
         {
-            if (!_lstSugerencias.Visible)
+            if (e.KeyCode == Keys.Enter)
             {
-                // Si la lista está oculta y dan enter, busca lo que hay en el txt
-                if (e.KeyCode == Keys.Enter) EjecutarBusqueda(forzarGrid: true);
+                // 1. Matar timer pendiente
+                _cts?.Cancel();
+
+                // 2. Decidir acción:
+                bool esCodigo = _detectorCodigoBarra != null && _detectorCodigoBarra(_txtBuscar.Text.Trim());
+
+                if (!_lstSugerencias.Visible || esCodigo)
+                {
+                    EjecutarBusqueda(forzarGrid: true);
+                }
+                else
+                {
+                    ConfirmarSeleccion();
+                }
+
+                e.SuppressKeyPress = true;
+                e.Handled = true;
                 return;
             }
 
-            if (e.KeyCode == Keys.Down)
+            // Navegación flechas
+            if (_lstSugerencias.Visible)
             {
-                int next = Math.Min(_lstSugerencias.SelectedIndex + 1, _lstSugerencias.Items.Count - 1);
-                if (next >= 0) _lstSugerencias.SelectedIndex = next;
-                e.Handled = true;
-            }
-            else if (e.KeyCode == Keys.Up)
-            {
-                int prev = Math.Max(_lstSugerencias.SelectedIndex - 1, 0);
-                if (prev >= 0) _lstSugerencias.SelectedIndex = prev;
-                e.Handled = true;
-            }
-            else if (e.KeyCode == Keys.Enter)
-            {
-                ConfirmarSeleccion();
-                e.SuppressKeyPress = true; // Evitar sonido 'ding'
-                e.Handled = true;
+                if (e.KeyCode == Keys.Down)
+                {
+                    int next = Math.Min(_lstSugerencias.SelectedIndex + 1, _lstSugerencias.Items.Count - 1);
+                    if (next >= 0) _lstSugerencias.SelectedIndex = next;
+                    e.Handled = true;
+                }
+                else if (e.KeyCode == Keys.Up)
+                {
+                    int prev = Math.Max(_lstSugerencias.SelectedIndex - 1, 0);
+                    if (prev >= 0) _lstSugerencias.SelectedIndex = prev;
+                    e.Handled = true;
+                }
             }
         }
 
-        // --- EVENTO 3: Click en Lista ---
-        public void ManejarClickLista()
-        {
-            ConfirmarSeleccion();
-        }
+        public void ManejarClickLista() => ConfirmarSeleccion();
 
-        // --- EVENTO 4: Perder Foco ---
         public async void ManejarLeave()
         {
-            await Task.Delay(200); // Pequeño delay para permitir clic
+            await Task.Delay(200);
             if (!_lstSugerencias.Focused) _lstSugerencias.Visible = false;
         }
 
         // --- LÓGICA PRIVADA ---
-        private void EjecutarBusqueda(bool forzarGrid = false)
+        private void EjecutarBusqueda(bool forzarGrid)
         {
-            var texto = _txtBuscar.Text;
+            var texto = _txtBuscar.Text.Trim();
+            bool hayTexto = !string.IsNullOrEmpty(texto);
+
+            if (!hayTexto)
+            {
+                _lstSugerencias.Visible = false;
+                return;
+            }
+
             var resultados = _gestorLogico.Buscar(texto, _criterioExacto, _criterioParcial);
 
             if (resultados.Count > 0)
             {
-                // Mostrar sugerencias
-                _lstSugerencias.DataSource = null;
-                _lstSugerencias.DataSource = resultados;
-                // Aquí usamos el truco para que se vea concatenado sin tocar la clase Producto
-                _lstSugerencias.DisplayMember = ""; // Truco para resetear
-
-                // Ajustar altura
-                int alturaItem = _lstSugerencias.ItemHeight;
-                _lstSugerencias.Height = Math.Min((alturaItem * resultados.Count) + 10, (alturaItem * 10) + 10);
-                _lstSugerencias.Visible = true;
-
-                // Si se forzó (ej. Enter en txt), llenamos el grid directo
                 if (forzarGrid)
                 {
                     _dgvResultados.DataSource = resultados;
                     _lstSugerencias.Visible = false;
+                    _notificadorEstado?.Invoke(true); // Mostrar botón limpiar
+
+                    // CAMBIO: Si encontró algo con escáner/Enter, limpiamos la caja también
+                    _txtBuscar.Clear();
+                }
+                else
+                {
+                    // Mostrar Sugerencias
+                    _lstSugerencias.DataSource = null;
+                    _lstSugerencias.DataSource = resultados.Take(10).ToList();
+                    _lstSugerencias.DisplayMember = "";
+
+                    int cantidad = Math.Min(resultados.Count, 10);
+                    _lstSugerencias.Height = (_lstSugerencias.ItemHeight * cantidad) + 10;
+                    _lstSugerencias.Visible = true;
                 }
             }
             else
@@ -144,17 +175,24 @@ namespace ModernMenuUI.ServiciosUI
         {
             if (_lstSugerencias.SelectedItem is T seleccionado)
             {
-                // 1. Poner texto en buscador (Opcional: usar el formateador o solo nombre)
-                _txtBuscar.Text = _formatoVisualLista(seleccionado);
-                _txtBuscar.SelectionStart = _txtBuscar.Text.Length;
+                // CAMBIO PRINCIPAL: En vez de poner texto, lo borramos
+                _txtBuscar.Clear();
 
-                // 2. Llenar Grid con ESE único elemento
+                // Llenamos el grid con la selección
                 _dgvResultados.DataSource = new List<T> { seleccionado };
 
-                // 3. Limpiar UI
+                _notificadorEstado?.Invoke(true);
+
                 _lstSugerencias.Visible = false;
                 _cts?.Cancel();
             }
+        }
+
+        public void LimpiarBusqueda()
+        {
+            _txtBuscar.Clear();
+            _lstSugerencias.Visible = false;
+            _notificadorEstado?.Invoke(false);
         }
     }
 }
