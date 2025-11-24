@@ -3,6 +3,7 @@ using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.InterfacesUsuarios.Compras;
+using ModernMenuUI.ServiciosUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
         private Marca _marcaSeleccionada;
+        private BuscadorInteractivo<Marca> _buscadorMarcas;
         public Marca MarcaSeleccionada { get; private set; }
+
         public frmMarcas()
         {
             InitializeComponent();
@@ -39,7 +42,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             btnAgregarMarca.Visible = false;
 
         }
-
         public frmMarcas(bool tipo)
         {
             InitializeComponent();
@@ -59,12 +61,25 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             await IniciarSuscripcionMarcas();
         }
 
+
         private async Task CargarMarcasMaestras()
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor;
                 _listaMaestraMarcas = await marcaRepositorio.ObtenerTodasLasMarcas(null);
+                _buscadorMarcas = new BuscadorInteractivo<Marca>(
+                txtBuscar,       // Tu TextBox de búsqueda
+                lstSugerencias,  // Tu ListBox
+                dgvMarcas,       // Tu DataGridView
+                _listaMaestraMarcas,
+                null,
+                (m, texto) => m.NombreMarca != null &&
+                              m.NombreMarca.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0,
+                (m) => m.NombreMarca,
+                null,
+                null
+                );
             }
             catch (OperationCanceledException)
             {
@@ -116,6 +131,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             this.Cursor = Cursors.Default;
         }
 
+        // Eventos del Buscador (Conecta estos eventos en el diseñador o código)
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorMarcas.ManejarKeyUpAsync(e);
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorMarcas.ManejarKeyDown(e);
+        private void txtBuscar_Leave(object sender, EventArgs e) => _buscadorMarcas.ManejarLeave();
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) => _buscadorMarcas.ManejarClickLista();
 
         private async Task DesecharSuscripcion()
         {
@@ -250,8 +270,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
-            frmProveedores proveedores = new frmProveedores();
-            proveedores.ShowDialog();
+            frmProveedor _provNuevo = new frmProveedor();
+            _provNuevo.ShowDialog();
         }
 
         private async void btnAgregarMarca_Click(object sender, EventArgs e)

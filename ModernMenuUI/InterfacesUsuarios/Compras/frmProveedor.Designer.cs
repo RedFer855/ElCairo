@@ -45,7 +45,7 @@
             btnSalir = new Button();
             btnAgregarProveedor = new Button();
             btnEditarProveedor = new Button();
-            groupBox1 = new GroupBox();
+            gbxFiltro = new GroupBox();
             rdbDeshabilitados = new RadioButton();
             rdbHabilitados = new RadioButton();
             rdbTodos = new RadioButton();
@@ -57,7 +57,7 @@
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProveedores).BeginInit();
-            groupBox1.SuspendLayout();
+            gbxFiltro.SuspendLayout();
             panelBusqueda.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -229,24 +229,25 @@
             btnEditarProveedor.Name = "btnEditarProveedor";
             btnEditarProveedor.Size = new Size(136, 43);
             btnEditarProveedor.TabIndex = 20;
-            btnEditarProveedor.Text = "EditarProveedor";
+            btnEditarProveedor.Text = "Ver Proveedor";
             btnEditarProveedor.UseVisualStyleBackColor = false;
             btnEditarProveedor.Click += btnEditarProveedor_Click;
             // 
-            // groupBox1
+            // gbxFiltro
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(rdbDeshabilitados);
-            groupBox1.Controls.Add(rdbHabilitados);
-            groupBox1.Controls.Add(rdbTodos);
-            groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(12, 61);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(660, 53);
-            groupBox1.TabIndex = 52;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Filtro";
+            gbxFiltro.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            gbxFiltro.Controls.Add(rdbDeshabilitados);
+            gbxFiltro.Controls.Add(rdbHabilitados);
+            gbxFiltro.Controls.Add(rdbTodos);
+            gbxFiltro.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxFiltro.ForeColor = SystemColors.ControlDarkDark;
+            gbxFiltro.Location = new Point(12, 61);
+            gbxFiltro.MaximumSize = new Size(533, 53);
+            gbxFiltro.Name = "gbxFiltro";
+            gbxFiltro.Size = new Size(533, 53);
+            gbxFiltro.TabIndex = 52;
+            gbxFiltro.TabStop = false;
+            gbxFiltro.Text = "Filtro";
             // 
             // rdbDeshabilitados
             // 
@@ -349,7 +350,7 @@
             ClientSize = new Size(684, 590);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
-            Controls.Add(groupBox1);
+            Controls.Add(gbxFiltro);
             Controls.Add(panelBusqueda);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProveedor";
@@ -360,8 +361,8 @@
             panel1.ResumeLayout(false);
             panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProveedores).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gbxFiltro.ResumeLayout(false);
+            gbxFiltro.PerformLayout();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
@@ -376,7 +377,7 @@
         private Button btnSalir;
         private Button btnAgregarProveedor;
         private Button btnEditarProveedor;
-        private GroupBox groupBox1;
+        private GroupBox gbxFiltro;
         private RadioButton rdbDeshabilitados;
         private RadioButton rdbHabilitados;
         private RadioButton rdbTodos;

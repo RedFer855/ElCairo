@@ -56,7 +56,8 @@
             rbMostrarHablilitados = new RadioButton();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            btnbuscar = new Button();
+            btnBuscar = new Button();
+            lstSugerencias = new ListBox();
             panel1.SuspendLayout();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
@@ -365,7 +366,7 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnbuscar);
+            panelBusqueda.Controls.Add(btnBuscar);
             panelBusqueda.Location = new Point(15, 12);
             panelBusqueda.MaximumSize = new Size(700, 43);
             panelBusqueda.MinimumSize = new Size(330, 43);
@@ -384,20 +385,37 @@
             txtBuscar.PlaceholderText = "Buscar Marcas...";
             txtBuscar.Size = new Size(443, 20);
             txtBuscar.TabIndex = 1;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
+            txtBuscar.MouseLeave += txtBuscar_Leave;
             // 
-            // btnbuscar
+            // btnBuscar
             // 
-            btnbuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(467, 12);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 20);
-            btnbuscar.TabIndex = 0;
-            btnbuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscar.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscar.BackgroundImage = (Image)resources.GetObject("btnBuscar.BackgroundImage");
+            btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscar.FlatAppearance.BorderSize = 0;
+            btnBuscar.FlatStyle = FlatStyle.Flat;
+            btnBuscar.Location = new Point(467, 12);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(48, 20);
+            btnBuscar.TabIndex = 0;
+            btnBuscar.UseVisualStyleBackColor = false;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(33, 45);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(443, 22);
+            lstSugerencias.TabIndex = 39;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
             // 
             // frmMarcas
             // 
@@ -405,6 +423,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(716, 481);
+            Controls.Add(lstSugerencias);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panelBusqueda);
             Controls.Add(gbxEstado);
@@ -452,11 +471,12 @@
         private Label label1;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button btnbuscar;
+        private Button btnBuscar;
         private Button btnSeleccionarMarca;
         private DataGridViewTextBoxColumn IdMarca;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn Proveedor;
         private DataGridViewCheckBoxColumn EstadoProducto;
+        private ListBox lstSugerencias;
     }
 }

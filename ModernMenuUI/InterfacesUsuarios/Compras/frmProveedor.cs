@@ -44,6 +44,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             RepositorioProveedor = new ProveedorRepositorio();
             this.FormClosing += frmProveedores_FormClosing;
             FormBorderStyle = FormBorderStyle.None;
+            btnSeleccionarProveedor.Visible = false;    
         }
 
         // CARGAR FORMULARIO
