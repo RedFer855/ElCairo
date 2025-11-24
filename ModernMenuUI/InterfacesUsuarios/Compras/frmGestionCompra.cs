@@ -555,6 +555,7 @@ namespace ModernMenuUI
 
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
+
             if (!lstSugerencias.Visible) return;
 
             if (e.KeyCode == Keys.Down)
@@ -574,6 +575,8 @@ namespace ModernMenuUI
             }
             else if (e.KeyCode == Keys.Enter)
             {
+                _ = EjecutarBusqueda();
+
                 if (lstSugerencias.SelectedItem != null)
                 {
                     Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
@@ -585,6 +588,17 @@ namespace ModernMenuUI
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
+            }
+        }
+        private async Task EjecutarBusqueda()
+        {
+            try
+            {
+                await HandleBuscarProveedorAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error durante la búsqueda del proveedor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -744,15 +758,9 @@ namespace ModernMenuUI
         }
 
 
-        // Mantengo ambos event handlers (por compatibilidad con Designer) pero los delego al helper.
-        private async void btnGetProv_Click(object sender, EventArgs e)
-        {
-            await HandleBuscarProveedorAsync();
-        }
-
         private async void btnBuscarProv_Click(object sender, EventArgs e)
         {
-            await HandleBuscarProveedorAsync();
+            //await HandleBuscarProveedorAsync();
         }
         #endregion
 
@@ -828,6 +836,11 @@ namespace ModernMenuUI
 
             frmReporte.ShowDialog();
         }
+
+        private async void txtBuscarProv_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
-    
+
 }

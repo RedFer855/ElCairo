@@ -186,6 +186,7 @@
             txtBuscarProv.Size = new Size(221, 26);
             txtBuscarProv.TabIndex = 22;
             txtBuscarProv.TextChanged += txtBuscar_TextChanged;
+            txtBuscarProv.Enter += txtBuscarProv_Enter;
             txtBuscarProv.KeyDown += txtBuscar_KeyDown;
             txtBuscarProv.KeyUp += txtBuscar_KeyUp;
             txtBuscarProv.Leave += txtBuscar_Leave;
