@@ -3,6 +3,7 @@ using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ServiciosUI;
 using Supabase.Interfaces;
 using Supabase.Realtime;
 using System;
@@ -27,6 +28,7 @@ namespace ModernMenuUI
     }
     public partial class frmInventarioBodega : Form
     {
+        private List<Inventario> _listaInventarioGlobal = new List<Inventario>();
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
         // === REPOSITORIOS Y CLIENTE ===
         private readonly InventarioRepositorio _inventarioRepo = new InventarioRepositorio();
@@ -40,6 +42,11 @@ namespace ModernMenuUI
 
         // Delegado para actualizar UI desde hilos
         private delegate Task RefreshDelegate();
+
+        private List<Inventario> _listaOriginal = new List<Inventario>();
+
+        // Buscador (asumo que ya tienes la clase BuscadorInteractivo)
+        private BuscadorInteractivo<Inventario> _buscadorCtrl;
 
         public frmInventarioBodega()
         {
@@ -70,9 +77,12 @@ namespace ModernMenuUI
             await CargarInventarioGridAsync(); // Carga el Grid
             txtBodegaActual.Text = ServicioSesionUsuario.ObtenerNombreBodega();
             // Cargar datos iniciales
-            await CargarComboBoxesEstado();
+          
+            // 1. Primero carga el combo
             await CargarBodegasComboBox();
 
+            // 2. Luego carga los datos y filtra
+            await CargarDatosInventario();
 
             // Iniciar suscripciones Realtime
             await IniciarSuscripcionInventario();
@@ -88,11 +98,6 @@ namespace ModernMenuUI
         {
             clsAnmaciones.NombreMenuPrincipal();
             this.Close();
-        }
-
-        private void cmbBodega_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e)
@@ -144,10 +149,6 @@ namespace ModernMenuUI
             return Task.CompletedTask;
         }
 
-        // ====================================================================
-        // REALTIME Y CONEXIÓN (Patrón frmEmpleado)
-        // ====================================================================
-
         private async Task IniciarSuscripcionInventario()
         {
             if (_supabaseClient == null) return;
@@ -161,7 +162,6 @@ namespace ModernMenuUI
 
             try
             {
-                // ✅ USANDO TU PATRÓN:
                 _inventarioSubscription = await _supabaseClient.From<Inventario>()
                     .On(ListenType.All, (sender, change) =>
                     {
@@ -279,19 +279,87 @@ namespace ModernMenuUI
         {
             try
             {
+                // Obtenemos las bodegas de la base de datos
                 List<Bodega> bodegas = await _bodegaRepo.ObtenerTodasLasBodegasAsync();
-                bodegas.Insert(0, new Bodega { IdBodega = 0, NombreBodega = "Todas" });
 
-                cmbBodega.DataSource = null;
+                // Creamos la opción "Todas" manualmente
+                // IMPORTANTE: Asegúrate que IdBodega 0 no exista en tu BD real
+                var opcionTodas = new Bodega { IdBodega = 0, NombreBodega = "Todas las Bodegas" };
+                bodegas.Insert(0, opcionTodas);
+
+                // Configuramos el Combo
+                cmbBodega.DataSource = null; // Limpiar enlace previo
                 cmbBodega.DataSource = bodegas;
-                cmbBodega.DisplayMember = "NombreBodega";
-                cmbBodega.ValueMember = "Id"; // Usamos el ID para el filtro
+                cmbBodega.DisplayMember = "NombreBodega"; // Lo que se ve
+                cmbBodega.ValueMember = "IdBodega";       // El valor interno (ID)
+
+                // Seleccionamos "Todas" por defecto
                 cmbBodega.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error al cargar bodegas: {ex.Message}");
+                MessageBox.Show($"Error al cargar bodegas: {ex.Message}");
             }
+        }
+
+        private async Task CargarDatosInventario()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                // Traemos TODO el inventario de la BD una sola vez
+                _listaInventarioGlobal = await _inventarioRepo.ObtenerTodoElInventario();
+
+                // Aplicamos el filtro inmediatamente para llenar el grid
+                FiltrarPorBodega();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar inventario: {ex.Message}");
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void FiltrarPorBodega()
+        {
+            // Si la lista está vacía, no hacemos nada
+            if (_listaInventarioGlobal == null || _listaInventarioGlobal.Count == 0) return;
+
+            // Validamos que haya un valor seleccionado
+            if (cmbBodega.SelectedValue == null) return;
+
+            // Intentamos obtener el ID seleccionado
+            if (int.TryParse(cmbBodega.SelectedValue.ToString(), out int idBodegaSeleccionada))
+            {
+                List<Inventario> listaFiltrada;
+
+                if (idBodegaSeleccionada == 0)
+                {
+                    // Si es 0, mostramos TODO (copiamos la lista global)
+                    listaFiltrada = _listaInventarioGlobal.ToList();
+                }
+                else
+                {
+                    // Si es > 0, filtramos por esa bodega específica
+                    listaFiltrada = _listaInventarioGlobal
+                                    .Where(prod => prod.IdBodegaInventario == idBodegaSeleccionada)
+                                    .ToList();
+                }
+
+                // Actualizamos el Grid
+                dgvProducto.DataSource = null;
+                dgvProducto.DataSource = listaFiltrada;
+            }
+        }
+
+        // Evento del ComboBox
+        private void cmbBodega_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FiltrarPorBodega();
         }
 
         private void btnCambiarBodega_Click(object sender, EventArgs e)

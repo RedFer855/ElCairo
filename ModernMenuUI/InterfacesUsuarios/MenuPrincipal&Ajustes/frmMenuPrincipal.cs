@@ -195,7 +195,8 @@ namespace ModernMenuUI
             {
                 CerrarSubmenu();
                 AbrirPaneles(PanelActual);
-                if (panelMenuLateral.Width == 100)
+
+                if (Math.Abs(panelMenuLateral.Width - _anchoMenuCerrado) <= TOLERANCIA)
                 {
                     MenulateralAnimacion();
                 }

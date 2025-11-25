@@ -356,7 +356,6 @@
             StockTotal.DataPropertyName = "StockProductoBodegaInventario";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             StockTotal.DefaultCellStyle = dataGridViewCellStyle3;
-            StockTotal.FillWeight = 40.203476F;
             StockTotal.HeaderText = "Stock";
             StockTotal.Name = "StockTotal";
             StockTotal.ReadOnly = true;
@@ -369,7 +368,6 @@
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.NullValue = "(Sin Stock Mínimo)";
             StockMinimo.DefaultCellStyle = dataGridViewCellStyle4;
-            StockMinimo.FillWeight = 70F;
             StockMinimo.HeaderText = "Stock Mínimo";
             StockMinimo.MinimumWidth = 120;
             StockMinimo.Name = "StockMinimo";
