@@ -1,101 +1,123 @@
 ﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados.Productos; // Asegúrate de que Proveedor esté aquí o ajusta el namespace
+using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
-using Supabase.Realtime;
+using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ServiciosUI;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI.InterfacesUsuarios.Compras
 {
     public partial class frmProveedor : Form
     {
-        // VARIABLES DE OBJETOS Y DEPENDENCIAS
-        private readonly ProveedorRepositorio RepositorioProveedor;
-        private readonly ServicioVerificacionConexion MonitorConexion = new ServicioVerificacionConexion();
+        #region 1. Campos y Dependencias
+        private readonly ProveedorRepositorio _repositorioProveedor;
+        private readonly GestorRealtime<Proveedor> _gestorRealtime;
+        private BuscadorInteractivo<Proveedor> _buscadorProveedores;
 
-        // VARIABLES DE ESTADO Y DATOS
-        private Supabase.Realtime.RealtimeChannel? SuscribcionProveedor;
-        private Supabase.Client? _supabaseClient;
-        private Proveedor ObjProveedor = null;
-        private List<Proveedor> _listaMaestraProveedores = new List<Proveedor>(); // Lista para filtrar en memoria
+        private List<Proveedor> _listaMaestraProveedores = new List<Proveedor>();
+        private Proveedor _proveedorSeleccionadoInterno;
 
-        // PROPIEDAD PARA SELECCIÓN EXTERNA
         public Proveedor ProveedorSeleccionado { get; private set; }
+        #endregion
 
-        #region CONSTRUCTORES
+        #region 2. Constructores
         public frmProveedor()
         {
             InitializeComponent();
             ConfigurarFormulario();
-            RepositorioProveedor = new ProveedorRepositorio();
+
+            _repositorioProveedor = new ProveedorRepositorio();
+            _gestorRealtime = new GestorRealtime<Proveedor>();
+
+            ConfigurarRealtime();
         }
 
         public frmProveedor(bool tipo)
         {
             InitializeComponent();
             ConfigurarFormulario();
-            RepositorioProveedor = new ProveedorRepositorio();
 
-            // Configuración modo selección
+            _repositorioProveedor = new ProveedorRepositorio();
+            _gestorRealtime = new GestorRealtime<Proveedor>();
+
             FormBorderStyle = FormBorderStyle.None;
             btnSeleccionarProveedor.Visible = false;
+
+            ConfigurarRealtime();
         }
 
         private void ConfigurarFormulario()
         {
+            this.DoubleBuffered = true;
             dgvProveedores.AutoGenerateColumns = false;
-            this.DoubleBuffered = true; // Reduce parpadeo
-            this.FormClosing += frmProveedores_FormClosing;
+        }
+
+        private void ConfigurarRealtime()
+        {
+            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
+            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
         }
         #endregion
 
-        #region CICLO DE VIDA (Load / Closing)
+        #region 3. Ciclo de Vida
         private async void frmProveedores_Load(object sender, EventArgs e)
         {
-            // Suscribir eventos de radio buttons unificados
             ConfigurarEventosFiltros();
-
-            await CargarProveedores();
-            MonitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-            await IniciarSuscripcionProveedores();
+            await InicializarDatosYBuscador();
+            await _gestorRealtime.SuscribirAsync();
         }
 
         private async void frmProveedores_FormClosing(object sender, FormClosingEventArgs e)
         {
-            await DesecharSuscripcion();
-            MonitorConexion.EstadoDeRedCambiado -= MonitorConexion_EstadoDeRedCambiado;
+            await _gestorRealtime.DesuscribirAsync();
         }
         #endregion
 
-        #region LOGICA DE DATOS Y FILTROS
+        #region 4. Lógica de Datos y Buscador
+        private void RecargarInterfazSafe()
+        {
+            if (!this.IsDisposed && this.IsHandleCreated)
+            {
+                this.BeginInvoke((MethodInvoker)(async () => await CargarDatosMaestros()));
+            }
+        }
 
-        private async Task CargarProveedores()
+        private async Task InicializarDatosYBuscador()
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-                using (var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(5)))
-                {
-                    // 1. Descargamos TODOS los datos a la lista maestra
-                    _listaMaestraProveedores = await RepositorioProveedor.ObtenerTodosLosProveedores(cts.Token);
+                _listaMaestraProveedores = await _repositorioProveedor.ObtenerTodosLosProveedores();
 
-                    // 2. Aplicamos los filtros visuales (Grid)
-                    RefrescarGrid();
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _buscadorProveedores = new BuscadorInteractivo<Proveedor>(
+                    txtBuscar,
+                    lstSugerencias,
+                    dgvProveedores,
+                    _listaMaestraProveedores,
+                    (p, term) => p.IdProveedor.ToString() == term,
+                    (p, term) => p.NombreProveedor != null && p.NombreProveedor.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
+                    (p) => p.NombreProveedor,
+                    (busquedaActiva) =>
+                    {
+                        // Callback: Controla visibilidad del panel de limpiar filtros
+                        pnlLimpiarFiltros.Visible = busquedaActiva;
+
+                        if (!busquedaActiva) RefrescarGrid();
+                    },
+                    (txt) => false
+                );
+
+                RefrescarGrid();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al cargar datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error inicializando datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -103,14 +125,33 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
+        private async Task CargarDatosMaestros()
+        {
+            try
+            {
+                _listaMaestraProveedores = await _repositorioProveedor.ObtenerTodosLosProveedores();
+
+                if (_buscadorProveedores != null)
+                {
+                    _buscadorProveedores.ActualizarDatosMaestros(_listaMaestraProveedores);
+                }
+
+                RefrescarGrid();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error recargando proveedores: {ex.Message}");
+            }
+        }
+
         private void RefrescarGrid()
         {
             if (_listaMaestraProveedores == null) return;
-
             this.Cursor = Cursors.WaitCursor;
 
             IEnumerable<Proveedor> query = _listaMaestraProveedores;
 
+            // Filtros de RadioButtons
             if (rbMostrarHabilitados.Checked)
             {
                 query = query.Where(p => p.EstadoProveedor == true);
@@ -119,10 +160,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             {
                 query = query.Where(p => p.EstadoProveedor == false);
             }
- 
-            var listaFiltrada = query.ToList();
+
+            // Asignar al Grid
+            var listaFinal = query.ToList();
             dgvProveedores.DataSource = null;
-            dgvProveedores.DataSource = listaFiltrada;
+            dgvProveedores.DataSource = listaFinal;
+
+            // Lógica para mostrar/ocultar el botón de Limpiar Filtros
+            // Si NO está marcado el filtro por defecto (Habilitados) O hay texto en búsqueda -> Mostrar botón
+            bool hayFiltrosActivos = !rbMostrarHabilitados.Checked || !string.IsNullOrEmpty(txtBuscar.Text);
+            pnlLimpiarFiltros.Visible = hayFiltrosActivos;
 
             if (dgvProveedores.Rows.Count > 0)
                 dgvProveedores.ClearSelection();
@@ -132,127 +179,58 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
         private void ConfigurarEventosFiltros()
         {
-            // Unificamos el evento para limpiar código
-            rbMostrarTodos.CheckedChanged += Filtro_CheckedChanged;
-            rbMostrarHabilitados.CheckedChanged += Filtro_CheckedChanged;
-            rbMostrarDeshabilitados.CheckedChanged += Filtro_CheckedChanged;
-        }
-
-        private void Filtro_CheckedChanged(object sender, EventArgs e)
-        {
-            // Solo recargamos si el botón que disparó el evento está marcado (para evitar doble carga)
-            if (sender is RadioButton rb && rb.Checked)
-            {
-                RefrescarGrid();
-            }
-        }
-
-        #endregion
-
-        #region REALTIME Y CONEXIÓN
-
-        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
-        {
-            if (!this.IsHandleCreated || this.IsDisposed) return;
-            if (status == NetworkStatus.Internet)
-            {
-                this.BeginInvoke((MethodInvoker)(async () =>
-                {
-                    if (this.IsDisposed) return;
-                    System.Diagnostics.Debug.WriteLine("Red recuperada. Recargando Proveedores...");
-                    await CargarProveedores();
-                    await IniciarSuscripcionProveedores();
-                }));
-            }
-        }
-
-        private async Task IniciarSuscripcionProveedores()
-        {
-            await DesecharSuscripcion();
-
-            try
-            {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
-
-                SuscribcionProveedor = await _supabaseClient.From<Proveedor>()
-                    .On(ListenType.All, (sender, change) =>
-                    {
-                        try
-                        {
-                            if (this == null || this.IsDisposed || !this.IsHandleCreated) return;
-
-                            this.BeginInvoke((MethodInvoker)(async () =>
-                            {
-                                if (this.IsDisposed) return;
-
-                                System.Diagnostics.Debug.WriteLine($"Cambio detectado en Proveedores: {change.Event}. Recargando...");
-
-                                // Esto recargará la lista maestra y luego refrescará el grid manteniendo filtros
-                                await CargarProveedores();
-                            }));
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime (Proveedor): {ex.Message}");
-                        }
-                    });
-
-                System.Diagnostics.Debug.WriteLine("Suscripción a Proveedores (Realtime) creada.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime (Proveedor): {ex.Message}");
-            }
-        }
-
-        private async Task DesecharSuscripcion()
-        {
-            if (SuscribcionProveedor != null)
-            {
-                try
-                {
-                    await Task.Run(() => SuscribcionProveedor.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción (Proveedor) desechada con éxito.");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción de Proveedor: {ex.Message}");
-                }
-                SuscribcionProveedor = null;
-            }
+            rbMostrarTodos.CheckedChanged += (s, e) => { if (rbMostrarTodos.Checked) RefrescarGrid(); };
+            rbMostrarHabilitados.CheckedChanged += (s, e) => { if (rbMostrarHabilitados.Checked) RefrescarGrid(); };
+            rbMostrarDeshabilitados.CheckedChanged += (s, e) => { if (rbMostrarDeshabilitados.Checked) RefrescarGrid(); };
         }
         #endregion
 
-        #region BOTONES Y ACCIONES UI
+        #region 5. Eventos del Buscador y Limpieza
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorProveedores.ManejarKeyUpAsync(e);
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorProveedores.ManejarKeyDown(e);
+        private void txtBuscar_Leave(object sender, EventArgs e) => _buscadorProveedores.ManejarLeave();
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) => _buscadorProveedores.ManejarClickLista();
 
-        private void btnSalir_Click(object sender, EventArgs e)
+        // LOGICA DEL BOTÓN LIMPIAR FILTROS
+        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
-            this.Close();
-        }
+            // 1. Resetear el buscador
+            _buscadorProveedores.LimpiarBusqueda();
 
+            // 2. Resetear el RadioButton al estado por defecto (Habilitados)
+            rbMostrarHabilitados.Checked = true;
+
+            // 3. Ocultar el panel (aunque RefrescarGrid lo hará, es bueno forzarlo visualmente rápido)
+            pnlLimpiarFiltros.Visible = false;
+
+            // 4. Refrescar la tabla
+            RefrescarGrid();
+        }
+        #endregion
+
+        #region 6. Acciones CRUD y Selección
         private async void btnAgregarProveedor_Click(object sender, EventArgs e)
         {
-            frmAgregarEditarProveedor prov = new frmAgregarEditarProveedor();
-            if (prov.ShowDialog() == DialogResult.OK)
+            frmAgregarEditarProveedor nuevoProv = new frmAgregarEditarProveedor();
+            if (nuevoProv.ShowDialog() == DialogResult.OK)
             {
-                // La recarga automática se encargará el Realtime, 
-                // pero forzamos por si acaso hay lag en la red local
-                await CargarProveedores();
+                await CargarDatosMaestros();
             }
         }
 
-        private void btnEditarProveedor_Click(object sender, EventArgs e)
+        private async void btnEditarProveedor_Click(object sender, EventArgs e)
         {
-            if (ObjProveedor != null)
+            if (_proveedorSeleccionadoInterno != null)
             {
-                frmAgregarEditarProveedor edi = new frmAgregarEditarProveedor(ObjProveedor);
-                edi.ShowDialog();
-                // No necesitamos llamar a CargarProveedores aquí si el Realtime funciona,
-                // pero si quieres asegurar: await CargarProveedores();
+                frmAgregarEditarProveedor editarForm = new frmAgregarEditarProveedor(_proveedorSeleccionadoInterno);
+                if (editarForm.ShowDialog() == DialogResult.OK)
+                {
+                    await CargarDatosMaestros();
+                }
             }
             else
             {
-                MessageBox.Show("Por favor, seleccione un proveedor de la lista para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, seleccione un proveedor de la lista para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -260,11 +238,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         {
             if (dgvProveedores.SelectedRows.Count > 0)
             {
-                ObjProveedor = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
+                _proveedorSeleccionadoInterno = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
             }
             else
             {
-                ObjProveedor = null;
+                _proveedorSeleccionadoInterno = null;
             }
         }
 
@@ -288,10 +266,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
             else
             {
-                // Solo mostramos mensaje si se hizo clic en el botón, no en doble clic vacío
                 if (this.ActiveControl == btnSeleccionarProveedor)
                     MessageBox.Show("Por favor, seleccione un proveedor de la lista.");
             }
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
         #endregion
     }
