@@ -667,23 +667,24 @@
             label8.AutoSize = true;
             label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
-            label8.Location = new Point(30, 56);
+            label8.Location = new Point(14, 57);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(72, 23);
+            label8.Size = new Size(145, 23);
             label8.TabIndex = 19;
-            label8.Text = "Código:";
+            label8.Text = "Código de Barra:";
+            label8.Click += label8_Click;
             // 
             // txtCodigo
             // 
             txtCodigo.BorderStyle = BorderStyle.None;
             txtCodigo.Enabled = false;
             txtCodigo.Font = new Font("Itim", 13F);
-            txtCodigo.Location = new Point(102, 54);
+            txtCodigo.Location = new Point(167, 54);
             txtCodigo.Margin = new Padding(4);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
-            txtCodigo.Size = new Size(242, 26);
+            txtCodigo.Size = new Size(177, 26);
             txtCodigo.TabIndex = 18;
             // 
             // label3
