@@ -187,13 +187,12 @@
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewTextBoxColumn2.DataPropertyName = "NombreProducto";
             dataGridViewTextBoxColumn2.HeaderText = "Producto";
-            dataGridViewTextBoxColumn2.MinimumWidth = 100;
+            dataGridViewTextBoxColumn2.MinimumWidth = 180;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 105;
             // 
             // Contenido
             // 

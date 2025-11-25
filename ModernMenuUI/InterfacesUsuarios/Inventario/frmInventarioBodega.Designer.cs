@@ -133,7 +133,8 @@
             // 
             // Codigo
             // 
-            Codigo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Codigo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Codigo.DataPropertyName = "CodigoBarraProducto";
             Codigo.HeaderText = "Código";
             Codigo.Name = "Codigo";
             Codigo.ReadOnly = true;
@@ -151,12 +152,11 @@
             // 
             // Bodega
             // 
-            Bodega.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Bodega.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Bodega.DataPropertyName = "NombreBodega";
             Bodega.HeaderText = "Bodega";
             Bodega.Name = "Bodega";
             Bodega.ReadOnly = true;
-            Bodega.Width = 93;
             // 
             // Anaquel
             // 
@@ -167,6 +167,7 @@
             // 
             // StockTotal
             // 
+            StockTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             StockTotal.DataPropertyName = "StockProductoBodegaInventario";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             StockTotal.DefaultCellStyle = dataGridViewCellStyle3;
@@ -174,6 +175,7 @@
             StockTotal.HeaderText = "Stock";
             StockTotal.Name = "StockTotal";
             StockTotal.ReadOnly = true;
+            StockTotal.Width = 80;
             // 
             // StockMinimo
             // 
@@ -184,13 +186,15 @@
             StockMinimo.DefaultCellStyle = dataGridViewCellStyle4;
             StockMinimo.FillWeight = 70F;
             StockMinimo.HeaderText = "Stock Mínimo";
-            StockMinimo.MinimumWidth = 20;
+            StockMinimo.MinimumWidth = 120;
             StockMinimo.Name = "StockMinimo";
             StockMinimo.ReadOnly = true;
             StockMinimo.Width = 124;
             // 
             // cmbBodega
             // 
+            cmbBodega.AutoCompleteMode = AutoCompleteMode.Append;
+            cmbBodega.AutoCompleteSource = AutoCompleteSource.ListItems;
             cmbBodega.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbBodega.ForeColor = Color.DimGray;
             cmbBodega.FormattingEnabled = true;

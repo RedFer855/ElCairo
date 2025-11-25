@@ -20,11 +20,11 @@ namespace CapaDeDatos.Modelados.Inventario
         [PrimaryKey("id_bodega")]
         public int IdBodegaInventario { get; set; }
 
-        
+
         // Objeto anidado para el JOIN de Bodega
         public Bodega bodega { get; set; }
 
-        
+
 
         [Column("stock_producto_bodega")]
         public int StockProductoBodegaInventario { get; set; }
@@ -37,12 +37,37 @@ namespace CapaDeDatos.Modelados.Inventario
         {
             get { return producto?.NombreProducto ?? "N/A"; }
         }
-        
+
         // Propiedad de ayuda para el DataGridView
         public string NombreBodega
         {
             get { return bodega?.NombreBodega ?? "N/A"; }
         }
-        
-    }
+
+        public string CodigoBarraProducto
+        {
+            get { return producto?.CodigoBarraProducto ?? "N/A"; }
+        }
+
+        public string NombreCategoria
+        {
+            get { return producto?.NombreCategoria ?? "N/A"; }
+        }
+
+        public string NombreMarca
+        {
+            get { return producto?.NombreMarca ?? "N/A"; }
+
+        }
+
+        public string NombrePresentacion
+        {
+            get { return producto?.NombrePresentacion ?? "N/A"; }
+        }
+
+        public string ContenidoProducto
+        {
+            get { return producto?.ContenidoProducto ?? "N/A"; }
+        }
+    }    
 }

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Supabase.Gotrue;
 using System;
-using System.Net.NetworkInformation;
 
 namespace CapaServiciosSeguridadValidacion
 {

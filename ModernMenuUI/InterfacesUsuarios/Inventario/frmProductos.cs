@@ -94,6 +94,12 @@ namespace ModernMenuUI
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error carga inicial: {ex.Message}");
+                MessageBox.Show(
+                    $"No se pudieron cargar los productos.\nPosible causa: Internet inestable o servidor en mantenimiento.\n\nDetalle: {ex.Message}",
+                    "Error de Carga",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
             finally { this.Cursor = Cursors.Default; }
         }
