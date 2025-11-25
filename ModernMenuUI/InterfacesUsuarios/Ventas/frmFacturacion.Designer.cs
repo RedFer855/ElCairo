@@ -118,7 +118,7 @@
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
             btnSalir.Location = new Point(1029, 755);
-            btnSalir.Margin = new Padding(4, 4, 4, 4);
+            btnSalir.Margin = new Padding(4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(100, 79);
             btnSalir.TabIndex = 17;
@@ -133,7 +133,7 @@
             button1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.FromArgb(87, 99, 110);
             button1.Location = new Point(854, 755);
-            button1.Margin = new Padding(4, 4, 4, 4);
+            button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Size = new Size(168, 79);
             button1.TabIndex = 15;
@@ -146,7 +146,7 @@
             txtCliente.BorderStyle = BorderStyle.None;
             txtCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCliente.Location = new Point(26, 18);
-            txtCliente.Margin = new Padding(4, 4, 4, 4);
+            txtCliente.Margin = new Padding(4);
             txtCliente.Name = "txtCliente";
             txtCliente.PlaceholderText = "Buscar Cliente...";
             txtCliente.Size = new Size(246, 24);
@@ -160,7 +160,7 @@
             panel5.Controls.Add(button2);
             panel5.Controls.Add(txtCliente);
             panel5.Location = new Point(15, 15);
-            panel5.Margin = new Padding(4, 4, 4, 4);
+            panel5.Margin = new Padding(4);
             panel5.Name = "panel5";
             panel5.Size = new Size(362, 64);
             panel5.TabIndex = 14;
@@ -174,7 +174,7 @@
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;
             button2.Location = new Point(280, 18);
-            button2.Margin = new Padding(4, 4, 4, 4);
+            button2.Margin = new Padding(4);
             button2.Name = "button2";
             button2.Size = new Size(60, 25);
             button2.TabIndex = 17;
@@ -211,7 +211,7 @@
             btnFacturar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnFacturar.ForeColor = SystemColors.ButtonFace;
             btnFacturar.Location = new Point(711, 755);
-            btnFacturar.Margin = new Padding(4, 4, 4, 4);
+            btnFacturar.Margin = new Padding(4);
             btnFacturar.Name = "btnFacturar";
             btnFacturar.Size = new Size(135, 79);
             btnFacturar.TabIndex = 16;
@@ -225,7 +225,7 @@
             panel8.Controls.Add(txtTotal);
             panel8.Controls.Add(label6);
             panel8.Location = new Point(464, 4);
-            panel8.Margin = new Padding(4, 4, 4, 4);
+            panel8.Margin = new Padding(4);
             panel8.Name = "panel8";
             panel8.Size = new Size(189, 64);
             panel8.TabIndex = 24;
@@ -237,7 +237,7 @@
             txtTotal.Enabled = false;
             txtTotal.Font = new Font("Itim", 18F);
             txtTotal.Location = new Point(0, 21);
-            txtTotal.Margin = new Padding(4, 4, 4, 4);
+            txtTotal.Margin = new Padding(4);
             txtTotal.Name = "txtTotal";
             txtTotal.PlaceholderText = "L0,00";
             txtTotal.ReadOnly = true;
@@ -250,7 +250,7 @@
             panel6.Controls.Add(txtSubtotal);
             panel6.Controls.Add(label5);
             panel6.Location = new Point(37, 4);
-            panel6.Margin = new Padding(4, 4, 4, 4);
+            panel6.Margin = new Padding(4);
             panel6.Name = "panel6";
             panel6.Size = new Size(192, 64);
             panel6.TabIndex = 23;
@@ -262,7 +262,7 @@
             txtSubtotal.Enabled = false;
             txtSubtotal.Font = new Font("Itim", 18F);
             txtSubtotal.Location = new Point(0, 21);
-            txtSubtotal.Margin = new Padding(4, 4, 4, 4);
+            txtSubtotal.Margin = new Padding(4);
             txtSubtotal.Name = "txtSubtotal";
             txtSubtotal.PlaceholderText = "L0,00";
             txtSubtotal.ReadOnly = true;
@@ -287,7 +287,7 @@
             panel3.Controls.Add(txtImpuesto);
             panel3.Controls.Add(label7);
             panel3.Location = new Point(285, 4);
-            panel3.Margin = new Padding(4, 4, 4, 4);
+            panel3.Margin = new Padding(4);
             panel3.Name = "panel3";
             panel3.Size = new Size(129, 64);
             panel3.TabIndex = 22;
@@ -299,7 +299,7 @@
             txtImpuesto.Enabled = false;
             txtImpuesto.Font = new Font("Itim", 18F);
             txtImpuesto.Location = new Point(0, 21);
-            txtImpuesto.Margin = new Padding(4, 4, 4, 4);
+            txtImpuesto.Margin = new Padding(4);
             txtImpuesto.Name = "txtImpuesto";
             txtImpuesto.PlaceholderText = "L0,00";
             txtImpuesto.ReadOnly = true;
@@ -312,7 +312,7 @@
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 335);
-            panelCarrito.Margin = new Padding(4, 4, 4, 4);
+            panelCarrito.Margin = new Padding(4);
             panelCarrito.Name = "panelCarrito";
             panelCarrito.Size = new Size(1114, 412);
             panelCarrito.TabIndex = 12;
@@ -324,7 +324,7 @@
             panel10.Controls.Add(pbxCarrito);
             panel10.Controls.Add(dgvCarrito);
             panel10.Location = new Point(26, 20);
-            panel10.Margin = new Padding(4, 4, 4, 4);
+            panel10.Margin = new Padding(4);
             panel10.Name = "panel10";
             panel10.Size = new Size(1061, 376);
             panel10.TabIndex = 17;
@@ -335,7 +335,7 @@
             pbxCarritoVacio.BackColor = Color.Transparent;
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
             pbxCarritoVacio.Location = new Point(344, 115);
-            pbxCarritoVacio.Margin = new Padding(4, 4, 4, 4);
+            pbxCarritoVacio.Margin = new Padding(4);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
             pbxCarritoVacio.Size = new Size(385, 179);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
@@ -347,7 +347,7 @@
             pbxCarrito.BackColor = Color.Transparent;
             pbxCarrito.Image = (Image)resources.GetObject("pbxCarrito.Image");
             pbxCarrito.Location = new Point(0, 0);
-            pbxCarrito.Margin = new Padding(4, 4, 4, 4);
+            pbxCarrito.Margin = new Padding(4);
             pbxCarrito.Name = "pbxCarrito";
             pbxCarrito.Size = new Size(50, 50);
             pbxCarrito.TabIndex = 2;
@@ -385,7 +385,7 @@
             dgvCarrito.EnableHeadersVisualStyles = false;
             dgvCarrito.GridColor = Color.FromArgb(189, 215, 238);
             dgvCarrito.Location = new Point(0, 0);
-            dgvCarrito.Margin = new Padding(4, 4, 4, 4);
+            dgvCarrito.Margin = new Padding(4);
             dgvCarrito.Name = "dgvCarrito";
             dgvCarrito.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -473,7 +473,7 @@
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(buscar);
             panelBusqueda.Location = new Point(385, 15);
-            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.Margin = new Padding(4);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(744, 64);
             panelBusqueda.TabIndex = 9;
@@ -484,7 +484,7 @@
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(26, 18);
-            txtBuscar.Margin = new Padding(4, 4, 4, 4);
+            txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
             txtBuscar.Size = new Size(630, 24);
@@ -500,7 +500,7 @@
             buscar.FlatAppearance.BorderSize = 0;
             buscar.FlatStyle = FlatStyle.Flat;
             buscar.Location = new Point(665, 18);
-            buscar.Margin = new Padding(4, 4, 4, 4);
+            buscar.Margin = new Padding(4);
             buscar.Name = "buscar";
             buscar.Size = new Size(60, 25);
             buscar.TabIndex = 0;
@@ -512,7 +512,7 @@
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel7);
             panel1.Location = new Point(385, 86);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
             panel1.Size = new Size(744, 241);
             panel1.TabIndex = 10;
@@ -524,7 +524,7 @@
             panel7.BackColor = Color.FromArgb(189, 215, 238);
             panel7.Controls.Add(dgvProductos);
             panel7.Location = new Point(26, 11);
-            panel7.Margin = new Padding(4, 4, 4, 4);
+            panel7.Margin = new Padding(4);
             panel7.Name = "panel7";
             panel7.Size = new Size(695, 212);
             panel7.TabIndex = 11;
@@ -566,7 +566,7 @@
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
             dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Margin = new Padding(4, 4, 4, 4);
+            dgvProductos.Margin = new Padding(4);
             dgvProductos.Name = "dgvProductos";
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -630,7 +630,7 @@
             panel2.Controls.Add(txtPrecio);
             panel2.Controls.Add(btnAgregar);
             panel2.Location = new Point(15, 86);
-            panel2.Margin = new Padding(4, 4, 4, 4);
+            panel2.Margin = new Padding(4);
             panel2.Name = "panel2";
             panel2.Size = new Size(362, 241);
             panel2.TabIndex = 11;
@@ -640,7 +640,7 @@
             nudCantidad.Font = new Font("Itim", 16.25F);
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
             nudCantidad.Location = new Point(102, 178);
-            nudCantidad.Margin = new Padding(4, 4, 4, 4);
+            nudCantidad.Margin = new Padding(4);
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
             nudCantidad.Size = new Size(74, 40);
@@ -677,7 +677,7 @@
             txtCodigo.Enabled = false;
             txtCodigo.Font = new Font("Itim", 13F);
             txtCodigo.Location = new Point(102, 54);
-            txtCodigo.Margin = new Padding(4, 4, 4, 4);
+            txtCodigo.Margin = new Padding(4);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
             txtCodigo.Size = new Size(242, 26);
@@ -725,7 +725,7 @@
             txtProducto.Enabled = false;
             txtProducto.Font = new Font("Itim", 13F);
             txtProducto.Location = new Point(102, 91);
-            txtProducto.Margin = new Padding(4, 4, 4, 4);
+            txtProducto.Margin = new Padding(4);
             txtProducto.Name = "txtProducto";
             txtProducto.ReadOnly = true;
             txtProducto.Size = new Size(242, 26);
@@ -737,7 +737,7 @@
             txtPrecio.Enabled = false;
             txtPrecio.Font = new Font("Itim", 13F);
             txtPrecio.Location = new Point(102, 130);
-            txtPrecio.Margin = new Padding(4, 4, 4, 4);
+            txtPrecio.Margin = new Padding(4);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.ReadOnly = true;
             txtPrecio.Size = new Size(242, 26);
@@ -753,7 +753,7 @@
             btnAgregar.ForeColor = SystemColors.ButtonFace;
             btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
             btnAgregar.Location = new Point(184, 170);
-            btnAgregar.Margin = new Padding(4, 4, 4, 4);
+            btnAgregar.Margin = new Padding(4);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Padding = new Padding(38, 0, 0, 0);
             btnAgregar.Size = new Size(151, 54);
@@ -777,7 +777,7 @@
             tableLayoutPanel1.Controls.Add(panel6, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
+            tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -792,7 +792,7 @@
             panel4.Controls.Add(panel9);
             panel4.Controls.Add(tableLayoutPanel1);
             panel4.Location = new Point(15, 755);
-            panel4.Margin = new Padding(4, 4, 4, 4);
+            panel4.Margin = new Padding(4);
             panel4.Name = "panel4";
             panel4.Size = new Size(689, 79);
             panel4.TabIndex = 13;
@@ -801,7 +801,7 @@
             // 
             panel9.Dock = DockStyle.Left;
             panel9.Location = new Point(0, 79);
-            panel9.Margin = new Padding(4, 4, 4, 4);
+            panel9.Margin = new Padding(4);
             panel9.Name = "panel9";
             panel9.Size = new Size(38, 0);
             panel9.TabIndex = 1;
@@ -813,7 +813,7 @@
             lstClientes.FormattingEnabled = true;
             lstClientes.ItemHeight = 23;
             lstClientes.Location = new Point(41, 59);
-            lstClientes.Margin = new Padding(4, 4, 4, 4);
+            lstClientes.Margin = new Padding(4);
             lstClientes.Name = "lstClientes";
             lstClientes.Size = new Size(245, 27);
             lstClientes.TabIndex = 18;
@@ -828,7 +828,7 @@
             lstSugerencias.FormattingEnabled = true;
             lstSugerencias.ItemHeight = 23;
             lstSugerencias.Location = new Point(411, 59);
-            lstSugerencias.Margin = new Padding(4, 4, 4, 4);
+            lstSugerencias.Margin = new Padding(4);
             lstSugerencias.Name = "lstSugerencias";
             lstSugerencias.Size = new Size(629, 27);
             lstSugerencias.TabIndex = 19;
@@ -856,7 +856,7 @@
             Controls.Add(panel2);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "frmFacturacion";
             Text = "frmFacturacion";
             FormClosing += frmFacturacion_FormClosing;

@@ -249,7 +249,7 @@ namespace ModernMenuUI
                     {
                         dgvCarrito.Rows[i].Cells[3].Value = stock;
                         MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                      
+
                     }
                     else
                     {
@@ -699,7 +699,7 @@ namespace ModernMenuUI
 
                 LimpiarCarrito();
 
-                txtBuscar.Text = ""; 
+                txtBuscar.Text = "";
                 _clienteSeleccionado = null;
 
                 await CargarProductosDeBodega();
