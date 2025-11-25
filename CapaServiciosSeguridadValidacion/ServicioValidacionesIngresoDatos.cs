@@ -40,10 +40,10 @@ namespace CapaServiciosSeguridadValidacion
         public static readonly List<Func<Empleado, (bool Error, string Mensaje)>> ListaValidacionesEmpleado =
         new List<Func<Empleado, (bool Error, string Mensaje)>>()
         {
-            e => ValidarCampoVacio(e.Nombre, "el nombre del empleado"),
-            e => ValidarCampoVacio(e.Apellido, "el apellido del empleado"),
-            e => ValidarCampoVacio(e.Dni, "el DNI"),
-            e => ValidarCampoVacio(e.Telefono, "el teléfono"),
+            e => ValidarDni(e.Dni, "el DNI"),
+            e => ValidarNombreApellido(e.Nombre, "el nombre del empleado"),
+            e => ValidarNombreApellido(e.Apellido, "el apellido del empleado"),
+            e => ValidarTelefono(e.Telefono, "el teléfono"),
             e => ValidarCampoVacio(e.Email, "el correo electrónico"),
             e => ValidarCampoVacio(e.Direccion, "la dirección"),
         };
@@ -52,8 +52,8 @@ namespace CapaServiciosSeguridadValidacion
         {
             foreach (var regla in ListaValidacionesEmpleado)
             {
-                    var resultado = regla(empleado);
-                    if (resultado.Error) return resultado;
+                var resultado = regla(empleado);
+                if (resultado.Error) return resultado;
             }
             return (false, "");
         }
@@ -64,7 +64,7 @@ namespace CapaServiciosSeguridadValidacion
             new List<Func<MarcaInsertar, (bool Error, string Mensaje)>>()
             {
         // Aquí validamos que el nombre no esté vacío
-        m => ValidarCampoVacio(m.NombreMarca, "el nombre de la marca")
+                m => ValidarCampoVacio(m.NombreMarca, "el nombre de la marca")
             };
 
         public static (bool Error, string Mensaje) EjecutarValidacionesMarca(MarcaInsertar _marca)
@@ -135,6 +135,46 @@ namespace CapaServiciosSeguridadValidacion
 
             return (false, "");
         }
+        public static (bool Error, string Mensaje) ValidarTelefono(string valor, string nombreCampo)
+        {
+            if (valor == null)
+                return (true, $"{nombreCampo} no puede estar vacío.");
+            if (valor.Length > 9 || valor.Length < 8)
+                return (true, $"{nombreCampo} debe tener 8 dígitos.");
 
+            if (!valor.All(char.IsDigit))
+                return (true, $"{nombreCampo} solo debe contener números.");
+            return (false, "");
+        }
+        public static (bool Error, string Mensaje) ValidarDni(string valor, string nombreCampo)
+        {
+            if(valor == null)
+                return (true, $"{nombreCampo} no puede estar vacío.");
+            if (valor.Length < 13 || valor.Length > 13)
+            {
+                return (true, $"{nombreCampo} debe de ser de 13 digitos");
+            }
+            if (int.TryParse(valor.ToString(), out int i))
+            {
+                if (i < 0) return (true, $"{nombreCampo} no puede ser negativo.");
+                return (false, "");
+            }
+            if (!valor.All(char.IsDigit))
+                return (true, $"{nombreCampo} solo debe contener números.");
+            return (false,"");
+        }
+        public static (bool Error, string Mensaje) ValidarNombreApellido(string valor, string nombreCampo)
+        {
+            if (valor == null)
+                return (true, $"{nombreCampo} no puede estar vacío.");
+
+            if (valor.Length < 2 )
+            {
+                return (true,$"{nombreCampo} debe de tener minimo 2 letras.");
+            }
+            if(valor.Length > 100)
+                return (true, $"{nombreCampo} no puede tener más de 100 caracteres.");
+            return (false , "");
+        }
     }
 }

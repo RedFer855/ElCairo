@@ -39,25 +39,6 @@ namespace ModernMenuUI
 
             try
             {
-                var v1 = ServicioValidacionesIngresoDatos.ValidarCampoVacio(txtNombre.Text, "el nombre");
-                if (v1.Error) { MessageBox.Show(v1.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarEmpleado.Enabled = true; return; }
-
-                var v2 = ServicioValidacionesIngresoDatos.ValidarCampoVacio(txtApellido.Text, "el apellido");
-                if (v2.Error) { MessageBox.Show(v2.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarEmpleado.Enabled = true; return; }
-
-                var v3 = ServicioValidacionesIngresoDatos.ValidarCampoVacio(txtDni.Text, "el DNI");
-                if (v3.Error) { MessageBox.Show(v3.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarEmpleado.Enabled = true; return; }
-
-                // Validar solo números → DNI
-                var v4 = ServicioValidacionesIngresoDatos.ValidarEnteroValido(txtDni.Text, "DNI");
-                if (v4.Error) { MessageBox.Show(v4.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarEmpleado.Enabled = true; return; }
-
-                // Validar solo números → Teléfono (si no viene vacío)
-                if (!string.IsNullOrWhiteSpace(txtTelefono.Text))
-                {
-                    var v5 = ServicioValidacionesIngresoDatos.ValidarEnteroValido(txtTelefono.Text, "Teléfono");
-                    if (v5.Error) { MessageBox.Show(v5.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarEmpleado.Enabled = true; return; }
-                }
 
                 if (_empleadoActual == null)
                 {
@@ -71,7 +52,14 @@ namespace ModernMenuUI
                         Email = txtCorreo.Text.Trim(),
                         Direccion = txtDireccion.Text.Trim()
                     };
+                    var resultadoValidacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesEmpleado(nuevoEmpleado);
 
+                    if (resultadoValidacion.Error)
+                    {
+                        MessageBox.Show(resultadoValidacion.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        btnGuardarEmpleado.Enabled = true; 
+                        return; 
+                    }
                     await EmpleadoRepositorio.InsertarEmpleado(nuevoEmpleado);
 
                     MessageBox.Show("¡Empleado guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
