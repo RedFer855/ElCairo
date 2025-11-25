@@ -18,7 +18,6 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
-    
     public enum NivelStockFiltro
     {
         Todos,
@@ -81,50 +80,7 @@ namespace ModernMenuUI
 
         }
 
-        private void FiltrarYColorear()
-        {
-            /*
-            string bodegaSeleccionada = cmbBodega.SelectedItem?.ToString() ?? "Todas";
-            string estadoSeleccionado = cmbEstado.SelectedItem?.ToString() ?? "Todos";
-
-            foreach (DataGridViewRow fila in dgvProducto.Rows)
-            {
-                if (fila.IsNewRow) continue;
-
-                string bodega = fila.Cells["Bodega"].Value.ToString();
-                int stockActual = Convert.ToInt32(fila.Cells[4].Value);
-                int stockMinimo = Convert.ToInt32(fila.Cells[5].Value);
-
-                // Determinar color lógico
-                string estadoFila = "";
-                if (stockActual < stockMinimo)
-                    estadoFila = "Bajo";
-                else if (stockActual >= stockMinimo && stockActual <= stockMinimo + 10)
-                    estadoFila = "Medio";
-                else
-                    estadoFila = "Alto";
-
-
-                // Aplicar visibilidad según filtros
-                bool visiblePorBodega = (bodegaSeleccionada == "Todas" || bodega == bodegaSeleccionada);
-                bool visiblePorEstado = (estadoSeleccionado == "Todos" || estadoFila == estadoSeleccionado);
-                fila.Visible = visiblePorBodega && visiblePorEstado;
-
-                // Aplicar color solo si es visible
-                if (fila.Visible)
-                {
-                    if (estadoFila == "Bajo")
-                        fila.DefaultCellStyle.BackColor = Color.FromArgb(255, 221, 221); //Rojo
-                    else if (estadoFila == "Medio")
-                        fila.DefaultCellStyle.BackColor = Color.FromArgb(252, 239, 220); // Amarillo
-                    else if (estadoFila == "Alto")
-                        fila.DefaultCellStyle.BackColor = Color.FromArgb(223, 244, 216); // Verde
-                    else
-                        MessageBox.Show("Nuevo estado");
-                }
-            }
-            */
-        }
+      
 
 
         // ======== FILTRAR AL CAMBIAR LA BODEGA =========
@@ -136,7 +92,7 @@ namespace ModernMenuUI
 
         private void cmbBodega_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FiltrarYColorear();
+
         }
 
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e)
@@ -161,8 +117,7 @@ namespace ModernMenuUI
                     dgvProducto.DataSource = lista;
                 }
 
-                // 2. Aplica el filtrado y coloreado en C# (Tu lógica original)
-                FiltrarYColorear();
+       
             }
             catch (TimeoutException ex)
             {

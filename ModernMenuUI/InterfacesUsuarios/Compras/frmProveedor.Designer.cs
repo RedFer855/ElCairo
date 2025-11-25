@@ -46,9 +46,9 @@
             btnAgregarProveedor = new Button();
             btnEditarProveedor = new Button();
             gbxFiltro = new GroupBox();
-            rdbDeshabilitados = new RadioButton();
-            rdbHabilitados = new RadioButton();
-            rdbTodos = new RadioButton();
+            rbMostrarDeshabilitados = new RadioButton();
+            rbMostrarHabilitados = new RadioButton();
+            rbMostrarTodos = new RadioButton();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
@@ -236,50 +236,50 @@
             // gbxFiltro
             // 
             gbxFiltro.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            gbxFiltro.Controls.Add(rdbDeshabilitados);
-            gbxFiltro.Controls.Add(rdbHabilitados);
-            gbxFiltro.Controls.Add(rdbTodos);
+            gbxFiltro.Controls.Add(rbMostrarDeshabilitados);
+            gbxFiltro.Controls.Add(rbMostrarHabilitados);
+            gbxFiltro.Controls.Add(rbMostrarTodos);
             gbxFiltro.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxFiltro.ForeColor = SystemColors.ControlDarkDark;
             gbxFiltro.Location = new Point(12, 61);
             gbxFiltro.MaximumSize = new Size(533, 53);
             gbxFiltro.Name = "gbxFiltro";
-            gbxFiltro.Size = new Size(533, 53);
+            gbxFiltro.Size = new Size(382, 53);
             gbxFiltro.TabIndex = 52;
             gbxFiltro.TabStop = false;
-            gbxFiltro.Text = "Filtro";
+            gbxFiltro.Text = "Filtros";
             // 
-            // rdbDeshabilitados
+            // rbMostrarDeshabilitados
             // 
-            rdbDeshabilitados.AutoSize = true;
-            rdbDeshabilitados.Location = new Point(341, 21);
-            rdbDeshabilitados.Name = "rdbDeshabilitados";
-            rdbDeshabilitados.Size = new Size(178, 22);
-            rdbDeshabilitados.TabIndex = 30;
-            rdbDeshabilitados.Text = "Mostrar Deshabilitados";
-            rdbDeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrarDeshabilitados.AutoSize = true;
+            rbMostrarDeshabilitados.Location = new Point(125, 21);
+            rbMostrarDeshabilitados.Name = "rbMostrarDeshabilitados";
+            rbMostrarDeshabilitados.Size = new Size(121, 22);
+            rbMostrarDeshabilitados.TabIndex = 30;
+            rbMostrarDeshabilitados.Text = "Deshabilitados";
+            rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
             // 
-            // rdbHabilitados
+            // rbMostrarHabilitados
             // 
-            rdbHabilitados.AutoSize = true;
-            rdbHabilitados.Checked = true;
-            rdbHabilitados.Location = new Point(158, 21);
-            rdbHabilitados.Name = "rdbHabilitados";
-            rdbHabilitados.Size = new Size(156, 22);
-            rdbHabilitados.TabIndex = 29;
-            rdbHabilitados.TabStop = true;
-            rdbHabilitados.Text = "Mostrar Habilitados";
-            rdbHabilitados.UseVisualStyleBackColor = true;
+            rbMostrarHabilitados.AutoSize = true;
+            rbMostrarHabilitados.Checked = true;
+            rbMostrarHabilitados.Location = new Point(18, 21);
+            rbMostrarHabilitados.Name = "rbMostrarHabilitados";
+            rbMostrarHabilitados.Size = new Size(101, 22);
+            rbMostrarHabilitados.TabIndex = 29;
+            rbMostrarHabilitados.TabStop = true;
+            rbMostrarHabilitados.Text = "Habilitados";
+            rbMostrarHabilitados.UseVisualStyleBackColor = true;
             // 
-            // rdbTodos
+            // rbMostrarTodos
             // 
-            rdbTodos.AutoSize = true;
-            rdbTodos.Location = new Point(18, 21);
-            rdbTodos.Name = "rdbTodos";
-            rdbTodos.Size = new Size(120, 22);
-            rdbTodos.TabIndex = 28;
-            rdbTodos.Text = "Mostrar Todos";
-            rdbTodos.UseVisualStyleBackColor = true;
+            rbMostrarTodos.AutoSize = true;
+            rbMostrarTodos.Location = new Point(252, 21);
+            rbMostrarTodos.Name = "rbMostrarTodos";
+            rbMostrarTodos.Size = new Size(120, 22);
+            rbMostrarTodos.TabIndex = 28;
+            rbMostrarTodos.Text = "Mostrar Todos";
+            rbMostrarTodos.UseVisualStyleBackColor = true;
             // 
             // panelBusqueda
             // 
@@ -378,9 +378,9 @@
         private Button btnAgregarProveedor;
         private Button btnEditarProveedor;
         private GroupBox gbxFiltro;
-        private RadioButton rdbDeshabilitados;
-        private RadioButton rdbHabilitados;
-        private RadioButton rdbTodos;
+        private RadioButton rbMostrarDeshabilitados;
+        private RadioButton rbMostrarHabilitados;
+        private RadioButton rbMostrarTodos;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button btnbuscar;
