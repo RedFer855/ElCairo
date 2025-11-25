@@ -199,16 +199,34 @@ namespace ModernMenuUI
         {
             dgvProductos.DataSource = null;
             dgvProductos.Rows.Clear();
+
             foreach (var p in listaMostrar)
             {
-                dgvProductos.Rows.Add(
-                    p.IdProducto,
+                // Agregamos la fila y capturamos su índice
+                int rowIndex = dgvProductos.Rows.Add(
+                    p.CodigoBarraProducto,  // <--- AQUI: Mostramos el Código de Barras visualmente
                     p.NombreProducto,
-                    p.PrecioCompra, // O PrecioVenta, verifica cuál usas en Master
+                    p.PrecioVenta,          // Nota: Puse PrecioVenta (es lo normal en facturación), si usas otro cámbialo.
                     p.StockEnBodega
                 );
+
+                // IMPORTANTE: Guardamos el ID real (int) oculto en el TAG de la fila.
+                // Esto permite que el buscador recupere el ID aunque no se vea.
+                dgvProductos.Rows[rowIndex].Tag = p.IdProducto;
             }
             dgvProductos.ClearSelection();
+            /* dgvProductos.DataSource = null;
+             dgvProductos.Rows.Clear();
+             foreach (var p in listaMostrar)
+             {
+                 dgvProductos.Rows.Add(
+                     p.IdProducto,
+                     p.NombreProducto,
+                     p.PrecioCompra, // O PrecioVenta, verifica cuál usas en Master
+                     p.StockEnBodega
+                 );
+             }
+             dgvProductos.ClearSelection();*/
         }
 
         // =======================================================
@@ -369,6 +387,60 @@ namespace ModernMenuUI
                 // Opción 2: El usuario dio Enter directo (tomar el primero del Grid filtrado)
                 else if (dgvProductos.Rows.Count > 0)
                 {
+                    // --- CORRECCIÓN AQUÍ ---
+                    // Como la celda visual ahora tiene letras (código de barra), 
+                    // obtenemos el ID numérico oculto en la propiedad TAG de la fila.
+                    if (dgvProductos.Rows[0].Tag != null)
+                    {
+                        int idPrimerProducto = (int)dgvProductos.Rows[0].Tag;
+
+                        // Buscamos el objeto completo en la memoria caché usando ese ID
+                        productoASeleccionar = _productosCache.FirstOrDefault(p => p.IdProducto == idPrimerProducto);
+                    }
+                }
+
+                // Si encontramos un producto válido, ejecutamos la selección
+                if (productoASeleccionar != null)
+                {
+                    SeleccionarProducto(productoASeleccionar);
+
+                    // Evitamos el sonido "Ding"
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+            }
+            /*// A. Navegación con Flechas (Solo si la lista es visible)
+            if (lstSugerencias.Visible)
+            {
+                if (e.KeyCode == Keys.Down)
+                {
+                    int newIndex = Math.Min(lstSugerencias.SelectedIndex + 1, lstSugerencias.Items.Count - 1);
+                    if (newIndex >= 0) lstSugerencias.SelectedIndex = newIndex;
+                    e.Handled = true;
+                    return;
+                }
+                else if (e.KeyCode == Keys.Up)
+                {
+                    int newIndex = Math.Max(lstSugerencias.SelectedIndex - 1, 0);
+                    if (newIndex >= 0) lstSugerencias.SelectedIndex = newIndex;
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            // B. Lógica del ENTER (Selección)
+            if (e.KeyCode == Keys.Enter)
+            {
+                Producto productoASeleccionar = null;
+
+                // Opción 1: El usuario eligió explícitamente de la lista de sugerencias
+                if (lstSugerencias.Visible && lstSugerencias.SelectedItem != null)
+                {
+                    productoASeleccionar = lstSugerencias.SelectedItem as Producto;
+                }
+                // Opción 2: El usuario dio Enter directo (tomar el primero del Grid filtrado)
+                else if (dgvProductos.Rows.Count > 0)
+                {
                     // Obtenemos el ID del primer producto visible en el Grid
                     if (dgvProductos.Rows[0].Cells[0].Value != null)
                     {
@@ -388,32 +460,8 @@ namespace ModernMenuUI
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
-            }
+            }*/
 
-            /* // Lógica MER para navegación
-             if (!lstSugerencias.Visible) return;
-
-             if (e.KeyCode == Keys.Down)
-             {
-                 int newIndex = Math.Min(lstSugerencias.SelectedIndex + 1, lstSugerencias.Items.Count - 1);
-                 if (newIndex >= 0) lstSugerencias.SelectedIndex = newIndex;
-                 e.Handled = true;
-             }
-             else if (e.KeyCode == Keys.Up)
-             {
-                 int newIndex = Math.Max(lstSugerencias.SelectedIndex - 1, 0);
-                 if (newIndex >= 0) lstSugerencias.SelectedIndex = newIndex;
-                 e.Handled = true;
-             }
-             else if (e.KeyCode == Keys.Enter)
-             {
-                 if (lstSugerencias.SelectedItem is Producto productoSel)
-                 {
-                     SeleccionarProducto(productoSel);
-                     e.Handled = true;
-                     e.SuppressKeyPress = true;
-                 }
-             }*/
         }
         private void lstSugerencias_DoubleClick(object sender, EventArgs e)
         {
@@ -424,115 +472,104 @@ namespace ModernMenuUI
         }
         private void SeleccionarProducto(Producto productoSel)
         {
-            // A. Llenar los campos de texto
-            txtCodigo.Text = productoSel.IdProducto.ToString();
+            // A. Llenar los campos de texto (CAMBIO AQUÍ: Usar Código de Barra)
+            txtCodigo.Text = productoSel.CodigoBarraProducto; // <--- Muestra el código de barras
             txtProducto.Text = productoSel.NombreProducto;
             txtPrecio.Text = productoSel.PrecioVenta.ToString("N2");
 
-            // B. Si el grid estaba filtrado (tenía menos filas que el total), 
-            // lo restauramos para poder encontrar el producto seleccionado.
+            // B. Si el grid estaba filtrado, lo restauramos completo
             if (dgvProductos.Rows.Count != _productosCache.Count)
             {
                 RefrescarGrid(_productosCache);
             }
 
-            // C. AQUÍ ESTÁ LA SOLUCIÓN: Llamamos al método que tiene 0 referencias
-            // Lo envolvemos en BeginInvoke para darle tiempo al Grid de "respirar" y pintarse
+            // C. Seleccionar visualmente en la tabla
+            // IMPORTANTE: Seguimos pasando el IdProducto (int) porque 'SeleccionarProductoEnGrid'
+            // busca ese número oculto en la propiedad TAG de la fila.
             this.BeginInvoke((MethodInvoker)(() =>
             {
                 SeleccionarProductoEnGrid(productoSel.IdProducto);
             }));
 
-            // D. Preparar el campo de cantidad (Foco para el usuario)
+            // D. Preparar cantidad y foco
             nudCantidad.Value = 1;
             nudCantidad.Focus();
             nudCantidad.Select(0, nudCantidad.Text.Length);
 
-            // E. Limpiar buscador y lista
+            // E. Limpieza visual
             lstSugerencias.Visible = false;
             txtBuscar.Text = "";
-            /*// 1. Llenar campos
-            txtCodigo.Text = productoSel.IdProducto.ToString();
-            txtProducto.Text = productoSel.NombreProducto;
-            txtPrecio.Text = productoSel.PrecioVenta.ToString("N2");
+            /* // A. Llenar los campos de texto
+             txtCodigo.Text = productoSel.IdProducto.ToString();
+             txtProducto.Text = productoSel.NombreProducto;
+             txtPrecio.Text = productoSel.PrecioVenta.ToString("N2");
 
-            // 2. IMPORTANTE: Restaurar el Grid COMPLETO primero
-            // Usamos la caché completa para asegurar que el producto exista en la lista visible
-            if (dgvProductos.Rows.Count != _productosCache.Count)
-            {
-                RefrescarGrid(_productosCache);
-            }
+             // B. Si el grid estaba filtrado (tenía menos filas que el total), 
+             // lo restauramos para poder encontrar el producto seleccionado.
+             if (dgvProductos.Rows.Count != _productosCache.Count)
+             {
+                 RefrescarGrid(_productosCache);
+             }
 
-            // 3. Ahora que el grid está lleno, buscamos y seleccionamos la fila
-            // Forzamos el proceso de selección visual
-            bool encontrado = false;
-            dgvProductos.ClearSelection(); // Limpiar cualquier selección previa
+             // C. AQUÍ ESTÁ LA SOLUCIÓN: Llamamos al método que tiene 0 referencias
+             // Lo envolvemos en BeginInvoke para darle tiempo al Grid de "respirar" y pintarse
+             this.BeginInvoke((MethodInvoker)(() =>
+             {
+                 SeleccionarProductoEnGrid(productoSel.IdProducto);
+             }));
 
-            foreach (DataGridViewRow fila in dgvProductos.Rows)
-            {
-                if (fila.Cells[0].Value != null &&
-                    Convert.ToInt32(fila.Cells[0].Value) == productoSel.IdProducto)
-                {
-                    fila.Selected = true; // Marcar azul
-                    dgvProductos.CurrentCell = fila.Cells[0]; // Mover el foco interno del grid a esa celda
-                    dgvProductos.FirstDisplayedScrollingRowIndex = fila.Index; // Scroll hasta que se vea
-                    encontrado = true;
-                    break;
-                }
-            }
+             // D. Preparar el campo de cantidad (Foco para el usuario)
+             nudCantidad.Value = 1;
+             nudCantidad.Focus();
+             nudCantidad.Select(0, nudCantidad.Text.Length);
 
-            if (!encontrado)
-            {
-                // Si por alguna razón rara no está, mensaje de debug (opcional)
-                System.Diagnostics.Debug.WriteLine($"Producto {productoSel.IdProducto} no encontrado en grid visual.");
-            }
+             // E. Limpiar buscador y lista
+             lstSugerencias.Visible = false;
+             txtBuscar.Text = "";*/
 
-            // 4. Preparar cantidad (Foco final para el usuario)
-            nudCantidad.Value = 1;
-            nudCantidad.Focus();
-            nudCantidad.Select(0, nudCantidad.Text.Length);
-
-            // 5. Limpieza visual
-            lstSugerencias.Visible = false;
-            txtBuscar.Text = "";*/
 
         }
         private void SeleccionarProductoEnGrid(int idProducto)
         {
-            // Protección: Si el grid está vacío, no hacemos nada
             if (dgvProductos.Rows.Count == 0) return;
 
-            dgvProductos.ClearSelection(); // Limpiar selecciones viejas
-
-            foreach (DataGridViewRow fila in dgvProductos.Rows)
-            {
-                // Verificamos que la celda del ID (índice 0) tenga valor
-                if (fila.Cells[0].Value != null &&
-                    Convert.ToInt32(fila.Cells[0].Value) == idProducto)
-                {
-                    // 1. Marcar la fila completa como seleccionada (Azul)
-                    fila.Selected = true;
-
-                    // 2. Mover el "foco" interno del grid a la primera celda de esa fila
-                    dgvProductos.CurrentCell = fila.Cells[0];
-
-                    // 3. Hacer scroll automático si la fila está muy abajo
-                    dgvProductos.FirstDisplayedScrollingRowIndex = fila.Index;
-
-                    break; // Ya lo encontramos, dejamos de buscar
-                }
-            }
-            /*if (dgvProductos.Rows.Count == 0) return;
             dgvProductos.ClearSelection();
+
             foreach (DataGridViewRow fila in dgvProductos.Rows)
             {
-                if (fila.Cells[0].Value != null && Convert.ToInt32(fila.Cells[0].Value) == idProducto)
+                // Comparamos contra el 'Tag' que es donde guardamos el ID numérico
+                if (fila.Tag != null && (int)fila.Tag == idProducto)
                 {
                     fila.Selected = true;
+                    dgvProductos.CurrentCell = fila.Cells[0]; // Pone el foco en el código de barra
                     dgvProductos.FirstDisplayedScrollingRowIndex = fila.Index;
                     break;
                 }
-            }*/
+            }
+            /* // Protección: Si el grid está vacío, no hacemos nada
+             if (dgvProductos.Rows.Count == 0) return;
+
+             dgvProductos.ClearSelection(); // Limpiar selecciones viejas
+
+             foreach (DataGridViewRow fila in dgvProductos.Rows)
+             {
+                 // Verificamos que la celda del ID (índice 0) tenga valor
+                 if (fila.Cells[0].Value != null &&
+                     Convert.ToInt32(fila.Cells[0].Value) == idProducto)
+                 {
+                     // 1. Marcar la fila completa como seleccionada (Azul)
+                     fila.Selected = true;
+
+                     // 2. Mover el "foco" interno del grid a la primera celda de esa fila
+                     dgvProductos.CurrentCell = fila.Cells[0];
+
+                     // 3. Hacer scroll automático si la fila está muy abajo
+                     dgvProductos.FirstDisplayedScrollingRowIndex = fila.Index;
+
+                     break; // Ya lo encontramos, dejamos de buscar
+                 }
+             }*/
+
         }
         // =======================================================
         // 5. EVENTOS RESTANTES (Clientes, Botones, Limpieza)
@@ -601,7 +638,54 @@ namespace ModernMenuUI
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(nudCantidad.Text))
+            if (string.IsNullOrEmpty(nudCantidad.Text)) nudCantidad.Value = 0;
+
+            if (nudCantidad.Value <= 0)
+            {
+                MessageBox.Show("No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                nudCantidad.Value = 1;
+                nudCantidad.Focus();
+                return;
+            }
+
+            // 2. VALIDAR QUE HAYA CÓDIGO
+            if (string.IsNullOrEmpty(txtCodigo.Text))
+            {
+                MessageBox.Show("Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtBuscar.Focus();
+                return;
+            }
+
+            // 3. BUSCAR EL ID REAL (INT) USANDO EL CÓDIGO DE BARRAS VISIBLE
+            string codigoBarraVisible = txtCodigo.Text;
+
+            // Buscamos en la memoria el producto que tenga ese código de barras
+            var productoEncontrado = _productosCache.FirstOrDefault(p => p.CodigoBarraProducto == codigoBarraVisible);
+
+            if (productoEncontrado != null)
+            {
+                // ¡Éxito! Pasamos el ID numérico real al método del carrito
+                AgregarAlCarrito(productoEncontrado.IdProducto, (int)nudCantidad.Value);
+
+                // 4. LIMPIEZA
+                nudCantidad.Value = 1;
+                txtCodigo.Text = null;
+                txtProducto.Text = null;
+                txtPrecio.Text = null;
+                dgvProductos.ClearSelection();
+
+                ActualizarTotales();
+                ActualizarImagenCarrito();
+
+                // Opcional: Devolver foco al buscador
+                txtBuscar.Focus();
+            }
+            else
+            {
+                // Caso raro: Hay texto en el cuadro pero no coincide con ningún producto cargado
+                MessageBox.Show("El código de producto no es válido o no existe en el inventario cargado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            /*if (string.IsNullOrEmpty(nudCantidad.Text))
             {
                 nudCantidad.Value = 0; 
             }
@@ -624,7 +708,7 @@ namespace ModernMenuUI
                 txtPrecio.Text = null;
                 ActualizarTotales();
                 ActualizarImagenCarrito();
-            }
+            }*/
         }
 
         // Resto de eventos de Master (CellClick, MouseEnter, Facturar...) se mantienen igual
@@ -863,7 +947,24 @@ namespace ModernMenuUI
 
         private void dgvProductos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // 1. Validar que no sea clic en la cabecera (-1)
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow fila = dgvProductos.Rows[e.RowIndex];
+
+            // CAMBIO: La celda 0 ahora tiene el código de barras, así que lo asignamos directo
+            if (fila.Cells[0].Value != null)
+                txtCodigo.Text = fila.Cells[0].Value.ToString(); // Muestra BARRA
+
+            if (fila.Cells[1].Value != null)
+                txtProducto.Text = fila.Cells[1].Value.ToString();
+
+            if (fila.Cells[2].Value != null)
+                txtPrecio.Text = fila.Cells[2].Value.ToString();
+
+            nudCantidad.Value = 1;
+            nudCantidad.Focus();
+            nudCantidad.Select(0, nudCantidad.Text.Length);
+            /*// 1. Validar que no sea clic en la cabecera (-1)
             if (e.RowIndex < 0) return;
 
             // 2. Obtener la fila donde se hizo clic
@@ -882,7 +983,7 @@ namespace ModernMenuUI
             // 4. Preparar la cantidad y el foco
             nudCantidad.Value = 1;
             nudCantidad.Focus();
-            nudCantidad.Select(0, nudCantidad.Text.Length);
+            nudCantidad.Select(0, nudCantidad.Text.Length);*/
         }
 
         private void nudCantidad_KeyPress(object sender, KeyPressEventArgs e)
