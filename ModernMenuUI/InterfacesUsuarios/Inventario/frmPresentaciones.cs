@@ -1,65 +1,110 @@
-﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados.Productos;
+﻿using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
-using Supabase;
-using Supabase.Realtime;
+using ModernMenuUI.ClasesUI; // Necesario para GestorRealtime
+using ModernMenuUI.ClasesUI.Extenciones; // Si usas la extensión de doble buffer
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmPresentaciones : Form
     {
+        #region 1. Campos y Dependencias
         private readonly PresentacionRepositorio presentacionRepositorio;
+        private readonly GestorRealtime<Presentacion> _gestorRealtime; // Implementación del Gestor
+
         private List<Presentacion> _listaMaestraPresentaciones = new List<Presentacion>();
-        private RealtimeChannel? _presentacionesSubscription;
-        private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
-        private Supabase.Client? _supabaseClient;
 
         public Presentacion PresentacionSeleccionada { get; private set; }
+        #endregion
 
+        #region 2. Constructores
         public frmPresentaciones()
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
-            presentacionRepositorio = new PresentacionRepositorio();
-            dgvPresentaciones.AutoGenerateColumns = false;
-            btnAgregarPresentacion.Visible = false;
-            btnModificarPresentacion.Visible = false;
+            ConfigurarFormulario(); // Método auxiliar para no repetir código
 
-            this.FormClosing += frmPresentaciones_FormClosing;
+            // Inicializamos repositorios y gestor
+            presentacionRepositorio = new PresentacionRepositorio();
+            _gestorRealtime = new GestorRealtime<Presentacion>();
+
+            ConfigurarRealtime();
         }
 
-        // Si quieres una sobrecarga tipo 'solo selección' como en marcas
+        // Sobrecarga para modo 'Solo Selección'
         public frmPresentaciones(bool soloSeleccion)
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
+            ConfigurarFormulario();
+
             presentacionRepositorio = new PresentacionRepositorio();
-            dgvPresentaciones.AutoGenerateColumns = false;
-            this.FormClosing += frmPresentaciones_FormClosing;
+            _gestorRealtime = new GestorRealtime<Presentacion>();
 
             if (soloSeleccion)
             {
-              
                 btnSeleccionarPresentacion.Visible = false;
-               
+                // Ajusta aquí si necesitas ocultar más botones en modo selección
             }
-            FormBorderStyle = FormBorderStyle.None; 
+            FormBorderStyle = FormBorderStyle.None;
+
+            ConfigurarRealtime();
         }
 
+        private void ConfigurarFormulario()
+        {
+            this.DoubleBuffered = true;
+            // Si tienes la extensión de ModernMenuUI activada:
+            // dgvPresentaciones.ActivarDobleBuffer(); 
+            dgvPresentaciones.AutoGenerateColumns = false;
+
+            // Ocultar botones por defecto (según tu código original)
+            btnAgregarPresentacion.Visible = false;
+            btnModificarPresentacion.Visible = false;
+        }
+
+        private void ConfigurarRealtime()
+        {
+            // Suscripción a eventos del Gestor (Igual que en Productos)
+            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
+            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+        }
+        #endregion
+
+        #region 3. Eventos de Ciclo de Vida (Load / Closing)
         private async void frmPresentaciones_Load(object sender, EventArgs e)
         {
-            _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-
+            // Carga inicial de datos
             await CargarPresentacionesMaestras();
             RefrescarGrid();
-            await IniciarSuscripcionPresentaciones();
+
+            // Iniciar suscripción Realtime
+            await _gestorRealtime.SuscribirAsync();
+        }
+
+        private async void frmPresentaciones_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Limpieza de suscripción al cerrar
+            await _gestorRealtime.DesuscribirAsync();
+        }
+        #endregion
+
+        #region 4. Lógica de Carga y Actualización
+        private void RecargarInterfazSafe()
+        {
+            // Método seguro para actualizar la UI desde el hilo de Realtime
+            if (!this.IsDisposed && this.IsHandleCreated)
+            {
+                this.BeginInvoke((MethodInvoker)(async () =>
+                {
+                    await CargarPresentacionesMaestras();
+                    RefrescarGrid();
+                }));
+            }
         }
 
         private async Task CargarPresentacionesMaestras()
@@ -88,9 +133,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             this.Cursor = Cursors.WaitCursor;
 
             bool? estado = null;
-            // Ajusta los nombres de los radio buttons según tu diseñador:
+
             if (rbMostrarHabilitados.Checked) estado = true;
             if (rbMostrarDeshabilitados.Checked) estado = false;
+            // Si rbMostrarTodos está marcado, estado queda null
 
             List<Presentacion> listaFiltrada;
 
@@ -111,83 +157,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             this.Cursor = Cursors.Default;
         }
+        #endregion
 
-        private async Task DesecharSuscripcion()
-        {
-            if (_presentacionesSubscription != null)
-            {
-                try
-                {
-                    await Task.Run(() => _presentacionesSubscription.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción de Presentaciones desechada.");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción Presentaciones: {ex.Message}");
-                }
-
-                _presentacionesSubscription = null;
-            }
-        }
-
-        private async Task IniciarSuscripcionPresentaciones()
-        {
-            await DesecharSuscripcion();
-
-            try
-            {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
-
-                _presentacionesSubscription = await _supabaseClient.From<Presentacion>()
-                    .On(ListenType.All, (sender, change) =>
-                    {
-                        try
-                        {
-                            if (this == null || this.IsDisposed || !this.IsHandleCreated) return;
-
-                            this.BeginInvoke((MethodInvoker)(async () =>
-                            {
-                                if (this.IsDisposed) return;
-                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en Presentaciones.");
-
-                                // 1. Recargar la lista maestra
-                                await CargarPresentacionesMaestras();
-                                // 2. Refrescar grid
-                                RefrescarGrid();
-                            }));
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime Presentaciones: {ex.Message}");
-                        }
-                    });
-
-                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime (Presentaciones) creada.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime (Presentaciones): {ex.Message}");
-            }
-        }
-
-        // --- MANEJO DE CONEXIÓN (igual que en frmMarcas) ---
-        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
-        {
-            if (!this.IsHandleCreated || this.IsDisposed) return;
-
-            if (status == NetworkStatus.Internet)
-            {
-                this.BeginInvoke((MethodInvoker)(async () =>
-                {
-                    if (this.IsDisposed) return;
-                    System.Diagnostics.Debug.WriteLine("Red recuperada. Recargando Presentaciones y Realtime...");
-                    await CargarPresentacionesMaestras();
-                    RefrescarGrid();
-                    await IniciarSuscripcionPresentaciones();
-                }));
-            }
-        }
-
+        #region 5. Eventos de UI (Filtros y Selección)
         private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
         {
             if (rbMostrarHabilitados.Checked) RefrescarGrid();
@@ -223,15 +195,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
-        private async void frmPresentaciones_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            await DesecharSuscripcion();
-            _monitorConexion.EstadoDeRedCambiado -= MonitorConexion_EstadoDeRedCambiado;
-        }
-
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+        #endregion
     }
 }
