@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaDeDatos.Modelados.Productos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmAgregarEditarCategoria : Form
     {
+        public frmAgregarEditarCategoria(Categoria _categoriaSeleccionada)
+        {
+            InitializeComponent();
+        }
+
         public frmAgregarEditarCategoria()
         {
             InitializeComponent();

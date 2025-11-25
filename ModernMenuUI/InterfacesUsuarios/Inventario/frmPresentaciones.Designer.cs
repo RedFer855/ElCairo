@@ -53,6 +53,10 @@
             btnSeleccionarPresentacion = new Button();
             btnSalir = new Button();
             panel1 = new Panel();
+            pnlLimpiarFiltros = new Panel();
+            btnLimpiarFiltros = new Button();
+            pbxClean = new PictureBox();
+            lstSugerencias = new ListBox();
             panelBusqueda.SuspendLayout();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
@@ -60,6 +64,8 @@
             gbxEstado.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
+            pnlLimpiarFiltros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxClean).BeginInit();
             SuspendLayout();
             // 
             // panelBusqueda
@@ -72,7 +78,7 @@
             panelBusqueda.MaximumSize = new Size(700, 43);
             panelBusqueda.MinimumSize = new Size(330, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(487, 43);
+            panelBusqueda.Size = new Size(495, 43);
             panelBusqueda.TabIndex = 46;
             // 
             // txtBuscar
@@ -84,8 +90,10 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Presentaciones...";
-            txtBuscar.Size = new Size(394, 20);
+            txtBuscar.Size = new Size(402, 20);
             txtBuscar.TabIndex = 1;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
             // 
             // btnbuscar
             // 
@@ -95,7 +103,7 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(418, 12);
+            btnbuscar.Location = new Point(426, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
@@ -238,7 +246,6 @@
             rbMostrarDeshabilitados.TabIndex = 30;
             rbMostrarDeshabilitados.Text = "Deshabilitados";
             rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
-            rbMostrarDeshabilitados.CheckedChanged += rbMostrarDeshabilitados_CheckedChanged;
             // 
             // rbMostrarTodos
             // 
@@ -249,7 +256,6 @@
             rbMostrarTodos.TabIndex = 29;
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
-            rbMostrarTodos.CheckedChanged += rbMostrarTodos_CheckedChanged;
             // 
             // rbMostrarHabilitados
             // 
@@ -262,7 +268,6 @@
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
             rbMostrarHabilitados.UseVisualStyleBackColor = true;
-            rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
             // btnAgregarPresentacion
             // 
@@ -335,12 +340,66 @@
             panel1.Size = new Size(678, 291);
             panel1.TabIndex = 43;
             // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(523, 11);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(166, 43);
+            pnlLimpiarFiltros.TabIndex = 47;
+            pnlLimpiarFiltros.Visible = false;
+            // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(3, 5);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(117, 32);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(121, 8);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(45, 24);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(30, 44);
+            lstSugerencias.MinimumSize = new Size(243, 22);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(402, 22);
+            lstSugerencias.TabIndex = 48;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            // 
             // frmPresentaciones
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(702, 476);
+            Controls.Add(lstSugerencias);
+            Controls.Add(pnlLimpiarFiltros);
             Controls.Add(panelBusqueda);
             Controls.Add(gbxEstado);
             Controls.Add(flowLayoutPanel1);
@@ -363,6 +422,8 @@
             gbxEstado.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            pnlLimpiarFiltros.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxClean).EndInit();
             ResumeLayout(false);
         }
 
@@ -387,5 +448,9 @@
         private DataGridViewTextBoxColumn NombrePresentacion;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewCheckBoxColumn EstadoPresentacion;
+        private Panel pnlLimpiarFiltros;
+        private Button btnLimpiarFiltros;
+        private PictureBox pbxClean;
+        private ListBox lstSugerencias;
     }
 }

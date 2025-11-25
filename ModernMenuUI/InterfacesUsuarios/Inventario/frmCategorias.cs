@@ -2,7 +2,8 @@
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
-using Supabase.Realtime.PostgresChanges;
+using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ServiciosUI;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,49 +15,65 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmCategorias : Form
     {
-        private GestorRealtime<Categoria> _gestorRealtime;
-        private CategoriaRepositorio _categoriaRepositorio;
-        private List<Categoria> _listaMaestraCategorias = new List<Categoria>();
-        public Categoria CategoriaSeleccionada { get; private set; }
+        #region 1. Campos y Dependencias
+        private readonly CategoriaRepositorio _categoriaRepositorio;
+        private readonly GestorRealtime<Categoria> _gestorRealtime;
+        private BuscadorInteractivo<Categoria> _buscadorCtrl;
 
+        private List<Categoria> _listaCompletaCategorias = new List<Categoria>();
+
+        private Categoria _categoriaSeleccionada;
+        public Categoria CategoriaSeleccionada { get; private set; }
+        #endregion
+
+        #region 2. Constructores
         public frmCategorias()
         {
             InitializeComponent();
             ConfigurarFormulario();
+
+            _categoriaRepositorio = new CategoriaRepositorio();
+            _gestorRealtime = new GestorRealtime<Categoria>();
+
             btnAgregarCategoria.Visible = false;
             btnModificarCategoria.Visible = false;
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
+
+            ConfigurarRealtime();
         }
 
         public frmCategorias(bool tipo)
         {
             InitializeComponent();
             ConfigurarFormulario();
+
+            _categoriaRepositorio = new CategoriaRepositorio();
+            _gestorRealtime = new GestorRealtime<Categoria>();
+
             FormBorderStyle = FormBorderStyle.None;
             btnSeleccionarCategoria.Visible = false;
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
+
+            ConfigurarRealtime();
         }
 
         private void ConfigurarFormulario()
         {
             this.DoubleBuffered = true;
-            _categoriaRepositorio = new CategoriaRepositorio();
             dgvCategorias.AutoGenerateColumns = false;
-            this.FormClosing += frmCategorias_FormClosing;
+            ConfigurarEventosUnificados();
 
-            _gestorRealtime = new GestorRealtime<Categoria>();
-
-            _gestorRealtime.OnCambioBaseDatos += (change) =>
-            {
-                System.Diagnostics.Debug.WriteLine($"Cambio BD: {change.Event}");
-                RecargarInterfaz();
-            };
-
-            _gestorRealtime.OnReconexionExitosa += () =>
-            {
-                System.Diagnostics.Debug.WriteLine("Reconexión exitosa -> Recargando Grid");
-                RecargarInterfaz();
-            };
+            // IMPORTANTE: NO agregamos TextChanged para que no filtre al escribir
         }
 
+        private void ConfigurarRealtime()
+        {
+            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
+            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+        }
+        #endregion
+
+        #region 3. Carga y Lógica Principal
         private async void frmCategorias_Load(object sender, EventArgs e)
         {
             if (!rbMostrarTodos.Checked && !rbMostrarHabilitados.Checked && !rbMostrarDeshabilitados.Checked)
@@ -64,9 +81,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 rbMostrarTodos.Checked = true;
             }
 
-            await CargarCategoriasMaestras();
-            RefrescarGrid();
-
+            await InicializarDatosYBuscador();
             await _gestorRealtime.SuscribirAsync();
         }
 
@@ -75,80 +90,152 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             await _gestorRealtime.DesuscribirAsync();
         }
 
-        private void RecargarInterfaz()
+        private void RecargarInterfazSafe()
         {
-            if (this.IsDisposed || !this.IsHandleCreated) return;
-
-            this.BeginInvoke((MethodInvoker)(async () =>
-            {
-                if (this.IsDisposed) return;
-                await CargarCategoriasMaestras();
-                RefrescarGrid();
-            }));
+            if (!this.IsDisposed && this.IsHandleCreated)
+                this.BeginInvoke((MethodInvoker)(async () => await CargarCategoriasMaestras()));
         }
 
-        private async Task CargarCategoriasMaestras()
+        private async Task InicializarDatosYBuscador()
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-                _listaMaestraCategorias = await _categoriaRepositorio.ObtenerTodasLasCategorias(null);
+                _listaCompletaCategorias = await _categoriaRepositorio.ObtenerTodasLasCategorias(null);
+
+                _buscadorCtrl = new BuscadorInteractivo<Categoria>(
+                    txtBuscar,
+                    lstSugerencias,
+                    dgvCategorias,
+                    _listaCompletaCategorias,
+                    (c, term) => c.IdCategoria.ToString() == term,
+                    (c, term) => c.NombreCategoria != null && c.NombreCategoria.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
+                    (c) => c.NombreCategoria,
+                    (buscando) =>
+                    {
+                        if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = buscando;
+                        // Solo refrescamos si LIMPIA la búsqueda (buscando = false)
+                        if (!buscando) RefrescarGrid();
+                    },
+                    (txt) => false
+                );
+
+                RefrescarGrid();
             }
             catch (Exception ex)
             {
-                // Opcional: Solo mostrar error si NO es cancelación de tarea
-                System.Diagnostics.Debug.WriteLine($"Error carga: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
-            finally
-            {
-                this.Cursor = Cursors.Default;
-            }
+            finally { this.Cursor = Cursors.Default; }
+        }
+
+        private async Task CargarCategoriasMaestras()
+        {
+            _listaCompletaCategorias = await _categoriaRepositorio.ObtenerTodasLasCategorias(null);
+            if (_buscadorCtrl != null) _buscadorCtrl.ActualizarDatosMaestros(_listaCompletaCategorias);
+            RefrescarGrid();
         }
 
         private void RefrescarGrid()
         {
+            if (_listaCompletaCategorias == null) return;
             this.Cursor = Cursors.WaitCursor;
 
-            bool? estado = null;
-            if (rbMostrarHabilitados.Checked) estado = true;
-            if (rbMostrarDeshabilitados.Checked) estado = false;
+            // 1. Filtro Estado
+            IEnumerable<Categoria> query = _listaCompletaCategorias;
 
-            List<Categoria> listaFiltrada;
+            if (rbMostrarHabilitados.Checked)
+                query = query.Where(c => c.EstadoCategoria == true);
+            else if (rbMostrarDeshabilitados.Checked)
+                query = query.Where(c => c.EstadoCategoria == false);
 
-            if (estado == null)
-                listaFiltrada = _listaMaestraCategorias;
-            else
-                listaFiltrada = _listaMaestraCategorias.Where(c => c.EstadoCategoria == estado).ToList();
+            // Actualizar buscador
+            if (_buscadorCtrl != null) _buscadorCtrl.ActualizarDatosMaestros(query.ToList());
 
+            // 2. Filtro Texto (Solo aplica cuando llamamos a este método manualmente)
+            string texto = txtBuscar.Text.Trim();
+            if (!string.IsNullOrEmpty(texto))
+            {
+                query = query.Where(c => c.NombreCategoria != null &&
+                                         c.NombreCategoria.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            // 3. Grid
+            var listaFinal = query.ToList();
             dgvCategorias.DataSource = null;
-            dgvCategorias.DataSource = listaFiltrada;
+            dgvCategorias.DataSource = listaFinal;
 
-            if (dgvCategorias.Rows.Count > 0)
-                dgvCategorias.ClearSelection();
+            // Botón Limpiar
+            if (pnlLimpiarFiltros != null)
+            {
+                bool hayFiltros = !rbMostrarHabilitados.Checked || !string.IsNullOrEmpty(texto);
+                pnlLimpiarFiltros.Visible = hayFiltros;
+            }
 
+            if (dgvCategorias.Rows.Count > 0) dgvCategorias.ClearSelection();
             this.Cursor = Cursors.Default;
         }
 
-        private void btnSalir_Click(object sender, EventArgs e)
+        private void ConfigurarEventosUnificados()
         {
-            this.Close();
+            rbMostrarTodos.CheckedChanged += (s, e) => { if (((RadioButton)s).Checked) RefrescarGrid(); };
+            rbMostrarHabilitados.CheckedChanged += (s, e) => { if (((RadioButton)s).Checked) RefrescarGrid(); };
+            rbMostrarDeshabilitados.CheckedChanged += (s, e) => { if (((RadioButton)s).Checked) RefrescarGrid(); };
+        }
+        #endregion
+
+        #region 4. Eventos Buscador (Lógica Mantenida + Refresco Manual)
+
+        // Eventos delegados al BuscadorInteractivo
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorCtrl.ManejarKeyUpAsync(e);
+
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorCtrl.ManejarKeyDown(e);
+
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) => _buscadorCtrl.ManejarClickLista();
+
+        private void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) _buscadorCtrl.ManejarClickLista();
+        }
+        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
+        {
+            _buscadorCtrl.LimpiarBusqueda();
+            rbMostrarHabilitados.Checked = true;
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
+            RefrescarGrid();
+        }
+        #endregion
+
+        #region 5. CRUD y Selección
+        private async void btnAgregarCategoria_Click(object sender, EventArgs e)
+        {
+            if (new frmAgregarEditarCategoria().ShowDialog() == DialogResult.OK) await CargarCategoriasMaestras();
         }
 
-        // --- EVENTOS DE UI (RadioButtons, Clicks) ---
-        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e) 
-        { 
-            if (rbMostrarHabilitados.Checked) RefrescarGrid(); 
-        }
-        private void rbMostrarDeshabilitados_CheckedChanged(object sender, EventArgs e) 
-        { 
-            if (rbMostrarDeshabilitados.Checked) RefrescarGrid(); 
-        }
-        private void rbMostrarTodos_CheckedChanged_1(object sender, EventArgs e) 
-        { 
-            if (rbMostrarTodos.Checked) RefrescarGrid(); 
+        private async void btnModificarCategoria_Click(object sender, EventArgs e)
+        {
+            if (_categoriaSeleccionada != null)
+            {
+                if (new frmAgregarEditarCategoria(_categoriaSeleccionada).ShowDialog() == DialogResult.OK) await CargarCategoriasMaestras();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una categoría.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
-        private void SeleccionarRegistro()
+        private void dgvCategorias_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvCategorias.SelectedRows.Count > 0)
+                _categoriaSeleccionada = dgvCategorias.SelectedRows[0].DataBoundItem as Categoria;
+            else
+                _categoriaSeleccionada = null;
+        }
+
+        private void btnSeleccionarCategoria_Click(object sender, EventArgs e) => ConfirmarSeleccion();
+        private void dgvCategorias_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => ConfirmarSeleccion();
+
+        private void ConfirmarSeleccion()
         {
             if (dgvCategorias.SelectedRows.Count > 0)
             {
@@ -158,16 +245,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
-        private void btnSeleccionarCategoria_Click(object sender, EventArgs e) => SeleccionarRegistro();
-
-        private void dgvCategorias_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0) SeleccionarRegistro();
-        }
-
-        private void btnAgregarCategoria_Click(object sender, EventArgs e)
-        {
-           
-        }
+        private void btnSalir_Click(object sender, EventArgs e) => this.Close();
+        #endregion
     }
 }
