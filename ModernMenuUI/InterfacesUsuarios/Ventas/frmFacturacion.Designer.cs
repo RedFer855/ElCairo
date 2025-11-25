@@ -490,6 +490,7 @@
             txtBuscar.Size = new Size(630, 24);
             txtBuscar.TabIndex = 1;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
             // 
             // buscar
             // 
@@ -583,6 +584,7 @@
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProductos.Size = new Size(695, 212);
             dgvProductos.TabIndex = 0;
+            dgvProductos.CellClick += dgvProductos_CellClick;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
             // Codigos
@@ -641,11 +643,12 @@
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
             nudCantidad.Location = new Point(102, 178);
             nudCantidad.Margin = new Padding(4);
-            nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
             nudCantidad.Size = new Size(74, 40);
             nudCantidad.TabIndex = 21;
             nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            nudCantidad.KeyPress += nudCantidad_KeyPress;
+            nudCantidad.Leave += nudCantidad_Leave;
             // 
             // label9
             // 
