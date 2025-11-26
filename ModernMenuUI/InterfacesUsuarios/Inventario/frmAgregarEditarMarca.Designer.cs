@@ -41,8 +41,8 @@
             pbxImagenMarca = new PictureBox();
             txtNombreMarca = new TextBox();
             gbxEstado = new GroupBox();
-            rbInactivo = new RadioButton();
-            rbActivo = new RadioButton();
+            rbdInactivo = new RadioButton();
+            rbdActivo = new RadioButton();
             lblEstado = new Label();
             label8 = new Label();
             label2 = new Label();
@@ -163,7 +163,7 @@
             txtProveedor.Location = new Point(150, 47);
             txtProveedor.Name = "txtProveedor";
             txtProveedor.PlaceholderText = "(Seleccione Buscar)";
-            txtProveedor.Size = new Size(201, 20);
+            txtProveedor.Size = new Size(201, 24);
             txtProveedor.TabIndex = 24;
             // 
             // btnBuscarProv
@@ -197,13 +197,13 @@
             txtNombreMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNombreMarca.Location = new Point(150, 20);
             txtNombreMarca.Name = "txtNombreMarca";
-            txtNombreMarca.Size = new Size(255, 20);
+            txtNombreMarca.Size = new Size(255, 24);
             txtNombreMarca.TabIndex = 1;
             // 
             // gbxEstado
             // 
-            gbxEstado.Controls.Add(rbInactivo);
-            gbxEstado.Controls.Add(rbActivo);
+            gbxEstado.Controls.Add(rbdInactivo);
+            gbxEstado.Controls.Add(rbdActivo);
             gbxEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(150, 73);
@@ -212,27 +212,27 @@
             gbxEstado.TabIndex = 7;
             gbxEstado.TabStop = false;
             // 
-            // rbInactivo
+            // rbdInactivo
             // 
-            rbInactivo.AutoSize = true;
-            rbInactivo.Location = new Point(119, 15);
-            rbInactivo.Name = "rbInactivo";
-            rbInactivo.Size = new Size(82, 23);
-            rbInactivo.TabIndex = 8;
-            rbInactivo.TabStop = true;
-            rbInactivo.Text = "Inactivo";
-            rbInactivo.UseVisualStyleBackColor = true;
+            rbdInactivo.AutoSize = true;
+            rbdInactivo.Location = new Point(119, 15);
+            rbdInactivo.Name = "rbdInactivo";
+            rbdInactivo.Size = new Size(100, 28);
+            rbdInactivo.TabIndex = 8;
+            rbdInactivo.TabStop = true;
+            rbdInactivo.Text = "Inactivo";
+            rbdInactivo.UseVisualStyleBackColor = true;
             // 
-            // rbActivo
+            // rbdActivo
             // 
-            rbActivo.AutoSize = true;
-            rbActivo.Location = new Point(6, 15);
-            rbActivo.Name = "rbActivo";
-            rbActivo.Size = new Size(70, 23);
-            rbActivo.TabIndex = 7;
-            rbActivo.TabStop = true;
-            rbActivo.Text = "Activo";
-            rbActivo.UseVisualStyleBackColor = true;
+            rbdActivo.AutoSize = true;
+            rbdActivo.Location = new Point(6, 15);
+            rbdActivo.Name = "rbdActivo";
+            rbdActivo.Size = new Size(84, 28);
+            rbdActivo.TabIndex = 7;
+            rbdActivo.TabStop = true;
+            rbdActivo.Text = "Activo";
+            rbdActivo.UseVisualStyleBackColor = true;
             // 
             // lblEstado
             // 
@@ -241,7 +241,7 @@
             lblEstado.ForeColor = Color.FromArgb(87, 99, 110);
             lblEstado.Location = new Point(87, 91);
             lblEstado.Name = "lblEstado";
-            lblEstado.Size = new Size(57, 18);
+            lblEstado.Size = new Size(70, 23);
             lblEstado.TabIndex = 18;
             lblEstado.Text = "Estado:";
             // 
@@ -252,7 +252,7 @@
             label8.ForeColor = Color.FromArgb(87, 99, 110);
             label8.Location = new Point(19, 21);
             label8.Name = "label8";
-            label8.Size = new Size(125, 18);
+            label8.Size = new Size(158, 23);
             label8.TabIndex = 12;
             label8.Text = "Nombre de Marca:";
             // 
@@ -263,13 +263,13 @@
             label2.ForeColor = Color.FromArgb(87, 99, 110);
             label2.Location = new Point(66, 51);
             label2.Name = "label2";
-            label2.Size = new Size(78, 18);
+            label2.Size = new Size(99, 23);
             label2.TabIndex = 14;
             label2.Text = "Proveedor:";
             // 
             // frmAgregarEditarMarca
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(571, 238);
             Controls.Add(panel2);
@@ -301,8 +301,8 @@
         private Button btnVolver;
         private Button btnGuardarMarca;
         private GroupBox gbxEstado;
-        private RadioButton rbInactivo;
-        private RadioButton rbActivo;
+        private RadioButton rbdInactivo;
+        private RadioButton rbdActivo;
         private Label lblEstado;
         private Label label8;
         private Label label2;

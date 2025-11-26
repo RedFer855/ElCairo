@@ -4,6 +4,7 @@ using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Modelados.Ventas;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -83,7 +84,7 @@ namespace CapaServiciosSeguridadValidacion
             new List<Func<MarcaInsertar, (bool Error, string Mensaje)>>()
             {
         // Aquí validamos que el nombre no esté vacío
-                m => ValidarCampoVacio(m.NombreMarca, "el nombre de la marca")
+                m => ValidarNombreApellido(m.NombreMarca, "el nombre de la marca")
             };
 
         public static (bool Error, string Mensaje) EjecutarValidacionesMarca(MarcaInsertar _marca)
@@ -133,6 +134,10 @@ namespace CapaServiciosSeguridadValidacion
             if (string.IsNullOrWhiteSpace(codigo))
                 return (true, "El código de barras no puede estar vacío.");
 
+            if (codigo.Contains(" ") || codigo.Contains("  "))
+                return (true, $"El codigo no puede contener espacios.");
+
+
             if (!codigo.All(char.IsDigit))
                 return (true, "El código de barras solo debe contener números (0-9).");
 
@@ -169,6 +174,8 @@ namespace CapaServiciosSeguridadValidacion
         {
             if (string.IsNullOrWhiteSpace(valor))
                 return (true, $"Debe ingresar {nombrecampo}.");
+            if (valor.Contains(" ") || valor.Contains("  "))
+                return (true, $"{nombrecampo} no puede contener espacios.");
 
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
@@ -181,6 +188,8 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} no puede estar vacío.");
             if (valor.Length > 9 || valor.Length < 8)
                 return (true, $"{nombrecampo} debe tener 8 dígitos.");
+            if (valor.Contains(" ") || valor.Contains("  "))
+                return (true, $"{nombrecampo} no puede contener espacios.");
 
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
@@ -199,6 +208,9 @@ namespace CapaServiciosSeguridadValidacion
                 if (i < 0) return (true, $"{nombrecampo} no puede ser negativo.");
                 return (false, "");
             }
+            if(valor.Contains(" ") || valor.Contains("  "))
+                return (true, $"{nombrecampo} no puede contener espacios.");
+
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
             return (false, "");
@@ -212,6 +224,13 @@ namespace CapaServiciosSeguridadValidacion
             {
                 return (true, $"{nombrecampo} debe de tener minimo 2 letras.");
             }
+            
+            if(valor.Any(char.IsDigit))
+                return (true, $"{nombrecampo} no puede contener números.");
+            
+            if(valor.Contains("  "))
+                return (true, $"{nombrecampo} no puede contener multiples espacios.");
+
             if (valor.Length > 150)
                 return (true, $"{nombrecampo} no puede tener más de 100 caracteres.");
             return (false, "");
@@ -226,6 +245,8 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} no es un correo electrónico válido.");
             if (valor.Length > 250)
                 return (true, $"{nombrecampo} no puede tener más de 250 caracteres.");
+            if (valor.Contains(" ") || valor.Contains("  "))
+                return (true, $"{nombrecampo} no puede contener espacios.");
 
             return (false, "");
         }
@@ -244,14 +265,12 @@ namespace CapaServiciosSeguridadValidacion
         {
             if (valor == null)
                 return (true, $"{nombrecampo} no puede estar vacío.");
-            if (valor.Length < 14 || valor.Length > 14)
-            {
-                return (true, $"{nombrecampo} debe de ser de 14 digitos");
-            }
-            if (int.TryParse(valor.ToString(), out int i))
-            {
-                if (i < 0) return (true, $"{nombrecampo} no puede ser negativo.");
-            }
+            if (valor.Length < 14 || valor.Length > 14)            
+                return (true, $"{nombrecampo} debe de ser de 14 digitos");            
+            if (int.TryParse(valor.ToString(), out int i))          
+                if (i < 0) return (true, $"{nombrecampo} no puede ser negativo.");            
+            if (valor.Contains(" ") || valor.Contains("  "))
+                return (true, $"{nombrecampo} no puede contener espacios.");
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
 
@@ -263,6 +282,9 @@ namespace CapaServiciosSeguridadValidacion
             string contraseniaRegex = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
             if (!Regex.IsMatch(valor,contraseniaRegex))
                 return(true, $"{nombrecampo} debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+            if (valor.Contains(" ") || valor.Contains("  "))
+                return (true, $"{nombrecampo} no puede contener espacios.");
+
 
             return (false, "");
         }

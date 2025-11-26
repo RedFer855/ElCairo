@@ -41,9 +41,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             // Cargar RadioButtons
             if (_marcaSeleccionada.EstadoMarca)
-                rbActivo.Checked = true;
+                rbdActivo.Checked = true;
             else
-                rbInactivo.Checked = true;
+                rbdInactivo.Checked = true;
         }
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
@@ -86,7 +86,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 MarcaInsertar _marcaTemporal = new MarcaInsertar
                 {
                     NombreMarca = txtNombreMarca.Text.Trim(),
-                    IdProveedor = _idProveedorSeleccionado
+                    IdProveedor = _idProveedorSeleccionado,
+                    EstadoMarca = rbdActivo.Checked
                 };
 
                 // Validaciones
@@ -94,6 +95,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 if (resultado.Error)
                 {
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (!rbdActivo.Checked && !rbdInactivo.Checked)
+                {
+                    MessageBox.Show("Debe seleccionar un estado.", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -105,8 +112,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 if (_marcaSeleccionada == null)
                 {
                     // === MODO INSERTAR ===
-                    _marcaTemporal.EstadoMarca = rbActivo.Checked;
-                    _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
+                    _marcaTemporal.EstadoMarca = rbdActivo.Checked;
+                    _marcaTemporal.IdEstado = rbdInactivo.Checked ? 2 : 1;
 
                     await MarcaRepositorio.InsertarMarca(_marcaTemporal);
                     MessageBox.Show("Marca guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -119,8 +126,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     _marcaTemporal.IdMarca = _marcaSeleccionada.IdMarca;
 
                     // 2. Asignar el resto de estados
-                    _marcaTemporal.EstadoMarca = rbActivo.Checked;
-                    _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
+                    _marcaTemporal.EstadoMarca = rbdActivo.Checked;
+                    _marcaTemporal.IdEstado = rbdInactivo.Checked ? 2 : 1;
 
                     // 3. Llamar al método nuevo
                     await MarcaRepositorio.ActualizarMarca(_marcaTemporal);
