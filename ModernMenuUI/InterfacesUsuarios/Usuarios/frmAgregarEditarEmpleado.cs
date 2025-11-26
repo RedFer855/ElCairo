@@ -60,6 +60,12 @@ namespace ModernMenuUI
                         btnGuardarEmpleado.Enabled = true; 
                         return; 
                     }
+                    if (!rbdActivo.Checked && !rbdInactivo.Checked)
+                    {
+                        MessageBox.Show("Debe seleccionar un estado.", "Validación",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     await EmpleadoRepositorio.InsertarEmpleado(nuevoEmpleado);
 
                     MessageBox.Show("¡Empleado guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);

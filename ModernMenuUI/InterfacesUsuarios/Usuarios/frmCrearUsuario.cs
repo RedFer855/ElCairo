@@ -1,6 +1,7 @@
 ﻿using CapaDeDatos.Modelados;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -55,24 +56,30 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 
         private async void btnGuardarEmpleado_Click(object sender, EventArgs e)
         {
-            if (txtCorreo.Text == "" || txtContrasenia.Text == "")
-            {
-                MessageBox.Show("Correo o Contraseña vacios, ingrese un valor valido");
-            }
-            else
+
+
+            try
             {
                 string correo = txtCorreo.Text.Trim();
                 string contra = txtContrasenia.Text.Trim();
 
                 UsuarioRepositorio user = new UsuarioRepositorio();
 
+                var v1 = ServicioValidacionesIngresoDatos.ValidarContrasenia(txtContrasenia.Text, "La contraseña");
+                if (v1.Error) { MessageBox.Show(v1.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarEmpleado.Enabled = true; return; }
+
                 await user.RegistrarUsuario(correo, contra);
-                MessageBox.Show("Confirme su correo con el link de validación enviado\n al correo relacionado.");
-
-                //this.Close();
-
+                MessageBox.Show("Confirme su correo con el link de validación enviado\n al correo relacionado.","Mensaje",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar el usuario: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (!this.IsDisposed)
+                    btnGuardarEmpleado.Enabled = true;
+            }
         }
     }
 }

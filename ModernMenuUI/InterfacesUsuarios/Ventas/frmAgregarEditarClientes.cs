@@ -36,81 +36,78 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
 
         private async void btnGuardarCliente_Click(object sender, EventArgs e)
         {
-            btnGuardarCliente.Enabled = false;
-            if (txtCorreo.Text ==""||txtDireccion.Text==""||txtDni.Text==""||txtNombre.Text==""||txtRtn.Text=="")
+            try
             {
-                MessageBox.Show("Ingrese el valor faltante para poder ingresar el cliete");
-            } else {
-                try
+                if (_clienteActual == null)
                 {
-                    // --- Validaciones ---
-                    /*var v1 = ServicioValidacionesIngresoDatos.ValidarCampoVacio(txtNombre.Text, "el nombre");
-                    if (v1.Error) { MessageBox.Show(v1.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarCliente.Enabled = true; return; }
-
-                    var v2 = ServicioValidacionesIngresoDatos.ValidarCampoVacio(txtDni.Text, "el DNI");
-                    if (v2.Error) { MessageBox.Show(v2.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarCliente.Enabled = true; return; }
-
-                    var v3 = ServicioValidacionesIngresoDatos.ValidarEnteroValido(txtDni.Text, "DNI");
-                    if (v3.Error) { MessageBox.Show(v3.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarCliente.Enabled = true; return; }
-
-                    if (!string.IsNullOrWhiteSpace(txtTelefono.Text))
+                    
+                    // === AGREGAR ===
+                    Cliente nuevoCliente = new Cliente
                     {
-                        var v4 = ServicioValidacionesIngresoDatos.ValidarEnteroValido(txtTelefono.Text, "Teléfono");
-                        if (v4.Error) { MessageBox.Show(v4.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarCliente.Enabled = true; return; }
-                    }*/
+                        DniCliente = txtDni.Text.Trim(),
+                        RtnCliente = txtRtn.Text.Trim(),
+                        NombreCliente = txtNombre.Text.Trim(),
+                        TelefonoCliente = txtTelefono.Text.Trim(),
+                        CorreoCliente = txtCorreo.Text.Trim(),
+                        DireccionCliente = txtDireccion.Text.Trim(),
+                        EstadoCliente = rbdActivo.Checked
+                    };
 
-                    if (_clienteActual == null)
+                    var resultadoValidacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesCliente(nuevoCliente);
+
+                    if (resultadoValidacion.Error)
                     {
-                        // === AGREGAR ===
-                        Cliente nuevoCliente = new Cliente
-                        {
-                            NombreCliente = txtNombre.Text.Trim(),
-                            DniCliente = txtDni.Text.Trim(),
-                            RtnCliente = txtRtn.Text.Trim(),
-                            TelefonoCliente = txtTelefono.Text.Trim(),
-                            CorreoCliente = txtCorreo.Text.Trim(),
-                            DireccionCliente = txtDireccion.Text.Trim(),
-                            EstadoCliente = rbdActivo.Checked
-                        };
-
-                        await ClienteRepositorio.InsertarCliente(nuevoCliente);
-
-                        MessageBox.Show("¡Cliente guardado exitosamente!", "Éxito",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        this.Close();
+                        MessageBox.Show(resultadoValidacion.Mensaje, "Validación",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                    else
+                    if (!rbdActivo.Checked && !rbdInactivo.Checked)
                     {
-                        // === EDITAR ===
-                        _clienteActual.NombreCliente = txtNombre.Text.Trim();
-                        _clienteActual.DniCliente = txtDni.Text.Trim();
-                        _clienteActual.RtnCliente = txtRtn.Text.Trim();
-                        _clienteActual.TelefonoCliente = txtTelefono.Text.Trim();
-                        _clienteActual.CorreoCliente = txtCorreo.Text.Trim();
-                        _clienteActual.DireccionCliente = txtDireccion.Text.Trim();
-                        _clienteActual.EstadoCliente = rbdActivo.Checked;
-
-                        await ClienteRepositorio.ActualizarCliente(_clienteActual);
-
-                        MessageBox.Show("¡Cliente actualizado exitosamente!", "Éxito",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        this.Close();
+                        MessageBox.Show("Debe seleccionar un estado.", "Validación",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
+
+                    await ClienteRepositorio.InsertarCliente(nuevoCliente);
+
+                    MessageBox.Show("¡Cliente guardado exitosamente!", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Close();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Error al guardar el cliente: {ex.Message}",
-                        "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    if (!this.IsDisposed)
-                        btnGuardarCliente.Enabled = true;
+                    // === EDITAR ===
+                    _clienteActual.NombreCliente = txtNombre.Text.Trim();
+                    _clienteActual.DniCliente = txtDni.Text.Trim();
+                    _clienteActual.RtnCliente = txtRtn.Text.Trim();
+                    _clienteActual.TelefonoCliente = txtTelefono.Text.Trim();
+                    _clienteActual.CorreoCliente = txtCorreo.Text.Trim();
+                    _clienteActual.DireccionCliente = txtDireccion.Text.Trim();
+                    _clienteActual.EstadoCliente = rbdActivo.Checked;
+
+                    await ClienteRepositorio.ActualizarCliente(_clienteActual);
+
+                    MessageBox.Show("¡Cliente actualizado exitosamente!", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Close();
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar el cliente: {ex.Message}",
+                    "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (!this.IsDisposed)
+                    btnGuardarCliente.Enabled = true;
+            }
         }
+    
+
+        
 
         private void frmAgregarEditarClientes_Load(object sender, EventArgs e)
         {
@@ -176,3 +173,4 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
         }
     }
 }
+
