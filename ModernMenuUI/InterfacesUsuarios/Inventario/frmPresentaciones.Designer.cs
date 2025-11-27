@@ -68,11 +68,12 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(12, 11);
-            panelBusqueda.MaximumSize = new Size(700, 43);
-            panelBusqueda.MinimumSize = new Size(330, 43);
+            panelBusqueda.Location = new Point(15, 14);
+            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.MaximumSize = new Size(875, 54);
+            panelBusqueda.MinimumSize = new Size(412, 54);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(487, 43);
+            panelBusqueda.Size = new Size(609, 54);
             panelBusqueda.TabIndex = 46;
             // 
             // txtBuscar
@@ -81,10 +82,11 @@
             txtBuscar.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(18, 12);
+            txtBuscar.Location = new Point(22, 15);
+            txtBuscar.Margin = new Padding(4, 4, 4, 4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Presentaciones...";
-            txtBuscar.Size = new Size(394, 20);
+            txtBuscar.Size = new Size(492, 24);
             txtBuscar.TabIndex = 1;
             // 
             // btnbuscar
@@ -95,9 +97,10 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(418, 12);
+            btnbuscar.Location = new Point(522, 15);
+            btnbuscar.Margin = new Padding(4, 4, 4, 4);
             btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 20);
+            btnbuscar.Size = new Size(60, 25);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
             // 
@@ -106,9 +109,10 @@
             panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(15, 14);
+            panelCarrito.Location = new Point(19, 18);
+            panelCarrito.Margin = new Padding(4, 4, 4, 4);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(648, 264);
+            panelCarrito.Size = new Size(810, 330);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -117,8 +121,9 @@
             panel10.Controls.Add(dgvPresentaciones);
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
+            panel10.Margin = new Padding(4, 4, 4, 4);
             panel10.Name = "panel10";
-            panel10.Size = new Size(648, 264);
+            panel10.Size = new Size(810, 330);
             panel10.TabIndex = 17;
             // 
             // dgvPresentaciones
@@ -156,6 +161,7 @@
             dgvPresentaciones.EnableHeadersVisualStyles = false;
             dgvPresentaciones.GridColor = Color.FromArgb(189, 215, 238);
             dgvPresentaciones.Location = new Point(0, 0);
+            dgvPresentaciones.Margin = new Padding(4, 4, 4, 4);
             dgvPresentaciones.Name = "dgvPresentaciones";
             dgvPresentaciones.ReadOnly = true;
             dgvPresentaciones.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -171,7 +177,7 @@
             dgvPresentaciones.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvPresentaciones.RowTemplate.Height = 50;
             dgvPresentaciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPresentaciones.Size = new Size(648, 264);
+            dgvPresentaciones.Size = new Size(810, 330);
             dgvPresentaciones.TabIndex = 1;
             dgvPresentaciones.CellDoubleClick += dgvPresentaciones_CellDoubleClick;
             // 
@@ -180,18 +186,20 @@
             IdPresentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             IdPresentacion.DataPropertyName = "IdPresentacionProducto";
             IdPresentacion.HeaderText = "Código";
+            IdPresentacion.MinimumWidth = 6;
             IdPresentacion.Name = "IdPresentacion";
             IdPresentacion.ReadOnly = true;
-            IdPresentacion.Width = 89;
+            IdPresentacion.Width = 106;
             // 
             // NombrePresentacion
             // 
             NombrePresentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             NombrePresentacion.DataPropertyName = "NombrePresentacion";
             NombrePresentacion.HeaderText = "Presentacion";
+            NombrePresentacion.MinimumWidth = 6;
             NombrePresentacion.Name = "NombrePresentacion";
             NombrePresentacion.ReadOnly = true;
-            NombrePresentacion.Width = 131;
+            NombrePresentacion.Width = 159;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -208,11 +216,12 @@
             EstadoPresentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             EstadoPresentacion.DataPropertyName = "EstadoPresentacion";
             EstadoPresentacion.HeaderText = "Estado";
+            EstadoPresentacion.MinimumWidth = 6;
             EstadoPresentacion.Name = "EstadoPresentacion";
             EstadoPresentacion.ReadOnly = true;
             EstadoPresentacion.Resizable = DataGridViewTriState.True;
             EstadoPresentacion.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoPresentacion.Width = 89;
+            EstadoPresentacion.Width = 105;
             // 
             // gbxEstado
             // 
@@ -222,9 +231,11 @@
             gbxEstado.Controls.Add(rbMostrarHabilitados);
             gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
-            gbxEstado.Location = new Point(12, 60);
+            gbxEstado.Location = new Point(15, 75);
+            gbxEstado.Margin = new Padding(4, 4, 4, 4);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(678, 53);
+            gbxEstado.Padding = new Padding(4, 4, 4, 4);
+            gbxEstado.Size = new Size(848, 66);
             gbxEstado.TabIndex = 45;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -232,9 +243,10 @@
             // rbMostrarDeshabilitados
             // 
             rbMostrarDeshabilitados.AutoSize = true;
-            rbMostrarDeshabilitados.Location = new Point(122, 22);
+            rbMostrarDeshabilitados.Location = new Point(152, 28);
+            rbMostrarDeshabilitados.Margin = new Padding(4, 4, 4, 4);
             rbMostrarDeshabilitados.Name = "rbMostrarDeshabilitados";
-            rbMostrarDeshabilitados.Size = new Size(121, 22);
+            rbMostrarDeshabilitados.Size = new Size(149, 27);
             rbMostrarDeshabilitados.TabIndex = 30;
             rbMostrarDeshabilitados.Text = "Deshabilitados";
             rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
@@ -243,9 +255,10 @@
             // rbMostrarTodos
             // 
             rbMostrarTodos.AutoSize = true;
-            rbMostrarTodos.Location = new Point(249, 22);
+            rbMostrarTodos.Location = new Point(311, 28);
+            rbMostrarTodos.Margin = new Padding(4, 4, 4, 4);
             rbMostrarTodos.Name = "rbMostrarTodos";
-            rbMostrarTodos.Size = new Size(120, 22);
+            rbMostrarTodos.Size = new Size(150, 27);
             rbMostrarTodos.TabIndex = 29;
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
@@ -255,9 +268,10 @@
             // 
             rbMostrarHabilitados.AutoSize = true;
             rbMostrarHabilitados.Checked = true;
-            rbMostrarHabilitados.Location = new Point(15, 21);
+            rbMostrarHabilitados.Location = new Point(19, 26);
+            rbMostrarHabilitados.Margin = new Padding(4, 4, 4, 4);
             rbMostrarHabilitados.Name = "rbMostrarHabilitados";
-            rbMostrarHabilitados.Size = new Size(101, 22);
+            rbMostrarHabilitados.Size = new Size(124, 27);
             rbMostrarHabilitados.TabIndex = 28;
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
@@ -269,12 +283,14 @@
             btnAgregarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarPresentacion.ForeColor = SystemColors.ButtonFace;
-            btnAgregarPresentacion.Location = new Point(3, 3);
+            btnAgregarPresentacion.Location = new Point(4, 4);
+            btnAgregarPresentacion.Margin = new Padding(4, 4, 4, 4);
             btnAgregarPresentacion.Name = "btnAgregarPresentacion";
-            btnAgregarPresentacion.Size = new Size(180, 44);
+            btnAgregarPresentacion.Size = new Size(225, 55);
             btnAgregarPresentacion.TabIndex = 35;
             btnAgregarPresentacion.Text = "Agregar Presentación";
             btnAgregarPresentacion.UseVisualStyleBackColor = false;
+            btnAgregarPresentacion.Click += btnAgregarPresentacion_Click;
             // 
             // flowLayoutPanel1
             // 
@@ -283,9 +299,10 @@
             flowLayoutPanel1.Controls.Add(btnModificarPresentacion);
             flowLayoutPanel1.Controls.Add(btnSeleccionarPresentacion);
             flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(12, 416);
+            flowLayoutPanel1.Location = new Point(15, 520);
+            flowLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(677, 51);
+            flowLayoutPanel1.Size = new Size(846, 64);
             flowLayoutPanel1.TabIndex = 44;
             // 
             // btnModificarPresentacion
@@ -293,9 +310,10 @@
             btnModificarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
             btnModificarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnModificarPresentacion.ForeColor = SystemColors.ButtonFace;
-            btnModificarPresentacion.Location = new Point(189, 3);
+            btnModificarPresentacion.Location = new Point(237, 4);
+            btnModificarPresentacion.Margin = new Padding(4, 4, 4, 4);
             btnModificarPresentacion.Name = "btnModificarPresentacion";
-            btnModificarPresentacion.Size = new Size(180, 44);
+            btnModificarPresentacion.Size = new Size(225, 55);
             btnModificarPresentacion.TabIndex = 36;
             btnModificarPresentacion.Text = "Modificar Presentación";
             btnModificarPresentacion.UseVisualStyleBackColor = false;
@@ -305,9 +323,10 @@
             btnSeleccionarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
             btnSeleccionarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSeleccionarPresentacion.ForeColor = SystemColors.ButtonFace;
-            btnSeleccionarPresentacion.Location = new Point(375, 3);
+            btnSeleccionarPresentacion.Location = new Point(470, 4);
+            btnSeleccionarPresentacion.Margin = new Padding(4, 4, 4, 4);
             btnSeleccionarPresentacion.Name = "btnSeleccionarPresentacion";
-            btnSeleccionarPresentacion.Size = new Size(200, 44);
+            btnSeleccionarPresentacion.Size = new Size(250, 55);
             btnSeleccionarPresentacion.TabIndex = 38;
             btnSeleccionarPresentacion.Text = "Seleccionar Presentación";
             btnSeleccionarPresentacion.UseVisualStyleBackColor = false;
@@ -317,9 +336,10 @@
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = SystemColors.ButtonFace;
-            btnSalir.Location = new Point(581, 3);
+            btnSalir.Location = new Point(728, 4);
+            btnSalir.Margin = new Padding(4, 4, 4, 4);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(91, 44);
+            btnSalir.Size = new Size(114, 55);
             btnSalir.TabIndex = 37;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -330,25 +350,27 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(12, 119);
+            panel1.Location = new Point(15, 149);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(678, 291);
+            panel1.Size = new Size(848, 364);
             panel1.TabIndex = 43;
             // 
             // frmPresentaciones
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(702, 476);
+            ClientSize = new Size(878, 595);
             Controls.Add(panelBusqueda);
             Controls.Add(gbxEstado);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4, 4, 4, 4);
             MaximizeBox = false;
             MinimizeBox = false;
-            MinimumSize = new Size(700, 475);
+            MinimumSize = new Size(870, 582);
             Name = "frmPresentaciones";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Presentaciones";

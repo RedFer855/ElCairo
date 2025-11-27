@@ -39,33 +39,34 @@ namespace ModernMenuUI
 
             try
             {
+                Empleado nuevoEmpleado = new Empleado
+                {
+                    Nombre = txtNombre.Text.Trim(),
+                    Apellido = txtApellido.Text.Trim(),
+                    Dni = txtDni.Text.Trim(),
+                    Telefono = txtTelefono.Text.Trim(),
+                    Email = txtCorreo.Text.Trim(),
+                    Direccion = txtDireccion.Text.Trim()
+                };
+                var resultadoValidacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesEmpleado(nuevoEmpleado);
+
+                if (resultadoValidacion.Error)
+                {
+                    MessageBox.Show(resultadoValidacion.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    btnGuardarEmpleado.Enabled = true;
+                    return;
+                }
+                if (!rbdActivo.Checked && !rbdInactivo.Checked)
+                {
+                    MessageBox.Show("Debe seleccionar un estado.", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 if (_empleadoActual == null)
                 {
                     // --- AGREGAR ---
-                    Empleado nuevoEmpleado = new Empleado
-                    {
-                        Nombre = txtNombre.Text.Trim(),
-                        Apellido = txtApellido.Text.Trim(),
-                        Dni = txtDni.Text.Trim(),
-                        Telefono = txtTelefono.Text.Trim(),
-                        Email = txtCorreo.Text.Trim(),
-                        Direccion = txtDireccion.Text.Trim()
-                    };
-                    var resultadoValidacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesEmpleado(nuevoEmpleado);
-
-                    if (resultadoValidacion.Error)
-                    {
-                        MessageBox.Show(resultadoValidacion.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        btnGuardarEmpleado.Enabled = true; 
-                        return; 
-                    }
-                    if (!rbdActivo.Checked && !rbdInactivo.Checked)
-                    {
-                        MessageBox.Show("Debe seleccionar un estado.", "Validación",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    
                     await EmpleadoRepositorio.InsertarEmpleado(nuevoEmpleado);
 
                     MessageBox.Show("¡Empleado guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);

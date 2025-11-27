@@ -46,11 +46,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             if (soloSeleccion)
             {
-              
+
                 btnSeleccionarPresentacion.Visible = false;
-               
+
             }
-            FormBorderStyle = FormBorderStyle.None; 
+            FormBorderStyle = FormBorderStyle.None;
         }
 
         private async void frmPresentaciones_Load(object sender, EventArgs e)
@@ -232,6 +232,22 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private async void btnAgregarPresentacion_Click(object sender, EventArgs e)
+        {
+            frmAgregarEditarPresentacion _nuevaPresentacion = new frmAgregarEditarPresentacion();
+
+            DialogResult resultado = _nuevaPresentacion.ShowDialog();
+
+            if (resultado == DialogResult.OK)
+            {
+
+                await CargarPresentacionesMaestras();
+
+                RefrescarGrid();
+
+            }
         }
     }
 }

@@ -38,36 +38,33 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
         {
             try
             {
+                Cliente nuevoCliente = new Cliente
+                {
+                    DniCliente = txtDni.Text.Trim(),
+                    RtnCliente = txtRtn.Text.Trim(),
+                    NombreCliente = txtNombre.Text.Trim(),
+                    TelefonoCliente = txtTelefono.Text.Trim(),
+                    CorreoCliente = txtCorreo.Text.Trim(),
+                    DireccionCliente = txtDireccion.Text.Trim(),
+                    EstadoCliente = rbdActivo.Checked
+                };
+
+                var resultadoValidacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesCliente(nuevoCliente);
+
+                if (resultadoValidacion.Error)
+                {
+                    MessageBox.Show(resultadoValidacion.Mensaje, "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (!rbdActivo.Checked && !rbdInactivo.Checked)
+                {
+                    MessageBox.Show("Debe seleccionar un estado.", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (_clienteActual == null)
                 {
-                    
-                    // === AGREGAR ===
-                    Cliente nuevoCliente = new Cliente
-                    {
-                        DniCliente = txtDni.Text.Trim(),
-                        RtnCliente = txtRtn.Text.Trim(),
-                        NombreCliente = txtNombre.Text.Trim(),
-                        TelefonoCliente = txtTelefono.Text.Trim(),
-                        CorreoCliente = txtCorreo.Text.Trim(),
-                        DireccionCliente = txtDireccion.Text.Trim(),
-                        EstadoCliente = rbdActivo.Checked
-                    };
-
-                    var resultadoValidacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesCliente(nuevoCliente);
-
-                    if (resultadoValidacion.Error)
-                    {
-                        MessageBox.Show(resultadoValidacion.Mensaje, "Validación",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if (!rbdActivo.Checked && !rbdInactivo.Checked)
-                    {
-                        MessageBox.Show("Debe seleccionar un estado.", "Validación",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
                     await ClienteRepositorio.InsertarCliente(nuevoCliente);
 
                     MessageBox.Show("¡Cliente guardado exitosamente!", "Éxito",
@@ -77,7 +74,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 }
                 else
                 {
-                    // === EDITAR ===
                     _clienteActual.NombreCliente = txtNombre.Text.Trim();
                     _clienteActual.DniCliente = txtDni.Text.Trim();
                     _clienteActual.RtnCliente = txtRtn.Text.Trim();

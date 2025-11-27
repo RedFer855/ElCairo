@@ -165,9 +165,20 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             if (e.RowIndex >= 0) SeleccionarRegistro();
         }
 
-        private void btnAgregarCategoria_Click(object sender, EventArgs e)
+        private async void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
-           
+            frmAgregarEditarCategoria _nuevaCategoria= new frmAgregarEditarCategoria();
+
+            DialogResult resultado = _nuevaCategoria.ShowDialog();
+
+            if (resultado == DialogResult.OK)
+            {
+
+                await CargarCategoriasMaestras();
+
+                RefrescarGrid();
+
+            }
         }
     }
 }

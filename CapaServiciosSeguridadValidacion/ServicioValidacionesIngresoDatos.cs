@@ -79,12 +79,11 @@ namespace CapaServiciosSeguridadValidacion
             return (false, "");
         }
 
-        // --- VALIDACIONES MARCA (NUEVO) ---
         public static readonly List<Func<MarcaInsertar, (bool Error, string Mensaje)>> ListaValidacionesMarca =
             new List<Func<MarcaInsertar, (bool Error, string Mensaje)>>()
             {
-        // Aquí validamos que el nombre no esté vacío
-                m => ValidarNombreApellido(m.NombreMarca, "el nombre de la marca")
+                m => ValidarNombreApellido(m.NombreMarca, "el nombre de la marca"),
+                //m => ValidarDireccion(m, "la descripción de la marca"),
             };
 
         public static (bool Error, string Mensaje) EjecutarValidacionesMarca(MarcaInsertar _marca)
@@ -267,7 +266,7 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} no puede contener multiples espacios.");
 
             if (valor.Length > 150)
-                return (true, $"{nombrecampo} no puede tener más de 100 caracteres.");
+                return (true, $"{nombrecampo} no puede tener más de 150 caracteres.");
             return (false, "");
         }
 
@@ -291,7 +290,8 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} no puede estar vacío.");
             if (valor.Length >= 301 || valor.Length < 10)
                 return (true, $"{nombrecampo} no puede ser menor de 10 o mayor de 300 caracteres.");
-
+            if(valor.Equals("  "))
+                return (true, $"{nombrecampo} no puede contener multiples espacios.");
 
             return (false, "");
         }
@@ -319,7 +319,6 @@ namespace CapaServiciosSeguridadValidacion
                 return(true, $"{nombrecampo} debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
             if (valor.Contains(" ") || valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener espacios.");
-
 
             return (false, "");
         }
