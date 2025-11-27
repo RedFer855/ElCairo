@@ -108,7 +108,7 @@
             txtTelefono.Font = new Font("Itim", 13F);
             txtTelefono.Location = new Point(190, 104);
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(289, 21);
+            txtTelefono.Size = new Size(289, 26);
             txtTelefono.TabIndex = 2;
             // 
             // txtNombreProveedor
@@ -119,7 +119,7 @@
             txtNombreProveedor.Location = new Point(190, 67);
             txtNombreProveedor.Name = "txtNombreProveedor";
             txtNombreProveedor.PlaceholderText = "(Empresa)";
-            txtNombreProveedor.Size = new Size(289, 20);
+            txtNombreProveedor.Size = new Size(289, 24);
             txtNombreProveedor.TabIndex = 1;
             // 
             // btnVolver
@@ -158,7 +158,7 @@
             rbInactivo.AutoSize = true;
             rbInactivo.Location = new Point(124, 19);
             rbInactivo.Name = "rbInactivo";
-            rbInactivo.Size = new Size(82, 23);
+            rbInactivo.Size = new Size(100, 28);
             rbInactivo.TabIndex = 8;
             rbInactivo.TabStop = true;
             rbInactivo.Text = "Inactivo";
@@ -169,7 +169,7 @@
             rbActivo.AutoSize = true;
             rbActivo.Location = new Point(8, 20);
             rbActivo.Name = "rbActivo";
-            rbActivo.Size = new Size(70, 23);
+            rbActivo.Size = new Size(84, 28);
             rbActivo.TabIndex = 7;
             rbActivo.TabStop = true;
             rbActivo.Text = "Activo";
@@ -194,7 +194,7 @@
             label5.ForeColor = Color.FromArgb(87, 99, 110);
             label5.Location = new Point(127, 195);
             label5.Name = "label5";
-            label5.Size = new Size(57, 18);
+            label5.Size = new Size(70, 23);
             label5.TabIndex = 18;
             label5.Text = "Estado:";
             // 
@@ -205,7 +205,7 @@
             label8.ForeColor = Color.FromArgb(87, 99, 110);
             label8.Location = new Point(29, 69);
             label8.Name = "label8";
-            label8.Size = new Size(155, 18);
+            label8.Size = new Size(197, 23);
             label8.TabIndex = 12;
             label8.Text = "Nombre del Proveedor:";
             // 
@@ -216,7 +216,7 @@
             label2.ForeColor = Color.FromArgb(87, 99, 110);
             label2.Location = new Point(111, 137);
             label2.Name = "label2";
-            label2.Size = new Size(73, 18);
+            label2.Size = new Size(94, 23);
             label2.TabIndex = 14;
             label2.Text = "Dirección:";
             // 
@@ -227,7 +227,7 @@
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(116, 104);
             label1.Name = "label1";
-            label1.Size = new Size(68, 18);
+            label1.Size = new Size(85, 23);
             label1.TabIndex = 13;
             label1.Text = "Telefono:";
             // 
@@ -238,7 +238,7 @@
             txtDireccion.Font = new Font("Itim", 13F);
             txtDireccion.Location = new Point(190, 134);
             txtDireccion.Name = "txtDireccion";
-            txtDireccion.Size = new Size(289, 21);
+            txtDireccion.Size = new Size(289, 26);
             txtDireccion.TabIndex = 3;
             // 
             // panel2
@@ -264,7 +264,7 @@
             // 
             // frmAgregarEditarProveedor
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(688, 290);
             Controls.Add(panBarraControl);

@@ -118,6 +118,41 @@ namespace CapaServiciosSeguridadValidacion
             return (false, "");
         }
 
+        public static readonly List<Func<Presentacion, (bool Error, string Mensaje)>> ListaValidacionesPresentacion =
+            new List<Func<Presentacion, (bool Error, string Mensaje)>>
+            {
+                p => ValidarNombreApellido(p.NombrePresentacion, "el nombre de la presentación"),
+                p => ValidarDireccion(p.DetallePresentacion, "la descripción de la presentación"),
+                
+            };
+        public static (bool Error, string Mensaje) EjecutarValidacionesPresentacion(Presentacion presentacion)
+        {
+            foreach (var regla in ListaValidacionesPresentacion)
+            {
+                var resultado = regla(presentacion);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
+       
+        public static readonly List <Func<Proveedor, (bool Error, string Mensaje)>> ListaValidacionesProveedor =
+            new List<Func<Proveedor, (bool Error, string Mensaje)>>
+            {
+                pr => ValidarNombreApellido(pr.NombreProveedor, "el nombre del proveedor"),
+                pr => ValidarTelefono(pr.TelefonoProveedor, "el número telefónico"),
+                pr => ValidarDireccion(pr.DireccionProveedor, "la dirección"),
+               
+            };
+        public static (bool Error, string Mensaje) EjecutarValidacionesProveedor(Proveedor proveedor)
+        {
+            foreach (var regla in ListaValidacionesProveedor)
+            {
+                var resultado = regla(proveedor);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
+
         // --- Validaciones individuales ---
         public static (bool Error, string Mensaje) ValidarCampoVacio(string valor, string nombrecampo)
             => string.IsNullOrWhiteSpace(valor)

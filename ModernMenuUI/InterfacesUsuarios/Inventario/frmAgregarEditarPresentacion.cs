@@ -16,5 +16,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             InitializeComponent();
         }
+
+        private void btnGuardarCategoria_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
