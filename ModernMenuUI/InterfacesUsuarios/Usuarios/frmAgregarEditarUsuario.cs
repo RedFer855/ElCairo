@@ -15,8 +15,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 {
     public partial class frmAgregarEditarUsuario : Form
     {
-        private Usuario _usuarioEditado;          // Usuario que se está editando
-        private Usuario _usuarioActualSistema;    // Usuario logueado
+        private Usuario _usuarioEditado;          
+        private Usuario _usuarioActualSistema;    
         private AnimadorPanel _animadorPanel;
 
         public frmAgregarEditarUsuario()

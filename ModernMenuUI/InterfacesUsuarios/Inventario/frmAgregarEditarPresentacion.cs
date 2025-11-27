@@ -32,6 +32,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             // Cargar campos en el formulario
             txtNombrePresentacion.Text = _presentacionSeleccionada.NombrePresentacion;
+            txtDescripcionPresentacion.Text = _presentacionSeleccionada.DetallePresentacion;
 
             // Estado
             if (_presentacionSeleccionada.EstadoPresentacion)

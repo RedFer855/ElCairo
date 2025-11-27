@@ -290,7 +290,7 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} no puede estar vacío.");
             if (valor.Length >= 301 || valor.Length < 10)
                 return (true, $"{nombrecampo} no puede ser menor de 10 o mayor de 300 caracteres.");
-            if(valor.Equals("  "))
+            if(valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener multiples espacios.");
 
             return (false, "");
@@ -322,6 +322,7 @@ namespace CapaServiciosSeguridadValidacion
 
             return (false, "");
         }
+
 
     }
 }

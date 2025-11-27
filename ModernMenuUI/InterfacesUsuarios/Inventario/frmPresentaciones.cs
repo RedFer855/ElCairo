@@ -20,6 +20,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         private RealtimeChannel? _presentacionesSubscription;
         private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
         private Supabase.Client? _supabaseClient;
+        private Presentacion? _presentacionSeleccionada;
 
         public Presentacion PresentacionSeleccionada { get; private set; }
 
@@ -247,6 +248,40 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                 RefrescarGrid();
 
+            }
+        }
+
+        private void dgvPresentaciones_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvPresentaciones.SelectedRows.Count > 0)
+            {
+                // Asignamos a la variable con guion bajo
+                _presentacionSeleccionada = dgvPresentaciones.SelectedRows[0].DataBoundItem as Presentacion;
+            }
+            else
+            {
+                _presentacionSeleccionada = null;
+            }
+        }
+
+        private async void btnModificarPresentacion_Click(object sender, EventArgs e)
+        {
+            // Verificamos la variable _marcaSeleccionada
+            if (_presentacionSeleccionada != null)
+            {
+                // Pasamos _marcaSeleccionada al constructor
+                frmAgregarEditarPresentacion editarForm = new frmAgregarEditarPresentacion(_presentacionSeleccionada);
+                DialogResult resultado = editarForm.ShowDialog();
+
+                if (resultado == DialogResult.OK)
+                {
+                    await CargarPresentacionesMaestras();
+                    RefrescarGrid();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una marca primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

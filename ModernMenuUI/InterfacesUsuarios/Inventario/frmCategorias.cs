@@ -17,6 +17,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         private GestorRealtime<Categoria> _gestorRealtime;
         private CategoriaRepositorio _categoriaRepositorio;
         private List<Categoria> _listaMaestraCategorias = new List<Categoria>();
+        private Categoria _categoriaSeleccionada;
+
         public Categoria CategoriaSeleccionada { get; private set; }
 
         public frmCategorias()
@@ -135,17 +137,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         }
 
         // --- EVENTOS DE UI (RadioButtons, Clicks) ---
-        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e) 
-        { 
-            if (rbMostrarHabilitados.Checked) RefrescarGrid(); 
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarHabilitados.Checked) RefrescarGrid();
         }
-        private void rbMostrarDeshabilitados_CheckedChanged(object sender, EventArgs e) 
-        { 
-            if (rbMostrarDeshabilitados.Checked) RefrescarGrid(); 
+        private void rbMostrarDeshabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarDeshabilitados.Checked) RefrescarGrid();
         }
-        private void rbMostrarTodos_CheckedChanged_1(object sender, EventArgs e) 
-        { 
-            if (rbMostrarTodos.Checked) RefrescarGrid(); 
+        private void rbMostrarTodos_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (rbMostrarTodos.Checked) RefrescarGrid();
         }
 
         private void SeleccionarRegistro()
@@ -167,7 +169,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private async void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
-            frmAgregarEditarCategoria _nuevaCategoria= new frmAgregarEditarCategoria();
+            frmAgregarEditarCategoria _nuevaCategoria = new frmAgregarEditarCategoria();
 
             DialogResult resultado = _nuevaCategoria.ShowDialog();
 
@@ -178,6 +180,38 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                 RefrescarGrid();
 
+            }
+        }
+
+        private async void btnModificarCategoria_Click(object sender, EventArgs e)
+        {
+            if (_categoriaSeleccionada != null)
+            {
+                // Pasamos _marcaSeleccionada al constructor
+                frmAgregarEditarCategoria editarForm = new frmAgregarEditarCategoria(_categoriaSeleccionada);
+                DialogResult resultado = editarForm.ShowDialog();
+
+                if (resultado == DialogResult.OK)
+                {
+                    await CargarCategoriasMaestras();
+                    RefrescarGrid();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una marca primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        
+        private async void dgvCategorias_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvCategorias.SelectedRows.Count > 0)
+            {
+                _categoriaSeleccionada = dgvCategorias.SelectedRows[0].DataBoundItem as Categoria;
+            }
+            else
+            {
+                _categoriaSeleccionada = null;
             }
         }
     }
