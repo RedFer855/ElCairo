@@ -3,6 +3,7 @@ using CapaDeDatos.Modelados.Productos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,6 +49,42 @@ namespace CapaDeDatos.Repositorios
             {
                 // Manejo de excepciones estándar
                 Console.WriteLine($"Error de Supabase al obtener categorías: {ex.Message}");
+                throw new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
+            }
+        }
+        public static async Task<int> InsertarCategoria(Categoria nuevaCategoria)
+        {
+            try
+            {
+                var client = await new CategoriaRepositorio().GetClient();
+                var response = await client.From<Categoria>().Insert(nuevaCategoria);
+                if (response?.Models != null && response.Models.Count > 0)
+                {
+                    return response.Models[0].IdCategoria;
+                }
+                throw new Exception("No se pudo insertar la categoría.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error de Supabase al insertar categoría: {ex.Message}");
+                throw new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
+            }
+        }
+        public static async Task ActualizarCategoria(Categoria categoriaActualizada)
+        {
+            try
+            {
+                var client = await new CategoriaRepositorio().GetClient();
+                var response = await client.From<Categoria>()
+                                           .Update(categoriaActualizada);
+                if (response?.Models == null || response.Models.Count == 0)
+                {
+                    throw new Exception("No se pudo actualizar la categoría.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error de Supabase al actualizar categoría: {ex.Message}");
                 throw new Exception("No se obtuvo respuesta. Verifique los datos y la conexión.", ex);
             }
         }

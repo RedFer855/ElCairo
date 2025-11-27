@@ -33,12 +33,12 @@
             lblNombreModulo = new Label();
             panel2 = new Panel();
             flpAjustarBotones = new FlowLayoutPanel();
-            btnGuardarCategoria = new Button();
+            btnGuardarPresentacion = new Button();
             btnVolver = new Button();
-            btnModificarCategoria = new Button();
-            txtDescripcionCategoria = new TextBox();
+            btnModificarPresentacion = new Button();
+            txtDescripcionPresentacion = new TextBox();
             pbxImagenMarca = new PictureBox();
-            txtNombreCategoria = new TextBox();
+            txtNombrePresentacion = new TextBox();
             gbxEstado = new GroupBox();
             rbInactivo = new RadioButton();
             rbActivo = new RadioButton();
@@ -80,9 +80,9 @@
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
             panel2.Controls.Add(flpAjustarBotones);
-            panel2.Controls.Add(txtDescripcionCategoria);
+            panel2.Controls.Add(txtDescripcionPresentacion);
             panel2.Controls.Add(pbxImagenMarca);
-            panel2.Controls.Add(txtNombreCategoria);
+            panel2.Controls.Add(txtNombrePresentacion);
             panel2.Controls.Add(gbxEstado);
             panel2.Controls.Add(lblEstado);
             panel2.Controls.Add(label8);
@@ -95,29 +95,29 @@
             // 
             // flpAjustarBotones
             // 
-            flpAjustarBotones.Controls.Add(btnGuardarCategoria);
+            flpAjustarBotones.Controls.Add(btnGuardarPresentacion);
             flpAjustarBotones.Controls.Add(btnVolver);
-            flpAjustarBotones.Controls.Add(btnModificarCategoria);
+            flpAjustarBotones.Controls.Add(btnModificarPresentacion);
             flpAjustarBotones.Location = new Point(10, 235);
             flpAjustarBotones.Name = "flpAjustarBotones";
             flpAjustarBotones.Size = new Size(295, 37);
             flpAjustarBotones.TabIndex = 25;
             // 
-            // btnGuardarCategoria
+            // btnGuardarPresentacion
             // 
-            btnGuardarCategoria.BackColor = Color.FromArgb(149, 195, 172);
-            btnGuardarCategoria.BackgroundImageLayout = ImageLayout.None;
-            btnGuardarCategoria.FlatAppearance.BorderSize = 0;
-            btnGuardarCategoria.Font = new Font("Itim", 11.9999981F);
-            btnGuardarCategoria.ForeColor = SystemColors.ButtonFace;
-            btnGuardarCategoria.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarCategoria.Location = new Point(3, 3);
-            btnGuardarCategoria.Name = "btnGuardarCategoria";
-            btnGuardarCategoria.Size = new Size(89, 33);
-            btnGuardarCategoria.TabIndex = 9;
-            btnGuardarCategoria.Text = "Guardar";
-            btnGuardarCategoria.UseVisualStyleBackColor = false;
-            btnGuardarCategoria.Visible = false;
+            btnGuardarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
+            btnGuardarPresentacion.BackgroundImageLayout = ImageLayout.None;
+            btnGuardarPresentacion.FlatAppearance.BorderSize = 0;
+            btnGuardarPresentacion.Font = new Font("Itim", 11.9999981F);
+            btnGuardarPresentacion.ForeColor = SystemColors.ButtonFace;
+            btnGuardarPresentacion.ImageAlign = ContentAlignment.BottomLeft;
+            btnGuardarPresentacion.Location = new Point(3, 3);
+            btnGuardarPresentacion.Name = "btnGuardarPresentacion";
+            btnGuardarPresentacion.Size = new Size(89, 33);
+            btnGuardarPresentacion.TabIndex = 9;
+            btnGuardarPresentacion.Text = "Guardar";
+            btnGuardarPresentacion.UseVisualStyleBackColor = false;
+            btnGuardarPresentacion.Visible = false;
             // 
             // btnVolver
             // 
@@ -134,32 +134,32 @@
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
             // 
-            // btnModificarCategoria
+            // btnModificarPresentacion
             // 
-            btnModificarCategoria.BackColor = Color.FromArgb(74, 148, 225);
-            btnModificarCategoria.BackgroundImageLayout = ImageLayout.None;
-            btnModificarCategoria.FlatAppearance.BorderSize = 0;
-            btnModificarCategoria.Font = new Font("Itim", 11.9999981F);
-            btnModificarCategoria.ForeColor = SystemColors.ButtonFace;
-            btnModificarCategoria.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarCategoria.Location = new Point(199, 3);
-            btnModificarCategoria.Name = "btnModificarCategoria";
-            btnModificarCategoria.Size = new Size(72, 33);
-            btnModificarCategoria.TabIndex = 19;
-            btnModificarCategoria.Text = "Editar";
-            btnModificarCategoria.UseVisualStyleBackColor = false;
+            btnModificarPresentacion.BackColor = Color.FromArgb(74, 148, 225);
+            btnModificarPresentacion.BackgroundImageLayout = ImageLayout.None;
+            btnModificarPresentacion.FlatAppearance.BorderSize = 0;
+            btnModificarPresentacion.Font = new Font("Itim", 11.9999981F);
+            btnModificarPresentacion.ForeColor = SystemColors.ButtonFace;
+            btnModificarPresentacion.ImageAlign = ContentAlignment.BottomLeft;
+            btnModificarPresentacion.Location = new Point(199, 3);
+            btnModificarPresentacion.Name = "btnModificarPresentacion";
+            btnModificarPresentacion.Size = new Size(72, 33);
+            btnModificarPresentacion.TabIndex = 19;
+            btnModificarPresentacion.Text = "Editar";
+            btnModificarPresentacion.UseVisualStyleBackColor = false;
             // 
-            // txtDescripcionCategoria
+            // txtDescripcionPresentacion
             // 
-            txtDescripcionCategoria.BackColor = Color.White;
-            txtDescripcionCategoria.BorderStyle = BorderStyle.None;
-            txtDescripcionCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDescripcionCategoria.Location = new Point(120, 38);
-            txtDescripcionCategoria.Multiline = true;
-            txtDescripcionCategoria.Name = "txtDescripcionCategoria";
-            txtDescripcionCategoria.PlaceholderText = "(Ingrese una Descripción)";
-            txtDescripcionCategoria.Size = new Size(306, 140);
-            txtDescripcionCategoria.TabIndex = 24;
+            txtDescripcionPresentacion.BackColor = Color.White;
+            txtDescripcionPresentacion.BorderStyle = BorderStyle.None;
+            txtDescripcionPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDescripcionPresentacion.Location = new Point(120, 38);
+            txtDescripcionPresentacion.Multiline = true;
+            txtDescripcionPresentacion.Name = "txtDescripcionPresentacion";
+            txtDescripcionPresentacion.PlaceholderText = "(Ingrese una Descripción)";
+            txtDescripcionPresentacion.Size = new Size(306, 140);
+            txtDescripcionPresentacion.TabIndex = 24;
             // 
             // pbxImagenMarca
             // 
@@ -171,16 +171,16 @@
             pbxImagenMarca.TabIndex = 21;
             pbxImagenMarca.TabStop = false;
             // 
-            // txtNombreCategoria
+            // txtNombrePresentacion
             // 
-            txtNombreCategoria.BackColor = Color.White;
-            txtNombreCategoria.BorderStyle = BorderStyle.None;
-            txtNombreCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNombreCategoria.Location = new Point(120, 12);
-            txtNombreCategoria.Name = "txtNombreCategoria";
-            txtNombreCategoria.PlaceholderText = "(Ingrese el nombre de la presentacion)";
-            txtNombreCategoria.Size = new Size(306, 20);
-            txtNombreCategoria.TabIndex = 1;
+            txtNombrePresentacion.BackColor = Color.White;
+            txtNombrePresentacion.BorderStyle = BorderStyle.None;
+            txtNombrePresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNombrePresentacion.Location = new Point(120, 12);
+            txtNombrePresentacion.Name = "txtNombrePresentacion";
+            txtNombrePresentacion.PlaceholderText = "(Ingrese el nombre de la presentacion)";
+            txtNombrePresentacion.Size = new Size(306, 20);
+            txtNombrePresentacion.TabIndex = 1;
             // 
             // gbxEstado
             // 
@@ -208,6 +208,7 @@
             // rbActivo
             // 
             rbActivo.AutoSize = true;
+            rbActivo.Checked = true;
             rbActivo.Location = new Point(6, 15);
             rbActivo.Name = "rbActivo";
             rbActivo.Size = new Size(70, 23);
@@ -272,12 +273,12 @@
 
         private Panel panel2;
         private FlowLayoutPanel flpAjustarBotones;
-        private Button btnGuardarCategoria;
+        private Button btnGuardarPresentacion;
         private Button btnVolver;
-        private Button btnModificarCategoria;
-        private TextBox txtDescripcionCategoria;
+        private Button btnModificarPresentacion;
+        private TextBox txtDescripcionPresentacion;
         private PictureBox pbxImagenMarca;
-        private TextBox txtNombreCategoria;
+        private TextBox txtNombrePresentacion;
         private GroupBox gbxEstado;
         private RadioButton rbInactivo;
         private RadioButton rbActivo;

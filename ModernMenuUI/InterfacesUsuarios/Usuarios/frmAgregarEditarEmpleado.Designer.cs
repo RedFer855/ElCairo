@@ -41,8 +41,8 @@
             label5 = new Label();
             label6 = new Label();
             groupBox1 = new GroupBox();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
+            rbInactivo = new RadioButton();
+            rbActivo = new RadioButton();
             txtDireccion = new TextBox();
             label3 = new Label();
             btnGuardarEmpleado = new Button();
@@ -184,8 +184,8 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(radioButton2);
-            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Controls.Add(rbInactivo);
+            groupBox1.Controls.Add(rbActivo);
             groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.DimGray;
             groupBox1.Location = new Point(121, 282);
@@ -194,27 +194,27 @@
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
-            // radioButton2
+            // rbInactivo
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(124, 20);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(82, 23);
-            radioButton2.TabIndex = 8;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Inactivo";
-            radioButton2.UseVisualStyleBackColor = true;
+            rbInactivo.AutoSize = true;
+            rbInactivo.Location = new Point(124, 20);
+            rbInactivo.Name = "rbInactivo";
+            rbInactivo.Size = new Size(82, 23);
+            rbInactivo.TabIndex = 8;
+            rbInactivo.Text = "Inactivo";
+            rbInactivo.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // rbActivo
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(8, 21);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(70, 23);
-            radioButton1.TabIndex = 7;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Activo";
-            radioButton1.UseVisualStyleBackColor = true;
+            rbActivo.AutoSize = true;
+            rbActivo.Checked = true;
+            rbActivo.Location = new Point(8, 21);
+            rbActivo.Name = "rbActivo";
+            rbActivo.Size = new Size(70, 23);
+            rbActivo.TabIndex = 7;
+            rbActivo.TabStop = true;
+            rbActivo.Text = "Activo";
+            rbActivo.UseVisualStyleBackColor = true;
             // 
             // txtDireccion
             // 
@@ -413,8 +413,8 @@
         private Label label5;
         private Label label6;
         private GroupBox groupBox1;
-        private RadioButton radioButton2;
-        private RadioButton radioButton1;
+        private RadioButton rbInactivo;
+        private RadioButton rbActivo;
         private TextBox txtDireccion;
         private Label label3;
         private Button btnGuardarEmpleado;

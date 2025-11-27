@@ -69,7 +69,7 @@
             lblNombreModulo.Name = "lblNombreModulo";
             lblNombreModulo.Size = new Size(479, 41);
             lblNombreModulo.TabIndex = 13;
-            lblNombreModulo.Text = "USUARIO";
+            lblNombreModulo.Text = " CREAR USUARIO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // btnVolver
@@ -239,7 +239,7 @@
             Controls.Add(panel2);
             Margin = new Padding(3, 2, 3, 2);
             Name = "frmCrearUsuario";
-            Text = "frmCrearUsuario";
+            Text = "Usuario";
             Load += frmCrearUsuario_Load;
             panBarraControl.ResumeLayout(false);
             groupBox1.ResumeLayout(false);

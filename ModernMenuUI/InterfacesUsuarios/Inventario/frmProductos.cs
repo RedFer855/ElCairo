@@ -73,7 +73,7 @@ namespace ModernMenuUI
                 this.Cursor = Cursors.WaitCursor;
                 _listaMaestraProductos = await _productoRepositorio.ObtenerTodosLosProductos(null);
 
-                // Instanciamos el buscador UNA SOLA VEZ aquí
+                
                 _buscadorCtrl = new BuscadorInteractivo<Producto>(
                     txtBuscar,
                     lstSugerencias,
@@ -86,7 +86,7 @@ namespace ModernMenuUI
                         pnlLimpiarFiltros.Visible = busquedaActiva;
                         if (!busquedaActiva) RefrescarGrid();
                     },
-                    (txt) => txt.All(char.IsDigit) && txt.Length >= 8 && txt.Length <= 13 // Detector Código
+                    (txt) => txt.All(char.IsDigit) && txt.Length >= 8 && txt.Length <= 13 
                 );
 
                 RefrescarGrid();

@@ -115,7 +115,7 @@ namespace ModernMenuUI
                     PrecioCosto = precioCosto,
                     CantidadProducto = cantidad
                 };
-
+           
                 // 2. VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(_productoInsertar);
                 if (resultado.Error)
@@ -154,7 +154,25 @@ namespace ModernMenuUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (ex.Message.Contains("23505") || ex.Message.Contains("duplicate key value"))
+                {
+                    MessageBox.Show(
+                        "El producto o código de barra ya existe. Por favor ingrese uno diferente.",
+                        "Código o producto duplicado",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
+                else
+                {
+                    // Otros errores
+                    MessageBox.Show(
+                        "Ocurrió un error: " + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
             }
             finally
             {

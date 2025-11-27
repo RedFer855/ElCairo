@@ -114,7 +114,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     (buscando) =>
                     {
                         if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = buscando;
-                        // Solo refrescamos si LIMPIA la búsqueda (buscando = false)
                         if (!buscando) RefrescarGrid();
                     },
                     (txt) => false
