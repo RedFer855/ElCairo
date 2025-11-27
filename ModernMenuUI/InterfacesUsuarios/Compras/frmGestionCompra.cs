@@ -434,7 +434,7 @@ namespace ModernMenuUI
                 .Where(r => !r.IsNewRow)
                 .Select(r => new
                 {
-                    id_producto = Convert.ToInt32(r.Cells[0].Value),
+                    id_producto = Convert.ToString(r.Cells[0].Value),
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
 

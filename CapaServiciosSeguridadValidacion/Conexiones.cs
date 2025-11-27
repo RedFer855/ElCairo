@@ -2,7 +2,7 @@
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
-namespace CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion
+namespace CapaServiciosSeguridadValidacion
 {
     public class ServicioVerificacionConexion1
     {

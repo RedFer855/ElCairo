@@ -56,7 +56,11 @@
             rbMostrarHablilitados = new RadioButton();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            btnbuscar = new Button();
+            btnBuscar = new Button();
+            lstSugerencias = new ListBox();
+            pnlLimpiarFiltros = new Panel();
+            btnLimpiarFiltros = new Button();
+            pbxClean = new PictureBox();
             panel1.SuspendLayout();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
@@ -65,6 +69,8 @@
             gbxEstado.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             panelBusqueda.SuspendLayout();
+            pnlLimpiarFiltros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxClean).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -74,7 +80,7 @@
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 121);
             panel1.Name = "panel1";
-            panel1.Size = new Size(692, 282);
+            panel1.Size = new Size(813, 282);
             panel1.TabIndex = 34;
             // 
             // panelCarrito
@@ -84,7 +90,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 19);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(659, 243);
+            panelCarrito.Size = new Size(780, 243);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -94,7 +100,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(659, 243);
+            panel10.Size = new Size(780, 243);
             panel10.TabIndex = 17;
             // 
             // dgvMarcas
@@ -113,8 +119,8 @@
             dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvMarcas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvMarcas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -147,8 +153,9 @@
             dgvMarcas.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvMarcas.RowTemplate.Height = 50;
             dgvMarcas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMarcas.Size = new Size(659, 243);
+            dgvMarcas.Size = new Size(780, 243);
             dgvMarcas.TabIndex = 1;
+            dgvMarcas.TabStop = false;
             dgvMarcas.CellDoubleClick += dgvMarcas_CellDoubleClick;
             dgvMarcas.SelectionChanged += dgvMarcas_SelectionChanged;
             // 
@@ -265,7 +272,7 @@
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(12, 62);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(692, 53);
+            gbxEstado.Size = new Size(813, 53);
             gbxEstado.TabIndex = 37;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -286,7 +293,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(302, 30);
+            tableLayoutPanel2.Size = new Size(420, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
             // txtMarca
@@ -296,7 +303,7 @@
             txtMarca.Name = "txtMarca";
             txtMarca.PlaceholderText = "(Todos los Proveedores)";
             txtMarca.ReadOnly = true;
-            txtMarca.Size = new Size(164, 25);
+            txtMarca.Size = new Size(282, 25);
             txtMarca.TabIndex = 34;
             // 
             // btnProveedores
@@ -307,7 +314,7 @@
             btnProveedores.BackgroundImageLayout = ImageLayout.Zoom;
             btnProveedores.FlatAppearance.BorderSize = 0;
             btnProveedores.FlatStyle = FlatStyle.Flat;
-            btnProveedores.Location = new Point(274, 3);
+            btnProveedores.Location = new Point(392, 3);
             btnProveedores.Name = "btnProveedores";
             btnProveedores.Size = new Size(25, 24);
             btnProveedores.TabIndex = 2;
@@ -334,7 +341,6 @@
             rbMostrarDeshablitados.TabIndex = 30;
             rbMostrarDeshablitados.Text = "Deshabilitados";
             rbMostrarDeshablitados.UseVisualStyleBackColor = true;
-            rbMostrarDeshablitados.CheckedChanged += rbMostrarDeshablitados_CheckedChanged_1;
             // 
             // rbMostrarTodos
             // 
@@ -345,7 +351,6 @@
             rbMostrarTodos.TabIndex = 29;
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
-            rbMostrarTodos.CheckedChanged += rbMostrarTodos_CheckedChanged_1;
             // 
             // rbMostrarHablilitados
             // 
@@ -358,19 +363,18 @@
             rbMostrarHablilitados.TabStop = true;
             rbMostrarHablilitados.Text = "Habilitados";
             rbMostrarHablilitados.UseVisualStyleBackColor = true;
-            rbMostrarHablilitados.CheckedChanged += rbMostrarHablilitados_CheckedChanged_1;
             // 
             // panelBusqueda
             // 
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnbuscar);
+            panelBusqueda.Controls.Add(btnBuscar);
             panelBusqueda.Location = new Point(15, 12);
             panelBusqueda.MaximumSize = new Size(700, 43);
             panelBusqueda.MinimumSize = new Size(330, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(530, 43);
+            panelBusqueda.Size = new Size(476, 43);
             panelBusqueda.TabIndex = 38;
             // 
             // txtBuscar
@@ -382,29 +386,86 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Marcas...";
-            txtBuscar.Size = new Size(443, 20);
+            txtBuscar.Size = new Size(389, 20);
             txtBuscar.TabIndex = 1;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
             // 
-            // btnbuscar
+            // btnBuscar
             // 
-            btnbuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(467, 12);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 20);
-            btnbuscar.TabIndex = 0;
-            btnbuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscar.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscar.BackgroundImage = (Image)resources.GetObject("btnBuscar.BackgroundImage");
+            btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscar.FlatAppearance.BorderSize = 0;
+            btnBuscar.FlatStyle = FlatStyle.Flat;
+            btnBuscar.Location = new Point(413, 12);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(48, 20);
+            btnBuscar.TabIndex = 0;
+            btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(33, 45);
+            lstSugerencias.MinimumSize = new Size(243, 22);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(389, 22);
+            lstSugerencias.TabIndex = 39;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(659, 12);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(166, 43);
+            pnlLimpiarFiltros.TabIndex = 56;
+            pnlLimpiarFiltros.Visible = false;
+            // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(3, 5);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(117, 32);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(121, 8);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(45, 24);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
             // 
             // frmMarcas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(716, 481);
+            ClientSize = new Size(837, 481);
+            Controls.Add(pnlLimpiarFiltros);
+            Controls.Add(lstSugerencias);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panelBusqueda);
             Controls.Add(gbxEstado);
@@ -429,6 +490,8 @@
             tableLayoutPanel2.PerformLayout();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
+            pnlLimpiarFiltros.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxClean).EndInit();
             ResumeLayout(false);
         }
 
@@ -452,11 +515,15 @@
         private Label label1;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button btnbuscar;
+        private Button btnBuscar;
         private Button btnSeleccionarMarca;
         private DataGridViewTextBoxColumn IdMarca;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn Proveedor;
         private DataGridViewCheckBoxColumn EstadoProducto;
+        private ListBox lstSugerencias;
+        private Panel pnlLimpiarFiltros;
+        private Button btnLimpiarFiltros;
+        private PictureBox pbxClean;
     }
 }

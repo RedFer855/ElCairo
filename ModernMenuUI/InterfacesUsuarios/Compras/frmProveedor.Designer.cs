@@ -45,21 +45,27 @@
             btnSalir = new Button();
             btnAgregarProveedor = new Button();
             btnEditarProveedor = new Button();
-            groupBox1 = new GroupBox();
-            rdbDeshabilitados = new RadioButton();
-            rdbHabilitados = new RadioButton();
-            rdbTodos = new RadioButton();
+            gbxFiltro = new GroupBox();
+            rbMostrarDeshabilitados = new RadioButton();
+            rbMostrarHabilitados = new RadioButton();
+            rbMostrarTodos = new RadioButton();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnSeleccionarProveedor = new Button();
+            lstSugerencias = new ListBox();
+            pnlLimpiarFiltros = new Panel();
+            btnLimpiarFiltros = new Button();
+            pbxClean = new PictureBox();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProveedores).BeginInit();
-            groupBox1.SuspendLayout();
+            gbxFiltro.SuspendLayout();
             panelBusqueda.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
+            pnlLimpiarFiltros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxClean).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -69,7 +75,7 @@
             panel1.Controls.Add(panel10);
             panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
-            panel1.Size = new Size(660, 403);
+            panel1.Size = new Size(789, 403);
             panel1.TabIndex = 50;
             // 
             // panel10
@@ -79,7 +85,7 @@
             panel10.Controls.Add(dgvProveedores);
             panel10.Location = new Point(18, 20);
             panel10.Name = "panel10";
-            panel10.Size = new Size(623, 365);
+            panel10.Size = new Size(752, 365);
             panel10.TabIndex = 17;
             // 
             // dgvProveedores
@@ -133,7 +139,7 @@
             dgvProveedores.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProveedores.RowTemplate.Height = 50;
             dgvProveedores.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProveedores.Size = new Size(623, 365);
+            dgvProveedores.Size = new Size(752, 365);
             dgvProveedores.TabIndex = 1;
             dgvProveedores.SelectionChanged += dgvProveedores_SelectionChanged;
             dgvProveedores.DoubleClick += dgvProveedores_DoubleClick;
@@ -229,56 +235,57 @@
             btnEditarProveedor.Name = "btnEditarProveedor";
             btnEditarProveedor.Size = new Size(136, 43);
             btnEditarProveedor.TabIndex = 20;
-            btnEditarProveedor.Text = "EditarProveedor";
+            btnEditarProveedor.Text = "Ver Proveedor";
             btnEditarProveedor.UseVisualStyleBackColor = false;
             btnEditarProveedor.Click += btnEditarProveedor_Click;
             // 
-            // groupBox1
+            // gbxFiltro
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(rdbDeshabilitados);
-            groupBox1.Controls.Add(rdbHabilitados);
-            groupBox1.Controls.Add(rdbTodos);
-            groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(12, 61);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(660, 53);
-            groupBox1.TabIndex = 52;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Filtro";
+            gbxFiltro.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            gbxFiltro.Controls.Add(rbMostrarDeshabilitados);
+            gbxFiltro.Controls.Add(rbMostrarHabilitados);
+            gbxFiltro.Controls.Add(rbMostrarTodos);
+            gbxFiltro.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxFiltro.ForeColor = SystemColors.ControlDarkDark;
+            gbxFiltro.Location = new Point(12, 61);
+            gbxFiltro.MaximumSize = new Size(533, 53);
+            gbxFiltro.Name = "gbxFiltro";
+            gbxFiltro.Size = new Size(511, 53);
+            gbxFiltro.TabIndex = 52;
+            gbxFiltro.TabStop = false;
+            gbxFiltro.Text = "Filtros";
             // 
-            // rdbDeshabilitados
+            // rbMostrarDeshabilitados
             // 
-            rdbDeshabilitados.AutoSize = true;
-            rdbDeshabilitados.Location = new Point(341, 21);
-            rdbDeshabilitados.Name = "rdbDeshabilitados";
-            rdbDeshabilitados.Size = new Size(178, 22);
-            rdbDeshabilitados.TabIndex = 30;
-            rdbDeshabilitados.Text = "Mostrar Deshabilitados";
-            rdbDeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrarDeshabilitados.AutoSize = true;
+            rbMostrarDeshabilitados.Location = new Point(125, 21);
+            rbMostrarDeshabilitados.Name = "rbMostrarDeshabilitados";
+            rbMostrarDeshabilitados.Size = new Size(121, 22);
+            rbMostrarDeshabilitados.TabIndex = 30;
+            rbMostrarDeshabilitados.Text = "Deshabilitados";
+            rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
             // 
-            // rdbHabilitados
+            // rbMostrarHabilitados
             // 
-            rdbHabilitados.AutoSize = true;
-            rdbHabilitados.Checked = true;
-            rdbHabilitados.Location = new Point(158, 21);
-            rdbHabilitados.Name = "rdbHabilitados";
-            rdbHabilitados.Size = new Size(156, 22);
-            rdbHabilitados.TabIndex = 29;
-            rdbHabilitados.TabStop = true;
-            rdbHabilitados.Text = "Mostrar Habilitados";
-            rdbHabilitados.UseVisualStyleBackColor = true;
+            rbMostrarHabilitados.AutoSize = true;
+            rbMostrarHabilitados.Checked = true;
+            rbMostrarHabilitados.Location = new Point(18, 21);
+            rbMostrarHabilitados.Name = "rbMostrarHabilitados";
+            rbMostrarHabilitados.Size = new Size(101, 22);
+            rbMostrarHabilitados.TabIndex = 29;
+            rbMostrarHabilitados.TabStop = true;
+            rbMostrarHabilitados.Text = "Habilitados";
+            rbMostrarHabilitados.UseVisualStyleBackColor = true;
             // 
-            // rdbTodos
+            // rbMostrarTodos
             // 
-            rdbTodos.AutoSize = true;
-            rdbTodos.Location = new Point(18, 21);
-            rdbTodos.Name = "rdbTodos";
-            rdbTodos.Size = new Size(120, 22);
-            rdbTodos.TabIndex = 28;
-            rdbTodos.Text = "Mostrar Todos";
-            rdbTodos.UseVisualStyleBackColor = true;
+            rbMostrarTodos.AutoSize = true;
+            rbMostrarTodos.Location = new Point(252, 21);
+            rbMostrarTodos.Name = "rbMostrarTodos";
+            rbMostrarTodos.Size = new Size(120, 22);
+            rbMostrarTodos.TabIndex = 28;
+            rbMostrarTodos.Text = "Mostrar Todos";
+            rbMostrarTodos.UseVisualStyleBackColor = true;
             // 
             // panelBusqueda
             // 
@@ -287,8 +294,10 @@
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
             panelBusqueda.Location = new Point(12, 12);
+            panelBusqueda.MaximumSize = new Size(660, 43);
+            panelBusqueda.MinimumSize = new Size(426, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(660, 43);
+            panelBusqueda.Size = new Size(492, 43);
             panelBusqueda.TabIndex = 51;
             // 
             // txtBuscar
@@ -299,8 +308,11 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Proveedores...";
-            txtBuscar.Size = new Size(573, 20);
+            txtBuscar.Size = new Size(405, 20);
             txtBuscar.TabIndex = 1;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
+            txtBuscar.Leave += txtBuscar_Leave;
             // 
             // btnbuscar
             // 
@@ -310,7 +322,7 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(597, 12);
+            btnbuscar.Location = new Point(429, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
@@ -341,30 +353,88 @@
             btnSeleccionarProveedor.UseVisualStyleBackColor = false;
             btnSeleccionarProveedor.Click += btnSeleccionarProveedor_Click;
             // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(30, 45);
+            lstSugerencias.MaximumSize = new Size(573, 22);
+            lstSugerencias.MinimumSize = new Size(339, 22);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(405, 22);
+            lstSugerencias.TabIndex = 54;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(635, 12);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(166, 43);
+            pnlLimpiarFiltros.TabIndex = 55;
+            pnlLimpiarFiltros.Visible = false;
+            // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(3, 5);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(117, 32);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(121, 8);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(45, 24);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
+            // 
             // frmProveedor
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(684, 590);
+            ClientSize = new Size(813, 590);
+            Controls.Add(pnlLimpiarFiltros);
+            Controls.Add(lstSugerencias);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
-            Controls.Add(groupBox1);
+            Controls.Add(gbxFiltro);
             Controls.Add(panelBusqueda);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmProveedor";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "frmProveedores";
+            Text = "Proveedores";
             FormClosing += frmProveedores_FormClosing;
             Load += frmProveedores_Load;
             panel1.ResumeLayout(false);
             panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProveedores).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gbxFiltro.ResumeLayout(false);
+            gbxFiltro.PerformLayout();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
+            pnlLimpiarFiltros.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxClean).EndInit();
             ResumeLayout(false);
         }
 
@@ -376,10 +446,10 @@
         private Button btnSalir;
         private Button btnAgregarProveedor;
         private Button btnEditarProveedor;
-        private GroupBox groupBox1;
-        private RadioButton rdbDeshabilitados;
-        private RadioButton rdbHabilitados;
-        private RadioButton rdbTodos;
+        private GroupBox gbxFiltro;
+        private RadioButton rbMostrarDeshabilitados;
+        private RadioButton rbMostrarHabilitados;
+        private RadioButton rbMostrarTodos;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button btnbuscar;
@@ -390,5 +460,9 @@
         private DataGridViewCheckBoxColumn dataGridViewTextBoxColumn3;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnSeleccionarProveedor;
+        private ListBox lstSugerencias;
+        private Panel pnlLimpiarFiltros;
+        private Button btnLimpiarFiltros;
+        private PictureBox pbxClean;
     }
 }

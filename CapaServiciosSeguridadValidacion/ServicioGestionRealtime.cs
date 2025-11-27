@@ -1,5 +1,5 @@
 ﻿using CapaDeDatos.Datos;
-using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
+using CapaServiciosSeguridadValidacion;
 using Supabase.Realtime;
 using Supabase.Realtime.Interfaces;
 using Supabase.Realtime.PostgresChanges;

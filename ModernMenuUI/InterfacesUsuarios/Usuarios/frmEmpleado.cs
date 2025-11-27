@@ -3,7 +3,6 @@ using CapaDeDatos.Modelados;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
-using CapaServiciosSeguridadValidacion.CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Usuarios;
 using Supabase;

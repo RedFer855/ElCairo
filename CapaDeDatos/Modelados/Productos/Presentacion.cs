@@ -20,6 +20,10 @@ namespace CapaDeDatos.Modelados.Productos
 
         [Column("estado_presentacion")]
         public bool EstadoPresentacion { get; set; }    
+        public override string ToString()
+        {
+            return NombrePresentacion;
+        }
 
     }
 }

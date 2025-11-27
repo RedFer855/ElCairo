@@ -249,6 +249,7 @@ namespace ModernMenuUI
                     {
                         dgvCarrito.Rows[i].Cells[3].Value = stock;
                         MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                      
                     }
                     else
                     {
@@ -260,6 +261,13 @@ namespace ModernMenuUI
             }
             // Si no está en el carrito, agregar nueva fila
             int cantidadFinal = cantidadAgregar;
+
+            if (stock <= 0)
+            {
+                MessageBox.Show("Este producto está agotado (Stock 0).", "Sin Stock", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // Detiene el método aquí, no agrega nada
+            }
+
             if (cantidadFinal > stock)
             {
                 cantidadFinal = stock;

@@ -15,7 +15,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmAgregarEditarCategoria : Form
     {
-        private Categoria _categoriaSeleccionada;
+        public frmAgregarEditarCategoria(Categoria _categoriaSeleccionada)
+        {
+            InitializeComponent();
+        }
+
         public frmAgregarEditarCategoria()
         {
             InitializeComponent();

@@ -32,17 +32,11 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioBodega));
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventarioBodega));
             panel1 = new Panel();
             dgvProducto = new DataGridView();
-            Codigo = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            Bodega = new DataGridViewTextBoxColumn();
-            Anaquel = new DataGridViewTextBoxColumn();
-            StockTotal = new DataGridViewTextBoxColumn();
-            StockMinimo = new DataGridViewTextBoxColumn();
             cmbBodega = new ComboBox();
             label8 = new Label();
             panelBusqueda = new Panel();
@@ -58,6 +52,12 @@
             btnCrearBodega = new Button();
             tlp = new TableLayoutPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            Codigo = new DataGridViewTextBoxColumn();
+            Producto = new DataGridViewTextBoxColumn();
+            Bodega = new DataGridViewTextBoxColumn();
+            Anaquel = new DataGridViewTextBoxColumn();
+            StockTotal = new DataGridViewTextBoxColumn();
+            StockMinimo = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducto).BeginInit();
             panelBusqueda.SuspendLayout();
@@ -131,66 +131,10 @@
             dgvProducto.Size = new Size(900, 439);
             dgvProducto.TabIndex = 14;
             // 
-            // Codigo
-            // 
-            Codigo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Codigo.HeaderText = "Código";
-            Codigo.Name = "Codigo";
-            Codigo.ReadOnly = true;
-            Codigo.Width = 89;
-            // 
-            // Producto
-            // 
-            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Producto.DataPropertyName = "NombreProducto";
-            Producto.FillWeight = 35.1780434F;
-            Producto.HeaderText = "Producto";
-            Producto.Name = "Producto";
-            Producto.ReadOnly = true;
-            Producto.Width = 105;
-            // 
-            // Bodega
-            // 
-            Bodega.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Bodega.DataPropertyName = "NombreBodega";
-            Bodega.HeaderText = "Bodega";
-            Bodega.Name = "Bodega";
-            Bodega.ReadOnly = true;
-            Bodega.Width = 93;
-            // 
-            // Anaquel
-            // 
-            Anaquel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Anaquel.HeaderText = "Anaquel";
-            Anaquel.Name = "Anaquel";
-            Anaquel.ReadOnly = true;
-            // 
-            // StockTotal
-            // 
-            StockTotal.DataPropertyName = "StockProductoBodegaInventario";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            StockTotal.DefaultCellStyle = dataGridViewCellStyle3;
-            StockTotal.FillWeight = 40.203476F;
-            StockTotal.HeaderText = "Stock";
-            StockTotal.Name = "StockTotal";
-            StockTotal.ReadOnly = true;
-            // 
-            // StockMinimo
-            // 
-            StockMinimo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            StockMinimo.DataPropertyName = "StockMinimoProductoBodegaInventario";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.NullValue = "(Sin Stock Mínimo)";
-            StockMinimo.DefaultCellStyle = dataGridViewCellStyle4;
-            StockMinimo.FillWeight = 70F;
-            StockMinimo.HeaderText = "Stock Mínimo";
-            StockMinimo.MinimumWidth = 20;
-            StockMinimo.Name = "StockMinimo";
-            StockMinimo.ReadOnly = true;
-            StockMinimo.Width = 124;
-            // 
             // cmbBodega
             // 
+            cmbBodega.AutoCompleteMode = AutoCompleteMode.Append;
+            cmbBodega.AutoCompleteSource = AutoCompleteSource.ListItems;
             cmbBodega.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbBodega.ForeColor = Color.DimGray;
             cmbBodega.FormattingEnabled = true;
@@ -373,6 +317,62 @@
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(309, 59);
             flowLayoutPanel1.TabIndex = 44;
+            // 
+            // Codigo
+            // 
+            Codigo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Codigo.DataPropertyName = "CodigoBarraProducto";
+            Codigo.HeaderText = "Código";
+            Codigo.Name = "Codigo";
+            Codigo.ReadOnly = true;
+            Codigo.Width = 89;
+            // 
+            // Producto
+            // 
+            Producto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Producto.DataPropertyName = "NombreProducto";
+            Producto.HeaderText = "Producto";
+            Producto.Name = "Producto";
+            Producto.ReadOnly = true;
+            // 
+            // Bodega
+            // 
+            Bodega.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Bodega.DataPropertyName = "NombreBodega";
+            Bodega.HeaderText = "Bodega";
+            Bodega.Name = "Bodega";
+            Bodega.ReadOnly = true;
+            // 
+            // Anaquel
+            // 
+            Anaquel.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Anaquel.HeaderText = "Anaquel";
+            Anaquel.Name = "Anaquel";
+            Anaquel.ReadOnly = true;
+            // 
+            // StockTotal
+            // 
+            StockTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            StockTotal.DataPropertyName = "StockProductoBodegaInventario";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            StockTotal.DefaultCellStyle = dataGridViewCellStyle3;
+            StockTotal.HeaderText = "Stock";
+            StockTotal.Name = "StockTotal";
+            StockTotal.ReadOnly = true;
+            StockTotal.Width = 80;
+            // 
+            // StockMinimo
+            // 
+            StockMinimo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            StockMinimo.DataPropertyName = "StockMinimoProductoBodegaInventario";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.NullValue = "(Sin Stock Mínimo)";
+            StockMinimo.DefaultCellStyle = dataGridViewCellStyle4;
+            StockMinimo.HeaderText = "Stock Mínimo";
+            StockMinimo.MinimumWidth = 120;
+            StockMinimo.Name = "StockMinimo";
+            StockMinimo.ReadOnly = true;
+            StockMinimo.Width = 135;
             // 
             // frmInventarioBodega
             // 

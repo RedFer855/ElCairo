@@ -2,202 +2,304 @@
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
+using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ClasesUI.Extenciones;
 using ModernMenuUI.InterfacesUsuarios.Compras;
+using ModernMenuUI.ServiciosUI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmMarcas : Form
     {
-        private int _idMarcaSeleccionada;
-        private readonly MarcaRepositorio marcaRepositorio;
+        #region 1. Campos y Dependencias
+        private readonly MarcaRepositorio _marcaRepositorio;
+        private readonly GestorRealtime<Marca> _gestorRealtime;
+
+        private BuscadorInteractivo<Marca> _buscadorCtrl; 
+
         private List<Marca> _listaMaestraMarcas = new List<Marca>();
-        private Supabase.Realtime.RealtimeChannel? _marcasSubscription;
-        private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
-        private Supabase.Client? _supabaseClient;
         private Marca _marcaSeleccionada;
+
         public Marca MarcaSeleccionada { get; private set; }
+        #endregion
+
+        #region 2. Constructor y Load
         public frmMarcas()
         {
             InitializeComponent();
-            btnAgregarMarca.Visible = false;
-            btnModificarMarca.Visible = false;
-            this.DoubleBuffered = true;
-            marcaRepositorio = new MarcaRepositorio();
-            dgvMarcas.AutoGenerateColumns = false;
-            this.FormClosing += frmMarcas_FormClosing;
-            btnModificarMarca.Visible = false;
-            btnAgregarMarca.Visible = false;
+            ConfigurarFormulario();
 
+            _marcaRepositorio = new MarcaRepositorio();
+            _gestorRealtime = new GestorRealtime<Marca>();
+
+            // Configuración específica de Marcas
+            btnAgregarMarca.Visible = false;
+            btnModificarMarca.Visible = false;
+
+            ConfigurarRealtime();
         }
 
         public frmMarcas(bool tipo)
         {
             InitializeComponent();
+            ConfigurarFormulario();
+
+            _marcaRepositorio = new MarcaRepositorio();
+            _gestorRealtime = new GestorRealtime<Marca>();
+
+            // Modo Selección
             FormBorderStyle = FormBorderStyle.None;
-            this.DoubleBuffered = true;
-            marcaRepositorio = new MarcaRepositorio();
-            dgvMarcas.AutoGenerateColumns = false;
-            this.FormClosing += frmMarcas_FormClosing;
             btnSeleccionarMarca.Visible = false;
+
+            ConfigurarRealtime();
+        }
+
+        private void ConfigurarFormulario()
+        {
+            this.DoubleBuffered = true;
+            dgvMarcas.AutoGenerateColumns = false;
+
+            ConfigurarEventosUnificados();
+        }
+
+        private void ConfigurarRealtime()
+        {
+            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
+            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
         }
 
         private async void frmMarcas_Load(object sender, EventArgs e)
         {
-            _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-            await CargarMarcasMaestras();
-            RefrescarGrid();
-            await IniciarSuscripcionMarcas();
+            await InicializarDatosYBuscador();
+            await _gestorRealtime.SuscribirAsync();
+        }
+
+        private async void frmMarcas_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            await _gestorRealtime.DesuscribirAsync();
+        }
+        #endregion
+
+        #region 3. Lógica de Carga y Realtime
+        private void RecargarInterfazSafe()
+        {
+            if (!this.IsDisposed && this.IsHandleCreated)
+            {
+                this.BeginInvoke((MethodInvoker)(async () => await CargarMarcasMaestras()));
+            }
+        }
+
+        private async Task InicializarDatosYBuscador()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                _listaMaestraMarcas = await _marcaRepositorio.ObtenerTodasLasMarcas(null);
+
+                // --- CONFIGURACIÓN DEL BUSCADOR ---
+                _buscadorCtrl = new BuscadorInteractivo<Marca>(
+                    txtBuscar,
+                    lstSugerencias,
+                    dgvMarcas,
+                    _listaMaestraMarcas,
+                    // 1. Criterio Exacto (ID)
+                    (m, term) => m.IdMarca.ToString() == term,
+
+                    // 2. Criterio Parcial (NOMBRE MARCA O NOMBRE PROVEEDOR)
+                    (m, term) =>
+                    {
+                        bool porNombre = m.NombreMarca != null &&
+                                         m.NombreMarca.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                        // Aquí agregamos la búsqueda por PROVEEDOR
+                        bool porProv = m.NombreProveedor != null &&
+                                       m.NombreProveedor.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                        return porNombre || porProv;
+                    },
+
+                    // 3. Visualización: SOLO NOMBRE MARCA (Lo que pediste)
+                    (m) => m.NombreMarca,
+
+                    // 4. Callback UI
+                    (busquedaActiva) =>
+                    {
+                        if (pnlLimpiarFiltros != null)
+                            pnlLimpiarFiltros.Visible = busquedaActiva;
+
+                        if (!busquedaActiva) RefrescarGrid();
+                    },
+                    (txt) => false
+                );
+
+                RefrescarGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error inicializando datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
 
         private async Task CargarMarcasMaestras()
         {
             try
             {
-                this.Cursor = Cursors.WaitCursor;
-                _listaMaestraMarcas = await marcaRepositorio.ObtenerTodasLasMarcas(null);
-            }
-            catch (OperationCanceledException)
-            {
-                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _listaMaestraMarcas = await _marcaRepositorio.ObtenerTodasLasMarcas(null);
+
+                if (_buscadorCtrl != null)
+                {
+                    _buscadorCtrl.ActualizarDatosMaestros(_listaMaestraMarcas);
+                }
+
+                RefrescarGrid();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al cargar marcas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Error recargando marcas: {ex.Message}");
             }
-            finally
-            {
-                this.Cursor = Cursors.Default;
-            }
+        }
+        #endregion
 
+        #region 4. Búsqueda (Delegada al Controlador - Base Original)
+        // Usamos la sintaxis lambda de una línea como en tu form Productos original
+
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorCtrl.ManejarKeyUpAsync(e);
+
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorCtrl.ManejarKeyDown(e);
+
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) => _buscadorCtrl.ManejarClickLista();
+
+        private void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) _buscadorCtrl.ManejarClickLista();
         }
 
+        private void btnBuscar_Click(object sender, EventArgs e) => _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
+        #endregion
 
+        #region 5. Filtrado y Grid
         private void RefrescarGrid()
         {
+            if (_listaMaestraMarcas == null) return;
+
             this.Cursor = Cursors.WaitCursor;
-            // gbxEstado.Enabled = false;
 
-            // 1. Determinar el filtro de estado
-            bool? estado = null;
-            if (rbMostrarHablilitados.Checked) estado = true;
-            if (rbMostrarDeshablitados.Checked) estado = false;
+            IEnumerable<Marca> query = _listaMaestraMarcas;
 
-            // 2. Filtrar la LISTA MAESTRA (Declarada como List<Marca>)
-            List<Marca> listaFiltrada; // <-- Declarada como List<>
-
-            if (estado == null)
+            if (rbMostrarHablilitados.Checked)
             {
-                listaFiltrada = _listaMaestraMarcas; // Asigna la lista maestra
+                query = query.Where(m => m.EstadoMarca == true);
             }
-            else
+            else if (rbMostrarDeshablitados.Checked)
             {
-                // Asigna el resultado de .ToList()
-                listaFiltrada = _listaMaestraMarcas.Where(m => m.EstadoMarca == estado).ToList();
+                query = query.Where(m => m.EstadoMarca == false);
+            }
+        
+            string textoBusqueda = txtBuscar.Text.Trim();
+
+            if (!string.IsNullOrEmpty(textoBusqueda))
+            {
+
+                query = query.Where(m =>
+                    (m.NombreMarca != null && m.NombreMarca.IndexOf(textoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (m.NombreProveedor != null && m.NombreProveedor.IndexOf(textoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)
+                );
             }
 
-            // 3. Asigna la lista filtrada (que ya es un List<>)
+            var listaFinal = query.ToList();
+
             dgvMarcas.DataSource = null;
-            dgvMarcas.DataSource = listaFiltrada; // <-- Sin el .ToList() aquí
+            dgvMarcas.DataSource = listaFinal;
 
-            if (dgvMarcas.Rows.Count > 0)
-                dgvMarcas.ClearSelection();
+            bool hayFiltrosActivos = !rbMostrarHablilitados.Checked || !string.IsNullOrEmpty(textoBusqueda);
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = hayFiltrosActivos;
 
-            // gbxEstado.Enabled = true; 
+            if (dgvMarcas.Rows.Count > 0) dgvMarcas.ClearSelection();
+
             this.Cursor = Cursors.Default;
         }
 
-
-        private async Task DesecharSuscripcion()
+        private void ConfigurarEventosUnificados()
         {
-            if (_marcasSubscription != null)
+            rbMostrarTodos.CheckedChanged += FiltroEstado_Changed;
+            rbMostrarHablilitados.CheckedChanged += FiltroEstado_Changed;
+            rbMostrarDeshablitados.CheckedChanged += FiltroEstado_Changed;
+        }
+
+        private void FiltroEstado_Changed(object sender, EventArgs e)
+        {
+            if (sender is RadioButton rb && rb.Checked) RefrescarGrid();
+        }
+
+        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
+        {
+            _buscadorCtrl.LimpiarBusqueda();
+            rbMostrarHablilitados.Checked = true;
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
+            RefrescarGrid();
+        }
+        #endregion
+
+        #region 6. Acciones CRUD y Selección
+        private async void btnAgregarMarca_Click(object sender, EventArgs e)
+        {
+            frmAgregarEditarMarca nuevaMarca = new frmAgregarEditarMarca();
+            if (nuevaMarca.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
-                    await Task.Run(() => _marcasSubscription.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción de Marcas desechada.");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción Marcas: {ex.Message}");
-                }
-                _marcasSubscription = null;
+                await CargarMarcasMaestras();
             }
         }
 
-        private async Task IniciarSuscripcionMarcas()
+        private async void btnModificarMarca_Click(object sender, EventArgs e)
         {
-            await DesecharSuscripcion();
-
-            try
+            if (_marcaSeleccionada != null)
             {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
-
-                // Suscripción a la tabla 'marcas'
-                _marcasSubscription = await _supabaseClient.From<Marca>()
-                    .On(ListenType.All, (sender, change) =>
-                    {
-                        try
-                        {
-                            if (this == null || this.IsDisposed || !this.IsHandleCreated) return;
-
-                            this.BeginInvoke((MethodInvoker)(async () =>
-                            {
-                                if (this.IsDisposed) return;
-                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en Marcas.");
-
-                                // 1. Vuelve a cargar la lista maestra
-                                await CargarMarcasMaestras();
-                                // 2. Refresca el grid
-                                RefrescarGrid();
-                            }));
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime Marcas: {ex.Message}");
-                        }
-                    });
-
-                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime (Marcas) creada.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime (Marcas): {ex.Message}");
-            }
-        }
-
-        // --- MANEJO DE CONEXIÓN (Misma lógica) ---
-        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
-        {
-            if (!this.IsHandleCreated || this.IsDisposed) return;
-
-            if (status == NetworkStatus.Internet)
-            {
-                this.BeginInvoke((MethodInvoker)(async () =>
+                frmAgregarEditarMarca editarForm = new frmAgregarEditarMarca(_marcaSeleccionada);
+                if (editarForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (this.IsDisposed) return;
-                    System.Diagnostics.Debug.WriteLine("Red recuperada. Recargando Marcas y Realtime...");
                     await CargarMarcasMaestras();
-                    RefrescarGrid();
-                    await IniciarSuscripcionMarcas();
-                }));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una marca primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        private void btnSalir_Click(object sender, EventArgs e)
+
+        private void dgvMarcas_SelectionChanged(object sender, EventArgs e)
         {
-            this.Close();
+            if (dgvMarcas.SelectedRows.Count > 0)
+            {
+                _marcaSeleccionada = dgvMarcas.SelectedRows[0].DataBoundItem as Marca;
+            }
+            else
+            {
+                _marcaSeleccionada = null;
+            }
         }
 
         private void btnSeleccionarMarca_Click(object sender, EventArgs e)
+        {
+            ConfirmarSeleccion();
+        }
+
+        private void dgvMarcas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ConfirmarSeleccion();
+        }
+
+        private void ConfirmarSeleccion()
         {
             if (dgvMarcas.SelectedRows.Count > 0)
             {
@@ -207,101 +309,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
-        private async void frmMarcas_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            await DesecharSuscripcion();
-            _monitorConexion.EstadoDeRedCambiado -= MonitorConexion_EstadoDeRedCambiado;
-        }
-
-        private void dgvMarcas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                // Asignar la marca seleccionada a la propiedad pública y cerrar.
-                MarcaSeleccionada = dgvMarcas.Rows[e.RowIndex].DataBoundItem as Marca;
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-        }
-
-        private void rbMostrarHablilitados_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (rbMostrarHablilitados.Checked)
-            {
-                RefrescarGrid();
-            }
-        }
-
-        private void rbMostrarDeshablitados_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (rbMostrarDeshablitados.Checked)
-            {
-                RefrescarGrid();
-            }
-        }
-
-        private void rbMostrarTodos_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (rbMostrarTodos.Checked)
-            {
-                RefrescarGrid();
-            }
-        }
-
         private void btnProveedores_Click(object sender, EventArgs e)
         {
-            frmProveedores proveedores = new frmProveedores();
-            proveedores.ShowDialog();
+            frmProveedor provNuevo = new frmProveedor();
+            provNuevo.ShowDialog();
         }
 
-        private async void btnAgregarMarca_Click(object sender, EventArgs e)
+        private void btnSalir_Click(object sender, EventArgs e)
         {
-            frmAgregarEditarMarca _nuevaMarca = new frmAgregarEditarMarca();
-
-            DialogResult resultado = _nuevaMarca.ShowDialog();
-
-            if (resultado == DialogResult.OK)
-            {
-
-                await CargarMarcasMaestras();
-
-                RefrescarGrid();
-
-            }
+            this.Close();
         }
-
-        private void dgvMarcas_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvMarcas.SelectedRows.Count > 0)
-            {
-                // Asignamos a la variable con guion bajo
-                _marcaSeleccionada = dgvMarcas.SelectedRows[0].DataBoundItem as Marca;
-            }
-            else
-            {
-                _marcaSeleccionada = null;
-            }
-        }
-
-        private async void btnModificarMarca_Click(object sender, EventArgs e)
-        {
-            // Verificamos la variable _marcaSeleccionada
-            if (_marcaSeleccionada != null)
-            {
-                // Pasamos _marcaSeleccionada al constructor
-                frmAgregarEditarMarca editarForm = new frmAgregarEditarMarca(_marcaSeleccionada);
-                DialogResult resultado = editarForm.ShowDialog();
-
-                if (resultado == DialogResult.OK)
-                {
-                    await CargarMarcasMaestras();
-                    RefrescarGrid();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Seleccione una marca primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
+        #endregion
     }
 }

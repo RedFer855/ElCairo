@@ -23,5 +23,10 @@ namespace CapaDeDatos.Modelados.Productos
 
         [Column("id_estado")]
         public int IdEstado { get; set; }
+
+        public override string ToString()
+        {
+            return NombreCategoria;
+        }
     }
 }

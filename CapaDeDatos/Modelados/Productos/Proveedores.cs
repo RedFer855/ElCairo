@@ -26,6 +26,11 @@ namespace CapaDeDatos.Modelados.Productos
 
         [Column("estado_proveedor")]
         public bool EstadoProveedor { get; set; }
+
+        public override string ToString()
+        {
+            return NombreProveedor;
+        }
     }
 
 }

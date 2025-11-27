@@ -187,13 +187,12 @@
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewTextBoxColumn2.DataPropertyName = "NombreProducto";
             dataGridViewTextBoxColumn2.HeaderText = "Producto";
-            dataGridViewTextBoxColumn2.MinimumWidth = 100;
+            dataGridViewTextBoxColumn2.MinimumWidth = 180;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 105;
             // 
             // Contenido
             // 
@@ -329,7 +328,6 @@
             txtBuscar.Size = new Size(343, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
-            txtBuscar.KeyPress += txtBuscar_KeyPress;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
             txtBuscar.Leave += txtBuscar_Leave;
             // 
@@ -509,7 +507,6 @@
             rbMostrardeshabilitados.TabIndex = 30;
             rbMostrardeshabilitados.Text = "Deshabilitados";
             rbMostrardeshabilitados.UseVisualStyleBackColor = true;
-            rbMostrardeshabilitados.CheckedChanged += rbMostrardeshabilitados_CheckedChanged;
             // 
             // rbMostrarTodos
             // 
@@ -520,7 +517,6 @@
             rbMostrarTodos.TabIndex = 29;
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
-            rbMostrarTodos.CheckedChanged += rbMostrarTodos_CheckedChanged;
             // 
             // rbMostrarHabilitados
             // 
@@ -533,7 +529,6 @@
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
             rbMostrarHabilitados.UseVisualStyleBackColor = true;
-            rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
             // lblFecha
             // 
@@ -564,7 +559,6 @@
             // HoraFecha
             // 
             HoraFecha.Enabled = true;
-            HoraFecha.Tick += HoraFecha_Tick;
             // 
             // btnIngresarPerdida
             // 
@@ -630,7 +624,6 @@
             lstSugerencias.TabIndex = 2;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
-            lstSugerencias.SelectedIndexChanged += lstSugerencias_SelectedIndexChanged;
             lstSugerencias.KeyDown += lstSugerencias_KeyDown;
             // 
             // flowLayoutPanel1

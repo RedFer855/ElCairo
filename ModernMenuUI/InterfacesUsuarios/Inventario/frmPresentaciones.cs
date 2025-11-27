@@ -1,42 +1,52 @@
-﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados.Productos;
+﻿using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
-using Supabase;
-using Supabase.Realtime;
+using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ServiciosUI; // Necesario para BuscadorInteractivo
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmPresentaciones : Form
     {
-        private readonly PresentacionRepositorio presentacionRepositorio;
-        private List<Presentacion> _listaMaestraPresentaciones = new List<Presentacion>();
-        private RealtimeChannel? _presentacionesSubscription;
-        private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
-        private Supabase.Client? _supabaseClient;
+        #region 1. Campos y Dependencias
+        private readonly PresentacionRepositorio _presentacionRepositorio;
+        private readonly GestorRealtime<Presentacion> _gestorRealtime;
         private Presentacion? _presentacionSeleccionada;
 
-        public Presentacion PresentacionSeleccionada { get; private set; }
 
+        // Agregamos el BuscadorInteractivo
+        private BuscadorInteractivo<Presentacion> _buscadorCtrl;
+
+        // Lista maestra en memoria
+        private List<Presentacion> _listaCompletaPresentaciones = new List<Presentacion>();
+
+        private Presentacion _presentacionSeleccionada;
+        public Presentacion PresentacionSeleccionada { get; private set; }
+        #endregion
+
+        #region 2. Constructores
         public frmPresentaciones()
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
-            presentacionRepositorio = new PresentacionRepositorio();
-            dgvPresentaciones.AutoGenerateColumns = false;
+            ConfigurarFormulario();
+
+            _presentacionRepositorio = new PresentacionRepositorio();
+            _gestorRealtime = new GestorRealtime<Presentacion>();
+
+            // Configuración visual por defecto (se mantiene tu lógica original de ocultar botones)
             btnAgregarPresentacion.Visible = false;
             btnModificarPresentacion.Visible = false;
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
 
-            this.FormClosing += frmPresentaciones_FormClosing;
+            ConfigurarRealtime();
         }
 
-        // Si quieres una sobrecarga tipo 'solo selección' como en marcas
         public frmPresentaciones(bool soloSeleccion)
         {
             InitializeComponent();
@@ -44,177 +54,213 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             presentacionRepositorio = new PresentacionRepositorio();
             dgvPresentaciones.AutoGenerateColumns = false;
             this.FormClosing += frmPresentaciones_FormClosing;
+            ConfigurarFormulario();
+
+            _presentacionRepositorio = new PresentacionRepositorio();
+            _gestorRealtime = new GestorRealtime<Presentacion>();
+
+            FormBorderStyle = FormBorderStyle.None;
 
             if (soloSeleccion)
             {
-
                 btnSeleccionarPresentacion.Visible = false;
+            }
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
+
+            ConfigurarRealtime();
+        }
 
             }
             FormBorderStyle = FormBorderStyle.None;
         }
 
+        private void ConfigurarFormulario()
+        {
+            this.DoubleBuffered = true;
+            dgvPresentaciones.AutoGenerateColumns = false;
+            ConfigurarEventosUnificados();
+
+            // IMPORTANTE: Evitamos el filtrado automático al escribir para delegarlo al buscador
+        }
+
+        private void ConfigurarRealtime()
+        {
+            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
+            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+        }
+        #endregion
+
+        #region 3. Carga y Lógica Principal
         private async void frmPresentaciones_Load(object sender, EventArgs e)
         {
-            _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
+            // Asegurar un radio button por defecto
+            if (!rbMostrarTodos.Checked && !rbMostrarHabilitados.Checked && !rbMostrarDeshabilitados.Checked)
+            {
+                rbMostrarTodos.Checked = true;
+            }
 
-            await CargarPresentacionesMaestras();
-            RefrescarGrid();
-            await IniciarSuscripcionPresentaciones();
+            await InicializarDatosYBuscador();
+            await _gestorRealtime.SuscribirAsync();
+        }
+
+        private async void frmPresentaciones_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            await _gestorRealtime.DesuscribirAsync();
+        }
+
+        private void RecargarInterfazSafe()
+        {
+            if (!this.IsDisposed && this.IsHandleCreated)
+                this.BeginInvoke((MethodInvoker)(async () => await CargarPresentacionesMaestras()));
+        }
+
+        private async Task InicializarDatosYBuscador()
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                // Carga inicial de datos
+                _listaCompletaPresentaciones = await _presentacionRepositorio.ObtenerTodasLasPresentaciones();
+
+                // Configuración del Buscador Interactivo
+                _buscadorCtrl = new BuscadorInteractivo<Presentacion>(
+                    txtBuscar,
+                    lstSugerencias,
+                    dgvPresentaciones,
+                    _listaCompletaPresentaciones,
+                    (p, term) => p.IdPresentacionProducto.ToString() == term, // Buscar por ID
+                    (p, term) => p.NombrePresentacion != null && p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0, // Buscar por Nombre
+                    (p) => p.NombrePresentacion, // Texto a mostrar en sugerencias
+                    (buscando) =>
+                    {
+                        if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = buscando;
+                        // Solo refrescamos grid si LIMPIA la búsqueda (buscando = false)
+                        if (!buscando) RefrescarGrid();
+                    },
+                    (txt) => false // Validación extra si fuera necesaria
+                );
+
+                RefrescarGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally { this.Cursor = Cursors.Default; }
         }
 
         private async Task CargarPresentacionesMaestras()
         {
             try
             {
-                this.Cursor = Cursors.WaitCursor;
-                _listaMaestraPresentaciones = await presentacionRepositorio.ObtenerTodasLasPresentaciones();
-            }
-            catch (OperationCanceledException)
-            {
-                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _listaCompletaPresentaciones = await _presentacionRepositorio.ObtenerTodasLasPresentaciones();
+                if (_buscadorCtrl != null) _buscadorCtrl.ActualizarDatosMaestros(_listaCompletaPresentaciones);
+                RefrescarGrid();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al cargar presentaciones", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
+                // Manejo silencioso o log en reconexión
+                Console.WriteLine(ex.Message);
             }
         }
 
         private void RefrescarGrid()
         {
+            if (_listaCompletaPresentaciones == null) return;
             this.Cursor = Cursors.WaitCursor;
 
-            bool? estado = null;
-            // Ajusta los nombres de los radio buttons según tu diseñador:
-            if (rbMostrarHabilitados.Checked) estado = true;
-            if (rbMostrarDeshabilitados.Checked) estado = false;
+            // 1. Filtro de Estado (En Memoria - Optimizado)
+            IEnumerable<Presentacion> query = _listaCompletaPresentaciones;
 
-            List<Presentacion> listaFiltrada;
+            if (rbMostrarHabilitados.Checked)
+                query = query.Where(p => p.EstadoPresentacion == true);
+            else if (rbMostrarDeshabilitados.Checked)
+                query = query.Where(p => p.EstadoPresentacion == false);
 
-            if (estado == null)
+            // Actualizamos la lista base del buscador con lo filtrado por estado
+            if (_buscadorCtrl != null) _buscadorCtrl.ActualizarDatosMaestros(query.ToList());
+
+            // 2. Filtro de Texto (Solo aplica cuando llamamos a este método manualmente o por cambio de radio button)
+            string texto = txtBuscar.Text.Trim();
+            if (!string.IsNullOrEmpty(texto))
             {
-                listaFiltrada = _listaMaestraPresentaciones;
-            }
-            else
-            {
-                listaFiltrada = _listaMaestraPresentaciones.Where(p => p.EstadoPresentacion == estado).ToList();
+                query = query.Where(p => p.NombrePresentacion != null &&
+                                         p.NombrePresentacion.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
+            // 3. Bind al Grid
+            var listaFinal = query.ToList();
             dgvPresentaciones.DataSource = null;
-            dgvPresentaciones.DataSource = listaFiltrada;
+            dgvPresentaciones.DataSource = listaFinal;
 
-            if (dgvPresentaciones.Rows.Count > 0)
-                dgvPresentaciones.ClearSelection();
+            // Botón Limpiar (Lógica visual)
+            if (pnlLimpiarFiltros != null)
+            {
+                bool hayFiltros = !rbMostrarHabilitados.Checked || !string.IsNullOrEmpty(texto);
+                pnlLimpiarFiltros.Visible = hayFiltros;
+            }
 
+            if (dgvPresentaciones.Rows.Count > 0) dgvPresentaciones.ClearSelection();
             this.Cursor = Cursors.Default;
         }
 
-        private async Task DesecharSuscripcion()
+        private void ConfigurarEventosUnificados()
         {
-            if (_presentacionesSubscription != null)
-            {
-                try
-                {
-                    await Task.Run(() => _presentacionesSubscription.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción de Presentaciones desechada.");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción Presentaciones: {ex.Message}");
-                }
+            // Unificamos lógica para no repetir código en cada RadioButton
+            rbMostrarTodos.CheckedChanged += (s, e) => { if (((RadioButton)s).Checked) RefrescarGrid(); };
+            rbMostrarHabilitados.CheckedChanged += (s, e) => { if (((RadioButton)s).Checked) RefrescarGrid(); };
+            rbMostrarDeshabilitados.CheckedChanged += (s, e) => { if (((RadioButton)s).Checked) RefrescarGrid(); };
+        }
+        #endregion
 
-                _presentacionesSubscription = null;
-            }
+        #region 4. Eventos Buscador (Delegados al BuscadorInteractivo)
+
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (_buscadorCtrl != null) await _buscadorCtrl.ManejarKeyUpAsync(e);
         }
 
-        private async Task IniciarSuscripcionPresentaciones()
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
-            await DesecharSuscripcion();
-
-            try
-            {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
-
-                _presentacionesSubscription = await _supabaseClient.From<Presentacion>()
-                    .On(ListenType.All, (sender, change) =>
-                    {
-                        try
-                        {
-                            if (this == null || this.IsDisposed || !this.IsHandleCreated) return;
-
-                            this.BeginInvoke((MethodInvoker)(async () =>
-                            {
-                                if (this.IsDisposed) return;
-                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en Presentaciones.");
-
-                                // 1. Recargar la lista maestra
-                                await CargarPresentacionesMaestras();
-                                // 2. Refrescar grid
-                                RefrescarGrid();
-                            }));
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime Presentaciones: {ex.Message}");
-                        }
-                    });
-
-                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime (Presentaciones) creada.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime (Presentaciones): {ex.Message}");
-            }
+            if (_buscadorCtrl != null) _buscadorCtrl.ManejarKeyDown(e);
         }
 
-        // --- MANEJO DE CONEXIÓN (igual que en frmMarcas) ---
-        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e)
         {
-            if (!this.IsHandleCreated || this.IsDisposed) return;
-
-            if (status == NetworkStatus.Internet)
-            {
-                this.BeginInvoke((MethodInvoker)(async () =>
-                {
-                    if (this.IsDisposed) return;
-                    System.Diagnostics.Debug.WriteLine("Red recuperada. Recargando Presentaciones y Realtime...");
-                    await CargarPresentacionesMaestras();
-                    RefrescarGrid();
-                    await IniciarSuscripcionPresentaciones();
-                }));
-            }
+            if (_buscadorCtrl != null) _buscadorCtrl.ManejarClickLista();
         }
 
-        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        private void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
         {
-            if (rbMostrarHabilitados.Checked) RefrescarGrid();
+            if (e.KeyCode == Keys.Enter && _buscadorCtrl != null) _buscadorCtrl.ManejarClickLista();
         }
 
-        private void rbMostrarDeshabilitados_CheckedChanged(object sender, EventArgs e)
+        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
-            if (rbMostrarDeshabilitados.Checked) RefrescarGrid();
+            if (_buscadorCtrl != null) _buscadorCtrl.LimpiarBusqueda();
+            rbMostrarHabilitados.Checked = true; // O el default que prefieras
+            if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
+            RefrescarGrid();
+        }
+        #endregion
+
+        #region 5. Selección y Salida
+
+        // Nota: Los botones de Agregar/Modificar existen pero estaban ocultos en tu código original.
+        // Si necesitas su lógica, sería análoga a la de Categorías.
+
+        private void dgvPresentaciones_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvPresentaciones.SelectedRows.Count > 0)
+                _presentacionSeleccionada = dgvPresentaciones.SelectedRows[0].DataBoundItem as Presentacion;
+            else
+                _presentacionSeleccionada = null;
         }
 
-        private void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbMostrarTodos.Checked) RefrescarGrid();
-        }
+        private void btnSeleccionarPresentacion_Click(object sender, EventArgs e) => ConfirmarSeleccion();
+        private void dgvPresentaciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => ConfirmarSeleccion();
 
-        private void dgvPresentaciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                PresentacionSeleccionada = dgvPresentaciones.Rows[e.RowIndex].DataBoundItem as Presentacion;
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-        }
-
-        private void btnSeleccionarPresentacion_Click(object sender, EventArgs e)
+        private void ConfirmarSeleccion()
         {
             if (dgvPresentaciones.SelectedRows.Count > 0)
             {
@@ -222,12 +268,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
-        }
-
-        private async void frmPresentaciones_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            await DesecharSuscripcion();
-            _monitorConexion.EstadoDeRedCambiado -= MonitorConexion_EstadoDeRedCambiado;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -283,6 +323,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             {
                 MessageBox.Show("Seleccione una marca primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
+}
+#endregio
     }
 }
