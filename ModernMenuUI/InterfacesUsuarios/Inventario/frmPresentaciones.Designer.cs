@@ -182,6 +182,7 @@
             dgvPresentaciones.Size = new Size(648, 264);
             dgvPresentaciones.TabIndex = 1;
             dgvPresentaciones.CellDoubleClick += dgvPresentaciones_CellDoubleClick;
+            dgvPresentaciones.SelectionChanged += dgvPresentaciones_SelectionChanged;
             // 
             // IdPresentacion
             // 
@@ -280,6 +281,7 @@
             btnAgregarPresentacion.TabIndex = 35;
             btnAgregarPresentacion.Text = "Agregar Presentación";
             btnAgregarPresentacion.UseVisualStyleBackColor = false;
+            btnAgregarPresentacion.Click += btnAgregarPresentacion_Click;
             // 
             // flowLayoutPanel1
             // 
@@ -304,6 +306,7 @@
             btnModificarPresentacion.TabIndex = 36;
             btnModificarPresentacion.Text = "Modificar Presentación";
             btnModificarPresentacion.UseVisualStyleBackColor = false;
+            btnModificarPresentacion.Click += btnModificarPresentacion_Click;
             // 
             // btnSeleccionarPresentacion
             // 
@@ -316,6 +319,7 @@
             btnSeleccionarPresentacion.TabIndex = 38;
             btnSeleccionarPresentacion.Text = "Seleccionar Presentación";
             btnSeleccionarPresentacion.UseVisualStyleBackColor = false;
+            btnSeleccionarPresentacion.Click += btnSeleccionarPresentacion_Click;
             // 
             // btnSalir
             // 

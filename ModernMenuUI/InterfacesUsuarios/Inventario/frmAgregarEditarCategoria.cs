@@ -123,5 +123,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             btnGuardarCategoria.Visible = true;
             btnModificarCategoria.Visible = false;
         }
+
+       
     }
 }

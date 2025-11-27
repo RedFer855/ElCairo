@@ -99,8 +99,8 @@
             // flpAjustarBotones
             // 
             flpAjustarBotones.Controls.Add(btnGuardarMarca);
-            flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Controls.Add(btnModificarMarca);
+            flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Location = new Point(19, 152);
             flpAjustarBotones.Name = "flpAjustarBotones";
             flpAjustarBotones.Size = new Size(295, 37);
@@ -131,7 +131,7 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(98, 3);
+            btnVolver.Location = new Point(176, 3);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(95, 33);
             btnVolver.TabIndex = 0;
@@ -147,7 +147,7 @@
             btnModificarMarca.Font = new Font("Itim", 11.9999981F);
             btnModificarMarca.ForeColor = SystemColors.ButtonFace;
             btnModificarMarca.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarMarca.Location = new Point(199, 3);
+            btnModificarMarca.Location = new Point(98, 3);
             btnModificarMarca.Name = "btnModificarMarca";
             btnModificarMarca.Size = new Size(72, 33);
             btnModificarMarca.TabIndex = 19;

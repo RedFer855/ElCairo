@@ -34,8 +34,8 @@
             panel2 = new Panel();
             flpAjustarBotones = new FlowLayoutPanel();
             btnGuardarPresentacion = new Button();
-            btnVolver = new Button();
             btnModificarPresentacion = new Button();
+            btnVolver = new Button();
             txtDescripcionPresentacion = new TextBox();
             pbxImagenMarca = new PictureBox();
             txtNombrePresentacion = new TextBox();
@@ -96,8 +96,8 @@
             // flpAjustarBotones
             // 
             flpAjustarBotones.Controls.Add(btnGuardarPresentacion);
-            flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Controls.Add(btnModificarPresentacion);
+            flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Location = new Point(10, 235);
             flpAjustarBotones.Name = "flpAjustarBotones";
             flpAjustarBotones.Size = new Size(295, 37);
@@ -118,21 +118,7 @@
             btnGuardarPresentacion.Text = "Guardar";
             btnGuardarPresentacion.UseVisualStyleBackColor = false;
             btnGuardarPresentacion.Visible = false;
-            // 
-            // btnVolver
-            // 
-            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
-            btnVolver.BackgroundImageLayout = ImageLayout.None;
-            btnVolver.FlatAppearance.BorderSize = 0;
-            btnVolver.Font = new Font("Itim", 11.9999981F);
-            btnVolver.ForeColor = SystemColors.ButtonFace;
-            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(98, 3);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(95, 33);
-            btnVolver.TabIndex = 0;
-            btnVolver.Text = "Volver";
-            btnVolver.UseVisualStyleBackColor = false;
+            btnGuardarPresentacion.Click += btnGuardarCategoria_Click;
             // 
             // btnModificarPresentacion
             // 
@@ -142,12 +128,28 @@
             btnModificarPresentacion.Font = new Font("Itim", 11.9999981F);
             btnModificarPresentacion.ForeColor = SystemColors.ButtonFace;
             btnModificarPresentacion.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarPresentacion.Location = new Point(199, 3);
+            btnModificarPresentacion.Location = new Point(98, 3);
             btnModificarPresentacion.Name = "btnModificarPresentacion";
             btnModificarPresentacion.Size = new Size(72, 33);
             btnModificarPresentacion.TabIndex = 19;
             btnModificarPresentacion.Text = "Editar";
             btnModificarPresentacion.UseVisualStyleBackColor = false;
+            btnModificarPresentacion.Click += btnModificarPresentacion_Click;
+            // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
+            btnVolver.BackgroundImageLayout = ImageLayout.None;
+            btnVolver.FlatAppearance.BorderSize = 0;
+            btnVolver.Font = new Font("Itim", 11.9999981F);
+            btnVolver.ForeColor = SystemColors.ButtonFace;
+            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
+            btnVolver.Location = new Point(176, 3);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(95, 33);
+            btnVolver.TabIndex = 0;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
             // 
             // txtDescripcionPresentacion
             // 
@@ -258,6 +260,7 @@
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Name = "frmAgregarEditarPresentacion";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Presentación";
             panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);

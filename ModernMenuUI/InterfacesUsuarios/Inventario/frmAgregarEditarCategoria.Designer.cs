@@ -35,8 +35,8 @@
             rbActivo = new RadioButton();
             flpAjustarBotones = new FlowLayoutPanel();
             btnGuardarCategoria = new Button();
-            btnVolver = new Button();
             btnModificarCategoria = new Button();
+            btnVolver = new Button();
             rbInactivo = new RadioButton();
             txtDescripcionCategoria = new TextBox();
             pbxImagenMarca = new PictureBox();
@@ -101,8 +101,8 @@
             // flpAjustarBotones
             // 
             flpAjustarBotones.Controls.Add(btnGuardarCategoria);
-            flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Controls.Add(btnModificarCategoria);
+            flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Location = new Point(12, 283);
             flpAjustarBotones.Name = "flpAjustarBotones";
             flpAjustarBotones.Size = new Size(295, 37);
@@ -123,21 +123,7 @@
             btnGuardarCategoria.Text = "Guardar";
             btnGuardarCategoria.UseVisualStyleBackColor = false;
             btnGuardarCategoria.Visible = false;
-            // 
-            // btnVolver
-            // 
-            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
-            btnVolver.BackgroundImageLayout = ImageLayout.None;
-            btnVolver.FlatAppearance.BorderSize = 0;
-            btnVolver.Font = new Font("Itim", 11.9999981F);
-            btnVolver.ForeColor = SystemColors.ButtonFace;
-            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(98, 3);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(95, 33);
-            btnVolver.TabIndex = 0;
-            btnVolver.Text = "Volver";
-            btnVolver.UseVisualStyleBackColor = false;
+            btnGuardarCategoria.Click += btnGuardarCategoria_Click;
             // 
             // btnModificarCategoria
             // 
@@ -147,12 +133,29 @@
             btnModificarCategoria.Font = new Font("Itim", 11.9999981F);
             btnModificarCategoria.ForeColor = SystemColors.ButtonFace;
             btnModificarCategoria.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarCategoria.Location = new Point(199, 3);
+            btnModificarCategoria.Location = new Point(98, 3);
             btnModificarCategoria.Name = "btnModificarCategoria";
             btnModificarCategoria.Size = new Size(72, 33);
             btnModificarCategoria.TabIndex = 19;
             btnModificarCategoria.Text = "Editar";
             btnModificarCategoria.UseVisualStyleBackColor = false;
+            btnModificarCategoria.Click += btnModificarCategoria_Click;
+            // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
+            btnVolver.BackgroundImageLayout = ImageLayout.None;
+            btnVolver.FlatAppearance.BorderSize = 0;
+            btnVolver.Font = new Font("Itim", 11.9999981F);
+            btnVolver.ForeColor = SystemColors.ButtonFace;
+            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
+            btnVolver.Location = new Point(176, 3);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(95, 33);
+            btnVolver.TabIndex = 0;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
             // 
             // rbInactivo
             // 

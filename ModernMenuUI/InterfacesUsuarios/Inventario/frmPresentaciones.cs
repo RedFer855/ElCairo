@@ -262,5 +262,22 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private void btnSalir_Click(object sender, EventArgs e) => this.Close();
         #endregion
+
+        private async void btnModificarPresentacion_Click(object sender, EventArgs e)
+        {
+            if (_presentacionSeleccionada != null)
+            {
+                if (new frmAgregarEditarPresentacion(_presentacionSeleccionada).ShowDialog() == DialogResult.OK) await CargarPresentacionesMaestras();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una presentación.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private async void btnAgregarPresentacion_Click(object sender, EventArgs e)
+        {
+            if (new frmAgregarEditarPresentacion().ShowDialog() == DialogResult.OK) await CargarPresentacionesMaestras();
+        }
     }
 }
