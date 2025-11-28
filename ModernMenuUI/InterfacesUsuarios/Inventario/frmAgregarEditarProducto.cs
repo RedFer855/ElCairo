@@ -21,7 +21,7 @@ namespace ModernMenuUI
         private int _idMarcaSeleccionada;
         private int _idCategoriaSeleccionada;
         private int _idPresentacionSeleccionada;
-       
+
 
         public frmAgregarEditarProducto()
         {
@@ -57,7 +57,7 @@ namespace ModernMenuUI
             {
                 rbDeshabilitado.Checked = true;
             }
-            pnlNota.Visible = false;
+            lblNota.Visible = false;
 
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
         }
@@ -115,7 +115,7 @@ namespace ModernMenuUI
                     PrecioCosto = precioCosto,
                     CantidadProducto = cantidad
                 };
-           
+
                 // 2. VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(_productoInsertar);
                 if (resultado.Error)
@@ -256,5 +256,6 @@ namespace ModernMenuUI
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
         }
+
     }
 }

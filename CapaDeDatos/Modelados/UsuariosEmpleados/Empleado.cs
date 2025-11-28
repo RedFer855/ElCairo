@@ -37,7 +37,7 @@ namespace CapaDeDatos.Modelados
 
         public override string ToString()
         {
-            return NombreEmpleado;
+            return NombreEmpleado + ApellidoEmpleado;
         }
     }
 
