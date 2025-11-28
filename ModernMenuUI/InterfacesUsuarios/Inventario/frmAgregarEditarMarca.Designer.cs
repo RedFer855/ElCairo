@@ -34,10 +34,9 @@
             panel2 = new Panel();
             flpAjustarBotones = new FlowLayoutPanel();
             btnGuardarMarca = new Button();
-            btnVolver = new Button();
             btnModificarMarca = new Button();
+            btnVolver = new Button();
             txtProveedor = new TextBox();
-            btnBuscarProv = new Button();
             pbxImagenMarca = new PictureBox();
             txtNombreMarca = new TextBox();
             gbxEstado = new GroupBox();
@@ -46,6 +45,7 @@
             lblEstado = new Label();
             label8 = new Label();
             label2 = new Label();
+            btnBuscarProv = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
@@ -123,22 +123,6 @@
             btnGuardarMarca.Visible = false;
             btnGuardarMarca.Click += btnGuardarMarca_Click;
             // 
-            // btnVolver
-            // 
-            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
-            btnVolver.BackgroundImageLayout = ImageLayout.None;
-            btnVolver.FlatAppearance.BorderSize = 0;
-            btnVolver.Font = new Font("Itim", 11.9999981F);
-            btnVolver.ForeColor = SystemColors.ButtonFace;
-            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(176, 3);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(95, 33);
-            btnVolver.TabIndex = 0;
-            btnVolver.Text = "Volver";
-            btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
-            // 
             // btnModificarMarca
             // 
             btnModificarMarca.BackColor = Color.FromArgb(74, 148, 225);
@@ -155,6 +139,22 @@
             btnModificarMarca.UseVisualStyleBackColor = false;
             btnModificarMarca.Click += btnModificarMarca_Click;
             // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = Color.FromArgb(148, 168, 187);
+            btnVolver.BackgroundImageLayout = ImageLayout.None;
+            btnVolver.FlatAppearance.BorderSize = 0;
+            btnVolver.Font = new Font("Itim", 11.9999981F);
+            btnVolver.ForeColor = SystemColors.ButtonFace;
+            btnVolver.ImageAlign = ContentAlignment.BottomLeft;
+            btnVolver.Location = new Point(176, 3);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(95, 33);
+            btnVolver.TabIndex = 0;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // txtProveedor
             // 
             txtProveedor.BackColor = Color.White;
@@ -165,20 +165,6 @@
             txtProveedor.PlaceholderText = "(Seleccione Buscar)";
             txtProveedor.Size = new Size(201, 20);
             txtProveedor.TabIndex = 24;
-            // 
-            // btnBuscarProv
-            // 
-            btnBuscarProv.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarProv.BackgroundImage = (Image)resources.GetObject("btnBuscarProv.BackgroundImage");
-            btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarProv.FlatAppearance.BorderSize = 0;
-            btnBuscarProv.FlatStyle = FlatStyle.Flat;
-            btnBuscarProv.Location = new Point(357, 46);
-            btnBuscarProv.Name = "btnBuscarProv";
-            btnBuscarProv.Size = new Size(48, 21);
-            btnBuscarProv.TabIndex = 23;
-            btnBuscarProv.UseVisualStyleBackColor = false;
-            btnBuscarProv.Click += btnBuscarProv_Click;
             // 
             // pbxImagenMarca
             // 
@@ -254,7 +240,7 @@
             label8.Name = "label8";
             label8.Size = new Size(125, 18);
             label8.TabIndex = 12;
-            label8.Text = "NombreEmpleado de Marca:";
+            label8.Text = "Nombre de Marca:";
             // 
             // label2
             // 
@@ -266,6 +252,20 @@
             label2.Size = new Size(78, 18);
             label2.TabIndex = 14;
             label2.Text = "Proveedor:";
+            // 
+            // btnBuscarProv
+            // 
+            btnBuscarProv.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarProv.BackgroundImage = (Image)resources.GetObject("btnBuscarProv.BackgroundImage");
+            btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarProv.FlatAppearance.BorderSize = 0;
+            btnBuscarProv.FlatStyle = FlatStyle.Flat;
+            btnBuscarProv.Location = new Point(357, 46);
+            btnBuscarProv.Name = "btnBuscarProv";
+            btnBuscarProv.Size = new Size(48, 21);
+            btnBuscarProv.TabIndex = 23;
+            btnBuscarProv.UseVisualStyleBackColor = false;
+            btnBuscarProv.Click += btnBuscarProv_Click;
             // 
             // frmAgregarEditarMarca
             // 
@@ -308,8 +308,8 @@
         private Label label2;
         private Label label1;
         public Label lblNombreModulo;
-        private Button btnBuscarProv;
         private TextBox txtProveedor;
         private FlowLayoutPanel flpAjustarBotones;
+        private Button btnBuscarProv;
     }
 }
