@@ -27,8 +27,9 @@ namespace CapaServiciosSeguridadValidacion
                 p => ValidarSeleccion(p.IdPresentacion, "una presentación"),
                 p => ValidarEnteroValido(p.CantidadProducto, "Cantidad"),
                 p => ValidarCampoVacio(p.ContenidoProducto, "el contenido del producto"),
-                //p => ValidarDecimalValido(p.PrecioCompra, "Precio de compra"),
-                //p => ValidarDecimalValido(p.PrecioCosto, "Precio costo"),
+                p => ValidarDecimalValido(p.PrecioCompra, "Precio de compra"),
+                p => ValidarDecimalValido(p.PrecioVenta, "Precio costo"),
+                //p => ValidarSeleccion(p.CantidadProducto,"La cantidad")
             };
 
         public static (bool Error, string Mensaje) EjecutarValidacionesProducto(ProductoInsertar producto)
