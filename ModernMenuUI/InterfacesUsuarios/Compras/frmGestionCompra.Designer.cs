@@ -86,7 +86,7 @@
             Stock = new DataGridViewTextBoxColumn();
             Codigos = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
-            textBox1 = new TextBox();
+            txtNuevoPrecio = new TextBox();
             label10 = new Label();
             nudCantidad = new NumericUpDown();
             label9 = new Label();
@@ -758,7 +758,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
-            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(txtNuevoPrecio);
             panel2.Controls.Add(label10);
             panel2.Controls.Add(nudCantidad);
             panel2.Controls.Add(label9);
@@ -777,16 +777,15 @@
             panel2.Size = new Size(422, 292);
             panel2.TabIndex = 20;
             // 
-            // textBox1
+            // txtNuevoPrecio
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Itim", 13F);
-            textBox1.Location = new Point(144, 170);
-            textBox1.Margin = new Padding(4);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(240, 26);
-            textBox1.TabIndex = 23;
+            txtNuevoPrecio.BorderStyle = BorderStyle.None;
+            txtNuevoPrecio.Font = new Font("Itim", 13F);
+            txtNuevoPrecio.Location = new Point(144, 170);
+            txtNuevoPrecio.Margin = new Padding(4);
+            txtNuevoPrecio.Name = "txtNuevoPrecio";
+            txtNuevoPrecio.Size = new Size(240, 26);
+            txtNuevoPrecio.TabIndex = 23;
             // 
             // label10
             // 
@@ -806,6 +805,7 @@
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
             nudCantidad.Location = new Point(110, 210);
             nudCantidad.Margin = new Padding(4);
+            nudCantidad.Maximum = new decimal(new int[] { 400, 0, 0, 0 });
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
             nudCantidad.Size = new Size(81, 40);
@@ -1047,7 +1047,7 @@
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
         private Label label10;
-        private TextBox textBox1;
+        private TextBox txtNuevoPrecio;
         private DataGridViewTextBoxColumn CodigoBarra;
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Marca;

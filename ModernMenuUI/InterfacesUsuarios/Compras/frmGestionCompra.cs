@@ -2,9 +2,11 @@
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
+using CapaDominio.Reportes;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;
+using Sprache;
 using Supabase;
 using Supabase.Realtime;
 using System;
@@ -19,7 +21,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Supabase.Postgrest.Constants;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
-using CapaDominio.Reportes;
 
 
 namespace ModernMenuUI
@@ -426,6 +427,17 @@ namespace ModernMenuUI
             {
                 throw new Exception("No hay usuario autenticado en la sesión actual.");
             }
+            if (string.IsNullOrWhiteSpace(txtNuevoPrecio.Text) ||
+                 !decimal.TryParse(txtNuevoPrecio.Text, out decimal precioNuevo))
+            {
+                MessageBox.Show("Ingrese un precio nuevo válido.", "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            decimal porcentaje = 10;
+
+            int proveedorId = _proveedorSeleccionado.IdProveedor;
+
 
             var respEmpleado = await CompraRepositorio.getUserId(Actual.Id);
 
@@ -459,7 +471,35 @@ namespace ModernMenuUI
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-                await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
+                var result = await supabase.Rpc<int>("registrar_compra_nuevo_inv", parametros);
+
+                if (result == 0)
+                {
+                    MessageBox.Show("La función no retornó un id de compra. Puede haber ocurrido un error interno.");
+                    return;
+                }
+                if (txtNuevoPrecio.Text != null)
+                {
+                    foreach (DataGridViewRow row in dgvCarrito.Rows)
+                    {
+                        if (row.IsNewRow) continue;
+
+                        string codigoBarra = row.Cells[0].Value.ToString();
+                        int cantidadIngresar = Convert.ToInt32(row.Cells[3].Value);
+
+                        var parametrosPrecio = new
+                        {
+                            p_id_producto = codigoBarra,
+                            p_cantidad_ingresar = cantidadIngresar,
+                            p_precio_nuevo = precioNuevo,
+                            p_porcentaje_ganancia = porcentaje
+                        };
+
+                        await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
+                    }
+                }
+                //await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
+                
                 MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
