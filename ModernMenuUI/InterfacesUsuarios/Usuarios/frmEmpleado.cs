@@ -4,252 +4,278 @@ using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ClasesUI.Extenciones;
 using ModernMenuUI.InterfacesUsuarios.Usuarios;
-using Supabase;
-using Supabase.Realtime;
-using Supabase.Realtime.Interfaces;
+using ModernMenuUI.ServiciosUI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Websocket.Client;
-using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
     public partial class frmEmpleado : Form
     {
+        #region 1. Campos y Dependencias
         private readonly EmpleadoRepositorio _empleadoRepo;
-        private Supabase.Realtime.RealtimeChannel? _empleadoSubscription;
-        private readonly ServicioVerificacionConexion _monitorConexion = new ServicioVerificacionConexion();
-        private Supabase.Client? _supabaseClient;
+        private readonly ServicioPermisosUI _servicioPermisos;
+        private readonly GestorRealtime<Empleado> _gestorRealtime;
+
+        private BuscadorInteractivo<Empleado> _buscadorCtrl;
+
+        private List<Empleado> _listaMaestra = new List<Empleado>();
         private Empleado EmpleadoSeleccionado = null;
 
+        private bool? _filtroEstado = null;
+        #endregion
+
+        #region 2. Constructor y Load
         public frmEmpleado()
         {
             InitializeComponent();
-            dgvEmpleados.AutoGenerateColumns = false;
+
+            // A. Inicialización
             _empleadoRepo = new EmpleadoRepositorio();
+            _servicioPermisos = new ServicioPermisosUI();
+            _gestorRealtime = new GestorRealtime<Empleado>();
 
-            // 👇 Aseguramos la limpieza de la suscripción cuando se cierre el formulario
-            this.FormClosing += frmEmpleados_FormClosing;
+            // B. Configuración Grid 
+            dgvEmpleados.AutoGenerateColumns = false;
+            dgvEmpleados.ActivarDobleBuffer();
+            dgvEmpleados.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 241);
+
+            // C. Permisos y Eventos (Mantenido comentado por solicitud)
+            //RegistrarBotonesConPermisos();
+            //_servicioPermisos.AplicarPermisos();
+
+            ConfigurarEventosUnificados();
+
+            // D. Realtime -> eventos
+            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
+            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
         }
 
-        private async void FrmEmpleados_Load(object sender, EventArgs e)
+        private async void frmEmpleado_Load(object sender, EventArgs e)
         {
-            // Suscripción al monitor de red
-            _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-
-            // Carga inicial
-            await CargarEmpleados();
-
-            // Inicia suscripción Realtime
-            await IniciarSuscripcionEmpleados();
+            await InicializarDatosYBuscador();
+            await _gestorRealtime.SuscribirAsync();
         }
 
-        private async Task DesecharSuscripcion()
+        private async void frmEmpleado_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_empleadoSubscription != null)
-            {
-                try
-                {
-                    await Task.Run(() => _empleadoSubscription.Unsubscribe());
-                    System.Diagnostics.Debug.WriteLine("Suscripción antigua desechada con éxito.");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error al desechar suscripción: {ex.Message}");
-                }
-                _empleadoSubscription = null;
-            }
+            await _gestorRealtime.DesuscribirAsync();
         }
+        #endregion
 
-        private async Task IniciarSuscripcionEmpleados()
-        {
-            await DesecharSuscripcion();
-
-            try
-            {
-                _supabaseClient = await Conexion.ConnectWithTimeoutAsync(3);
-
-                _empleadoSubscription = await _supabaseClient.From<Empleado>()
-                    .On(ListenType.All, (sender, change) =>
-                    {
-                        try
-                        {
-
-                            if (this == null || this.IsDisposed || !this.IsHandleCreated)
-                            {
-                                System.Diagnostics.Debug.WriteLine("Evento Realtime ignorado: formulario cerrado o no inicializado.");
-                                return;
-                            }
-
-
-                            this.BeginInvoke((MethodInvoker)(async () =>
-                            {
-                                if (this.IsDisposed) return;
-                                System.Diagnostics.Debug.WriteLine($"Cambio detectado: {change.Event} en la tabla Empleados.");
-                                await CargarEmpleados();
-                            }));
-
-
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"Error manejando evento Realtime: {ex.Message}");
-                        }
-                    });
-
-                System.Diagnostics.Debug.WriteLine("Suscripción a Realtime creada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime: {ex.Message}");
-            }
-        }
-
-        private async Task CargarEmpleados()
+        #region 3. Carga y Realtime
+        private async Task InicializarDatosYBuscador()
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor;
 
-                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3)))
-                {
-                    List<Empleado> listaDeEmpleados = await _empleadoRepo.ObtenerTodosLosEmpleados(cts.Token);
+                _listaMaestra = await _empleadoRepo.ObtenerTodosLosEmpleados();
 
-                    dgvEmpleados.DataSource = null;
-                    dgvEmpleados.DataSource = listaDeEmpleados;
-                }
+                // Buscador interactivo configurado
+                _buscadorCtrl = new BuscadorInteractivo<Empleado>(
+                    txtBuscar,
+                    lstSugerencias,
+                    dgvEmpleados,
+                    _listaMaestra,
 
-                if (dgvEmpleados.Rows.Count > 0)
-                {
-                    dgvEmpleados.ClearSelection();
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    // 1. CRITERIO EXACTO (Al dar Enter o Clic en botón buscar)
+                    // Busca por ID (int) o por DNI (string exacto)
+                    (emp, txt) => emp.Id.ToString() == txt || (emp.DniEmpleado != null && emp.DniEmpleado == txt),
+
+                    // 2. CRITERIO PARCIAL (Filtrado mientras escribes)
+                    // Busca coincidencias en Nombre, Apellido O en el DNI (Contains)
+                    (emp, txt) => (emp.NombreEmpleado + " " + emp.ApellidoEmpleado).IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0
+                               || (emp.DniEmpleado != null && emp.DniEmpleado.Contains(txt)),
+
+                    // 3. DISPLAY (Lo que se ve en la lista de sugerencias)
+                    (emp) => $"{emp.NombreEmpleado} {emp.ApellidoEmpleado}",
+
+                    // 4. ACCION VISUAL (Mostrar/Ocultar panel de filtros)
+                    (busquedaActiva) => {
+                        pnlLimpiarFiltros.Visible = busquedaActiva;
+                        if (!busquedaActiva) RefrescarGrid();
+                    },
+
+                    // 5. VALIDACION DE ENTRADA (Permite dígitos para ID/DNI)
+                    // Nota: Si tus DNI tienen guiones, quita el .All(char.IsDigit) o adáptalo.
+                    (txt) => txt.All(char.IsDigit)
+                );
+
+                RefrescarGrid();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al cargar datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    $"No se pudieron cargar los empleados.\nPosible causa: Internet inestable o servidor.\n\nDetalle: {ex.Message}",
+                    "Error de Carga",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
-            finally
-            {
-                this.Cursor = Cursors.Default;
-            }
+            finally { this.Cursor = Cursors.Default; }
         }
 
-        private async void btnSalir_Click(object sender, EventArgs e)
+        private async Task CargarEmpleadosMaestros()
         {
             try
             {
-                await DesecharSuscripcion();
+                _listaMaestra = await _empleadoRepo.ObtenerTodosLosEmpleados();
+                _buscadorCtrl?.ActualizarDatosMaestros(_listaMaestra);
+                RefrescarGrid();
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error al remover canal: {ex.Message}");
-            }
-            finally
-            {
-                clsAnmaciones.NombreMenuPrincipal();
-                this.Close();
+                System.Diagnostics.Debug.WriteLine($"Error recarga empleados: {ex.Message}");
             }
         }
 
-        private async void frmEmpleados_FormClosing(object sender, FormClosingEventArgs e)
+        private void RecargarInterfazSafe()
         {
-            await DesecharSuscripcion();
+            if (!this.IsDisposed && this.IsHandleCreated)
+                this.BeginInvoke((MethodInvoker)(async () => await CargarEmpleadosMaestros()));
+        }
+        #endregion
+
+        #region 4. Búsqueda
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorCtrl.ManejarKeyUpAsync(e);
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorCtrl.ManejarKeyDown(e);
+        private void txtBuscar_Leave(object sender, EventArgs e) => _buscadorCtrl.ManejarLeave();
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) => _buscadorCtrl.ManejarClickLista();
+        private void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) _buscadorCtrl.ManejarClickLista();
+        }
+        private void btnBuscar_Click(object sender, EventArgs e) => _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
+        #endregion
+
+        #region 5. Filtrado y Grid
+        private void RefrescarGrid()
+        {
+            gbxFiltros.Enabled = false;
+
+            var query = _listaMaestra.AsEnumerable();
+
+            if (rbMostrarHabilitados.Checked) query = query.Where(e => e.EstadoEmpleado == true);
+            else if (rbMostrarDeshabilitados.Checked) query = query.Where(e => e.EstadoEmpleado == false);
+
+            var listaFinal = query.ToList();
+            dgvEmpleados.DataSource = listaFinal;
+
+            bool hayFiltrosExtras = !rbMostrarHabilitados.Checked;
+            if (hayFiltrosExtras) pnlLimpiarFiltros.Visible = true;
+
+            if (listaFinal.Count > 0) dgvEmpleados.ClearSelection();
+            gbxFiltros.Enabled = true;
         }
 
-
-        private void btnAgregarEmpleado_Click(object sender, EventArgs e)
+        private void ConfigurarEventosUnificados()
         {
-            frmAgregarEditarEmpleado Empleados = new frmAgregarEditarEmpleado();
-            Empleados.ShowDialog();
+            rbMostrarTodos.CheckedChanged += FiltroEstado_Changed;
+            rbMostrarHabilitados.CheckedChanged += FiltroEstado_Changed;
+            rbMostrarDeshabilitados.CheckedChanged += FiltroEstado_Changed;
         }
 
-        private void btnNuevo_Click(object sender, EventArgs e)
+        private void FiltroEstado_Changed(object sender, EventArgs e)
         {
-            if (EmpleadoSeleccionado != null)
-            {
-                frmAgregarEditarEmpleado EmpleadosEditar = new frmAgregarEditarEmpleado(EmpleadoSeleccionado);
-                EmpleadosEditar.ShowDialog();
-                CargarEmpleados();
-            }
-            else
-            {
-                MessageBox.Show("Por favor, seleccione un empleado de la lista para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
-        {
-            if (!this.IsHandleCreated || this.IsDisposed)
-            {
-                System.Diagnostics.Debug.WriteLine("MonitorConexion: Formulario no listo para Invoke.");
-                return;
-            }
-
-            if (status == NetworkStatus.Internet)
-            {
-                this.BeginInvoke((MethodInvoker)(async () =>
-                {
-                    if (this.IsDisposed) return;
-                    System.Diagnostics.Debug.WriteLine("Red recuperada. Iniciando recarga y Realtime...");
-                    await CargarEmpleados();
-                    await IniciarSuscripcionEmpleados();
-                }));
-            }
-        }
-
-        private void dgvEmpleados_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+            if (sender is RadioButton rb && rb.Checked) RefrescarGrid();
         }
 
         private void dgvEmpleados_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvEmpleados.SelectedRows.Count > 0)
-            {
-                var filaSeleccionada = dgvEmpleados.SelectedRows[0];
-                Empleado empleado = filaSeleccionada.DataBoundItem as Empleado;
-
-                if (empleado != null)
-                {
-                    EmpleadoSeleccionado = empleado;
-                }
-            }
+                EmpleadoSeleccionado = dgvEmpleados.SelectedRows[0].DataBoundItem as Empleado;
             else
-            {
                 EmpleadoSeleccionado = null;
+        }
+
+        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
+        {
+            rbMostrarHabilitados.Checked = true;
+            _buscadorCtrl.LimpiarBusqueda();
+            RefrescarGrid();
+        }
+        #endregion
+
+        #region 6. CRUD y Acciones
+        private async void btnAgregarEmpleado_Click(object sender, EventArgs e)
+        {
+            var frm = new frmAgregarEditarEmpleado();
+            if (frm.ShowDialog() == DialogResult.OK) await CargarEmpleadosMaestros();
+        }
+
+        private async void btnEditarEmpleado_Click(object sender, EventArgs e)
+        {
+            if (EmpleadoSeleccionado == null)
+            {
+                MessageBox.Show("Seleccione un empleado primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            var frm = new frmAgregarEditarEmpleado(EmpleadoSeleccionado);
+            if (frm.ShowDialog() == DialogResult.OK) await CargarEmpleadosMaestros();
         }
 
         private async void btnCrearUsuario_Click(object sender, EventArgs e)
         {
-            var client = await Conexion.GetClientAsync();
-            var authUser = client.Auth.CurrentUser;
-
-            var usuarioActualSistema = await client
-                .From<Usuario>()
-                .Where(u => u.Uuid == authUser.Id)
-                .Single();
-            if (EmpleadoSeleccionado != null)
+            if (EmpleadoSeleccionado == null)
             {
-                frmCrearUsuario empleadoCrear = new frmCrearUsuario(EmpleadoSeleccionado, usuarioActualSistema);
-                empleadoCrear.ShowDialog();
-                await CargarEmpleados();
+                MessageBox.Show("Seleccione un empleado primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            try
             {
-                MessageBox.Show("Por favor, seleccione un empleado de la lista para editar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Cursor = Cursors.WaitCursor;
+                var client = await Conexion.GetClientAsync();
+                var authUser = client.Auth.CurrentUser;
+
+                if (authUser == null)
+                {
+                    MessageBox.Show("No hay sesión activa de Supabase.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var usuarioActualSistema = await client
+                    .From<Usuario>()
+                    .Where(u => u.Uuid == authUser.Id)
+                    .Single();
+
+                this.Cursor = Cursors.Default;
+
+                var frm = new frmCrearUsuario(EmpleadoSeleccionado, usuarioActualSistema);
+                frm.ShowDialog();
+
+                await CargarEmpleadosMaestros();
+            }
+            catch (Exception ex)
+            {
+                this.Cursor = Cursors.Default;
+                MessageBox.Show($"Error al preparar creación de usuario: {ex.Message}");
             }
         }
+        #endregion
+
+        #region 7. UI y Permisos
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            clsAnmaciones.NombreMenuPrincipal();
+            this.Close();
+        }
+
+        //private void RegistrarBotonesConPermisos()
+        //{
+        //    _servicioPermisos.RegistrarBoton(btnAgregarEmpleado, "insert_empleados");
+        //    _servicioPermisos.RegistrarBoton(btnEditarEmpleado, "update_empleados");
+        //    _servicioPermisos.RegistrarBoton(btnCrearUsuario, "insert_usuarios");
+        //}
+        #endregion
     }
 }

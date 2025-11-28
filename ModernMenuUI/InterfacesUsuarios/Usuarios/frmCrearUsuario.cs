@@ -41,13 +41,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
             var rolesPermitidos = await us.ObtenerRolesSegunUsuario(_usuario.RolUsuario);
 
             cmbRol.DataSource = rolesPermitidos;
-            cmbRol.DisplayMember = "Nombre";
+            cmbRol.DisplayMember = "NombreEmpleado";
             cmbRol.ValueMember = "IdRol";
 
 
             if (_usuarioActual != null)
             {
-                txtCorreo.Text = _usuarioActual.Email;
+                txtCorreo.Text = _usuarioActual.EmailEmpleado;
                 //rdbActivo.Checked = _usuarioActual.EstadoUsuario;
                 //cmbRol.SelectedValue = _usuarioActual.RolUsuario;
             }

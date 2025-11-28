@@ -207,7 +207,7 @@
             label8.Name = "label8";
             label8.Size = new Size(155, 18);
             label8.TabIndex = 12;
-            label8.Text = "Nombre del Proveedor:";
+            label8.Text = "NombreEmpleado del Proveedor:";
             // 
             // label2
             // 
@@ -229,7 +229,7 @@
             label1.Name = "label1";
             label1.Size = new Size(68, 18);
             label1.TabIndex = 13;
-            label1.Text = "Telefono:";
+            label1.Text = "TelefonoEmpleado:";
             // 
             // txtDireccion
             // 

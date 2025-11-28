@@ -254,7 +254,7 @@
             label8.Name = "label8";
             label8.Size = new Size(125, 18);
             label8.TabIndex = 12;
-            label8.Text = "Nombre de Marca:";
+            label8.Text = "NombreEmpleado de Marca:";
             // 
             // label2
             // 

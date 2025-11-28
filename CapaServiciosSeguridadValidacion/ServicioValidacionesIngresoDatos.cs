@@ -44,12 +44,12 @@ namespace CapaServiciosSeguridadValidacion
         public static readonly List<Func<Empleado, (bool Error, string Mensaje)>> ListaValidacionesEmpleado =
         new List<Func<Empleado, (bool Error, string Mensaje)>>()
         {
-            e => ValidarDni(e.Dni, "el DNI"),
-            e => ValidarNombreApellido(e.Nombre, "el nombre del empleado"),
-            e => ValidarNombreApellido(e.Apellido, "el apellido del empleado"),
-            e => ValidarTelefono(e.Telefono, "el teléfono"),
-            e => ValidarEmail(e.Email, "el correo electrónico"),
-            e => ValidarDireccion(e.Direccion, "la dirección"),
+            e => ValidarDni(e.DniEmpleado, "el DNI"),
+            e => ValidarNombreApellido(e.NombreEmpleado, "el nombre del empleado"),
+            e => ValidarNombreApellido(e.ApellidoEmpleado, "el apellido del empleado"),
+            e => ValidarTelefono(e.TelefonoEmpleado, "el teléfono"),
+            e => ValidarEmail(e.EmailEmpleado, "el correo electrónico"),
+            e => ValidarDireccion(e.DireccionEmpleado, "la dirección"),
         };
 
         public static (bool Error, string Mensaje) EjecutarValidacionesEmpleado(Empleado empleado)

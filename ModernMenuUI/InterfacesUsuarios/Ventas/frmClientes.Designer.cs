@@ -161,7 +161,7 @@
             // 
             dataGridViewTextBoxColumn2.DataPropertyName = "NombreCliente";
             dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn2.HeaderText = "NombreEmpleado";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
@@ -192,12 +192,12 @@
             PorcentajeGanancia.Name = "PorcentajeGanancia";
             PorcentajeGanancia.ReadOnly = true;
             // 
-            // Dni
+            // DniEmpleado
             // 
             Dni.DataPropertyName = "DniCliente";
-            Dni.HeaderText = "Dni";
+            Dni.HeaderText = "DniEmpleado";
             Dni.MinimumWidth = 6;
-            Dni.Name = "Dni";
+            Dni.Name = "DniEmpleado";
             Dni.ReadOnly = true;
             // 
             // RTN
