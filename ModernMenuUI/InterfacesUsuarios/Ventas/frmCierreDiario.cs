@@ -44,7 +44,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 _ventasSubscription = null;
             }
         }
-        private async Task IniciarSuscripcionVentas()
+       /* private async Task IniciarSuscripcionVentas()
         {
             // Por si ya había una suscripción activa
             await DesecharSuscripcionVentas();
@@ -78,7 +78,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             {
                 System.Diagnostics.Debug.WriteLine($"Error al suscribir a Realtime (Ventas): {ex.Message}");
             }
-        }
+        }*/
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
