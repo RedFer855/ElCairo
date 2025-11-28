@@ -1,12 +1,13 @@
 ﻿using CapaDeDatos.Modelados;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Usuarios;
+using Supabase.Postgrest.Exceptions;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using CapaServiciosSeguridadValidacion;
 
 namespace ModernMenuUI
 {
@@ -100,9 +101,22 @@ namespace ModernMenuUI
                     this.Close();
                 }
             }
+            catch (PostgrestException pex)
+            {
+                if (pex.Message == "23505"|| pex.Message == "duplicate key")
+                {
+                    MessageBox.Show("El correo ingresado ya está registrado.",
+                                    "Usuario duplicado",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Error al guardar el empleado:\n" + pex.Message);
+                }
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar el empleado: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error inesperado:\n" + ex.Message,"Error",MessageBoxButtons.OK,MessageBoxIcon.Stop);
             }
             finally
             {

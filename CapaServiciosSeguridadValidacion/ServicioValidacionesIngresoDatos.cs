@@ -152,6 +152,26 @@ namespace CapaServiciosSeguridadValidacion
             return (false, "");
         }
 
+        public static readonly List<Func<Cliente, (bool Error, string Mensaje)>> ListaValidacionesClinte =             
+            new List<Func<Cliente, (bool Error, string Mensaje)>>
+            {
+                cl => ValidarDni(cl.DniCliente, "El dni"),
+                cl => ValidarRtn(cl.RtnCliente, "El RTN"),
+                cl => ValidarNombreApellido(cl.NombreCliente, "El nombre del cliente"),
+                cl => ValidarTelefono(cl.TelefonoCliente, "El número telefónico"),
+                cl => ValidarEmail(cl.CorreoCliente, "El correo electrónico"),
+                cl => ValidarDireccion(cl.DireccionCliente, "La dirección")
+            };
+        public static (bool Error, string Mensaje) EjecutarValidacionesClinte(Cliente cliente)
+        {
+            foreach (var regla in ListaValidacionesClinte)
+            {
+                var resultado = regla(cliente);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
+
         // --- Validaciones individuales ---
         public static (bool Error, string Mensaje) ValidarCampoVacio(string valor, string nombrecampo)
             => string.IsNullOrWhiteSpace(valor)
