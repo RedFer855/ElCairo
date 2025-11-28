@@ -76,19 +76,22 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 
                 UsuarioRepositorio repo = new UsuarioRepositorio();
                 var client = await Conexion.GetClientAsync();
+                var sessionOriginal = client.Auth.CurrentSession;
+                await repo.RegistrarUsuario(correo, contra);
 
-                
-                var respuesta = await repo.RegistrarUsuario(correo, contra);
+                await client.Auth.SetSession(
+                            sessionOriginal.AccessToken,
+                            sessionOriginal.RefreshToken
+                             );
 
-                if (respuesta?.User == null)
+                if (_usuarioActual == null)
                 {
                     MessageBox.Show("No se pudo registrar el usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                string uuidNuevoUsuario = respuesta.User.Id;
+                //string uuidNuevoUsuario = _usuario.Uuid;
 
-                
                 var result = await client.Rpc("crear_usuario_empleado", new
                 {
                     p_id_empleado = idEmpleado,

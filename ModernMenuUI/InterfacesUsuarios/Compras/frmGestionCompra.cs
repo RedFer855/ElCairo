@@ -427,15 +427,6 @@ namespace ModernMenuUI
             {
                 throw new Exception("No hay usuario autenticado en la sesión actual.");
             }
-            if (string.IsNullOrWhiteSpace(txtNuevoPrecio.Text) ||
-                 !decimal.TryParse(txtNuevoPrecio.Text, out decimal precioNuevo))
-            {
-                MessageBox.Show("Ingrese un precio nuevo válido.", "Advertencia",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            decimal porcentaje = 10;
-
             int proveedorId = _proveedorSeleccionado.IdProveedor;
 
 
@@ -470,16 +461,18 @@ namespace ModernMenuUI
 
             try
             {
-                this.Cursor = Cursors.WaitCursor;
-                var result = await supabase.Rpc<int>("registrar_compra_nuevo_inv", parametros);
+                if (!string.IsNullOrWhiteSpace(txtNuevoPrecio.Text))
+                {
+                    decimal precioNuevo = Convert.ToDecimal(txtNuevoPrecio.Text);
 
-                if (result == 0)
-                {
-                    MessageBox.Show("La función no retornó un id de compra. Puede haber ocurrido un error interno.");
-                    return;
-                }
-                if (txtNuevoPrecio.Text != null)
-                {
+                    if (!decimal.TryParse(txtNuevoPrecio.Text, out precioNuevo))
+                    {
+                        MessageBox.Show("Ingrese un precio válido.", "Advertencia",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+
                     foreach (DataGridViewRow row in dgvCarrito.Rows)
                     {
                         if (row.IsNewRow) continue;
@@ -489,18 +482,31 @@ namespace ModernMenuUI
 
                         var parametrosPrecio = new
                         {
+                            p_id_empleado = idEmpleado,
                             p_id_producto = codigoBarra,
                             p_cantidad_ingresar = cantidadIngresar,
                             p_precio_nuevo = precioNuevo,
-                            p_porcentaje_ganancia = porcentaje
                         };
 
                         await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
+                        MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.","Compra ingresada",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     }
                 }
-                //await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
-                
-                MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    var result = await supabase.Rpc<int>("registrar_compra_nuevo_inv", parametros);
+
+                    if (result == 0)
+                    {
+                        MessageBox.Show("La función no retornó un id de compra. Puede haber ocurrido un error interno.");
+                        return;
+                    }
+
+                    //await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
+
+                    MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {

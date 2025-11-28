@@ -690,7 +690,7 @@ namespace ModernMenuUI
                 };
 
                 // --- ENVIAR A SUPABASE ---
-                await supabase.Rpc("registrar_venta", parametros);
+                await supabase.Rpc("venta_resgistrada", parametros);
 
                 // --- FINALIZAR ---
                 this.Cursor = Cursors.Default;

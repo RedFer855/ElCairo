@@ -20,13 +20,13 @@ namespace CapaDeDatos.Repositorios
             return await Conexion.ConnectWithTimeoutAsync(3);
         }
 
-        public async Task<Session> RegistrarUsuario(string email, string password)
+        public async Task RegistrarUsuario(string email, string password)
         {
             try
             {
                 var client = await GetClient();
-                var session = await client.Auth.SignUp(email, password);
-                return session;
+                await client.Auth.SignUp(email, password);
+                //return session;
             }
             catch (GotrueException ex)
             {

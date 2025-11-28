@@ -39,6 +39,15 @@
             panel1 = new Panel();
             panel10 = new Panel();
             dgvBitacora = new DataGridView();
+            dateTimePicker1 = new DateTimePicker();
+            dateTimePicker2 = new DateTimePicker();
+            label1 = new Label();
+            label2 = new Label();
+            panelBusqueda = new Panel();
+            txtBuscar = new TextBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            btnNuevoRol = new Button();
+            btnSalir = new Button();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             Fecha = new DataGridViewTextBoxColumn();
             Usuario = new DataGridViewTextBoxColumn();
@@ -49,15 +58,6 @@
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             Estado = new DataGridViewTextBoxColumn();
             User = new DataGridViewTextBoxColumn();
-            dateTimePicker1 = new DateTimePicker();
-            dateTimePicker2 = new DateTimePicker();
-            label1 = new Label();
-            label2 = new Label();
-            panelBusqueda = new Panel();
-            txtBuscar = new TextBox();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            btnNuevoRol = new Button();
-            btnSalir = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel3.SuspendLayout();
@@ -75,8 +75,9 @@
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
+            panBarraControl.Margin = new Padding(4, 4, 4, 4);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(766, 31);
+            panBarraControl.Size = new Size(958, 39);
             panBarraControl.TabIndex = 53;
             // 
             // panel3
@@ -84,8 +85,9 @@
             panel3.Controls.Add(lblNombreModulo);
             panel3.Dock = DockStyle.Left;
             panel3.Location = new Point(0, 0);
+            panel3.Margin = new Padding(4, 4, 4, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(218, 31);
+            panel3.Size = new Size(272, 39);
             panel3.TabIndex = 9;
             // 
             // lblNombreModulo
@@ -93,9 +95,10 @@
             lblNombreModulo.AutoSize = true;
             lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNombreModulo.ForeColor = Color.White;
-            lblNombreModulo.Location = new Point(3, 0);
+            lblNombreModulo.Location = new Point(4, 0);
+            lblNombreModulo.Margin = new Padding(4, 0, 4, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(127, 29);
+            lblNombreModulo.Size = new Size(159, 35);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "BITACORA";
             // 
@@ -104,9 +107,10 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
-            panel1.Location = new Point(24, 155);
+            panel1.Location = new Point(30, 194);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(717, 411);
+            panel1.Size = new Size(896, 514);
             panel1.TabIndex = 46;
             // 
             // panel10
@@ -114,9 +118,10 @@
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
             panel10.Controls.Add(dgvBitacora);
-            panel10.Location = new Point(19, 20);
+            panel10.Location = new Point(24, 25);
+            panel10.Margin = new Padding(4, 4, 4, 4);
             panel10.Name = "panel10";
-            panel10.Size = new Size(680, 376);
+            panel10.Size = new Size(850, 470);
             panel10.TabIndex = 17;
             // 
             // dgvBitacora
@@ -156,6 +161,7 @@
             dgvBitacora.EnableHeadersVisualStyles = false;
             dgvBitacora.GridColor = Color.FromArgb(189, 215, 238);
             dgvBitacora.Location = new Point(0, 0);
+            dgvBitacora.Margin = new Padding(4, 4, 4, 4);
             dgvBitacora.Name = "dgvBitacora";
             dgvBitacora.ReadOnly = true;
             dgvBitacora.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -171,137 +177,44 @@
             dgvBitacora.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvBitacora.RowTemplate.Height = 50;
             dgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBitacora.Size = new Size(680, 376);
+            dgvBitacora.Size = new Size(850, 470);
             dgvBitacora.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewTextBoxColumn1.DataPropertyName = "IdBitacoraEmpleado";
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "Id";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 57;
-            // 
-            // Fecha
-            // 
-            Fecha.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Fecha.DataPropertyName = "FechaHora";
-            Fecha.FillWeight = 70F;
-            Fecha.HeaderText = "Fecha";
-            Fecha.Name = "Fecha";
-            Fecha.ReadOnly = true;
-            Fecha.Width = 81;
-            // 
-            // Usuario
-            // 
-            Usuario.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Usuario.DataPropertyName = "IdEmpleado";
-            Usuario.HeaderText = "Usuario";
-            Usuario.Name = "Usuario";
-            Usuario.ReadOnly = true;
-            Usuario.Width = 95;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewTextBoxColumn2.DataPropertyName = "AccionRealizada";
-            dataGridViewTextBoxColumn2.FillWeight = 60F;
-            dataGridViewTextBoxColumn2.HeaderText = "Accion";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 88;
-            // 
-            // Modulo
-            // 
-            Modulo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Modulo.DataPropertyName = "Modulo";
-            Modulo.FillWeight = 60F;
-            Modulo.HeaderText = "Modulo";
-            Modulo.Name = "Modulo";
-            Modulo.ReadOnly = true;
-            Modulo.Width = 94;
-            // 
-            // EstadoAnterior
-            // 
-            EstadoAnterior.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoAnterior.DataPropertyName = "EstadoAnterior";
-            EstadoAnterior.FillWeight = 80F;
-            EstadoAnterior.HeaderText = "Estado Anterior";
-            EstadoAnterior.Name = "EstadoAnterior";
-            EstadoAnterior.ReadOnly = true;
-            EstadoAnterior.Width = 138;
-            // 
-            // EstadoActual
-            // 
-            EstadoActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoActual.DataPropertyName = "EstadoActual";
-            EstadoActual.FillWeight = 80F;
-            EstadoActual.HeaderText = "Estado Actual";
-            EstadoActual.Name = "EstadoActual";
-            EstadoActual.ReadOnly = true;
-            EstadoActual.Width = 128;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewTextBoxColumn3.DataPropertyName = "CampoAfectado";
-            dataGridViewTextBoxColumn3.FillWeight = 80F;
-            dataGridViewTextBoxColumn3.HeaderText = "Campo Afectado";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            dataGridViewTextBoxColumn3.Width = 143;
-            // 
-            // Estado
-            // 
-            Estado.DataPropertyName = "NombreHost";
-            Estado.FillWeight = 60F;
-            Estado.HeaderText = "NombreEmpleado Host";
-            Estado.Name = "Estado";
-            Estado.ReadOnly = true;
-            // 
-            // User
-            // 
-            User.DataPropertyName = "UsuarioHost";
-            User.HeaderText = "Usuario del Host";
-            User.Name = "User";
-            User.ReadOnly = true;
             // 
             // dateTimePicker1
             // 
             dateTimePicker1.CalendarFont = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dateTimePicker1.Location = new Point(24, 126);
+            dateTimePicker1.Location = new Point(30, 158);
+            dateTimePicker1.Margin = new Padding(4, 4, 4, 4);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 23);
+            dateTimePicker1.Size = new Size(249, 27);
             dateTimePicker1.TabIndex = 47;
             // 
             // dateTimePicker2
             // 
             dateTimePicker2.CalendarFont = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dateTimePicker2.Location = new Point(266, 126);
+            dateTimePicker2.Location = new Point(332, 158);
+            dateTimePicker2.Margin = new Padding(4, 4, 4, 4);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(200, 23);
+            dateTimePicker2.Size = new Size(249, 27);
             dateTimePicker2.TabIndex = 48;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(24, 96);
+            label1.Location = new Point(30, 120);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(75, 15);
+            label1.Size = new Size(93, 20);
             label1.TabIndex = 50;
             label1.Text = "Fecha Inicial:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(266, 96);
+            label2.Location = new Point(332, 120);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(67, 15);
+            label2.Size = new Size(83, 20);
             label2.TabIndex = 51;
             label2.Text = "Fecha final:";
             // 
@@ -310,9 +223,10 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Location = new Point(24, 50);
+            panelBusqueda.Location = new Point(30, 62);
+            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(717, 43);
+            panelBusqueda.Size = new Size(896, 54);
             panelBusqueda.TabIndex = 54;
             // 
             // txtBuscar
@@ -320,10 +234,11 @@
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(18, 12);
+            txtBuscar.Location = new Point(22, 15);
+            txtBuscar.Margin = new Padding(4, 4, 4, 4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Usuarios...";
-            txtBuscar.Size = new Size(681, 20);
+            txtBuscar.Size = new Size(851, 24);
             txtBuscar.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -331,14 +246,15 @@
             tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 81F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 101F));
             tableLayoutPanel1.Controls.Add(btnNuevoRol, 0, 0);
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel1.Location = new Point(24, 603);
+            tableLayoutPanel1.Location = new Point(30, 754);
+            tableLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(247, 44);
+            tableLayoutPanel1.Size = new Size(309, 55);
             tableLayoutPanel1.TabIndex = 55;
             // 
             // btnNuevoRol
@@ -347,9 +263,10 @@
             btnNuevoRol.Dock = DockStyle.Fill;
             btnNuevoRol.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnNuevoRol.ForeColor = SystemColors.ButtonFace;
-            btnNuevoRol.Location = new Point(3, 3);
+            btnNuevoRol.Location = new Point(4, 4);
+            btnNuevoRol.Margin = new Padding(4, 4, 4, 4);
             btnNuevoRol.Name = "btnNuevoRol";
-            btnNuevoRol.Size = new Size(160, 38);
+            btnNuevoRol.Size = new Size(200, 47);
             btnNuevoRol.TabIndex = 17;
             btnNuevoRol.Text = "Imprimir Reporte";
             btnNuevoRol.UseVisualStyleBackColor = false;
@@ -361,19 +278,127 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(169, 3);
+            btnSalir.Location = new Point(212, 4);
+            btnSalir.Margin = new Padding(4, 4, 4, 4);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(75, 38);
+            btnSalir.Size = new Size(93, 47);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewTextBoxColumn1.DataPropertyName = "IdBitacoraEmpleado";
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewTextBoxColumn1.FillWeight = 50F;
+            dataGridViewTextBoxColumn1.HeaderText = "Id";
+            dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Width = 65;
+            // 
+            // Fecha
+            // 
+            Fecha.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Fecha.DataPropertyName = "FechaHora";
+            Fecha.FillWeight = 70F;
+            Fecha.HeaderText = "Fecha";
+            Fecha.MinimumWidth = 6;
+            Fecha.Name = "Fecha";
+            Fecha.ReadOnly = true;
+            Fecha.Width = 95;
+            // 
+            // Usuario
+            // 
+            Usuario.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Usuario.DataPropertyName = "IdEmpleado";
+            Usuario.HeaderText = "Usuario";
+            Usuario.MinimumWidth = 6;
+            Usuario.Name = "Usuario";
+            Usuario.ReadOnly = true;
+            Usuario.Width = 113;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.DataPropertyName = "AccionRealizada";
+            dataGridViewTextBoxColumn2.FillWeight = 60F;
+            dataGridViewTextBoxColumn2.HeaderText = "Accion";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 104;
+            // 
+            // Modulo
+            // 
+            Modulo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Modulo.DataPropertyName = "Modulo";
+            Modulo.FillWeight = 60F;
+            Modulo.HeaderText = "Modulo";
+            Modulo.MinimumWidth = 6;
+            Modulo.Name = "Modulo";
+            Modulo.ReadOnly = true;
+            Modulo.Width = 111;
+            // 
+            // EstadoAnterior
+            // 
+            EstadoAnterior.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EstadoAnterior.DataPropertyName = "EstadoAnterior";
+            EstadoAnterior.FillWeight = 80F;
+            EstadoAnterior.HeaderText = "Estado Anterior";
+            EstadoAnterior.MinimumWidth = 6;
+            EstadoAnterior.Name = "EstadoAnterior";
+            EstadoAnterior.ReadOnly = true;
+            EstadoAnterior.Width = 167;
+            // 
+            // EstadoActual
+            // 
+            EstadoActual.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            EstadoActual.DataPropertyName = "EstadoActual";
+            EstadoActual.FillWeight = 80F;
+            EstadoActual.HeaderText = "Estado Actual";
+            EstadoActual.MinimumWidth = 6;
+            EstadoActual.Name = "EstadoActual";
+            EstadoActual.ReadOnly = true;
+            EstadoActual.Width = 153;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn3.DataPropertyName = "CampoAfectado";
+            dataGridViewTextBoxColumn3.FillWeight = 80F;
+            dataGridViewTextBoxColumn3.HeaderText = "Campo Afectado";
+            dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            dataGridViewTextBoxColumn3.Width = 174;
+            // 
+            // Estado
+            // 
+            Estado.DataPropertyName = "NombreHost";
+            Estado.FillWeight = 60F;
+            Estado.HeaderText = "NombreEmpleado Host";
+            Estado.MinimumWidth = 6;
+            Estado.Name = "Estado";
+            Estado.ReadOnly = true;
+            // 
+            // User
+            // 
+            User.DataPropertyName = "UsuarioHost";
+            User.HeaderText = "Usuario del Host";
+            User.MinimumWidth = 6;
+            User.Name = "User";
+            User.ReadOnly = true;
+            // 
             // frmBitacora
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(766, 679);
+            ClientSize = new Size(958, 849);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(panelBusqueda);
             Controls.Add(panBarraControl);
@@ -383,6 +408,7 @@
             Controls.Add(dateTimePicker1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 4, 4, 4);
             Name = "frmBitacora";
             Text = "frmBitacora";
             Load += frmBitacora_Load;
