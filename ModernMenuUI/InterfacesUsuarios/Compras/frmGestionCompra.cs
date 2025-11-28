@@ -512,6 +512,8 @@ namespace ModernMenuUI
                 dgvCarrito.Rows.Clear();
                 _proveedorSeleccionado = null;
                 txtBuscarProv.Text = "";
+                txtNuevoPrecio.Text = "";
+                nudCantidad.Value = 1;
                 _listaMaestraProductos.Clear();
                 dgvProductos.DataSource = null;
                 dgvProductos.Rows.Clear();
