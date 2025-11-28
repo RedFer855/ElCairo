@@ -90,7 +90,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
                     return;
                 }
 
-                //string uuidNuevoUsuario = _usuario.Uuid;
 
                 var result = await client.Rpc("crear_usuario_empleado", new
                 {
@@ -110,7 +109,35 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar el usuario: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var client = await Conexion.GetClientAsync();
+
+                var sessionOriginal = client.Auth.CurrentSession;
+
+                await client.Auth.SetSession(
+                            sessionOriginal.AccessToken,
+                            sessionOriginal.RefreshToken
+                             );
+
+                if (ex.Message.Contains("\"code\":422") || ex.Message.Contains("\"error_code\":\"user_already_exists\""))
+                {
+                    MessageBox.Show(
+                        "El usuario ya existe en la base de datos.\n Por favor seleccione uno diferente",
+                        "Usuario duplicado",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation
+                    );
+                }
+                else
+                {
+                    // Otros errores
+                    MessageBox.Show(
+                        "Ocurrió un error: " + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+                //MessageBox.Show($"Error al guardar el usuario: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
