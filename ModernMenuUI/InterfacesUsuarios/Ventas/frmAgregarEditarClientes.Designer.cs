@@ -385,7 +385,7 @@
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(15, 69);
             label1.Name = "label1";
-            label1.Size = new Size(64, 18);
+            label1.Size = new Size(127, 18);
             label1.TabIndex = 13;
             label1.Text = "NombreEmpleado:";
             // 
@@ -398,6 +398,7 @@
             Controls.Add(panBarraControl);
             Margin = new Padding(3, 2, 3, 2);
             Name = "frmAgregarEditarClientes";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmAgregarEditarClientes";
             Load += frmAgregarEditarClientes_Load;
             panBarraControl.ResumeLayout(false);

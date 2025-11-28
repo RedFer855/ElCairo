@@ -287,6 +287,7 @@
             txtCantidad.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCantidad.ForeColor = Color.DimGray;
             txtCantidad.Location = new Point(176, 347);
+            txtCantidad.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtCantidad.Name = "txtCantidad";
             txtCantidad.Size = new Size(275, 25);
             txtCantidad.TabIndex = 61;
@@ -297,6 +298,7 @@
             txtPrecioCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioCompra.ForeColor = Color.DimGray;
             txtPrecioCompra.Location = new Point(176, 147);
+            txtPrecioCompra.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioCompra.Name = "txtPrecioCompra";
             txtPrecioCompra.Size = new Size(275, 25);
             txtPrecioCompra.TabIndex = 60;
@@ -307,6 +309,7 @@
             txtPrecioVenta.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioVenta.ForeColor = Color.DimGray;
             txtPrecioVenta.Location = new Point(176, 107);
+            txtPrecioVenta.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioVenta.Name = "txtPrecioVenta";
             txtPrecioVenta.Size = new Size(275, 25);
             txtPrecioVenta.TabIndex = 59;
