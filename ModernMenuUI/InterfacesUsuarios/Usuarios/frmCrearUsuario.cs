@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Modelados;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
@@ -58,16 +59,51 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
         {
             try
             {
+                btnGuardarEmpleado.Enabled = false;
+
                 string correo = txtCorreo.Text.Trim();
                 string contra = txtContrasenia.Text.Trim();
+                int rolSeleccionado = (int)cmbRol.SelectedValue;
+                int idEmpleado = _usuarioActual.Id;
 
-                UsuarioRepositorio user = new UsuarioRepositorio();
+                var v1 = ServicioValidacionesIngresoDatos.ValidarContrasenia(contra, "La contraseña");
+                if (v1.Error)
+                {
+                    MessageBox.Show(v1.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    btnGuardarEmpleado.Enabled = true;
+                    return;
+                }
 
-                var v1 = ServicioValidacionesIngresoDatos.ValidarContrasenia(txtContrasenia.Text, "La contraseña");
-                if (v1.Error) { MessageBox.Show(v1.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); btnGuardarEmpleado.Enabled = true; return; }
+                UsuarioRepositorio repo = new UsuarioRepositorio();
+                var client = await Conexion.GetClientAsync();
 
-                await user.RegistrarUsuario(correo, contra);
-                MessageBox.Show("Confirme su correo con el link de validación enviado\n al correo relacionado.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                var respuesta = await repo.RegistrarUsuario(correo, contra);
+
+                if (respuesta?.User == null)
+                {
+                    MessageBox.Show("No se pudo registrar el usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string uuidNuevoUsuario = respuesta.User.Id;
+
+                
+                var result = await client.Rpc("crear_usuario_empleado", new
+                {
+                    p_id_empleado = idEmpleado,
+                    p_email = correo,
+                    p_rol = rolSeleccionado
+                });
+
+                MessageBox.Show(
+                    "Usuario creado correctamente.",
+                    "Usuario Creado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                this.Close();
             }
             catch (Exception ex)
             {
