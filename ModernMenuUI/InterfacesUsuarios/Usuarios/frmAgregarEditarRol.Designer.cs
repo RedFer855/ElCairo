@@ -177,7 +177,7 @@
             label8.Name = "label8";
             label8.Size = new Size(110, 18);
             label8.TabIndex = 19;
-            label8.Text = "Nombre del Rol:";
+            label8.Text = "NombreEmpleado del Rol:";
             // 
             // txtNombreRol
             // 

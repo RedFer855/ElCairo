@@ -260,7 +260,7 @@
             // 
             Estado.DataPropertyName = "NombreHost";
             Estado.FillWeight = 60F;
-            Estado.HeaderText = "Nombre Host";
+            Estado.HeaderText = "NombreEmpleado Host";
             Estado.Name = "Estado";
             Estado.ReadOnly = true;
             // 

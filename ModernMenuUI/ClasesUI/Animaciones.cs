@@ -26,7 +26,7 @@ namespace ModernMenuUI.ClasesUI
             CambiarNombreMenu(TituloLabel,Titulo);
         }
 
-        // Cambiar de Nombre un Label
+        // Cambiar de NombreEmpleado un Label
         public static void CambiarNombreMenu(Label label, string Nombre)
         {
             label.Text = Nombre;

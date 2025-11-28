@@ -15,25 +15,30 @@ namespace CapaDeDatos.Modelados
         public int Id { get; set; }
 
         [Column("nombre_empleado")]
-        public string Nombre { get; set; }
+        public string NombreEmpleado { get; set; }
 
         [Column("apellido_empleado")]
-        public string Apellido { get; set; }
+        public string ApellidoEmpleado { get; set; }
 
         [Column("dni_empleado")]
-        public string Dni { get; set; }
+        public string DniEmpleado { get; set; }
 
         [Column("telefono_empleado")]
-        public string Telefono { get; set; }
+        public string TelefonoEmpleado { get; set; }
 
         [Column("email_empleado")]
-        public string Email { get; set; }
+        public string EmailEmpleado { get; set; }
 
         [Column("direccion_empleado")]
-        public string Direccion { get; set; }
+        public string DireccionEmpleado { get; set; }
         
         [Column("estado_empleado")]
         public bool EstadoEmpleado { get; set; }
+
+        public override string ToString()
+        {
+            return NombreEmpleado;
+        }
     }
 
 

@@ -211,7 +211,7 @@
             txtDni.Location = new Point(106, 20);
             txtDni.Margin = new Padding(3, 2, 3, 2);
             txtDni.Name = "txtDni";
-            txtDni.PlaceholderText = "(Ingrese Dni sin espacios ni guiones)";
+            txtDni.PlaceholderText = "(Ingrese DniEmpleado sin espacios ni guiones)";
             txtDni.Size = new Size(276, 20);
             txtDni.TabIndex = 1;
             // 
@@ -387,7 +387,7 @@
             label1.Name = "label1";
             label1.Size = new Size(64, 18);
             label1.TabIndex = 13;
-            label1.Text = "Nombre:";
+            label1.Text = "NombreEmpleado:";
             // 
             // frmAgregarEditarClientes
             // 

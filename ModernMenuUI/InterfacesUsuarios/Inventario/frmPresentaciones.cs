@@ -119,7 +119,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     dgvPresentaciones,
                     _listaCompletaPresentaciones,
                     (p, term) => p.IdPresentacionProducto.ToString() == term, // Buscar por ID
-                    (p, term) => p.NombrePresentacion != null && p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0, // Buscar por Nombre
+                    (p, term) => p.NombrePresentacion != null && p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0, // Buscar por NombreEmpleado
                     (p) => p.NombrePresentacion, // Texto a mostrar en sugerencias
                     (buscando) =>
                     {

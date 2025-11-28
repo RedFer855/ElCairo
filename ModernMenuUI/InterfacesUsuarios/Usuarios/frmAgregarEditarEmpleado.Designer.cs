@@ -40,7 +40,7 @@
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
-            groupBox1 = new GroupBox();
+            gbxEstado = new GroupBox();
             rbInactivo = new RadioButton();
             rbActivo = new RadioButton();
             txtDireccion = new TextBox();
@@ -49,16 +49,17 @@
             btnVolver = new Button();
             txtDni = new TextBox();
             txtNombre = new TextBox();
-            btnUsuario = new Button();
-            btnModificar = new Button();
+            btnModificarEmpleado = new Button();
             label7 = new Label();
             pictureBox1 = new PictureBox();
             panel2 = new Panel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
-            groupBox1.SuspendLayout();
+            gbxEstado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panBarraControl
@@ -101,9 +102,9 @@
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(17, 69);
             label1.Name = "label1";
-            label1.Size = new Size(64, 18);
+            label1.Size = new Size(127, 18);
             label1.TabIndex = 13;
-            label1.Text = "Nombre:";
+            label1.Text = "NombreEmpleado:";
             // 
             // label2
             // 
@@ -182,17 +183,17 @@
             label6.TabIndex = 16;
             label6.Text = "Correo:";
             // 
-            // groupBox1
+            // gbxEstado
             // 
-            groupBox1.Controls.Add(rbInactivo);
-            groupBox1.Controls.Add(rbActivo);
-            groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(121, 282);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(214, 51);
-            groupBox1.TabIndex = 7;
-            groupBox1.TabStop = false;
+            gbxEstado.Controls.Add(rbInactivo);
+            gbxEstado.Controls.Add(rbActivo);
+            gbxEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxEstado.ForeColor = Color.DimGray;
+            gbxEstado.Location = new Point(121, 282);
+            gbxEstado.Name = "gbxEstado";
+            gbxEstado.Size = new Size(214, 51);
+            gbxEstado.TabIndex = 7;
+            gbxEstado.TabStop = false;
             // 
             // rbInactivo
             // 
@@ -246,7 +247,7 @@
             btnGuardarEmpleado.Font = new Font("Itim", 11.9999981F);
             btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
             btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarEmpleado.Location = new Point(24, 376);
+            btnGuardarEmpleado.Location = new Point(3, 3);
             btnGuardarEmpleado.Name = "btnGuardarEmpleado";
             btnGuardarEmpleado.Size = new Size(89, 37);
             btnGuardarEmpleado.TabIndex = 9;
@@ -263,7 +264,7 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(341, 376);
+            btnVolver.Location = new Point(193, 3);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(95, 37);
             btnVolver.TabIndex = 0;
@@ -278,7 +279,7 @@
             txtDni.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtDni.Location = new Point(121, 27);
             txtDni.Name = "txtDni";
-            txtDni.PlaceholderText = "(Ingrese Dni sin espacios ni guiones)";
+            txtDni.PlaceholderText = "(Ingrese DniEmpleado sin espacios ni guiones)";
             txtDni.Size = new Size(315, 20);
             txtDni.TabIndex = 1;
             // 
@@ -292,37 +293,21 @@
             txtNombre.Size = new Size(315, 21);
             txtNombre.TabIndex = 2;
             // 
-            // btnUsuario
+            // btnModificarEmpleado
             // 
-            btnUsuario.BackColor = Color.FromArgb(148, 168, 187);
-            btnUsuario.BackgroundImageLayout = ImageLayout.None;
-            btnUsuario.FlatAppearance.BorderSize = 0;
-            btnUsuario.Font = new Font("Itim", 11.9999981F);
-            btnUsuario.ForeColor = SystemColors.ButtonFace;
-            btnUsuario.ImageAlign = ContentAlignment.BottomLeft;
-            btnUsuario.Location = new Point(121, 376);
-            btnUsuario.Name = "btnUsuario";
-            btnUsuario.Size = new Size(101, 37);
-            btnUsuario.TabIndex = 10;
-            btnUsuario.Text = "Ver Usuario";
-            btnUsuario.UseVisualStyleBackColor = false;
-            btnUsuario.Click += btnUsuario_Click;
-            // 
-            // btnModificar
-            // 
-            btnModificar.BackColor = Color.FromArgb(149, 195, 172);
-            btnModificar.BackgroundImageLayout = ImageLayout.None;
-            btnModificar.FlatAppearance.BorderSize = 0;
-            btnModificar.Font = new Font("Itim", 11.9999981F);
-            btnModificar.ForeColor = SystemColors.ButtonFace;
-            btnModificar.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificar.Location = new Point(238, 376);
-            btnModificar.Name = "btnModificar";
-            btnModificar.Size = new Size(89, 37);
-            btnModificar.TabIndex = 19;
-            btnModificar.Text = "Modificar";
-            btnModificar.UseVisualStyleBackColor = false;
-            btnModificar.Click += btnModificar_Click;
+            btnModificarEmpleado.BackColor = Color.FromArgb(0, 95, 184);
+            btnModificarEmpleado.BackgroundImageLayout = ImageLayout.None;
+            btnModificarEmpleado.FlatAppearance.BorderSize = 0;
+            btnModificarEmpleado.Font = new Font("Itim", 11.9999981F);
+            btnModificarEmpleado.ForeColor = SystemColors.ButtonFace;
+            btnModificarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
+            btnModificarEmpleado.Location = new Point(98, 3);
+            btnModificarEmpleado.Name = "btnModificarEmpleado";
+            btnModificarEmpleado.Size = new Size(89, 37);
+            btnModificarEmpleado.TabIndex = 19;
+            btnModificarEmpleado.Text = "Editar";
+            btnModificarEmpleado.UseVisualStyleBackColor = false;
+            btnModificarEmpleado.Click += btnModificar_Click;
             // 
             // label7
             // 
@@ -348,17 +333,14 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(flowLayoutPanel1);
             panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(label7);
-            panel2.Controls.Add(btnModificar);
-            panel2.Controls.Add(btnUsuario);
             panel2.Controls.Add(txtNombre);
             panel2.Controls.Add(txtDni);
-            panel2.Controls.Add(btnVolver);
-            panel2.Controls.Add(btnGuardarEmpleado);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(txtDireccion);
-            panel2.Controls.Add(groupBox1);
+            panel2.Controls.Add(gbxEstado);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(label5);
             panel2.Controls.Add(label4);
@@ -373,6 +355,16 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(744, 421);
             panel2.TabIndex = 0;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(btnGuardarEmpleado);
+            flowLayoutPanel1.Controls.Add(btnModificarEmpleado);
+            flowLayoutPanel1.Controls.Add(btnVolver);
+            flowLayoutPanel1.Location = new Point(8, 372);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(327, 46);
+            flowLayoutPanel1.TabIndex = 22;
             // 
             // frmAgregarEditarEmpleado
             // 
@@ -391,11 +383,12 @@
             Text = "Datos de Empleados";
             Load += frmAgregarEmpleado_Load;
             panBarraControl.ResumeLayout(false);
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gbxEstado.ResumeLayout(false);
+            gbxEstado.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -412,7 +405,7 @@
         private Label label4;
         private Label label5;
         private Label label6;
-        private GroupBox groupBox1;
+        private GroupBox gbxEstado;
         private RadioButton rbInactivo;
         private RadioButton rbActivo;
         private TextBox txtDireccion;
@@ -422,9 +415,10 @@
         private TextBox txtDni;
         private TextBox txtNombre;
         private Button btnUsuario;
-        private Button btnModificar;
+        private Button btnModificarEmpleado;
         private Label label7;
         private PictureBox pictureBox1;
         private Panel panel2;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }
