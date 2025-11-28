@@ -341,7 +341,7 @@
             cmbUnidadContenido.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
             cmbUnidadContenido.Location = new Point(374, 305);
             cmbUnidadContenido.Name = "cmbUnidadContenido";
-            cmbUnidadContenido.Size = new Size(65, 26);
+            cmbUnidadContenido.Size = new Size(77, 26);
             cmbUnidadContenido.TabIndex = 57;
             // 
             // label22
