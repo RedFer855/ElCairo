@@ -69,7 +69,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(651, 41);
+            panBarraControl.Size = new Size(744, 41);
             panBarraControl.TabIndex = 13;
             // 
             // lblNombreModulo
@@ -79,7 +79,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(651, 41);
+            lblNombreModulo.Size = new Size(744, 41);
             lblNombreModulo.TabIndex = 14;
             lblNombreModulo.Text = "EDITAR EMPLEADO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -338,9 +338,9 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(459, 111);
+            pictureBox1.Location = new Point(459, 29);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(180, 155);
+            pictureBox1.Size = new Size(258, 247);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 21;
             pictureBox1.TabStop = false;
@@ -371,14 +371,14 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 41);
             panel2.Name = "panel2";
-            panel2.Size = new Size(651, 421);
+            panel2.Size = new Size(744, 421);
             panel2.TabIndex = 0;
             // 
             // frmAgregarEditarEmpleado
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(651, 462);
+            ClientSize = new Size(744, 462);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             DoubleBuffered = true;

@@ -80,13 +80,13 @@ namespace ModernMenuUI
                         lblMensajeError.Text = "Conectando al servidor...";
                         lblMensajeError.Visible = true;
 
-                        await Task.Delay(400);
+                        await Task.Delay(300);
 
                         lblMensajeError.Text = "Verificando credenciales...";
                         await Task.Delay(300);
 
                         lblMensajeError.Text = "Validando Permisos...";
-                        await Task.Delay(500);
+                        await Task.Delay(300);
 
                         lblMensajeError.ForeColor = Color.Green;
                         lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
@@ -129,6 +129,7 @@ namespace ModernMenuUI
                         catch (Exception ex)
                         {
                             pbxCargando.Visible = false;
+                            throw;
                             MessageBox.Show($"Error crítico al cargar permisos: {ex.Message}. Cierre la aplicación.", "Error de Permisos", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             LimpiarDatos(e, e);
                             return;
@@ -338,7 +339,7 @@ namespace ModernMenuUI
             }
         }
 
-        private async void button1_Click_1(object sender, EventArgs e)
+        private async void btnBiometrico_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.AppStarting;
 
@@ -361,10 +362,14 @@ namespace ModernMenuUI
             // 2. Huella y Login
             if (await _biometrico.VerificarIdentidad($"Hola {ultimoEmail}, confirma."))
             {
+                btnBiometrico.Enabled = false;
                 try
                 {
+                    
+                    pbxCargando.Visible = true;
                     lblMensajeError.Visible = true;
-                    lblMensajeError.Text = "Validando...";
+                    lblMensajeError.ForeColor = Color.DarkGray;
+                    lblMensajeError.Text = "Conectando al servidor...";
 
                     // Recuperar token y Loguear en Supabase
                     string token = _biometrico.ObtenerTokenGuardado(ultimoEmail);
@@ -373,7 +378,7 @@ namespace ModernMenuUI
                     var usuarioSupabase = await _usuarioRepo.IniciarSesionConToken(token);
 
                     // Cargar Permisos (Tu lógica de siempre)
-                    lblMensajeError.Text = "Cargando roles...";
+                    lblMensajeError.Text = "Validando Permisos...";
                     var validacionRepo = new ValidacionRolRepositorio();
                     var contexto = await validacionRepo.ConstruirContexto(usuarioSupabase.Id);
                     ServicioSesionUsuario.IniciarSesion(usuarioSupabase, contexto);
@@ -384,11 +389,18 @@ namespace ModernMenuUI
                     {
                         _biometrico.GuardarTokenSeguro(ultimoEmail, cliente.Auth.CurrentSession.RefreshToken);
                     }
+                    await Task.Delay(100);
 
                     // Navegar
+                    pbxCargando.Visible = false;
+                    lblMensajeError.ForeColor = Color.Green;
+                    lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
+                    await Task.Delay(300);
                     this.Visible = false;
                     new frmInicioBodega().ShowDialog();
+                    btnBiometrico.Enabled = true;
                     this.Close();
+
                 }
                 catch (Exception ex)
                 {
@@ -396,6 +408,7 @@ namespace ModernMenuUI
                     lblMensajeError.Text = ex.Message;
                     MessageBox.Show(ex.Message);
                     _biometrico.BorrarToken(ultimoEmail);
+                    btnBiometrico.Enabled = true;
                 }
                 finally { this.Cursor = Cursors.Default; }
             }

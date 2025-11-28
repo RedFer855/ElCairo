@@ -33,7 +33,7 @@
             pbxContenedorImagen = new PictureBox();
             pictureBox1 = new PictureBox();
             panDatosIngreso = new Panel();
-            button1 = new Button();
+            btnBiometrico = new Button();
             btnVer = new Button();
             pbxCargando = new PictureBox();
             lblMensajeError = new Label();
@@ -69,7 +69,7 @@
             panLogo.Location = new Point(0, 0);
             panLogo.Margin = new Padding(3, 4, 3, 4);
             panLogo.Name = "panLogo";
-            panLogo.Size = new Size(286, 429);
+            panLogo.Size = new Size(286, 450);
             panLogo.TabIndex = 0;
             panLogo.MouseDown += panLogo_MouseDown;
             // 
@@ -81,7 +81,7 @@
             pbxContenedorImagen.Location = new Point(0, 0);
             pbxContenedorImagen.Margin = new Padding(3, 4, 3, 4);
             pbxContenedorImagen.Name = "pbxContenedorImagen";
-            pbxContenedorImagen.Size = new Size(286, 429);
+            pbxContenedorImagen.Size = new Size(286, 450);
             pbxContenedorImagen.SizeMode = PictureBoxSizeMode.Zoom;
             pbxContenedorImagen.TabIndex = 9;
             pbxContenedorImagen.TabStop = false;
@@ -93,7 +93,7 @@
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(286, 429);
+            pictureBox1.Size = new Size(286, 450);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -102,7 +102,7 @@
             // panDatosIngreso
             // 
             panDatosIngreso.BackColor = Color.FromArgb(15, 15, 15);
-            panDatosIngreso.Controls.Add(button1);
+            panDatosIngreso.Controls.Add(btnBiometrico);
             panDatosIngreso.Controls.Add(btnVer);
             panDatosIngreso.Controls.Add(pbxCargando);
             panDatosIngreso.Controls.Add(lblMensajeError);
@@ -114,21 +114,27 @@
             panDatosIngreso.Controls.Add(btnAcceder);
             panDatosIngreso.Dock = DockStyle.Fill;
             panDatosIngreso.Location = new Point(286, 0);
-            panDatosIngreso.Margin = new Padding(3, 4, 3, 4);
+            panDatosIngreso.Margin = new Padding(0);
             panDatosIngreso.Name = "panDatosIngreso";
-            panDatosIngreso.Size = new Size(605, 429);
+            panDatosIngreso.Size = new Size(594, 450);
             panDatosIngreso.TabIndex = 8;
             panDatosIngreso.MouseDown += panDatosIngreso_MouseDown;
             // 
-            // button1
+            // btnBiometrico
             // 
-            button1.Location = new Point(441, 312);
-            button1.Name = "button1";
-            button1.Size = new Size(127, 53);
-            button1.TabIndex = 21;
-            button1.Text = "Huella";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
+            btnBiometrico.BackColor = Color.FromArgb(40, 40, 40);
+            btnBiometrico.BackgroundImage = (Image)resources.GetObject("btnBiometrico.BackgroundImage");
+            btnBiometrico.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBiometrico.FlatAppearance.BorderSize = 0;
+            btnBiometrico.FlatStyle = FlatStyle.Flat;
+            btnBiometrico.Font = new Font("Itim", 12F);
+            btnBiometrico.Location = new Point(486, 312);
+            btnBiometrico.Margin = new Padding(0);
+            btnBiometrico.Name = "btnBiometrico";
+            btnBiometrico.Size = new Size(53, 52);
+            btnBiometrico.TabIndex = 21;
+            btnBiometrico.UseVisualStyleBackColor = false;
+            btnBiometrico.Click += btnBiometrico_Click;
             // 
             // btnVer
             // 
@@ -180,7 +186,7 @@
             txtContrasenia.Location = new Point(59, 181);
             txtContrasenia.Margin = new Padding(3, 4, 3, 4);
             txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.Size = new Size(427, 40);
+            txtContrasenia.Size = new Size(427, 24);
             txtContrasenia.TabIndex = 4;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContra_Enter;
@@ -196,7 +202,7 @@
             txtUsuario.Location = new Point(59, 119);
             txtUsuario.Margin = new Padding(3, 4, 3, 4);
             txtUsuario.Name = "txtUsuario";
-            txtUsuario.Size = new Size(480, 40);
+            txtUsuario.Size = new Size(480, 24);
             txtUsuario.TabIndex = 3;
             txtUsuario.Text = "USUARIO";
             txtUsuario.Enter += txtUsuario_Enter;
@@ -210,7 +216,7 @@
             lblRecuperarContrasenia.ForeColor = Color.FromArgb(142, 142, 142);
             lblRecuperarContrasenia.Location = new Point(201, 388);
             lblRecuperarContrasenia.Name = "lblRecuperarContrasenia";
-            lblRecuperarContrasenia.Size = new Size(349, 36);
+            lblRecuperarContrasenia.Size = new Size(204, 20);
             lblRecuperarContrasenia.TabIndex = 7;
             lblRecuperarContrasenia.Text = "¿Has olvidado tu contraseña?";
             lblRecuperarContrasenia.Click += lblRecuperarContrasenia_Click;
@@ -265,7 +271,7 @@
             btnAcceder.Location = new Point(59, 312);
             btnAcceder.Margin = new Padding(3, 4, 3, 4);
             btnAcceder.Name = "btnAcceder";
-            btnAcceder.Size = new Size(376, 53);
+            btnAcceder.Size = new Size(414, 53);
             btnAcceder.TabIndex = 6;
             btnAcceder.Text = "ACCEDER";
             btnAcceder.UseVisualStyleBackColor = false;
@@ -278,7 +284,7 @@
             label3.ForeColor = Color.FromArgb(142, 142, 142);
             label3.Location = new Point(201, 12);
             label3.Name = "label3";
-            label3.Size = new Size(325, 43);
+            label3.Size = new Size(185, 24);
             label3.TabIndex = 10;
             label3.Text = "INICIO DE SESIÓN";
             // 
@@ -292,7 +298,7 @@
             panBarraControl.Location = new Point(286, 0);
             panBarraControl.Margin = new Padding(3, 4, 3, 4);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(605, 47);
+            panBarraControl.Size = new Size(594, 47);
             panBarraControl.TabIndex = 9;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -305,7 +311,7 @@
             btnMinimizar.Dock = DockStyle.Right;
             btnMinimizar.FlatAppearance.BorderSize = 0;
             btnMinimizar.FlatStyle = FlatStyle.Flat;
-            btnMinimizar.Location = new Point(503, 0);
+            btnMinimizar.Location = new Point(492, 0);
             btnMinimizar.Margin = new Padding(3, 4, 3, 4);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Size = new Size(51, 47);
@@ -322,7 +328,7 @@
             btnCerrar.Dock = DockStyle.Right;
             btnCerrar.FlatAppearance.BorderSize = 0;
             btnCerrar.FlatStyle = FlatStyle.Flat;
-            btnCerrar.Location = new Point(554, 0);
+            btnCerrar.Location = new Point(543, 0);
             btnCerrar.Margin = new Padding(3, 4, 3, 4);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(51, 47);
@@ -332,9 +338,9 @@
             // 
             // frmIniciosesion
             // 
-            AutoScaleDimensions = new SizeF(163F, 163F);
+            AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(891, 429);
+            ClientSize = new Size(880, 450);
             Controls.Add(panBarraControl);
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
@@ -378,6 +384,6 @@
         private Label lblMensajeError;
         private PictureBox pbxCargando;
         private Button btnVer;
-        private Button button1;
+        private Button btnBiometrico;
     }
 }

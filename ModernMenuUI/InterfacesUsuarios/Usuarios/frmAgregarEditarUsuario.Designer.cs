@@ -78,7 +78,7 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(254, 243);
+            btnVolver.Location = new Point(135, 203);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(95, 37);
             btnVolver.TabIndex = 10;
@@ -92,7 +92,6 @@
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(82, 23);
             radioButton2.TabIndex = 9;
-            radioButton2.TabStop = true;
             radioButton2.Text = "Inactivo";
             radioButton2.UseVisualStyleBackColor = true;
             // 
@@ -104,7 +103,7 @@
             btnGuardarEmpleado.Font = new Font("Itim", 11.9999981F);
             btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
             btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarEmpleado.Location = new Point(130, 243);
+            btnGuardarEmpleado.Location = new Point(17, 203);
             btnGuardarEmpleado.Name = "btnGuardarEmpleado";
             btnGuardarEmpleado.Size = new Size(103, 37);
             btnGuardarEmpleado.TabIndex = 11;
@@ -138,6 +137,7 @@
             // rdbActivo
             // 
             rdbActivo.AutoSize = true;
+            rdbActivo.Checked = true;
             rdbActivo.Location = new Point(8, 21);
             rdbActivo.Name = "rdbActivo";
             rdbActivo.Size = new Size(70, 23);
@@ -194,7 +194,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(497, 302);
+            panel2.Size = new Size(497, 253);
             panel2.TabIndex = 16;
             // 
             // cmbRol
@@ -209,7 +209,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(497, 302);
+            ClientSize = new Size(497, 253);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.FixedDialog;

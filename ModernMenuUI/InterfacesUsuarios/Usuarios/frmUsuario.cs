@@ -179,28 +179,6 @@ namespace ModernMenuUI
             this.Close();
         }
 
-        private void btnNuevo_Click(object sender, EventArgs e)
-        {
-            if (_usuarioSeleccionado == null)
-            {
-                MessageBox.Show("Seleccione un usuario para editar.");
-            }
-            else
-            {
-                // Lógica para editar
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            // Lógica para agregar
-        }
-
-        private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Clic en celda
-        }
-
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvUsuario.SelectedRows.Count > 0)
@@ -214,17 +192,8 @@ namespace ModernMenuUI
             }
         }
 
-        private void frmUsuario_Load_1(object sender, EventArgs e)
-        {
 
-        }
-
-        private void btnNuevo_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void btnNuevo_Click_2(object sender, EventArgs e)
+        private async void btnEditarUsuarios_Click(object sender, EventArgs e)
         {
             var client = await Conexion.GetClientAsync();
             var authUser = client.Auth.CurrentUser;
@@ -247,8 +216,6 @@ namespace ModernMenuUI
                 frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
                 usuario.ShowDialog();
             }
-
-
         }
     }
 }

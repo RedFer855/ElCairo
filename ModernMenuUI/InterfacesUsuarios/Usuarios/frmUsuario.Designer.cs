@@ -37,7 +37,7 @@
             button4 = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnSalir = new Button();
-            btnNuevo = new Button();
+            btnEditarUsuarios = new Button();
             groupBox1 = new GroupBox();
             rdbDeshabilitados = new RadioButton();
             rdbHabilitados = new RadioButton();
@@ -77,7 +77,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel1.Controls.Add(btnNuevo, 0, 0);
+            tableLayoutPanel1.Controls.Add(btnEditarUsuarios, 0, 0);
             tableLayoutPanel1.Location = new Point(18, 562);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
@@ -99,19 +99,19 @@
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
             // 
-            // btnNuevo
+            // btnEditarUsuarios
             // 
-            btnNuevo.BackColor = Color.FromArgb(189, 215, 238);
-            btnNuevo.Dock = DockStyle.Fill;
-            btnNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.FromArgb(87, 99, 110);
-            btnNuevo.Location = new Point(3, 3);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(211, 44);
-            btnNuevo.TabIndex = 20;
-            btnNuevo.Text = "Editar Usuario";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevo_Click_2;
+            btnEditarUsuarios.BackColor = Color.FromArgb(189, 215, 238);
+            btnEditarUsuarios.Dock = DockStyle.Fill;
+            btnEditarUsuarios.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnEditarUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
+            btnEditarUsuarios.Location = new Point(3, 3);
+            btnEditarUsuarios.Name = "btnEditarUsuarios";
+            btnEditarUsuarios.Size = new Size(211, 44);
+            btnEditarUsuarios.TabIndex = 20;
+            btnEditarUsuarios.Text = "Editar Usuario";
+            btnEditarUsuarios.UseVisualStyleBackColor = false;
+            btnEditarUsuarios.Click += btnEditarUsuarios_Click;
             // 
             // groupBox1
             // 
@@ -319,7 +319,6 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmUsuario";
             Text = "frmUsuario";
-            Load += frmUsuario_Load_1;
             tableLayoutPanel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -335,7 +334,7 @@
         private Button button4;
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnSalir;
-        private Button btnNuevo;
+        private Button btnEditarUsuarios;
         private GroupBox groupBox1;
         private RadioButton rdbDeshabilitados;
         private RadioButton rdbHabilitados;

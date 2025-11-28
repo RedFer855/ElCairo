@@ -265,8 +265,18 @@ namespace CapaServiciosSeguridadValidacion
             if (valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener multiples espacios.");
 
+            if (!Regex.IsMatch(valor, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$"))
+                return (true, $"{nombrecampo} solo puede contener letras con o sin tilde y espacios.");
+
+            for (int i = 0; i < valor.Length - 2; i++)
+            {
+                if (valor[i] == valor[i + 1] && valor[i] == valor[i + 2])
+                    return (true, $"{nombrecampo} no puede contener más de 3 caracteres repetidos consecutivamente.");
+            }
+
             if (valor.Length > 150)
                 return (true, $"{nombrecampo} no puede tener más de 150 caracteres.");
+
             return (false, "");
         }
 
