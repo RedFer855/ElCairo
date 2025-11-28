@@ -187,5 +187,32 @@ namespace CapaDeDatos.Repositorios
             public int NuevoRol { get; set; }
             public bool NuevoEstado { get; set; }
         }
+        // Asegúrate de: using Supabase.Gotrue;
+
+        public async Task<User> IniciarSesionConToken(string refreshToken)
+        {
+            var client = await GetClient();
+            try
+            {
+                string tokenFalsoCaducado = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEsInN1YiI6IjEyMyJ9.falsesig";                // 1. Inyectamos la sesión manualmente usando el Refresh Token
+                await client.Auth.SetSession(
+                    accessToken: tokenFalsoCaducado,
+                    refreshToken: refreshToken,     // Tenemos el de la huella
+                    forceAccessTokenRefresh: true   // ¡Dame uno nuevo ya!
+                );
+
+                // 2. Obtenemos el usuario SIN await (porque es una propiedad)
+                var user = client.Auth.CurrentUser;
+
+                if (user == null) throw new Exception("Usuario no encontrado.");
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"SUPABASE ERROR: {ex.Message}");
+            }
+        }
+
     }
 }

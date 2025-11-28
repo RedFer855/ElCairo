@@ -2,6 +2,7 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ServiciosUI;
 using Supabase.Gotrue.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,13 @@ namespace ModernMenuUI
     public partial class frmIniciosesion : Form
     {
         private readonly UsuarioRepositorio _usuarioRepo;
+        private readonly ServicioBiometrico _biometrico;
 
         public frmIniciosesion()
         {
             InitializeComponent();
             _usuarioRepo = new UsuarioRepositorio();
-
+            _biometrico = new ServicioBiometrico();
         }
 
         public void LimpiarDatos(object sender, EventArgs e)
@@ -97,6 +99,19 @@ namespace ModernMenuUI
                             var contexto = await validacionRepo.ConstruirContexto(uuidUsuario);
 
                             ServicioSesionUsuario.IniciarSesion(Actual, contexto);
+                            try
+                            {
+                                if (supabase.Auth.CurrentSession != null)
+                                {
+                                    // Guardamos el token FRESCO que acabamos de recibir
+                                    _biometrico.GuardarTokenSeguro(Actual.Email, supabase.Auth.CurrentSession.RefreshToken);
+
+                                    // Recordamos el email
+                                    Properties.Settings.Default.UltimoUsuario = Actual.Email;
+                                    Properties.Settings.Default.Save();
+                                }
+                            }
+                            catch { } // Fallo silencioso si no hay permisos (se arregla luego)
 
                             pbxCargando.Visible = false;
 
@@ -303,8 +318,6 @@ namespace ModernMenuUI
             {
                 txtContrasenia.UseSystemPasswordChar = true;
             }
-
-            txtContrasenia.Focus(); 
         }
 
         private void txtUsuario_KeyDown(object sender, KeyEventArgs e)
@@ -325,5 +338,67 @@ namespace ModernMenuUI
             }
         }
 
+        private async void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.AppStarting;
+
+            // 1. Validaciones iniciales
+            string ultimoEmail = Properties.Settings.Default.UltimoUsuario;
+            if (string.IsNullOrEmpty(ultimoEmail))
+            {
+                MessageBox.Show("Inicia sesión con contraseña primero.", "Aviso");
+                this.Cursor = Cursors.Default;
+                return;
+            }
+
+            if (!await _biometrico.EsPosibleUsarHuella())
+            {
+                MessageBox.Show("No hay sensor de huella.", "Error");
+                this.Cursor = Cursors.Default;
+                return;
+            }
+
+            // 2. Huella y Login
+            if (await _biometrico.VerificarIdentidad($"Hola {ultimoEmail}, confirma."))
+            {
+                try
+                {
+                    lblMensajeError.Visible = true;
+                    lblMensajeError.Text = "Validando...";
+
+                    // Recuperar token y Loguear en Supabase
+                    string token = _biometrico.ObtenerTokenGuardado(ultimoEmail);
+                    if (string.IsNullOrEmpty(token)) throw new Exception("Sin credencial.");
+
+                    var usuarioSupabase = await _usuarioRepo.IniciarSesionConToken(token);
+
+                    // Cargar Permisos (Tu lógica de siempre)
+                    lblMensajeError.Text = "Cargando roles...";
+                    var validacionRepo = new ValidacionRolRepositorio();
+                    var contexto = await validacionRepo.ConstruirContexto(usuarioSupabase.Id);
+                    ServicioSesionUsuario.IniciarSesion(usuarioSupabase, contexto);
+
+                    // Actualizar token (Rolling)
+                    var cliente = await CapaDeDatos.Datos.Conexion.GetClientAsync();
+                    if (cliente.Auth.CurrentSession != null)
+                    {
+                        _biometrico.GuardarTokenSeguro(ultimoEmail, cliente.Auth.CurrentSession.RefreshToken);
+                    }
+
+                    // Navegar
+                    this.Visible = false;
+                    new frmInicioBodega().ShowDialog();
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    lblMensajeError.ForeColor = Color.Red;
+                    lblMensajeError.Text = ex.Message;
+                    MessageBox.Show(ex.Message);
+                    _biometrico.BorrarToken(ultimoEmail);
+                }
+                finally { this.Cursor = Cursors.Default; }
+            }
+        }
     }
 }
