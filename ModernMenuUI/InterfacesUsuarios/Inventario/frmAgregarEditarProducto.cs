@@ -81,14 +81,11 @@ namespace ModernMenuUI
         {
             try
             {
-                // VARIABLES PARA LOS DATOS NUMÉRICOS
                 decimal precioCompra = 0;
                 decimal precioVenta = 0;
                 decimal precioCosto = 0;
                 int cantidad = 0;
 
-                // --- LÓGICA DE PROTECCIÓN DE DATOS ---
-                // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos (NO borrarlos)
                 if (_productoSeleccionado != null)
                 {
                     precioCompra = _productoSeleccionado.PrecioCompra;
@@ -96,9 +93,7 @@ namespace ModernMenuUI
                     precioCosto = _productoSeleccionado.PrecioCosto;
                     cantidad = _productoSeleccionado.CantidadProducto;
                 }
-                // Si es NUEVO, se van en 0 (porque se calculan luego o inician vacíos)
 
-                // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
                 ProductoInsertar _productoInsertar = new ProductoInsertar
                 {
                     NombreProducto = txtNombreProducto.Text.Trim(),
@@ -122,6 +117,10 @@ namespace ModernMenuUI
                 {
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
+                }
+                if (cmbUnidadContenido.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 // 3. ASIGNAR ESTADO
