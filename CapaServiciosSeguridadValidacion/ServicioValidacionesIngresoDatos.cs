@@ -21,14 +21,14 @@ namespace CapaServiciosSeguridadValidacion
             {
                 p => CodigoBarraValido(p.CodigoBarraProducto, LongitudesCodigoBarraPermitidas),
                 p => ValidarNombreApellido(p.NombreProducto, "el nombre del producto"),
+                p => ValidarDecimalValido(p.PrecioCompra, "Precio de compra"),
                 p => ValidarDecimalValido(p.PrecioVenta, "Precio venta"),
                 p => ValidarSeleccion(p.IdCategoria, "una categoría"),
                 p => ValidarSeleccion(p.IdMarca, "una marca"),
                 p => ValidarSeleccion(p.IdPresentacion, "una presentación"),
                 p => ValidarEnteroValido(p.CantidadProducto, "Cantidad"),
                 p => ValidarCampoVacio(p.ContenidoProducto, "el contenido del producto"),
-                p => ValidarDecimalValido(p.PrecioCompra, "Precio de compra"),
-                p => ValidarDecimalValido(p.PrecioVenta, "Precio costo"),
+                //p => ValidarDecimalValido(p.PrecioVenta, "Precio costo"),
                 //p => ValidarSeleccion(p.CantidadProducto,"La cantidad")
             };
 

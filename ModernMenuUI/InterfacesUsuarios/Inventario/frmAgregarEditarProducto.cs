@@ -96,8 +96,8 @@ namespace ModernMenuUI
 
                 ProductoInsertar _productoInsertar = new ProductoInsertar
                 {
-                    NombreProducto = txtNombreProducto.Text.Trim(),
                     CodigoBarraProducto = txtCodBarra.Text.Trim(),
+                    NombreProducto = txtNombreProducto.Text.Trim(),
 
                     IdMarca = _idMarcaSeleccionada,
                     IdCategoria = _idCategoriaSeleccionada,
@@ -121,6 +121,7 @@ namespace ModernMenuUI
                 if (cmbUnidadContenido.SelectedIndex == -1)
                 {
                     MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
                 // 3. ASIGNAR ESTADO
