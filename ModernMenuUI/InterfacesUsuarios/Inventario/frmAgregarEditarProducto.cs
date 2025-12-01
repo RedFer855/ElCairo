@@ -262,5 +262,9 @@ namespace ModernMenuUI
             btnModificarProducto.Visible = false;
         }
 
+        private void cmbUnidadContenido_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

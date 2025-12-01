@@ -347,6 +347,7 @@
             cmbUnidadContenido.Name = "cmbUnidadContenido";
             cmbUnidadContenido.Size = new Size(77, 31);
             cmbUnidadContenido.TabIndex = 57;
+            cmbUnidadContenido.SelectedIndexChanged += cmbUnidadContenido_SelectedIndexChanged;
             // 
             // label22
             // 
