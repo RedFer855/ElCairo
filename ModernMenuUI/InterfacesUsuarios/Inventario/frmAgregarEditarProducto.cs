@@ -123,6 +123,11 @@ namespace ModernMenuUI
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (cmbUnidadContenido.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 // 3. ASIGNAR ESTADO
                 _productoInsertar.EstadoProducto = rbHabilitado.Checked;
