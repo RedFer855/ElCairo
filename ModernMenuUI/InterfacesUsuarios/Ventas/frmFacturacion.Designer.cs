@@ -139,6 +139,7 @@
             button1.TabIndex = 15;
             button1.Text = "Imprimir Cotización";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // txtCliente
             // 
@@ -169,7 +170,6 @@
             // 
             button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button2.BackColor = Color.FromArgb(168, 191, 212);
-            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
             button2.BackgroundImageLayout = ImageLayout.Zoom;
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;

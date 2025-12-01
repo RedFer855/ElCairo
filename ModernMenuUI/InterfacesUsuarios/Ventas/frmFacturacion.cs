@@ -253,7 +253,7 @@ namespace ModernMenuUI
                     {
                         dgvCarrito.Rows[i].Cells[3].Value = stock;
                         MessageBox.Show($"Stock insuficiente. Solo hay {stock} unidades disponibles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                      
+
                     }
                     else
                     {
@@ -618,6 +618,36 @@ namespace ModernMenuUI
             // await CargarRutasAsync();
             //await CargarClientesAsync();
         }
+        private Factura CrearFacturaDesdeCarrito()
+        {
+            Factura factura = new Factura
+            {
+                NombreEmisor = "Mi Empresa S.A.",
+                RTNEmisor = "08011999123999",
+                DireccionEmisor = "Tegucigalpa, Honduras",
+                FechaEmision = DateTime.Now,
+                NumeroFactura = "FAC-001",
+                NombreCliente = "Cliente de Prueba",
+                RTNCliente = "08011999123998",
+                DireccionCliente = "Dirección Cliente"
+            };
+
+            foreach (DataGridViewRow row in dgvCarrito.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    ItemFactura item = new ItemFactura
+                    {
+                        Descripcion = row.Cells[1].Value.ToString(),
+                        PrecioUnitario = Convert.ToDecimal(row.Cells[2].Value),
+                        Cantidad = Convert.ToInt32(row.Cells[3].Value)
+                    };
+                    factura.Items.Add(item);
+                }
+            }
+
+            return factura;
+        }
 
         private async void btnFacturar_Click(object sender, EventArgs e)
         {
@@ -726,6 +756,116 @@ namespace ModernMenuUI
             {
                 MessageBox.Show("Error al generar la factura:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Factura factura = CrearFacturaDesdeCarrito();
+
+                if (!factura.EsValida())
+                {
+                    MessageBox.Show("La factura no tiene productos o está incompleta.", "Advertencia");
+                    return;
+                }
+
+                string carpeta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "FacturasTXT");
+                if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
+
+                string archivo = $"Factura_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+                string ruta = Path.Combine(carpeta, archivo);
+
+                // Configuración de columnas
+                int anchoCant = 6;
+                int anchoProd = 35;
+                int anchoPrecio = 12;
+
+                // Calculos
+                decimal subtotal = factura.Items.Sum(x => x.Cantidad * x.PrecioUnitario);
+                decimal impuesto = subtotal * 0.15m; // 15% de ISV
+                decimal total = subtotal + impuesto;
+                decimal pago = 2000; // ejemplo
+                decimal cambio = pago - total;
+
+                StringBuilder sb = new StringBuilder();
+
+                // ENCABEZADO
+                sb.AppendLine("           Punto de Venta Restaurante - Honduras");
+                sb.AppendLine("                  Boulevard Ejemplo Systems");
+                sb.AppendLine("                  Tegucigalpa, Honduras");
+                sb.AppendLine("                  R.T.N. 08000000000000");
+                sb.AppendLine("                     Tel: 0000-0000");
+                sb.AppendLine("             Correo Elec.: cliente@ejemplo.com");
+                sb.AppendLine();
+                sb.AppendLine("                             Venta");
+                sb.AppendLine($"Factura {factura.NumeroFactura} Fecha {DateTime.Now:yyyyMMdd}");
+                sb.AppendLine("------------------------------------------------------------");
+
+                // Encabezados de columna
+                sb.AppendLine("Cant.".PadRight(anchoCant) + "Producto".PadRight(anchoProd) + "Precio L".PadLeft(anchoPrecio));
+                sb.AppendLine("------------------------------------------------------------");
+
+                // Productos
+                foreach (var item in factura.Items)
+                {
+                    string nombre = item.Descripcion.Length > anchoProd ? item.Descripcion.Substring(0, anchoProd) : item.Descripcion;
+                    sb.AppendLine(item.Cantidad.ToString().PadRight(anchoCant) +
+                                  nombre.PadRight(anchoProd) +
+                                  (item.Cantidad * item.PrecioUnitario).ToString("N0", new System.Globalization.CultureInfo("es-HN")).PadLeft(anchoPrecio));
+                }
+
+                sb.AppendLine("------------------------------------------------------------");
+
+                // Totales
+                sb.AppendLine("Subtotal :".PadLeft(anchoCant + anchoProd) + subtotal.ToString("N0", new System.Globalization.CultureInfo("es-HN")).PadLeft(anchoPrecio));
+                sb.AppendLine("ISV (15%) :".PadLeft(anchoCant + anchoProd) + impuesto.ToString("N0", new System.Globalization.CultureInfo("es-HN")).PadLeft(anchoPrecio));
+                sb.AppendLine("------------------------------------------------------------");
+                sb.AppendLine("TOTAL :".PadLeft(anchoCant + anchoProd) + total.ToString("N0", new System.Globalization.CultureInfo("es-HN")).PadLeft(anchoPrecio));
+                sb.AppendLine();
+                sb.AppendLine("Efectivo :".PadLeft(anchoCant + anchoProd) + pago.ToString("N0", new System.Globalization.CultureInfo("es-HN")).PadLeft(anchoPrecio));
+                sb.AppendLine("Cambio   :".PadLeft(anchoCant + anchoProd) + cambio.ToString("N0", new System.Globalization.CultureInfo("es-HN")).PadLeft(anchoPrecio));
+                sb.AppendLine("------------------------------------------------------------");
+                sb.AppendLine($"         {DateTime.Now:dd/MM/yyyy hh:mm:ss tt}");
+                sb.AppendLine("************************************************************");
+
+                // Mensaje al cliente
+                sb.AppendLine("Gracias por su compra!");
+                sb.AppendLine("Si tiene dudas sobre su factura, por favor contáctenos:");
+                sb.AppendLine("Correo: soporte@ejemplo.com");
+                sb.AppendLine("Tel: 0000-0000");
+                sb.AppendLine("************************************************************");
+
+                File.WriteAllText(ruta, sb.ToString());
+
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                {
+                    FileName = ruta,
+                    UseShellExecute = true
+                });
+
+                MessageBox.Show($"Factura TXT generada correctamente en:\n{ruta}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar la factura:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            /*
+            Factura factura = CrearFacturaDesdeCarrito();
+
+            if (!factura.EsValida())
+            {
+                MessageBox.Show("La factura no tiene productos o está incompleta.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Logo desde archivo
+            Image logo = ModernMenuUI.Properties.Resources.buscar;
+
+            ServicioDeImpresion servicioImpresion = new ServicioDeImpresion();
+            servicioImpresion.ImprimirTicket(factura, logo);
+
+            */
         }
     }
 }
