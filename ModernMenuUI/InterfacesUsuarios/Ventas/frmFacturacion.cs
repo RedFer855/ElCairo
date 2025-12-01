@@ -759,7 +759,7 @@ namespace ModernMenuUI
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {/*
             try
             {
                 Factura factura = CrearFacturaDesdeCarrito();
