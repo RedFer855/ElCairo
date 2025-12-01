@@ -1,4 +1,11 @@
 ﻿using CapaDeAplicacion;
+using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Modelados.Productos;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
+using CapaDeDatos.Modelados.Ventas;
+using CapaDeDatos.Repositorios;
 using CapaDominio;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
@@ -9,6 +16,9 @@ using iText.Layout.Properties;
 using Microsoft.VisualBasic.ApplicationServices;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.Properties;
+using Supabase.Realtime;
+using Supabase.Realtime.Interfaces;
+using Supabase.Realtime.PostgresChanges;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,21 +29,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Image = System.Drawing.Image;
-
-
-
-using CapaDeDatos.Datos;
-using CapaDeDatos.Repositorios;
-using CapaDeDatos.Modelados.UsuariosEmpleados;
-using CapaDeDatos.Modelados;
-using CapaDeDatos.Modelados.Inventario;
-using CapaDeDatos.Modelados.Productos;
-using CapaDeDatos.Modelados.Ventas;
+using static Supabase.Postgrest.Constants;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
-using Supabase.Realtime;
-using Supabase.Realtime.Interfaces;
-using Supabase.Realtime.PostgresChanges;
+using Image = System.Drawing.Image;
 namespace ModernMenuUI
 {
     public partial class frmFacturacion : Form
@@ -649,114 +647,228 @@ namespace ModernMenuUI
             return factura;
         }
 
-        private async void btnFacturar_Click(object sender, EventArgs e)
+        private async Task GenerarPDFFacturaAsync(Factura factura, string ruta)
         {
-            try
+            await Task.Run(() =>
             {
-                Factura factura = CrearFacturaDesdeCarrito();
+                var culture = new CultureInfo("es-HN");
 
-                if (!factura.EsValida())
-                {
-                    MessageBox.Show("La factura no tiene productos o está incompleta.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Carpeta segura en Documentos
-                string carpeta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas");
-                if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
-
-                string ruta = Path.Combine(carpeta, $"Factura_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
-
-                // Logo desde recursos
-                Image logo = ModernMenuUI.Properties.Resources.logo_ElCairo;
-
-                // Crear fuentes
                 PdfFont fontNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                 PdfFont fontBold = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
                 PdfFont fontItalic = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
 
-                // Crear PDF
-                using (var fs = new FileStream(ruta, FileMode.Create, FileAccess.Write))
-                using (var writer = new PdfWriter(fs))
-                using (var pdf = new PdfDocument(writer))
-                using (var doc = new iText.Layout.Document(pdf))
+                Image logo = ModernMenuUI.Properties.Resources.logo_ElCairo;
+
+                using (MemoryStream ms = new MemoryStream())
+                using (PdfWriter writer = new PdfWriter(ms))
+                using (PdfDocument pdf = new PdfDocument(writer))
+                using (Document doc = new Document(pdf, iText.Kernel.Geom.PageSize.A4))
                 {
-                    // Logo
+                    doc.SetMargins(20, 20, 20, 20);
+
+                    // LOGO
                     if (logo != null)
                     {
-                        using (var ms = new MemoryStream())
+                        try
                         {
-                            logo.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                            var imgData = iText.IO.Image.ImageDataFactory.Create(ms.ToArray());
-                            var img = new iText.Layout.Element.Image(imgData).ScaleToFit(100, 50);
-                            doc.Add(img);
+                            using (MemoryStream lms = new MemoryStream())
+                            {
+                                logo.Save(lms, System.Drawing.Imaging.ImageFormat.Png);
+                                var img = new iText.Layout.Element.Image(iText.IO.Image.ImageDataFactory.Create(lms.ToArray()))
+                                    .ScaleToFit(120, 60);
+                                doc.Add(img);
+                            }
                         }
+                        catch { }
                     }
 
-                    // Título
                     doc.Add(new Paragraph("FACTURA")
-                        .SetFont(fontBold)
-                        .SetFontSize(18)
+                        .SetFont(fontBold).SetFontSize(20)
                         .SetTextAlignment(TextAlignment.CENTER));
-                    doc.Add(new Paragraph(" ")); // espacio
 
-                    // DATOS DEL EMISOR
-                    doc.Add(new Paragraph($"Emisor: {factura.NombreEmisor}").SetFont(fontNormal));
-                    doc.Add(new Paragraph($"RTN: {factura.RTNEmisor}").SetFont(fontNormal));
-                    doc.Add(new Paragraph($"Dirección: {factura.DireccionEmisor}").SetFont(fontNormal));
-                    doc.Add(new Paragraph($"Factura N°: {factura.NumeroFactura}").SetFont(fontNormal));
-                    doc.Add(new Paragraph($"Fecha: {factura.FechaEmision:dd/MM/yyyy HH:mm}").SetFont(fontNormal));
-                    doc.Add(new Paragraph(" ")); // espacio
-
-                    // DATOS DEL CLIENTE
                     doc.Add(new Paragraph($"Cliente: {factura.NombreCliente}").SetFont(fontNormal));
                     doc.Add(new Paragraph($"RTN: {factura.RTNCliente}").SetFont(fontNormal));
                     doc.Add(new Paragraph($"Dirección: {factura.DireccionCliente}").SetFont(fontNormal));
-                    doc.Add(new Paragraph(" ")); // espacio
+                    doc.Add(new Paragraph(" "));
 
-                    // TABLA DE PRODUCTOS
-                    Table tabla = new Table(4, true);
-                    tabla.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetFont(fontBold)));
-                    tabla.AddHeaderCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fontBold)));
-                    tabla.AddHeaderCell(new Cell().Add(new Paragraph("Precio Unitario").SetFont(fontBold)));
-                    tabla.AddHeaderCell(new Cell().Add(new Paragraph("Subtotal").SetFont(fontBold)));
+                    Table t = new Table(iText.Layout.Properties.UnitValue.CreatePercentArray(
+                        new float[] { 50, 15, 15, 20 })).UseAllAvailableWidth();
+
+                    t.AddHeaderCell("Producto");
+                    t.AddHeaderCell("Cant.");
+                    t.AddHeaderCell("Precio");
+                    t.AddHeaderCell("Total");
 
                     foreach (var item in factura.Items)
                     {
-                        tabla.AddCell(new Cell().Add(new Paragraph(item.Descripcion).SetFont(fontNormal)));
-                        tabla.AddCell(new Cell().Add(new Paragraph(item.Cantidad.ToString()).SetFont(fontNormal)));
-                        tabla.AddCell(new Cell().Add(new Paragraph(item.PrecioUnitario.ToString("C")).SetFont(fontNormal)));
-                        tabla.AddCell(new Cell().Add(new Paragraph((item.Cantidad * item.PrecioUnitario).ToString("C")).SetFont(fontNormal)));
+                        t.AddCell(item.Descripcion);
+                        t.AddCell(item.Cantidad.ToString());
+                        t.AddCell(item.PrecioUnitario.ToString("C", culture));
+                        t.AddCell(item.TotalLinea.ToString("C", culture));
                     }
 
-                    doc.Add(tabla);
+                    doc.Add(t);
 
-                    // TOTAL
-                    decimal total = factura.Items.Sum(x => x.Cantidad * x.PrecioUnitario);
-                    doc.Add(new Paragraph($"\nTOTAL: {total:C}")
-                        .SetFont(fontBold)
-                        .SetFontSize(14));
+                    doc.Add(new Paragraph($"\nSubtotal: {factura.SubTotal.ToString("C", culture)}"));
+                    doc.Add(new Paragraph($"ISV (15%): {factura.ISV.ToString("C", culture)}"));
+                    doc.Add(new Paragraph($"TOTAL: {factura.Total.ToString("C", culture)}").SetFont(fontBold));
 
-                    // Mensaje final
-                    doc.Add(new Paragraph("\nGracias por su compra!").SetFont(fontItalic));
+                    doc.Add(new Paragraph("\nGracias por su compra!")
+                        .SetFont(fontItalic).SetTextAlignment(TextAlignment.CENTER));
 
                     doc.Close();
+
+                    File.WriteAllBytes(ruta, ms.ToArray());
                 }
 
-                // Abrir PDF automáticamente
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                // Intentar abrirlo
+                try
                 {
-                    FileName = ruta,
-                    UseShellExecute = true
-                });
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                    {
+                        FileName = ruta,
+                        UseShellExecute = true
+                    });
+                }
+                catch { }
+            });
+        }
 
-                MessageBox.Show($"Factura generada correctamente en:\n{ruta}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        private async void btnFacturar_Click(object sender, EventArgs e)
+        {
+            // ================================
+            // 1. VALIDACIONES PREVIAS
+            // ================================
+            if (dgvCarrito.Rows.Count == 0)
+            {
+                MessageBox.Show("El carrito está vacío. Agregue productos para facturar.",
+                                "Carrito Vacio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (_clienteSeleccionado == null)
+            {
+                MessageBox.Show("Debe buscar y seleccionar un Cliente.",
+                                "Falta Cliente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCliente.Focus();
+                return;
+            }
+
+            int idBodegaVenta = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
+            if (idBodegaVenta == -1)
+            {
+                MessageBox.Show("Error de Sesión: No se detecta la bodega actual.",
+                                "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                // ================================
+                // 2. USUARIO AUTHENTICADO – EMPLEADO
+                // ================================
+                var supabase = await Conexion.GetClientAsync();
+                var usuarioAuth = supabase.Auth.CurrentUser;
+
+                if (usuarioAuth == null)
+                    throw new Exception("No hay usuario autenticado en Supabase.");
+
+                var respEmpleado = await supabase
+                    .From<Usuario>()
+                    .Select("id_empleado")
+                    .Filter("user_id", Operator.Equals, usuarioAuth.Id)
+                    .Get();
+
+                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
+                {
+                    MessageBox.Show("El usuario actual no tiene un 'id_empleado' vinculado.");
+                    return;
+                }
+
+                int idEmpleado = respEmpleado.Models.First().IdUsuario;
+
+                // ================================
+                // 3. EXTRAER DETALLES DE LA VENTA
+                // ================================
+                var detallesVenta = dgvCarrito.Rows
+                    .Cast<DataGridViewRow>()
+                    .Where(r => !r.IsNewRow)
+                    .Select(r => new
+                    {
+                        id_producto = Convert.ToInt32(r.Cells[0].Value),
+                        cantidad_venta = Convert.ToInt32(r.Cells[3].Value),
+                        id_bodega = idBodegaVenta
+                    })
+                    .ToList();
+
+                // ================================
+                // 4. PREPARAR PARÁMETROS PARA RPC
+                // ================================
+                var parametros = new
+                {
+                    p_id_cliente = _clienteSeleccionado.IdCliente,
+                    p_id_rutas = (int?)null,
+                    p_id_empleado = idEmpleado,
+                    p_fecha_venta = DateTime.UtcNow,
+                    p_detalles = detallesVenta
+                };
+
+                // ================================
+                // 5. REGISTRAR VENTA EN SUPABASE
+                // ================================
+                await supabase.Rpc("registrar_venta", parametros);
+
+                // ================================
+                // 6. CREAR FACTURA LOCAL PARA PDF
+                // ================================
+                Factura factura = CrearFacturaDesdeCarrito();
+                if (factura == null)
+                {
+                    MessageBox.Show("No se pudo generar la factura local.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                factura.NombreCliente = _clienteSeleccionado.NombreCliente;
+                factura.RTNCliente = _clienteSeleccionado.DniCliente;
+                factura.DireccionCliente = _clienteSeleccionado.DireccionCliente;
+
+                // ================================
+                // 7. GENERAR PDF SEGURO DESDE MEMORIA
+                // ================================
+                string carpeta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas");
+                Directory.CreateDirectory(carpeta);
+
+                string archivoPDF = $"Factura_{DateTime.Now:yyyyMMdd_HHmmss}_{Guid.NewGuid().ToString().Substring(0, 6)}.pdf";
+                string ruta = Path.Combine(carpeta, archivoPDF);
+
+                await GenerarPDFFacturaAsync(factura, ruta);
+
+                // ================================
+                // 8. LIMPIAR Y ACTUALIZAR INTERFAZ
+                // ================================
+                MessageBox.Show($"¡Venta registrada y factura generada para {_clienteSeleccionado.NombreCliente}! 😄",
+                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LimpiarCarrito();
+                txtCliente.Text = "";
+                _clienteSeleccionado = null;
+
+                await CargarProductosDeBodega(); // Actualiza stock en tiempo real
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al generar la factura:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al procesar la venta o generar la factura:\n\n{ex.Message}",
+                                "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
+
 
 
 
