@@ -157,7 +157,29 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
 
         private async void btnCierre_Click(object sender, EventArgs e)
         {
+            var datosCierre = dgvCierreDiario.DataSource as List<CierreDiarioResult>;
 
+            // 2. Obtener los valores de resumen necesarios
+            string totalVentas = txtTotalVentas.Text;
+            string alias = cmbEmpleados.Text; // Alias del empleado seleccionado
+            string fecha = dtpFecha.Value.ToShortDateString(); // Fecha seleccionada
+
+            // 3. Validación de datos
+            if (datosCierre == null || !datosCierre.Any())
+            {
+                MessageBox.Show("No hay datos cargados para exportar. Por favor, selecciona un empleado y una fecha con ventas.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 4. Crear una instancia del nuevo formulario (frmImprimirCierre) 
+            // y pasarle los datos al constructor.
+            using (var frm = new frmImprimirCierre(datosCierre, totalVentas, alias, fecha))
+            {
+                // Mostrar el nuevo formulario como un diálogo modal
+                frm.ShowDialog();
+            }
+            /*frmImprimirCierre cierre = new frmImprimirCierre();
+            cierre.ShowDialog();*/
         }
         private async Task GenerarCierreAsync()
         {
