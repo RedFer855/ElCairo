@@ -246,11 +246,6 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} debe tener 8 dígitos.");
             if (valor.Contains(" ") || valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener espacios.");
-            for (int j = 0; j < valor.Length - 5; j++)
-            {
-                if (valor[j] == valor[j + 1] && valor[j] == valor[j + 5])
-                    return (true, $"{nombrecampo} no puede contener más de 5 caracteres repetidos consecutivamente.");
-            }
 
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
