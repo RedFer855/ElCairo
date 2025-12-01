@@ -21,14 +21,15 @@ namespace CapaServiciosSeguridadValidacion
             {
                 p => CodigoBarraValido(p.CodigoBarraProducto, LongitudesCodigoBarraPermitidas),
                 p => ValidarNombreApellido(p.NombreProducto, "el nombre del producto"),
+                p => ValidarDecimalValido(p.PrecioCompra, "Precio de compra"),
                 p => ValidarDecimalValido(p.PrecioVenta, "Precio venta"),
                 p => ValidarSeleccion(p.IdCategoria, "una categoría"),
                 p => ValidarSeleccion(p.IdMarca, "una marca"),
                 p => ValidarSeleccion(p.IdPresentacion, "una presentación"),
                 p => ValidarEnteroValido(p.CantidadProducto, "Cantidad"),
                 p => ValidarCampoVacio(p.ContenidoProducto, "el contenido del producto"),
-                //p => ValidarDecimalValido(p.PrecioCompra, "Precio de compra"),
-                //p => ValidarDecimalValido(p.PrecioCosto, "Precio costo"),
+                //p => ValidarDecimalValido(p.PrecioVenta, "Precio costo"),
+                //p => ValidarSeleccion(p.CantidadProducto,"La cantidad")
             };
 
         public static (bool Error, string Mensaje) EjecutarValidacionesProducto(ProductoInsertar producto)
@@ -152,7 +153,7 @@ namespace CapaServiciosSeguridadValidacion
             return (false, "");
         }
 
-        public static readonly List<Func<Cliente, (bool Error, string Mensaje)>> ListaValidacionesClinte =             
+        public static readonly List<Func<Cliente, (bool Error, string Mensaje)>> ListaValidacionesClinte =
             new List<Func<Cliente, (bool Error, string Mensaje)>>
             {
                 cl => ValidarDni(cl.DniCliente, "El dni"),
@@ -191,7 +192,6 @@ namespace CapaServiciosSeguridadValidacion
             if (codigo.Contains(" ") || codigo.Contains("  "))
                 return (true, $"El codigo no puede contener espacios.");
 
-
             if (!codigo.All(char.IsDigit))
                 return (true, "El código de barras solo debe contener números (0-9).");
 
@@ -224,6 +224,7 @@ namespace CapaServiciosSeguridadValidacion
             }
             return (true, $"{nombrecampo} debe ser un número entero válido.");
         }
+        /*
         public static (bool Error, string Mensaje) ValidarSoloNumeros(string valor, string nombrecampo)
         {
             if (string.IsNullOrWhiteSpace(valor))
@@ -231,11 +232,12 @@ namespace CapaServiciosSeguridadValidacion
             if (valor.Contains(" ") || valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener espacios.");
 
+
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
 
             return (false, "");
-        }
+        }*/
         public static (bool Error, string Mensaje) ValidarTelefono(string valor, string nombrecampo)
         {
             if (valor == null)
@@ -244,6 +246,11 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} debe tener 8 dígitos.");
             if (valor.Contains(" ") || valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener espacios.");
+            for (int j = 0; j < valor.Length - 5; j++)
+            {
+                if (valor[j] == valor[j + 1] && valor[j] == valor[j + 5])
+                    return (true, $"{nombrecampo} no puede contener más de 5 caracteres repetidos consecutivamente.");
+            }
 
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
@@ -265,8 +272,24 @@ namespace CapaServiciosSeguridadValidacion
             if (valor.Contains(" ") || valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener espacios.");
 
+            int contador = 1;
+
+            for (int j = 1; j < valor.Length; j++)
+            {
+                if (valor[j] == valor[j - 1])
+                {
+                    contador++;
+                    if (contador >= 5)
+                        return (true, $"{nombrecampo} no puede contener más de 5 caracteres repetidos consecutivamente.");
+                }
+                else
+                {
+                    contador = 1;
+                }
+            }
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
+
             return (false, "");
         }
         public static (bool Error, string Mensaje) ValidarNombreApellido(string valor, string nombrecampo)
@@ -338,6 +361,21 @@ namespace CapaServiciosSeguridadValidacion
                 return (true, $"{nombrecampo} no puede contener espacios.");
             if (!valor.All(char.IsDigit))
                 return (true, $"{nombrecampo} solo debe contener números.");
+            int contador = 1;
+
+            for (int j = 1; j < valor.Length; j++)
+            {
+                if (valor[j] == valor[j - 1])
+                {
+                    contador++;
+                    if (contador >= 5)
+                        return (true, $"{nombrecampo} no puede contener más de 5 caracteres repetidos consecutivamente.");
+                }
+                else
+                {
+                    contador = 1;
+                }
+            }
 
             return (false, "");
         }
