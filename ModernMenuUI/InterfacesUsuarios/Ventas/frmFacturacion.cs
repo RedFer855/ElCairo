@@ -622,7 +622,7 @@ namespace ModernMenuUI
         {
             Factura factura = new Factura
             {
-                NombreEmisor = "Mi Empresa S.A.",
+                NombreEmisor = "El Cairo S.A.",
                 RTNEmisor = "08011999123999",
                 DireccionEmisor = "Tegucigalpa, Honduras",
                 FechaEmision = DateTime.Now,
@@ -668,7 +668,7 @@ namespace ModernMenuUI
                 string ruta = Path.Combine(carpeta, $"Factura_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
 
                 // Logo desde recursos
-                Image logo = ModernMenuUI.Properties.Resources.buscar;
+                Image logo = ModernMenuUI.Properties.Resources.logo_ElCairo;
 
                 // Crear fuentes
                 PdfFont fontNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
@@ -758,8 +758,11 @@ namespace ModernMenuUI
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {/*
+
+
+        private void btnImprimirCotizacion_Click(object sender, EventArgs e)
+        {
+            /*
             try
             {
                 Factura factura = CrearFacturaDesdeCarrito();
@@ -850,7 +853,7 @@ namespace ModernMenuUI
             {
                 MessageBox.Show("Error al generar la factura:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            /*
+
             Factura factura = CrearFacturaDesdeCarrito();
 
             if (!factura.EsValida())
@@ -864,7 +867,6 @@ namespace ModernMenuUI
 
             ServicioDeImpresion servicioImpresion = new ServicioDeImpresion();
             servicioImpresion.ImprimirTicket(factura, logo);
-
             */
         }
     }
