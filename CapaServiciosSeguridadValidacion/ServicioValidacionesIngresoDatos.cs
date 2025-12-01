@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Modelados;
+﻿
+using CapaDeDatos.Modelados;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Modelados.Ventas;
