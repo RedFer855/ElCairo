@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CapaDominio
 {
-    
+
     public class Factura
     {
         public string NombreEmisor { get; set; }
