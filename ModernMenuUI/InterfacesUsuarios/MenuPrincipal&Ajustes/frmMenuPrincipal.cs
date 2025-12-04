@@ -6,6 +6,7 @@ using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
 using ModernMenuUI.InterfacesUsuarios.Reporteria;
+using ModernMenuUI.InterfacesUsuarios.Ventas;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -473,13 +474,15 @@ namespace ModernMenuUI
         private void btnCierreDiario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            ManejarFormularios.Instancia.AbrirFormulario(new frmCierreDiario());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
         }
 
         private void btnDevoluciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
+            
         }
 
         // CONTENEDORES PARA MOVER FORMULARIO CON EVENTO
