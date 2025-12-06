@@ -6,7 +6,20 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>RedInventory One</AssemblyName>
+    <ApplicationIcon>el cairo 2 (1) 1 (1) (1).ico</ApplicationIcon>
+    <PackageId>RedInventory One</PackageId>
+    <Title>RedInventory One</Title>
+    <Authors>RedFer855</Authors>
+    <Copyright>RedFer855 © 2025</Copyright>
+    <Product>RedInventory One</Product>
+    <Description>Sistema para manejo de inventario y soporte multibodega con punto de venta.</Description>
+    <PackageReleaseNotes>Beta 1</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="el cairo 2 (1) 1 (1) (1).ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
