@@ -1,4 +1,5 @@
 ﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using Supabase.Gotrue;
 using Supabase.Gotrue.Exceptions;
@@ -211,6 +212,73 @@ namespace CapaDeDatos.Repositorios
             catch (Exception ex)
             {
                 throw new Exception($"SUPABASE ERROR: {ex.Message}");
+            }
+        }
+
+        public async Task<bool> VerificarPrimerUsoAsync()
+        {
+            try
+            {
+                var client = await GetClient();
+
+                // 🚨 CORRECCIÓN CLAVE: El método Rpc<bool> devuelve directamente el valor bool.
+                // No hay necesidad de acceder a .Models ni a .First().
+
+                // La variable 'esPrimerUso' será true o false, según la función de Postgres.
+                bool esPrimerUso = await client.Rpc<bool>("verificar_primer_uso", null);
+
+                // Retornamos directamente el resultado de la función SQL.
+                return esPrimerUso;
+            }
+            catch (Exception ex)
+            {
+                // En caso de error de conexión/permisos, lanzamos la excepción.
+                throw new Exception($"Error al llamar a la función de verificación de estado: {ex.Message}");
+            }
+        }
+
+
+        public async Task<Usuario> CrearUsuarioAdminFinalAsync(string email, string password)
+        {
+            try
+            {
+                var client = await GetClient();
+
+                // 1. CREAR LA CUENTA EN SUPABASE AUTH (GoTrue)
+                // Esto crea el registro en la tabla de autenticación de Supabase.
+                var session = await client.Auth.SignUp(email, password);
+
+                if (session.User == null)
+                    throw new Exception("Supabase Auth no devolvió un usuario válido.");
+
+                // 2. CREAR EL PERFIL EN TU TABLA 'usuario' (Postgrest)
+                var perfilACrear = new Usuario
+                {
+                    // Usamos el UUID de Supabase Auth para vincular
+                    Uuid = session.User.Id,
+                    AliasUsuario = email,
+                    RolUsuario = 4, // Asumimos 4 es el ID del rol SuperAdministrador (INT)
+                    EstadoUsuario = true
+                    // La contraseña NO se guarda aquí, ya la maneja Supabase Auth.
+                };
+
+                // Inserta el perfil en tu tabla 'usuario'
+                var response = await client.From<Usuario>().Insert(perfilACrear);
+
+                // Devuelve el modelo insertado (perfil) que tiene el ID_EMPLEADO generado
+                return response.Models.FirstOrDefault();
+            }
+            catch (GotrueException ex)
+            {
+                throw new Exception($"Error de autenticación al crear admin: {ex.Message}");
+            }
+            catch (PostgrestException ex)
+            {
+                throw new Exception($"Error de BD al crear perfil de admin: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado en creación de admin: {ex.Message}");
             }
         }
 
