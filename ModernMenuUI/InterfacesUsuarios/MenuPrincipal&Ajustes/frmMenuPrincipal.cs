@@ -22,7 +22,7 @@ namespace ModernMenuUI
         private Form formularioactivo = null;
         private readonly ServicioVerificacionConexion _monitorConexion;
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
-        
+
         // Variables para almacenar los tamaños calculados una sola vez
         private int _anchoMenuAbierto;
         private int _anchoMenuCerrado;
@@ -391,7 +391,7 @@ namespace ModernMenuUI
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
-            bool tipo = true;   
+            bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new InterfacesUsuarios.Compras.frmProveedor(tipo));
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
@@ -399,7 +399,7 @@ namespace ModernMenuUI
 
         private void btnPresentaciones_Click(object sender, EventArgs e)
         {
-            bool tipo = true;  
+            bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmPresentaciones(tipo));
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
@@ -482,7 +482,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
-            
+
         }
 
         // CONTENEDORES PARA MOVER FORMULARIO CON EVENTO
@@ -612,6 +612,11 @@ namespace ModernMenuUI
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmMarcas(tipo));
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+        }
+
+        private void btnBodegas_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

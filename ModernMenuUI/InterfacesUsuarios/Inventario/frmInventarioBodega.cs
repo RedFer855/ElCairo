@@ -376,9 +376,5 @@ namespace ModernMenuUI
 
         }
 
-        private void btnCrearBodega_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -99,8 +99,8 @@
             // 
             // flpAjustarBotones
             // 
-            flpAjustarBotones.Controls.Add(btnModificarBodega);
             flpAjustarBotones.Controls.Add(btnGuardarBodega);
+            flpAjustarBotones.Controls.Add(btnModificarBodega);
             flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Location = new Point(37, 213);
             flpAjustarBotones.Name = "flpAjustarBotones";
@@ -115,7 +115,7 @@
             btnModificarBodega.Font = new Font("Itim", 11.9999981F);
             btnModificarBodega.ForeColor = SystemColors.ButtonFace;
             btnModificarBodega.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarBodega.Location = new Point(3, 3);
+            btnModificarBodega.Location = new Point(98, 3);
             btnModificarBodega.Name = "btnModificarBodega";
             btnModificarBodega.Size = new Size(72, 33);
             btnModificarBodega.TabIndex = 19;
@@ -130,13 +130,14 @@
             btnGuardarBodega.Font = new Font("Itim", 11.9999981F);
             btnGuardarBodega.ForeColor = SystemColors.ButtonFace;
             btnGuardarBodega.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarBodega.Location = new Point(81, 3);
+            btnGuardarBodega.Location = new Point(3, 3);
             btnGuardarBodega.Name = "btnGuardarBodega";
             btnGuardarBodega.Size = new Size(89, 33);
             btnGuardarBodega.TabIndex = 9;
             btnGuardarBodega.Text = "Guardar";
             btnGuardarBodega.UseVisualStyleBackColor = false;
             btnGuardarBodega.Visible = false;
+            btnGuardarBodega.Click += btnGuardarBodega_Click;
             // 
             // btnVolver
             // 

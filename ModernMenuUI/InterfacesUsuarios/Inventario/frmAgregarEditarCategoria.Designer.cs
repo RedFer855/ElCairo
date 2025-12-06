@@ -90,6 +90,7 @@
             // rbActivo
             // 
             rbActivo.AutoSize = true;
+            rbActivo.Checked = true;
             rbActivo.Location = new Point(6, 15);
             rbActivo.Name = "rbActivo";
             rbActivo.Size = new Size(70, 23);
@@ -164,7 +165,6 @@
             rbInactivo.Name = "rbInactivo";
             rbInactivo.Size = new Size(82, 23);
             rbInactivo.TabIndex = 8;
-            rbInactivo.TabStop = true;
             rbInactivo.Text = "Inactivo";
             rbInactivo.UseVisualStyleBackColor = true;
             // 

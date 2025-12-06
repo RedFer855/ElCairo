@@ -928,6 +928,7 @@
             btnBodegas.Text = "Bodegas";
             btnBodegas.TextAlign = ContentAlignment.MiddleLeft;
             btnBodegas.UseVisualStyleBackColor = false;
+            btnBodegas.Click += btnBodegas_Click;
             // 
             // btnInventarioBodega
             // 
