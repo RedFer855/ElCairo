@@ -415,7 +415,7 @@
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
+            dataGridViewTextBoxColumn4.HeaderText = "CantidadCierre";
             dataGridViewTextBoxColumn4.MinimumWidth = 6;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
@@ -661,7 +661,7 @@
             label3.Name = "label3";
             label3.Size = new Size(72, 18);
             label3.TabIndex = 17;
-            label3.Text = "Cantidad:";
+            label3.Text = "CantidadCierre:";
             // 
             // label2
             // 

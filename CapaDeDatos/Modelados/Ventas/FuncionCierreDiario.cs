@@ -14,7 +14,6 @@ namespace CapaDeDatos.Modelados
         [Column("idventa")]
         public int IdVenta { get; set; }
 
-
         [Column("fecha_venta")]
         public DateTime FechaVenta { get; set; }
 
