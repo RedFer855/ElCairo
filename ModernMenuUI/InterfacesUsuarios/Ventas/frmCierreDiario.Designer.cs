@@ -218,6 +218,7 @@
             // txtTotalVentas
             // 
             txtTotalVentas.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtTotalVentas.ForeColor = Color.DimGray;
             txtTotalVentas.Location = new Point(143, 14);
             txtTotalVentas.Margin = new Padding(3, 2, 3, 2);
             txtTotalVentas.Name = "txtTotalVentas";
@@ -244,7 +245,7 @@
             btnImprimirCierre.Location = new Point(4, 3);
             btnImprimirCierre.Margin = new Padding(4, 3, 4, 3);
             btnImprimirCierre.Name = "btnImprimirCierre";
-            btnImprimirCierre.Size = new Size(164, 52);
+            btnImprimirCierre.Size = new Size(164, 60);
             btnImprimirCierre.TabIndex = 25;
             btnImprimirCierre.Text = "Imprimir Cierre";
             btnImprimirCierre.UseVisualStyleBackColor = false;
@@ -260,7 +261,7 @@
             btnSalir.Location = new Point(176, 3);
             btnSalir.Margin = new Padding(4, 3, 4, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(155, 52);
+            btnSalir.Size = new Size(155, 60);
             btnSalir.TabIndex = 27;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -355,6 +356,7 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnImprimirCierre);
             flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Location = new Point(12, 570);
@@ -366,12 +368,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(973, 645);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(gbxEstado);
             Controls.Add(panel3);
             Controls.Add(panel1);
-            ForeColor = Color.White;
+            ForeColor = Color.DimGray;
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 2, 3, 2);
             Name = "frmCierreDiario";
