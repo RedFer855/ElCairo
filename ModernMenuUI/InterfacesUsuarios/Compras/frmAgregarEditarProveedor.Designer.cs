@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarProveedor));
             lblNombreModulo = new Label();
             pictureBox1 = new PictureBox();
-            btnModificarProveedor = new Button();
+            btnEditarProveedor = new Button();
             txtTelefono = new TextBox();
             txtNombreProveedor = new TextBox();
             btnVolver = new Button();
@@ -46,11 +46,13 @@
             label1 = new Label();
             txtDireccion = new TextBox();
             panel2 = new Panel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             gbxEstado.SuspendLayout();
             panel2.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panBarraControl
@@ -86,20 +88,21 @@
             pictureBox1.TabIndex = 21;
             pictureBox1.TabStop = false;
             // 
-            // btnModificarProveedor
+            // btnEditarProveedor
             // 
-            btnModificarProveedor.BackColor = Color.FromArgb(149, 195, 172);
-            btnModificarProveedor.BackgroundImageLayout = ImageLayout.None;
-            btnModificarProveedor.FlatAppearance.BorderSize = 0;
-            btnModificarProveedor.Font = new Font("Itim", 11.9999981F);
-            btnModificarProveedor.ForeColor = SystemColors.ButtonFace;
-            btnModificarProveedor.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarProveedor.Location = new Point(124, 245);
-            btnModificarProveedor.Name = "btnModificarProveedor";
-            btnModificarProveedor.Size = new Size(89, 35);
-            btnModificarProveedor.TabIndex = 19;
-            btnModificarProveedor.Text = "Modificar";
-            btnModificarProveedor.UseVisualStyleBackColor = false;
+            btnEditarProveedor.BackColor = Color.FromArgb(113, 96, 232);
+            btnEditarProveedor.BackgroundImageLayout = ImageLayout.None;
+            btnEditarProveedor.FlatAppearance.BorderSize = 0;
+            btnEditarProveedor.Font = new Font("Itim", 11.9999981F);
+            btnEditarProveedor.ForeColor = SystemColors.ButtonFace;
+            btnEditarProveedor.ImageAlign = ContentAlignment.BottomLeft;
+            btnEditarProveedor.Location = new Point(98, 3);
+            btnEditarProveedor.Name = "btnEditarProveedor";
+            btnEditarProveedor.Size = new Size(89, 35);
+            btnEditarProveedor.TabIndex = 19;
+            btnEditarProveedor.Text = "Editar";
+            btnEditarProveedor.UseVisualStyleBackColor = false;
+            btnEditarProveedor.Click += btnEditarProveedor_Click;
             // 
             // txtTelefono
             // 
@@ -130,9 +133,9 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(222, 245);
+            btnVolver.Location = new Point(193, 3);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(95, 35);
+            btnVolver.Size = new Size(71, 35);
             btnVolver.TabIndex = 0;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
@@ -145,7 +148,7 @@
             btnGuardarProveedor.Font = new Font("Itim", 11.9999981F);
             btnGuardarProveedor.ForeColor = SystemColors.ButtonFace;
             btnGuardarProveedor.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarProveedor.Location = new Point(29, 245);
+            btnGuardarProveedor.Location = new Point(3, 3);
             btnGuardarProveedor.Name = "btnGuardarProveedor";
             btnGuardarProveedor.Size = new Size(89, 35);
             btnGuardarProveedor.TabIndex = 9;
@@ -167,6 +170,7 @@
             // rbActivo
             // 
             rbActivo.AutoSize = true;
+            rbActivo.Checked = true;
             rbActivo.Location = new Point(8, 20);
             rbActivo.Name = "rbActivo";
             rbActivo.Size = new Size(70, 23);
@@ -181,7 +185,7 @@
             gbxEstado.Controls.Add(rbActivo);
             gbxEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
-            gbxEstado.Location = new Point(190, 176);
+            gbxEstado.Location = new Point(190, 228);
             gbxEstado.Name = "gbxEstado";
             gbxEstado.Size = new Size(214, 48);
             gbxEstado.TabIndex = 7;
@@ -192,7 +196,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(87, 99, 110);
-            label5.Location = new Point(127, 195);
+            label5.Location = new Point(127, 247);
             label5.Name = "label5";
             label5.Size = new Size(57, 18);
             label5.TabIndex = 18;
@@ -207,7 +211,7 @@
             label8.Name = "label8";
             label8.Size = new Size(155, 18);
             label8.TabIndex = 12;
-            label8.Text = "NombreEmpleado del Proveedor:";
+            label8.Text = "Nombre del Proveedor:";
             // 
             // label2
             // 
@@ -229,7 +233,7 @@
             label1.Name = "label1";
             label1.Size = new Size(68, 18);
             label1.TabIndex = 13;
-            label1.Text = "TelefonoEmpleado:";
+            label1.Text = "Telefono:";
             // 
             // txtDireccion
             // 
@@ -237,19 +241,18 @@
             txtDireccion.BorderStyle = BorderStyle.None;
             txtDireccion.Font = new Font("Itim", 13F);
             txtDireccion.Location = new Point(190, 134);
+            txtDireccion.Multiline = true;
             txtDireccion.Name = "txtDireccion";
-            txtDireccion.Size = new Size(289, 21);
+            txtDireccion.Size = new Size(289, 88);
             txtDireccion.TabIndex = 3;
             // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(flowLayoutPanel1);
             panel2.Controls.Add(pictureBox1);
-            panel2.Controls.Add(btnModificarProveedor);
             panel2.Controls.Add(txtTelefono);
             panel2.Controls.Add(txtNombreProveedor);
-            panel2.Controls.Add(btnVolver);
-            panel2.Controls.Add(btnGuardarProveedor);
             panel2.Controls.Add(gbxEstado);
             panel2.Controls.Add(label5);
             panel2.Controls.Add(label8);
@@ -259,14 +262,24 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(688, 290);
+            panel2.Size = new Size(688, 351);
             panel2.TabIndex = 14;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(btnGuardarProveedor);
+            flowLayoutPanel1.Controls.Add(btnEditarProveedor);
+            flowLayoutPanel1.Controls.Add(btnVolver);
+            flowLayoutPanel1.Location = new Point(12, 292);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(274, 47);
+            flowLayoutPanel1.TabIndex = 22;
             // 
             // frmAgregarEditarProveedor
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(688, 290);
+            ClientSize = new Size(688, 351);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -283,13 +296,14 @@
             gbxEstado.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private PictureBox pictureBox1;
-        private Button btnModificarProveedor;
+        private Button btnEditarProveedor;
         private TextBox txtTelefono;
         private TextBox txtNombreProveedor;
         private Button btnVolver;
@@ -304,5 +318,6 @@
         private TextBox txtDireccion;
         public Label lblNombreModulo;
         private Panel panel2;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

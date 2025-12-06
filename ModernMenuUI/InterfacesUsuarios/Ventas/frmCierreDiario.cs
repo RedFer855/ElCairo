@@ -170,5 +170,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 frm.ShowDialog();
             }
         }
+
+        private void btnBuscarEmpleado_Click(object sender, EventArgs e)
+        {
+            frmUsuario _usuarioCierre = new frmUsuario();   
+            _usuarioCierre.ShowDialog();
+        }
     }
 }

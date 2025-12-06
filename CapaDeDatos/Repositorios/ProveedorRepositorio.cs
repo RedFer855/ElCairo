@@ -16,7 +16,7 @@ namespace CapaDeDatos.Repositorios
             return await Conexion.ConnectWithTimeoutAsync();
         }
 
-        public static async Task InsertarProveedor(Proveedor nuevoProveedor)
+        public async Task InsertarProveedor(Proveedor nuevoProveedor)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace CapaDeDatos.Repositorios
         }
 
 
-        public static async Task ActualizarProveedor(Proveedor proveedorActualizado)
+        public async Task ActualizarProveedor(Proveedor proveedorActualizado)
         {
             try
             {

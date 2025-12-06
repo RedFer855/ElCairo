@@ -51,7 +51,7 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             label4 = new Label();
             btnMarca = new Button();
-            btnCategoria = new Button();
+            btnBuscarEmpleado = new Button();
             label5 = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel1.SuspendLayout();
@@ -294,7 +294,7 @@
             tableLayoutPanel2.Controls.Add(dtpFecha, 4, 0);
             tableLayoutPanel2.Controls.Add(label4, 3, 0);
             tableLayoutPanel2.Controls.Add(btnMarca, 5, 0);
-            tableLayoutPanel2.Controls.Add(btnCategoria, 2, 0);
+            tableLayoutPanel2.Controls.Add(btnBuscarEmpleado, 2, 0);
             tableLayoutPanel2.Controls.Add(label5, 0, 0);
             tableLayoutPanel2.Location = new Point(6, 17);
             tableLayoutPanel2.MinimumSize = new Size(400, 30);
@@ -329,19 +329,20 @@
             btnMarca.TabIndex = 2;
             btnMarca.UseVisualStyleBackColor = false;
             // 
-            // btnCategoria
+            // btnBuscarEmpleado
             // 
-            btnCategoria.BackColor = Color.FromArgb(168, 191, 212);
-            btnCategoria.BackgroundImage = (Image)resources.GetObject("btnCategoria.BackgroundImage");
-            btnCategoria.BackgroundImageLayout = ImageLayout.Zoom;
-            btnCategoria.Dock = DockStyle.Fill;
-            btnCategoria.FlatAppearance.BorderSize = 0;
-            btnCategoria.FlatStyle = FlatStyle.Flat;
-            btnCategoria.Location = new Point(283, 3);
-            btnCategoria.Name = "btnCategoria";
-            btnCategoria.Size = new Size(27, 24);
-            btnCategoria.TabIndex = 38;
-            btnCategoria.UseVisualStyleBackColor = false;
+            btnBuscarEmpleado.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarEmpleado.BackgroundImage = (Image)resources.GetObject("btnBuscarEmpleado.BackgroundImage");
+            btnBuscarEmpleado.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarEmpleado.Dock = DockStyle.Fill;
+            btnBuscarEmpleado.FlatAppearance.BorderSize = 0;
+            btnBuscarEmpleado.FlatStyle = FlatStyle.Flat;
+            btnBuscarEmpleado.Location = new Point(283, 3);
+            btnBuscarEmpleado.Name = "btnBuscarEmpleado";
+            btnBuscarEmpleado.Size = new Size(27, 24);
+            btnBuscarEmpleado.TabIndex = 38;
+            btnBuscarEmpleado.UseVisualStyleBackColor = false;
+            btnBuscarEmpleado.Click += btnBuscarEmpleado_Click;
             // 
             // label5
             // 
@@ -412,7 +413,7 @@
         private TableLayoutPanel tableLayoutPanel2;
         private Label label4;
         private Button btnMarca;
-        private Button btnCategoria;
+        private Button btnBuscarEmpleado;
         private Label label5;
         private FlowLayoutPanel flowLayoutPanel1;
     }
