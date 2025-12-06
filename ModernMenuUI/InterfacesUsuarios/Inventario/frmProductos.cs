@@ -275,7 +275,7 @@ namespace ModernMenuUI
 
         private void RegistrarBotonesConPermisos()
         {
-            _servicioPermisos.RegistrarBoton(btnNuevoProducto, "insert_inventario");
+            _servicioPermisos.RegistrarBoton(btnNuevoProducto, "create_inventario");
             _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");

@@ -1,5 +1,6 @@
 ﻿using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
+using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using System;
 using System.Drawing;
@@ -107,7 +108,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
             try
             {
-                // Armar proveedor temporal
+                // Crear proveedor temporal
                 Proveedor proveedorTemp = new Proveedor
                 {
                     NombreProveedor = txtNombreProveedor.Text.Trim(),
@@ -116,6 +117,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     IdEstadoProveedor = rbActivo.Checked ? 1 : 2,
                     EstadoProveedor = rbActivo.Checked
                 };
+
+                // VALIDAR proveedor (igual que validas Marca)
+                var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProveedor(proveedorTemp);
+
+                if (resultado.Error)
+                {
+                    MessageBox.Show(resultado.Mensaje, "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 ProveedorRepositorio _repoProv = new ProveedorRepositorio();
 
@@ -150,5 +161,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 this.Cursor = Cursors.Default;
             }
         }
+
     }
 }
