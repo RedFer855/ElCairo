@@ -1,5 +1,6 @@
 ﻿
 using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Modelados.Ventas;
@@ -42,6 +43,24 @@ namespace CapaServiciosSeguridadValidacion
             }
             return (false, "");
         }
+
+        public static readonly List<Func<Bodega, (bool Error, string Mensaje)>> ListaValidacionesBodega =
+            new List<Func<Bodega, (bool Error, string Mensaje)>>()
+            {
+                b => ValidarNombreApellido(b.NombreBodega, "el nombre de la bodega"),
+                b => ValidarContrasenia(b.ContraseniaBodega, "la contraseña de la bodega"),
+            };
+
+        public static (bool Error, string Mensaje) EjecutarValidacionesBodega(Bodega bodega)
+        {
+            foreach (var regla in ListaValidacionesBodega)
+            {
+                var resultado = regla(bodega);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
+
 
         public static readonly List<Func<Empleado, (bool Error, string Mensaje)>> ListaValidacionesEmpleado =
         new List<Func<Empleado, (bool Error, string Mensaje)>>()

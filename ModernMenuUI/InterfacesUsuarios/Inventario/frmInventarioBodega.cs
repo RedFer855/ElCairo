@@ -380,8 +380,8 @@ namespace ModernMenuUI
 
         private async void btnCrearBodega_Click(object sender, EventArgs e)
         {
-            frmAgregarEditarBodega provNuevo = new frmAgregarEditarBodega();
-            provNuevo.ShowDialog();
+            frmAgregarEditarBodega bodenueva = new frmAgregarEditarBodega();
+            bodenueva.ShowDialog();
         }
     }
 }
