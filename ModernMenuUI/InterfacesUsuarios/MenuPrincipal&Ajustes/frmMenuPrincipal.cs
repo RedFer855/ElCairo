@@ -15,23 +15,28 @@ using System.Globalization;
 
 namespace ModernMenuUI
 {
+    /// <summary>
+    /// Formulario principal de la aplicación. Maneja el menú lateral, notificaciones y la apertura de formularios hijos.
+    /// </summary>
     public partial class frmMenuPrincipal : Form
     {
+        /// <summary>Indica si las animaciones están habilitadas.</summary>
         public bool Animacion = true;
-        AnimadorPanel animadorPanel;
+
+        private AnimadorPanel animadorPanel;
         private Form formularioactivo = null;
         private readonly ServicioVerificacionConexion _monitorConexion;
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
 
-        // Variables para almacenar los tamaños calculados una sola vez
         private int _anchoMenuAbierto;
         private int _anchoMenuCerrado;
-        private AnimadorPanel _animadorNotificaciones; // Instancia para notificaciones
+        private AnimadorPanel _animadorNotificaciones;
 
-        // Tolerancia para la comparación
         private const int TOLERANCIA = 5;
 
-
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="frmMenuPrincipal"/>.
+        /// </summary>
         public frmMenuPrincipal()
         {
             InitializeComponent();
@@ -41,16 +46,15 @@ namespace ModernMenuUI
             this.BackColor = Color.White;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
             _monitorConexion = new ServicioVerificacionConexion();
-            // 3. Suscribirse al evento que dispara el servicio
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
-            // 4. Comprobar el estado inicial
             ActualizarEstadoVisual(_monitorConexion.HayConexionAhora());
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
         }
 
-
-        // Mostrar paneles cerrados al cargar por primera vez el form
+        /// <summary>
+        /// Evento Load: ajusta visibilidad inicial de divisores y registra panel contenedor para formularios hijos.
+        /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
             if (btnInventarios.Visible == false)
@@ -79,46 +83,47 @@ namespace ModernMenuUI
             }
             lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
             lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
-            ManejarFormularios.Inicializar(this.panelFormHijo); // PanelContenedor es tu panel principal
+            ManejarFormularios.Inicializar(this.panelFormHijo);
             panelvisible();
-
-            // Ahora puedes mostrar en un label
             lblBodega.Text = ServicioSesionUsuario.ObtenerNombreBodega();
         }
+
+        /// <summary>
+        /// Configura el controlador/animador de notificaciones en modo overlay.
+        /// </summary>
         private void ConfigurarNotificaciones()
         {
             int anchoMaximoNotif = CalculadoraResolucion.ObtenerAnchoNotificaciones();
-            // overlay = true evita que cambien los tamaños (Dock) y por tanto el re-layout del panelFormHijo
             _animadorNotificaciones = new AnimadorPanel(panelNotificaciones, 0, anchoMaximoNotif, 50, true);
-            // ya no forzamos panelNotificaciones.Width = 0 aquí
         }
 
+        /// <summary>
+        /// Calcula y aplica dimensiones del menú lateral según resolución.
+        /// </summary>
         private void ConfigurarMenu()
         {
-            // 1. LLAMADA A LA CLASE: Obtenemos los tamaños según el monitor actual
             var dimensiones = CalculadoraResolucion.ObtenerDimensionesOptimas();
 
             _anchoMenuAbierto = dimensiones.AnchoAbierto;
             _anchoMenuCerrado = dimensiones.AnchoCerrado;
 
-            // 2. Estado inicial: Empezamos abiertos (según tu indicación)
             panelMenuLateral.Width = _anchoMenuAbierto;
-
-            // Debug: Para que veas en consola cuánto calculó
             Console.WriteLine($"Resolución detectada. Menu Abierto: {_anchoMenuAbierto}, Cerrado: {_anchoMenuCerrado}");
         }
 
+        /// <summary>
+        /// Handler del servicio de verificación de conexión; actualiza la UI.
+        /// </summary>
         private void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
         {
-            // Llamar a la función de actualización de la UI para manejar el Invoke
             ActualizarEstadoVisual(status);
         }
 
-        // 6. Método Thread-Safe para actualizar la UI
-        //    (Ahora maneja 3 estados)
+        /// <summary>
+        /// Actualiza de forma segura (hilo UI) la etiqueta que muestra el estado de red.
+        /// </summary>
         private void ActualizarEstadoVisual(NetworkStatus status)
         {
-            // Usar Invoke para garantizar que la actualización ocurra en el hilo de la UI.
             if (this.InvokeRequired)
             {
                 this.Invoke((MethodInvoker)delegate
@@ -128,30 +133,28 @@ namespace ModernMenuUI
                 return;
             }
 
-            // Actualización visual del Label con 3 estados
             switch (status)
             {
                 case NetworkStatus.Internet:
                     lblEstadoConexion.Text = "✅ Conectado a la Red";
-                    lblEstadoConexion.ForeColor = Color.White; // Tu color de "Conectado"
+                    lblEstadoConexion.ForeColor = Color.White;
                     break;
 
-                case NetworkStatus.RedSinInternet: // <-- EL NUEVO ESTADO
+                case NetworkStatus.RedSinInternet:
                     lblEstadoConexion.Text = "⚠️ Conectado Sin Internet";
-                    lblEstadoConexion.ForeColor = Color.Yellow; // Naranja para advertencia
+                    lblEstadoConexion.ForeColor = Color.Yellow;
                     break;
 
                 case NetworkStatus.SinRed:
                     lblEstadoConexion.Text = "🛑 Sin conexión";
-                    lblEstadoConexion.ForeColor = Color.FromArgb(150, 42, 68); // Tu rojo
+                    lblEstadoConexion.ForeColor = Color.FromArgb(150, 42, 68);
                     break;
             }
         }
 
-        // PANELES
-        // FUNCIONES DENTRO DE PANELES SUBMENUS
-
-        // Mostrar Paneles
+        /// <summary>
+        /// Establece la visibilidad de un panel secundario.
+        /// </summary>
         private void AbrirPaneles(Panel panel)
         {
             if (panel.Visible == false)
@@ -164,7 +167,9 @@ namespace ModernMenuUI
             }
         }
 
-        // Cerrar todos lo paneles
+        /// <summary>
+        /// Oculta todos los paneles de submenú.
+        /// </summary>
         private void panelvisible()
         {
             panelInventario.Visible = false;
@@ -172,12 +177,11 @@ namespace ModernMenuUI
             panelVentas.Visible = false;
             panelReporteria.Visible = false;
             panelUsuarios.Visible = false;
-
         }
 
-
-
-        // Cerrar todos los submenu
+        /// <summary>
+        /// Cierra todos los submenús.
+        /// </summary>
         private void CerrarSubmenu()
         {
             Panel[] submenus = { panelInventario, panelCompras, panelVentas, panelReporteria, panelUsuarios };
@@ -185,7 +189,9 @@ namespace ModernMenuUI
                 p.Visible = false;
         }
 
-        //Abrir y Cerrar Paneles
+        /// <summary>
+        /// Abre o cierra un subpanel concreto y anima el menú lateral si procede.
+        /// </summary>
         private void AbrirCerrarPanel(Panel PanelActual)
         {
             if (PanelActual.Visible == true)
@@ -204,11 +210,17 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Ejecuta la animación del menú lateral.
+        /// </summary>
         private void MenulateralAnimacion()
         {
             AlternarMenu();
         }
 
+        /// <summary>
+        /// Alterna el ancho del menú lateral entre abierto y cerrado.
+        /// </summary>
         private void AlternarMenu()
         {
             lblEstadoConexion.Visible = false;
@@ -234,13 +246,17 @@ namespace ModernMenuUI
             lblEstadoConexion.Visible = true;
         }
 
-        // Ocultar Men� Lateral
+        /// <summary>
+        /// Handler del botón que abre/cierra el menú lateral.
+        /// </summary>
         private void btnAbrirMenu_Click(object sender, EventArgs e)
         {
             MenulateralAnimacion();
         }
 
-        // Timers para Animar apneles en abrir y cerrar
+        /// <summary>
+        /// Tick del timer de apertura del menú lateral.
+        /// </summary>
         private void timerAbrir_Tick(object sender, EventArgs e)
         {
             if (panelMenuLateral.Width < 261)
@@ -267,6 +283,9 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Tick del timer de cierre del menú lateral.
+        /// </summary>
         private void timerCerrar_Tick(object sender, EventArgs e)
         {
             if (panelMenuLateral.Width > 101)
@@ -293,12 +312,17 @@ namespace ModernMenuUI
             }
         }
 
-        // BOTONES DE CONTROL DE VENTANA
+        /// <summary>
+        /// Cierra la ventana principal.
+        /// </summary>
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Alterna entre maximizar y restaurar la ventana.
+        /// </summary>
         private void btnMiniMaxi_Click(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Maximized)
@@ -311,16 +335,25 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Minimiza la ventana.
+        /// </summary>
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
+        /// <summary>
+        /// Abre el formulario de ajustes.
+        /// </summary>
         private void btnAjustes_Click(object sender, EventArgs e)
         {
             ManejarFormularios.Instancia.AbrirFormulario(new frmAjustes());
         }
 
+        /// <summary>
+        /// Alterna la pantalla de notificaciones mediante el animador.
+        /// </summary>
         private void btnNotificaciones_Click(object sender, EventArgs e)
         {
             try
@@ -330,12 +363,10 @@ namespace ModernMenuUI
 
                 if (parent == null)
                 {
-                    // Si no hay parent, basa la comprobación en Visible
                     estaCerrado = !panelNotificaciones.Visible;
                 }
                 else
                 {
-                    // Cerrado si no es visible o si está completamente fuera a la derecha
                     estaCerrado = !panelNotificaciones.Visible || panelNotificaciones.Left >= parent.ClientSize.Width - 1;
                 }
 
@@ -356,23 +387,29 @@ namespace ModernMenuUI
             }
         }
 
-        // BOTONES SUBMENUS
+        /// <summary>
+        /// Abre el formulario de gestión de inventario.
+        /// </summary>
         private void btnGestionInventario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmProductos());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de inventario por bodega.
+        /// </summary>
         private void btnInventarioBodega_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de categorías.
+        /// </summary>
         private void btnCategorias_Click(object sender, EventArgs e)
         {
             bool tipo = true;
@@ -381,14 +418,19 @@ namespace ModernMenuUI
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
 
+        /// <summary>
+        /// Abre el formulario de gestión de compras.
+        /// </summary>
         private void btnGestionCompra_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmGestionCompra());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de proveedores (modo compras).
+        /// </summary>
         private void btnProveedores_Click(object sender, EventArgs e)
         {
             bool tipo = true;
@@ -397,6 +439,9 @@ namespace ModernMenuUI
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
         }
 
+        /// <summary>
+        /// Abre el formulario de presentaciones.
+        /// </summary>
         private void btnPresentaciones_Click(object sender, EventArgs e)
         {
             bool tipo = true;
@@ -404,54 +449,70 @@ namespace ModernMenuUI
             ManejarFormularios.Instancia.AbrirFormulario(new frmPresentaciones(tipo));
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
+
+        /// <summary>
+        /// Abre el formulario de facturación.
+        /// </summary>
         private void btnGestionVentas_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmFacturacion());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de clientes.
+        /// </summary>
         private void btnClientes_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de gestión de empleados.
+        /// </summary>
         private void btnGestionEmpleados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmEmpleado());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de usuarios.
+        /// </summary>
         private void btnGestionUsuarios_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmUsuario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de roles.
+        /// </summary>
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmRol());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-
         }
 
+        /// <summary>
+        /// Abre el formulario de bitácora.
+        /// </summary>
         private void btnBitacora_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
-
         }
 
+        /// <summary>
+        /// Abre el formulario para crear reportes.
+        /// </summary>
         private void btnCrearReporte_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
@@ -459,18 +520,27 @@ namespace ModernMenuUI
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
         }
 
+        /// <summary>
+        /// Muestra la lista de reportes creados.
+        /// </summary>
         private void btnReportesCreados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
         }
 
+        /// <summary>
+        /// Abre el formulario de registro de pérdidas.
+        /// </summary>
         private void btnRegistroPerdida_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
         }
 
+        /// <summary>
+        /// Abre el formulario de cierre diario.
+        /// </summary>
         private void btnCierreDiario_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
@@ -478,14 +548,15 @@ namespace ModernMenuUI
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
         }
 
+        /// <summary>
+        /// Acción para devoluciones.
+        /// </summary>
         private void btnDevoluciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
-
         }
 
-        // CONTENEDORES PARA MOVER FORMULARIO CON EVENTO
         private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
         {
             clsAnmaciones.MoverFormulario(this.Handle);
@@ -519,7 +590,9 @@ namespace ModernMenuUI
             clsAnmaciones.MoverFormulario(this.Handle);
         }
 
-        // HORA FECHA
+        /// <summary>
+        /// Actualiza hora y fecha mostradas en la UI.
+        /// </summary>
         private void HoraFecha_Tick(object sender, EventArgs e)
         {
             lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt", new CultureInfo("es-ES"));
@@ -540,15 +613,13 @@ namespace ModernMenuUI
 
         private void pbxCalculadora_MouseDown(object sender, MouseEventArgs e)
         {
-            pbxCalculadora.BackColor = Color.LightGreen; // resalta
+            pbxCalculadora.BackColor = Color.LightGreen;
         }
 
         private void pbxCalculadora_MouseUp(object sender, MouseEventArgs e)
         {
-            pbxCalculadora.BackColor = Color.Transparent; // resalta
+            pbxCalculadora.BackColor = Color.Transparent;
         }
-
-        // BOTENES PARA ABRIR SUBMENUS
 
         private void btnCompras_Click(object sender, EventArgs e)
         {
@@ -575,11 +646,11 @@ namespace ModernMenuUI
             AbrirCerrarPanel(panelReporteria);
         }
 
-        // Servicio de para ocultar Acciones visualmete en el sistema
+        /// <summary>
+        /// Registra botones y acciones en el servicio de permisos.
+        /// </summary>
         private void RegistrarBotonesConPermisos()
         {
-            // BOTONES DE MÓDULO (Lógica "OR")
-            //Mapeo Inventario
             _servicioPermisos.RegistrarBoton(btnInventarios, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnInventarioBodega, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnGestionInventario, "select_inventario", "update_inventario", "create_inventario");
@@ -587,20 +658,20 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnMarcas, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnCategorias, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnPresentaciones, "select_inventario", "update_inventario", "create_inventario");
-            //Mapeo Compras
+
             _servicioPermisos.RegistrarBoton(btnCompras, "select_compra", "update_compra", "create_compra");
             _servicioPermisos.RegistrarBoton(btnGestionCompra, "select_compra", "update_compra", "create_compra");
             _servicioPermisos.RegistrarBoton(btnProveedores, "select_compra", "update_compra", "create_compra");
-            //Mapeo Ventas
+
             _servicioPermisos.RegistrarBoton(btnVentas, "select_venta", "update_venta", "create_venta");
             _servicioPermisos.RegistrarBoton(btnGestionVentas, "select_venta", "update_venta", "create_venta");
             _servicioPermisos.RegistrarBoton(btnClientes, "select_venta", "update_venta", "create_venta");
-            //Mapeo Usuarios
+
             _servicioPermisos.RegistrarBoton(btnUsuarios, "select_usuario", "update_usuario", "create_usuario");
             _servicioPermisos.RegistrarBoton(btnGestionUsuarios, "select_usuario", "update_usuario", "create_usuario");
             _servicioPermisos.RegistrarBoton(btnGestionRoles, "select_usuario", "update_usuario", "create_usuario");
             _servicioPermisos.RegistrarBoton(btnBitacora, "select_usuario", "update_usuario", "create_usuario");
-            //Mapeo Reporteria
+
             _servicioPermisos.RegistrarBoton(btnReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnCrearReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
