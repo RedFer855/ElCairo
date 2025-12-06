@@ -37,6 +37,7 @@
             btnModificarMarca = new Button();
             btnVolver = new Button();
             txtProveedor = new TextBox();
+            btnBuscarProv = new Button();
             pbxImagenMarca = new PictureBox();
             txtNombreMarca = new TextBox();
             gbxEstado = new GroupBox();
@@ -45,7 +46,6 @@
             lblEstado = new Label();
             label8 = new Label();
             label2 = new Label();
-            btnBuscarProv = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
@@ -166,6 +166,20 @@
             txtProveedor.Size = new Size(201, 20);
             txtProveedor.TabIndex = 24;
             // 
+            // btnBuscarProv
+            // 
+            btnBuscarProv.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarProv.BackgroundImage = (Image)resources.GetObject("btnBuscarProv.BackgroundImage");
+            btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarProv.FlatAppearance.BorderSize = 0;
+            btnBuscarProv.FlatStyle = FlatStyle.Flat;
+            btnBuscarProv.Location = new Point(357, 46);
+            btnBuscarProv.Name = "btnBuscarProv";
+            btnBuscarProv.Size = new Size(48, 21);
+            btnBuscarProv.TabIndex = 23;
+            btnBuscarProv.UseVisualStyleBackColor = false;
+            btnBuscarProv.Click += btnBuscarProv_Click;
+            // 
             // pbxImagenMarca
             // 
             pbxImagenMarca.Image = (Image)resources.GetObject("pbxImagenMarca.Image");
@@ -205,13 +219,13 @@
             rbInactivo.Name = "rbInactivo";
             rbInactivo.Size = new Size(82, 23);
             rbInactivo.TabIndex = 8;
-            rbInactivo.TabStop = true;
             rbInactivo.Text = "Inactivo";
             rbInactivo.UseVisualStyleBackColor = true;
             // 
             // rbActivo
             // 
             rbActivo.AutoSize = true;
+            rbActivo.Checked = true;
             rbActivo.Location = new Point(6, 15);
             rbActivo.Name = "rbActivo";
             rbActivo.Size = new Size(70, 23);
@@ -252,20 +266,6 @@
             label2.Size = new Size(78, 18);
             label2.TabIndex = 14;
             label2.Text = "Proveedor:";
-            // 
-            // btnBuscarProv
-            // 
-            btnBuscarProv.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarProv.BackgroundImage = (Image)resources.GetObject("btnBuscarProv.BackgroundImage");
-            btnBuscarProv.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarProv.FlatAppearance.BorderSize = 0;
-            btnBuscarProv.FlatStyle = FlatStyle.Flat;
-            btnBuscarProv.Location = new Point(357, 46);
-            btnBuscarProv.Name = "btnBuscarProv";
-            btnBuscarProv.Size = new Size(48, 21);
-            btnBuscarProv.TabIndex = 23;
-            btnBuscarProv.UseVisualStyleBackColor = false;
-            btnBuscarProv.Click += btnBuscarProv_Click;
             // 
             // frmAgregarEditarMarca
             // 

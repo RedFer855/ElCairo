@@ -1,6 +1,4 @@
-﻿using CapaDeDatos.Datos;
-using CapaDeDatos.Modelados;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +15,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         public frmAgregarEditarBodega()
         {
             InitializeComponent();
+        }
+
+        public frmAgregarEditarBodega(Bodega _nuevaBodega)
+        {
+            InitializeComponent();
+            txtNombreBodega.Text = _nuevaBodega.NombreBodega;
+                
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

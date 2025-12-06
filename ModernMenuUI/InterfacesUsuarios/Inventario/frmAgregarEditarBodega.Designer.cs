@@ -100,8 +100,8 @@
             // 
             // flpAjustarBotones
             // 
-            flpAjustarBotones.Controls.Add(btnModificarBodega);
             flpAjustarBotones.Controls.Add(btnGuardarBodega);
+            flpAjustarBotones.Controls.Add(btnModificarBodega);
             flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Location = new Point(85, 237);
             flpAjustarBotones.Margin = new Padding(3, 4, 3, 4);

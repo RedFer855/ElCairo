@@ -291,7 +291,6 @@
             btnCrearBodega.TabIndex = 42;
             btnCrearBodega.Text = "Crear Bodega";
             btnCrearBodega.UseVisualStyleBackColor = false;
-            btnCrearBodega.Click += btnCrearBodega_Click;
             // 
             // tlp
             // 
