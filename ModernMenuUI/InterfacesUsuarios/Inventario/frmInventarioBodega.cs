@@ -3,6 +3,8 @@ using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.InterfacesUsuarios.Compras;
+using ModernMenuUI.InterfacesUsuarios.Inventario;
 using ModernMenuUI.ServiciosUI;
 using Supabase.Interfaces;
 using Supabase.Realtime;
@@ -376,9 +378,10 @@ namespace ModernMenuUI
 
         }
 
-        private void btnCrearBodega_Click(object sender, EventArgs e)
+        private async void btnCrearBodega_Click(object sender, EventArgs e)
         {
-
+            frmAgregarEditarBodega provNuevo = new frmAgregarEditarBodega();
+            provNuevo.ShowDialog();
         }
     }
 }
