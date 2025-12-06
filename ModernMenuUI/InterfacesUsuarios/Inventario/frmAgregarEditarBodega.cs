@@ -1,4 +1,7 @@
-﻿using CapaDeDatos.Modelados.Inventario;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Modelados.Productos;
+using CapaServiciosSeguridadValidacion;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,13 +19,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         public frmAgregarEditarBodega()
         {
             InitializeComponent();
+            btnGuardarBodega.Visible = true;
+            btnModificarBodega.Visible = false;
         }
 
         public frmAgregarEditarBodega(Bodega _nuevaBodega)
         {
             InitializeComponent();
             txtNombreBodega.Text = _nuevaBodega.NombreBodega;
-                
+            btnGuardarBodega.Visible = false;
+            btnModificarBodega.Visible = true;
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -30,9 +36,53 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             this.Close();
         }
 
-        private void btnGuardarBodega_Click(object sender, EventArgs e)
+        private async void btnGuardarBodega_Click(object sender, EventArgs e)
         {
+            Bodega bodega= new Bodega
+            {
+                NombreBodega = txtNombreBodega.Text.Trim(),
+                ContraseniaBodega = txtContrasenia.Text.Trim(),
+                EstadoBodega = rbActivo.Checked
+            };
 
+            // Validaciones
+            var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesBodega(bodega);
+            if (resultado.Error)
+            {
+                MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!rbActivo.Checked && !rbInactivo.Checked)
+            {
+                MessageBox.Show("Seleccione un estado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                var supabase = await Conexion.GetClientAsync();
+                var usuarioAuth = supabase.Auth.CurrentUser;
+                
+
+
+                await supabase.Rpc("insertar_bodega", new
+                {
+                    p_nombre_bodega = txtNombreBodega.Text,
+                    p_contrasenia = txtContrasenia.Text,
+                    p_estado_bodega = rbActivo.Checked,
+                    p_id_estado = rbActivo.Checked ? 1 : 2
+                });
+                MessageBox.Show("Bodega guardada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar la bodega: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Close();
+            }
         }
     }
 }
