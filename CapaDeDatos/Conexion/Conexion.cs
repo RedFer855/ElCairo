@@ -8,7 +8,7 @@ using Supabase;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
-
+using System.Configuration;
 
 
 namespace CapaDeDatos.Datos
@@ -25,9 +25,11 @@ namespace CapaDeDatos.Datos
                 return _supabaseClient;
             }
 
-            Env.Load();
+            string supabaseUrl = ConfigurationManager.AppSettings["SupabaseUrl"];
+            string supabaseKey = ConfigurationManager.AppSettings["SupabaseKey"];
+            /*Env.Load();
             string supabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL");
-            string supabaseKey = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+            string supabaseKey = Environment.GetEnvironmentVariable("SUPABASE_KEY");*/
 
             if (string.IsNullOrEmpty(supabaseUrl) || string.IsNullOrEmpty(supabaseKey))
             {
