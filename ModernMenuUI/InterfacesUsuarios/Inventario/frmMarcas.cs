@@ -39,10 +39,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             _marcaRepositorio = new MarcaRepositorio();
             _gestorRealtime = new GestorRealtime<Marca>();
 
-            // Configuración específica de Marcas
-            btnAgregarMarca.Visible = false;
-            btnModificarMarca.Visible = false;
-
             ConfigurarRealtime();
         }
 

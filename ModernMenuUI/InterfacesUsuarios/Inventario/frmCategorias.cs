@@ -59,9 +59,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             ConfigurarFormulario();
             _categoriaRepositorio = new CategoriaRepositorio();
             _gestorRealtime = new GestorRealtime<Categoria>();
-
-            btnAgregarCategoria.Visible = false;
-            btnModificarCategoria.Visible = false;
             if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
 
             ConfigurarRealtime();

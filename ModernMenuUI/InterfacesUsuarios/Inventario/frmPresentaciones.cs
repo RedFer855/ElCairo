@@ -2,7 +2,7 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
-using ModernMenuUI.ServiciosUI; // Necesario para BuscadorInteractivo
+using ModernMenuUI.ServiciosUI; 
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,11 +17,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         #region 1. Campos y Dependencias
         private readonly PresentacionRepositorio _presentacionRepositorio;
         private readonly GestorRealtime<Presentacion> _gestorRealtime;
-
-        // Agregamos el BuscadorInteractivo
         private BuscadorInteractivo<Presentacion> _buscadorCtrl;
-
-        // Lista maestra en memoria
         private List<Presentacion> _listaCompletaPresentaciones = new List<Presentacion>();
 
         private Presentacion _presentacionSeleccionada;
@@ -36,10 +32,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             _presentacionRepositorio = new PresentacionRepositorio();
             _gestorRealtime = new GestorRealtime<Presentacion>();
-
-            // Configuración visual por defecto (se mantiene tu lógica original de ocultar botones)
-            btnAgregarPresentacion.Visible = false;
-            btnModificarPresentacion.Visible = false;
             if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
 
             ConfigurarRealtime();

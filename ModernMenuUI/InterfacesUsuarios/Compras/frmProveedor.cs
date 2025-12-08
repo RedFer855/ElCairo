@@ -51,6 +51,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         /// </summary>
         public Proveedor ProveedorSeleccionado { get; private set; }
 
+        private bool _modoForm = false;
+
         #endregion
 
         #region 2. Constructores
@@ -73,11 +75,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         /// Inicializa una nueva instancia de <see cref="frmProveedor"/> en modo selección (diálogo).
         /// </summary>
         /// <param name="tipo">Parámetro que indica el modo; se mantiene para compatibilidad con la sobrecarga.</param>
-        public frmProveedor(bool tipo)
+        public frmProveedor(bool _modoForm)
         {
             InitializeComponent();
             ConfigurarFormulario();
-
+            this._modoForm = _modoForm; 
             _repositorioProveedor = new ProveedorRepositorio();
             _gestorRealtime = new GestorRealtime<Proveedor>();
 
@@ -320,13 +322,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         /// </summary>
         private void dgvProveedores_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvProveedores.SelectedRows.Count > 0)
+            if (_modoForm == true)
             {
-                _proveedorSeleccionadoInterno = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
-            }
-            else
-            {
-                _proveedorSeleccionadoInterno = null;
+                if (dgvProveedores.SelectedRows.Count > 0)
+                {
+                    _proveedorSeleccionadoInterno = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
+                }
+                else
+                {
+                    _proveedorSeleccionadoInterno = null;
+                }
+
             }
         }
 

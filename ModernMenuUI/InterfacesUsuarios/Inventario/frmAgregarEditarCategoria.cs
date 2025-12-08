@@ -2,13 +2,6 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
@@ -16,23 +9,29 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
     public partial class frmAgregarEditarCategoria : Form
     {
         private Categoria _categoriaSeleccionada;
+
+        /// <summary>
+        /// Inicializa el formulario para agregar una nueva categoría.
+        /// </summary>
         public frmAgregarEditarCategoria()
         {
             InitializeComponent();
             btnGuardarCategoria.Visible = true;
             lblNombreModulo.Text = "AGREGAR CATEGORÍA";
         }
+
+        /// <summary>
+        /// Inicializa el formulario para editar una categoría existente.
+        /// </summary>
+        /// <param name="categoriaParaEditar">Objeto categoría que será editado.</param>
         public frmAgregarEditarCategoria(Categoria categoriaParaEditar)
         {
             InitializeComponent();
-
             _categoriaSeleccionada = categoriaParaEditar;
 
-            // Cargar campos
             txtNombreCategoria.Text = _categoriaSeleccionada.NombreCategoria;
             txtDescripcionCategoria.Text = _categoriaSeleccionada.DescripcionCategoria;
 
-            // Estado
             if (_categoriaSeleccionada.EstadoCategoria)
                 rbActivo.Checked = true;
             else
@@ -41,6 +40,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             lblNombreModulo.Text = "EDITAR CATEGORÍA";
         }
 
+        /// <summary>
+        /// Valida los datos ingresados y guarda o actualiza la categoría.
+        /// </summary>
         private async void btnGuardarCategoria_Click(object sender, EventArgs e)
         {
             try
@@ -59,13 +61,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 if (!rbActivo.Checked && !rbInactivo.Checked)
                 {
-                    MessageBox.Show("Debe seleccionar un estado.", "Validación",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Debe seleccionar un estado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
 
                 btnGuardarCategoria.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
@@ -73,24 +74,19 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 if (_categoriaSeleccionada == null)
                 {
                     categoriaTemp.IdEstado = rbInactivo.Checked ? 2 : 1;
-
                     await CategoriaRepositorio.InsertarCategoria(categoriaTemp);
 
-                    MessageBox.Show("Categoría guardada correctamente.",
-                                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Categoría guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-
                     categoriaTemp.IdCategoria = _categoriaSeleccionada.IdCategoria;
-
                     categoriaTemp.IdEstado = rbInactivo.Checked ? 2 : 1;
                     categoriaTemp.EstadoCategoria = rbActivo.Checked;
 
                     await CategoriaRepositorio.ActualizarCategoria(categoriaTemp);
 
-                    MessageBox.Show("Categoría actualizada correctamente.",
-                                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Categoría actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 this.DialogResult = DialogResult.OK;
@@ -98,8 +94,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar/actualizar: " + ex.Message,
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar o actualizar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -108,22 +103,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
-        private void frmAgregarEditarCategoria_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Cierra el formulario sin realizar cambios.
+        /// </summary>
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Habilita el botón de guardar cuando se desea modificar una categoría.
+        /// </summary>
         private void btnModificarCategoria_Click(object sender, EventArgs e)
         {
             btnGuardarCategoria.Visible = true;
             btnModificarCategoria.Visible = false;
         }
-
-       
     }
 }

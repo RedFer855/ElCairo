@@ -297,14 +297,14 @@
             // 
             // btnModificarPresentacion
             // 
-            btnModificarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
+            btnModificarPresentacion.BackColor = Color.FromArgb(148, 168, 187);
             btnModificarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnModificarPresentacion.ForeColor = SystemColors.ButtonFace;
             btnModificarPresentacion.Location = new Point(189, 3);
             btnModificarPresentacion.Name = "btnModificarPresentacion";
-            btnModificarPresentacion.Size = new Size(180, 44);
+            btnModificarPresentacion.Size = new Size(149, 44);
             btnModificarPresentacion.TabIndex = 36;
-            btnModificarPresentacion.Text = "Modificar Presentación";
+            btnModificarPresentacion.Text = "Ver Presentación";
             btnModificarPresentacion.UseVisualStyleBackColor = false;
             btnModificarPresentacion.Click += btnModificarPresentacion_Click;
             // 
@@ -313,7 +313,7 @@
             btnSeleccionarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
             btnSeleccionarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSeleccionarPresentacion.ForeColor = SystemColors.ButtonFace;
-            btnSeleccionarPresentacion.Location = new Point(375, 3);
+            btnSeleccionarPresentacion.Location = new Point(344, 3);
             btnSeleccionarPresentacion.Name = "btnSeleccionarPresentacion";
             btnSeleccionarPresentacion.Size = new Size(200, 44);
             btnSeleccionarPresentacion.TabIndex = 38;
@@ -326,7 +326,7 @@
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = SystemColors.ButtonFace;
-            btnSalir.Location = new Point(581, 3);
+            btnSalir.Location = new Point(550, 3);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(91, 44);
             btnSalir.TabIndex = 37;
