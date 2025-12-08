@@ -249,7 +249,8 @@
             txtDireccion.Margin = new Padding(3, 2, 3, 2);
             txtDireccion.Multiline = true;
             txtDireccion.Name = "txtDireccion";
-            txtDireccion.Size = new Size(300, 54);
+            txtDireccion.ScrollBars = ScrollBars.Vertical;
+            txtDireccion.Size = new Size(300, 80);
             txtDireccion.TabIndex = 6;
             // 
             // groupBox1
@@ -258,11 +259,11 @@
             groupBox1.Controls.Add(rbdActivo);
             groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(100, 228);
+            groupBox1.Location = new Point(100, 239);
             groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(187, 55);
+            groupBox1.Size = new Size(187, 44);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
@@ -306,7 +307,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(87, 99, 110);
-            label5.Location = new Point(30, 243);
+            label5.Location = new Point(36, 257);
             label5.Name = "label5";
             label5.Size = new Size(57, 18);
             label5.TabIndex = 18;

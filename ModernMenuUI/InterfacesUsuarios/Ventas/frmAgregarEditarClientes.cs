@@ -17,7 +17,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             _clienteActual = null;
             if (habilitarCorreo) txtCorreo.ReadOnly = false;
 
-            // MAPEO DE PERMISOS PARA AGREGAR
             btnGuardarCliente.Tag = "insert_clientes";
         }
 

@@ -16,6 +16,7 @@ namespace ModernMenuUI
 {
     public partial class frmClientes : Form
     {
+        private readonly bool _modoSeleccion = false;
         private readonly ClienteRepositorio _clienteRepositorio;
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos;
         private readonly GestorRealtime<Cliente> _gestorRealtime;
@@ -23,10 +24,38 @@ namespace ModernMenuUI
         private BuscadorInteractivo<Cliente> _buscadorCtrl;
         private List<Cliente> _listaMaestraClientes = new List<Cliente>();
         private Cliente _clienteSeleccionado;
+        public Cliente _clienteSeleccionadoFinal;
 
         public frmClientes()
         {
             InitializeComponent();
+
+            FormBorderStyle = FormBorderStyle.None;
+            _clienteRepositorio = new ClienteRepositorio();
+            _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
+            _gestorRealtime = new GestorRealtime<Cliente>();
+
+            dgvClientes.AutoGenerateColumns = false;
+            dgvClientes.ActivarDobleBuffer();
+            dgvClientes.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 241);
+
+            RegistrarBotonesConPermisos();
+            _servicioPermisos.AplicarPermisos();
+
+            ConfigurarEventosUnificados();
+
+            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
+            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+
+            this.Load += frmClientes_Load;
+            this.FormClosing += frmClientes_FormClosing;
+        }
+
+        public frmClientes(bool _modoSeleccion)
+        {
+            InitializeComponent();
+            this._modoSeleccion = _modoSeleccion;
+            btnSeleccionarCliente.Visible = _modoSeleccion;
 
             _clienteRepositorio = new ClienteRepositorio();
             _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
@@ -204,6 +233,35 @@ namespace ModernMenuUI
         {
             clsAnmaciones.NombreMenuPrincipal();
             this.Close();
+        }
+
+        private void btnSeleccionarCliente_Click(object sender, EventArgs e)
+        {
+            if (_clienteSeleccionado == null)
+            {
+                MessageBox.Show("Seleccione un cliente de la tabla.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            _clienteSeleccionadoFinal = _clienteSeleccionado;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void dgvClientes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_modoSeleccion == true)
+            {
+                if (_clienteSeleccionado == null)
+                {
+                    MessageBox.Show("Seleccione un cliente de la tabla.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                _clienteSeleccionadoFinal = _clienteSeleccionado;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
     }
 }
