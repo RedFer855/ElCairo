@@ -1,13 +1,13 @@
-﻿using CapaDeDatos.Datos; // Para Conexion
+﻿using CapaDeDatos.Datos; // Para Conexion a Supabase
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Repositorios;
-using CapaServiciosSeguridadValidacion; // Para el monitor de red
+using CapaServiciosSeguridadValidacion; // Para ServicioVerificacionConexion
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Usuarios;
-using Supabase.Realtime; // Para Realtime
+using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics; // Para Debug.WriteLine
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,55 +15,93 @@ using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace ModernMenuUI
 {
+    /// <summary>
+    /// Formulario encargado de mostrar, actualizar y editar usuarios del sistema.
+    /// 
+    /// Características principales:
+    /// ✔ Carga de usuarios desde Supabase  
+    /// ✔ Realtime: detección de INSERT/UPDATE/DELETE  
+    /// ✔ Reconexión automática si se pierde el Internet  
+    /// ✔ Edición de usuarios mediante frmAgregarEditarUsuario  
+    /// ✔ DataGridView protegido contra autogeneración de columnas  
+    /// </summary>
     public partial class frmUsuario : Form
     {
+        // -------------------------------------------------------------
+        // 1. CAMPOS PRIVADOS
+        // -------------------------------------------------------------
 
+        /// <summary>Repositorio de acceso a datos de usuarios.</summary>
         private readonly UsuarioRepositorio _usuarioRepo;
+
+        /// <summary>Usuario actualmente seleccionado en el DataGridView.</summary>
         private Usuario _usuarioSeleccionado = null;
 
+        /// <summary>Monitor que detecta cambios de conectividad de red.</summary>
         private readonly ServicioVerificacionConexion _monitorConexion = new();
+
+        /// <summary>Cliente activo de Supabase (Realtime + PostgREST).</summary>
         private Supabase.Client? _supabaseClient;
+
+        /// <summary>Canal Realtime para escuchar cambios en la tabla Usuario.</summary>
         private RealtimeChannel? _canalRealtime;
 
 
+        // -------------------------------------------------------------
+        // 2. CONSTRUCTOR
+        // -------------------------------------------------------------
         public frmUsuario()
         {
             InitializeComponent();
 
             _usuarioRepo = new UsuarioRepositorio();
 
-            //Usamos 'dgvProductos' (el nombre de tu control)
+            // Configuración del DataGridView (evita columnas duplicadas o desordenadas)
             dgvUsuario.AutoGenerateColumns = false;
 
-            // 3. CONECTAMOS LOS EVENTOS MANUALMENTE
+            // Registro manual de eventos del formulario
             this.dgvUsuario.SelectionChanged += new System.EventHandler(this.dgvProductos_SelectionChanged);
             this.Load += new System.EventHandler(this.frmUsuario_Load);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUsuario_FormClosing);
+            this.FormClosing += new FormClosingEventHandler(this.frmUsuario_FormClosing);
         }
 
-        // --- 4. CICLO DE VIDA DEL FORMULARIO ---
 
+        // -------------------------------------------------------------
+        // 3. LOAD Y FORM CLOSING
+        // -------------------------------------------------------------
+
+        /// <summary>
+        /// Evento Load del formulario.
+        /// Inicializa:
+        /// - Monitor de red
+        /// - Carga inicial de datos
+        /// - Suscripción Realtime
+        /// </summary>
         private async void frmUsuario_Load(object sender, EventArgs e)
         {
-            // Conectar el monitor de red
             _monitorConexion.EstadoDeRedCambiado += MonitorConexion_EstadoDeRedCambiado;
 
-            // Carga inicial
             await CargarDatosAsync();
-
-            // Suscripción inicial a Realtime
             await IniciarSuscripcionAsync();
         }
 
+        /// <summary>
+        /// Limpia recursos antes de cerrar el formulario.
+        /// </summary>
         private async void frmUsuario_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Limpieza fundamental
             _monitorConexion.EstadoDeRedCambiado -= MonitorConexion_EstadoDeRedCambiado;
             await DesecharSuscripcionAsync();
         }
 
-        // --- 5. LÓGICA DE CARGA DE DATOS ---
 
+        // -------------------------------------------------------------
+        // 4. CARGA DE DATOS
+        // -------------------------------------------------------------
+
+        /// <summary>
+        /// Carga todos los usuarios desde Supabase respetando timeout.
+        /// </summary>
         private async Task CargarDatosAsync(CancellationToken ct = default)
         {
             try
@@ -73,24 +111,27 @@ namespace ModernMenuUI
                 using (var cts = CancellationTokenSource.CreateLinkedTokenSource(ct))
                 {
                     cts.CancelAfter(TimeSpan.FromSeconds(10));
-                    List<Usuario> listaDeUsuarios = await _usuarioRepo.ObtenerTodosLosUsuarios(cts.Token);
+
+                    List<Usuario> listaDeUsuarios =
+                        await _usuarioRepo.ObtenerTodosLosUsuarios(cts.Token);
 
                     dgvUsuario.DataSource = null;
                     dgvUsuario.DataSource = listaDeUsuarios;
                 }
 
                 if (dgvUsuario.Rows.Count > 0)
-                {
                     dgvUsuario.ClearSelection();
-                }
             }
             catch (OperationCanceledException)
             {
-                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).", "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).",
+                                "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al cargar datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message,
+                                "Error al cargar datos",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -98,8 +139,17 @@ namespace ModernMenuUI
             }
         }
 
-        // --- 6. LÓGICA DE RED Y REALTIME ---
 
+        // -------------------------------------------------------------
+        // 5. MONITOR DE RED Y REALTIME
+        // -------------------------------------------------------------
+
+        /// <summary>
+        /// Ejecutado cuando cambia el estado de la red.
+        /// Si vuelve el Internet:
+        ///   - Recarga datos
+        ///   - Reconecta Realtime
+        /// </summary>
         private async void MonitorConexion_EstadoDeRedCambiado(NetworkStatus status)
         {
             if (!this.IsHandleCreated || this.IsDisposed)
@@ -113,30 +163,44 @@ namespace ModernMenuUI
                 this.BeginInvoke((MethodInvoker)(async () =>
                 {
                     if (this.IsDisposed) return;
+
                     Debug.WriteLine("Red recuperada. Recargando datos y Realtime...");
+
                     await CargarDatosAsync();
                     await IniciarSuscripcionAsync();
                 }));
             }
         }
 
+        /// <summary>
+        /// Crea la suscripción Realtime a la tabla Usuario.
+        /// Detecta automáticamente:
+        ///  - INSERT
+        ///  - UPDATE
+        ///  - DELETE
+        /// </summary>
         private async Task IniciarSuscripcionAsync()
         {
-            await DesecharSuscripcionAsync(); // Limpia la anterior
+            await DesecharSuscripcionAsync(); // Limpia suscripción previa
+
             try
             {
                 _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
 
-                _canalRealtime = await _supabaseClient.From<Usuario>()
+                _canalRealtime = await _supabaseClient
+                    .From<Usuario>()
                     .On(ListenType.All, (sender, change) =>
                     {
                         try
                         {
-                            if (this == null || this.IsDisposed || !this.IsHandleCreated) return;
+                            if (this == null || this.IsDisposed || !this.IsHandleCreated)
+                                return;
 
+                            // Se reenfila al hilo de UI
                             this.BeginInvoke((MethodInvoker)(async () =>
                             {
                                 if (this.IsDisposed) return;
+
                                 Debug.WriteLine($"Cambio detectado (Usuarios): {change.Event}. Recargando...");
                                 await CargarDatosAsync();
                             }));
@@ -146,6 +210,7 @@ namespace ModernMenuUI
                             Debug.WriteLine($"Error en evento Realtime: {ex.Message}");
                         }
                     });
+
                 Debug.WriteLine("Suscripción a Realtime (Usuarios) creada.");
             }
             catch (Exception ex)
@@ -154,6 +219,9 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Cancela la suscripción anterior de Realtime para evitar fugas de memoria.
+        /// </summary>
         private async Task DesecharSuscripcionAsync()
         {
             if (_canalRealtime != null)
@@ -167,11 +235,15 @@ namespace ModernMenuUI
                 {
                     Debug.WriteLine($"Error al desechar suscripción: {ex.Message}");
                 }
+
                 _canalRealtime = null;
             }
         }
 
-        // --- 7. LÓGICA DE BOTONES Y GRID (Tu código original) ---
+
+        // -------------------------------------------------------------
+        // 6. BOTONES Y GRID
+        // -------------------------------------------------------------
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
@@ -179,6 +251,9 @@ namespace ModernMenuUI
             this.Close();
         }
 
+        /// <summary>
+        /// Actualiza el usuario seleccionado cuando el grid cambia de fila.
+        /// </summary>
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvUsuario.SelectedRows.Count > 0)
@@ -192,7 +267,9 @@ namespace ModernMenuUI
             }
         }
 
-
+        /// <summary>
+        /// Abre el editor de usuario con los permisos y restricciones correctas.
+        /// </summary>
         private async void btnEditarUsuarios_Click(object sender, EventArgs e)
         {
             var client = await Conexion.GetClientAsync();
@@ -211,11 +288,11 @@ namespace ModernMenuUI
                                 MessageBoxIcon.Warning);
                 return;
             }
-            else
-            {
-                frmAgregarEditarUsuario usuario = new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
-                usuario.ShowDialog();
-            }
+
+            frmAgregarEditarUsuario usuario =
+                new frmAgregarEditarUsuario(_usuarioSeleccionado, usuarioActualSistema);
+
+            usuario.ShowDialog();
         }
     }
 }

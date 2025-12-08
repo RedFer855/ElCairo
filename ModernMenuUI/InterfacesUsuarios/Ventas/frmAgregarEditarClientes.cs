@@ -7,24 +7,50 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Ventas
 {
+    /// <summary>
+    /// Formulario para agregar o editar clientes.
+    /// Controla validaciones, permisos, bloqueo de campos,
+    /// y operaciones CRUD contra el repositorio de clientes.
+    /// </summary>
     public partial class frmAgregarEditarClientes : Form
     {
+        /// <summary>
+        /// Si es null → modo AGREGAR.
+        /// Si tiene valor → modo EDITAR.
+        /// </summary>
         private Cliente _clienteActual;
 
+        // ============================================================
+        //  CONSTRUCTORES
+        // ============================================================
+
+        /// <summary>
+        /// Constructor para AGREGAR un cliente.
+        /// </summary>
+        /// <param name="habilitarCorreo">Permite habilitar el campo correo si se desea.</param>
         public frmAgregarEditarClientes(bool habilitarCorreo = false)
         {
             InitializeComponent();
             _clienteActual = null;
-            if (habilitarCorreo) txtCorreo.ReadOnly = false;
 
+            // Permite activar el correo opcionalmente
+            if (habilitarCorreo)
+                txtCorreo.ReadOnly = false;
+
+            // Permiso asignado para GUARDAR nuevos clientes
             btnGuardarCliente.Tag = "insert_clientes";
         }
 
+        /// <summary>
+        /// Constructor para EDITAR un cliente existente.
+        /// Bloquea campos hasta presionar "Modificar".
+        /// </summary>
         public frmAgregarEditarClientes(Cliente cliente)
         {
             InitializeComponent();
             _clienteActual = cliente;
 
+            // Asociamos eventos de clic para bloquear elementos hasta activar el modo edición
             txtDni.Click += TextBox_ReadOnlyClick;
             txtRtn.Click += TextBox_ReadOnlyClick;
             txtNombre.Click += TextBox_ReadOnlyClick;
@@ -37,18 +63,29 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
 
             btnVolver.Focus();
 
-            // MAPEO DE PERMISOS PARA EDITAR
+            // Permisos asignados para edición
             btnModificar.Tag = "update_clientes";
             btnGuardarCliente.Tag = "update_clientes";
         }
 
+
+        // ============================================================
+        //  GUARDAR CLIENTE (AGREGAR / EDITAR)
+        // ============================================================
+
+        /// <summary>
+        /// Maneja el guardado tanto para agregar como para editar un cliente.
+        /// Aplica validación, guarda datos y maneja errores PostgreSQL.
+        /// </summary>
         private async void btnGuardarCliente_Click(object sender, EventArgs e)
         {
             try
             {
                 if (_clienteActual == null)
                 {
-                    // =========== AGREGAR ===========
+                    // ----------------------------------------------------
+                    // AGREGAR CLIENTE
+                    // ----------------------------------------------------
                     Cliente nuevoCliente = new Cliente
                     {
                         NombreCliente = txtNombre.Text.Trim(),
@@ -60,6 +97,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                         EstadoCliente = rbdActivo.Checked
                     };
 
+                    // Validación unificada
                     var validacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesClinte(nuevoCliente);
                     if (validacion.Error)
                     {
@@ -77,7 +115,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 }
                 else
                 {
-                    // =========== EDITAR ===========
+                    // ----------------------------------------------------
+                    // EDITAR CLIENTE EXISTENTE
+                    // ----------------------------------------------------
                     _clienteActual.NombreCliente = txtNombre.Text.Trim();
                     _clienteActual.DniCliente = txtDni.Text.Trim();
                     _clienteActual.RtnCliente = txtRtn.Text.Trim();
@@ -98,7 +138,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             {
                 string mensaje = ex.Message;
 
-                // Error PostgreSQL de clave duplicada (23505)
+                // ----------------------------------------------------
+                // Manejo de errores PostgreSQL (CODE 23505 → duplicado)
+                // ----------------------------------------------------
                 if (mensaje.Contains("23505"))
                 {
                     if (mensaje.Contains("dni_cliente"))
@@ -130,6 +172,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             }
         }
 
+
+        // ============================================================
+        //  LOAD DEL FORMULARIO
+        // ============================================================
+
+        /// <summary>
+        /// Carga datos al entrar en modo edición o prepara la UI para modo agregar.
+        /// </summary>
         private void frmAgregarEditarClientes_Load(object sender, EventArgs e)
         {
             if (_clienteActual != null)
@@ -146,6 +196,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 rbdActivo.Checked = _clienteActual.EstadoCliente;
                 rbdInactivo.Checked = !_clienteActual.EstadoCliente;
 
+                // Bloquear campos
                 txtDni.ReadOnly = true;
                 txtRtn.ReadOnly = true;
                 txtNombre.ReadOnly = true;
@@ -168,6 +219,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             }
         }
 
+
+        // ============================================================
+        //  CONTROL DE BLOQUEO DE CAMPOS
+        // ============================================================
+
         private void TextBox_ReadOnlyClick(object sender, EventArgs e)
         {
             TextBox tb = sender as TextBox;
@@ -185,13 +241,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             {
                 MessageBox.Show("Presione primero el botón Editar.",
                     "Estado bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 rb.Checked = !rb.Checked;
             }
         }
 
+
+        // ============================================================
+        //  BOTÓN MODIFICAR
+        // ============================================================
+
+        /// <summary>
+        /// Habilita la edición de los campos en modo EDITAR.
+        /// </summary>
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            // Habilitar edición
             txtDni.ReadOnly = false;
             txtRtn.ReadOnly = false;
             txtNombre.ReadOnly = false;
@@ -202,6 +266,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             rbdActivo.Enabled = true;
             rbdInactivo.Enabled = true;
 
+            // Se retiran validadores de clic de bloqueo
             rbdActivo.Click -= Estado_ReadOnlyClick;
             rbdInactivo.Click -= Estado_ReadOnlyClick;
 
@@ -209,6 +274,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             btnModificar.Visible = false;
             btnGuardarCliente.Visible = true;
         }
+
+
+        // ============================================================
+        //  BOTÓN VOLVER
+        // ============================================================
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
