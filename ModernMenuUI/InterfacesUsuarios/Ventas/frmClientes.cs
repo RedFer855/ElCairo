@@ -145,6 +145,7 @@ namespace ModernMenuUI
         private void txtBuscar_Leave(object sender, EventArgs e) => _buscadorCtrl.ManejarLeave();
         private void lstSugerencias_KeyDown(object sender, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) _buscadorCtrl.ManejarClickLista(); }
         private void btnBuscar_Click(object sender, EventArgs e) => _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) {_buscadorCtrl?.ManejarClickLista();}
 
         private void RefrescarGrid()
         {

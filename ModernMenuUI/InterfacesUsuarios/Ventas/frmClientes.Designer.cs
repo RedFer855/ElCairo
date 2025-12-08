@@ -380,6 +380,7 @@
             lstSugerencias.Size = new Size(410, 23);
             lstSugerencias.TabIndex = 40;
             lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
             lstSugerencias.KeyDown += lstSugerencias_KeyDown;
             // 
             // pnlLimpiarFiltros
