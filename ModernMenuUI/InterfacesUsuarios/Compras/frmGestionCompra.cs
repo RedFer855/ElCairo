@@ -399,6 +399,7 @@ namespace ModernMenuUI
             txtProducto.Text = null;
             dgvProductos.ClearSelection();
             txtPrecio.Text = null;
+            ActualizarTotales();
             ActualizarImagenCarrito();
         }
         #endregion
@@ -530,6 +531,30 @@ namespace ModernMenuUI
             }
         }
         #endregion
+
+        private void ActualizarTotales()
+        {
+            decimal subtotal = 0;
+
+            foreach (DataGridViewRow fila in dgvCarrito.Rows)
+            {
+                if (fila.Cells[2].Value != null && fila.Cells[3].Value != null)
+                {
+                    decimal precio = Convert.ToDecimal(fila.Cells[2].Value);
+                    int cantidad = Convert.ToInt32(fila.Cells[3].Value);
+
+                    subtotal += (precio * cantidad);
+                }
+            }
+
+            decimal impuesto = subtotal * 0.15m;
+
+            decimal total = subtotal + impuesto;
+
+            txtSubTotal.Text = subtotal.ToString("N2");
+            txtImpuesto.Text = impuesto.ToString("N2");
+            txtTotal.Text = total.ToString("N2");
+        }
 
         #region UI Helpers
         private void ActualizarImagenCarrito()

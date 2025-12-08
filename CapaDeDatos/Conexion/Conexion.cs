@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DotNetEnv;
+﻿using DotNetEnv;
 using Supabase;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 
@@ -26,8 +27,8 @@ namespace CapaDeDatos.Datos
             }
 
             Env.Load();
-            string supabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL");
-            string supabaseKey = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+            string supabaseUrl = ConfigurationManager.AppSettings["SUPABASE_URL"];
+            string supabaseKey = ConfigurationManager.AppSettings["SUPABASE_KEY"];
 
             if (string.IsNullOrEmpty(supabaseUrl) || string.IsNullOrEmpty(supabaseKey))
             {
