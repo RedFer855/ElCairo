@@ -1053,11 +1053,12 @@
             // 
             // panel5
             // 
+            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel5.BackColor = Color.FromArgb(148, 168, 187);
             panel5.Controls.Add(label1);
             panel5.Location = new Point(20, 10);
             panel5.Name = "panel5";
-            panel5.Size = new Size(759, 29);
+            panel5.Size = new Size(739, 29);
             panel5.TabIndex = 15;
             // 
             // label1
@@ -1188,6 +1189,7 @@
             // 
             // pbxCalculadora
             // 
+            pbxCalculadora.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pbxCalculadora.Image = Properties.Resources.calculadora;
             pbxCalculadora.Location = new Point(829, 22);
             pbxCalculadora.Margin = new Padding(10);

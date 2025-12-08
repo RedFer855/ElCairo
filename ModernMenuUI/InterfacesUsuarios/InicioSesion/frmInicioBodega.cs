@@ -39,23 +39,18 @@ namespace ModernMenuUI
 
             try
             {
-                // Puedes mostrar un pequeño mensaje o un spinner aquí
                 btnAcceder.Enabled = false;
 
                 bool success = await BodegaRepositorio.IniciarSesion(codbodega, contrasenia);
 
                 if (success)
                 {
-                    // Recuperar datos de la bodega logueada
                     var bodega = await BodegaRepositorio.ObtenerBodegaPorIdAsync(codbodega);
-
 
                     if (bodega != null)
                     {
                         ServicioSesionUsuario.AsignarBodegaActual(bodega);
                     }
-
-                    Bodega id_bodega = new Bodega();
 
                     Form formcarga = new frmPantallaDeCarga();
                     this.Visible = false;
@@ -65,13 +60,18 @@ namespace ModernMenuUI
                 {
                     lblMensajeError.Visible = true;
                     lblMensajeError.Text = "Código o contraseña incorrectos.";
-                    codbodega = "";
-                    contrasenia = "";
+
+                    // 🔥 Cambios solicitados
+                    txtCodigoBodega.Text = "CÓDIGO";
+                    txtContrasenia.Text = "CONTRASEÑA";
+                    txtContrasenia.UseSystemPasswordChar = false;
+                    txtCodigoBodega.Focus();
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Error al intentar iniciar sesión.", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                MessageBox.Show("Error al intentar iniciar sesión.", "Error",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
             finally
             {
