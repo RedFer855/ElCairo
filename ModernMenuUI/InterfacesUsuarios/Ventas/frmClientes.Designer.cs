@@ -36,6 +36,13 @@
             panel1 = new Panel();
             panel10 = new Panel();
             dgvClientes = new DataGridView();
+            Dni = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            PorcentajeGanancia = new DataGridViewTextBoxColumn();
+            Correo = new DataGridViewTextBoxColumn();
+            RTN = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            EstadoCliente = new DataGridViewCheckBoxColumn();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
@@ -52,13 +59,6 @@
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            Dni = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
-            Correo = new DataGridViewTextBoxColumn();
-            RTN = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            EstadoCliente = new DataGridViewCheckBoxColumn();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvClientes).BeginInit();
@@ -144,6 +144,79 @@
             dgvClientes.Size = new Size(704, 450);
             dgvClientes.TabIndex = 1;
             dgvClientes.SelectionChanged += dgvClientes_SelectionChanged;
+            // 
+            // Dni
+            // 
+            Dni.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Dni.DataPropertyName = "DniCliente";
+            Dni.HeaderText = "DNI";
+            Dni.MinimumWidth = 6;
+            Dni.Name = "Dni";
+            Dni.ReadOnly = true;
+            Dni.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.DataPropertyName = "NombreCliente";
+            dataGridViewTextBoxColumn2.FillWeight = 70F;
+            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 96;
+            // 
+            // PorcentajeGanancia
+            // 
+            PorcentajeGanancia.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            PorcentajeGanancia.DataPropertyName = "TelefonoCliente";
+            PorcentajeGanancia.FillWeight = 80F;
+            PorcentajeGanancia.HeaderText = "Teléfono";
+            PorcentajeGanancia.MinimumWidth = 6;
+            PorcentajeGanancia.Name = "PorcentajeGanancia";
+            PorcentajeGanancia.ReadOnly = true;
+            PorcentajeGanancia.Width = 101;
+            // 
+            // Correo
+            // 
+            Correo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Correo.DataPropertyName = "CorreoCliente";
+            Correo.HeaderText = "Correo";
+            Correo.MinimumWidth = 6;
+            Correo.Name = "Correo";
+            Correo.ReadOnly = true;
+            Correo.Width = 88;
+            // 
+            // RTN
+            // 
+            RTN.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RTN.DataPropertyName = "RtnCliente";
+            RTN.HeaderText = "RTN";
+            RTN.MinimumWidth = 6;
+            RTN.Name = "RTN";
+            RTN.ReadOnly = true;
+            RTN.Width = 72;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn4.DataPropertyName = "DireccionCliente";
+            dataGridViewTextBoxColumn4.FillWeight = 70F;
+            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
+            dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // EstadoCliente
+            // 
+            EstadoCliente.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoCliente.DataPropertyName = "EstadoCliente";
+            EstadoCliente.HeaderText = "Estado";
+            EstadoCliente.Name = "EstadoCliente";
+            EstadoCliente.ReadOnly = true;
+            EstadoCliente.Resizable = DataGridViewTriState.True;
+            EstadoCliente.SortMode = DataGridViewColumnSortMode.Automatic;
+            EstadoCliente.Width = 89;
             // 
             // panelBusqueda
             // 
@@ -288,7 +361,7 @@
             btnAgregarCliente.TabIndex = 22;
             btnAgregarCliente.Text = "Agregar Cliente";
             btnAgregarCliente.UseVisualStyleBackColor = false;
-            btnAgregarCliente.Click += btnCliente_Click;
+            btnAgregarCliente.Click += btnAgregarCliente_Click;
             // 
             // lstSugerencias
             // 
@@ -353,79 +426,6 @@
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(741, 52);
             flowLayoutPanel1.TabIndex = 42;
-            // 
-            // Dni
-            // 
-            Dni.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Dni.DataPropertyName = "DniCliente";
-            Dni.HeaderText = "DNI";
-            Dni.MinimumWidth = 6;
-            Dni.Name = "Dni";
-            Dni.ReadOnly = true;
-            Dni.Width = 70;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewTextBoxColumn2.DataPropertyName = "NombreCliente";
-            dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 96;
-            // 
-            // PorcentajeGanancia
-            // 
-            PorcentajeGanancia.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            PorcentajeGanancia.DataPropertyName = "TelefonoCliente";
-            PorcentajeGanancia.FillWeight = 80F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.MinimumWidth = 6;
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            PorcentajeGanancia.ReadOnly = true;
-            PorcentajeGanancia.Width = 101;
-            // 
-            // Correo
-            // 
-            Correo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Correo.DataPropertyName = "CorreoCliente";
-            Correo.HeaderText = "Correo";
-            Correo.MinimumWidth = 6;
-            Correo.Name = "Correo";
-            Correo.ReadOnly = true;
-            Correo.Width = 88;
-            // 
-            // RTN
-            // 
-            RTN.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            RTN.DataPropertyName = "RtnCliente";
-            RTN.HeaderText = "RTN";
-            RTN.MinimumWidth = 6;
-            RTN.Name = "RTN";
-            RTN.ReadOnly = true;
-            RTN.Width = 72;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn4.DataPropertyName = "DireccionCliente";
-            dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
-            dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // EstadoCliente
-            // 
-            EstadoCliente.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoCliente.DataPropertyName = "EstadoCliente";
-            EstadoCliente.HeaderText = "Estado";
-            EstadoCliente.Name = "EstadoCliente";
-            EstadoCliente.ReadOnly = true;
-            EstadoCliente.Resizable = DataGridViewTriState.True;
-            EstadoCliente.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoCliente.Width = 89;
             // 
             // frmClientes
             // 

@@ -10,15 +10,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
     public partial class frmAgregarEditarClientes : Form
     {
         private Cliente _clienteActual;
+
         public frmAgregarEditarClientes(bool habilitarCorreo = false)
         {
             InitializeComponent();
             _clienteActual = null;
-
-            // Si venimos desde "Agregar Cliente", habilitar correo
-            if (habilitarCorreo)
-                txtCorreo.ReadOnly = false;
+            if (habilitarCorreo) txtCorreo.ReadOnly = false;
         }
+
         public frmAgregarEditarClientes(Cliente cliente)
         {
             InitializeComponent();
@@ -31,18 +30,18 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             txtCorreo.Click += TextBox_ReadOnlyClick;
             txtDireccion.Click += TextBox_ReadOnlyClick;
 
+            rbdActivo.Click += Estado_ReadOnlyClick;
+            rbdInactivo.Click += Estado_ReadOnlyClick;
+
             btnVolver.Focus();
         }
 
         private async void btnGuardarCliente_Click(object sender, EventArgs e)
         {
-
             try
             {
-
                 if (_clienteActual == null)
                 {
-                    // === AGREGAR ===
                     Cliente nuevoCliente = new Cliente
                     {
                         NombreCliente = txtNombre.Text.Trim(),
@@ -55,7 +54,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                     };
 
                     var validacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesClinte(nuevoCliente);
-
                     if (validacion.Error)
                     {
                         MessageBox.Show(validacion.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -64,15 +62,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                     }
 
                     await ClienteRepositorio.InsertarCliente(nuevoCliente);
-
-                    MessageBox.Show("¡Cliente guardado exitosamente!", "Éxito",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    MessageBox.Show("¡Cliente guardado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
                 else
                 {
-                    // === EDITAR ===
                     _clienteActual.NombreCliente = txtNombre.Text.Trim();
                     _clienteActual.DniCliente = txtDni.Text.Trim();
                     _clienteActual.RtnCliente = txtRtn.Text.Trim();
@@ -82,25 +76,19 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                     _clienteActual.EstadoCliente = rbdActivo.Checked;
 
                     await ClienteRepositorio.ActualizarCliente(_clienteActual);
-
-                    MessageBox.Show("¡Cliente actualizado exitosamente!", "Éxito",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    MessageBox.Show("¡Cliente actualizado exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar el cliente: {ex.Message}",
-                    "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar el cliente: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                if (!this.IsDisposed)
-                    btnGuardarCliente.Enabled = true;
+                if (!this.IsDisposed) btnGuardarCliente.Enabled = true;
             }
         }
-
 
         private void frmAgregarEditarClientes_Load(object sender, EventArgs e)
         {
@@ -118,13 +106,15 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 rbdActivo.Checked = _clienteActual.EstadoCliente;
                 rbdInactivo.Checked = !_clienteActual.EstadoCliente;
 
-                // DESHABILITAR
                 txtDni.ReadOnly = true;
                 txtRtn.ReadOnly = true;
                 txtNombre.ReadOnly = true;
                 txtTelefono.ReadOnly = true;
                 txtCorreo.ReadOnly = true;
                 txtDireccion.ReadOnly = true;
+
+                rbdActivo.Enabled = true;
+                rbdInactivo.Enabled = true;
 
                 btnGuardarCliente.Visible = false;
                 btnModificar.Visible = true;
@@ -133,18 +123,27 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             else
             {
                 clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "AGREGAR CLIENTE NUEVO");
-
                 btnGuardarCliente.Visible = true;
                 btnModificar.Visible = false;
             }
         }
+
         private void TextBox_ReadOnlyClick(object sender, EventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null && tb.ReadOnly)
             {
-                MessageBox.Show("Presione primero el botón Editar.",
-                    "Campo deshabilitado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Presione primero el botón Editar.", "Campo deshabilitado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void Estado_ReadOnlyClick(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb != null && btnModificar.Visible == true)
+            {
+                MessageBox.Show("Presione primero el botón Editar.", "Estado bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                rb.Checked = !rb.Checked;
             }
         }
 
@@ -160,11 +159,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             rbdActivo.Enabled = true;
             rbdInactivo.Enabled = true;
 
+            rbdActivo.Click -= Estado_ReadOnlyClick;
+            rbdInactivo.Click -= Estado_ReadOnlyClick;
+
             btnModificar.Enabled = false;
             btnModificar.Visible = false;
             btnGuardarCliente.Visible = true;
         }
-
     }
 }
-
