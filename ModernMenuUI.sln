@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaServiciosSeguridadValid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDeAplicacion", "CapaDeAplicacion\CapaDeAplicacion.csproj", "{C47E1522-AEFA-4E64-8C43-6B8E3C7688F3}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupElCairo", "..\..\..\Documents\Visual Studio 2022\SetupElCairo.vdproj", "{E99CBFB1-5027-5CA7-7CAC-6712034C1736}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,8 @@ Global
 		{C47E1522-AEFA-4E64-8C43-6B8E3C7688F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C47E1522-AEFA-4E64-8C43-6B8E3C7688F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C47E1522-AEFA-4E64-8C43-6B8E3C7688F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E99CBFB1-5027-5CA7-7CAC-6712034C1736}.Debug|Any CPU.ActiveCfg = Debug
+		{E99CBFB1-5027-5CA7-7CAC-6712034C1736}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

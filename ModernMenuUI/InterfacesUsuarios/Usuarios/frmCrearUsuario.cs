@@ -61,8 +61,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
             {
                 btnGuardarEmpleado.Enabled = false;
 
+                if (_usuarioActual == null)
+                {
+                    MessageBox.Show("No hay un empleado cargado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 string correo = txtCorreo.Text.Trim();
                 string contra = txtContrasenia.Text.Trim();
+
+                if (cmbRol.SelectedValue == null)
+                {
+                    MessageBox.Show("Debe seleccionar un rol.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 int rolSeleccionado = (int)cmbRol.SelectedValue;
                 int idEmpleado = _usuarioActual.Id;
 
@@ -70,26 +83,31 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
                 if (v1.Error)
                 {
                     MessageBox.Show(v1.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    btnGuardarEmpleado.Enabled = true;
                     return;
                 }
 
                 UsuarioRepositorio repo = new UsuarioRepositorio();
                 var client = await Conexion.GetClientAsync();
-                var sessionOriginal = client.Auth.CurrentSession;
-                await repo.RegistrarUsuario(correo, contra);
 
-                await client.Auth.SetSession(
-                            sessionOriginal.AccessToken,
-                            sessionOriginal.RefreshToken
-                             );
-
-                if (_usuarioActual == null)
+                if (client == null || client.Auth == null)
                 {
-                    MessageBox.Show("No se pudo registrar el usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error de conexión con Supabase.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
+                // Guardar sesión actual SOLO si existe
+                var sessionOriginal = client.Auth.CurrentSession;
+
+                await repo.RegistrarUsuario(correo, contra);
+
+                // Restaurar sesión solo si existe
+                if (sessionOriginal != null)
+                {
+                    await client.Auth.SetSession(
+                        sessionOriginal.AccessToken,
+                        sessionOriginal.RefreshToken
+                    );
+                }
 
                 var result = await client.Rpc("crear_usuario_empleado", new
                 {
@@ -98,46 +116,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
                     p_rol = rolSeleccionado
                 });
 
-                MessageBox.Show(
-                    "Usuario creado correctamente.",
-                    "Usuario Creado",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-
+                MessageBox.Show("Usuario creado correctamente.", "Usuario Creado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             catch (Exception ex)
             {
-                var client = await Conexion.GetClientAsync();
-
-                var sessionOriginal = client.Auth.CurrentSession;
-
-                await client.Auth.SetSession(
-                            sessionOriginal.AccessToken,
-                            sessionOriginal.RefreshToken
-                             );
-
-                if (ex.Message.Contains("\"code\":422") || ex.Message.Contains("\"error_code\":\"user_already_exists\""))
-                {
-                    MessageBox.Show(
-                        "El usuario ya existe en la base de datos.\n Por favor seleccione uno diferente",
-                        "Usuario duplicado",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation
-                    );
-                }
-                else
-                {
-                    // Otros errores
-                    MessageBox.Show(
-                        "Ocurrió un error: " + ex.Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
-                }
-                //MessageBox.Show($"Error al guardar el usuario: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ocurrió un error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

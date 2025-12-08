@@ -488,6 +488,7 @@ namespace ModernMenuUI
                             p_id_producto = codigoBarra,
                             p_cantidad_ingresar = cantidadIngresar,
                             p_precio_nuevo = precioNuevo,
+                            p_id_bodega = idBodega   
                         };
 
                         await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
@@ -504,8 +505,6 @@ namespace ModernMenuUI
                         MessageBox.Show("La función no retornó un id de compra. Puede haber ocurrido un error interno.");
                         return;
                     }
-
-                    //await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
 
                     MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
