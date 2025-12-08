@@ -981,6 +981,12 @@ namespace ModernMenuUI
             servicioImpresion.ImprimirTicket(factura, logo);
             */
         }
+
+        private void btnBuscarCliente_Click(object sender, EventArgs e)
+        {
+            frmClientes _buscarClienteForm = new frmClientes();  
+            _buscarClienteForm.ShowDialog();
+        }
     }
 }
 

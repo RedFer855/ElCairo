@@ -370,7 +370,7 @@
             lstSugerencias.ForeColor = Color.DimGray;
             lstSugerencias.FormattingEnabled = true;
             lstSugerencias.ItemHeight = 19;
-            lstSugerencias.Location = new Point(30, 47);
+            lstSugerencias.Location = new Point(30, 46);
             lstSugerencias.MaximumSize = new Size(800, 400);
             lstSugerencias.MinimumSize = new Size(165, 23);
             lstSugerencias.Name = "lstSugerencias";

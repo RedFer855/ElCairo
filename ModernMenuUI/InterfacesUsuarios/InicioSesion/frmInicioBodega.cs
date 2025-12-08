@@ -3,12 +3,8 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,14 +17,23 @@ namespace ModernMenuUI
             InitializeComponent();
             this.Shown += (s, e) => txtCodigoBodega.Focus();
         }
+
         public static class SessionData
         {
             public static int IdBodegaActual { get; set; }
         }
-        private void LimpiarDatos()
+
+        private void ResetearCamposLogin()
         {
-            txtContrasenia.Text = null;
-            txtCodigoBodega.Text = null;
+            txtCodigoBodega.UseSystemPasswordChar = false;
+            txtContrasenia.UseSystemPasswordChar = false;
+
+            txtCodigoBodega.Text = "CÓDIGO";
+            txtContrasenia.Text = "CONTRASEÑA";
+
+            txtCodigoBodega.SelectionStart = 0;
+            txtCodigoBodega.SelectionLength = 0;
+
             txtCodigoBodega.Focus();
         }
 
@@ -36,6 +41,21 @@ namespace ModernMenuUI
         {
             string codbodega = txtCodigoBodega.Text.Trim();
             string contrasenia = txtContrasenia.Text.Trim();
+
+            // 🔥 VALIDACIÓN: asegurar que no use placeholders como datos reales
+            bool codigoVacio = codbodega == "" || codbodega == "CÓDIGO";
+            bool passVacia = contrasenia == "" || contrasenia == "CONTRASEÑA";
+
+            if (codigoVacio || passVacia)
+            {
+                MessageBox.Show(
+                    "Debe llenar todos los campos para iniciar sesión.",
+                    "Campos incompletos",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
 
             try
             {
@@ -48,9 +68,7 @@ namespace ModernMenuUI
                     var bodega = await BodegaRepositorio.ObtenerBodegaPorIdAsync(codbodega);
 
                     if (bodega != null)
-                    {
                         ServicioSesionUsuario.AsignarBodegaActual(bodega);
-                    }
 
                     Form formcarga = new frmPantallaDeCarga();
                     this.Visible = false;
@@ -61,11 +79,7 @@ namespace ModernMenuUI
                     lblMensajeError.Visible = true;
                     lblMensajeError.Text = "Código o contraseña incorrectos.";
 
-                    // 🔥 Cambios solicitados
-                    txtCodigoBodega.Text = "CÓDIGO";
-                    txtContrasenia.Text = "CONTRASEÑA";
-                    txtContrasenia.UseSystemPasswordChar = false;
-                    txtCodigoBodega.Focus();
+                    ResetearCamposLogin();
                 }
             }
             catch
@@ -78,8 +92,6 @@ namespace ModernMenuUI
                 btnAcceder.Enabled = true;
             }
         }
-
-
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
@@ -99,9 +111,7 @@ namespace ModernMenuUI
         private void txtContrasenia_Enter(object sender, EventArgs e)
         {
             if (txtContrasenia.Text == "CONTRASEÑA")
-            {
                 clsAnmaciones.PrivacidadIngresarDatos(txtContrasenia, "");
-            }
         }
 
         private void txtContrasenia_Leave(object sender, EventArgs e)
@@ -116,34 +126,25 @@ namespace ModernMenuUI
         private void txtCodigoBodega_Enter(object sender, EventArgs e)
         {
             if (txtCodigoBodega.Text == "CÓDIGO")
-            {
                 txtCodigoBodega.Text = "";
-            }
         }
 
         private void txtCodigoBodega_Leave(object sender, EventArgs e)
         {
             if (txtCodigoBodega.Text == "")
-            {
                 txtCodigoBodega.Text = "CÓDIGO";
-            }
         }
-
 
         private void btnVer_MouseUp(object sender, MouseEventArgs e)
         {
             if (txtContrasenia.Text != "CONTRASEÑA")
-            {
                 txtContrasenia.UseSystemPasswordChar = true;
-            }
         }
 
         private void btnVer_MouseDown(object sender, MouseEventArgs e)
         {
             if (txtContrasenia.Text != "CONTRASEÑA")
-            {
                 txtContrasenia.UseSystemPasswordChar = false;
-            }
         }
 
         private void txtCodigoBodega_KeyDown(object sender, KeyEventArgs e)

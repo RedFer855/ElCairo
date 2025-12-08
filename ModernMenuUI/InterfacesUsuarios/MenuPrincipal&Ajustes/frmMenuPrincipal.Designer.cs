@@ -1066,9 +1066,9 @@
             tableLayoutPanel1.MinimumSize = new Size(550, 200);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 313F));
-            tableLayoutPanel1.Size = new Size(796, 628);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(796, 654);
             tableLayoutPanel1.TabIndex = 35;
             // 
             // panel4
@@ -1079,10 +1079,10 @@
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(dgvProducto);
             panel4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel4.Location = new Point(0, 315);
+            panel4.Location = new Point(0, 327);
             panel4.Margin = new Padding(0, 0, 0, 10);
             panel4.Name = "panel4";
-            panel4.Size = new Size(796, 303);
+            panel4.Size = new Size(796, 317);
             panel4.TabIndex = 36;
             // 
             // panel5
@@ -1157,7 +1157,7 @@
             dgvProducto.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProducto.RowTemplate.Height = 50;
             dgvProducto.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducto.Size = new Size(759, 238);
+            dgvProducto.Size = new Size(759, 252);
             dgvProducto.TabIndex = 14;
             // 
             // Codigo
@@ -1238,7 +1238,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chart1.Series.Add(series1);
-            chart1.Size = new Size(378, 295);
+            chart1.Size = new Size(378, 307);
             chart1.TabIndex = 1;
             chart1.Text = "chart1";
             chart1.Click += chart1_Click;
@@ -1259,7 +1259,7 @@
             series2.Name = "Series1";
             series2.YValuesPerPoint = 4;
             chart2.Series.Add(series2);
-            chart2.Size = new Size(378, 295);
+            chart2.Size = new Size(378, 307);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
             // 
