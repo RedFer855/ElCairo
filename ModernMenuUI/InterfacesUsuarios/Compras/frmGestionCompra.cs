@@ -523,6 +523,9 @@ namespace ModernMenuUI
                 _proveedorSeleccionado = null;
                 txtNombreProveedor.Text = "";
                 txtNuevoPrecio.Text = "";
+                txtSubTotal.Text = "0.00";
+                txtImpuesto.Text = "0.00";
+                txtTotal.Text = "0.00";
                 nudCantidad.Value = 1;
                 _listaMaestraProductos.Clear();
                 dgvProductos.DataSource = null;

@@ -857,9 +857,7 @@ namespace ModernMenuUI
                 MessageBox.Show($"¡Venta registrada y factura generada para {_clienteSeleccionado.NombreCliente}! 😄",
                                 "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                LimpiarCarrito();
-                txtCliente.Text = "";
-                _clienteSeleccionado = null;
+               
 
                 await CargarProductosDeBodega(); // Actualiza stock en tiempo real
             }
@@ -871,6 +869,13 @@ namespace ModernMenuUI
             finally
             {
                 this.Cursor = Cursors.Default;
+                nudCantidad.Value = 1;
+                LimpiarCarrito();
+                txtCliente.Text = "";
+                txtImpuesto.Text = "0.00";
+                txtSubtotal.Text = "0.00";
+                txtTotal.Text = "0.00";
+                _clienteSeleccionado = null;
             }
         }
 
