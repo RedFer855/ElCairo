@@ -82,7 +82,7 @@
             lblNombreModulo.Name = "lblNombreModulo";
             lblNombreModulo.Size = new Size(679, 31);
             lblNombreModulo.TabIndex = 14;
-            lblNombreModulo.Text = "EDITAR CLIENTE";
+            lblNombreModulo.Text = "DATOS DEL CLIENTE";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel2
@@ -171,6 +171,7 @@
             btnVolver.TabIndex = 12;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
             // 
             // txtRtn
             // 
