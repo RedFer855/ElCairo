@@ -1046,9 +1046,9 @@
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(dgvProducto);
             panel4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel4.Location = new Point(20, 26);
+            panel4.Location = new Point(40, 26);
             panel4.Name = "panel4";
-            panel4.Size = new Size(796, 281);
+            panel4.Size = new Size(776, 281);
             panel4.TabIndex = 36;
             // 
             // panel5
@@ -1122,7 +1122,7 @@
             dgvProducto.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProducto.RowTemplate.Height = 50;
             dgvProducto.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducto.Size = new Size(759, 216);
+            dgvProducto.Size = new Size(739, 216);
             dgvProducto.TabIndex = 14;
             // 
             // Codigo
@@ -1338,7 +1338,7 @@
             MinimumSize = new Size(900, 500);
             Name = "frmMenuPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "  ";
+            Text = "7427230070277";
             Load += Form1_Load;
             panBarraControl.ResumeLayout(false);
             panBarraControl.PerformLayout();
