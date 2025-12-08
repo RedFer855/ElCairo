@@ -45,7 +45,7 @@
             btnImprimirOrden = new Button();
             panel5 = new Panel();
             btnBuscarProv = new Button();
-            txtBuscarProv = new TextBox();
+            txtNombreProveedor = new TextBox();
             label4 = new Label();
             btnAgregarCompra = new Button();
             panel4 = new Panel();
@@ -151,7 +151,7 @@
             // 
             panel5.BackColor = Color.FromArgb(189, 215, 238);
             panel5.Controls.Add(btnBuscarProv);
-            panel5.Controls.Add(txtBuscarProv);
+            panel5.Controls.Add(txtNombreProveedor);
             panel5.Controls.Add(label4);
             panel5.Location = new Point(12, 4);
             panel5.Name = "panel5";
@@ -173,19 +173,19 @@
             btnBuscarProv.UseVisualStyleBackColor = false;
             btnBuscarProv.Click += btnBuscarProv_Click;
             // 
-            // txtBuscarProv
+            // txtNombreProveedor
             // 
-            txtBuscarProv.BorderStyle = BorderStyle.None;
-            txtBuscarProv.Font = new Font("Itim", 13F);
-            txtBuscarProv.Location = new Point(73, 14);
-            txtBuscarProv.Name = "txtBuscarProv";
-            txtBuscarProv.Size = new Size(193, 21);
-            txtBuscarProv.TabIndex = 22;
-            txtBuscarProv.TextChanged += txtBuscar_TextChanged;
-            txtBuscarProv.Enter += txtBuscarProv_Enter;
-            txtBuscarProv.KeyDown += txtBuscar_KeyDown;
-            txtBuscarProv.KeyUp += txtBuscar_KeyUp;
-            txtBuscarProv.Leave += txtBuscar_Leave;
+            txtNombreProveedor.BorderStyle = BorderStyle.None;
+            txtNombreProveedor.Font = new Font("Itim", 13F);
+            txtNombreProveedor.Location = new Point(73, 14);
+            txtNombreProveedor.Name = "txtNombreProveedor";
+            txtNombreProveedor.Size = new Size(193, 21);
+            txtNombreProveedor.TabIndex = 22;
+            txtNombreProveedor.TextChanged += txtBuscar_TextChanged;
+            txtNombreProveedor.Enter += txtBuscarProv_Enter;
+            txtNombreProveedor.KeyDown += txtBuscar_KeyDown;
+            txtNombreProveedor.KeyUp += txtBuscar_KeyUp;
+            txtNombreProveedor.Leave += txtBuscar_Leave;
             // 
             // label4
             // 
@@ -993,7 +993,7 @@
         private Button btnAgregar;
         private Panel panel7;
         private DataGridView dgvProductos;
-        private TextBox txtBuscarProv;
+        private TextBox txtNombreProveedor;
         private Button btnBuscarProv;
         private ListBox lstSugerencias;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;

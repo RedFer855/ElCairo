@@ -33,8 +33,8 @@
             rbInactivo = new RadioButton();
             rbActivo = new RadioButton();
             flpAjustarBotones = new FlowLayoutPanel();
-            btnModificarBodega = new Button();
             btnGuardarBodega = new Button();
+            btnModificarBodega = new Button();
             btnVolver = new Button();
             txtContrasenia = new TextBox();
             txtNombreBodega = new TextBox();
@@ -57,9 +57,8 @@
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Margin = new Padding(3, 4, 3, 4);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(477, 49);
+            panBarraControl.Size = new Size(417, 37);
             panBarraControl.TabIndex = 19;
             // 
             // lblNombreModulo
@@ -69,7 +68,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(477, 49);
+            lblNombreModulo.Size = new Size(417, 37);
             lblNombreModulo.TabIndex = 14;
             lblNombreModulo.Text = "EDITAR BODEGA";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -77,22 +76,20 @@
             // rbInactivo
             // 
             rbInactivo.AutoSize = true;
-            rbInactivo.Location = new Point(136, 20);
-            rbInactivo.Margin = new Padding(3, 4, 3, 4);
+            rbInactivo.Location = new Point(119, 15);
             rbInactivo.Name = "rbInactivo";
-            rbInactivo.Size = new Size(100, 28);
+            rbInactivo.Size = new Size(82, 23);
             rbInactivo.TabIndex = 8;
-            rbInactivo.TabStop = true;
             rbInactivo.Text = "Inactivo";
             rbInactivo.UseVisualStyleBackColor = true;
             // 
             // rbActivo
             // 
             rbActivo.AutoSize = true;
-            rbActivo.Location = new Point(7, 20);
-            rbActivo.Margin = new Padding(3, 4, 3, 4);
+            rbActivo.Checked = true;
+            rbActivo.Location = new Point(6, 15);
             rbActivo.Name = "rbActivo";
-            rbActivo.Size = new Size(84, 28);
+            rbActivo.Size = new Size(70, 23);
             rbActivo.TabIndex = 7;
             rbActivo.TabStop = true;
             rbActivo.Text = "Activo";
@@ -103,27 +100,10 @@
             flpAjustarBotones.Controls.Add(btnGuardarBodega);
             flpAjustarBotones.Controls.Add(btnModificarBodega);
             flpAjustarBotones.Controls.Add(btnVolver);
-            flpAjustarBotones.Location = new Point(85, 237);
-            flpAjustarBotones.Margin = new Padding(3, 4, 3, 4);
+            flpAjustarBotones.Location = new Point(74, 178);
             flpAjustarBotones.Name = "flpAjustarBotones";
-            flpAjustarBotones.Size = new Size(315, 49);
+            flpAjustarBotones.Size = new Size(276, 37);
             flpAjustarBotones.TabIndex = 25;
-            // 
-            // btnModificarBodega
-            // 
-            btnModificarBodega.BackColor = Color.FromArgb(74, 148, 225);
-            btnModificarBodega.BackgroundImageLayout = ImageLayout.None;
-            btnModificarBodega.FlatAppearance.BorderSize = 0;
-            btnModificarBodega.Font = new Font("Itim", 11.9999981F);
-            btnModificarBodega.ForeColor = SystemColors.ButtonFace;
-            btnModificarBodega.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarBodega.Location = new Point(3, 4);
-            btnModificarBodega.Margin = new Padding(3, 4, 3, 4);
-            btnModificarBodega.Name = "btnModificarBodega";
-            btnModificarBodega.Size = new Size(82, 44);
-            btnModificarBodega.TabIndex = 19;
-            btnModificarBodega.Text = "Editar";
-            btnModificarBodega.UseVisualStyleBackColor = false;
             // 
             // btnGuardarBodega
             // 
@@ -133,15 +113,29 @@
             btnGuardarBodega.Font = new Font("Itim", 11.9999981F);
             btnGuardarBodega.ForeColor = SystemColors.ButtonFace;
             btnGuardarBodega.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarBodega.Location = new Point(91, 4);
-            btnGuardarBodega.Margin = new Padding(3, 4, 3, 4);
+            btnGuardarBodega.Location = new Point(3, 3);
             btnGuardarBodega.Name = "btnGuardarBodega";
-            btnGuardarBodega.Size = new Size(102, 44);
+            btnGuardarBodega.Size = new Size(89, 33);
             btnGuardarBodega.TabIndex = 9;
             btnGuardarBodega.Text = "Guardar";
             btnGuardarBodega.UseVisualStyleBackColor = false;
             btnGuardarBodega.Visible = false;
             btnGuardarBodega.Click += btnGuardarBodega_Click;
+            // 
+            // btnModificarBodega
+            // 
+            btnModificarBodega.BackColor = Color.FromArgb(74, 148, 225);
+            btnModificarBodega.BackgroundImageLayout = ImageLayout.None;
+            btnModificarBodega.FlatAppearance.BorderSize = 0;
+            btnModificarBodega.Font = new Font("Itim", 11.9999981F);
+            btnModificarBodega.ForeColor = SystemColors.ButtonFace;
+            btnModificarBodega.ImageAlign = ContentAlignment.BottomLeft;
+            btnModificarBodega.Location = new Point(98, 3);
+            btnModificarBodega.Name = "btnModificarBodega";
+            btnModificarBodega.Size = new Size(72, 33);
+            btnModificarBodega.TabIndex = 19;
+            btnModificarBodega.Text = "Editar";
+            btnModificarBodega.UseVisualStyleBackColor = false;
             // 
             // btnVolver
             // 
@@ -151,10 +145,9 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(199, 4);
-            btnVolver.Margin = new Padding(3, 4, 3, 4);
+            btnVolver.Location = new Point(176, 3);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(109, 44);
+            btnVolver.Size = new Size(95, 33);
             btnVolver.TabIndex = 0;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
@@ -165,11 +158,10 @@
             txtContrasenia.BackColor = Color.White;
             txtContrasenia.BorderStyle = BorderStyle.None;
             txtContrasenia.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContrasenia.Location = new Point(142, 120);
-            txtContrasenia.Margin = new Padding(3, 4, 3, 4);
+            txtContrasenia.Location = new Point(124, 90);
             txtContrasenia.Name = "txtContrasenia";
             txtContrasenia.PlaceholderText = "Ingrese la contraseña";
-            txtContrasenia.Size = new Size(291, 24);
+            txtContrasenia.Size = new Size(255, 20);
             txtContrasenia.TabIndex = 24;
             // 
             // txtNombreBodega
@@ -177,11 +169,10 @@
             txtNombreBodega.BackColor = Color.White;
             txtNombreBodega.BorderStyle = BorderStyle.None;
             txtNombreBodega.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNombreBodega.Location = new Point(142, 84);
-            txtNombreBodega.Margin = new Padding(3, 4, 3, 4);
+            txtNombreBodega.Location = new Point(124, 63);
             txtNombreBodega.Name = "txtNombreBodega";
             txtNombreBodega.PlaceholderText = "Ingrese el nombre de la bodega";
-            txtNombreBodega.Size = new Size(291, 24);
+            txtNombreBodega.Size = new Size(255, 20);
             txtNombreBodega.TabIndex = 1;
             // 
             // gbxEstado
@@ -190,11 +181,9 @@
             gbxEstado.Controls.Add(rbActivo);
             gbxEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
-            gbxEstado.Location = new Point(142, 155);
-            gbxEstado.Margin = new Padding(3, 4, 3, 4);
+            gbxEstado.Location = new Point(124, 116);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Padding = new Padding(3, 4, 3, 4);
-            gbxEstado.Size = new Size(291, 60);
+            gbxEstado.Size = new Size(255, 45);
             gbxEstado.TabIndex = 7;
             gbxEstado.TabStop = false;
             // 
@@ -203,9 +192,9 @@
             label2.AutoSize = true;
             label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(87, 99, 110);
-            label2.Location = new Point(36, 121);
+            label2.Location = new Point(32, 91);
             label2.Name = "label2";
-            label2.Size = new Size(110, 23);
+            label2.Size = new Size(87, 18);
             label2.TabIndex = 14;
             label2.Text = "Contraseña:";
             // 
@@ -214,9 +203,9 @@
             label8.AutoSize = true;
             label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
-            label8.Location = new Point(65, 84);
+            label8.Location = new Point(57, 63);
             label8.Name = "label8";
-            label8.Size = new Size(76, 23);
+            label8.Size = new Size(61, 18);
             label8.TabIndex = 12;
             label8.Text = "Bodega:";
             // 
@@ -232,9 +221,8 @@
             panel2.Controls.Add(label2);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(477, 324);
+            panel2.Size = new Size(417, 243);
             panel2.TabIndex = 18;
             // 
             // label1
@@ -242,21 +230,20 @@
             label1.AutoSize = true;
             label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(70, 175);
+            label1.Location = new Point(61, 131);
             label1.Name = "label1";
-            label1.Size = new Size(70, 23);
+            label1.Size = new Size(57, 18);
             label1.TabIndex = 26;
             label1.Text = "Estado:";
             // 
             // frmAgregarEditarBodega
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(477, 324);
+            ClientSize = new Size(417, 243);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmAgregarEditarBodega";

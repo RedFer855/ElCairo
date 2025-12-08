@@ -79,7 +79,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         {
             InitializeComponent();
             ConfigurarFormulario();
-            this._modoForm = _modoForm; 
+            this._modoForm = _modoForm;
             _repositorioProveedor = new ProveedorRepositorio();
             _gestorRealtime = new GestorRealtime<Proveedor>();
 
@@ -258,8 +258,27 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
         /// <summary>
         /// Maneja eventos KeyDown en el cuadro de búsqueda para navegación y entradas especiales.
+        /// Además corrige el bug donde el usuario presiona Enter antes de que aparezcan las sugerencias.
+        /// Si estamos en modo selección (modal) y no hay sugerencias visibles, intentamos resolver el nombre directamente.
         /// </summary>
-        private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorProveedores.ManejarKeyDown(e);
+        private async void txtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Si el buscador está manejando la navegación de flechas / enter, delegamos primero.
+            _buscadorProveedores.ManejarKeyDown(e);
+
+            // Si el usuario presionó Enter y estamos en modo selección,
+            // y las sugerencias NO están visibles (o no se poblaron aún),
+            // intentamos buscar por nombre completo y seleccionar automáticamente.
+            if (e.KeyCode == Keys.Enter && _modoForm && !lstSugerencias.Visible)
+            {
+                e.Handled = true;
+                string nombre = txtBuscar.Text?.Trim();
+                if (!string.IsNullOrEmpty(nombre))
+                {
+                    await IntentarSeleccionarProveedorPorNombreAsync(nombre);
+                }
+            }
+        }
 
         /// <summary>
         /// Maneja el evento Leave del cuadro de búsqueda para ocultar sugerencias y cancelar búsquedas activas.
@@ -322,17 +341,30 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         /// </summary>
         private void dgvProveedores_SelectionChanged(object sender, EventArgs e)
         {
-            if (_modoForm == true)
+            if (dgvProveedores.SelectedRows.Count > 0)
             {
-                if (dgvProveedores.SelectedRows.Count > 0)
-                {
-                    _proveedorSeleccionadoInterno = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
-                }
-                else
-                {
-                    _proveedorSeleccionadoInterno = null;
-                }
+                _proveedorSeleccionadoInterno = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
+            }
+            else
+            {
+                _proveedorSeleccionadoInterno = null;
+            }
+        }
 
+        /// <summary>
+        /// Maneja el clic del mouse sobre el DataGridView.
+        /// Si estamos en modo selección (modal), un único click en una fila selecciona y cierra (comportamiento pedido).
+        /// </summary>
+        private void dgvProveedores_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (_modoForm && e.RowIndex >= 0 && e.RowIndex < dgvProveedores.Rows.Count)
+            {
+                var prov = dgvProveedores.Rows[e.RowIndex].DataBoundItem as Proveedor;
+                if (prov != null)
+                {
+                    _proveedorSeleccionadoInterno = prov;
+                    ConfirmarSeleccion();
+                }
             }
         }
 
@@ -357,16 +389,62 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         /// </summary>
         private void ConfirmarSeleccion()
         {
-            if (dgvProveedores.SelectedRows.Count > 0)
+            if (_proveedorSeleccionadoInterno != null)
             {
-                ProveedorSeleccionado = dgvProveedores.SelectedRows[0].DataBoundItem as Proveedor;
+                ProveedorSeleccionado = _proveedorSeleccionadoInterno;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                if (this.ActiveControl == btnSeleccionarProveedor)
-                    MessageBox.Show("Por favor, seleccione un proveedor de la lista.");
+                MessageBox.Show("Por favor, seleccione un proveedor de la lista.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
+        /// Intenta resolver un proveedor por nombre (vía repositorio) y si lo encuentra lo selecciona y cierra.
+        /// Usado para el caso donde el usuario presionó Enter antes de que cargaran las sugerencias.
+        /// </summary>
+        private async Task IntentarSeleccionarProveedorPorNombreAsync(string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre)) return;
+
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                var id = await ProveedorRepositorio.ObtenerIdProveedorPorNombreAsync(nombre);
+                if (id == null)
+                {
+                    MessageBox.Show("No se encontró un proveedor con ese nombre.", "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // buscar en la memoria primero
+                var prov = _listaMaestraProveedores.FirstOrDefault(p => p.IdProveedor == id.Value);
+
+                if (prov == null)
+                {
+                    prov = await ProveedorRepositorio.CargarProveedorPorIdAsync(id.Value);
+                    if (prov != null) _listaMaestraProveedores.Add(prov);
+                }
+
+                if (prov == null)
+                {
+                    MessageBox.Show("Error cargando la información del proveedor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                _proveedorSeleccionadoInterno = prov;
+                ConfirmarSeleccion();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error buscando el proveedor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
 
@@ -379,5 +457,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         }
 
         #endregion
+
+        private void btnbuscar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
