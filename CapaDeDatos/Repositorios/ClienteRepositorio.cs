@@ -18,27 +18,13 @@ namespace CapaDeDatos.Repositorios
         }
 
 
-        public async Task<List<Cliente>> ObtenerTodosLosClientes(
-    bool estado = true,
-    string nombre = null)
+        public async Task<List<Cliente>> ObtenerTodosLosClientes()
         {
             try
             {
                 var client = await GetClient();
                 var query = client.From<Cliente>()
                                   .Order("id_cliente", Supabase.Postgrest.Constants.Ordering.Ascending);
-
-                // Filtrar por estado (ya es booleano)
-                query = query.Where(x => x.EstadoCliente == estado);
-
-                // Filtrar por nombre si no viene vacío
-                if (!string.IsNullOrWhiteSpace(nombre))
-                {
-                    query = query.Filter("nombre_cliente",
-                        Supabase.Postgrest.Constants.Operator.ILike,
-                        $"%{nombre}%");
-                }
-
                 var response = await query.Get();
                 return response?.Models ?? new List<Cliente>();
             }
@@ -103,7 +89,7 @@ namespace CapaDeDatos.Repositorios
             }
         }
 
-        public async Task<List<Cliente>> ObtenerActivos(string estado = "activo")
+        public async Task<List<Cliente>> ObtenerActivos(bool estado = true)
         {
             try
             {

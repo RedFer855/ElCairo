@@ -14,8 +14,16 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
+    /// <summary>
+    /// Formulario para agregar o editar una bodega.
+    /// Proporciona UI para crear una nueva bodega o modificar una existente.
+    /// </summary>
     public partial class frmAgregarEditarBodega : Form
     {
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario en modo "Agregar".
+        /// Muestra el botón de guardar y oculta el de modificar.
+        /// </summary>
         public frmAgregarEditarBodega()
         {
             InitializeComponent();
@@ -23,6 +31,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             btnModificarBodega.Visible = false;
         }
 
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario en modo "Editar".
+        /// Rellena los controles con los datos de la bodega proporcionada.
+        /// </summary>
+        /// <param name="_nuevaBodega">Objeto <see cref="Bodega"/> con los datos a editar.</param>
         public frmAgregarEditarBodega(Bodega _nuevaBodega)
         {
             InitializeComponent();
@@ -31,11 +44,22 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             btnModificarBodega.Visible = true;
         }
 
+        /// <summary>
+        /// Cierra el formulario al pulsar el botón "Volver".
+        /// </summary>
+        /// <param name="sender">Origen del evento.</param>
+        /// <param name="e">Argumentos del evento.</param>
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Handler para guardar una nueva bodega.
+        /// Valida los datos, llama al RPC de inserción y muestra mensajes de resultado.
+        /// </summary>
+        /// <param name="sender">Origen del evento.</param>
+        /// <param name="e">Argumentos del evento.</param>
         private async void btnGuardarBodega_Click(object sender, EventArgs e)
         {
             Bodega bodega= new Bodega
@@ -62,8 +86,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 var supabase = await Conexion.GetClientAsync();
                 var usuarioAuth = supabase.Auth.CurrentUser;
                 
-
-
                 await supabase.Rpc("insertar_bodega", new
                 {
                     p_nombre_bodega = txtNombreBodega.Text,
@@ -72,8 +94,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     p_id_estado = rbActivo.Checked ? 1 : 2
                 });
                 MessageBox.Show("Bodega guardada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
             }
             catch (Exception ex)
             {

@@ -140,17 +140,6 @@ namespace ModernMenuUI
             }
         }
 
-        private Task CargarComboBoxesEstado()
-        {
-            cmbEstado.Items.Clear();
-            cmbEstado.Items.Add(NivelStockFiltro.Todos.ToString());
-            cmbEstado.Items.Add(NivelStockFiltro.Bajo.ToString());
-            cmbEstado.Items.Add(NivelStockFiltro.Medio.ToString());
-            cmbEstado.Items.Add(NivelStockFiltro.Alto.ToString());
-            cmbEstado.SelectedIndex = 0;
-            return Task.CompletedTask;
-        }
-
         private async Task IniciarSuscripcionInventario()
         {
             if (_supabaseClient == null) return;
