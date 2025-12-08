@@ -230,35 +230,37 @@ namespace ModernMenuUI
                 MessageBox.Show("Seleccione un empleado primero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            try
+            else
             {
-                this.Cursor = Cursors.WaitCursor;
-                var client = await Conexion.GetClientAsync();
-                var authUser = client.Auth.CurrentUser;
-
-                if (authUser == null)
+                try
                 {
-                    MessageBox.Show("No hay sesión activa de Supabase.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    this.Cursor = Cursors.WaitCursor;
+                    var client = await Conexion.GetClientAsync();
+                    var authUser = client.Auth.CurrentUser;
+
+                    if (authUser == null)
+                    {
+                        MessageBox.Show("No hay sesión activa de Supabase.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var usuarioActualSistema = await client
+                        .From<Usuario>()
+                        .Where(u => u.Uuid == authUser.Id)
+                        .Single();
+
+                    this.Cursor = Cursors.Default;
+
+                    var frm = new frmCrearUsuario(EmpleadoSeleccionado, usuarioActualSistema);
+                    frm.ShowDialog();
+
+                    await CargarEmpleadosMaestros();
                 }
-
-                var usuarioActualSistema = await client
-                    .From<Usuario>()
-                    .Where(u => u.Uuid == authUser.Id)
-                    .Single();
-
-                this.Cursor = Cursors.Default;
-
-                var frm = new frmCrearUsuario(EmpleadoSeleccionado, usuarioActualSistema);
-                frm.ShowDialog();
-
-                await CargarEmpleadosMaestros();
-            }
-            catch (Exception ex)
-            {
-                this.Cursor = Cursors.Default;
-                MessageBox.Show($"Error al preparar creación de usuario: {ex.Message}");
+                catch (Exception ex)
+                {
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show($"Error al preparar creación de usuario: {ex.Message}");
+                }
             }
         }
         #endregion

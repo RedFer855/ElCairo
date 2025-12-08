@@ -119,9 +119,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
                 MessageBox.Show("Usuario creado correctamente.", "Usuario Creado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show("Ocurrió un error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             finally
             {
