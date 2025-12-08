@@ -30,20 +30,12 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
             panel1 = new Panel();
             panel10 = new Panel();
             dgvClientes = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Correo = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
-            Dni = new DataGridViewTextBoxColumn();
-            RTN = new DataGridViewTextBoxColumn();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
@@ -60,6 +52,12 @@
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            Dni = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            PorcentajeGanancia = new DataGridViewTextBoxColumn();
+            Correo = new DataGridViewTextBoxColumn();
+            RTN = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvClientes).BeginInit();
@@ -113,16 +111,16 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvClientes.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Correo, dataGridViewTextBoxColumn4, PorcentajeGanancia, Dni, RTN });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle4.Padding = new Padding(5);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvClientes.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvClientes.Columns.AddRange(new DataGridViewColumn[] { Dni, dataGridViewTextBoxColumn2, PorcentajeGanancia, Correo, RTN, dataGridViewTextBoxColumn4 });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvClientes.DefaultCellStyle = dataGridViewCellStyle3;
             dgvClientes.Dock = DockStyle.Fill;
             dgvClientes.EnableHeadersVisualStyles = false;
             dgvClientes.GridColor = Color.FromArgb(189, 215, 238);
@@ -130,14 +128,14 @@
             dgvClientes.Name = "dgvClientes";
             dgvClientes.ReadOnly = true;
             dgvClientes.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvClientes.RowHeadersWidth = 30;
             dgvClientes.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvClientes.RowTemplate.Height = 50;
@@ -145,69 +143,6 @@
             dgvClientes.Size = new Size(704, 450);
             dgvClientes.TabIndex = 1;
             dgvClientes.SelectionChanged += dgvClientes_SelectionChanged;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "IdCliente";
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "Id";
-            dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.DataPropertyName = "NombreCliente";
-            dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // Correo
-            // 
-            Correo.DataPropertyName = "CorreoCliente";
-            Correo.HeaderText = "Correo";
-            Correo.MinimumWidth = 6;
-            Correo.Name = "Correo";
-            Correo.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "DireccionCliente";
-            dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
-            dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // PorcentajeGanancia
-            // 
-            PorcentajeGanancia.DataPropertyName = "TelefonoCliente";
-            PorcentajeGanancia.FillWeight = 80F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.MinimumWidth = 6;
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            PorcentajeGanancia.ReadOnly = true;
-            // 
-            // Dni
-            // 
-            Dni.DataPropertyName = "DniCliente";
-            Dni.HeaderText = "DniEmpleado";
-            Dni.MinimumWidth = 6;
-            Dni.Name = "Dni";
-            Dni.ReadOnly = true;
-            // 
-            // RTN
-            // 
-            RTN.DataPropertyName = "RtnCliente";
-            RTN.HeaderText = "RTN";
-            RTN.MinimumWidth = 6;
-            RTN.Name = "RTN";
-            RTN.ReadOnly = true;
             // 
             // panelBusqueda
             // 
@@ -418,6 +353,68 @@
             flowLayoutPanel1.Size = new Size(741, 52);
             flowLayoutPanel1.TabIndex = 42;
             // 
+            // Dni
+            // 
+            Dni.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Dni.DataPropertyName = "DniCliente";
+            Dni.HeaderText = "DNI";
+            Dni.MinimumWidth = 6;
+            Dni.Name = "Dni";
+            Dni.ReadOnly = true;
+            Dni.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.DataPropertyName = "NombreCliente";
+            dataGridViewTextBoxColumn2.FillWeight = 70F;
+            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 96;
+            // 
+            // PorcentajeGanancia
+            // 
+            PorcentajeGanancia.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            PorcentajeGanancia.DataPropertyName = "TelefonoCliente";
+            PorcentajeGanancia.FillWeight = 80F;
+            PorcentajeGanancia.HeaderText = "Teléfono";
+            PorcentajeGanancia.MinimumWidth = 6;
+            PorcentajeGanancia.Name = "PorcentajeGanancia";
+            PorcentajeGanancia.ReadOnly = true;
+            PorcentajeGanancia.Width = 101;
+            // 
+            // Correo
+            // 
+            Correo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Correo.DataPropertyName = "CorreoCliente";
+            Correo.HeaderText = "Correo";
+            Correo.MinimumWidth = 6;
+            Correo.Name = "Correo";
+            Correo.ReadOnly = true;
+            Correo.Width = 88;
+            // 
+            // RTN
+            // 
+            RTN.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RTN.DataPropertyName = "RtnCliente";
+            RTN.HeaderText = "RTN";
+            RTN.MinimumWidth = 6;
+            RTN.Name = "RTN";
+            RTN.ReadOnly = true;
+            RTN.Width = 72;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn4.DataPropertyName = "DireccionCliente";
+            dataGridViewTextBoxColumn4.FillWeight = 70F;
+            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
+            dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
             // frmClientes
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -464,17 +461,16 @@
         private Button btnVerCliente;
         private Button btnSalir;
         private Button btnFactura;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Correo;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn PorcentajeGanancia;
-        private DataGridViewTextBoxColumn Dni;
-        private DataGridViewTextBoxColumn RTN;
         private ListBox lstSugerencias;
         private Panel pnlLimpiarFiltros;
         private Button btnLimpiarFiltros;
         private PictureBox pbxClean;
         private FlowLayoutPanel flowLayoutPanel1;
+        private DataGridViewTextBoxColumn Dni;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn PorcentajeGanancia;
+        private DataGridViewTextBoxColumn Correo;
+        private DataGridViewTextBoxColumn RTN;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     }
 }
