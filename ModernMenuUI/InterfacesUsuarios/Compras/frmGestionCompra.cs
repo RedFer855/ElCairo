@@ -488,6 +488,7 @@ namespace ModernMenuUI
                             p_id_producto = codigoBarra,
                             p_cantidad_ingresar = cantidadIngresar,
                             p_precio_nuevo = precioNuevo,
+                            p_id_bodega = idBodega
                         };
 
                         await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
