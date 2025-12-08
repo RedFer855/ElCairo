@@ -217,6 +217,7 @@
             panelBusqueda.Controls.Add(btnbuscar);
             panelBusqueda.Location = new Point(12, 13);
             panelBusqueda.MaximumSize = new Size(885, 43);
+            panelBusqueda.MinimumSize = new Size(250, 43);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(570, 43);
             panelBusqueda.TabIndex = 37;
