@@ -3,7 +3,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
-using System;   
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,14 +15,38 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
+    /// <summary>
+    /// Formulario para agregar o editar productos.
+    /// - En modo "agregar" muestra controles vacíos y guarda un nuevo producto.
+    /// - En modo "editar" carga un producto en los controles y actualiza al guardar.
+    /// Mantiene validaciones básicas, manejo de errores y llamadas al repositorio.
+    /// </summary>
     public partial class frmAgregarEditarProducto : Form
     {
+        /// <summary>
+        /// Producto en edición. Si es null, el formulario está en modo "agregar".
+        /// </summary>
         private Producto _productoSeleccionado;
+
+        /// <summary>
+        /// Id de la marca seleccionada en el selector externo.
+        /// </summary>
         private int _idMarcaSeleccionada;
+
+        /// <summary>
+        /// Id de la categoría seleccionada en el selector externo.
+        /// </summary>
         private int _idCategoriaSeleccionada;
+
+        /// <summary>
+        /// Id de la presentación seleccionada en el selector externo.
+        /// </summary>
         private int _idPresentacionSeleccionada;
 
-
+        /// <summary>
+        /// Constructor para crear un nuevo producto.
+        /// Configura el formulario en modo "AGREGAR".
+        /// </summary>
         public frmAgregarEditarProducto()
         {
             InitializeComponent();
@@ -31,11 +55,18 @@ namespace ModernMenuUI
             btnModificarProducto.Visible = false;
         }
 
+        /// <summary>
+        /// Constructor para editar un producto existente.
+        /// Carga los valores del producto en los controles del formulario.
+        /// </summary>
+        /// <param name="productoseleccionado">Producto a editar.</param>
         public frmAgregarEditarProducto(Producto productoseleccionado)
         {
-
             InitializeComponent();
+
             _productoSeleccionado = productoseleccionado;
+
+            // Cargar valores en controles
             txtNombreProducto.Text = productoseleccionado.NombreProducto;
             txtMarca.Text = productoseleccionado.NombreMarca;
             txtCategoria.Text = productoseleccionado.NombreCategoria;
@@ -57,26 +88,42 @@ namespace ModernMenuUI
             {
                 rbDeshabilitado.Checked = true;
             }
+
             lblNota.Visible = false;
 
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
         }
 
+        /// <summary>
+        /// Maneja arrastre del formulario (mover ventana).
+        /// </summary>
         private void Editar_Producto_MouseDown(object sender, MouseEventArgs e)
         {
             clsAnmaciones.MoverFormulario(this.Handle);
         }
 
+        /// <summary>
+        /// Maneja arrastre de la barra de control (mover ventana).
+        /// </summary>
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
             clsAnmaciones.MoverFormulario(this.Handle);
         }
 
+        /// <summary>
+        /// Cierra el formulario al presionar el botón "Volver".
+        /// </summary>
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Evento que guarda o actualiza el producto.
+        /// - Construye un objeto <see cref="ProductoInsertar"/> con datos validados.
+        /// - Si <see cref="_productoSeleccionado"/> es null inserta, si no actualiza.
+        /// - Mantiene manejo de errores específico para clave duplicada (23505).
+        /// </summary>
         private async void btnGuardarProducto_Click(object sender, EventArgs e)
         {
             try
@@ -87,8 +134,7 @@ namespace ModernMenuUI
                 decimal precioCosto = 0;
                 int cantidad = 0;
 
-                // --- LÓGICA DE PROTECCIÓN DE DATOS ---
-                // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos (NO borrarlos)
+                // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos
                 if (_productoSeleccionado != null)
                 {
                     precioCompra = _productoSeleccionado.PrecioCompra;
@@ -96,7 +142,6 @@ namespace ModernMenuUI
                     precioCosto = _productoSeleccionado.PrecioCosto;
                     cantidad = _productoSeleccionado.CantidadProducto;
                 }
-                // Si es NUEVO, se van en 0 (porque se calculan luego o inician vacíos)
 
                 // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
                 ProductoInsertar _productoInsertar = new ProductoInsertar
@@ -109,7 +154,7 @@ namespace ModernMenuUI
                     IdPresentacion = _idPresentacionSeleccionada,
                     ContenidoProducto = $"{txtContenido.Text.Trim()} {cmbUnidadContenido.SelectedItem?.ToString().Trim()}".Trim(),
 
-                    // --- ASIGNACIÓN SEGURA (Desde el objeto original, no del TXT) ---
+                    // ASIGNACIÓN SEGURA (Desde el objeto original, no del TXT)
                     PrecioCompra = precioCompra,
                     PrecioVenta = precioVenta,
                     PrecioCosto = precioCosto,
@@ -139,16 +184,16 @@ namespace ModernMenuUI
 
                 ProductoRepositorio repo = new ProductoRepositorio();
 
-                // --- 5. LÓGICA DECISIVA ---
+                // 5. LÓGICA DECISIVA
                 if (_productoSeleccionado == null)
                 {
-                    // === MODO INSERTAR ===
+                    // MODO INSERTAR
                     await repo.InsertarProducto(_productoInsertar);
                     MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // === MODO ACTUALIZAR ===
+                    // MODO ACTUALIZAR
                     _productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
                     await repo.ActualizarProducto(_productoInsertar);
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -170,7 +215,6 @@ namespace ModernMenuUI
                 }
                 else
                 {
-                    // Otros errores
                     MessageBox.Show(
                         "Ocurrió un error: " + ex.Message,
                         "Error",
@@ -186,6 +230,9 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Abre el formulario de selección de categoría y asigna la categoría seleccionada al control.
+        /// </summary>
         private void btnBuscarCategoria_Click(object sender, EventArgs e)
         {
             using (var categoriasForm = new frmCategorias())
@@ -199,6 +246,9 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Abre el formulario de selección de marca y asigna la marca seleccionada al control.
+        /// </summary>
         private void btnBuscarMarca_Click(object sender, EventArgs e)
         {
             using (var marcasForm = new frmMarcas())
@@ -211,6 +261,9 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Abre el formulario de selección de presentaciones y asigna la seleccionada al control.
+        /// </summary>
         private void btnBuscarPresentacion_Click(object sender, EventArgs e)
         {
             using (var presentacionesForm = new frmPresentaciones())
@@ -223,6 +276,12 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Rellena los controles de "contenido" a partir del texto guardado en la entidad.
+        /// - Espera cadenas en formato: "<valor> <unidad>" (ej. "250 ml").
+        /// - Si no puede parsear, deja los controles vacíos.
+        /// </summary>
+        /// <param name="presentacion">Texto guardado en ContenidoProducto.</param>
         private void CargarPresentacionEnControles(string presentacion)
         {
             presentacion = presentacion?.Trim() ?? "";
@@ -256,12 +315,18 @@ namespace ModernMenuUI
             }
         }
 
+        /// <summary>
+        /// Habilita el botón guardar y oculta el botón modificar (cambia a modo edición visual).
+        /// </summary>
         private void btnModificarProducto_Click(object sender, EventArgs e)
         {
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
         }
 
+        /// <summary>
+        /// Evento del combobox de unidad de contenido. Actualmente vacío — reservado por si se requiere lógica adicional.
+        /// </summary>
         private void cmbUnidadContenido_SelectedIndexChanged(object sender, EventArgs e)
         {
 
