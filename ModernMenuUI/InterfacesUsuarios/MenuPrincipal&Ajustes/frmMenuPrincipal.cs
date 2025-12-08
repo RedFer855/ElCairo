@@ -691,5 +691,10 @@ namespace ModernMenuUI
             ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "Bodega");
         }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
