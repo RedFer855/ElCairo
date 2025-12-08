@@ -7,10 +7,20 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Compras
 {
+    /// <summary>
+    /// Formulario para agregar o editar un proveedor.
+    /// Soporta modo creación y modo edición; realiza validaciones y persiste cambios mediante <see cref="ProveedorRepositorio"/>.
+    /// </summary>
     public partial class frmAgregarEditarProveedor : Form
     {
+        /// <summary>
+        /// Instancia del proveedor que se está editando. Si es null, el formulario está en modo creación.
+        /// </summary>
         private Proveedor _proveedorActual;
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="frmAgregarEditarProveedor"/> en modo creación.
+        /// </summary>
         public frmAgregarEditarProveedor()
         {
             InitializeComponent();
@@ -18,6 +28,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             btnEditarProveedor.Enabled = false;
         }
 
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="frmAgregarEditarProveedor"/> en modo edición con el proveedor proporcionado.
+        /// </summary>
+        /// <param name="proveedor">Proveedor a editar.</param>
         public frmAgregarEditarProveedor(Proveedor proveedor)
         {
             _proveedorActual = proveedor;
@@ -27,7 +41,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             btnGuardarProveedor.Enabled = false;
         }
 
-
+        /// <summary>
+        /// Establece los campos de texto como sólo lectura o editables, y ajusta su color de fondo.
+        /// </summary>
+        /// <param name="estado">True para poner los campos como sólo lectura; false para permitir edición.</param>
         private void SetReadOnlyMode(bool estado)
         {
             txtNombreProveedor.ReadOnly = estado;
@@ -41,7 +58,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             txtDireccion.BackColor = back;
         }
 
-
+        /// <summary>
+        /// Muestra un mensaje informativo cuando el usuario intenta editar campos bloqueados.
+        /// </summary>
         private void BloqueoMensaje_Click(object sender, EventArgs e)
         {
             if (txtNombreProveedor.ReadOnly)
@@ -51,11 +70,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
+        /// <summary>
+        /// Maneja la inicialización del formulario al cargarse. Configura la interfaz según el modo (nuevo/editar).
+        /// </summary>
         private void frmAgregarEditarProveedor_Load(object sender, EventArgs e)
         {
             if (_proveedorActual != null)
             {
-                // Modo EDITAR
                 clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "EDITAR PROVEEDOR");
 
                 txtNombreProveedor.Text = _proveedorActual.NombreProveedor;
@@ -77,7 +98,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
             else
             {
-                // Modo NUEVO
                 clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "GUARDAR PROVEEDOR");
 
                 btnEditarProveedor.Visible = false;
@@ -87,6 +107,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
+        /// <summary>
+        /// Activa la edición de los campos permitiendo guardar los cambios.
+        /// </summary>
         private void btnEditarProveedor_Click(object sender, EventArgs e)
         {
             SetReadOnlyMode(false);
@@ -100,6 +123,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 "Modo edición activado", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// Valida y guarda o actualiza el proveedor actual en la base de datos de forma asíncrona.
+        /// </summary>
         private async void btnGuardarProveedor_Click(object sender, EventArgs e)
         {
             btnGuardarProveedor.Enabled = false;
@@ -107,7 +133,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
             try
             {
-                // Armar proveedor temporal
                 Proveedor proveedorTemp = new Proveedor
                 {
                     NombreProveedor = txtNombreProveedor.Text.Trim(),

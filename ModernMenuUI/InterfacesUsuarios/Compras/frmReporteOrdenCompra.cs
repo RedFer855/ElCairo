@@ -1,9 +1,9 @@
 ﻿using CapaDominio.Reportes;
 using ClosedXML.Excel;
-using QuestPDF; // Agrega esta línea para importar el espacio de nombres donde está LicenseType
+using QuestPDF; 
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
-using QuestPDF.Infrastructure; // Agrega esta línea para importar el espacio de nombres de QuestPDF
+using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,15 +17,51 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Compras
 {
-
+    /// <summary>
+    /// Formulario para generar y exportar reportes de órdenes de compra en formato PDF y Excel.
+    /// Permite visualizar los detalles de la orden en un DataGridView y exportar a PDF o Excel con logo y totales.
+    /// </summary>
     public partial class frmReporteOrdenCompra : Form
     {
+        /// <summary>
+        /// Lista de items (artículos) que componen la orden de compra.
+        /// </summary>
         private List<OrdenCompra> _listaItems;
+
+        /// <summary>
+        /// Valor del subtotal formateado como string para incluir en el reporte.
+        /// </summary>
         private string _subtotal;
+
+        /// <summary>
+        /// Valor del impuesto formateado como string para incluir en el reporte.
+        /// </summary>
         private string _impuesto;
+
+        /// <summary>
+        /// Valor del total general formateado como string para incluir en el reporte.
+        /// </summary>
         private string _totalGeneral;
+
+        /// <summary>
+        /// Nombre del proveedor que aparecerá en la orden de compra.
+        /// </summary>
         private string _nombreProveedor;
+
+        /// <summary>
+        /// Nombre del usuario que genera la orden de compra.
+        /// </summary>
         private string _nombreUsuario;
+
+        /// <summary>
+        /// Inicializa una nueva instancia de <see cref="frmReporteOrdenCompra"/> con los datos de la orden de compra.
+        /// </summary>
+        /// <param name="items">Lista de items (productos) de la orden de compra.</param>
+        /// <param name="sub">Subtotal de la orden formateado como string.</param>
+        /// <param name="imp">Impuesto (ISV) de la orden formateado como string.</param>
+        /// <param name="total">Total general de la orden formateado como string.</param>
+        /// <param name="proveedor">Nombre del proveedor de la orden.</param>
+        /// <param name="usuario">Nombre del usuario que genera la orden.</param>
         public frmReporteOrdenCompra(List<OrdenCompra> items, string sub, string imp, string total, string proveedor, string usuario)
         {
             InitializeComponent();
@@ -38,10 +74,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
             QuestPDF.Settings.License = LicenseType.Community;
         }
+
+        /// <summary>
+        /// Obtiene el logo de la empresa desde los recursos del proyecto y lo convierte a bytes para su inserción en reportes.
+        /// </summary>
+        /// <returns>Array de bytes con la imagen del logo en formato PNG.</returns>
         private byte[] ObtenerLogoEnBytes()
         {
-            // 1. Obtener la imagen usando el nombre EXACTO del recurso
-            // (Fíjate que es el nombre que sale en la ventana .resx, no el nombre del archivo .png)
             var imagen = Properties.Resources.logo_ElCairo;
 
             using (var ms = new MemoryStream())
@@ -50,11 +89,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 return ms.ToArray();
             }
         }
+
+        /// <summary>
+        /// Evento que se ejecuta al cargar el formulario; inicializa el DataGridView con los items de la orden de compra.
+        /// </summary>
         private void frmReporteOrdenCompra_Load(object sender, EventArgs e)
         {
             dgvCarrito.DataSource = _listaItems;
 
-            // Ajustar columnas para que se vean bien
             dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvCarrito.Columns["TotalLinea"].HeaderText = "Total Línea";
@@ -62,6 +104,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             dgvCarrito.Columns["Precio"].HeaderText = "Precio Unitario";
         }
 
+        /// <summary>
+        /// Genera y exporta la orden de compra a un archivo PDF con encabezado, tabla de items, pie de página y logo.
+        /// El usuario selecciona la ubicación y nombre del archivo mediante un diálogo de guardado.
+        /// </summary>
         private void btnPDF_Click(object sender, EventArgs e)
         {
             string fechaActual = DateTime.Now.ToString("g");
@@ -75,21 +121,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 {
                     try
                     {
-                        // 1. OBTENER LOGO
                         byte[] logoBytes = null;
                         try { logoBytes = ObtenerLogoEnBytes(); } catch { }
 
-                        // 2. CREAR DOCUMENTO
                         var document = Document.Create(container =>
                         {
                             container.Page(page =>
                             {
                                 page.Margin(40);
 
-                                // --- 3. HEADER INVERTIDO (Texto izquierda, Logo derecha) ---
                                 page.Header().Row(row =>
                                 {
-                                    // A) COLUMNA IZQUIERDA: TEXTOS (Alineados a la Izquierda)
                                     row.RelativeItem().Column(col =>
                                     {
                                         col.Item().AlignLeft().Text("Orden de Compra")
@@ -105,16 +147,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                                             .FontSize(10).FontColor(Colors.Grey.Medium);
                                     });
 
-                                    // B) COLUMNA DERECHA: EL LOGO
                                     if (logoBytes != null)
                                     {
-                                        row.ConstantItem(20); // Espacio de separación
+                                        row.ConstantItem(20); 
                                         row.ConstantItem(80).Image(logoBytes, ImageScaling.FitArea);
                                     }
                                 });
-                                // ---------------------------------------------------------
 
-                                // 4. TABLA DE PRODUCTOS (Igual que antes)
                                 page.Content()
                                     .PaddingTop(20)
                                     .Table(table =>
@@ -147,7 +186,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                                         }
                                     });
 
-                                // 5. FOOTER
                                 page.Footer()
                                     .AlignRight()
                                     .Column(col =>
@@ -159,7 +197,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                             });
                         });
 
-                        // 6. GENERAR
                         document.GeneratePdf(sfd.FileName);
                         MessageBox.Show("¡Exportado a PDF con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Process.Start(new ProcessStartInfo(sfd.FileName) { UseShellExecute = true });
@@ -170,9 +207,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     }
                 }
             }
-
         }
 
+        /// <summary>
+        /// Genera y exporta la orden de compra a un archivo Excel con formato, logo, tabla de items y totales.
+        /// El usuario selecciona la ubicación y nombre del archivo mediante un diálogo de guardado.
+        /// </summary>
         private void btnExcel_Click(object sender, EventArgs e)
         {
             string fechaActual = DateTime.Now.ToString("g");
@@ -190,46 +230,36 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                         {
                             var worksheet = workbook.Worksheets.Add("OrdenCompra");
 
-                            // 👇 --- 1. AGREGAR LOGO (BLOQUE NUEVO) --- 👇
                             try
                             {
-                                // Obtenemos los bytes usando tu método auxiliar
                                 byte[] imagenBytes = ObtenerLogoEnBytes();
 
                                 using (var logoStream = new MemoryStream(imagenBytes))
                                 {
-                                    // Insertamos la imagen
                                     worksheet.AddPicture(logoStream)
-                                        .MoveTo(worksheet.Cell("E1")) // La ponemos en E1 (esquina derecha)
-                                        .Scale(0.15); // Ajusta el tamaño (0.15 = 15% del original)
+                                        .MoveTo(worksheet.Cell("E1")) 
+                                        .Scale(0.15); 
                                 }
                             }
                             catch
                             {
-                                // Si falla la imagen (no existe recurso), no hacemos nada y seguimos.
                             }
-                            // 👆 --------------------------------------- 👆
 
-                            // 2. Título y Fecha
                             worksheet.Cell("A1").Value = "Orden de Compra";
                             worksheet.Cell("A1").Style.Font.Bold = true;
                             worksheet.Cell("A1").Style.Font.FontSize = 16;
 
                             worksheet.Cell("A2").Value = $"Fecha de Emisión: {fechaActual}";
 
-                            // 3. Proveedor
                             worksheet.Cell("A3").Value = $"Proveedor: {_nombreProveedor}";
                             worksheet.Cell("A3").Style.Font.Bold = true;
 
-                            // 4. Usuario
                             worksheet.Cell("A4").Value = $"Generado por: {_nombreUsuario}";
                             worksheet.Cell("A4").Style.Font.Italic = true;
 
-                            // 5. Tabla (En A6)
                             worksheet.Cell("A6").InsertTable(_listaItems);
-
-                            // 6. Totales
                             int lastRow = worksheet.LastRowUsed().RowNumber();
+
                             worksheet.Cell(lastRow + 2, 4).Value = "Subtotal:";
                             worksheet.Cell(lastRow + 2, 5).Value = _subtotal;
                             worksheet.Cell(lastRow + 3, 4).Value = "Impuesto:";
@@ -237,7 +267,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                             worksheet.Cell(lastRow + 4, 4).Value = "Total General:";
                             worksheet.Cell(lastRow + 4, 5).Value = _totalGeneral;
 
-                            // Ajustar columnas
                             worksheet.Columns().AdjustToContents();
 
                             workbook.SaveAs(sfd.FileName);
@@ -252,10 +281,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     }
                 }
             }
-
         }
     }
-
-
-
 }
