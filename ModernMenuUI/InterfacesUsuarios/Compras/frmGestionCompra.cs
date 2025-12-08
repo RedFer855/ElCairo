@@ -519,7 +519,7 @@ namespace ModernMenuUI
                 this.Cursor = Cursors.Default;
                 dgvCarrito.Rows.Clear();
                 _proveedorSeleccionado = null;
-                txtBuscarProv.Text = "";
+                txtNombreProveedor.Text = "";
                 txtNuevoPrecio.Text = "";
                 nudCantidad.Value = 1;
                 _listaMaestraProductos.Clear();
@@ -581,10 +581,10 @@ namespace ModernMenuUI
             {
                 await Task.Delay(300, _ctsBusqueda.Token);
 
-                List<Proveedor> resultados = BuscarProveedores(txtBuscarProv.Text);
+                List<Proveedor> resultados = BuscarProveedores(txtNombreProveedor.Text);
                 List<Proveedor> top10 = resultados.Take(MAX_SUGGESTIONS).ToList();
 
-                if (resultados.Count > 0 && !string.IsNullOrEmpty(txtBuscarProv.Text))
+                if (resultados.Count > 0 && !string.IsNullOrEmpty(txtNombreProveedor.Text))
                 {
                     lstSugerencias.DataSource = null;
                     lstSugerencias.DataSource = top10;
@@ -630,8 +630,8 @@ namespace ModernMenuUI
                 if (lstSugerencias.SelectedItem != null)
                 {
                     Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
-                    txtBuscarProv.Text = proveedorSel?.NombreProveedor ?? "";
-                    txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
+                    txtNombreProveedor.Text = proveedorSel?.NombreProveedor ?? "";
+                    txtNombreProveedor.SelectionStart = txtNombreProveedor.Text.Length;
                     lstSugerencias.Visible = false;
                     _ctsBusqueda?.Cancel();
                     _proveedorSeleccionado = proveedorSel;
@@ -673,8 +673,8 @@ namespace ModernMenuUI
             if (lstSugerencias.SelectedItem != null)
             {
                 Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
-                txtBuscarProv.Text = proveedorSel?.NombreProveedor ?? "";
-                txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
+                txtNombreProveedor.Text = proveedorSel?.NombreProveedor ?? "";
+                txtNombreProveedor.SelectionStart = txtNombreProveedor.Text.Length;
                 lstSugerencias.Visible = false;
                 _ctsBusqueda?.Cancel();
                 _proveedorSeleccionado = proveedorSel;
@@ -689,9 +689,9 @@ namespace ModernMenuUI
                 if (proveedorSel != null)
                 {
                     _ignorarTextChanged = true;
-                    txtBuscarProv.Text = proveedorSel.NombreProveedor;
-                    txtBuscarProv.SelectionStart = txtBuscarProv.Text.Length;
-                    txtBuscarProv.SelectionLength = 0;
+                    txtNombreProveedor.Text = proveedorSel.NombreProveedor;
+                    txtNombreProveedor.SelectionStart = txtNombreProveedor.Text.Length;
+                    txtNombreProveedor.SelectionLength = 0;
                     _ignorarTextChanged = false;
 
                     lstSugerencias.Visible = false;
@@ -713,7 +713,7 @@ namespace ModernMenuUI
                 Proveedor proveedorSel = lstSugerencias.SelectedItem as Proveedor;
                 if (proveedorSel != null)
                 {
-                    txtBuscarProv.Text = proveedorSel.NombreProveedor;
+                    txtNombreProveedor.Text = proveedorSel.NombreProveedor;
                     lstSugerencias.Visible = false;
                     _proveedorSeleccionado = proveedorSel;
                 }
@@ -739,7 +739,7 @@ namespace ModernMenuUI
         // Método helper para evitar duplicación entre dos botones que hacían lo mismo.
         private async Task HandleBuscarProveedorAsync()
         {
-            string nombre = txtBuscarProv.Text?.Trim() ?? "";
+            string nombre = txtNombreProveedor.Text?.Trim() ?? "";
 
             if (string.IsNullOrEmpty(nombre))
             {
@@ -810,7 +810,19 @@ namespace ModernMenuUI
 
         private async void btnBuscarProv_Click(object sender, EventArgs e)
         {
-            //await HandleBuscarProveedorAsync();
+            using (var frm = new frmProveedor())
+            {
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    var prov = frm.ProveedorSeleccionado;
+                    txtNombreProveedor.Text = prov.NombreProveedor;
+
+                    // Aquí puedes llamar al método que trae productos del proveedor:
+                    await HandleBuscarProveedorAsync(); // (o el equivalente que ya tienes)
+                }
+            }
+
         }
         #endregion
 
@@ -826,11 +838,11 @@ namespace ModernMenuUI
 
             // 2. VALIDAR QUE HAYA ALGO ESCRITO EN EL TEXTBOX
             // Ahora validamos el texto visual, no la variable interna
-            if (string.IsNullOrWhiteSpace(txtBuscarProv.Text))
+            if (string.IsNullOrWhiteSpace(txtNombreProveedor.Text))
             {
                 MessageBox.Show("Por favor escriba o seleccione un proveedor antes de generar el reporte.",
                                 "Falta Proveedor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtBuscarProv.Focus();
+                txtNombreProveedor.Focus();
                 return;
             }
 
@@ -872,7 +884,7 @@ namespace ModernMenuUI
             string total = txtTotal.Text;
 
             // 6. OBTENER EL PROVEEDOR
-            string nombreProveedor = txtBuscarProv.Text.Trim();
+            string nombreProveedor = txtNombreProveedor.Text.Trim();
 
             // 7. CREAR Y MOSTRAR EL REPORTE
             frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(

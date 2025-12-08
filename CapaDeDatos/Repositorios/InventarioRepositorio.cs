@@ -25,9 +25,7 @@ namespace CapaDeDatos.Repositorios
             {
                 var client = await GetClient();
                 var queryBuilder = client.From<Inventario>();
-
-                queryBuilder.Select("*, producto(*), bodega(*)");
-
+                queryBuilder.Select("*, producto(*, marca(*), categoria(*), presentacion(*)), bodega(*)");
                 queryBuilder.Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
 
                 var response = await queryBuilder.Get(cancellationToken);
@@ -40,7 +38,7 @@ namespace CapaDeDatos.Repositorios
             }
             catch (Exception ex)
             {
-                throw;// new Exception("No se pudo cargar el inventario. Verifique la conexión.", ex);
+                throw new Exception("No se pudo cargar el inventario. Verifique la conexión.", ex);
             }
         }
 

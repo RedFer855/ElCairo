@@ -30,39 +30,43 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
             panel1 = new Panel();
             panel10 = new Panel();
             dgvClientes = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Correo = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
             Dni = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            PorcentajeGanancia = new DataGridViewTextBoxColumn();
+            Correo = new DataGridViewTextBoxColumn();
             RTN = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            EstadoCliente = new DataGridViewCheckBoxColumn();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
             btnbuscar = new Button();
-            groupBox1 = new GroupBox();
-            rdbDeshabilitados = new RadioButton();
-            rdbHabilitados = new RadioButton();
-            rdbTodos = new RadioButton();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            btnFactura = new Button();
+            gbxEstado = new GroupBox();
+            rbDeshabilitados = new RadioButton();
+            rbHabilitados = new RadioButton();
+            rbTodos = new RadioButton();
+            btnSeleccionarCliente = new Button();
             btnSalir = new Button();
-            btnEditar = new Button();
-            btnCliente = new Button();
+            btnVerCliente = new Button();
+            btnAgregarCliente = new Button();
+            lstSugerencias = new ListBox();
+            pnlLimpiarFiltros = new Panel();
+            btnLimpiarFiltros = new Button();
+            pbxClean = new PictureBox();
+            fwBotones = new FlowLayoutPanel();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvClientes).BeginInit();
             panelBusqueda.SuspendLayout();
-            groupBox1.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            gbxEstado.SuspendLayout();
+            pnlLimpiarFiltros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxClean).BeginInit();
+            fwBotones.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -70,9 +74,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
-            panel1.Location = new Point(14, 145);
+            panel1.Location = new Point(12, 121);
             panel1.Name = "panel1";
-            panel1.Size = new Size(739, 388);
+            panel1.Size = new Size(669, 350);
             panel1.TabIndex = 33;
             // 
             // panel10
@@ -82,7 +86,7 @@
             panel10.Controls.Add(dgvClientes);
             panel10.Location = new Point(16, 19);
             panel10.Name = "panel10";
-            panel10.Size = new Size(702, 350);
+            panel10.Size = new Size(632, 312);
             panel10.TabIndex = 17;
             // 
             // dgvClientes
@@ -108,16 +112,16 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvClientes.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Correo, dataGridViewTextBoxColumn4, PorcentajeGanancia, Dni, RTN });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle4.Padding = new Padding(5);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvClientes.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvClientes.Columns.AddRange(new DataGridViewColumn[] { Dni, dataGridViewTextBoxColumn2, PorcentajeGanancia, Correo, RTN, dataGridViewTextBoxColumn4, EstadoCliente });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvClientes.DefaultCellStyle = dataGridViewCellStyle3;
             dgvClientes.Dock = DockStyle.Fill;
             dgvClientes.EnableHeadersVisualStyles = false;
             dgvClientes.GridColor = Color.FromArgb(189, 215, 238);
@@ -125,57 +129,78 @@
             dgvClientes.Name = "dgvClientes";
             dgvClientes.ReadOnly = true;
             dgvClientes.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvClientes.RowHeadersWidth = 30;
             dgvClientes.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.BackColor = Color.White;
-            dataGridViewCellStyle6.ForeColor = Color.Teal;
-            dataGridViewCellStyle6.SelectionBackColor = Color.Teal;
-            dataGridViewCellStyle6.SelectionForeColor = Color.White;
-            dgvClientes.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvClientes.RowTemplate.Height = 50;
-            dgvClientes.Size = new Size(702, 350);
+            dgvClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvClientes.Size = new Size(632, 312);
             dgvClientes.TabIndex = 1;
+            dgvClientes.CellDoubleClick += dgvClientes_CellDoubleClick;
             dgvClientes.SelectionChanged += dgvClientes_SelectionChanged;
             // 
-            // dataGridViewTextBoxColumn1
+            // Dni
             // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "IdCliente";
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 50F;
-            dataGridViewTextBoxColumn1.HeaderText = "Id";
-            dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
+            Dni.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Dni.DataPropertyName = "DniCliente";
+            Dni.HeaderText = "DNI";
+            Dni.MinimumWidth = 6;
+            Dni.Name = "Dni";
+            Dni.ReadOnly = true;
+            Dni.Width = 70;
             // 
             // dataGridViewTextBoxColumn2
             // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewTextBoxColumn2.DataPropertyName = "NombreCliente";
             dataGridViewTextBoxColumn2.FillWeight = 70F;
-            dataGridViewTextBoxColumn2.HeaderText = "NombreEmpleado";
+            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 96;
+            // 
+            // PorcentajeGanancia
+            // 
+            PorcentajeGanancia.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            PorcentajeGanancia.DataPropertyName = "TelefonoCliente";
+            PorcentajeGanancia.FillWeight = 80F;
+            PorcentajeGanancia.HeaderText = "Teléfono";
+            PorcentajeGanancia.MinimumWidth = 6;
+            PorcentajeGanancia.Name = "PorcentajeGanancia";
+            PorcentajeGanancia.ReadOnly = true;
+            PorcentajeGanancia.Width = 101;
             // 
             // Correo
             // 
+            Correo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             Correo.DataPropertyName = "CorreoCliente";
             Correo.HeaderText = "Correo";
             Correo.MinimumWidth = 6;
             Correo.Name = "Correo";
             Correo.ReadOnly = true;
+            Correo.Width = 88;
+            // 
+            // RTN
+            // 
+            RTN.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            RTN.DataPropertyName = "RtnCliente";
+            RTN.HeaderText = "RTN";
+            RTN.MinimumWidth = 6;
+            RTN.Name = "RTN";
+            RTN.ReadOnly = true;
+            RTN.Width = 72;
             // 
             // dataGridViewTextBoxColumn4
             // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewTextBoxColumn4.DataPropertyName = "DireccionCliente";
             dataGridViewTextBoxColumn4.FillWeight = 70F;
             dataGridViewTextBoxColumn4.HeaderText = "Dirección";
@@ -183,30 +208,16 @@
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
-            // PorcentajeGanancia
+            // EstadoCliente
             // 
-            PorcentajeGanancia.DataPropertyName = "TelefonoCliente";
-            PorcentajeGanancia.FillWeight = 80F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.MinimumWidth = 6;
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            PorcentajeGanancia.ReadOnly = true;
-            // 
-            // DniEmpleado
-            // 
-            Dni.DataPropertyName = "DniCliente";
-            Dni.HeaderText = "DniEmpleado";
-            Dni.MinimumWidth = 6;
-            Dni.Name = "DniEmpleado";
-            Dni.ReadOnly = true;
-            // 
-            // RTN
-            // 
-            RTN.DataPropertyName = "RtnCliente";
-            RTN.HeaderText = "RTN";
-            RTN.MinimumWidth = 6;
-            RTN.Name = "RTN";
-            RTN.ReadOnly = true;
+            EstadoCliente.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoCliente.DataPropertyName = "EstadoCliente";
+            EstadoCliente.HeaderText = "Estado";
+            EstadoCliente.Name = "EstadoCliente";
+            EstadoCliente.ReadOnly = true;
+            EstadoCliente.Resizable = DataGridViewTriState.True;
+            EstadoCliente.SortMode = DataGridViewColumnSortMode.Automatic;
+            EstadoCliente.Width = 89;
             // 
             // panelBusqueda
             // 
@@ -214,9 +225,11 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(12, 24);
+            panelBusqueda.Location = new Point(12, 13);
+            panelBusqueda.MaximumSize = new Size(885, 43);
+            panelBusqueda.MinimumSize = new Size(250, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(739, 43);
+            panelBusqueda.Size = new Size(498, 43);
             panelBusqueda.TabIndex = 37;
             // 
             // txtBuscar
@@ -227,8 +240,11 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Clientes...";
-            txtBuscar.Size = new Size(651, 20);
+            txtBuscar.Size = new Size(410, 20);
             txtBuscar.TabIndex = 1;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
+            txtBuscar.Leave += txtBuscar_Leave;
             // 
             // btnbuscar
             // 
@@ -238,89 +254,74 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(675, 12);
+            btnbuscar.Location = new Point(434, 12);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
+            btnbuscar.Click += btnBuscar_Click;
             // 
-            // groupBox1
+            // gbxEstado
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(rdbDeshabilitados);
-            groupBox1.Controls.Add(rdbHabilitados);
-            groupBox1.Controls.Add(rdbTodos);
-            groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.ForeColor = SystemColors.ControlDarkDark;
-            groupBox1.Location = new Point(12, 86);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(742, 53);
-            groupBox1.TabIndex = 38;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Filtro";
+            gbxEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            gbxEstado.Controls.Add(rbDeshabilitados);
+            gbxEstado.Controls.Add(rbHabilitados);
+            gbxEstado.Controls.Add(rbTodos);
+            gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxEstado.ForeColor = SystemColors.ControlDarkDark;
+            gbxEstado.Location = new Point(11, 62);
+            gbxEstado.Name = "gbxEstado";
+            gbxEstado.Size = new Size(670, 53);
+            gbxEstado.TabIndex = 38;
+            gbxEstado.TabStop = false;
+            gbxEstado.Text = "Filtro";
             // 
-            // rdbDeshabilitados
+            // rbDeshabilitados
             // 
-            rdbDeshabilitados.AutoSize = true;
-            rdbDeshabilitados.Location = new Point(341, 21);
-            rdbDeshabilitados.Name = "rdbDeshabilitados";
-            rdbDeshabilitados.Size = new Size(178, 22);
-            rdbDeshabilitados.TabIndex = 30;
-            rdbDeshabilitados.Text = "Mostrar Deshabilitados";
-            rdbDeshabilitados.UseVisualStyleBackColor = true;
+            rbDeshabilitados.AutoSize = true;
+            rbDeshabilitados.Location = new Point(306, 21);
+            rbDeshabilitados.Name = "rbDeshabilitados";
+            rbDeshabilitados.Size = new Size(178, 22);
+            rbDeshabilitados.TabIndex = 30;
+            rbDeshabilitados.Text = "Mostrar Deshabilitados";
+            rbDeshabilitados.UseVisualStyleBackColor = true;
             // 
-            // rdbHabilitados
+            // rbHabilitados
             // 
-            rdbHabilitados.AutoSize = true;
-            rdbHabilitados.Checked = true;
-            rdbHabilitados.Location = new Point(158, 21);
-            rdbHabilitados.Name = "rdbHabilitados";
-            rdbHabilitados.Size = new Size(156, 22);
-            rdbHabilitados.TabIndex = 29;
-            rdbHabilitados.TabStop = true;
-            rdbHabilitados.Text = "Mostrar Habilitados";
-            rdbHabilitados.UseVisualStyleBackColor = true;
+            rbHabilitados.AutoSize = true;
+            rbHabilitados.Checked = true;
+            rbHabilitados.Location = new Point(18, 21);
+            rbHabilitados.Name = "rbHabilitados";
+            rbHabilitados.Size = new Size(156, 22);
+            rbHabilitados.TabIndex = 29;
+            rbHabilitados.TabStop = true;
+            rbHabilitados.Text = "Mostrar Habilitados";
+            rbHabilitados.UseVisualStyleBackColor = true;
             // 
-            // rdbTodos
+            // rbTodos
             // 
-            rdbTodos.AutoSize = true;
-            rdbTodos.Location = new Point(18, 21);
-            rdbTodos.Name = "rdbTodos";
-            rdbTodos.Size = new Size(120, 22);
-            rdbTodos.TabIndex = 28;
-            rdbTodos.Text = "Mostrar Todos";
-            rdbTodos.UseVisualStyleBackColor = true;
+            rbTodos.AutoSize = true;
+            rbTodos.Location = new Point(180, 21);
+            rbTodos.Name = "rbTodos";
+            rbTodos.Size = new Size(120, 22);
+            rbTodos.TabIndex = 28;
+            rbTodos.Text = "Mostrar Todos";
+            rbTodos.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // btnSeleccionarCliente
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel1.Controls.Add(btnFactura, 0, 1);
-            tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel1.Controls.Add(btnEditar, 1, 1);
-            tableLayoutPanel1.Controls.Add(btnCliente, 0, 0);
-            tableLayoutPanel1.Location = new Point(14, 549);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(322, 100);
-            tableLayoutPanel1.TabIndex = 39;
-            // 
-            // btnFactura
-            // 
-            btnFactura.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnFactura.BackColor = Color.FromArgb(149, 195, 172);
-            btnFactura.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnFactura.ForeColor = SystemColors.ButtonFace;
-            btnFactura.Location = new Point(3, 53);
-            btnFactura.Name = "btnFactura";
-            btnFactura.Size = new Size(193, 44);
-            btnFactura.TabIndex = 23;
-            btnFactura.Text = "Factura con Cliente";
-            btnFactura.UseVisualStyleBackColor = false;
+            btnSeleccionarCliente.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSeleccionarCliente.BackColor = Color.FromArgb(149, 195, 172);
+            btnSeleccionarCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSeleccionarCliente.ForeColor = SystemColors.ButtonFace;
+            btnSeleccionarCliente.Location = new Point(204, 3);
+            btnSeleccionarCliente.Name = "btnSeleccionarCliente";
+            btnSeleccionarCliente.Size = new Size(193, 44);
+            btnSeleccionarCliente.TabIndex = 23;
+            btnSeleccionarCliente.Text = "Seleccionar Cliente";
+            btnSeleccionarCliente.UseVisualStyleBackColor = false;
+            btnSeleccionarCliente.Visible = false;
+            btnSeleccionarCliente.Click += btnSeleccionarCliente_Click;
             // 
             // btnSalir
             // 
@@ -329,54 +330,126 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(204, 3);
+            btnSalir.Location = new Point(519, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(115, 44);
+            btnSalir.Size = new Size(82, 44);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
-            // btnEditar
+            // btnVerCliente
             // 
-            btnEditar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnEditar.BackColor = Color.FromArgb(189, 215, 238);
-            btnEditar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnEditar.ForeColor = Color.FromArgb(87, 99, 110);
-            btnEditar.Location = new Point(204, 53);
-            btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(115, 44);
-            btnEditar.TabIndex = 20;
-            btnEditar.Text = "Editar Cliente";
-            btnEditar.UseVisualStyleBackColor = false;
-            btnEditar.Click += btnEditar_Click;
+            btnVerCliente.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVerCliente.BackColor = Color.FromArgb(189, 215, 238);
+            btnVerCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnVerCliente.ForeColor = Color.FromArgb(87, 99, 110);
+            btnVerCliente.Location = new Point(403, 3);
+            btnVerCliente.Name = "btnVerCliente";
+            btnVerCliente.Size = new Size(110, 44);
+            btnVerCliente.TabIndex = 20;
+            btnVerCliente.Text = "Ver Cliente";
+            btnVerCliente.UseVisualStyleBackColor = false;
+            btnVerCliente.Click += btnVerCliente_Click;
             // 
-            // btnCliente
+            // btnAgregarCliente
             // 
-            btnCliente.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnCliente.BackColor = Color.FromArgb(149, 195, 172);
-            btnCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCliente.ForeColor = SystemColors.ButtonFace;
-            btnCliente.Location = new Point(3, 3);
-            btnCliente.Name = "btnCliente";
-            btnCliente.Size = new Size(195, 44);
-            btnCliente.TabIndex = 22;
-            btnCliente.Text = "Agregar Cliente";
-            btnCliente.UseVisualStyleBackColor = false;
-            btnCliente.Click += btnCliente_Click;
+            btnAgregarCliente.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnAgregarCliente.BackColor = Color.FromArgb(149, 195, 172);
+            btnAgregarCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarCliente.ForeColor = SystemColors.ButtonFace;
+            btnAgregarCliente.Location = new Point(3, 3);
+            btnAgregarCliente.Name = "btnAgregarCliente";
+            btnAgregarCliente.Size = new Size(195, 44);
+            btnAgregarCliente.TabIndex = 22;
+            btnAgregarCliente.Text = "Agregar Cliente";
+            btnAgregarCliente.UseVisualStyleBackColor = false;
+            btnAgregarCliente.Click += btnAgregarCliente_Click;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 19;
+            lstSugerencias.Location = new Point(30, 46);
+            lstSugerencias.MaximumSize = new Size(800, 400);
+            lstSugerencias.MinimumSize = new Size(165, 23);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(410, 23);
+            lstSugerencias.TabIndex = 40;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(516, 13);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(166, 43);
+            pnlLimpiarFiltros.TabIndex = 41;
+            pnlLimpiarFiltros.Visible = false;
+            // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(3, 5);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(117, 32);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(121, 8);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(45, 24);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
+            // 
+            // fwBotones
+            // 
+            fwBotones.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            fwBotones.Controls.Add(btnAgregarCliente);
+            fwBotones.Controls.Add(btnSeleccionarCliente);
+            fwBotones.Controls.Add(btnVerCliente);
+            fwBotones.Controls.Add(btnSalir);
+            fwBotones.Location = new Point(12, 477);
+            fwBotones.MinimumSize = new Size(670, 52);
+            fwBotones.Name = "fwBotones";
+            fwBotones.Size = new Size(670, 52);
+            fwBotones.TabIndex = 42;
             // 
             // frmClientes
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(766, 679);
-            Controls.Add(tableLayoutPanel1);
-            Controls.Add(groupBox1);
+            BackColor = Color.White;
+            ClientSize = new Size(694, 541);
+            Controls.Add(fwBotones);
+            Controls.Add(pnlLimpiarFiltros);
+            Controls.Add(lstSugerencias);
+            Controls.Add(gbxEstado);
             Controls.Add(panelBusqueda);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmClientes";
-            Text = "frmClientes";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Clientes";
             FormClosing += frmClientes_FormClosing;
             Load += frmClientes_Load;
             panel1.ResumeLayout(false);
@@ -384,9 +457,11 @@
             ((System.ComponentModel.ISupportInitialize)dgvClientes).EndInit();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
+            gbxEstado.ResumeLayout(false);
+            gbxEstado.PerformLayout();
+            pnlLimpiarFiltros.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxClean).EndInit();
+            fwBotones.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -398,21 +473,25 @@
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button btnbuscar;
-        private GroupBox groupBox1;
-        private RadioButton rdbDeshabilitados;
-        private RadioButton rdbHabilitados;
-        private RadioButton rdbTodos;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Button btnCliente;
-        private Button btnEditar;
+        private GroupBox gbxEstado;
+        private RadioButton rbDeshabilitados;
+        private RadioButton rbHabilitados;
+        private RadioButton rbTodos;
+        private Button btnAgregarCliente;
+        private Button btnVerCliente;
         private Button btnSalir;
-        private Button btnFactura;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Correo;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn PorcentajeGanancia;
+        private Button btnSeleccionarCliente;
+        private ListBox lstSugerencias;
+        private Panel pnlLimpiarFiltros;
+        private Button btnLimpiarFiltros;
+        private PictureBox pbxClean;
+        private FlowLayoutPanel fwBotones;
         private DataGridViewTextBoxColumn Dni;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn PorcentajeGanancia;
+        private DataGridViewTextBoxColumn Correo;
         private DataGridViewTextBoxColumn RTN;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewCheckBoxColumn EstadoCliente;
     }
 }

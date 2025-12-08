@@ -36,6 +36,7 @@ namespace ModernMenuUI
 {
     public partial class frmFacturacion : Form
     {
+        private bool _bloquearSugerencias = false;
         private readonly ProductoRepositorio _productoRepo;
         private Supabase.Client? _supabaseClient;
         private RealtimeChannel? _productoSubscription;
@@ -44,6 +45,7 @@ namespace ModernMenuUI
         private ClienteRepositorio _clienteRepo = new ClienteRepositorio();
         private List<Cliente> _todosLosClientes = new List<Cliente>(); // La caché
         private Cliente _clienteSeleccionado = null; // Aquí guardaremos al elegido
+      
 
         public frmFacturacion()
         {
@@ -559,20 +561,23 @@ namespace ModernMenuUI
         }
         private void txtCliente_TextChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show("Clientes cargados: " + _todosLosClientes.Count);
+            // Si el cambio lo causó el programa → NO mostrar sugerencias
+            if (_bloquearSugerencias)
+                return;
+
             string texto = txtCliente.Text.ToLower().Trim();
 
             if (string.IsNullOrEmpty(texto))
             {
                 lstClientes.Visible = false;
-                _clienteSeleccionado = null; // Limpiamos si borra el texto
+                _clienteSeleccionado = null;
                 return;
             }
 
-            // Filtramos la lista en memoria
             var resultados = _todosLosClientes
                 .Where(c => c.NombreCliente.ToLower().Contains(texto))
                 .ToList();
+
             if (resultados.Count > 0)
             {
                 lstClientes.DataSource = null;
@@ -580,7 +585,6 @@ namespace ModernMenuUI
                 lstClientes.DisplayMember = "NombreCliente";
                 lstClientes.ValueMember = "IdCliente";
 
-                // Ajuste visual de altura
                 int alturaItem = lstClientes.ItemHeight;
                 lstClientes.Height = Math.Min((resultados.Count * alturaItem) + 10, 150);
 
@@ -591,6 +595,7 @@ namespace ModernMenuUI
                 lstClientes.Visible = false;
             }
         }
+
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
@@ -981,6 +986,27 @@ namespace ModernMenuUI
             servicioImpresion.ImprimirTicket(factura, logo);
             */
         }
+
+        private void btnBuscarCliente_Click(object sender, EventArgs e)
+        {
+            frmClientes selector = new frmClientes(true);
+
+            if (selector.ShowDialog() == DialogResult.OK)
+            {
+                Cliente seleccionado = selector._clienteSeleccionadoFinal;
+
+                if (seleccionado != null)
+                {
+                    _bloquearSugerencias = true;             // 🔥 BLOQUEAR sugerencias temporalmente
+                    txtCliente.Text = seleccionado.NombreCliente;
+                    _clienteSeleccionado = seleccionado;
+
+                    lstClientes.Visible = false;             // Asegurar que no aparezca
+                    _bloquearSugerencias = false;            // 🔥 Volver a permitir sugerencias
+                }
+            }
+        }
+
     }
 }
 

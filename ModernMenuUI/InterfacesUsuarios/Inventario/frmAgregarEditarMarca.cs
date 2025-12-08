@@ -57,7 +57,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private void btnBuscarProv_Click(object sender, EventArgs e)
         {
-            using (var formSeleccion = new frmProveedor(true))
+            using (var formSeleccion = new frmProveedor())
             {
                 if (formSeleccion.ShowDialog() == DialogResult.OK)
                 {
@@ -147,5 +147,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             btnGuardarMarca.Visible = true;
             btnModificarMarca.Visible = false;
         }
+
+
     }
 }

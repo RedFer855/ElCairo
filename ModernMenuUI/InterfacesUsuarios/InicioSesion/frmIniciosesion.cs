@@ -76,21 +76,7 @@ namespace ModernMenuUI
 
                     if (usuario != null)
                     {
-                        lblMensajeError.ForeColor = Color.DarkGray;
-                        lblMensajeError.Text = "Conectando al servidor...";
-                        lblMensajeError.Visible = true;
-
-                        await Task.Delay(300);
-
-                        lblMensajeError.Text = "Verificando credenciales...";
-                        await Task.Delay(300);
-
-                        lblMensajeError.Text = "Validando Permisos...";
-                        await Task.Delay(300);
-
-                        lblMensajeError.ForeColor = Color.Green;
-                        lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
-                        await Task.Delay(100);
+                        AnimacionInicio();
 
                         try
                         {
@@ -362,40 +348,27 @@ namespace ModernMenuUI
             // 2. Huella y Login
             if (await _biometrico.VerificarIdentidad($"Hola {ultimoEmail}, confirma."))
             {
+                btnAcceder.Enabled = false;
+                btnBiometrico.Enabled = false;
                 btnBiometrico.Enabled = false;
                 try
                 {
-                    
-                    pbxCargando.Visible = true;
-                    lblMensajeError.Visible = true;
-                    lblMensajeError.ForeColor = Color.DarkGray;
-                    lblMensajeError.Text = "Conectando al servidor...";
-
-                    // Recuperar token y Loguear en Supabase
+                    AnimacionInicio();
                     string token = _biometrico.ObtenerTokenGuardado(ultimoEmail);
                     if (string.IsNullOrEmpty(token)) throw new Exception("Sin credencial.");
 
                     var usuarioSupabase = await _usuarioRepo.IniciarSesionConToken(token);
 
-                    // Cargar Permisos (Tu lógica de siempre)
-                    lblMensajeError.Text = "Validando Permisos...";
                     var validacionRepo = new ValidacionRolRepositorio();
                     var contexto = await validacionRepo.ConstruirContexto(usuarioSupabase.Id);
                     ServicioSesionUsuario.IniciarSesion(usuarioSupabase, contexto);
 
-                    // Actualizar token (Rolling)
                     var cliente = await CapaDeDatos.Datos.Conexion.GetClientAsync();
                     if (cliente.Auth.CurrentSession != null)
                     {
                         _biometrico.GuardarTokenSeguro(ultimoEmail, cliente.Auth.CurrentSession.RefreshToken);
                     }
-                    await Task.Delay(100);
 
-                    // Navegar
-                    pbxCargando.Visible = false;
-                    lblMensajeError.ForeColor = Color.Green;
-                    lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
-                    await Task.Delay(300);
                     this.Visible = false;
                     new frmInicioBodega().ShowDialog();
                     btnBiometrico.Enabled = true;
@@ -410,8 +383,37 @@ namespace ModernMenuUI
                     _biometrico.BorrarToken(ultimoEmail);
                     btnBiometrico.Enabled = true;
                 }
-                finally { this.Cursor = Cursors.Default; }
+                finally 
+                { 
+                    this.Cursor = Cursors.Default;
+                    pbxCargando.Visible = false;
+                    btnAcceder.Enabled = true;
+                    btnBiometrico.Enabled = true;
+                }
             }
+
+
+
+        }
+
+        private async void AnimacionInicio()
+        {
+            pbxCargando.Visible = true;
+            lblMensajeError.ForeColor = Color.DarkGray;
+            lblMensajeError.Text = "Conectando al servidor...";
+            lblMensajeError.Visible = true;
+
+            await Task.Delay(300);
+
+            lblMensajeError.Text = "Verificando credenciales...";
+            await Task.Delay(300);
+
+            lblMensajeError.Text = "Validando Permisos...";
+            await Task.Delay(300);
+
+            lblMensajeError.ForeColor = Color.Green;
+            lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
+            await Task.Delay(100);
         }
     }
 }

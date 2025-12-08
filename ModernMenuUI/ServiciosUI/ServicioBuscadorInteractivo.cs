@@ -56,27 +56,24 @@ namespace ModernMenuUI.ServiciosUI
             _gestorLogico = new GestorBusqueda<T>(nuevosDatos);
         }
 
-        // --- EVENTO 1: KeyUp (Manual) ---
         public async Task ManejarKeyUpAsync(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) return;
 
-            // 1. Cancelamos cualquier búsqueda anterior
             _cts?.Cancel();
             _cts = new CancellationTokenSource();
 
             try
             {
-                // 2. Esperamos 300ms
+
                 await Task.Delay(300, _cts.Token);
 
-                // 3. Ejecutamos búsqueda (Mostrar Sugerencias)
+
                 EjecutarBusqueda(forzarGrid: false);
             }
             catch (TaskCanceledException) { }
         }
 
-        // --- EVENTO 2: KeyDown (Escáner/Navegación) ---
         public void ManejarKeyDown(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -101,7 +98,6 @@ namespace ModernMenuUI.ServiciosUI
                 return;
             }
 
-            // Navegación flechas
             if (_lstSugerencias.Visible)
             {
                 if (e.KeyCode == Keys.Down)
@@ -127,7 +123,6 @@ namespace ModernMenuUI.ServiciosUI
             if (!_lstSugerencias.Focused) _lstSugerencias.Visible = false;
         }
 
-        // --- LÓGICA PRIVADA ---
         private void EjecutarBusqueda(bool forzarGrid)
         {
             var texto = _txtBuscar.Text.Trim();
@@ -149,7 +144,6 @@ namespace ModernMenuUI.ServiciosUI
                     _lstSugerencias.Visible = false;
                     _notificadorEstado?.Invoke(true); // Mostrar botón limpiar
 
-                    // CAMBIO: Si encontró algo con escáner/Enter, limpiamos la caja también
                     _txtBuscar.Clear();
                 }
                 else
@@ -167,7 +161,16 @@ namespace ModernMenuUI.ServiciosUI
             else
             {
                 _lstSugerencias.Visible = false;
-                if (forzarGrid) MessageBox.Show("No se encontraron resultados.");
+                if (forzarGrid)
+                {
+                    MessageBox.Show(
+                        "No se encontraron resultados.",
+                        "Información",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+                }
+
             }
         }
 

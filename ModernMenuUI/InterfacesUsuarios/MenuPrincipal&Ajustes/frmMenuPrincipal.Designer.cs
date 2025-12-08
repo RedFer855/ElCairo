@@ -100,6 +100,8 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            pbxCalculadora = new PictureBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
             panel5 = new Panel();
             label1 = new Label();
@@ -110,8 +112,6 @@
             Anaquel = new DataGridViewTextBoxColumn();
             StockTotal = new DataGridViewTextBoxColumn();
             StockMinimo = new DataGridViewTextBoxColumn();
-            pbxCalculadora = new PictureBox();
-            tableLayoutPanel1 = new TableLayoutPanel();
             chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             lblHora = new Label();
@@ -136,11 +136,11 @@
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducto).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
-            tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)chart2).BeginInit();
             panelNotificaciones.SuspendLayout();
@@ -1028,7 +1028,6 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
-            panelFormHijo.Controls.Add(panel4);
             panelFormHijo.Controls.Add(pbxCalculadora);
             panelFormHijo.Controls.Add(tableLayoutPanel1);
             panelFormHijo.Controls.Add(lblHora);
@@ -1039,20 +1038,56 @@
             panelFormHijo.Size = new Size(934, 696);
             panelFormHijo.TabIndex = 2;
             // 
+            // pbxCalculadora
+            // 
+            pbxCalculadora.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbxCalculadora.Image = Properties.Resources.calculadora;
+            pbxCalculadora.Location = new Point(829, 13);
+            pbxCalculadora.Margin = new Padding(10);
+            pbxCalculadora.Name = "pbxCalculadora";
+            pbxCalculadora.Size = new Size(86, 100);
+            pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxCalculadora.TabIndex = 6;
+            pbxCalculadora.TabStop = false;
+            pbxCalculadora.Click += pbxCalculadora_Click;
+            pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
+            pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(panel4, 0, 1);
+            tableLayoutPanel1.Controls.Add(chart1, 0, 0);
+            tableLayoutPanel1.Controls.Add(chart2, 1, 0);
+            tableLayoutPanel1.Location = new Point(20, 13);
+            tableLayoutPanel1.MinimumSize = new Size(550, 200);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(796, 654);
+            tableLayoutPanel1.TabIndex = 35;
+            // 
             // panel4
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel4.BackColor = Color.FromArgb(189, 215, 238);
+            tableLayoutPanel1.SetColumnSpan(panel4, 2);
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(dgvProducto);
             panel4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panel4.Location = new Point(20, 26);
+            panel4.Location = new Point(0, 327);
+            panel4.Margin = new Padding(0, 0, 0, 10);
             panel4.Name = "panel4";
-            panel4.Size = new Size(796, 281);
+            panel4.Size = new Size(796, 317);
             panel4.TabIndex = 36;
             // 
             // panel5
             // 
+            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel5.BackColor = Color.FromArgb(148, 168, 187);
             panel5.Controls.Add(label1);
             panel5.Location = new Point(20, 10);
@@ -1122,7 +1157,7 @@
             dgvProducto.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProducto.RowTemplate.Height = 50;
             dgvProducto.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducto.Size = new Size(759, 216);
+            dgvProducto.Size = new Size(759, 252);
             dgvProducto.TabIndex = 14;
             // 
             // Codigo
@@ -1186,37 +1221,6 @@
             StockMinimo.ReadOnly = true;
             StockMinimo.Width = 130;
             // 
-            // pbxCalculadora
-            // 
-            pbxCalculadora.Image = Properties.Resources.calculadora;
-            pbxCalculadora.Location = new Point(829, 22);
-            pbxCalculadora.Margin = new Padding(10);
-            pbxCalculadora.Name = "pbxCalculadora";
-            pbxCalculadora.Size = new Size(86, 100);
-            pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
-            pbxCalculadora.TabIndex = 6;
-            pbxCalculadora.TabStop = false;
-            pbxCalculadora.Click += pbxCalculadora_Click;
-            pbxCalculadora.MouseDown += pbxCalculadora_MouseDown;
-            pbxCalculadora.MouseUp += pbxCalculadora_MouseUp;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(chart1, 0, 0);
-            tableLayoutPanel1.Controls.Add(chart2, 1, 0);
-            tableLayoutPanel1.Location = new Point(20, 313);
-            tableLayoutPanel1.MaximumSize = new Size(1550, 450);
-            tableLayoutPanel1.MinimumSize = new Size(550, 200);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(892, 328);
-            tableLayoutPanel1.TabIndex = 35;
-            // 
             // chart1
             // 
             chart1.BackColor = Color.FromArgb(189, 215, 238);
@@ -1225,8 +1229,8 @@
             chart1.Dock = DockStyle.Fill;
             legend1.Name = "Legend1";
             chart1.Legends.Add(legend1);
-            chart1.Location = new Point(20, 20);
-            chart1.Margin = new Padding(20);
+            chart1.Location = new Point(0, 0);
+            chart1.Margin = new Padding(0, 0, 20, 20);
             chart1.Name = "chart1";
             chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
             series1.ChartArea = "ChartArea1";
@@ -1234,9 +1238,10 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chart1.Series.Add(series1);
-            chart1.Size = new Size(406, 288);
-            chart1.TabIndex = 0;
+            chart1.Size = new Size(378, 307);
+            chart1.TabIndex = 1;
             chart1.Text = "chart1";
+            chart1.Click += chart1_Click;
             // 
             // chart2
             // 
@@ -1246,15 +1251,15 @@
             chart2.Dock = DockStyle.Fill;
             legend2.Name = "Legend1";
             chart2.Legends.Add(legend2);
-            chart2.Location = new Point(466, 20);
-            chart2.Margin = new Padding(20);
+            chart2.Location = new Point(418, 0);
+            chart2.Margin = new Padding(20, 0, 0, 20);
             chart2.Name = "chart2";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             series2.YValuesPerPoint = 4;
             chart2.Series.Add(series2);
-            chart2.Size = new Size(406, 288);
+            chart2.Size = new Size(378, 307);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
             // 
@@ -1338,7 +1343,7 @@
             MinimumSize = new Size(900, 500);
             Name = "frmMenuPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "  ";
+            Text = "El Cairo";
             Load += Form1_Load;
             panBarraControl.ResumeLayout(false);
             panBarraControl.PerformLayout();
@@ -1360,11 +1365,11 @@
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
             panelFormHijo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProducto).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
-            tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
             ((System.ComponentModel.ISupportInitialize)chart2).EndInit();
             panelNotificaciones.ResumeLayout(false);
@@ -1416,8 +1421,6 @@
         private System.Windows.Forms.Timer HoraFecha;
         private PictureBox pbxCalculadora;
         private Button btnCierreDiario;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private Label lblFecha;
         private Label lblHora;
         private Button btnDevoluciones;
@@ -1460,5 +1463,7 @@
         private DataGridViewTextBoxColumn StockMinimo;
         private Panel panel5;
         public Label label1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

@@ -10,15 +10,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
     public partial class frmAgregarEditarClientes : Form
     {
         private Cliente _clienteActual;
+
         public frmAgregarEditarClientes(bool habilitarCorreo = false)
         {
             InitializeComponent();
             _clienteActual = null;
+            if (habilitarCorreo) txtCorreo.ReadOnly = false;
 
-            // Si venimos desde "Agregar Cliente", habilitar correo
-            if (habilitarCorreo)
-                txtCorreo.ReadOnly = false;
+            btnGuardarCliente.Tag = "insert_clientes";
         }
+
         public frmAgregarEditarClientes(Cliente cliente)
         {
             InitializeComponent();
@@ -31,18 +32,23 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             txtCorreo.Click += TextBox_ReadOnlyClick;
             txtDireccion.Click += TextBox_ReadOnlyClick;
 
+            rbdActivo.Click += Estado_ReadOnlyClick;
+            rbdInactivo.Click += Estado_ReadOnlyClick;
+
             btnVolver.Focus();
+
+            // MAPEO DE PERMISOS PARA EDITAR
+            btnModificar.Tag = "update_clientes";
+            btnGuardarCliente.Tag = "update_clientes";
         }
 
         private async void btnGuardarCliente_Click(object sender, EventArgs e)
         {
-
             try
             {
-
                 if (_clienteActual == null)
                 {
-                    // === AGREGAR ===
+                    // =========== AGREGAR ===========
                     Cliente nuevoCliente = new Cliente
                     {
                         NombreCliente = txtNombre.Text.Trim(),
@@ -55,7 +61,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                     };
 
                     var validacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesClinte(nuevoCliente);
-
                     if (validacion.Error)
                     {
                         MessageBox.Show(validacion.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -72,7 +77,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 }
                 else
                 {
-                    // === EDITAR ===
+                    // =========== EDITAR ===========
                     _clienteActual.NombreCliente = txtNombre.Text.Trim();
                     _clienteActual.DniCliente = txtDni.Text.Trim();
                     _clienteActual.RtnCliente = txtRtn.Text.Trim();
@@ -91,8 +96,32 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar el cliente: {ex.Message}",
-                    "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string mensaje = ex.Message;
+
+                // Error PostgreSQL de clave duplicada (23505)
+                if (mensaje.Contains("23505"))
+                {
+                    if (mensaje.Contains("dni_cliente"))
+                    {
+                        MessageBox.Show("El DNI ingresado ya está registrado en otro cliente.",
+                            "DNI duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (mensaje.Contains("rtn_cliente"))
+                    {
+                        MessageBox.Show("El RTN ingresado ya está registrado en otro cliente.",
+                            "RTN duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Un dato único ya está registrado en otro cliente.\nVerifique los campos.",
+                            "Dato duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Ocurrió un error al guardar el cliente:\n{ex.Message}",
+                        "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             finally
             {
@@ -100,7 +129,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                     btnGuardarCliente.Enabled = true;
             }
         }
-    
 
         private void frmAgregarEditarClientes_Load(object sender, EventArgs e)
         {
@@ -118,13 +146,15 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 rbdActivo.Checked = _clienteActual.EstadoCliente;
                 rbdInactivo.Checked = !_clienteActual.EstadoCliente;
 
-                // DESHABILITAR
                 txtDni.ReadOnly = true;
                 txtRtn.ReadOnly = true;
                 txtNombre.ReadOnly = true;
                 txtTelefono.ReadOnly = true;
                 txtCorreo.ReadOnly = true;
                 txtDireccion.ReadOnly = true;
+
+                rbdActivo.Enabled = true;
+                rbdInactivo.Enabled = true;
 
                 btnGuardarCliente.Visible = false;
                 btnModificar.Visible = true;
@@ -133,23 +163,35 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             else
             {
                 clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "AGREGAR CLIENTE NUEVO");
-
                 btnGuardarCliente.Visible = true;
                 btnModificar.Visible = false;
             }
         }
+
         private void TextBox_ReadOnlyClick(object sender, EventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null && tb.ReadOnly)
             {
-                MessageBox.Show("Presione primero el botón Modificar.",
+                MessageBox.Show("Presione primero el botón Editar.",
                     "Campo deshabilitado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void Estado_ReadOnlyClick(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb != null && btnModificar.Visible == true)
+            {
+                MessageBox.Show("Presione primero el botón Editar.",
+                    "Estado bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                rb.Checked = !rb.Checked;
             }
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            // Habilitar edición
             txtDni.ReadOnly = false;
             txtRtn.ReadOnly = false;
             txtNombre.ReadOnly = false;
@@ -160,10 +202,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             rbdActivo.Enabled = true;
             rbdInactivo.Enabled = true;
 
+            rbdActivo.Click -= Estado_ReadOnlyClick;
+            rbdInactivo.Click -= Estado_ReadOnlyClick;
+
             btnModificar.Enabled = false;
             btnModificar.Visible = false;
             btnGuardarCliente.Visible = true;
         }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
-

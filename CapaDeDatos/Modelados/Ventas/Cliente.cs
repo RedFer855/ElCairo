@@ -33,6 +33,11 @@ namespace CapaDeDatos.Modelados.Ventas
         [Column("estado_cliente")]
         public bool EstadoCliente { get; set; }
 
+        public override string ToString()
+        {
+            return NombreCliente;
+        }
+
     }
 
 }
