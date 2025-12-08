@@ -118,7 +118,7 @@
             flowLayoutPanel1.Controls.Add(btnVolver);
             flowLayoutPanel1.Location = new Point(17, 302);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(443, 44);
+            flowLayoutPanel1.Size = new Size(273, 44);
             flowLayoutPanel1.TabIndex = 24;
             // 
             // btnGuardarCliente
