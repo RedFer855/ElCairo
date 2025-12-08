@@ -100,7 +100,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                     btnGuardarCliente.Enabled = true;
             }
         }
-    
+
 
         private void frmAgregarEditarClientes_Load(object sender, EventArgs e)
         {
@@ -143,7 +143,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             TextBox tb = sender as TextBox;
             if (tb != null && tb.ReadOnly)
             {
-                MessageBox.Show("Presione primero el botón Modificar.",
+                MessageBox.Show("Presione primero el botón Editar.",
                     "Campo deshabilitado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -164,6 +164,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             btnModificar.Visible = false;
             btnGuardarCliente.Visible = true;
         }
+
     }
 }
 
