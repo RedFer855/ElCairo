@@ -58,6 +58,7 @@
             Correo = new DataGridViewTextBoxColumn();
             RTN = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            EstadoCliente = new DataGridViewCheckBoxColumn();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvClientes).BeginInit();
@@ -111,7 +112,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvClientes.Columns.AddRange(new DataGridViewColumn[] { Dni, dataGridViewTextBoxColumn2, PorcentajeGanancia, Correo, RTN, dataGridViewTextBoxColumn4 });
+            dgvClientes.Columns.AddRange(new DataGridViewColumn[] { Dni, dataGridViewTextBoxColumn2, PorcentajeGanancia, Correo, RTN, dataGridViewTextBoxColumn4, EstadoCliente });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -415,6 +416,17 @@
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
+            // EstadoCliente
+            // 
+            EstadoCliente.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoCliente.DataPropertyName = "EstadoCliente";
+            EstadoCliente.HeaderText = "Estado";
+            EstadoCliente.Name = "EstadoCliente";
+            EstadoCliente.ReadOnly = true;
+            EstadoCliente.Resizable = DataGridViewTriState.True;
+            EstadoCliente.SortMode = DataGridViewColumnSortMode.Automatic;
+            EstadoCliente.Width = 89;
+            // 
             // frmClientes
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -472,5 +484,6 @@
         private DataGridViewTextBoxColumn Correo;
         private DataGridViewTextBoxColumn RTN;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewCheckBoxColumn EstadoCliente;
     }
 }
