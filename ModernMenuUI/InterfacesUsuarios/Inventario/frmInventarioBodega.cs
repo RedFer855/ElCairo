@@ -1,8 +1,8 @@
 ﻿using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
-using CapaDominio.Enums;
-using CapaDominio.Servicios;
+using CapaDeNegocio.Enums;
+using CapaDeNegocio.Servicios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.Adapters;
 using ModernMenuUI.ClasesUI;

@@ -2,7 +2,7 @@
 using CapaDeDatos.Modelados;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
-using CapaDominio.Reportes;
+using CapaDeNegocio.Reportes;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;

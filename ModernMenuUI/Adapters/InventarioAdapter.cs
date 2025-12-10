@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CapaDeDatos.Modelados.Inventario;
-using CapaDominio.Entidades;
+using CapaDeNegocio.Entidades;
 
 namespace ModernMenuUI.Adapters
 {

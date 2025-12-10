@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using CapaDeDatos.Modelados.Inventario;
-using CapaDominio.Servicios;
-using CapaDominio.Entidades;
-using CapaDominio.Enums;
+using CapaDeNegocio.Servicios;
+using CapaDeNegocio.Entidades;
+using CapaDeNegocio .Enums;
 using ModernMenuUI.Adapters;
 
 namespace ModernMenuUI.ServiciosUI.GridFormatters

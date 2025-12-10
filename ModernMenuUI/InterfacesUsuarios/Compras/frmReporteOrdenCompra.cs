@@ -1,4 +1,4 @@
-﻿using CapaDominio.Reportes;
+﻿using CapaDeNegocio.Reportes;
 using ClosedXML.Excel;
 using QuestPDF; 
 using QuestPDF.Fluent;

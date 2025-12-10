@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing; 
+using System.Drawing;
 
-namespace CapaDominio
+
+
+namespace CapaDeNegocio.Entidades
 {
-
+    public class ItemFactura
+    {
+        public string Descripcion { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal TotalLinea => Cantidad * PrecioUnitario;
+    }
     public class Factura
     {
         public string NombreEmisor { get; set; }
@@ -29,17 +37,8 @@ namespace CapaDominio
         public decimal ISV => SubTotal * 0.15m;
         public decimal Total => SubTotal + ISV;
 
-        public Image Logo { get; set; }
+        public byte[] LogoBytes { get; set; }
 
         public bool EsValida() => !string.IsNullOrEmpty(NombreCliente) && Items.Count > 0;
     }
-
-    public class ItemFactura
-    {
-        public string Descripcion { get; set; }
-        public int Cantidad { get; set; }
-        public decimal PrecioUnitario { get; set; }
-        public decimal TotalLinea => Cantidad * PrecioUnitario;
-    }
-
 }

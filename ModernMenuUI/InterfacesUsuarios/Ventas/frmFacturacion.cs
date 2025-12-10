@@ -6,7 +6,7 @@ using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
 using CapaDeDatos.Modelados.Ventas;
 using CapaDeDatos.Repositorios;
-using CapaDominio;
+using CapaDeNegocio.Entidades;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
@@ -45,24 +45,21 @@ namespace ModernMenuUI
         private ClienteRepositorio _clienteRepo = new ClienteRepositorio();
         private List<Cliente> _todosLosClientes = new List<Cliente>(); // La caché
         private Cliente _clienteSeleccionado = null; // Aquí guardaremos al elegido
-      
+
 
         public frmFacturacion()
         {
             InitializeComponent();
-            // _productoRepo = new ProductoRepositorio();
             _inventarioRepo = new InventarioRepositorio();
-            // ===== ESTILO BARRA LATERAL (RowHeader) =====
             dgvProductos.RowHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#DCE6F1");
             dgvProductos.RowHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#57636e");
             dgvProductos.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             clsAnmaciones.ActivarDoubleBuffering(dgvCarrito);
             clsAnmaciones.ActivarDoubleBuffering(dgvProductos);
-            txtBuscar.PlaceholderText = "Buscar producto...";
-            txtBuscar.ForeColor = Color.Black; // Esto cambia el color del texto normal
             dgvProductos.ClearSelection();
             this.FormClosing += frmFacturacion_FormClosing;
+            CargarProductosDeBodega();
         }
 
 
@@ -70,9 +67,9 @@ namespace ModernMenuUI
         private void SeleccionarCliente(Cliente cliente)
         {
             txtCliente.Text = cliente.NombreCliente;
-            _clienteSeleccionado = cliente; // ¡IMPORTANTE! Guardamos el objeto
+            _clienteSeleccionado = cliente;
             lstClientes.Visible = false;
-            txtCliente.SelectionStart = txtCliente.Text.Length; // Cursor al final
+            txtCliente.SelectionStart = txtCliente.Text.Length;
             txtCliente.Focus();
         }
 
@@ -164,14 +161,8 @@ namespace ModernMenuUI
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-
-                // 1. Obtener el ID de la bodega desde la sesión (Login)
                 int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
-
-                // 2. Obtener SOLO los productos de esa bodega
                 _productosCache = await _inventarioRepo.ObtenerProductosDeBodega(idBodega);
-
-                // 3. Mostrar en el Grid
                 dgvProductos.DataSource = null;
                 dgvProductos.Rows.Clear();
 
@@ -180,8 +171,8 @@ namespace ModernMenuUI
                     dgvProductos.Rows.Add(
                         p.IdProducto,
                         p.NombreProducto,
-                        p.PrecioCompra, // O PrecioVenta
-                        p.StockEnBodega // <--- ¡OJO! Usamos el stock específico de esta bodega
+                        p.PrecioCompra,
+                        p.StockEnBodega
                     );
                 }
             }
@@ -599,27 +590,15 @@ namespace ModernMenuUI
 
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
-            /* MessageBox.Show($"ID Bodega Actual: {SessionData.IdBodegaActual}\n" +
-          $"Método que voy a llamar: CargarProductosDeBodegaAsync",
-          "Diagnóstico", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
-
-            await CargarProductosDeBodega();
-            // await CargarProductosAsync();
             try
             {
-                // Asegúrate de tener _clienteRepo instanciado arriba
                 _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
-
-                // Opcional: Mensaje para verificar si cargaron
-                // MessageBox.Show($"Se cargaron {_todosLosClientes.Count} clientes."); 
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar clientes: " + ex.Message);
             }
             await IniciarSuscripcionProductosAsync();
-            // await CargarRutasAsync();
-            //await CargarClientesAsync();
         }
         private Factura CrearFacturaDesdeCarrito()
         {
@@ -1007,6 +986,10 @@ namespace ModernMenuUI
             }
         }
 
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
 
