@@ -38,6 +38,7 @@ namespace ModernMenuUI
         {
             InitializeComponent();
             _empleadoActual = null;
+            txtCorreo.ReadOnly = false;
         }
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace ModernMenuUI
             _empleadoActual = empleado;
 
             // Campos bloqueados en modo lectura hasta presionar "Modificar"
+
             txtApellido.Click += TextBox_ReadOnlyClick;
             txtTelefono.Click += TextBox_ReadOnlyClick;
             txtDireccion.Click += TextBox_ReadOnlyClick;
