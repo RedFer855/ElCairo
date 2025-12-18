@@ -66,9 +66,9 @@
             Sumar = new DataGridViewImageColumn();
             Eliminar = new DataGridViewImageColumn();
             panelBusqueda = new Panel();
-            lstSugerencias = new ListBox();
             txtBuscar = new TextBox();
             btnBuscarProducto = new Button();
+            lstSugerencias = new ListBox();
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
@@ -478,22 +478,6 @@
             panelBusqueda.Size = new Size(625, 51);
             panelBusqueda.TabIndex = 9;
             // 
-            // lstSugerencias
-            // 
-            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstSugerencias.ForeColor = Color.DimGray;
-            lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 18;
-            lstSugerencias.Location = new Point(384, 47);
-            lstSugerencias.MaximumSize = new Size(536, 22);
-            lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(535, 22);
-            lstSugerencias.TabIndex = 19;
-            lstSugerencias.Visible = false;
-            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
-            lstSugerencias.Leave += lstSugerencias_Leave;
-            // 
             // txtBuscar
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -519,6 +503,22 @@
             btnBuscarProducto.Size = new Size(48, 20);
             btnBuscarProducto.TabIndex = 0;
             btnBuscarProducto.UseVisualStyleBackColor = false;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(384, 47);
+            lstSugerencias.MaximumSize = new Size(536, 22);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(535, 22);
+            lstSugerencias.TabIndex = 19;
+            lstSugerencias.Visible = false;
+            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
+            lstSugerencias.Leave += lstSugerencias_Leave;
             // 
             // panel1
             // 
@@ -649,7 +649,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(355, 529);
             panel2.TabIndex = 11;
-            panel2.Paint += panel2_Paint;
             // 
             // pictureBox1
             // 
@@ -743,7 +742,6 @@
             label1.Size = new Size(89, 18);
             label1.TabIndex = 15;
             label1.Text = "Descripción:";
-            label1.Click += label1_Click;
             // 
             // txtProducto
             // 

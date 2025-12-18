@@ -14,4 +14,8 @@
     <ProjectReference Include="..\CapaDeNegocio\CapaDeNegocio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Reportes\" />
+  </ItemGroup>
+
 </Project>

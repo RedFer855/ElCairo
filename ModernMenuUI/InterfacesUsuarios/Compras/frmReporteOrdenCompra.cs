@@ -1,6 +1,6 @@
-﻿using CapaDeNegocio.Reportes;
+﻿using CapaDeNegocio.Entidades;
 using ClosedXML.Excel;
-using QuestPDF; 
+using QuestPDF;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;

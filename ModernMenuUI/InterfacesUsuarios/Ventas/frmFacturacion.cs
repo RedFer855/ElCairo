@@ -63,8 +63,6 @@ namespace ModernMenuUI
             CargarProductosDeBodega();
         }
 
-
-        // FUNCIONES
         private void SeleccionarCliente(Cliente cliente)
         {
             txtCliente.Text = cliente.NombreCliente;
@@ -192,7 +190,6 @@ namespace ModernMenuUI
             int limiteProductos = 3;
             int productosActuales = dgvCarrito.Rows.Count;
 
-            // Si ya llegó al límite y el producto no está en el carrito
             bool productoYaExiste = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Any(r => !r.IsNewRow && (int)r.Cells[0].Value == codigoProducto);
@@ -205,14 +202,13 @@ namespace ModernMenuUI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
-                return; //  Detiene el método
+                return; 
             }
 
             Image Eliminar = Properties.Resources.eliminar__1_;
             Image Restar = Properties.Resources.signo_menos__1_;
             Image Sumar = Properties.Resources.mas__2_;
 
-            // Buscar producto en dgvProductos
             DataGridViewRow producto = null;
             for (int i = 0; i < dgvProductos.Rows.Count; i++)
             {
@@ -233,7 +229,6 @@ namespace ModernMenuUI
             decimal precio = Convert.ToDecimal(producto.Cells[2].Value);
             int stock = Convert.ToInt32(producto.Cells[3].Value);
 
-            // Revisar si ya está en el carrito
             for (int i = 0; i < dgvCarrito.Rows.Count; i++)
             {
                 if ((int)dgvCarrito.Rows[i].Cells[0].Value == codigoProducto)
@@ -255,13 +250,13 @@ namespace ModernMenuUI
                     return;
                 }
             }
-            // Si no está en el carrito, agregar nueva fila
+
             int cantidadFinal = cantidadAgregar;
 
             if (stock <= 0)
             {
                 MessageBox.Show("Este producto está agotado (Stock 0).", "Sin Stock", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Detiene el método aquí, no agrega nada
+                return; 
             }
 
             if (cantidadFinal > stock)
@@ -275,9 +270,9 @@ namespace ModernMenuUI
 
         private void LimpiarCarrito()
         {
-            dgvCarrito.Rows.Clear();      // borra todos los productos del carrito
-            ActualizarTotales();          // deja subtotal, total e impuesto en 0
-            ActualizarImagenCarrito();    // muestra la imagen de carrito vacío
+            dgvCarrito.Rows.Clear();      
+            ActualizarTotales();          
+            ActualizarImagenCarrito();   
             txtCodigo.Text = "";
             txtProducto.Text = "";
             txtPrecio.Text = "";
@@ -285,7 +280,6 @@ namespace ModernMenuUI
             dgvProductos.ClearSelection();
         }
 
-        // EVENTOS
         private void lstSugerencias_Leave(object sender, EventArgs e)
         {
             lstSugerencias.Visible = false;
@@ -296,12 +290,12 @@ namespace ModernMenuUI
         {
             if (lstSugerencias.SelectedItem is Producto producto)
             {
-                // Llenar los textbox del producto
+
                 txtCodigo.Text = producto.IdProducto.ToString();
                 txtProducto.Text = producto.NombreProducto;
                 txtPrecio.Text = producto.PrecioVenta.ToString("N2");
 
-                // Buscar y seleccionar la fila correspondiente en dgvProductos
+
                 foreach (DataGridViewRow fila in dgvProductos.Rows)
                 {
                     if (fila.Cells[0].Value != null && (int)fila.Cells[0].Value == producto.IdProducto)
@@ -312,7 +306,6 @@ namespace ModernMenuUI
                     }
                 }
 
-                // Ocultar las sugerencias
                 lstSugerencias.Visible = false;
             }
         }
@@ -327,10 +320,9 @@ namespace ModernMenuUI
                 return;
             }
 
-            // Buscar coincidencias por nombre
             var resultados = _productosCache
                 .Where(p => p.NombreProducto.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
-                .Take(10) // máximo 10 sugerencias
+                .Take(10) 
                 .ToList();
 
             if (resultados.Count == 0)
@@ -339,7 +331,6 @@ namespace ModernMenuUI
                 return;
             }
 
-            // Cargar sugerencias
             lstSugerencias.DataSource = resultados;
             lstSugerencias.DisplayMember = "NombreProducto";
             lstSugerencias.ValueMember = "IdProducto";
@@ -355,9 +346,9 @@ namespace ModernMenuUI
         {
             if (dgvProductos.CurrentRow != null && dgvProductos.CurrentRow.Selected)
             {
-                txtProducto.Text = dgvProductos.CurrentRow.Cells[1].Value.ToString(); // Descripción
-                txtPrecio.Text = dgvProductos.CurrentRow.Cells[2].Value.ToString();   // Precio
-                txtCodigo.Text = dgvProductos.CurrentRow.Cells[0].Value.ToString();    // Código
+                txtProducto.Text = dgvProductos.CurrentRow.Cells[1].Value.ToString(); 
+                txtPrecio.Text = dgvProductos.CurrentRow.Cells[2].Value.ToString();   
+                txtCodigo.Text = dgvProductos.CurrentRow.Cells[0].Value.ToString();   
             }
             else
             {
@@ -391,9 +382,9 @@ namespace ModernMenuUI
 
         private void dgvCarrito_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == 5) // columna específica
+            if (e.RowIndex >= 0 && e.ColumnIndex == 5) 
             {
-                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Gray; // color oscuro al presionar
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Gray; 
             }
         }
 
@@ -401,10 +392,7 @@ namespace ModernMenuUI
         {
             if (e.RowIndex >= 0 && e.RowIndex < dgvCarrito.RowCount && e.ColumnIndex >= 4 && e.ColumnIndex <= 6 && e.ColumnIndex < dgvCarrito.ColumnCount)
             {
-                // Restaurar color si lo necesitas
                 dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.White;
-
-                // Quitar la selección solo de esa celda
                 dgvCarrito[e.ColumnIndex, e.RowIndex].Selected = false;
             }
         }
@@ -416,7 +404,6 @@ namespace ModernMenuUI
 
             int stock = 0;
 
-            // Obtener el stock del producto desde dgvProductos
             int codigoProducto = Convert.ToInt32(dgvCarrito.Rows[e.RowIndex].Cells[0].Value);
             for (int i = 0; i < dgvProductos.Rows.Count; i++)
             {
@@ -427,7 +414,6 @@ namespace ModernMenuUI
                 }
             }
 
-            // Columna eliminar
             if (e.ColumnIndex == 4)
             {
                 if (dgvCarrito.CurrentRow != null)
@@ -435,7 +421,6 @@ namespace ModernMenuUI
                 ActualizarTotales();
             }
 
-            // Columna restar
             if (e.ColumnIndex == 5)
             {
                 int cantidad = Convert.ToInt32(dgvCarrito.Rows[e.RowIndex].Cells[3].Value);
@@ -451,7 +436,6 @@ namespace ModernMenuUI
 
             }
 
-            // Columna sumar
             if (e.ColumnIndex == 6)
             {
                 int cantidad = Convert.ToInt32(dgvCarrito.Rows[e.RowIndex].Cells[3].Value);
@@ -497,8 +481,6 @@ namespace ModernMenuUI
         {
             if (e.RowIndex >= 0)
             {
-
-                // Solo recalcular si cambia la columna de cantidad (3) o precio (2)
                 if (e.ColumnIndex == 2 || e.ColumnIndex == 3)
                 {
                     double precio = Convert.ToDouble(dgvCarrito.Rows[e.RowIndex].Cells[2].Value);
@@ -509,18 +491,17 @@ namespace ModernMenuUI
 
         private void ActualizarImagenCarrito()
         {
-            // Si no hay filas visibles (ni productos)
             if (dgvCarrito.Rows.Count == 0)
             {
                 pbxCarritoVacio.Visible = true;
-                //lblCarritoVacio.Visible = true;
+
             }
             else
             {
                 pbxCarritoVacio.Visible = false;
-                //lblCarritoVacio.Visible = false;
             }
         }
+
         private void lstClientes_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && lstClientes.SelectedItem != null)
@@ -544,6 +525,7 @@ namespace ModernMenuUI
                 }
             }
         }
+
         private void lstClientes_MouseClick(object sender, MouseEventArgs e)
         {
             if (lstClientes.SelectedItem is Cliente cliente)
@@ -551,9 +533,9 @@ namespace ModernMenuUI
                 SeleccionarCliente(cliente);
             }
         }
+
         private void txtCliente_TextChanged(object sender, EventArgs e)
         {
-            // Si el cambio lo causó el programa → NO mostrar sugerencias
             if (_bloquearSugerencias)
                 return;
 
@@ -587,8 +569,6 @@ namespace ModernMenuUI
                 lstClientes.Visible = false;
             }
         }
-
-
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
             try
@@ -632,13 +612,8 @@ namespace ModernMenuUI
             return factura;
         }
 
-
-
         private async void btnFacturar_Click(object sender, EventArgs e)
         {
-            // ================================
-            // 1. VALIDACIONES PREVIAS
-            // ================================
             if (dgvCarrito.Rows.Count == 0)
             {
                 MessageBox.Show("El carrito está vacío. Agregue productos para facturar.",
@@ -663,115 +638,8 @@ namespace ModernMenuUI
             }
             FacturaReportService servicio = new FacturaReportService();
             servicio.MostrarFactura();
-            /*
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
-
-                // ================================
-                // 2. USUARIO AUTHENTICADO – EMPLEADO
-                // ================================
-                var supabase = await Conexion.GetClientAsync();
-                var usuarioAuth = supabase.Auth.CurrentUser;
-
-                if (usuarioAuth == null)
-                    throw new Exception("No hay usuario autenticado en Supabase.");
-
-                var respEmpleado = await supabase
-                    .From<Usuario>()
-                    .Select("id_empleado")
-                    .Filter("user_id", Operator.Equals, usuarioAuth.Id)
-                    .Get();
-
-                if (respEmpleado.Models == null || respEmpleado.Models.Count == 0)
-                {
-                    MessageBox.Show("El usuario actual no tiene un 'id_empleado' vinculado.");
-                    return;
-                }
-
-                int idEmpleado = respEmpleado.Models.First().IdUsuario;
-
-                // ================================
-                // 3. EXTRAER DETALLES DE LA VENTA
-                // ================================
-                var detallesVenta = dgvCarrito.Rows
-                    .Cast<DataGridViewRow>()
-                    .Where(r => !r.IsNewRow)
-                    .Select(r => new
-                    {
-                        id_producto = Convert.ToInt32(r.Cells[0].Value),
-                        cantidad_venta = Convert.ToInt32(r.Cells[3].Value),
-                        id_bodega = idBodegaVenta
-                    })
-                    .ToList();
-
-                // ================================
-                // 4. PREPARAR PARÁMETROS PARA RPC
-                // ================================
-                var parametros = new
-                {
-                    p_id_cliente = _clienteSeleccionado.IdCliente,
-                    p_id_rutas = (int?)null,
-                    p_id_empleado = idEmpleado,
-                    p_fecha_venta = DateTime.UtcNow,
-                    p_detalles = detallesVenta
-                };
-
-                // ================================
-                // 5. REGISTRAR VENTA EN SUPABASE
-                // ================================
-                await supabase.Rpc("registrar_venta", parametros);
-
-                // ================================
-                // 6. CREAR FACTURA LOCAL PARA PDF
-                // ================================
-                Factura factura = CrearFacturaDesdeCarrito();
-                if (factura == null)
-                {
-                    MessageBox.Show("No se pudo generar la factura local.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                factura.NombreCliente = _clienteSeleccionado.NombreCliente;
-                factura.RTNCliente = _clienteSeleccionado.DniCliente;
-                factura.DireccionCliente = _clienteSeleccionado.DireccionCliente;
-
-                // ================================
-                // 7. GENERAR PDF SEGURO DESDE MEMORIA
-                // ================================
-                string carpeta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Facturas");
-                Directory.CreateDirectory(carpeta);
-
-                string archivoPDF = $"Factura_{DateTime.Now:yyyyMMdd_HHmmss}_{Guid.NewGuid().ToString().Substring(0, 6)}.pdf";
-                string ruta = Path.Combine(carpeta, archivoPDF);
-
-                await GenerarPDFFacturaAsync(factura, ruta);
-
-                // ================================
-                // 8. LIMPIAR Y ACTUALIZAR INTERFAZ
-                // ================================
-                MessageBox.Show($"¡Venta registrada y factura generada para {_clienteSeleccionado.NombreCliente}! 😄",
-                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                LimpiarCarrito();
-                txtCliente.Text = "";
-                _clienteSeleccionado = null;
-
-                await CargarProductosDeBodega(); // Actualiza stock en tiempo real
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al procesar la venta o generar la factura:\n\n{ex.Message}",
-                                "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
-            }*/
+            LimpiarCarrito();
         }
-
-
-
 
         private void btnImprimirCotizacion_Click(object sender, EventArgs e)
         {
@@ -893,27 +761,15 @@ namespace ModernMenuUI
 
                 if (seleccionado != null)
                 {
-                    _bloquearSugerencias = true;             // 🔥 BLOQUEAR sugerencias temporalmente
+                    _bloquearSugerencias = true;             
                     txtCliente.Text = seleccionado.NombreCliente;
                     _clienteSeleccionado = seleccionado;
 
-                    lstClientes.Visible = false;             // Asegurar que no aparezca
-                    _bloquearSugerencias = false;            // 🔥 Volver a permitir sugerencias
+                    lstClientes.Visible = false;            
+                    _bloquearSugerencias = false;            
                 }
             }
         }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-  
     }
 }
 

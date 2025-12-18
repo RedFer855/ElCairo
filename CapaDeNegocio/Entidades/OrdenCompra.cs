@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDeNegocio.Reportes
+namespace CapaDeNegocio.Entidades
 {
     public class OrdenCompra
     {
