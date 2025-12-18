@@ -30,7 +30,7 @@ namespace CapaInfraestructura.Reportes
         public async Task<string> GenerateAndOpenPdfAsync(Factura factura, string rutaSalida = null)
         {
             if (factura == null) throw new ArgumentNullException(nameof(factura));
-            if (!factura.EsValida()) throw new ArgumentException("Factura inválida. Debe tener al menos 1 item.");
+            //if (!factura.EsValida()) throw new ArgumentException("Factura inválida. Debe tener al menos 1 item.");
 
             rutaSalida ??= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                             "Facturas",
@@ -87,8 +87,8 @@ namespace CapaInfraestructura.Reportes
 
                         doc.Add(t);
 
-                        doc.Add(new Paragraph($"\nSubtotal: {factura.SubTotal.ToString("C2", _culture)}"));
-                        doc.Add(new Paragraph($"ISV (15%): {factura.ISV.ToString("C2", _culture)}"));
+                        //doc.Add(new Paragraph($"\nSubtotal: {factura.SubTotal.ToString("C2", _culture)}"));
+                       // doc.Add(new Paragraph($"ISV (15%): {factura.ISV.ToString("C2", _culture)}"));
                         doc.Add(new Paragraph($"TOTAL: {factura.Total.ToString("C2", _culture)}").SetFont(fontBold));
                         doc.Add(new Paragraph("\nGracias por su compra!").SetFont(fontItalic).SetTextAlignment(TextAlignment.CENTER));
 

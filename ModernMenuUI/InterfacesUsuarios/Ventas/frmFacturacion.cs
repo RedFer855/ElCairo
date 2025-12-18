@@ -16,6 +16,7 @@ using iText.Layout.Properties;
 using Microsoft.VisualBasic.ApplicationServices;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.Properties;
+using ModernMenuUI.ServiciosUI;
 using Supabase.Realtime;
 using Supabase.Realtime.Interfaces;
 using Supabase.Realtime.PostgresChanges;
@@ -631,92 +632,6 @@ namespace ModernMenuUI
             return factura;
         }
 
-        private async Task GenerarPDFFacturaAsync(Factura factura, string ruta)
-        {
-            await Task.Run(() =>
-            {
-                var culture = new CultureInfo("es-HN");
-
-                PdfFont fontNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
-                PdfFont fontBold = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
-                PdfFont fontItalic = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
-
-                Image logo = ModernMenuUI.Properties.Resources.logo_ElCairo;
-
-                using (MemoryStream ms = new MemoryStream())
-                using (PdfWriter writer = new PdfWriter(ms))
-                using (PdfDocument pdf = new PdfDocument(writer))
-                using (Document doc = new Document(pdf, iText.Kernel.Geom.PageSize.A4))
-                {
-                    doc.SetMargins(20, 20, 20, 20);
-
-                    // LOGO
-                    if (logo != null)
-                    {
-                        try
-                        {
-                            using (MemoryStream lms = new MemoryStream())
-                            {
-                                logo.Save(lms, System.Drawing.Imaging.ImageFormat.Png);
-                                var img = new iText.Layout.Element.Image(iText.IO.Image.ImageDataFactory.Create(lms.ToArray()))
-                                    .ScaleToFit(120, 60);
-                                doc.Add(img);
-                            }
-                        }
-                        catch { }
-                    }
-
-                    doc.Add(new Paragraph("FACTURA")
-                        .SetFont(fontBold).SetFontSize(20)
-                        .SetTextAlignment(TextAlignment.CENTER));
-
-                    doc.Add(new Paragraph($"Cliente: {factura.NombreCliente}").SetFont(fontNormal));
-                    doc.Add(new Paragraph($"RTN: {factura.RTNCliente}").SetFont(fontNormal));
-                    doc.Add(new Paragraph($"Dirección: {factura.DireccionCliente}").SetFont(fontNormal));
-                    doc.Add(new Paragraph(" "));
-
-                    Table t = new Table(iText.Layout.Properties.UnitValue.CreatePercentArray(
-                        new float[] { 50, 15, 15, 20 })).UseAllAvailableWidth();
-
-                    t.AddHeaderCell("Producto");
-                    t.AddHeaderCell("Cant.");
-                    t.AddHeaderCell("Precio");
-                    t.AddHeaderCell("Total");
-
-                    foreach (var item in factura.Items)
-                    {
-                        t.AddCell(item.Descripcion);
-                        t.AddCell(item.Cantidad.ToString());
-                        t.AddCell(item.PrecioUnitario.ToString("C", culture));
-                        t.AddCell(item.TotalLinea.ToString("C", culture));
-                    }
-
-                    doc.Add(t);
-
-                    doc.Add(new Paragraph($"\nSubtotal: {factura.SubTotal.ToString("C", culture)}"));
-                    doc.Add(new Paragraph($"ISV (15%): {factura.ISV.ToString("C", culture)}"));
-                    doc.Add(new Paragraph($"TOTAL: {factura.Total.ToString("C", culture)}").SetFont(fontBold));
-
-                    doc.Add(new Paragraph("\nGracias por su compra!")
-                        .SetFont(fontItalic).SetTextAlignment(TextAlignment.CENTER));
-
-                    doc.Close();
-
-                    File.WriteAllBytes(ruta, ms.ToArray());
-                }
-
-                // Intentar abrirlo
-                try
-                {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-                    {
-                        FileName = ruta,
-                        UseShellExecute = true
-                    });
-                }
-                catch { }
-            });
-        }
 
 
         private async void btnFacturar_Click(object sender, EventArgs e)
@@ -746,7 +661,9 @@ namespace ModernMenuUI
                                 "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            FacturaReportService servicio = new FacturaReportService();
+            servicio.MostrarFactura();
+            /*
             try
             {
                 this.Cursor = Cursors.WaitCursor;
@@ -850,7 +767,7 @@ namespace ModernMenuUI
             finally
             {
                 this.Cursor = Cursors.Default;
-            }
+            }*/
         }
 
 
@@ -987,6 +904,11 @@ namespace ModernMenuUI
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
