@@ -66,8 +66,9 @@
             Sumar = new DataGridViewImageColumn();
             Eliminar = new DataGridViewImageColumn();
             panelBusqueda = new Panel();
+            lstSugerencias = new ListBox();
             txtBuscar = new TextBox();
-            buscar = new Button();
+            btnBuscarProducto = new Button();
             panel1 = new Panel();
             panel7 = new Panel();
             dgvProductos = new DataGridView();
@@ -91,7 +92,6 @@
             panel4 = new Panel();
             panel9 = new Panel();
             lstClientes = new ListBox();
-            lstSugerencias = new ListBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             panel5.SuspendLayout();
             panel8.SuspendLayout();
@@ -329,9 +329,9 @@
             pbxCarritoVacio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbxCarritoVacio.BackColor = Color.Transparent;
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
-            pbxCarritoVacio.Location = new Point(-3, 193);
+            pbxCarritoVacio.Location = new Point(253, 187);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(607, 164);
+            pbxCarritoVacio.Size = new Size(108, 164);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
@@ -471,38 +471,54 @@
             // 
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(buscar);
+            panelBusqueda.Controls.Add(btnBuscarProducto);
             panelBusqueda.Location = new Point(360, 0);
             panelBusqueda.Margin = new Padding(0);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(625, 51);
             panelBusqueda.TabIndex = 9;
             // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(384, 47);
+            lstSugerencias.MaximumSize = new Size(536, 22);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(535, 22);
+            lstSugerencias.TabIndex = 19;
+            lstSugerencias.Visible = false;
+            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
+            lstSugerencias.Leave += lstSugerencias_Leave;
+            // 
             // txtBuscar
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(21, 14);
+            txtBuscar.Location = new Point(12, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(537, 20);
+            txtBuscar.Size = new Size(535, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
-            // buscar
+            // btnBuscarProducto
             // 
-            buscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buscar.BackColor = Color.FromArgb(168, 191, 212);
-            buscar.BackgroundImage = (Image)resources.GetObject("buscar.BackgroundImage");
-            buscar.BackgroundImageLayout = ImageLayout.Zoom;
-            buscar.FlatAppearance.BorderSize = 0;
-            buscar.FlatStyle = FlatStyle.Flat;
-            buscar.Location = new Point(564, 14);
-            buscar.Name = "buscar";
-            buscar.Size = new Size(48, 20);
-            buscar.TabIndex = 0;
-            buscar.UseVisualStyleBackColor = false;
+            btnBuscarProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBuscarProducto.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarProducto.BackgroundImage = (Image)resources.GetObject("btnBuscarProducto.BackgroundImage");
+            btnBuscarProducto.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarProducto.FlatAppearance.BorderSize = 0;
+            btnBuscarProducto.FlatStyle = FlatStyle.Flat;
+            btnBuscarProducto.Location = new Point(560, 14);
+            btnBuscarProducto.Name = "btnBuscarProducto";
+            btnBuscarProducto.Size = new Size(48, 20);
+            btnBuscarProducto.TabIndex = 0;
+            btnBuscarProducto.UseVisualStyleBackColor = false;
             // 
             // panel1
             // 
@@ -828,22 +844,6 @@
             lstClientes.MouseClick += lstClientes_MouseClick;
             lstClientes.KeyDown += lstClientes_KeyDown;
             // 
-            // lstSugerencias
-            // 
-            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstSugerencias.ForeColor = Color.DimGray;
-            lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 18;
-            lstSugerencias.Location = new Point(395, 47);
-            lstSugerencias.MaximumSize = new Size(536, 22);
-            lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(536, 22);
-            lstSugerencias.TabIndex = 19;
-            lstSugerencias.Visible = false;
-            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
-            lstSugerencias.Leave += lstSugerencias_Leave;
-            // 
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -922,7 +922,7 @@
         private Panel panelCarrito;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button buscar;
+        private Button btnBuscarProducto;
         private Panel panel1;
         private Panel panel2;
         private Label label3;
