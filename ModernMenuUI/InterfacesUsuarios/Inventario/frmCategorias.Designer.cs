@@ -204,7 +204,7 @@
             flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Location = new Point(12, 417);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(776, 51);
+            flowLayoutPanel1.Size = new Size(596, 51);
             flowLayoutPanel1.TabIndex = 44;
             // 
             // btnAgregarCategoria

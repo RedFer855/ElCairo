@@ -104,7 +104,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 17);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(718, 407);
+            panelCarrito.Size = new Size(784, 407);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -114,7 +114,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(718, 407);
+            panel10.Size = new Size(784, 407);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -167,7 +167,7 @@
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(718, 407);
+            dgvProductos.Size = new Size(784, 407);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -313,7 +313,7 @@
             panelBusqueda.MaximumSize = new Size(885, 43);
             panelBusqueda.MinimumSize = new Size(250, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(428, 43);
+            panelBusqueda.Size = new Size(494, 43);
             panelBusqueda.TabIndex = 14;
             // 
             // txtBuscar
@@ -325,7 +325,7 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(343, 20);
+            txtBuscar.Size = new Size(409, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
@@ -339,7 +339,7 @@
             btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscar.FlatAppearance.BorderSize = 0;
             btnBuscar.FlatStyle = FlatStyle.Flat;
-            btnBuscar.Location = new Point(367, 12);
+            btnBuscar.Location = new Point(433, 12);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(48, 20);
             btnBuscar.TabIndex = 0;
@@ -397,7 +397,7 @@
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(12, 61);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(746, 53);
+            gbxEstado.Size = new Size(812, 53);
             gbxEstado.TabIndex = 28;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -423,14 +423,14 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(372, 30);
+            tableLayoutPanel2.Size = new Size(438, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(202, 0);
+            label1.Location = new Point(235, 0);
             label1.Name = "label1";
             label1.Size = new Size(61, 30);
             label1.TabIndex = 40;
@@ -440,11 +440,11 @@
             // txtFiltroMarca
             // 
             txtFiltroMarca.Dock = DockStyle.Fill;
-            txtFiltroMarca.Location = new Point(269, 3);
+            txtFiltroMarca.Location = new Point(302, 3);
             txtFiltroMarca.Name = "txtFiltroMarca";
             txtFiltroMarca.PlaceholderText = "(Todas)";
             txtFiltroMarca.ReadOnly = true;
-            txtFiltroMarca.Size = new Size(66, 25);
+            txtFiltroMarca.Size = new Size(99, 25);
             txtFiltroMarca.TabIndex = 34;
             // 
             // btnMarca
@@ -455,7 +455,7 @@
             btnMarca.Dock = DockStyle.Fill;
             btnMarca.FlatAppearance.BorderSize = 0;
             btnMarca.FlatStyle = FlatStyle.Flat;
-            btnMarca.Location = new Point(341, 3);
+            btnMarca.Location = new Point(407, 3);
             btnMarca.Name = "btnMarca";
             btnMarca.Size = new Size(28, 24);
             btnMarca.TabIndex = 2;
@@ -470,7 +470,7 @@
             btnCategoria.Dock = DockStyle.Fill;
             btnCategoria.FlatAppearance.BorderSize = 0;
             btnCategoria.FlatStyle = FlatStyle.Flat;
-            btnCategoria.Location = new Point(169, 3);
+            btnCategoria.Location = new Point(202, 3);
             btnCategoria.Name = "btnCategoria";
             btnCategoria.Size = new Size(27, 24);
             btnCategoria.TabIndex = 38;
@@ -484,7 +484,7 @@
             txtFiltroCategoria.Name = "txtFiltroCategoria";
             txtFiltroCategoria.PlaceholderText = "(Todas)";
             txtFiltroCategoria.ReadOnly = true;
-            txtFiltroCategoria.Size = new Size(66, 25);
+            txtFiltroCategoria.Size = new Size(99, 25);
             txtFiltroCategoria.TabIndex = 35;
             // 
             // label2
@@ -536,7 +536,7 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(730, 642);
+            lblFecha.Location = new Point(796, 642);
             lblFecha.Name = "lblFecha";
             lblFecha.Size = new Size(22, 25);
             lblFecha.TabIndex = 30;
@@ -549,7 +549,7 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(730, 616);
+            lblHora.Location = new Point(796, 616);
             lblHora.Name = "lblHora";
             lblHora.Size = new Size(28, 33);
             lblHora.TabIndex = 29;
@@ -606,7 +606,7 @@
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
-            panel1.Size = new Size(746, 437);
+            panel1.Size = new Size(812, 437);
             panel1.TabIndex = 32;
             // 
             // lstSugerencias
@@ -620,7 +620,7 @@
             lstSugerencias.MaximumSize = new Size(800, 400);
             lstSugerencias.MinimumSize = new Size(165, 23);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(343, 23);
+            lstSugerencias.Size = new Size(409, 23);
             lstSugerencias.TabIndex = 2;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -670,7 +670,7 @@
             pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(446, 12);
+            pnlLimpiarFiltros.Location = new Point(512, 12);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
             pnlLimpiarFiltros.Size = new Size(166, 43);
             pnlLimpiarFiltros.TabIndex = 36;
@@ -682,7 +682,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.DimGray;
-            label3.Location = new Point(627, 17);
+            label3.Location = new Point(693, 17);
             label3.Name = "label3";
             label3.RightToLeft = RightToLeft.Yes;
             label3.Size = new Size(132, 36);
@@ -694,7 +694,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(770, 679);
+            ClientSize = new Size(836, 679);
             Controls.Add(label3);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(flowLayoutPanel1);
@@ -708,6 +708,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProductos";
             Text = "frmProductos";
+            FormClosing += frmProductos_FormClosing;
             Load += frmProductos_Load;
             panelCarrito.ResumeLayout(false);
             panel10.ResumeLayout(false);

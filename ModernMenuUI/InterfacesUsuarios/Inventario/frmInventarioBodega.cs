@@ -77,6 +77,7 @@ namespace ModernMenuUI
             _permUI.AplicarPermisos();
             _permUI.RegistrarBoton(btnCambiarBodega, "update_inventario");
             _permUI.RegistrarBoton(btnCrearBodega, "update_inventario");
+            ConfigurarComboEstado();
         }
 
         /// <summary>
@@ -86,10 +87,14 @@ namespace ModernMenuUI
         {
             Cursor = Cursors.WaitCursor;
 
+            this.SuspendLayout();
+
             await CargarDatos();
             await CargarBodegas();
-            ConfigurarComboEstado();
+
             ConectarEventosUI();
+
+            this.ResumeLayout(true);
 
             txtBodegaActual.Text = ServicioSesionUsuario.ObtenerNombreBodega();
 
@@ -367,5 +372,6 @@ namespace ModernMenuUI
                 await RecargarDatos();
             }
         }
+
     }
 }

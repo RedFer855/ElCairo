@@ -5,9 +5,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Supabase.Postgrest.Attributes; // Asegúrese de tener esto para [Table] y [Column]
+using Supabase.Postgrest.Attributes; 
 using Supabase.Postgrest.Models;
-using JsonIgnoreAttribute = Newtonsoft.Json.JsonIgnoreAttribute;
 
 
 namespace CapaDeDatos.Modelados.Productos
@@ -76,9 +75,15 @@ namespace CapaDeDatos.Modelados.Productos
 
         public int StockEnBodega { get; set; }
 
+        [Column("id_impuesto")]
+        public int IdImpuesto { get; set; }
+
+        public Impuesto Impuesto { get; set; }
+
+        public decimal ImpuestoProducto => Impuesto?.PorcentajeImpuesto ?? 0m;
+
         public override string ToString()
         {
-            // Esto une las palabras con espacio, ignorando las que sean nulas o vacías
             return string.Join(" ", new[] { NombreProducto, NombreMarca, NombrePresentacion, ContenidoProducto }
                    .Where(s => !string.IsNullOrEmpty(s)));
         }

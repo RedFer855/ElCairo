@@ -85,7 +85,7 @@ namespace ModernMenuUI
             lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
             ManejarFormularios.Inicializar(this.panelFormHijo);
             panelvisible();
-            lblBodega.Text = ServicioSesionUsuario.ObtenerNombreBodega();
+            lblBodega.Text = "Bodega: " + ServicioSesionUsuario.ObtenerNombreBodega();
         }
 
         /// <summary>

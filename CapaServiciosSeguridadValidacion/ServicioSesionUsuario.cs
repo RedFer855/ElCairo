@@ -74,7 +74,7 @@ namespace CapaServiciosSeguridadValidacion
 
         public static string ObtenerNombreBodega()
         {
-            return "Bodega: " + BodegaActual?.NombreBodega ?? "Bodega Desconocida";
+            return BodegaActual?.NombreBodega ?? "Bodega Desconocida";
         }
 
         public static int ObtenerIdBodega()
