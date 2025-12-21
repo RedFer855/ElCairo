@@ -372,6 +372,5 @@ namespace ModernMenuUI
                 await RecargarDatos();
             }
         }
-
     }
 }
