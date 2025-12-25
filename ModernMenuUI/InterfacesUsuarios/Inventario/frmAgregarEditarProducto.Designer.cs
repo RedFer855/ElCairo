@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarEditarProducto));
             lblNombreModulo = new Label();
@@ -40,39 +41,46 @@
             btnAgregar = new Button();
             panel2 = new Panel();
             panel1 = new Panel();
-            txtCantidad = new NumericUpDown();
-            txtPrecioCompra = new NumericUpDown();
-            txtPrecioVenta = new NumericUpDown();
-            lblNota = new Label();
-            txtContenido = new TextBox();
-            cmbUnidadContenido = new ComboBox();
-            label22 = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnGuardarProducto = new Button();
             btnModificarProducto = new Button();
             btnVolver = new Button();
-            btnBuscarPresentacion = new Button();
-            btnBuscarMarca = new Button();
-            btnBuscarCategoria = new Button();
-            pictureBox1 = new PictureBox();
-            label19 = new Label();
-            label9 = new Label();
-            label11 = new Label();
-            txtPresentacion = new TextBox();
-            label12 = new Label();
-            txtMarca = new TextBox();
-            groupBox1 = new GroupBox();
-            rbDeshabilitado = new RadioButton();
-            rbHabilitado = new RadioButton();
-            label13 = new Label();
-            label14 = new Label();
-            label15 = new Label();
+            fpnlDinamico = new FlowLayoutPanel();
+            pnlDatosGenerales = new Panel();
             txtCategoria = new TextBox();
+            label15 = new Label();
+            label13 = new Label();
+            txtMarca = new TextBox();
+            label12 = new Label();
+            txtContenido = new TextBox();
+            txtPresentacion = new TextBox();
+            cmbUnidadContenido = new ComboBox();
             label16 = new Label();
             txtCodBarra = new TextBox();
-            label17 = new Label();
+            label22 = new Label();
             label18 = new Label();
+            label19 = new Label();
             txtNombreProducto = new TextBox();
+            btnBuscarCategoria = new Button();
+            btnBuscarPresentacion = new Button();
+            btnBuscarMarca = new Button();
+            pnlCantidad = new Panel();
+            txtCantidad = new NumericUpDown();
+            label9 = new Label();
+            pnlVentas = new Panel();
+            txtPrecioVenta = new NumericUpDown();
+            label17 = new Label();
+            pnlCompras = new Panel();
+            numericUpDown1 = new NumericUpDown();
+            label11 = new Label();
+            txtPrecioCompra = new NumericUpDown();
+            label20 = new Label();
+            lblNota = new Label();
+            pictureBox1 = new PictureBox();
+            gbxEstadoProductoNuevo = new GroupBox();
+            rbDeshabilitado = new RadioButton();
+            rbHabilitado = new RadioButton();
+            lblEstado = new Label();
             label10 = new Label();
             textBox5 = new TextBox();
             label7 = new Label();
@@ -91,16 +99,23 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
+            tipEditar = new ToolTip(components);
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)txtCantidad).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtPrecioCompra).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtPrecioVenta).BeginInit();
             flowLayoutPanel1.SuspendLayout();
+            fpnlDinamico.SuspendLayout();
+            pnlDatosGenerales.SuspendLayout();
+            pnlCantidad.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtCantidad).BeginInit();
+            pnlVentas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtPrecioVenta).BeginInit();
+            pnlCompras.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtPrecioCompra).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            groupBox1.SuspendLayout();
+            gbxEstadoProductoNuevo.SuspendLayout();
             gbxEstado.SuspendLayout();
             SuspendLayout();
             // 
@@ -112,7 +127,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(813, 37);
+            panBarraControl.Size = new Size(864, 37);
             panBarraControl.TabIndex = 2;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -123,7 +138,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(813, 37);
+            lblNombreModulo.Size = new Size(864, 37);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "EDITAR PRODUCTO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -242,130 +257,30 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 37);
             panel2.Name = "panel2";
-            panel2.Size = new Size(813, 466);
+            panel2.Size = new Size(864, 511);
             panel2.TabIndex = 12;
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(txtCantidad);
-            panel1.Controls.Add(txtPrecioCompra);
-            panel1.Controls.Add(txtPrecioVenta);
-            panel1.Controls.Add(lblNota);
-            panel1.Controls.Add(txtContenido);
-            panel1.Controls.Add(cmbUnidadContenido);
-            panel1.Controls.Add(label22);
             panel1.Controls.Add(flowLayoutPanel1);
-            panel1.Controls.Add(btnBuscarPresentacion);
-            panel1.Controls.Add(btnBuscarMarca);
-            panel1.Controls.Add(btnBuscarCategoria);
+            panel1.Controls.Add(fpnlDinamico);
             panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(label19);
-            panel1.Controls.Add(label9);
-            panel1.Controls.Add(label11);
-            panel1.Controls.Add(txtPresentacion);
-            panel1.Controls.Add(label12);
-            panel1.Controls.Add(txtMarca);
-            panel1.Controls.Add(groupBox1);
-            panel1.Controls.Add(label13);
-            panel1.Controls.Add(label14);
-            panel1.Controls.Add(label15);
-            panel1.Controls.Add(txtCategoria);
-            panel1.Controls.Add(label16);
-            panel1.Controls.Add(txtCodBarra);
-            panel1.Controls.Add(label17);
-            panel1.Controls.Add(label18);
-            panel1.Controls.Add(txtNombreProducto);
+            panel1.Controls.Add(gbxEstadoProductoNuevo);
+            panel1.Controls.Add(lblEstado);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(813, 466);
+            panel1.Size = new Size(864, 511);
             panel1.TabIndex = 41;
-            // 
-            // txtCantidad
-            // 
-            txtCantidad.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCantidad.ForeColor = Color.DimGray;
-            txtCantidad.Location = new Point(176, 347);
-            txtCantidad.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
-            txtCantidad.Name = "txtCantidad";
-            txtCantidad.Size = new Size(275, 25);
-            txtCantidad.TabIndex = 61;
-            txtCantidad.Visible = false;
-            // 
-            // txtPrecioCompra
-            // 
-            txtPrecioCompra.DecimalPlaces = 2;
-            txtPrecioCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPrecioCompra.ForeColor = Color.DimGray;
-            txtPrecioCompra.Location = new Point(176, 147);
-            txtPrecioCompra.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
-            txtPrecioCompra.Name = "txtPrecioCompra";
-            txtPrecioCompra.Size = new Size(275, 25);
-            txtPrecioCompra.TabIndex = 60;
-            // 
-            // txtPrecioVenta
-            // 
-            txtPrecioVenta.DecimalPlaces = 2;
-            txtPrecioVenta.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPrecioVenta.ForeColor = Color.DimGray;
-            txtPrecioVenta.Location = new Point(176, 107);
-            txtPrecioVenta.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
-            txtPrecioVenta.Name = "txtPrecioVenta";
-            txtPrecioVenta.Size = new Size(275, 25);
-            txtPrecioVenta.TabIndex = 59;
-            // 
-            // lblNota
-            // 
-            lblNota.BackColor = Color.FromArgb(148, 168, 187);
-            lblNota.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNota.ForeColor = Color.White;
-            lblNota.Location = new Point(488, 347);
-            lblNota.Name = "lblNota";
-            lblNota.Size = new Size(300, 84);
-            lblNota.TabIndex = 52;
-            lblNota.Text = "Nota: Para ingresar Inventario de este \r\nproducto, y establecer cantidades \r\nmínimas de inventario deberá realizarlo \r\npor medio de compra.";
-            // 
-            // txtContenido
-            // 
-            txtContenido.BackColor = Color.White;
-            txtContenido.BorderStyle = BorderStyle.None;
-            txtContenido.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContenido.Location = new Point(176, 307);
-            txtContenido.Name = "txtContenido";
-            txtContenido.PlaceholderText = "(Cantidad)";
-            txtContenido.Size = new Size(108, 20);
-            txtContenido.TabIndex = 58;
-            // 
-            // cmbUnidadContenido
-            // 
-            cmbUnidadContenido.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmbUnidadContenido.ForeColor = Color.DimGray;
-            cmbUnidadContenido.FormattingEnabled = true;
-            cmbUnidadContenido.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
-            cmbUnidadContenido.Location = new Point(374, 305);
-            cmbUnidadContenido.Name = "cmbUnidadContenido";
-            cmbUnidadContenido.Size = new Size(77, 26);
-            cmbUnidadContenido.TabIndex = 57;
-            cmbUnidadContenido.SelectedIndexChanged += cmbUnidadContenido_SelectedIndexChanged;
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("Itim", 11.9999981F);
-            label22.ForeColor = Color.FromArgb(87, 99, 110);
-            label22.Location = new Point(290, 307);
-            label22.Name = "label22";
-            label22.Size = new Size(78, 19);
-            label22.TabIndex = 56;
-            label22.Text = "Unidades:";
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnGuardarProducto);
             flowLayoutPanel1.Controls.Add(btnModificarProducto);
             flowLayoutPanel1.Controls.Add(btnVolver);
-            flowLayoutPanel1.Location = new Point(34, 399);
+            flowLayoutPanel1.Location = new Point(18, 452);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(261, 47);
             flowLayoutPanel1.TabIndex = 51;
@@ -419,6 +334,230 @@
             btnVolver.UseVisualStyleBackColor = false;
             btnVolver.Click += btnVolver_Click;
             // 
+            // fpnlDinamico
+            // 
+            fpnlDinamico.Controls.Add(pnlDatosGenerales);
+            fpnlDinamico.Controls.Add(pnlCantidad);
+            fpnlDinamico.Controls.Add(pnlVentas);
+            fpnlDinamico.Controls.Add(pnlCompras);
+            fpnlDinamico.Controls.Add(lblNota);
+            fpnlDinamico.Location = new Point(18, 20);
+            fpnlDinamico.Name = "fpnlDinamico";
+            fpnlDinamico.Size = new Size(449, 422);
+            fpnlDinamico.TabIndex = 67;
+            // 
+            // pnlDatosGenerales
+            // 
+            pnlDatosGenerales.Controls.Add(txtCategoria);
+            pnlDatosGenerales.Controls.Add(label15);
+            pnlDatosGenerales.Controls.Add(label13);
+            pnlDatosGenerales.Controls.Add(txtMarca);
+            pnlDatosGenerales.Controls.Add(label12);
+            pnlDatosGenerales.Controls.Add(txtContenido);
+            pnlDatosGenerales.Controls.Add(txtPresentacion);
+            pnlDatosGenerales.Controls.Add(cmbUnidadContenido);
+            pnlDatosGenerales.Controls.Add(label16);
+            pnlDatosGenerales.Controls.Add(txtCodBarra);
+            pnlDatosGenerales.Controls.Add(label22);
+            pnlDatosGenerales.Controls.Add(label18);
+            pnlDatosGenerales.Controls.Add(label19);
+            pnlDatosGenerales.Controls.Add(txtNombreProducto);
+            pnlDatosGenerales.Controls.Add(btnBuscarCategoria);
+            pnlDatosGenerales.Controls.Add(btnBuscarPresentacion);
+            pnlDatosGenerales.Controls.Add(btnBuscarMarca);
+            pnlDatosGenerales.Location = new Point(0, 0);
+            pnlDatosGenerales.Margin = new Padding(0);
+            pnlDatosGenerales.Name = "pnlDatosGenerales";
+            pnlDatosGenerales.Size = new Size(450, 227);
+            pnlDatosGenerales.TabIndex = 62;
+            // 
+            // txtCategoria
+            // 
+            txtCategoria.BackColor = Color.White;
+            txtCategoria.BorderStyle = BorderStyle.None;
+            txtCategoria.Font = new Font("Itim", 11.9999981F);
+            txtCategoria.ForeColor = Color.DimGray;
+            txtCategoria.Location = new Point(151, 82);
+            txtCategoria.Name = "txtCategoria";
+            txtCategoria.PlaceholderText = "(Seleccione Buscar)";
+            txtCategoria.ReadOnly = true;
+            txtCategoria.Size = new Size(221, 20);
+            txtCategoria.TabIndex = 23;
+            tipEditar.SetToolTip(txtCategoria, "Para editar este producto, presione el botón Editar.");
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Itim", 11.9999981F);
+            label15.ForeColor = Color.FromArgb(87, 99, 110);
+            label15.Location = new Point(61, 83);
+            label15.Name = "label15";
+            label15.Size = new Size(79, 19);
+            label15.TabIndex = 25;
+            label15.Text = "Categoría:";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Itim", 11.9999981F);
+            label13.ForeColor = Color.FromArgb(87, 99, 110);
+            label13.Location = new Point(85, 123);
+            label13.Name = "label13";
+            label13.Size = new Size(55, 19);
+            label13.TabIndex = 27;
+            label13.Text = "Marca:";
+            // 
+            // txtMarca
+            // 
+            txtMarca.BackColor = Color.White;
+            txtMarca.BorderStyle = BorderStyle.None;
+            txtMarca.Font = new Font("Itim", 11.9999981F);
+            txtMarca.ForeColor = Color.DimGray;
+            txtMarca.Location = new Point(151, 123);
+            txtMarca.Name = "txtMarca";
+            txtMarca.PlaceholderText = "(Seleccione Buscar)";
+            txtMarca.ReadOnly = true;
+            txtMarca.Size = new Size(221, 20);
+            txtMarca.TabIndex = 31;
+            tipEditar.SetToolTip(txtMarca, "Para editar este producto, presione el botón Editar.");
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Itim", 11.9999981F);
+            label12.ForeColor = Color.FromArgb(87, 99, 110);
+            label12.Location = new Point(38, 163);
+            label12.Name = "label12";
+            label12.Size = new Size(102, 19);
+            label12.TabIndex = 32;
+            label12.Text = "Presentación:";
+            // 
+            // txtContenido
+            // 
+            txtContenido.BackColor = Color.White;
+            txtContenido.BorderStyle = BorderStyle.None;
+            txtContenido.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtContenido.ForeColor = Color.DimGray;
+            txtContenido.Location = new Point(151, 203);
+            txtContenido.Name = "txtContenido";
+            txtContenido.PlaceholderText = "(Cantidad)";
+            txtContenido.Size = new Size(108, 20);
+            txtContenido.TabIndex = 58;
+            tipEditar.SetToolTip(txtContenido, "Para editar este producto, presione el botón Editar.");
+            // 
+            // txtPresentacion
+            // 
+            txtPresentacion.BackColor = Color.White;
+            txtPresentacion.BorderStyle = BorderStyle.None;
+            txtPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPresentacion.ForeColor = Color.DimGray;
+            txtPresentacion.Location = new Point(151, 163);
+            txtPresentacion.Name = "txtPresentacion";
+            txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
+            txtPresentacion.ReadOnly = true;
+            txtPresentacion.Size = new Size(221, 20);
+            txtPresentacion.TabIndex = 37;
+            tipEditar.SetToolTip(txtPresentacion, "Para editar este producto, presione el botón Editar.");
+            // 
+            // cmbUnidadContenido
+            // 
+            cmbUnidadContenido.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbUnidadContenido.ForeColor = Color.DimGray;
+            cmbUnidadContenido.FormattingEnabled = true;
+            cmbUnidadContenido.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
+            cmbUnidadContenido.Location = new Point(349, 198);
+            cmbUnidadContenido.Name = "cmbUnidadContenido";
+            cmbUnidadContenido.Size = new Size(77, 26);
+            cmbUnidadContenido.TabIndex = 57;
+            tipEditar.SetToolTip(cmbUnidadContenido, "Para editar este producto, presione el botón Editar.");
+            cmbUnidadContenido.SelectedIndexChanged += cmbUnidadContenido_SelectedIndexChanged;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("Itim", 11.9999981F);
+            label16.ForeColor = Color.FromArgb(87, 99, 110);
+            label16.Location = new Point(17, 2);
+            label16.Name = "label16";
+            label16.Size = new Size(123, 19);
+            label16.TabIndex = 19;
+            label16.Text = "Código de Barra:";
+            // 
+            // txtCodBarra
+            // 
+            txtCodBarra.BackColor = Color.White;
+            txtCodBarra.BorderStyle = BorderStyle.None;
+            txtCodBarra.Font = new Font("Itim", 11.9999981F);
+            txtCodBarra.ForeColor = Color.DimGray;
+            txtCodBarra.Location = new Point(151, 0);
+            txtCodBarra.MaxLength = 13;
+            txtCodBarra.Name = "txtCodBarra";
+            txtCodBarra.PlaceholderText = "(Ingrese o Escanee el Código)";
+            txtCodBarra.Size = new Size(275, 20);
+            txtCodBarra.TabIndex = 18;
+            tipEditar.SetToolTip(txtCodBarra, "Para editar este producto, presione el botón Editar.");
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Itim", 11.9999981F);
+            label22.ForeColor = Color.FromArgb(87, 99, 110);
+            label22.Location = new Point(265, 203);
+            label22.Name = "label22";
+            label22.Size = new Size(78, 19);
+            label22.TabIndex = 56;
+            label22.Text = "Unidades:";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Itim", 11.9999981F);
+            label18.ForeColor = Color.FromArgb(87, 99, 110);
+            label18.Location = new Point(64, 40);
+            label18.Name = "label18";
+            label18.Size = new Size(76, 19);
+            label18.TabIndex = 15;
+            label18.Text = "Producto:";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Itim", 11.9999981F);
+            label19.ForeColor = Color.FromArgb(87, 99, 110);
+            label19.Location = new Point(56, 203);
+            label19.Name = "label19";
+            label19.Size = new Size(84, 19);
+            label19.TabIndex = 42;
+            label19.Text = "Contenido:";
+            // 
+            // txtNombreProducto
+            // 
+            txtNombreProducto.BackColor = Color.White;
+            txtNombreProducto.BorderStyle = BorderStyle.None;
+            txtNombreProducto.Font = new Font("Itim", 11.9999981F);
+            txtNombreProducto.ForeColor = Color.DimGray;
+            txtNombreProducto.Location = new Point(151, 40);
+            txtNombreProducto.Name = "txtNombreProducto";
+            txtNombreProducto.PlaceholderText = "(Nombre del Producto)";
+            txtNombreProducto.Size = new Size(275, 20);
+            txtNombreProducto.TabIndex = 13;
+            tipEditar.SetToolTip(txtNombreProducto, "Para editar este producto, presione el botón Editar.");
+            // 
+            // btnBuscarCategoria
+            // 
+            btnBuscarCategoria.BackColor = Color.FromArgb(168, 191, 212);
+            btnBuscarCategoria.BackgroundImage = (Image)resources.GetObject("btnBuscarCategoria.BackgroundImage");
+            btnBuscarCategoria.BackgroundImageLayout = ImageLayout.Zoom;
+            btnBuscarCategoria.FlatAppearance.BorderSize = 0;
+            btnBuscarCategoria.FlatStyle = FlatStyle.Flat;
+            btnBuscarCategoria.Location = new Point(378, 82);
+            btnBuscarCategoria.Name = "btnBuscarCategoria";
+            btnBuscarCategoria.Size = new Size(48, 20);
+            btnBuscarCategoria.TabIndex = 44;
+            tipEditar.SetToolTip(btnBuscarCategoria, "Para editar este producto, presione el botón Editar.");
+            btnBuscarCategoria.UseVisualStyleBackColor = false;
+            btnBuscarCategoria.Click += btnBuscarCategoria_Click;
+            // 
             // btnBuscarPresentacion
             // 
             btnBuscarPresentacion.BackColor = Color.FromArgb(168, 191, 212);
@@ -426,10 +565,11 @@
             btnBuscarPresentacion.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarPresentacion.FlatAppearance.BorderSize = 0;
             btnBuscarPresentacion.FlatStyle = FlatStyle.Flat;
-            btnBuscarPresentacion.Location = new Point(403, 267);
+            btnBuscarPresentacion.Location = new Point(378, 163);
             btnBuscarPresentacion.Name = "btnBuscarPresentacion";
             btnBuscarPresentacion.Size = new Size(48, 20);
             btnBuscarPresentacion.TabIndex = 49;
+            tipEditar.SetToolTip(btnBuscarPresentacion, "Para editar este producto, presione el botón Editar.");
             btnBuscarPresentacion.UseVisualStyleBackColor = false;
             btnBuscarPresentacion.Click += btnBuscarPresentacion_Click;
             // 
@@ -440,117 +580,169 @@
             btnBuscarMarca.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarMarca.FlatAppearance.BorderSize = 0;
             btnBuscarMarca.FlatStyle = FlatStyle.Flat;
-            btnBuscarMarca.Location = new Point(403, 227);
+            btnBuscarMarca.Location = new Point(378, 123);
             btnBuscarMarca.Name = "btnBuscarMarca";
             btnBuscarMarca.Size = new Size(48, 20);
             btnBuscarMarca.TabIndex = 45;
+            tipEditar.SetToolTip(btnBuscarMarca, "Para editar este producto, presione el botón Editar.");
             btnBuscarMarca.UseVisualStyleBackColor = false;
             btnBuscarMarca.Click += btnBuscarMarca_Click;
             // 
-            // btnBuscarCategoria
+            // pnlCantidad
             // 
-            btnBuscarCategoria.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscarCategoria.BackgroundImage = (Image)resources.GetObject("btnBuscarCategoria.BackgroundImage");
-            btnBuscarCategoria.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscarCategoria.FlatAppearance.BorderSize = 0;
-            btnBuscarCategoria.FlatStyle = FlatStyle.Flat;
-            btnBuscarCategoria.Location = new Point(403, 186);
-            btnBuscarCategoria.Name = "btnBuscarCategoria";
-            btnBuscarCategoria.Size = new Size(48, 20);
-            btnBuscarCategoria.TabIndex = 44;
-            btnBuscarCategoria.UseVisualStyleBackColor = false;
-            btnBuscarCategoria.Click += btnBuscarCategoria_Click;
+            pnlCantidad.Controls.Add(txtCantidad);
+            pnlCantidad.Controls.Add(label9);
+            pnlCantidad.Location = new Point(0, 247);
+            pnlCantidad.Margin = new Padding(0, 20, 0, 0);
+            pnlCantidad.Name = "pnlCantidad";
+            pnlCantidad.Size = new Size(450, 26);
+            pnlCantidad.TabIndex = 66;
             // 
-            // pictureBox1
+            // txtCantidad
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(488, 27);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(300, 300);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 43;
-            pictureBox1.TabStop = false;
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Font = new Font("Itim", 11.9999981F);
-            label19.ForeColor = Color.FromArgb(87, 99, 110);
-            label19.Location = new Point(81, 307);
-            label19.Name = "label19";
-            label19.Size = new Size(84, 19);
-            label19.TabIndex = 42;
-            label19.Text = "Contenido:";
+            txtCantidad.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCantidad.ForeColor = Color.DimGray;
+            txtCantidad.Location = new Point(151, 0);
+            txtCantidad.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
+            txtCantidad.Name = "txtCantidad";
+            txtCantidad.Size = new Size(275, 25);
+            txtCantidad.TabIndex = 61;
+            tipEditar.SetToolTip(txtCantidad, "Para editar este producto, presione el botón Editar.");
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Itim", 11.9999981F);
             label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(86, 347);
+            label9.Location = new Point(64, 1);
             label9.Name = "label9";
             label9.Size = new Size(76, 19);
             label9.TabIndex = 40;
             label9.Text = "Cantidad:";
-            label9.Visible = false;
+            // 
+            // pnlVentas
+            // 
+            pnlVentas.Controls.Add(txtPrecioVenta);
+            pnlVentas.Controls.Add(label17);
+            pnlVentas.Location = new Point(0, 293);
+            pnlVentas.Margin = new Padding(0, 20, 0, 0);
+            pnlVentas.Name = "pnlVentas";
+            pnlVentas.Size = new Size(450, 26);
+            pnlVentas.TabIndex = 65;
+            // 
+            // txtPrecioVenta
+            // 
+            txtPrecioVenta.DecimalPlaces = 2;
+            txtPrecioVenta.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPrecioVenta.ForeColor = Color.DimGray;
+            txtPrecioVenta.Location = new Point(151, -1);
+            txtPrecioVenta.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
+            txtPrecioVenta.Name = "txtPrecioVenta";
+            txtPrecioVenta.Size = new Size(275, 25);
+            txtPrecioVenta.TabIndex = 59;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("Itim", 11.9999981F);
+            label17.ForeColor = Color.FromArgb(87, 99, 110);
+            label17.Location = new Point(20, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(120, 19);
+            label17.TabIndex = 16;
+            label17.Text = "Precio de Venta:";
+            // 
+            // pnlCompras
+            // 
+            pnlCompras.Controls.Add(numericUpDown1);
+            pnlCompras.Controls.Add(label11);
+            pnlCompras.Controls.Add(txtPrecioCompra);
+            pnlCompras.Controls.Add(label20);
+            pnlCompras.Location = new Point(0, 339);
+            pnlCompras.Margin = new Padding(0, 20, 0, 0);
+            pnlCompras.Name = "pnlCompras";
+            pnlCompras.Size = new Size(450, 72);
+            pnlCompras.TabIndex = 66;
+            // 
+            // numericUpDown1
+            // 
+            numericUpDown1.DecimalPlaces = 2;
+            numericUpDown1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numericUpDown1.ForeColor = Color.DimGray;
+            numericUpDown1.Location = new Point(151, 44);
+            numericUpDown1.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(275, 25);
+            numericUpDown1.TabIndex = 64;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Itim", 11.9999981F);
             label11.ForeColor = Color.FromArgb(87, 99, 110);
-            label11.Location = new Point(37, 147);
+            label11.Location = new Point(12, 1);
             label11.Name = "label11";
             label11.Size = new Size(133, 19);
             label11.TabIndex = 38;
             label11.Text = "Precio de Compra:";
             // 
-            // txtPresentacion
+            // txtPrecioCompra
             // 
-            txtPresentacion.BackColor = Color.White;
-            txtPresentacion.BorderStyle = BorderStyle.None;
-            txtPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPresentacion.Location = new Point(176, 267);
-            txtPresentacion.Name = "txtPresentacion";
-            txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
-            txtPresentacion.ReadOnly = true;
-            txtPresentacion.Size = new Size(221, 20);
-            txtPresentacion.TabIndex = 37;
+            txtPrecioCompra.DecimalPlaces = 2;
+            txtPrecioCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPrecioCompra.ForeColor = Color.DimGray;
+            txtPrecioCompra.Location = new Point(151, 0);
+            txtPrecioCompra.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
+            txtPrecioCompra.Name = "txtPrecioCompra";
+            txtPrecioCompra.Size = new Size(275, 25);
+            txtPrecioCompra.TabIndex = 60;
             // 
-            // label12
+            // label20
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Itim", 11.9999981F);
-            label12.ForeColor = Color.FromArgb(87, 99, 110);
-            label12.Location = new Point(63, 267);
-            label12.Name = "label12";
-            label12.Size = new Size(102, 19);
-            label12.TabIndex = 32;
-            label12.Text = "Presentación:";
+            label20.AutoSize = true;
+            label20.Font = new Font("Itim", 11.9999981F);
+            label20.ForeColor = Color.FromArgb(87, 99, 110);
+            label20.Location = new Point(25, 44);
+            label20.Name = "label20";
+            label20.Size = new Size(119, 19);
+            label20.TabIndex = 63;
+            label20.Text = "Precio de Costo:";
             // 
-            // txtMarca
+            // lblNota
             // 
-            txtMarca.BackColor = Color.White;
-            txtMarca.BorderStyle = BorderStyle.None;
-            txtMarca.Font = new Font("Itim", 11.9999981F);
-            txtMarca.Location = new Point(176, 227);
-            txtMarca.Name = "txtMarca";
-            txtMarca.PlaceholderText = "(Seleccione Buscar)";
-            txtMarca.ReadOnly = true;
-            txtMarca.Size = new Size(221, 20);
-            txtMarca.TabIndex = 31;
+            lblNota.BackColor = Color.FromArgb(148, 168, 187);
+            lblNota.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNota.ForeColor = Color.White;
+            lblNota.ImageAlign = ContentAlignment.MiddleLeft;
+            lblNota.Location = new Point(0, 431);
+            lblNota.Margin = new Padding(0, 20, 0, 0);
+            lblNota.Name = "lblNota";
+            lblNota.Size = new Size(426, 92);
+            lblNota.TabIndex = 52;
+            lblNota.Text = "Nota: Para ingresar Inventario de un producto nuevo, establecer cantidades mínimas de inventario, y precio de compra deberá realizarlo por medio del módulo de compra.";
+            lblNota.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // groupBox1
+            // pictureBox1
             // 
-            groupBox1.Controls.Add(rbDeshabilitado);
-            groupBox1.Controls.Add(rbHabilitado);
-            groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(570, 337);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(196, 44);
-            groupBox1.TabIndex = 30;
-            groupBox1.TabStop = false;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(494, 20);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(350, 350);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 43;
+            pictureBox1.TabStop = false;
+            // 
+            // gbxEstadoProductoNuevo
+            // 
+            gbxEstadoProductoNuevo.Controls.Add(rbDeshabilitado);
+            gbxEstadoProductoNuevo.Controls.Add(rbHabilitado);
+            gbxEstadoProductoNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxEstadoProductoNuevo.ForeColor = Color.DimGray;
+            gbxEstadoProductoNuevo.Location = new Point(560, 387);
+            gbxEstadoProductoNuevo.Name = "gbxEstadoProductoNuevo";
+            gbxEstadoProductoNuevo.Size = new Size(196, 44);
+            gbxEstadoProductoNuevo.TabIndex = 30;
+            gbxEstadoProductoNuevo.TabStop = false;
             // 
             // rbDeshabilitado
             // 
@@ -574,106 +766,16 @@
             rbHabilitado.Text = "Activo";
             rbHabilitado.UseVisualStyleBackColor = true;
             // 
-            // label13
+            // lblEstado
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Itim", 11.9999981F);
-            label13.ForeColor = Color.FromArgb(87, 99, 110);
-            label13.Location = new Point(110, 227);
-            label13.Name = "label13";
-            label13.Size = new Size(55, 19);
-            label13.TabIndex = 27;
-            label13.Text = "Marca:";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label14.ForeColor = Color.FromArgb(87, 99, 110);
-            label14.Location = new Point(499, 353);
-            label14.Name = "label14";
-            label14.Size = new Size(60, 19);
-            label14.TabIndex = 26;
-            label14.Text = "Estado:";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Itim", 11.9999981F);
-            label15.ForeColor = Color.FromArgb(87, 99, 110);
-            label15.Location = new Point(86, 187);
-            label15.Name = "label15";
-            label15.Size = new Size(79, 19);
-            label15.TabIndex = 25;
-            label15.Text = "Categoría:";
-            // 
-            // txtCategoria
-            // 
-            txtCategoria.BackColor = Color.White;
-            txtCategoria.BorderStyle = BorderStyle.None;
-            txtCategoria.Font = new Font("Itim", 11.9999981F);
-            txtCategoria.Location = new Point(176, 186);
-            txtCategoria.Name = "txtCategoria";
-            txtCategoria.PlaceholderText = "(Seleccione Buscar)";
-            txtCategoria.ReadOnly = true;
-            txtCategoria.Size = new Size(221, 20);
-            txtCategoria.TabIndex = 23;
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Font = new Font("Itim", 11.9999981F);
-            label16.ForeColor = Color.FromArgb(87, 99, 110);
-            label16.Location = new Point(42, 29);
-            label16.Name = "label16";
-            label16.Size = new Size(123, 19);
-            label16.TabIndex = 19;
-            label16.Text = "Código de Barra:";
-            // 
-            // txtCodBarra
-            // 
-            txtCodBarra.BackColor = Color.White;
-            txtCodBarra.BorderStyle = BorderStyle.None;
-            txtCodBarra.Font = new Font("Itim", 11.9999981F);
-            txtCodBarra.Location = new Point(176, 27);
-            txtCodBarra.MaxLength = 13;
-            txtCodBarra.Name = "txtCodBarra";
-            txtCodBarra.PlaceholderText = "(Ingrese o Escanee el Código)";
-            txtCodBarra.Size = new Size(275, 20);
-            txtCodBarra.TabIndex = 18;
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Font = new Font("Itim", 11.9999981F);
-            label17.ForeColor = Color.FromArgb(87, 99, 110);
-            label17.Location = new Point(45, 107);
-            label17.Name = "label17";
-            label17.Size = new Size(120, 19);
-            label17.TabIndex = 16;
-            label17.Text = "Precio de Venta:";
-            // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Font = new Font("Itim", 11.9999981F);
-            label18.ForeColor = Color.FromArgb(87, 99, 110);
-            label18.Location = new Point(89, 67);
-            label18.Name = "label18";
-            label18.Size = new Size(76, 19);
-            label18.TabIndex = 15;
-            label18.Text = "Producto:";
-            // 
-            // txtNombreProducto
-            // 
-            txtNombreProducto.BackColor = Color.White;
-            txtNombreProducto.BorderStyle = BorderStyle.None;
-            txtNombreProducto.Font = new Font("Itim", 11.9999981F);
-            txtNombreProducto.Location = new Point(176, 67);
-            txtNombreProducto.Name = "txtNombreProducto";
-            txtNombreProducto.PlaceholderText = "(Nombre del Producto)";
-            txtNombreProducto.Size = new Size(275, 20);
-            txtNombreProducto.TabIndex = 13;
+            lblEstado.AutoSize = true;
+            lblEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblEstado.ForeColor = Color.FromArgb(87, 99, 110);
+            lblEstado.Location = new Point(494, 403);
+            lblEstado.Name = "lblEstado";
+            lblEstado.Size = new Size(60, 19);
+            lblEstado.TabIndex = 26;
+            lblEstado.Text = "Estado:";
             // 
             // label10
             // 
@@ -895,12 +997,18 @@
             textBox1.Size = new Size(197, 20);
             textBox1.TabIndex = 22;
             // 
+            // tipEditar
+            // 
+            tipEditar.AutoPopDelay = 5000;
+            tipEditar.InitialDelay = 300;
+            tipEditar.ReshowDelay = 100;
+            // 
             // frmAgregarEditarProducto
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(813, 503);
+            ClientSize = new Size(864, 548);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -910,19 +1018,30 @@
             Name = "frmAgregarEditarProducto";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Producto";
+            Load += frmAgregarEditarProducto_Load;
             MouseDown += Editar_Producto_MouseDown;
             panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)txtCantidad).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtPrecioCompra).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtPrecioVenta).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
+            fpnlDinamico.ResumeLayout(false);
+            pnlDatosGenerales.ResumeLayout(false);
+            pnlDatosGenerales.PerformLayout();
+            pnlCantidad.ResumeLayout(false);
+            pnlCantidad.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)txtCantidad).EndInit();
+            pnlVentas.ResumeLayout(false);
+            pnlVentas.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)txtPrecioVenta).EndInit();
+            pnlCompras.ResumeLayout(false);
+            pnlCompras.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtPrecioCompra).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gbxEstadoProductoNuevo.ResumeLayout(false);
+            gbxEstadoProductoNuevo.PerformLayout();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
             ResumeLayout(false);
@@ -962,10 +1081,10 @@
         private TextBox txtPresentacion;
         private Label label12;
         private TextBox txtMarca;
-        private GroupBox groupBox1;
+        private GroupBox gbxEstadoProductoNuevo;
         private RadioButton rbHabilitado;
         private Label label13;
-        private Label label14;
+        private Label lblEstado;
         private Label label15;
         private TextBox txtCategoria;
         private Label label16;
@@ -990,5 +1109,13 @@
         private NumericUpDown txtPrecioCompra;
         private NumericUpDown txtPrecioVenta;
         private NumericUpDown txtCantidad;
+        private Panel pnlVentas;
+        private NumericUpDown numericUpDown1;
+        private Label label20;
+        private Panel pnlDatosGenerales;
+        private Panel pnlCompras;
+        private FlowLayoutPanel fpnlDinamico;
+        private ToolTip tipEditar;
+        private Panel pnlCantidad;
     }
 }

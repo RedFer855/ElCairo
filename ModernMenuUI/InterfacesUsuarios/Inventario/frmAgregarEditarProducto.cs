@@ -50,6 +50,12 @@ namespace ModernMenuUI
         public frmAgregarEditarProducto()
         {
             InitializeComponent();
+            this.Size = new Size(880, 550);
+            lblEstado.Visible = false;
+            gbxEstadoProductoNuevo.Visible = false;
+            pnlVentas.Visible = false;  
+            pnlCantidad.Visible = false;
+            pnlCompras.Visible = false;
             lblNombreModulo.Text = "AGREGAR PRODUCTO";
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
@@ -328,6 +334,11 @@ namespace ModernMenuUI
         /// Evento del combobox de unidad de contenido. Actualmente vacío — reservado por si se requiere lógica adicional.
         /// </summary>
         private void cmbUnidadContenido_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmAgregarEditarProducto_Load(object sender, EventArgs e)
         {
 
         }
