@@ -75,9 +75,9 @@ namespace ModernMenuUI
             _rtBodega.OnReconexionExitosa += () => RecargarUI();
 
             _permUI.AplicarPermisos();
-            _permUI.RegistrarBoton(btnCambiarBodega, "update_inventario");
             _permUI.RegistrarBoton(btnCrearBodega, "update_inventario");
             ConfigurarComboEstado();
+            txtBodegaActual.Text = ServicioSesionUsuario.ObtenerNombreBodega();
         }
 
         /// <summary>
@@ -87,16 +87,14 @@ namespace ModernMenuUI
         {
             Cursor = Cursors.WaitCursor;
 
-            this.SuspendLayout();
+
 
             await CargarDatos();
             await CargarBodegas();
 
             ConectarEventosUI();
 
-            this.ResumeLayout(true);
-
-            txtBodegaActual.Text = ServicioSesionUsuario.ObtenerNombreBodega();
+   
 
             await _rtInventario.SuscribirAsync();
             await _rtBodega.SuscribirAsync();

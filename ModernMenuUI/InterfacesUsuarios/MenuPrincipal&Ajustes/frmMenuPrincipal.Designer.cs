@@ -445,7 +445,7 @@
             btnReporte.Dock = DockStyle.Top;
             btnReporte.Imagen = (Image)resources.GetObject("btnReporte.Imagen");
             btnReporte.Location = new Point(0, 1075);
-            btnReporte.Margin = new Padding(3, 4, 3, 4);
+            btnReporte.Margin = new Padding(3, 5, 3, 5);
             btnReporte.Name = "btnReporte";
             btnReporte.Size = new Size(283, 80);
             btnReporte.TabIndex = 30;
@@ -558,7 +558,7 @@
             btnUsuarios.Dock = DockStyle.Top;
             btnUsuarios.Imagen = (Image)resources.GetObject("btnUsuarios.Imagen");
             btnUsuarios.Location = new Point(0, 833);
-            btnUsuarios.Margin = new Padding(3, 4, 3, 4);
+            btnUsuarios.Margin = new Padding(3, 5, 3, 5);
             btnUsuarios.Name = "btnUsuarios";
             btnUsuarios.Size = new Size(283, 80);
             btnUsuarios.TabIndex = 28;
@@ -728,7 +728,7 @@
             btnVentas.Dock = DockStyle.Top;
             btnVentas.Imagen = (Image)resources.GetObject("btnVentas.Imagen");
             btnVentas.Location = new Point(0, 591);
-            btnVentas.Margin = new Padding(3, 4, 3, 4);
+            btnVentas.Margin = new Padding(3, 5, 3, 5);
             btnVentas.Name = "btnVentas";
             btnVentas.Size = new Size(283, 80);
             btnVentas.TabIndex = 27;
@@ -803,7 +803,7 @@
             btnCompras.Dock = DockStyle.Top;
             btnCompras.Imagen = (Image)resources.GetObject("btnCompras.Imagen");
             btnCompras.Location = new Point(0, 429);
-            btnCompras.Margin = new Padding(3, 4, 3, 4);
+            btnCompras.Margin = new Padding(3, 5, 3, 5);
             btnCompras.Name = "btnCompras";
             btnCompras.Size = new Size(283, 80);
             btnCompras.TabIndex = 26;
@@ -977,7 +977,7 @@
             btnInventarios.Dock = DockStyle.Top;
             btnInventarios.Imagen = (Image)resources.GetObject("btnInventarios.Imagen");
             btnInventarios.Location = new Point(0, 67);
-            btnInventarios.Margin = new Padding(3, 4, 3, 4);
+            btnInventarios.Margin = new Padding(3, 5, 3, 5);
             btnInventarios.Name = "btnInventarios";
             btnInventarios.Size = new Size(283, 80);
             btnInventarios.TabIndex = 29;
@@ -1340,6 +1340,7 @@
             Controls.Add(panelMenuLateral);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 10F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 500);
             Name = "frmMenuPrincipal";
             StartPosition = FormStartPosition.CenterScreen;

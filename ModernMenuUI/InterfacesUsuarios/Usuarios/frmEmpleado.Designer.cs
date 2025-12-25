@@ -47,7 +47,6 @@
             btnSalir = new Button();
             btnAgregarEmpleado = new Button();
             btnEditarEmpleado = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
             btnCrearUsuario = new Button();
             button4 = new Button();
             pnlLimpiarFiltros = new Panel();
@@ -61,14 +60,15 @@
             Email = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewCheckBoxColumn();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).BeginInit();
             panel10.SuspendLayout();
             panel1.SuspendLayout();
             panelBusqueda.SuspendLayout();
             gbxFiltros.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
             pnlLimpiarFiltros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxClean).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // dgvEmpleados
@@ -122,7 +122,7 @@
             dgvEmpleados.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvEmpleados.RowTemplate.Height = 50;
             dgvEmpleados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEmpleados.Size = new Size(708, 400);
+            dgvEmpleados.Size = new Size(708, 458);
             dgvEmpleados.TabIndex = 1;
             dgvEmpleados.SelectionChanged += dgvEmpleados_SelectionChanged;
             // 
@@ -133,7 +133,7 @@
             panel10.Controls.Add(dgvEmpleados);
             panel10.Location = new Point(18, 13);
             panel10.Name = "panel10";
-            panel10.Size = new Size(708, 400);
+            panel10.Size = new Size(708, 458);
             panel10.TabIndex = 17;
             // 
             // txtBuscar
@@ -157,7 +157,7 @@
             panel1.Controls.Add(panel10);
             panel1.Location = new Point(12, 129);
             panel1.Name = "panel1";
-            panel1.Size = new Size(742, 427);
+            panel1.Size = new Size(742, 485);
             panel1.TabIndex = 45;
             // 
             // btnbuscar
@@ -240,7 +240,7 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(220, 3);
+            btnSalir.Location = new Point(416, 3);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(125, 44);
             btnSalir.TabIndex = 18;
@@ -256,7 +256,7 @@
             btnAgregarEmpleado.ForeColor = SystemColors.ButtonFace;
             btnAgregarEmpleado.Location = new Point(3, 3);
             btnAgregarEmpleado.Name = "btnAgregarEmpleado";
-            btnAgregarEmpleado.Size = new Size(211, 44);
+            btnAgregarEmpleado.Size = new Size(145, 44);
             btnAgregarEmpleado.TabIndex = 22;
             btnAgregarEmpleado.Text = "Agregar Empleado";
             btnAgregarEmpleado.UseVisualStyleBackColor = false;
@@ -268,31 +268,13 @@
             btnEditarEmpleado.BackColor = Color.FromArgb(189, 215, 238);
             btnEditarEmpleado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditarEmpleado.ForeColor = Color.FromArgb(87, 99, 110);
-            btnEditarEmpleado.Location = new Point(3, 53);
+            btnEditarEmpleado.Location = new Point(273, 3);
             btnEditarEmpleado.Name = "btnEditarEmpleado";
-            btnEditarEmpleado.Size = new Size(211, 44);
+            btnEditarEmpleado.Size = new Size(137, 44);
             btnEditarEmpleado.TabIndex = 20;
             btnEditarEmpleado.Text = "Editar Empleado";
             btnEditarEmpleado.UseVisualStyleBackColor = false;
             btnEditarEmpleado.Click += btnEditarEmpleado_Click;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel1.Controls.Add(btnCrearUsuario, 1, 1);
-            tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel1.Controls.Add(btnAgregarEmpleado, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnEditarEmpleado, 0, 1);
-            tableLayoutPanel1.Location = new Point(12, 567);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(348, 100);
-            tableLayoutPanel1.TabIndex = 48;
             // 
             // btnCrearUsuario
             // 
@@ -300,9 +282,9 @@
             btnCrearUsuario.BackColor = Color.FromArgb(149, 195, 172);
             btnCrearUsuario.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCrearUsuario.ForeColor = SystemColors.ButtonFace;
-            btnCrearUsuario.Location = new Point(220, 53);
+            btnCrearUsuario.Location = new Point(154, 3);
             btnCrearUsuario.Name = "btnCrearUsuario";
-            btnCrearUsuario.Size = new Size(125, 44);
+            btnCrearUsuario.Size = new Size(113, 44);
             btnCrearUsuario.TabIndex = 23;
             btnCrearUsuario.Text = "Crear Usuario";
             btnCrearUsuario.UseVisualStyleBackColor = false;
@@ -390,11 +372,11 @@
             dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewTextBoxColumn2.DataPropertyName = "NombreEmpleado";
             dataGridViewTextBoxColumn2.FillWeight = 35.1780434F;
-            dataGridViewTextBoxColumn2.HeaderText = "NombreEmpleado";
+            dataGridViewTextBoxColumn2.HeaderText = "Nombre";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 164;
+            dataGridViewTextBoxColumn2.Width = 96;
             // 
             // Categoria
             // 
@@ -420,15 +402,18 @@
             // 
             // Email
             // 
+            Email.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             Email.DataPropertyName = "EmailEmpleado";
             Email.FillWeight = 40.203476F;
             Email.HeaderText = "Correo";
             Email.MinimumWidth = 6;
             Email.Name = "Email";
             Email.ReadOnly = true;
+            Email.Width = 88;
             // 
             // dataGridViewTextBoxColumn4
             // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewTextBoxColumn4.DataPropertyName = "DireccionEmpleado";
             dataGridViewTextBoxColumn4.FillWeight = 70F;
             dataGridViewTextBoxColumn4.HeaderText = "Dirección";
@@ -449,18 +434,29 @@
             dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
             dataGridViewTextBoxColumn3.Width = 89;
             // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(btnAgregarEmpleado);
+            flowLayoutPanel1.Controls.Add(btnCrearUsuario);
+            flowLayoutPanel1.Controls.Add(btnEditarEmpleado);
+            flowLayoutPanel1.Controls.Add(btnSalir);
+            flowLayoutPanel1.Location = new Point(12, 620);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(742, 57);
+            flowLayoutPanel1.TabIndex = 60;
+            // 
             // frmEmpleado
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(766, 679);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(lstSugerencias);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(panel1);
             Controls.Add(panelBusqueda);
             Controls.Add(gbxFiltros);
-            Controls.Add(tableLayoutPanel1);
             Controls.Add(button4);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
@@ -475,9 +471,9 @@
             panelBusqueda.PerformLayout();
             gbxFiltros.ResumeLayout(false);
             gbxFiltros.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
             pnlLimpiarFiltros.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxClean).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -495,7 +491,6 @@
         private Button btnSalir;
         private Button btnAgregarEmpleado;
         private Button btnEditarEmpleado;
-        private TableLayoutPanel tableLayoutPanel1;
         private Button button4;
         private Button btnCrearUsuario;
         private Panel pnlLimpiarFiltros;
@@ -509,5 +504,6 @@
         private DataGridViewTextBoxColumn Email;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewCheckBoxColumn dataGridViewTextBoxColumn3;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }
