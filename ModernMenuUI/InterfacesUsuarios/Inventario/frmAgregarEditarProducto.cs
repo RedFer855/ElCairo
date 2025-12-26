@@ -49,6 +49,8 @@ namespace ModernMenuUI
         /// </summary>
         public frmAgregarEditarProducto()
         {
+
+          
             InitializeComponent();
             this.Size = new Size(880, 550);
             lblEstado.Visible = false;
@@ -69,6 +71,16 @@ namespace ModernMenuUI
         public frmAgregarEditarProducto(Producto productoseleccionado)
         {
             InitializeComponent();
+
+            SetTextBoxReadOnly(pnlDatosGenerales, true);
+            // SetTextBoxReadOnly(pnlVentas, true);
+            // SetTextBoxReadOnly(pnlCompras, true);
+
+            txtCantidad.Enabled = false;
+            txtPrecioCompra.Enabled = false;
+            txtPrecioVenta.Enabled = false;
+            txtPrecioCosto.Enabled = false;
+
 
             _productoSeleccionado = productoseleccionado;
 
@@ -98,6 +110,22 @@ namespace ModernMenuUI
             lblNota.Visible = false;
 
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
+        }
+
+        private void SetTextBoxReadOnly(Control contenedor, bool readOnly)
+        {
+            foreach (Control c in contenedor.Controls)
+            {
+                if (c is TextBox tb)
+                {
+                    tb.ReadOnly = readOnly;
+                }
+                // Por si tienes controles dentro de otros paneles o groupbox
+                else if (c.HasChildren)
+                {
+                    SetTextBoxReadOnly(c, readOnly);
+                }
+            }
         }
 
         /// <summary>
@@ -326,8 +354,18 @@ namespace ModernMenuUI
         /// </summary>
         private void btnModificarProducto_Click(object sender, EventArgs e)
         {
+            SetTextBoxReadOnly(pnlDatosGenerales, false);
+            SetTextBoxReadOnly(pnlVentas, false);
+            SetTextBoxReadOnly(pnlCompras, false);
+
+            txtCantidad.Enabled = true;
+            txtPrecioCompra.Enabled = true;
+            txtPrecioVenta.Enabled = true;
+            txtPrecioCosto.Enabled = true;
+
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
+            pnlDatosGenerales.Enabled = true;   
         }
 
         /// <summary>

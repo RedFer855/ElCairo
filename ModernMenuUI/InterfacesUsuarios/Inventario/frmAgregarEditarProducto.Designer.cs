@@ -71,7 +71,7 @@
             txtPrecioVenta = new NumericUpDown();
             label17 = new Label();
             pnlCompras = new Panel();
-            numericUpDown1 = new NumericUpDown();
+            txtPrecioCosto = new NumericUpDown();
             label11 = new Label();
             txtPrecioCompra = new NumericUpDown();
             label20 = new Label();
@@ -112,7 +112,7 @@
             pnlVentas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtPrecioVenta).BeginInit();
             pnlCompras.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtPrecioCosto).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtPrecioCompra).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             gbxEstadoProductoNuevo.SuspendLayout();
@@ -602,6 +602,7 @@
             // 
             txtCantidad.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCantidad.ForeColor = Color.DimGray;
+            txtCantidad.InterceptArrowKeys = false;
             txtCantidad.Location = new Point(151, 0);
             txtCantidad.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtCantidad.Name = "txtCantidad";
@@ -635,7 +636,8 @@
             txtPrecioVenta.DecimalPlaces = 2;
             txtPrecioVenta.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioVenta.ForeColor = Color.DimGray;
-            txtPrecioVenta.Location = new Point(151, -1);
+            txtPrecioVenta.InterceptArrowKeys = false;
+            txtPrecioVenta.Location = new Point(151, 0);
             txtPrecioVenta.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioVenta.Name = "txtPrecioVenta";
             txtPrecioVenta.Size = new Size(275, 25);
@@ -646,7 +648,7 @@
             label17.AutoSize = true;
             label17.Font = new Font("Itim", 11.9999981F);
             label17.ForeColor = Color.FromArgb(87, 99, 110);
-            label17.Location = new Point(20, 0);
+            label17.Location = new Point(20, 1);
             label17.Name = "label17";
             label17.Size = new Size(120, 19);
             label17.TabIndex = 16;
@@ -654,7 +656,7 @@
             // 
             // pnlCompras
             // 
-            pnlCompras.Controls.Add(numericUpDown1);
+            pnlCompras.Controls.Add(txtPrecioCosto);
             pnlCompras.Controls.Add(label11);
             pnlCompras.Controls.Add(txtPrecioCompra);
             pnlCompras.Controls.Add(label20);
@@ -664,16 +666,17 @@
             pnlCompras.Size = new Size(450, 72);
             pnlCompras.TabIndex = 66;
             // 
-            // numericUpDown1
+            // txtPrecioCosto
             // 
-            numericUpDown1.DecimalPlaces = 2;
-            numericUpDown1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numericUpDown1.ForeColor = Color.DimGray;
-            numericUpDown1.Location = new Point(151, 44);
-            numericUpDown1.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(275, 25);
-            numericUpDown1.TabIndex = 64;
+            txtPrecioCosto.DecimalPlaces = 2;
+            txtPrecioCosto.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPrecioCosto.ForeColor = Color.DimGray;
+            txtPrecioCosto.InterceptArrowKeys = false;
+            txtPrecioCosto.Location = new Point(151, 44);
+            txtPrecioCosto.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
+            txtPrecioCosto.Name = "txtPrecioCosto";
+            txtPrecioCosto.Size = new Size(275, 25);
+            txtPrecioCosto.TabIndex = 64;
             // 
             // label11
             // 
@@ -691,6 +694,7 @@
             txtPrecioCompra.DecimalPlaces = 2;
             txtPrecioCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioCompra.ForeColor = Color.DimGray;
+            txtPrecioCompra.InterceptArrowKeys = false;
             txtPrecioCompra.Location = new Point(151, 0);
             txtPrecioCompra.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioCompra.Name = "txtPrecioCompra";
@@ -1037,7 +1041,7 @@
             ((System.ComponentModel.ISupportInitialize)txtPrecioVenta).EndInit();
             pnlCompras.ResumeLayout(false);
             pnlCompras.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtPrecioCosto).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtPrecioCompra).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             gbxEstadoProductoNuevo.ResumeLayout(false);
@@ -1117,5 +1121,6 @@
         private FlowLayoutPanel fpnlDinamico;
         private ToolTip tipEditar;
         private Panel pnlCantidad;
+        private NumericUpDown txtPrecioCosto;
     }
 }

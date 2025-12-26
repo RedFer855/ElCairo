@@ -100,6 +100,8 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            pnlNotificaciones = new Panel();
+            lblNotificaciones = new Label();
             pbxCalculadora = new PictureBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
@@ -118,9 +120,8 @@
             lblFecha = new Label();
             timerAbrir = new System.Windows.Forms.Timer(components);
             timerCerrar = new System.Windows.Forms.Timer(components);
-            panelNotificaciones = new Panel();
-            lblNotificaciones = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
+            notifyIcon1 = new NotifyIcon(components);
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel6.SuspendLayout();
@@ -136,6 +137,7 @@
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
+            pnlNotificaciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
@@ -143,7 +145,6 @@
             ((System.ComponentModel.ISupportInitialize)dgvProducto).BeginInit();
             ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)chart2).BeginInit();
-            panelNotificaciones.SuspendLayout();
             SuspendLayout();
             // 
             // panBarraControl
@@ -1028,6 +1029,7 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(pnlNotificaciones);
             panelFormHijo.Controls.Add(pbxCalculadora);
             panelFormHijo.Controls.Add(tableLayoutPanel1);
             panelFormHijo.Controls.Add(lblHora);
@@ -1037,6 +1039,29 @@
             panelFormHijo.Name = "panelFormHijo";
             panelFormHijo.Size = new Size(934, 696);
             panelFormHijo.TabIndex = 2;
+            // 
+            // pnlNotificaciones
+            // 
+            pnlNotificaciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlNotificaciones.BackColor = Color.FromArgb(167, 191, 211);
+            pnlNotificaciones.BackgroundImageLayout = ImageLayout.Center;
+            pnlNotificaciones.Controls.Add(lblNotificaciones);
+            pnlNotificaciones.Location = new Point(934, 0);
+            pnlNotificaciones.Name = "pnlNotificaciones";
+            pnlNotificaciones.Size = new Size(350, 696);
+            pnlNotificaciones.TabIndex = 3;
+            // 
+            // lblNotificaciones
+            // 
+            lblNotificaciones.Dock = DockStyle.Fill;
+            lblNotificaciones.Font = new Font("Itim", 14F);
+            lblNotificaciones.ForeColor = Color.FromArgb(148, 168, 187);
+            lblNotificaciones.Location = new Point(0, 0);
+            lblNotificaciones.Name = "lblNotificaciones";
+            lblNotificaciones.Size = new Size(350, 696);
+            lblNotificaciones.TabIndex = 0;
+            lblNotificaciones.Text = "No tienes notificaciones pendientes...";
+            lblNotificaciones.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pbxCalculadora
             // 
@@ -1301,32 +1326,15 @@
             timerCerrar.Interval = 8;
             timerCerrar.Tick += timerCerrar_Tick;
             // 
-            // panelNotificaciones
-            // 
-            panelNotificaciones.BackColor = Color.FromArgb(167, 191, 211);
-            panelNotificaciones.BackgroundImageLayout = ImageLayout.Center;
-            panelNotificaciones.Controls.Add(lblNotificaciones);
-            panelNotificaciones.Dock = DockStyle.Right;
-            panelNotificaciones.Location = new Point(1234, 65);
-            panelNotificaciones.Name = "panelNotificaciones";
-            panelNotificaciones.Size = new Size(0, 696);
-            panelNotificaciones.TabIndex = 3;
-            // 
-            // lblNotificaciones
-            // 
-            lblNotificaciones.AutoSize = true;
-            lblNotificaciones.Font = new Font("Itim", 14F);
-            lblNotificaciones.ForeColor = Color.FromArgb(148, 168, 187);
-            lblNotificaciones.Location = new Point(24, 408);
-            lblNotificaciones.Name = "lblNotificaciones";
-            lblNotificaciones.Size = new Size(314, 23);
-            lblNotificaciones.TabIndex = 0;
-            lblNotificaciones.Text = "No tienes notificaciones pendientes...";
-            // 
             // HoraFecha
             // 
             HoraFecha.Enabled = true;
             HoraFecha.Tick += HoraFecha_Tick;
+            // 
+            // notifyIcon1
+            // 
+            notifyIcon1.Text = "notifyIcon1";
+            notifyIcon1.Visible = true;
             // 
             // frmMenuPrincipal
             // 
@@ -1334,7 +1342,6 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(224, 224, 224);
             ClientSize = new Size(1234, 761);
-            Controls.Add(panelNotificaciones);
             Controls.Add(panelFormHijo);
             Controls.Add(panBarraControl);
             Controls.Add(panelMenuLateral);
@@ -1366,6 +1373,7 @@
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
             panelFormHijo.PerformLayout();
+            pnlNotificaciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -1373,8 +1381,6 @@
             ((System.ComponentModel.ISupportInitialize)dgvProducto).EndInit();
             ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
             ((System.ComponentModel.ISupportInitialize)chart2).EndInit();
-            panelNotificaciones.ResumeLayout(false);
-            panelNotificaciones.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1411,7 +1417,7 @@
         private PictureBox pictureBox1;
         private System.Windows.Forms.Timer timerAbrir;
         private System.Windows.Forms.Timer timerCerrar;
-        private Panel panelNotificaciones;
+        private Panel pnlNotificaciones;
         private Panel panel1;
         private Label lblNotificaciones;
         private Button btnNotificaciones;
@@ -1466,5 +1472,6 @@
         public Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private NotifyIcon notifyIcon1;
     }
 }

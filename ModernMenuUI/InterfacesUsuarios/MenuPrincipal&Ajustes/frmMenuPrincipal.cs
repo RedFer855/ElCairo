@@ -42,7 +42,6 @@ namespace ModernMenuUI
             InitializeComponent();
             ConfigurarMenu();
             ConfigurarNotificaciones();
-            animadorPanel = new AnimadorPanel(panelNotificaciones, 0, 350, 50);
             this.BackColor = Color.White;
             clsAnmaciones objnombre = new clsAnmaciones("MENU PRINCIPAL", lblNombreModulo);
             _monitorConexion = new ServicioVerificacionConexion();
@@ -81,10 +80,15 @@ namespace ModernMenuUI
             {
                 pnlDivisorReporteria.Visible = false;
             }
+
             lblUsuario.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
+
             lblRol.Text = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerRolUsuario();
+
             ManejarFormularios.Inicializar(this.panelFormHijo);
+
             panelvisible();
+
             lblBodega.Text = "Bodega: " + ServicioSesionUsuario.ObtenerNombreBodega();
         }
 
@@ -94,7 +98,7 @@ namespace ModernMenuUI
         private void ConfigurarNotificaciones()
         {
             int anchoMaximoNotif = CalculadoraResolucion.ObtenerAnchoNotificaciones();
-            _animadorNotificaciones = new AnimadorPanel(panelNotificaciones, 0, anchoMaximoNotif, 50, true);
+            _animadorNotificaciones = new AnimadorPanel(pnlNotificaciones, 400, 20, true);
         }
 
         /// <summary>
@@ -358,16 +362,16 @@ namespace ModernMenuUI
         {
             try
             {
-                var parent = panelNotificaciones.Parent;
+                var parent = pnlNotificaciones.Parent;
                 bool estaCerrado;
 
                 if (parent == null)
                 {
-                    estaCerrado = !panelNotificaciones.Visible;
+                    estaCerrado = !pnlNotificaciones.Visible;
                 }
                 else
                 {
-                    estaCerrado = !panelNotificaciones.Visible || panelNotificaciones.Left >= parent.ClientSize.Width - 1;
+                    estaCerrado = !pnlNotificaciones.Visible || pnlNotificaciones.Left >= parent.ClientSize.Width - 1;
                 }
 
                 if (estaCerrado)
