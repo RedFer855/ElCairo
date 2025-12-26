@@ -1,6 +1,7 @@
 ﻿using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
+using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
 using System;
@@ -50,12 +51,12 @@ namespace ModernMenuUI
         public frmAgregarEditarProducto()
         {
 
-          
+
             InitializeComponent();
             this.Size = new Size(880, 550);
             lblEstado.Visible = false;
             gbxEstadoProductoNuevo.Visible = false;
-            pnlVentas.Visible = false;  
+            pnlVentas.Visible = false;
             pnlCantidad.Visible = false;
             pnlCompras.Visible = false;
             lblNombreModulo.Text = "AGREGAR PRODUCTO";
@@ -73,13 +74,8 @@ namespace ModernMenuUI
             InitializeComponent();
 
             SetTextBoxReadOnly(pnlDatosGenerales, true);
-            // SetTextBoxReadOnly(pnlVentas, true);
-            // SetTextBoxReadOnly(pnlCompras, true);
-
-            txtCantidad.Enabled = false;
-            txtPrecioCompra.Enabled = false;
-            txtPrecioVenta.Enabled = false;
-            txtPrecioCosto.Enabled = false;
+            SetTextBoxReadOnly(pnlVentas, true);
+            
 
 
             _productoSeleccionado = productoseleccionado;
@@ -88,15 +84,16 @@ namespace ModernMenuUI
             txtNombreProducto.Text = productoseleccionado.NombreProducto;
             txtMarca.Text = productoseleccionado.NombreMarca;
             txtCategoria.Text = productoseleccionado.NombreCategoria;
-            txtPrecio.Text = productoseleccionado.PrecioCosto.ToString();
-            txtPrecioCompra.Text = productoseleccionado.PrecioCompra.ToString();
-            txtPrecioVenta.Text = productoseleccionado.PrecioVenta.ToString();
+            nudPrecioCompra.Text = productoseleccionado.PrecioCompra.ToString();
+            nudPrecioVenta.Text = productoseleccionado.PrecioVenta.ToString();
             txtCodBarra.Text = productoseleccionado.CodigoBarraProducto;
             txtPresentacion.Text = productoseleccionado.NombrePresentacion.ToString();
-            txtCantidad.Text = productoseleccionado.CantidadProducto.ToString();
+            nudCantidad.Text = productoseleccionado.CantidadProducto.ToString();
             _idMarcaSeleccionada = productoseleccionado.IdMarca;
             _idCategoriaSeleccionada = productoseleccionado.IdCategoria;
             _idPresentacionSeleccionada = productoseleccionado.IdPresentacion;
+            nudPrecioCosto.Value = productoseleccionado.PrecioCosto;
+            nudPorcentajeGanancia.Value = productoseleccionado.PorcentajeGananciaProducto;
 
             if (productoseleccionado.EstadoProducto)
             {
@@ -166,6 +163,7 @@ namespace ModernMenuUI
                 decimal precioCompra = 0;
                 decimal precioVenta = 0;
                 decimal precioCosto = 0;
+                decimal porcentajeGanancia = 0;
                 int cantidad = 0;
 
                 // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos
@@ -175,6 +173,7 @@ namespace ModernMenuUI
                     precioVenta = _productoSeleccionado.PrecioVenta;
                     precioCosto = _productoSeleccionado.PrecioCosto;
                     cantidad = _productoSeleccionado.CantidadProducto;
+                    porcentajeGanancia = _productoSeleccionado.PorcentajeGananciaProducto;
                 }
 
                 // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
@@ -187,16 +186,17 @@ namespace ModernMenuUI
                     IdCategoria = _idCategoriaSeleccionada,
                     IdPresentacion = _idPresentacionSeleccionada,
                     ContenidoProducto = $"{txtContenido.Text.Trim()} {cmbUnidadContenido.SelectedItem?.ToString().Trim()}".Trim(),
-
-                    // ASIGNACIÓN SEGURA (Desde el objeto original, no del TXT)
+                    PrecioVenta = nudPrecioVenta.Value,
+                    PorcentajeGananciaProducto = nudPorcentajeGanancia.Value,
                     PrecioCompra = precioCompra,
-                    PrecioVenta = precioVenta,
                     PrecioCosto = precioCosto,
                     CantidadProducto = cantidad
+
                 };
 
                 // 2. VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(_productoInsertar);
+
                 if (resultado.Error)
                 {
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -356,16 +356,14 @@ namespace ModernMenuUI
         {
             SetTextBoxReadOnly(pnlDatosGenerales, false);
             SetTextBoxReadOnly(pnlVentas, false);
-            SetTextBoxReadOnly(pnlCompras, false);
 
-            txtCantidad.Enabled = true;
-            txtPrecioCompra.Enabled = true;
-            txtPrecioVenta.Enabled = true;
-            txtPrecioCosto.Enabled = true;
+            tipEditar.Active = false;
+
+            nudPrecioVenta.Enabled = true;
 
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
-            pnlDatosGenerales.Enabled = true;   
+            pnlDatosGenerales.Enabled = true;
         }
 
         /// <summary>
@@ -377,6 +375,23 @@ namespace ModernMenuUI
         }
 
         private void frmAgregarEditarProducto_Load(object sender, EventArgs e)
+        {
+            var controladorPrecio =
+            ControladorSincronizacionPrecio.Crear(
+                nudPrecioCosto,
+                nudPrecioVenta,
+                nudPorcentajeGanancia,
+                c => c
+                    .DecimalesMoneda(2)
+                    .CostoMinimo(0)
+                    .PorcentajeMaximo(1000)
+                    .PermitirGananciaNegativa(true)
+                    .AlError(m => MessageBox.Show(m, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning))
+            );
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

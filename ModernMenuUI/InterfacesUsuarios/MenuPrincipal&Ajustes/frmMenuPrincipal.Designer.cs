@@ -100,6 +100,7 @@
             panelMneuLateral = new Panel();
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
+            pbxWhatsapp = new PictureBox();
             pnlNotificaciones = new Panel();
             lblNotificaciones = new Label();
             pbxCalculadora = new PictureBox();
@@ -137,6 +138,7 @@
             panelInventario.SuspendLayout();
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxWhatsapp).BeginInit();
             pnlNotificaciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
             tableLayoutPanel1.SuspendLayout();
@@ -1029,6 +1031,7 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(pbxWhatsapp);
             panelFormHijo.Controls.Add(pnlNotificaciones);
             panelFormHijo.Controls.Add(pbxCalculadora);
             panelFormHijo.Controls.Add(tableLayoutPanel1);
@@ -1039,6 +1042,20 @@
             panelFormHijo.Name = "panelFormHijo";
             panelFormHijo.Size = new Size(934, 696);
             panelFormHijo.TabIndex = 2;
+            // 
+            // pbxWhatsapp
+            // 
+            pbxWhatsapp.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbxWhatsapp.Cursor = Cursors.Hand;
+            pbxWhatsapp.Image = (Image)resources.GetObject("pbxWhatsapp.Image");
+            pbxWhatsapp.Location = new Point(847, 122);
+            pbxWhatsapp.Margin = new Padding(10);
+            pbxWhatsapp.Name = "pbxWhatsapp";
+            pbxWhatsapp.Size = new Size(74, 80);
+            pbxWhatsapp.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxWhatsapp.TabIndex = 36;
+            pbxWhatsapp.TabStop = false;
+            pbxWhatsapp.Click += pbxWhatsapp_Click;
             // 
             // pnlNotificaciones
             // 
@@ -1066,11 +1083,12 @@
             // pbxCalculadora
             // 
             pbxCalculadora.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pbxCalculadora.Cursor = Cursors.Hand;
             pbxCalculadora.Image = Properties.Resources.calculadora;
-            pbxCalculadora.Location = new Point(829, 13);
+            pbxCalculadora.Location = new Point(841, 13);
             pbxCalculadora.Margin = new Padding(10);
             pbxCalculadora.Name = "pbxCalculadora";
-            pbxCalculadora.Size = new Size(86, 100);
+            pbxCalculadora.Size = new Size(83, 100);
             pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCalculadora.TabIndex = 6;
             pbxCalculadora.TabStop = false;
@@ -1093,7 +1111,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(796, 654);
+            tableLayoutPanel1.Size = new Size(814, 654);
             tableLayoutPanel1.TabIndex = 35;
             // 
             // panel4
@@ -1107,7 +1125,7 @@
             panel4.Location = new Point(0, 327);
             panel4.Margin = new Padding(0, 0, 0, 10);
             panel4.Name = "panel4";
-            panel4.Size = new Size(796, 317);
+            panel4.Size = new Size(814, 317);
             panel4.TabIndex = 36;
             // 
             // panel5
@@ -1117,7 +1135,7 @@
             panel5.Controls.Add(label1);
             panel5.Location = new Point(20, 10);
             panel5.Name = "panel5";
-            panel5.Size = new Size(759, 29);
+            panel5.Size = new Size(777, 29);
             panel5.TabIndex = 15;
             // 
             // label1
@@ -1182,7 +1200,7 @@
             dgvProducto.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProducto.RowTemplate.Height = 50;
             dgvProducto.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducto.Size = new Size(759, 252);
+            dgvProducto.Size = new Size(777, 252);
             dgvProducto.TabIndex = 14;
             // 
             // Codigo
@@ -1263,7 +1281,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chart1.Series.Add(series1);
-            chart1.Size = new Size(378, 307);
+            chart1.Size = new Size(387, 307);
             chart1.TabIndex = 1;
             chart1.Text = "chart1";
             chart1.Click += chart1_Click;
@@ -1276,7 +1294,7 @@
             chart2.Dock = DockStyle.Fill;
             legend2.Name = "Legend1";
             chart2.Legends.Add(legend2);
-            chart2.Location = new Point(418, 0);
+            chart2.Location = new Point(427, 0);
             chart2.Margin = new Padding(20, 0, 0, 20);
             chart2.Name = "chart2";
             series2.ChartArea = "ChartArea1";
@@ -1284,7 +1302,7 @@
             series2.Name = "Series1";
             series2.YValuesPerPoint = 4;
             chart2.Series.Add(series2);
-            chart2.Size = new Size(378, 307);
+            chart2.Size = new Size(387, 307);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
             // 
@@ -1373,6 +1391,7 @@
             panelMneuLateral.ResumeLayout(false);
             panelFormHijo.ResumeLayout(false);
             panelFormHijo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxWhatsapp).EndInit();
             pnlNotificaciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
@@ -1473,5 +1492,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private NotifyIcon notifyIcon1;
+        private PictureBox pbxWhatsapp;
     }
 }

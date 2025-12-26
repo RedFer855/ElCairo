@@ -180,32 +180,33 @@
             dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewTextBoxColumn1.FillWeight = 80F;
             dataGridViewTextBoxColumn1.HeaderText = "Código";
-            dataGridViewTextBoxColumn1.MinimumWidth = 65;
+            dataGridViewTextBoxColumn1.MinimumWidth = 80;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
             dataGridViewTextBoxColumn1.Width = 89;
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewTextBoxColumn2.DataPropertyName = "NombreProducto";
             dataGridViewTextBoxColumn2.HeaderText = "Producto";
             dataGridViewTextBoxColumn2.MinimumWidth = 180;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 180;
             // 
             // Contenido
             // 
-            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Contenido.DataPropertyName = "ContenidoProducto";
             Contenido.HeaderText = "Contenido";
+            Contenido.MinimumWidth = 113;
             Contenido.Name = "Contenido";
             Contenido.ReadOnly = true;
-            Contenido.Width = 113;
             // 
             // dataGridViewTextBoxColumn4
             // 
-            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewTextBoxColumn4.DataPropertyName = "NombreMarca";
             dataGridViewTextBoxColumn4.FillWeight = 120F;
             dataGridViewTextBoxColumn4.HeaderText = "Marca";

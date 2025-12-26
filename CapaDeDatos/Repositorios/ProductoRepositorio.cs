@@ -76,7 +76,7 @@ namespace CapaDeDatos.Repositorios
             catch (Exception ex)
             {
                 Console.WriteLine($"Error de Supabase al insertar producto: {ex.Message}");
-                throw;// new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
+                throw new Exception("No se pudo guardar el producto. Verifique los datos y la conexión.", ex);
             }
         }
 
@@ -90,10 +90,6 @@ namespace CapaDeDatos.Repositorios
             {
                 var client = await GetClient();
 
-                // OPTIMIZACIÓN:
-                // 1. No necesitamos pasar el ID aparte, ya viene dentro de '_productoEditar.IdProducto'.
-                // 2. No necesitamos .Where(), Supabase usa el [PrimaryKey] del modelo para saber a quién actualizar.
-
                 var response = await client
                     .From<ProductoInsertar>()
                     .Update(_productoEditar);
@@ -106,7 +102,7 @@ namespace CapaDeDatos.Repositorios
             catch (Exception ex)
             {
                 Console.WriteLine($"Error de Supabase al modificar producto: {ex.Message}");
-                throw;// new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
+                throw new Exception("No se pudo modificar el producto. Verifique los datos y la conexión.", ex);
             }
         }
 
@@ -121,7 +117,7 @@ namespace CapaDeDatos.Repositorios
 
             var resp = await client
                             .From<Producto>()
-                            .Select("*, marca(*), categoria(*)")     // 👈 IMPORTANTE: JOIN
+                            .Select("*, marca(*), categoria(*)")    
                             .Filter("id_marca", Operator.In, idMarcas)
                             .Get();
 

@@ -700,5 +700,29 @@ namespace ModernMenuUI
         {
 
         }
+
+        private void pbxWhatsapp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Intenta abrir la app (normal o Business)
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "whatsapp://",
+                    UseShellExecute = true
+                });
+            }
+            catch
+            {
+                // Si no hay app instalada, abre WhatsApp Web
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://web.whatsapp.com/",
+                    UseShellExecute = true
+                });
+            }
+
+
+        }
     }
 }
