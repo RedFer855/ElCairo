@@ -81,7 +81,7 @@
             nudPrecioVenta = new NumericUpDown();
             label17 = new Label();
             lblNota = new Label();
-            pictureBox1 = new PictureBox();
+            pbxImagenProducto = new PictureBox();
             gbxEstadoProductoNuevo = new GroupBox();
             rbDeshabilitado = new RadioButton();
             rbHabilitado = new RadioButton();
@@ -122,7 +122,7 @@
             pnlVentas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudPorcentajeGanancia).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudPrecioVenta).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbxImagenProducto).BeginInit();
             gbxEstadoProductoNuevo.SuspendLayout();
             gbxEstado.SuspendLayout();
             SuspendLayout();
@@ -135,7 +135,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(864, 37);
+            panBarraControl.Size = new Size(846, 37);
             panBarraControl.TabIndex = 2;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -146,7 +146,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(864, 37);
+            lblNombreModulo.Size = new Size(846, 37);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "EDITAR PRODUCTO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -252,7 +252,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 37);
             panel2.Name = "panel2";
-            panel2.Size = new Size(864, 544);
+            panel2.Size = new Size(846, 550);
             panel2.TabIndex = 12;
             // 
             // panel1
@@ -260,13 +260,13 @@
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Controls.Add(fpnlDinamico);
-            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(pbxImagenProducto);
             panel1.Controls.Add(gbxEstadoProductoNuevo);
             panel1.Controls.Add(lblEstado);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(864, 544);
+            panel1.Size = new Size(846, 550);
             panel1.TabIndex = 41;
             panel1.Paint += panel1_Paint;
             // 
@@ -276,9 +276,9 @@
             flowLayoutPanel1.Controls.Add(btnGuardarProducto);
             flowLayoutPanel1.Controls.Add(btnModificarProducto);
             flowLayoutPanel1.Controls.Add(btnVolver);
-            flowLayoutPanel1.Location = new Point(18, 485);
+            flowLayoutPanel1.Location = new Point(18, 494);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(261, 47);
+            flowLayoutPanel1.Size = new Size(398, 53);
             flowLayoutPanel1.TabIndex = 51;
             // 
             // btnGuardarProducto
@@ -291,7 +291,7 @@
             btnGuardarProducto.ImageAlign = ContentAlignment.BottomLeft;
             btnGuardarProducto.Location = new Point(3, 3);
             btnGuardarProducto.Name = "btnGuardarProducto";
-            btnGuardarProducto.Size = new Size(89, 40);
+            btnGuardarProducto.Size = new Size(142, 49);
             btnGuardarProducto.TabIndex = 47;
             btnGuardarProducto.Text = "Guardar";
             btnGuardarProducto.UseVisualStyleBackColor = false;
@@ -306,9 +306,9 @@
             btnModificarProducto.Font = new Font("Itim", 11.9999981F);
             btnModificarProducto.ForeColor = SystemColors.ButtonFace;
             btnModificarProducto.ImageAlign = ContentAlignment.BottomLeft;
-            btnModificarProducto.Location = new Point(98, 3);
+            btnModificarProducto.Location = new Point(151, 3);
             btnModificarProducto.Name = "btnModificarProducto";
-            btnModificarProducto.Size = new Size(89, 40);
+            btnModificarProducto.Size = new Size(124, 49);
             btnModificarProducto.TabIndex = 48;
             btnModificarProducto.Text = "Editar";
             btnModificarProducto.UseVisualStyleBackColor = false;
@@ -322,9 +322,9 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(193, 3);
+            btnVolver.Location = new Point(281, 3);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(64, 40);
+            btnVolver.Size = new Size(97, 49);
             btnVolver.TabIndex = 46;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
@@ -339,7 +339,7 @@
             fpnlDinamico.Controls.Add(lblNota);
             fpnlDinamico.Location = new Point(18, 20);
             fpnlDinamico.Name = "fpnlDinamico";
-            fpnlDinamico.Size = new Size(449, 462);
+            fpnlDinamico.Size = new Size(439, 462);
             fpnlDinamico.TabIndex = 67;
             // 
             // pnlDatosGenerales
@@ -808,15 +808,17 @@
             lblNota.Text = "Nota: Para ingresar Inventario de un producto nuevo, establecer cantidades mínimas de inventario, y precio de compra deberá realizarlo por medio del módulo de compra.";
             lblNota.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // pictureBox1
+            // pbxImagenProducto
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(494, 20);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(350, 350);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 43;
-            pictureBox1.TabStop = false;
+            pbxImagenProducto.BackColor = Color.White;
+            pbxImagenProducto.BorderStyle = BorderStyle.FixedSingle;
+            pbxImagenProducto.Image = (Image)resources.GetObject("pbxImagenProducto.Image");
+            pbxImagenProducto.Location = new Point(471, 20);
+            pbxImagenProducto.Name = "pbxImagenProducto";
+            pbxImagenProducto.Size = new Size(350, 350);
+            pbxImagenProducto.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxImagenProducto.TabIndex = 43;
+            pbxImagenProducto.TabStop = false;
             // 
             // gbxEstadoProductoNuevo
             // 
@@ -824,7 +826,7 @@
             gbxEstadoProductoNuevo.Controls.Add(rbHabilitado);
             gbxEstadoProductoNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstadoProductoNuevo.ForeColor = Color.DimGray;
-            gbxEstadoProductoNuevo.Location = new Point(560, 387);
+            gbxEstadoProductoNuevo.Location = new Point(540, 381);
             gbxEstadoProductoNuevo.Name = "gbxEstadoProductoNuevo";
             gbxEstadoProductoNuevo.Size = new Size(196, 44);
             gbxEstadoProductoNuevo.TabIndex = 30;
@@ -857,7 +859,7 @@
             lblEstado.AutoSize = true;
             lblEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblEstado.ForeColor = Color.FromArgb(87, 99, 110);
-            lblEstado.Location = new Point(494, 403);
+            lblEstado.Location = new Point(474, 397);
             lblEstado.Name = "lblEstado";
             lblEstado.Size = new Size(60, 19);
             lblEstado.TabIndex = 26;
@@ -1094,7 +1096,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(864, 581);
+            ClientSize = new Size(846, 587);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -1126,7 +1128,7 @@
             pnlVentas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nudPorcentajeGanancia).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudPrecioVenta).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbxImagenProducto).EndInit();
             gbxEstadoProductoNuevo.ResumeLayout(false);
             gbxEstadoProductoNuevo.PerformLayout();
             gbxEstado.ResumeLayout(false);
@@ -1180,7 +1182,7 @@
         private TextBox txtNombreProducto;
         private RadioButton radioButton1;
         private Label label19;
-        private PictureBox pictureBox1;
+        private PictureBox pbxImagenProducto;
         private Button btnBuscarMarca;
         private Button btnBuscarCategoria;
         private Button btnModificarProducto;
