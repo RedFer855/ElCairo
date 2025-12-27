@@ -336,6 +336,7 @@
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmRecuperacionContrasenia";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "RecuperacionContrasenia";

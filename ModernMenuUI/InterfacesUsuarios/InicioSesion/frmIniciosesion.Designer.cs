@@ -346,6 +346,7 @@
             Controls.Add(panLogo);
             Font = new Font("Itim", 6.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "frmIniciosesion";
             StartPosition = FormStartPosition.CenterScreen;

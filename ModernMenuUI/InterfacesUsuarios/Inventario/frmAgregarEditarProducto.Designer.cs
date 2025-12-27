@@ -252,7 +252,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 37);
             panel2.Name = "panel2";
-            panel2.Size = new Size(846, 550);
+            panel2.Size = new Size(846, 541);
             panel2.TabIndex = 12;
             // 
             // panel1
@@ -266,7 +266,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(846, 550);
+            panel1.Size = new Size(846, 541);
             panel1.TabIndex = 41;
             panel1.Paint += panel1_Paint;
             // 
@@ -276,7 +276,7 @@
             flowLayoutPanel1.Controls.Add(btnGuardarProducto);
             flowLayoutPanel1.Controls.Add(btnModificarProducto);
             flowLayoutPanel1.Controls.Add(btnVolver);
-            flowLayoutPanel1.Location = new Point(18, 494);
+            flowLayoutPanel1.Location = new Point(18, 485);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(398, 53);
             flowLayoutPanel1.TabIndex = 51;
@@ -375,7 +375,7 @@
             txtCategoria.ForeColor = Color.DimGray;
             txtCategoria.Location = new Point(151, 82);
             txtCategoria.Name = "txtCategoria";
-            txtCategoria.PlaceholderText = "(Seleccione Buscar)";
+            txtCategoria.PlaceholderText = "Seleccione Buscar...";
             txtCategoria.ReadOnly = true;
             txtCategoria.Size = new Size(221, 20);
             txtCategoria.TabIndex = 23;
@@ -411,7 +411,7 @@
             txtMarca.ForeColor = Color.DimGray;
             txtMarca.Location = new Point(151, 123);
             txtMarca.Name = "txtMarca";
-            txtMarca.PlaceholderText = "(Seleccione Buscar)";
+            txtMarca.PlaceholderText = "Seleccione Buscar..";
             txtMarca.ReadOnly = true;
             txtMarca.Size = new Size(221, 20);
             txtMarca.TabIndex = 31;
@@ -436,7 +436,7 @@
             txtContenido.ForeColor = Color.DimGray;
             txtContenido.Location = new Point(151, 203);
             txtContenido.Name = "txtContenido";
-            txtContenido.PlaceholderText = "(Cantidad)";
+            txtContenido.PlaceholderText = "Cantidad...";
             txtContenido.Size = new Size(108, 20);
             txtContenido.TabIndex = 58;
             tipEditar.SetToolTip(txtContenido, "Para editar este producto, presione el botón Editar.");
@@ -449,7 +449,7 @@
             txtPresentacion.ForeColor = Color.DimGray;
             txtPresentacion.Location = new Point(151, 163);
             txtPresentacion.Name = "txtPresentacion";
-            txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
+            txtPresentacion.PlaceholderText = "Seleccione Buscar...";
             txtPresentacion.ReadOnly = true;
             txtPresentacion.Size = new Size(221, 20);
             txtPresentacion.TabIndex = 37;
@@ -460,7 +460,7 @@
             cmbUnidadContenido.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbUnidadContenido.ForeColor = Color.DimGray;
             cmbUnidadContenido.FormattingEnabled = true;
-            cmbUnidadContenido.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
+            cmbUnidadContenido.Items.AddRange(new object[] { "Unidad", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
             cmbUnidadContenido.Location = new Point(349, 198);
             cmbUnidadContenido.Name = "cmbUnidadContenido";
             cmbUnidadContenido.Size = new Size(77, 26);
@@ -488,7 +488,7 @@
             txtCodBarra.Location = new Point(151, 0);
             txtCodBarra.MaxLength = 13;
             txtCodBarra.Name = "txtCodBarra";
-            txtCodBarra.PlaceholderText = "(Ingrese o Escanee el Código)";
+            txtCodBarra.PlaceholderText = "Ingrese o Escanee el Código...";
             txtCodBarra.Size = new Size(275, 20);
             txtCodBarra.TabIndex = 18;
             tipEditar.SetToolTip(txtCodBarra, "Para editar este producto, presione el botón Editar.");
@@ -535,7 +535,7 @@
             txtNombreProducto.Location = new Point(151, 40);
             txtNombreProducto.MaxLength = 500;
             txtNombreProducto.Name = "txtNombreProducto";
-            txtNombreProducto.PlaceholderText = "(Nombre del Producto)";
+            txtNombreProducto.PlaceholderText = "Ingrese Nombre del Producto..";
             txtNombreProducto.Size = new Size(275, 20);
             txtNombreProducto.TabIndex = 13;
             tipEditar.SetToolTip(txtNombreProducto, "Para editar este producto, presione el botón Editar.");
@@ -709,6 +709,7 @@
             nudPrecioCompra.Size = new Size(147, 25);
             nudPrecioCompra.TabIndex = 60;
             tipEditar.SetToolTip(nudPrecioCompra, "Para editar este producto, presione el botón Editar.");
+            nudPrecioCompra.ValueChanged += nudPrecioCompra_ValueChanged;
             // 
             // label20
             // 
@@ -779,7 +780,7 @@
             nudPrecioVenta.Location = new Point(151, 0);
             nudPrecioVenta.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             nudPrecioVenta.Name = "nudPrecioVenta";
-            nudPrecioVenta.Size = new Size(275, 25);
+            nudPrecioVenta.Size = new Size(147, 25);
             nudPrecioVenta.TabIndex = 59;
             tipEditar.SetToolTip(nudPrecioVenta, "Para editar este producto, presione el botón Editar.");
             // 
@@ -1096,7 +1097,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(846, 587);
+            ClientSize = new Size(846, 578);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);

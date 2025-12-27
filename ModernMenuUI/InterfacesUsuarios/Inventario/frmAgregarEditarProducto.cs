@@ -50,15 +50,16 @@ namespace ModernMenuUI
         /// </summary>
         public frmAgregarEditarProducto()
         {
-
-
             InitializeComponent();
-            this.Size = new Size(880, 550);
+            //this.Size = new Size(880, 550);
             lblEstado.Visible = false;
             gbxEstadoProductoNuevo.Visible = false;
-            pnlVentas.Visible = false;
-            pnlCantidad.Visible = false;
-            pnlCompras.Visible = false;
+            //pnlVentas.Visible = false;
+            //pnlCantidad.Visible = false;
+            //pnlCompras.Visible = false;
+            nudCantidad.Enabled = true;
+            nudPrecioCompra.Enabled = true;
+            nudPrecioCosto.Enabled = true;
             lblNombreModulo.Text = "AGREGAR PRODUCTO";
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
@@ -75,12 +76,9 @@ namespace ModernMenuUI
 
             SetTextBoxReadOnly(pnlDatosGenerales, true);
             SetTextBoxReadOnly(pnlVentas, true);
-            
-
 
             _productoSeleccionado = productoseleccionado;
 
-            // Cargar valores en controles
             txtNombreProducto.Text = productoseleccionado.NombreProducto;
             txtMarca.Text = productoseleccionado.NombreMarca;
             txtCategoria.Text = productoseleccionado.NombreCategoria;
@@ -117,7 +115,6 @@ namespace ModernMenuUI
                 {
                     tb.ReadOnly = readOnly;
                 }
-                // Por si tienes controles dentro de otros paneles o groupbox
                 else if (c.HasChildren)
                 {
                     SetTextBoxReadOnly(c, readOnly);
@@ -394,6 +391,14 @@ namespace ModernMenuUI
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void nudPrecioCompra_ValueChanged(object sender, EventArgs e)
+        {
+            if (_productoSeleccionado == null)
+            {
+                nudPrecioCosto.Value = nudPrecioCompra.Value;
+            }
         }
     }
 }

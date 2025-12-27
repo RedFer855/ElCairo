@@ -271,6 +271,7 @@
             Controls.Add(panel1);
             Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "frmInicioBodega";
             StartPosition = FormStartPosition.CenterScreen;

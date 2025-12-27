@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPantallaDeCarga));
             panel1 = new Panel();
             pbInicioSistema = new ProgressBar();
             pictureBox1 = new PictureBox();
@@ -73,6 +74,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmPantallaDeCarga";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormPantallaDeCarga";
