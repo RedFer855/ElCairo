@@ -19,28 +19,45 @@ namespace CapaDeDatos.Repositorios
             return await Conexion.ConnectWithTimeoutAsync();
         }
 
-        public async Task<List<Inventario>> ObtenerTodoElInventario(CancellationToken cancellationToken = default)
+        public async Task<List<Inventario>> ObtenerTodoElInventario(
+        CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = await GetClient();
+
                 var queryBuilder = client.From<Inventario>();
-                queryBuilder.Select("*, producto(*, marca(*), categoria(*), presentacion(*)), bodega(*)");
-                queryBuilder.Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
+                queryBuilder
+                    .Select("*, producto(*, marca(*), categoria(*), presentacion(*)), bodega(*)")
+                    .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
 
                 var response = await queryBuilder.Get(cancellationToken);
 
-                return response.Models ?? new List<Inventario>();
+                return response?.Models ?? new List<Inventario>();
             }
-            catch (OperationCanceledException ex) when (cancellationToken.IsCancellationRequested)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                throw new TimeoutException("La consulta de inventario fue cancelada por timeout.", ex);
+                // ⏱️ Cancelación controlada → NO romper app
+                return new List<Inventario>();
             }
-            catch (Exception ex)
+            catch (Supabase.Postgrest.Exceptions.PostgrestException ex)
+                when (ex.Message.Contains("JWT expired"))
             {
-                throw new Exception("No se pudo cargar el inventario. Verifique la conexión.", ex);
+                // 🔐 Sesión expirada → NO romper app
+                return new List<Inventario>();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // 🔐 Sesión inválida → NO romper app
+                return new List<Inventario>();
+            }
+            catch (Exception)
+            {
+                // ❌ Cualquier otro error → NO romper app
+                return new List<Inventario>();
             }
         }
+
 
         public async Task<List<Producto>> ObtenerProductosDeBodega(int idBodega)
         {
