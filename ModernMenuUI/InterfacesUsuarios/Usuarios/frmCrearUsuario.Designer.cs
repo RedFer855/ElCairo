@@ -94,7 +94,6 @@
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(82, 23);
             radioButton2.TabIndex = 9;
-            radioButton2.TabStop = true;
             radioButton2.Text = "Inactivo";
             radioButton2.UseVisualStyleBackColor = true;
             // 
@@ -152,6 +151,7 @@
             // radioButton1
             // 
             radioButton1.AutoSize = true;
+            radioButton1.Checked = true;
             radioButton1.Location = new Point(8, 22);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(70, 23);

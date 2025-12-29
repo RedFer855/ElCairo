@@ -14,11 +14,30 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
-
+    /// <summary>
+    /// Formulario para agregar o editar marcas asociadas a proveedores.
+    /// Este módulo permite:
+    ///  - Registrar nuevas marcas.
+    ///  - Editar marcas existentes.
+    ///  - Seleccionar proveedor desde un formulario modal.
+    ///  - Validar datos antes de insertarlos o actualizarlos en la base de datos.
+    /// </summary>
     public partial class frmAgregarEditarMarca : Form
     {
+        /// <summary>
+        /// Almacena el ID del proveedor seleccionado desde el formulario de proveedores.
+        /// </summary>
         private int _idProveedorSeleccionado;
-        private Marca _marcaSeleccionada;   
+
+        /// <summary>
+        /// Marca seleccionada en modo edición. Si es null, el formulario está en modo agregar.
+        /// </summary>
+        private Marca _marcaSeleccionada;
+
+        /// <summary>
+        /// Constructor principal utilizado para agregar nuevas marcas.
+        /// Configura visibilidad de botones y rotula el módulo.
+        /// </summary>
         public frmAgregarEditarMarca()
         {
             InitializeComponent();
@@ -26,42 +45,50 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             lblNombreModulo.Text = "AGREGAR MARCA";
         }
 
+        /// <summary>
+        /// Constructor alternativo utilizado cuando se desea editar una marca existente.
+        /// Carga automáticamente los datos de la marca recibida.
+        /// </summary>
+        /// <param name="_marcaParaEditar">Objeto marca que contiene los datos a modificar.</param>
         public frmAgregarEditarMarca(Marca _marcaParaEditar)
         {
             InitializeComponent();
-            // Asignamos a nuestra variable local _marcaSeleccionada
+
+            // Asignar objeto local
             _marcaSeleccionada = _marcaParaEditar;
 
-            // --- LLENAR LOS CAMPOS CON LOS DATOS ---
+            // Cargar datos del formulario
             txtNombreMarca.Text = _marcaSeleccionada.NombreMarca;
-
-            // Cargar el proveedor 
             txtProveedor.Text = _marcaSeleccionada.NombreProveedor;
             _idProveedorSeleccionado = _marcaSeleccionada.IdProveedor;
 
-            // Cargar RadioButtons
+            // Cargar estado
             if (_marcaSeleccionada.EstadoMarca)
                 rbActivo.Checked = true;
             else
                 rbInactivo.Checked = true;
         }
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
+        private void panel2_Paint(object sender, PaintEventArgs e) { }
 
+        /// <summary>
+        /// Cierra el formulario sin guardar cambios.
+        /// </summary>
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Abre el formulario de proveedores en modo selección.
+        /// Permite escoger un proveedor y traer sus datos de vuelta.
+        /// </summary>
         private void btnBuscarProv_Click(object sender, EventArgs e)
         {
             using (var formSeleccion = new frmProveedor())
             {
                 if (formSeleccion.ShowDialog() == DialogResult.OK)
                 {
-
                     if (formSeleccion.ProveedorSeleccionado != null)
                     {
                         txtProveedor.Text = formSeleccion.ProveedorSeleccionado.NombreProveedor;
@@ -71,25 +98,29 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
+        /// <summary>
+        /// Maneja tanto la creación como la actualización de una marca.
+        /// Aplica validaciones y llama a los repositorios según corresponda.
+        /// </summary>
         private async void btnGuardarMarca_Click(object sender, EventArgs e)
         {
             try
             {
-                // VALIDACIONES PREVIAS
+                // VALIDAR QUE HAYA PROVEEDOR SELECCIONADO
                 if (_idProveedorSeleccionado <= 0)
                 {
                     MessageBox.Show("Debe seleccionar un proveedor.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Construimos el objeto base (lo llamaré _marcaTemporal para diferenciarlo del objeto original cargado)
+                // Crear objeto intermedio para validaciones e inserción
                 MarcaInsertar _marcaTemporal = new MarcaInsertar
                 {
                     NombreMarca = txtNombreMarca.Text.Trim(),
                     IdProveedor = _idProveedorSeleccionado
                 };
 
-                // Validaciones
+                // Ejecutar validaciones personalizadas
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesMarca(_marcaTemporal);
                 if (resultado.Error)
                 {
@@ -100,32 +131,29 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 btnGuardarMarca.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                // --- LÓGICA DECISIVA: ¿INSERTAR O ACTUALIZAR? ---
-                // Verificamos si _marcaSeleccionada es null para saber si es nuevo
+                // --- INSERTAR O ACTUALIZAR SEGÚN EL CONTEXTO ---
                 if (_marcaSeleccionada == null)
                 {
-                    // === MODO INSERTAR ===
+                    // ----------------------- MODO INSERTAR -----------------------
                     _marcaTemporal.EstadoMarca = rbActivo.Checked;
                     _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
 
                     await MarcaRepositorio.InsertarMarca(_marcaTemporal);
-                    MessageBox.Show("Marca guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    MessageBox.Show("Marca guardada correctamente.", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // === MODO ACTUALIZAR ===
-
-                    // 1. ¡PASO CRUCIAL! Asignar el ID original al objeto temporal
-                    _marcaTemporal.IdMarca = _marcaSeleccionada.IdMarca;
-
-                    // 2. Asignar el resto de estados
+                    // ----------------------- MODO ACTUALIZAR -----------------------
+                    _marcaTemporal.IdMarca = _marcaSeleccionada.IdMarca; // ID original a actualizar
                     _marcaTemporal.EstadoMarca = rbActivo.Checked;
                     _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
 
-                    // 3. Llamar al método nuevo
                     await MarcaRepositorio.ActualizarMarca(_marcaTemporal);
 
-                    MessageBox.Show("Marca actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Marca actualizada correctamente.", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 this.DialogResult = DialogResult.OK;
@@ -133,7 +161,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar/actualizar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar/actualizar: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -142,12 +171,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
+        /// <summary>
+        /// Permite pasar de modo lectura a edición manualmente.
+        /// </summary>
         private void btnModificarMarca_Click(object sender, EventArgs e)
         {
             btnGuardarMarca.Visible = true;
             btnModificarMarca.Visible = false;
         }
-
-
     }
 }

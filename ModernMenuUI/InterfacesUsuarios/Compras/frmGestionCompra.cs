@@ -845,10 +845,8 @@ namespace ModernMenuUI
                 if (result == DialogResult.OK)
                 {
                     var prov = frm.ProveedorSeleccionado;
-                    txtNombreProveedor.Text = prov.NombreProveedor;
-
-                    // Aquí puedes llamar al método que trae productos del proveedor:
-                    await HandleBuscarProveedorAsync(); // (o el equivalente que ya tienes)
+                    txtNombreProveedor.Text = prov.NombreProveedor;       
+                    await HandleBuscarProveedorAsync(); 
                 }
             }
 
@@ -857,7 +855,6 @@ namespace ModernMenuUI
 
         private async void btnImprimirOrden_Click(object sender, EventArgs e)
         {
-            // 1. VALIDAR CARRITO VACÍO
             if (dgvCarrito.Rows.Count == 0)
             {
                 MessageBox.Show("El carrito está vacío. Agregue productos para generar la orden.",
@@ -865,8 +862,6 @@ namespace ModernMenuUI
                 return;
             }
 
-            // 2. VALIDAR QUE HAYA ALGO ESCRITO EN EL TEXTBOX
-            // Ahora validamos el texto visual, no la variable interna
             if (string.IsNullOrWhiteSpace(txtNombreProveedor.Text))
             {
                 MessageBox.Show("Por favor escriba o seleccione un proveedor antes de generar el reporte.",

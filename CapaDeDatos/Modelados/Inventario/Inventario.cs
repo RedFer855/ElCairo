@@ -66,7 +66,7 @@ namespace CapaDeDatos.Modelados.Inventario
         public override string ToString()
         {
             // Esto une las palabras con espacio, ignorando las que sean nulas o vacías
-            return string.Join(" ", new[] { NombreProducto, NombreMarca, NombrePresentacion, ContenidoProducto }
+            return string.Join(" ", new[] { NombreBodega, NombreProducto, NombreMarca, NombrePresentacion, ContenidoProducto }
                    .Where(s => !string.IsNullOrEmpty(s)));
         }
     }    

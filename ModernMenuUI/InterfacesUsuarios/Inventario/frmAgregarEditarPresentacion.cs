@@ -13,10 +13,26 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
+    /// <summary>
+    /// Formulario para agregar o editar presentaciones de productos.
+    /// Permite:
+    ///  - Registrar nuevas presentaciones.
+    ///  - Editar presentaciones existentes.
+    ///  - Validar datos antes de guardar.
+    ///  - Gestionar estados (Activo / Inactivo).
+    /// </summary>
     public partial class frmAgregarEditarPresentacion : Form
     {
+        /// <summary>
+        /// Presentación seleccionada para edición.
+        /// Si es null, el formulario funciona en modo "agregar".
+        /// </summary>
         private Presentacion _presentacionSeleccionada;
 
+        /// <summary>
+        /// Constructor por defecto para agregar una nueva presentación.
+        /// Configura el formulario en modo "insertar".
+        /// </summary>
         public frmAgregarEditarPresentacion()
         {
             InitializeComponent();
@@ -24,13 +40,19 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             btnGuardarPresentacion.Visible = true;
             lblNombreModulo.Text = "AGREGAR PRESENTACIÓN";
         }
+
+        /// <summary>
+        /// Constructor utilizado para editar una presentación existente.
+        /// Carga automáticamente los datos en los controles del formulario.
+        /// </summary>
+        /// <param name="presentacionParaEditar">Objeto Presentación que contiene la información a editar.</param>
         public frmAgregarEditarPresentacion(Presentacion presentacionParaEditar)
         {
             InitializeComponent();
 
             _presentacionSeleccionada = presentacionParaEditar;
 
-            // Cargar campos en el formulario
+            // Cargar campos
             txtNombrePresentacion.Text = _presentacionSeleccionada.NombrePresentacion;
             txtDescripcionPresentacion.Text = _presentacionSeleccionada.DetallePresentacion;
 
@@ -43,16 +65,23 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             lblNombreModulo.Text = "EDITAR PRESENTACIÓN";
         }
 
+        /// <summary>
+        /// Evento que maneja la acción de guardar o actualizar la presentación.
+        /// Determina automáticamente si debe insertar o actualizar según el contexto.
+        /// </summary>
         private async void btnGuardarCategoria_Click(object sender, EventArgs e)
         {
             try
             {
+                // Objeto temporal para validar e insertar/actualizar
                 Presentacion presentacionTemp = new Presentacion
                 {
                     NombrePresentacion = txtNombrePresentacion.Text.Trim(),
                     DetallePresentacion = txtDescripcionPresentacion.Text.Trim(),
                     EstadoPresentacion = rbActivo.Checked
                 };
+
+                // EJECUTAR VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos
                                 .EjecutarValidacionesPresentacion(presentacionTemp);
 
@@ -62,22 +91,25 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                         "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
+                // Validar estado
                 if (!rbActivo.Checked && !rbInactivo.Checked)
                 {
                     MessageBox.Show("Debe seleccionar un estado.",
                         "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 btnGuardarPresentacion.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
                 PresentacionRepositorio repo = new PresentacionRepositorio();
 
+                // ---------------------------------------------------------------------
+                //                              INSERTAR
+                // ---------------------------------------------------------------------
                 if (_presentacionSeleccionada == null)
                 {
-                    // === INSERTAR ===
-                    presentacionTemp.EstadoPresentacion = rbActivo.Checked;
-
                     await repo.InsertarPresentacion(presentacionTemp);
 
                     MessageBox.Show("Presentación guardada correctamente.",
@@ -85,12 +117,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 }
                 else
                 {
-                    // === ACTUALIZAR ===
-
+                    // ---------------------------------------------------------------------
+                    //                              ACTUALIZAR
+                    // ---------------------------------------------------------------------
                     presentacionTemp.IdPresentacionProducto =
                         _presentacionSeleccionada.IdPresentacionProducto;
-
-                    presentacionTemp.EstadoPresentacion = rbActivo.Checked;
 
                     await repo.ActualizarPresentacion(presentacionTemp);
 
@@ -113,6 +144,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
+        /// <summary>
+        /// Activa el modo edición si está deshabilitado.
+        /// Permite modificar los campos llenados automáticamente.
+        /// </summary>
         private void btnModificarPresentacion_Click(object sender, EventArgs e)
         {
             btnGuardarPresentacion.Visible = true;

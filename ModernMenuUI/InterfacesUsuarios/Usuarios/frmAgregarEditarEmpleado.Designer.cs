@@ -102,9 +102,9 @@
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(17, 69);
             label1.Name = "label1";
-            label1.Size = new Size(127, 18);
+            label1.Size = new Size(64, 18);
             label1.TabIndex = 13;
-            label1.Text = "NombreEmpleado:";
+            label1.Text = "Nombre:";
             // 
             // label2
             // 

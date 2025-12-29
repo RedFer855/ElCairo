@@ -13,19 +13,51 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Ventas
 {
+    /// <summary>
+    /// Formulario encargado de mostrar el cierre diario de ventas
+    /// de un empleado específico en una fecha seleccionada.
+    /// Permite ver detalle, totalizar ventas, imprimir y escuchar cambios.
+    /// </summary>
     public partial class frmCierreDiario : Form
     {
+        /// <summary>
+        /// Suscripción Realtime para monitorear la tabla de ventas.
+        /// </summary>
         private RealtimeChannel? _ventasSubscription;
+
+        /// <summary>
+        /// Flag que controla que el formulario haya terminado de cargar
+        /// antes de ejecutar búsquedas automáticas por eventos.
+        /// </summary>
         private bool _formCargado = false;
 
+
+        // ============================================================
+        //  CONSTRUCTOR
+        // ============================================================
+
+        /// <summary>
+        /// Inicializa componentes y configura el DataGridView.
+        /// </summary>
         public frmCierreDiario()
         {
             InitializeComponent();
+
             dgvCierre.AutoGenerateColumns = false;
             txtTotalVentas.ReadOnly = true;
+
             this.FormClosing += frmCierreDiario_FormClosing;
         }
 
+
+        // ============================================================
+        //  MÉTODOS DE SUSCRIPCIÓN REALTIME
+        // ============================================================
+
+        /// <summary>
+        /// Se encarga de desuscribir la escucha Realtime en Supabase
+        /// para evitar fugas de memoria o eventos fantasma.
+        /// </summary>
         private async Task DesecharSuscripcionVentas()
         {
             if (_ventasSubscription != null)
@@ -44,6 +76,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             }
         }
 
+
+        // ============================================================
+        //  MÉTODOS DE CARGA DE INFORMACIÓN
+        // ============================================================
+
+        /// <summary>
+        /// Llama el RPC "fn_cierre_diario_alias" para obtener el cierre diario
+        /// de un empleado y fecha seleccionada.  
+        /// Llena el DataGridView y calcula el total del día.
+        /// </summary>
         private async Task CargarCierreDiarioAsync()
         {
             var supabase = await Conexion.GetClientAsync();
@@ -51,6 +93,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             string alias = cmbEmpleado.SelectedValue?.ToString();
             DateTime fecha = dtpFecha.Value.Date;
 
+            // Evita errores si no hay empleado seleccionado
             if (string.IsNullOrWhiteSpace(alias))
                 return;
 
@@ -60,14 +103,19 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                 p_fecha = fecha.ToString("yyyy-MM-dd")
             });
 
-            // 👉 ÚNICO DGV
+            // Asignación al DGV principal
             dgvCierre.DataSource = lista;
 
-            // 👉 SUMATORIA
+            // Sumatoria de subtotales
             decimal totalDia = lista.Sum(x => x.Subtotal);
             txtTotalVentas.Text = "L." + totalDia.ToString("0.00");
         }
 
+
+        /// <summary>
+        /// Obtiene todos los alias de usuario de la tabla usuarios,
+        /// los carga en el ComboBox y establece el modo DropDownList.
+        /// </summary>
         private async Task CargarAliasUsuariosAsync()
         {
             try
@@ -93,6 +141,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             }
         }
 
+
+        /// <summary>
+        /// Muestra el cierre diario aplicando animación de carga.
+        /// Llama internamente a CargarCierreDiarioAsync().
+        /// </summary>
         private async Task GenerarCierreAsync()
         {
             try
@@ -111,21 +164,37 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             }
         }
 
+
+        // ============================================================
+        //  EVENTOS
+        // ============================================================
+
+        /// <summary>
+        /// Sale del formulario regresando al menú principal.
+        /// </summary>
         private void btnSalir_Click(object sender, EventArgs e)
         {
             clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
 
+
+        /// <summary>
+        /// Se ejecuta al cambiar la fecha.  
+        /// Solo actúa si el formulario ya terminó de cargar.
+        /// </summary>
         private async void dtpFecha_ValueChanged(object sender, EventArgs e)
         {
             if (!_formCargado) return;
-            if (cmbEmpleado.SelectedValue == null)
-                return;
+            if (cmbEmpleado.SelectedValue == null) return;
 
             await GenerarCierreAsync();
         }
 
+
+        /// <summary>
+        /// Evento LOAD: carga usuarios, fecha e inicializa bandera de carga.
+        /// </summary>
         private async void frmCierreDiario_Load(object sender, EventArgs e)
         {
             dgvCierre.DataSource = new List<CierreDiarioResult>();
@@ -136,20 +205,36 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             _formCargado = true;
         }
 
+
+        /// <summary>
+        /// Al cambiar de empleado, vuelve a generar el cierre diario.
+        /// </summary>
         private async void cmbEmpleado_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!_formCargado) return;
-            if (cmbEmpleado.SelectedValue == null)
-                return;
+            if (cmbEmpleado.SelectedValue == null) return;
 
             await GenerarCierreAsync();
         }
 
+
+        /// <summary>
+        /// Se llama al cerrar el formulario: elimina la suscripción realtime.
+        /// </summary>
         private async void frmCierreDiario_FormClosing(object sender, FormClosingEventArgs e)
         {
             await DesecharSuscripcionVentas();
         }
 
+
+        // ============================================================
+        //  BOTÓN IMPRIMIR CIERRE
+        // ============================================================
+
+        /// <summary>
+        /// Valida datos cargados y envía el cierre diario
+        /// al formulario de impresión.
+        /// </summary>
         private void btnImprimirCierre_Click(object sender, EventArgs e)
         {
             var datosCierre = dgvCierre.DataSource as List<CierreDiarioResult>;
@@ -160,8 +245,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
 
             if (datosCierre == null || !datosCierre.Any())
             {
-                MessageBox.Show("No hay datos cargados para exportar. Por favor, selecciona un empleado y una fecha con ventas.",
-                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "No hay datos cargados para exportar. Por favor, selecciona un empleado y una fecha con ventas.",
+                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                );
                 return;
             }
 
@@ -171,9 +258,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
             }
         }
 
+
+        // ============================================================
+        //  BUSCAR EMPLEADO
+        // ============================================================
+
+        /// <summary>
+        /// Abre el formulario de usuarios para buscar un empleado.
+        /// </summary>
         private void btnBuscarEmpleado_Click(object sender, EventArgs e)
         {
-            frmUsuario _usuarioCierre = new frmUsuario();   
+            frmUsuario _usuarioCierre = new frmUsuario();
             _usuarioCierre.ShowDialog();
         }
     }
