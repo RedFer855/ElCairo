@@ -44,6 +44,12 @@ namespace ModernMenuUI
         private int _idPresentacionSeleccionada;
 
         /// <summary>
+        /// Variables para la imagen de los productos.
+        /// </summary>
+        private string _nombreArchivo;
+        private byte[] _byteImagen;
+
+        /// <summary>
         /// Constructor para crear un nuevo producto.
         /// Configura el formulario en modo "AGREGAR".
         /// </summary>
@@ -54,6 +60,7 @@ namespace ModernMenuUI
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
         }
+        RepositorioImgenSupabase repositorioImg = new RepositorioImgenSupabase();
 
         /// <summary>
         /// Constructor para editar un producto existente.
@@ -92,6 +99,17 @@ namespace ModernMenuUI
             lblNota.Visible = false;
 
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
+            _ = CargarImagenAsync();
+        }
+
+        private async Task CargarImagenAsync()
+        {
+            if (!string.IsNullOrEmpty(_productoSeleccionado.ImagenProducto))
+            {
+                Imagen_Producto.Image = await repositorioImg.LeerImagenes(
+                    _productoSeleccionado.ImagenProducto
+                );
+            }
         }
 
         /// <summary>
@@ -126,8 +144,13 @@ namespace ModernMenuUI
         /// </summary>
         private async void btnGuardarProducto_Click(object sender, EventArgs e)
         {
+            //llamadas a repositorios
+            RepositorioImgenSupabase repositorioImg = new RepositorioImgenSupabase();
+            ProductoRepositorio repo = new ProductoRepositorio();
+
             try
             {
+
                 // VARIABLES PARA LOS DATOS NUMÉRICOS
                 decimal precioCompra = 0;
                 decimal precioVenta = 0;
@@ -158,7 +181,8 @@ namespace ModernMenuUI
                     PrecioCompra = precioCompra,
                     PrecioVenta = precioVenta,
                     PrecioCosto = precioCosto,
-                    CantidadProducto = cantidad
+                    CantidadProducto = cantidad,
+                    ProductoPath = _nombreArchivo,
                 };
 
                 // 2. VALIDACIONES
@@ -173,6 +197,11 @@ namespace ModernMenuUI
                     MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (_byteImagen == null)
+                {
+                    MessageBox.Show("Seleccione una imagen para el producto.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 // 3. ASIGNAR ESTADO
                 _productoInsertar.EstadoProducto = rbHabilitado.Checked;
@@ -182,19 +211,20 @@ namespace ModernMenuUI
                 btnGuardarProducto.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                ProductoRepositorio repo = new ProductoRepositorio();
 
                 // 5. LÓGICA DECISIVA
                 if (_productoSeleccionado == null)
                 {
                     // MODO INSERTAR
                     await repo.InsertarProducto(_productoInsertar);
+                    await repositorioImg.IngresarImagen(_byteImagen,_nombreArchivo);
                     MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     // MODO ACTUALIZAR
                     _productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
+                    
                     await repo.ActualizarProducto(_productoInsertar);
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -330,6 +360,26 @@ namespace ModernMenuUI
         private void cmbUnidadContenido_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private async void Imagen_Producto_Click(object sender, EventArgs e)
+        {
+            //file dialog (sacando la imagen de los archivos
+            using (OpenFileDialog openfile = new OpenFileDialog())
+            {
+                openfile.Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.webp";
+                openfile.Title = "Seleccionar imagen del producto";
+
+                if (openfile.ShowDialog() == DialogResult.OK)
+                {
+                    // Mostrar imagen en el PictureBox
+                    Imagen_Producto.Image = Image.FromFile(openfile.FileName);
+
+                    // Guardar datos en memoria
+                    _byteImagen = File.ReadAllBytes(openfile.FileName);
+                    _nombreArchivo = $"{Guid.NewGuid()}{Path.GetExtension(openfile.FileName)}";
+                }
+            }
         }
     }
 }

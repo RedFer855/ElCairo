@@ -68,7 +68,7 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("cantidad_producto")]
         public int CantidadProducto { get; set; }
 
-        [Column("imagen_producto")]
+        [Column("producto_path")]
         public string? ImagenProducto { get; set; } 
 
         [Column("id_proveedor")]
