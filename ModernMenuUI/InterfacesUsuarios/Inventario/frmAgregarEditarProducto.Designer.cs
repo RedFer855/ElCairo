@@ -284,7 +284,10 @@
             // 
             // Imagen_Producto
             // 
-            Imagen_Producto.Image = Properties.Resources.buscar;
+            Imagen_Producto.BackColor = Color.Silver;
+            Imagen_Producto.BackgroundImage = Properties.Resources.buscar;
+            Imagen_Producto.BackgroundImageLayout = ImageLayout.Center;
+            Imagen_Producto.BorderStyle = BorderStyle.FixedSingle;
             Imagen_Producto.Location = new Point(488, 20);
             Imagen_Producto.Name = "Imagen_Producto";
             Imagen_Producto.Size = new Size(300, 300);
@@ -911,6 +914,7 @@
             Name = "frmAgregarEditarProducto";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Producto";
+            Load += frmAgregarEditarProducto_Load;
             MouseDown += Editar_Producto_MouseDown;
             panBarraControl.ResumeLayout(false);
             panel2.ResumeLayout(false);

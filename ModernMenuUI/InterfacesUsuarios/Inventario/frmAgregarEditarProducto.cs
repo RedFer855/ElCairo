@@ -99,18 +99,45 @@ namespace ModernMenuUI
             lblNota.Visible = false;
 
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
-            _ = CargarImagenAsync();
-        }
 
-        private async Task CargarImagenAsync()
+        }
+        protected override async void OnShown(EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_productoSeleccionado.ImagenProducto))
+
+        }
+        
+        private async void frmAgregarEditarProducto_Load(object sender, EventArgs e)
+        {
+            await CargarImagenProductoAsync();
+        }
+        private async Task CargarImagenProductoAsync()
+        {
+            if (_productoSeleccionado == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(_productoSeleccionado.ImagenProducto))
             {
-                Imagen_Producto.Image = await repositorioImg.LeerImagenes(
-                    _productoSeleccionado.ImagenProducto
+                MessageBox.Show($"imagen del producto : {_productoSeleccionado.ImagenProducto}");
+                return;
+            }
+
+
+            try
+            {
+                var imagen = await repositorioImg.LeerImagenes(_productoSeleccionado.ImagenProducto);
+                Imagen_Producto.Image = imagen;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo cargar la imagen del producto.\n" + ex.Message,
+                    "Imagen",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
                 );
             }
         }
+
 
         /// <summary>
         /// Maneja arrastre del formulario (mover ventana).
@@ -211,20 +238,22 @@ namespace ModernMenuUI
                 btnGuardarProducto.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
+                // Preparar imagen para mostrar después
+                // var imagen = await repositorioImg.LeerImagenes(_productoInsertar.ProductoPath);
 
                 // 5. LÓGICA DECISIVA
                 if (_productoSeleccionado == null)
                 {
                     // MODO INSERTAR
+                    await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
                     await repo.InsertarProducto(_productoInsertar);
-                    await repositorioImg.IngresarImagen(_byteImagen,_nombreArchivo);
                     MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     // MODO ACTUALIZAR
                     _productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
-                    
+                    // Imagen_Producto.Image = imagen;
                     await repo.ActualizarProducto(_productoInsertar);
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -381,5 +410,7 @@ namespace ModernMenuUI
                 }
             }
         }
+
+        
     }
 }

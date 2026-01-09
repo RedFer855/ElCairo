@@ -1,6 +1,7 @@
 ﻿using CapaDeDatos.Datos;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,24 +33,25 @@ namespace CapaDeDatos.Repositorios
 
         public async Task<Image> LeerImagenes(string nombreArchivo)
         {
-            try 
+            try
             {
                 var cliente = await GetClient();
+
                 var bytes = await cliente.Storage
                                          .From("imagenes_productos")
-                                         .Download($"public/{nombreArchivo}", null);
+                                         .Download(nombreArchivo, (sender, progress) => Debug.WriteLine($"{progress}%"));
 
                 using (var ms = new MemoryStream(bytes))
+                using (var imgTemp = Image.FromStream(ms))
                 {
-                    return Image.FromStream(ms);
+                    // Clonar la imagen para evitar dependencia del stream
+                    return new Bitmap(imgTemp);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("No se pudo leer las imagenes. Verifique los datos o la conexión.");
+                throw new Exception("No se pudo leer la imagen desde Supabase.", ex);
             }
-
         }
-
     }
 }
