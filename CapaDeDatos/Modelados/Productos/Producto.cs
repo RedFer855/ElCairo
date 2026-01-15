@@ -26,6 +26,9 @@ namespace CapaDeDatos.Modelados.Productos
 
         public string NombreMarca => Marca?.NombreMarca ?? "Sin Marca";
 
+        [Column("tipo_calculo_ganancia_producto")]
+        public int TipoGananciaProducto { get; set; }
+
         [Column("id_categoria")]
         public int IdCategoria { get; set; }
         [Column("categoria")]

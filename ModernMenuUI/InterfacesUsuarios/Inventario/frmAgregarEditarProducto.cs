@@ -51,16 +51,8 @@ namespace ModernMenuUI
         public frmAgregarEditarProducto()
         {
             InitializeComponent();
-            //this.Size = new Size(880, 550);
-            lblEstado.Visible = false;
-            gbxEstadoProductoNuevo.Visible = false;
-            //pnlVentas.Visible = false;
-            //pnlCantidad.Visible = false;
-            //pnlCompras.Visible = false;
             nudCantidad.Enabled = true;
             nudPrecioCompra.Enabled = true;
-            nudPrecioCosto.Enabled = true;
-            lblNombreModulo.Text = "AGREGAR PRODUCTO";
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
         }
@@ -72,10 +64,10 @@ namespace ModernMenuUI
         /// <param name="productoseleccionado">Producto a editar.</param>
         public frmAgregarEditarProducto(Producto productoseleccionado)
         {
+            this.Text = "Ver Producto";
             InitializeComponent();
-
-            SetTextBoxReadOnly(pnlDatosGenerales, true);
-            SetTextBoxReadOnly(pnlVentas, true);
+            pnlVisualizacion.Visible = true;
+            pnlEditarProducto.Visible = false;
 
             _productoSeleccionado = productoseleccionado;
 
@@ -93,6 +85,15 @@ namespace ModernMenuUI
             nudPrecioCosto.Value = productoseleccionado.PrecioCosto;
             nudPorcentajeGanancia.Value = productoseleccionado.PorcentajeGananciaProducto;
 
+            if (productoseleccionado.TipoGananciaProducto == 1)
+            {
+                rbFija.Checked = true;
+            }
+            else
+            {
+                rbPorcentual.Checked = true;
+            }
+
             if (productoseleccionado.EstadoProducto)
             {
                 rbHabilitado.Checked = true;
@@ -102,24 +103,11 @@ namespace ModernMenuUI
                 rbDeshabilitado.Checked = true;
             }
 
-            lblNota.Visible = false;
+            lblPrecioVenta.Text = "L" + nudPrecioVenta.Value;
+            lblNombreProducto.Text = txtNombreProducto.Text + " " + txtMarca.Text + " " + txtPresentacion.Text + " " + productoseleccionado.ContenidoProducto.ToString();
+            lblCodigoBarraProducto.Text = "Código de barra: " + txtCodBarra.Text;
 
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
-        }
-
-        private void SetTextBoxReadOnly(Control contenedor, bool readOnly)
-        {
-            foreach (Control c in contenedor.Controls)
-            {
-                if (c is TextBox tb)
-                {
-                    tb.ReadOnly = readOnly;
-                }
-                else if (c.HasChildren)
-                {
-                    SetTextBoxReadOnly(c, readOnly);
-                }
-            }
         }
 
         /// <summary>
@@ -172,13 +160,17 @@ namespace ModernMenuUI
                     cantidad = _productoSeleccionado.CantidadProducto;
                     porcentajeGanancia = _productoSeleccionado.PorcentajeGananciaProducto;
                 }
+                else
+                {
+                    cantidad = (int)nudCantidad.Value;
+                    precioCompra = nudPrecioCompra.Value;
+                    precioVenta = nudPrecioVenta.Value;
+                }
 
-                // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
                 ProductoInsertar _productoInsertar = new ProductoInsertar
                 {
                     NombreProducto = txtNombreProducto.Text.Trim(),
                     CodigoBarraProducto = txtCodBarra.Text.Trim(),
-
                     IdMarca = _idMarcaSeleccionada,
                     IdCategoria = _idCategoriaSeleccionada,
                     IdPresentacion = _idPresentacionSeleccionada,
@@ -191,7 +183,10 @@ namespace ModernMenuUI
 
                 };
 
-                // 2. VALIDACIONES
+                _productoInsertar.EstadoProducto = rbHabilitado.Checked;
+                _productoInsertar.IdEstado = rbHabilitado.Checked ? 1 : 2;
+                _productoInsertar.TipoGananciaProducto = rbFija.Checked ? 1 : 2;
+
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(_productoInsertar);
 
                 if (resultado.Error)
@@ -199,23 +194,19 @@ namespace ModernMenuUI
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 if (cmbUnidadContenido.SelectedIndex == -1)
                 {
                     MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // 3. ASIGNAR ESTADO
-                _productoInsertar.EstadoProducto = rbHabilitado.Checked;
-                _productoInsertar.IdEstado = rbHabilitado.Checked ? 1 : 2;
 
-                // 4. PREPARAR INTERFAZ
                 btnGuardarProducto.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
                 ProductoRepositorio repo = new ProductoRepositorio();
 
-                // 5. LÓGICA DECISIVA
                 if (_productoSeleccionado == null)
                 {
                     // MODO INSERTAR
@@ -351,10 +342,9 @@ namespace ModernMenuUI
         /// </summary>
         private void btnModificarProducto_Click(object sender, EventArgs e)
         {
-            SetTextBoxReadOnly(pnlDatosGenerales, false);
-            SetTextBoxReadOnly(pnlVentas, false);
-
-            tipEditar.Active = false;
+            this.Text = "Editar Producto";
+            pnlVisualizacion.Visible = false;
+            pnlEditarProducto.Visible = true;
 
             nudPrecioVenta.Enabled = true;
 
@@ -388,11 +378,6 @@ namespace ModernMenuUI
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void nudPrecioCompra_ValueChanged(object sender, EventArgs e)
         {
             if (_productoSeleccionado == null)
@@ -400,5 +385,6 @@ namespace ModernMenuUI
                 nudPrecioCosto.Value = nudPrecioCompra.Value;
             }
         }
+
     }
 }

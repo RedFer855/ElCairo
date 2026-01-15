@@ -54,6 +54,9 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("cantidad_producto")]
         public int CantidadProducto { get; set; }
 
+        [Column("tipo_calculo_ganancia_producto")]
+        public int TipoGananciaProducto { get; set; }
+
     }
 
 }

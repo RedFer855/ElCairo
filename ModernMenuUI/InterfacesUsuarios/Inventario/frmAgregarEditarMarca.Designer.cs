@@ -296,7 +296,6 @@
         private Panel panel2;
         private PictureBox pbxImagenMarca;
         private Button btnModificarMarca;
-        private TextBox txtNombre;
         private TextBox txtNombreMarca;
         private Button btnVolver;
         private Button btnGuardarMarca;
@@ -306,7 +305,6 @@
         private Label lblEstado;
         private Label label8;
         private Label label2;
-        private Label label1;
         public Label lblNombreModulo;
         private TextBox txtProveedor;
         private FlowLayoutPanel flpAjustarBotones;
