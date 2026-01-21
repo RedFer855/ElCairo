@@ -291,7 +291,7 @@
             Imagen_Producto.Location = new Point(488, 20);
             Imagen_Producto.Name = "Imagen_Producto";
             Imagen_Producto.Size = new Size(300, 300);
-            Imagen_Producto.SizeMode = PictureBoxSizeMode.CenterImage;
+            Imagen_Producto.SizeMode = PictureBoxSizeMode.Zoom;
             Imagen_Producto.TabIndex = 62;
             Imagen_Producto.TabStop = false;
             Imagen_Producto.Click += Imagen_Producto_Click;

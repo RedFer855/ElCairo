@@ -254,6 +254,7 @@ namespace ModernMenuUI
                     // MODO ACTUALIZAR
                     _productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
                     // Imagen_Producto.Image = imagen;
+                    await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
                     await repo.ActualizarProducto(_productoInsertar);
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

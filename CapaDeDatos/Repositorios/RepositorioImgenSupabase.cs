@@ -52,6 +52,6 @@ namespace CapaDeDatos.Repositorios
             {
                 throw new Exception("No se pudo leer la imagen desde Supabase.", ex);
             }
-        }
+        }//act y del
     }
 }

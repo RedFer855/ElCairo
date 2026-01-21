@@ -11,7 +11,7 @@ namespace CapaDeDatos.Modelados.Productos
     {
         [PrimaryKey("id_categoria", false)]
         public int IdCategoria { get; set; }
-
+        
         [Column("nombre_categoria")]
         public string NombreCategoria { get; set; }
 
