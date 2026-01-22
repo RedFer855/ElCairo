@@ -73,6 +73,8 @@
             nudPrecioVenta = new NumericUpDown();
             label17 = new Label();
             panel3 = new Panel();
+            nudPrecioFinal = new NumericUpDown();
+            label3 = new Label();
             groupBox1 = new GroupBox();
             radioButton3 = new RadioButton();
             radioButton1 = new RadioButton();
@@ -91,7 +93,7 @@
             btnGuardarProducto = new Button();
             btnModificarProducto = new Button();
             btnModificarImagen = new Button();
-            panel2 = new Panel();
+            pnlPrincipal = new Panel();
             flpVerEditar = new FlowLayoutPanel();
             pnlVisualizacion = new Panel();
             flowLayoutPanel2 = new FlowLayoutPanel();
@@ -101,7 +103,6 @@
             lblCantidad = new Label();
             lblPrecioVenta = new Label();
             pbxImagenProductoVer = new PictureBox();
-            label3 = new Label();
             pnlEditarProducto.SuspendLayout();
             fpnlDinamico.SuspendLayout();
             pnlDatosGenerales.SuspendLayout();
@@ -115,11 +116,12 @@
             ((System.ComponentModel.ISupportInitialize)nudPorcentajeGanancia).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudPrecioVenta).BeginInit();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudPrecioFinal).BeginInit();
             groupBox1.SuspendLayout();
             gbxEstadoProductoNuevo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxImagenProducto).BeginInit();
             flowLayoutPanel1.SuspendLayout();
-            panel2.SuspendLayout();
+            pnlPrincipal.SuspendLayout();
             flpVerEditar.SuspendLayout();
             pnlVisualizacion.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -671,6 +673,7 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(nudPrecioFinal);
             panel3.Controls.Add(label3);
             panel3.Controls.Add(groupBox1);
             panel3.Controls.Add(label1);
@@ -679,6 +682,30 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(439, 76);
             panel3.TabIndex = 63;
+            // 
+            // nudPrecioFinal
+            // 
+            nudPrecioFinal.DecimalPlaces = 2;
+            nudPrecioFinal.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nudPrecioFinal.ForeColor = Color.DimGray;
+            nudPrecioFinal.InterceptArrowKeys = false;
+            nudPrecioFinal.Location = new Point(151, 38);
+            nudPrecioFinal.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
+            nudPrecioFinal.Name = "nudPrecioFinal";
+            nudPrecioFinal.Size = new Size(147, 25);
+            nudPrecioFinal.TabIndex = 72;
+            tipEditar.SetToolTip(nudPrecioFinal, "Para editar este producto, presione el botón Editar.");
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.FromArgb(87, 99, 110);
+            label3.Location = new Point(46, 39);
+            label3.Name = "label3";
+            label3.Size = new Size(93, 19);
+            label3.TabIndex = 71;
+            label3.Text = "Precio Final:";
             // 
             // groupBox1
             // 
@@ -742,7 +769,7 @@
             gbxEstadoProductoNuevo.Controls.Add(rbHabilitado);
             gbxEstadoProductoNuevo.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstadoProductoNuevo.ForeColor = Color.DimGray;
-            gbxEstadoProductoNuevo.Location = new Point(576, 418);
+            gbxEstadoProductoNuevo.Location = new Point(572, 410);
             gbxEstadoProductoNuevo.Name = "gbxEstadoProductoNuevo";
             gbxEstadoProductoNuevo.Size = new Size(196, 40);
             gbxEstadoProductoNuevo.TabIndex = 30;
@@ -775,7 +802,7 @@
             lblEstado.AutoSize = true;
             lblEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblEstado.ForeColor = Color.FromArgb(87, 99, 110);
-            lblEstado.Location = new Point(504, 433);
+            lblEstado.Location = new Point(500, 425);
             lblEstado.Name = "lblEstado";
             lblEstado.Size = new Size(60, 19);
             lblEstado.TabIndex = 26;
@@ -805,10 +832,10 @@
             flowLayoutPanel1.Controls.Add(btnGuardarProducto);
             flowLayoutPanel1.Controls.Add(btnModificarProducto);
             flowLayoutPanel1.Controls.Add(btnModificarImagen);
-            flowLayoutPanel1.Location = new Point(0, 497);
+            flowLayoutPanel1.Location = new Point(18, 497);
             flowLayoutPanel1.Margin = new Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(457, 35);
+            flowLayoutPanel1.Size = new Size(572, 35);
             flowLayoutPanel1.TabIndex = 51;
             // 
             // btnGuardarProducto
@@ -860,17 +887,17 @@
             btnModificarImagen.UseVisualStyleBackColor = false;
             btnModificarImagen.Click += btnVolver_Click;
             // 
-            // panel2
+            // pnlPrincipal
             // 
-            panel2.BackColor = Color.FromArgb(189, 215, 238);
-            panel2.Controls.Add(flpVerEditar);
-            panel2.Controls.Add(flowLayoutPanel1);
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(840, 532);
-            panel2.TabIndex = 12;
+            pnlPrincipal.BackColor = Color.White;
+            pnlPrincipal.Controls.Add(flpVerEditar);
+            pnlPrincipal.Controls.Add(flowLayoutPanel1);
+            pnlPrincipal.Dock = DockStyle.Fill;
+            pnlPrincipal.Location = new Point(0, 0);
+            pnlPrincipal.Margin = new Padding(0);
+            pnlPrincipal.Name = "pnlPrincipal";
+            pnlPrincipal.Size = new Size(840, 532);
+            pnlPrincipal.TabIndex = 12;
             // 
             // flpVerEditar
             // 
@@ -975,24 +1002,13 @@
             pbxImagenProductoVer.TabIndex = 69;
             pbxImagenProductoVer.TabStop = false;
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.FromArgb(87, 99, 110);
-            label3.Location = new Point(61, 43);
-            label3.Name = "label3";
-            label3.Size = new Size(93, 19);
-            label3.TabIndex = 71;
-            label3.Text = "Precio Final:";
-            // 
             // frmAgregarEditarProducto
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(840, 532);
-            Controls.Add(panel2);
+            Controls.Add(pnlPrincipal);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -1022,13 +1038,14 @@
             ((System.ComponentModel.ISupportInitialize)nudPrecioVenta).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudPrecioFinal).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             gbxEstadoProductoNuevo.ResumeLayout(false);
             gbxEstadoProductoNuevo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbxImagenProducto).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
+            pnlPrincipal.ResumeLayout(false);
             flpVerEditar.ResumeLayout(false);
             pnlVisualizacion.ResumeLayout(false);
             pnlVisualizacion.PerformLayout();
@@ -1095,7 +1112,7 @@
         private Button btnGuardarProducto;
         private Button btnModificarProducto;
         private Button btnModificarImagen;
-        private Panel panel2;
+        private Panel pnlPrincipal;
         private FlowLayoutPanel flpVerEditar;
         private Panel pnlVisualizacion;
         private FlowLayoutPanel flowLayoutPanel2;
@@ -1112,5 +1129,6 @@
         private RadioButton radioButton1;
         private RadioButton radioButton2;
         private Label label3;
+        private NumericUpDown nudPrecioFinal;
     }
 }

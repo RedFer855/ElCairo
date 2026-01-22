@@ -20,6 +20,7 @@ namespace ModernMenuUI.ClasesUI
     internal class ControladorSincronizacionPrecio : IDisposable
     {
         private readonly NumericUpDown _nudCosto;
+        private readonly NumericUpDown _nudPrecioFinal;
         private readonly NumericUpDown _nudPrecioVenta;
         private readonly NumericUpDown _nudPorcentajeGanancia;
         private readonly ConfiguracionSincronizacionPrecio _config;
@@ -128,6 +129,79 @@ namespace ModernMenuUI.ClasesUI
         }
 
         private void AlCambiarPrecioVenta(object sender, EventArgs e)
+        {
+            if (_actualizando) return;
+
+            // Si intento poner precio por debajo del costo, lo forzamos al costo y mostramos una sola advertencia
+            if (_nudPrecioVenta.Value < _nudCosto.Value)
+            {
+                _actualizando = true;
+                _nudPrecioVenta.Value = _nudCosto.Value;
+
+                if (!_alertaPrecioCostoMostrada)
+                {
+                    Alerta("El precio de venta no puede ser menor al costo.");
+                    _alertaPrecioCostoMostrada = true;
+                }
+
+                _actualizando = false;
+                return;
+            }
+
+            // Evitar división por cero al calcular porcentaje
+            if (_nudCosto.Value == 0)
+            {
+                if (!_alertaPrecioCostoMostrada)
+                {
+                    Alerta("El costo no puede ser 0.");
+                    _alertaPrecioCostoMostrada = true;
+                }
+                return;
+            }
+
+            _actualizando = true;
+
+            // Recalcular precio máximo
+            _precioMaximo = _nudCosto.Value * 11m;
+
+            if (_nudPrecioVenta.Value > _precioMaximo)
+            {
+                _nudPrecioVenta.Value = _precioMaximo;
+                // Establecemos el porcentaje al tope
+                _nudPorcentajeGanancia.Value = 1000m;
+                _topeActivo = true;
+
+                if (!_alertaTopeMostrada)
+                {
+                    Alerta("La ganancia máxima permitida es 1000%.");
+                    _alertaTopeMostrada = true;
+                }
+            }
+            else
+            {
+                // Calcular nuevo porcentaje (redondeado a 2 decimales porque el control tiene 2)
+                decimal nuevoPorcentaje =
+                    Math.Round(((_nudPrecioVenta.Value - _nudCosto.Value) / _nudCosto.Value) * 100m, 2);
+
+                _nudPorcentajeGanancia.Value =
+                    LimitarValor(_nudPorcentajeGanancia, nuevoPorcentaje);
+
+                // Si bajó del tope, permitimos que la alerta del tope se muestre otra vez en el futuro
+                if (_nudPorcentajeGanancia.Value < 1000m)
+                {
+                    _topeActivo = false;
+                    _alertaTopeMostrada = false;
+                }
+            }
+
+            // Si el precio está por encima del costo, resetear la bandera de alerta por precio=costo
+            if (_nudPrecioVenta.Value > _nudCosto.Value)
+                _alertaPrecioCostoMostrada = false;
+
+            _actualizando = false;
+        }
+
+        private void AlCambiarPrecioFinal(object sender, EventArgs e)
         {
             if (_actualizando) return;
 

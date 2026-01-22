@@ -342,6 +342,7 @@ namespace ModernMenuUI
         /// </summary>
         private void btnModificarProducto_Click(object sender, EventArgs e)
         {
+            pnlPrincipal.BackColor = Color.FromArgb(189, 215, 238);
             this.Text = "Editar Producto";
             pnlVisualizacion.Visible = false;
             pnlEditarProducto.Visible = true;
@@ -375,7 +376,6 @@ namespace ModernMenuUI
                     .PermitirGananciaNegativa(true)
                     .AlError(m => MessageBox.Show(m, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning))
             );
-
         }
 
         private void nudPrecioCompra_ValueChanged(object sender, EventArgs e)
