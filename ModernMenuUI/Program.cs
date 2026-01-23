@@ -21,7 +21,7 @@ namespace ModernMenuUI
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmBienvenida());
+            Application.Run(new frmIniciosesion());
         }
     }
 }
