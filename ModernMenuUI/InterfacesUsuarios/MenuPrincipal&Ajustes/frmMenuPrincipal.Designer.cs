@@ -43,6 +43,8 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            btnSalir = new Button();
             panel6 = new Panel();
             lblEstadoConexion = new Label();
             panel12 = new Panel();
@@ -123,6 +125,7 @@
             HoraFecha = new System.Windows.Forms.Timer(components);
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             panel6.SuspendLayout();
             panel1.SuspendLayout();
             panelMenuLateral.SuspendLayout();
@@ -149,6 +152,7 @@
             // panBarraControl
             // 
             panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
+            panBarraControl.Controls.Add(tableLayoutPanel2);
             panBarraControl.Controls.Add(panel6);
             panBarraControl.Controls.Add(btnNotificaciones);
             panBarraControl.Controls.Add(panel3);
@@ -165,6 +169,37 @@
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 2.238806F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 97.76119F));
+            tableLayoutPanel2.Controls.Add(btnSalir, 1, 0);
+            tableLayoutPanel2.Location = new Point(598, 3);
+            tableLayoutPanel2.Margin = new Padding(4);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(108, 62);
+            tableLayoutPanel2.TabIndex = 46;
+            // 
+            // btnSalir
+            // 
+            btnSalir.BackColor = Color.FromArgb(255, 128, 128);
+            btnSalir.Dock = DockStyle.Fill;
+            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSalir.ForeColor = Color.White;
+            btnSalir.ImageAlign = ContentAlignment.TopCenter;
+            btnSalir.Location = new Point(6, 4);
+            btnSalir.Margin = new Padding(4);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(98, 54);
+            btnSalir.TabIndex = 18;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click;
+            // 
             // panel6
             // 
             panel6.AutoSize = true;
@@ -172,10 +207,10 @@
             panel6.Controls.Add(panel12);
             panel6.Controls.Add(panel9);
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(761, 0);
+            panel6.Location = new Point(737, 0);
             panel6.Name = "panel6";
             panel6.RightToLeft = RightToLeft.Yes;
-            panel6.Size = new Size(108, 65);
+            panel6.Size = new Size(132, 65);
             panel6.TabIndex = 11;
             // 
             // lblEstadoConexion
@@ -188,7 +223,7 @@
             lblEstadoConexion.Location = new Point(0, 26);
             lblEstadoConexion.Name = "lblEstadoConexion";
             lblEstadoConexion.RightToLeft = RightToLeft.Yes;
-            lblEstadoConexion.Size = new Size(108, 19);
+            lblEstadoConexion.Size = new Size(132, 24);
             lblEstadoConexion.TabIndex = 3;
             lblEstadoConexion.Text = "Estado de Red";
             // 
@@ -197,7 +232,7 @@
             panel12.Dock = DockStyle.Bottom;
             panel12.Location = new Point(0, 48);
             panel12.Name = "panel12";
-            panel12.Size = new Size(108, 17);
+            panel12.Size = new Size(132, 17);
             panel12.TabIndex = 15;
             // 
             // panel9
@@ -205,7 +240,7 @@
             panel9.Dock = DockStyle.Top;
             panel9.Location = new Point(0, 0);
             panel9.Name = "panel9";
-            panel9.Size = new Size(108, 26);
+            panel9.Size = new Size(132, 26);
             panel9.TabIndex = 4;
             // 
             // btnNotificaciones
@@ -252,7 +287,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(3, 17);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(200, 29);
+            lblNombreModulo.Size = new Size(251, 35);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "MENU PRINCIPAL";
             lblNombreModulo.MouseDown += lblNombreModulo_MouseDown;
@@ -372,7 +407,7 @@
             pictureBox1.InitialImage = null;
             pictureBox1.Location = new Point(0, 1237);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(283, 175);
+            pictureBox1.Size = new Size(279, 175);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -383,7 +418,7 @@
             pnlDivisorReporteria.Dock = DockStyle.Top;
             pnlDivisorReporteria.Location = new Point(0, 1235);
             pnlDivisorReporteria.Name = "pnlDivisorReporteria";
-            pnlDivisorReporteria.Size = new Size(283, 2);
+            pnlDivisorReporteria.Size = new Size(279, 2);
             pnlDivisorReporteria.TabIndex = 21;
             // 
             // panelReporteria
@@ -396,7 +431,7 @@
             panelReporteria.Dock = DockStyle.Top;
             panelReporteria.Location = new Point(0, 1155);
             panelReporteria.Name = "panelReporteria";
-            panelReporteria.Size = new Size(283, 80);
+            panelReporteria.Size = new Size(279, 80);
             panelReporteria.TabIndex = 10;
             // 
             // btnReportesCreados
@@ -410,7 +445,7 @@
             btnReportesCreados.Location = new Point(0, 40);
             btnReportesCreados.Name = "btnReportesCreados";
             btnReportesCreados.Padding = new Padding(20, 0, 0, 0);
-            btnReportesCreados.Size = new Size(283, 40);
+            btnReportesCreados.Size = new Size(279, 40);
             btnReportesCreados.TabIndex = 1;
             btnReportesCreados.Text = "Reportes Creados";
             btnReportesCreados.TextAlign = ContentAlignment.MiddleLeft;
@@ -428,7 +463,7 @@
             btnCrearReporte.Location = new Point(0, 0);
             btnCrearReporte.Name = "btnCrearReporte";
             btnCrearReporte.Padding = new Padding(20, 0, 0, 0);
-            btnCrearReporte.Size = new Size(283, 40);
+            btnCrearReporte.Size = new Size(279, 40);
             btnCrearReporte.TabIndex = 0;
             btnCrearReporte.Text = "Crear Reporte";
             btnCrearReporte.TextAlign = ContentAlignment.MiddleLeft;
@@ -447,7 +482,7 @@
             btnReporte.Location = new Point(0, 1075);
             btnReporte.Margin = new Padding(3, 4, 3, 4);
             btnReporte.Name = "btnReporte";
-            btnReporte.Size = new Size(283, 80);
+            btnReporte.Size = new Size(279, 80);
             btnReporte.TabIndex = 30;
             btnReporte.Texto = "Reportería";
             btnReporte.Click += btnReporte_Click;
@@ -458,7 +493,7 @@
             pnlDivisorUsuario.Dock = DockStyle.Top;
             pnlDivisorUsuario.Location = new Point(0, 1073);
             pnlDivisorUsuario.Name = "pnlDivisorUsuario";
-            pnlDivisorUsuario.Size = new Size(283, 2);
+            pnlDivisorUsuario.Size = new Size(279, 2);
             pnlDivisorUsuario.TabIndex = 22;
             // 
             // panelUsuarios
@@ -473,7 +508,7 @@
             panelUsuarios.Dock = DockStyle.Top;
             panelUsuarios.Location = new Point(0, 913);
             panelUsuarios.Name = "panelUsuarios";
-            panelUsuarios.Size = new Size(283, 160);
+            panelUsuarios.Size = new Size(279, 160);
             panelUsuarios.TabIndex = 8;
             // 
             // btnBitacora
@@ -487,7 +522,7 @@
             btnBitacora.Location = new Point(0, 120);
             btnBitacora.Name = "btnBitacora";
             btnBitacora.Padding = new Padding(20, 0, 0, 0);
-            btnBitacora.Size = new Size(283, 40);
+            btnBitacora.Size = new Size(279, 40);
             btnBitacora.TabIndex = 7;
             btnBitacora.Text = "Bitacora";
             btnBitacora.TextAlign = ContentAlignment.MiddleLeft;
@@ -505,7 +540,7 @@
             btnGestionRoles.Location = new Point(0, 80);
             btnGestionRoles.Name = "btnGestionRoles";
             btnGestionRoles.Padding = new Padding(20, 0, 0, 0);
-            btnGestionRoles.Size = new Size(283, 40);
+            btnGestionRoles.Size = new Size(279, 40);
             btnGestionRoles.TabIndex = 4;
             btnGestionRoles.Text = "Gestión de Roles";
             btnGestionRoles.TextAlign = ContentAlignment.MiddleLeft;
@@ -523,7 +558,7 @@
             btnGestionUsuarios.Location = new Point(0, 40);
             btnGestionUsuarios.Name = "btnGestionUsuarios";
             btnGestionUsuarios.Padding = new Padding(20, 0, 0, 0);
-            btnGestionUsuarios.Size = new Size(283, 40);
+            btnGestionUsuarios.Size = new Size(279, 40);
             btnGestionUsuarios.TabIndex = 1;
             btnGestionUsuarios.Text = "Gestión de Usuarios";
             btnGestionUsuarios.TextAlign = ContentAlignment.MiddleLeft;
@@ -541,7 +576,7 @@
             btnGestionEmpleados.Location = new Point(0, 0);
             btnGestionEmpleados.Name = "btnGestionEmpleados";
             btnGestionEmpleados.Padding = new Padding(20, 0, 0, 0);
-            btnGestionEmpleados.Size = new Size(283, 40);
+            btnGestionEmpleados.Size = new Size(279, 40);
             btnGestionEmpleados.TabIndex = 0;
             btnGestionEmpleados.Text = "Gestión de Empleados";
             btnGestionEmpleados.TextAlign = ContentAlignment.MiddleLeft;
@@ -560,7 +595,7 @@
             btnUsuarios.Location = new Point(0, 833);
             btnUsuarios.Margin = new Padding(3, 4, 3, 4);
             btnUsuarios.Name = "btnUsuarios";
-            btnUsuarios.Size = new Size(283, 80);
+            btnUsuarios.Size = new Size(279, 80);
             btnUsuarios.TabIndex = 28;
             btnUsuarios.Texto = "Usuarios";
             btnUsuarios.Click += btnUsuarios_Click;
@@ -571,7 +606,7 @@
             pnlDivisorVentas.Dock = DockStyle.Top;
             pnlDivisorVentas.Location = new Point(0, 831);
             pnlDivisorVentas.Name = "pnlDivisorVentas";
-            pnlDivisorVentas.Size = new Size(283, 2);
+            pnlDivisorVentas.Size = new Size(279, 2);
             pnlDivisorVentas.TabIndex = 23;
             // 
             // panel2
@@ -584,7 +619,7 @@
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(0, 1412);
             panel2.Name = "panel2";
-            panel2.Size = new Size(283, 80);
+            panel2.Size = new Size(279, 80);
             panel2.TabIndex = 11;
             // 
             // lblBodega
@@ -594,7 +629,7 @@
             lblBodega.ForeColor = Color.White;
             lblBodega.Location = new Point(106, 55);
             lblBodega.Name = "lblBodega";
-            lblBodega.Size = new Size(131, 18);
+            lblBodega.Size = new Size(165, 23);
             lblBodega.TabIndex = 11;
             lblBodega.Text = "Bodega: Mi Bodega";
             // 
@@ -605,7 +640,7 @@
             lblRol.ForeColor = Color.White;
             lblRol.Location = new Point(106, 32);
             lblRol.Name = "lblRol";
-            lblRol.Size = new Size(79, 18);
+            lblRol.Size = new Size(99, 23);
             lblRol.TabIndex = 10;
             lblRol.Text = "Rol: Admin";
             // 
@@ -616,7 +651,7 @@
             lblUsuario.ForeColor = Color.White;
             lblUsuario.Location = new Point(106, 6);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(135, 18);
+            lblUsuario.Size = new Size(169, 23);
             lblUsuario.TabIndex = 9;
             lblUsuario.Text = "Fernando Barahona";
             // 
@@ -643,7 +678,7 @@
             panelVentas.Dock = DockStyle.Top;
             panelVentas.Location = new Point(0, 671);
             panelVentas.Name = "panelVentas";
-            panelVentas.Size = new Size(283, 160);
+            panelVentas.Size = new Size(279, 160);
             panelVentas.TabIndex = 6;
             // 
             // btnDevoluciones
@@ -657,7 +692,7 @@
             btnDevoluciones.Location = new Point(0, 120);
             btnDevoluciones.Name = "btnDevoluciones";
             btnDevoluciones.Padding = new Padding(20, 0, 0, 0);
-            btnDevoluciones.Size = new Size(283, 40);
+            btnDevoluciones.Size = new Size(279, 40);
             btnDevoluciones.TabIndex = 3;
             btnDevoluciones.Text = "Devoluciones";
             btnDevoluciones.TextAlign = ContentAlignment.MiddleLeft;
@@ -675,7 +710,7 @@
             btnCierreDiario.Location = new Point(0, 80);
             btnCierreDiario.Name = "btnCierreDiario";
             btnCierreDiario.Padding = new Padding(20, 0, 0, 0);
-            btnCierreDiario.Size = new Size(283, 40);
+            btnCierreDiario.Size = new Size(279, 40);
             btnCierreDiario.TabIndex = 2;
             btnCierreDiario.Text = "Cierre Diario";
             btnCierreDiario.TextAlign = ContentAlignment.MiddleLeft;
@@ -693,7 +728,7 @@
             btnClientes.Location = new Point(0, 40);
             btnClientes.Name = "btnClientes";
             btnClientes.Padding = new Padding(20, 0, 0, 0);
-            btnClientes.Size = new Size(283, 40);
+            btnClientes.Size = new Size(279, 40);
             btnClientes.TabIndex = 1;
             btnClientes.Text = "Clientes";
             btnClientes.TextAlign = ContentAlignment.MiddleLeft;
@@ -711,7 +746,7 @@
             btnGestionVentas.Location = new Point(0, 0);
             btnGestionVentas.Name = "btnGestionVentas";
             btnGestionVentas.Padding = new Padding(20, 0, 0, 0);
-            btnGestionVentas.Size = new Size(283, 40);
+            btnGestionVentas.Size = new Size(279, 40);
             btnGestionVentas.TabIndex = 0;
             btnGestionVentas.Text = "Facturación";
             btnGestionVentas.TextAlign = ContentAlignment.MiddleLeft;
@@ -730,7 +765,7 @@
             btnVentas.Location = new Point(0, 591);
             btnVentas.Margin = new Padding(3, 4, 3, 4);
             btnVentas.Name = "btnVentas";
-            btnVentas.Size = new Size(283, 80);
+            btnVentas.Size = new Size(279, 80);
             btnVentas.TabIndex = 27;
             btnVentas.Texto = "Ventas";
             btnVentas.Click += btnVentas_Click;
@@ -741,7 +776,7 @@
             pnlDivisorCompras.Dock = DockStyle.Top;
             pnlDivisorCompras.Location = new Point(0, 589);
             pnlDivisorCompras.Name = "pnlDivisorCompras";
-            pnlDivisorCompras.Size = new Size(283, 2);
+            pnlDivisorCompras.Size = new Size(279, 2);
             pnlDivisorCompras.TabIndex = 24;
             // 
             // panelCompras
@@ -754,7 +789,7 @@
             panelCompras.Dock = DockStyle.Top;
             panelCompras.Location = new Point(0, 509);
             panelCompras.Name = "panelCompras";
-            panelCompras.Size = new Size(283, 80);
+            panelCompras.Size = new Size(279, 80);
             panelCompras.TabIndex = 4;
             // 
             // btnProveedores
@@ -768,7 +803,7 @@
             btnProveedores.Location = new Point(0, 40);
             btnProveedores.Name = "btnProveedores";
             btnProveedores.Padding = new Padding(20, 0, 0, 0);
-            btnProveedores.Size = new Size(283, 40);
+            btnProveedores.Size = new Size(279, 40);
             btnProveedores.TabIndex = 1;
             btnProveedores.Text = "Proveedores";
             btnProveedores.TextAlign = ContentAlignment.MiddleLeft;
@@ -786,7 +821,7 @@
             btnGestionCompra.Location = new Point(0, 0);
             btnGestionCompra.Name = "btnGestionCompra";
             btnGestionCompra.Padding = new Padding(20, 0, 0, 0);
-            btnGestionCompra.Size = new Size(283, 40);
+            btnGestionCompra.Size = new Size(279, 40);
             btnGestionCompra.TabIndex = 0;
             btnGestionCompra.Text = "Gestión de Compra";
             btnGestionCompra.TextAlign = ContentAlignment.MiddleLeft;
@@ -805,7 +840,7 @@
             btnCompras.Location = new Point(0, 429);
             btnCompras.Margin = new Padding(3, 4, 3, 4);
             btnCompras.Name = "btnCompras";
-            btnCompras.Size = new Size(283, 80);
+            btnCompras.Size = new Size(279, 80);
             btnCompras.TabIndex = 26;
             btnCompras.Texto = "Compras";
             btnCompras.Click += btnCompras_Click;
@@ -816,7 +851,7 @@
             pnlDivisorInventario.Dock = DockStyle.Top;
             pnlDivisorInventario.Location = new Point(0, 427);
             pnlDivisorInventario.Name = "pnlDivisorInventario";
-            pnlDivisorInventario.Size = new Size(283, 2);
+            pnlDivisorInventario.Size = new Size(279, 2);
             pnlDivisorInventario.TabIndex = 20;
             // 
             // panelInventario
@@ -834,7 +869,7 @@
             panelInventario.Dock = DockStyle.Top;
             panelInventario.Location = new Point(0, 147);
             panelInventario.Name = "panelInventario";
-            panelInventario.Size = new Size(283, 280);
+            panelInventario.Size = new Size(279, 280);
             panelInventario.TabIndex = 2;
             // 
             // btnRegistroPerdida
@@ -848,7 +883,7 @@
             btnRegistroPerdida.Location = new Point(0, 240);
             btnRegistroPerdida.Name = "btnRegistroPerdida";
             btnRegistroPerdida.Padding = new Padding(20, 0, 0, 0);
-            btnRegistroPerdida.Size = new Size(283, 40);
+            btnRegistroPerdida.Size = new Size(279, 40);
             btnRegistroPerdida.TabIndex = 3;
             btnRegistroPerdida.Text = "Perdidas";
             btnRegistroPerdida.TextAlign = ContentAlignment.MiddleLeft;
@@ -867,7 +902,7 @@
             btnPresentaciones.Location = new Point(0, 200);
             btnPresentaciones.Name = "btnPresentaciones";
             btnPresentaciones.Padding = new Padding(20, 0, 0, 0);
-            btnPresentaciones.Size = new Size(283, 40);
+            btnPresentaciones.Size = new Size(279, 40);
             btnPresentaciones.TabIndex = 6;
             btnPresentaciones.Text = "Tipos de Presentación";
             btnPresentaciones.TextAlign = ContentAlignment.MiddleLeft;
@@ -886,7 +921,7 @@
             btnCategorias.Location = new Point(0, 160);
             btnCategorias.Name = "btnCategorias";
             btnCategorias.Padding = new Padding(20, 0, 0, 0);
-            btnCategorias.Size = new Size(283, 40);
+            btnCategorias.Size = new Size(279, 40);
             btnCategorias.TabIndex = 5;
             btnCategorias.Text = "Listado de Categorías";
             btnCategorias.TextAlign = ContentAlignment.MiddleLeft;
@@ -905,7 +940,7 @@
             btnMarcas.Location = new Point(0, 120);
             btnMarcas.Name = "btnMarcas";
             btnMarcas.Padding = new Padding(20, 0, 0, 0);
-            btnMarcas.Size = new Size(283, 40);
+            btnMarcas.Size = new Size(279, 40);
             btnMarcas.TabIndex = 4;
             btnMarcas.Text = "Marcas";
             btnMarcas.TextAlign = ContentAlignment.MiddleLeft;
@@ -924,7 +959,7 @@
             btnGestionInventario.Location = new Point(0, 80);
             btnGestionInventario.Name = "btnGestionInventario";
             btnGestionInventario.Padding = new Padding(20, 0, 0, 0);
-            btnGestionInventario.Size = new Size(283, 40);
+            btnGestionInventario.Size = new Size(279, 40);
             btnGestionInventario.TabIndex = 0;
             btnGestionInventario.Text = "Productos";
             btnGestionInventario.TextAlign = ContentAlignment.MiddleLeft;
@@ -942,7 +977,7 @@
             btnBodegas.Location = new Point(0, 40);
             btnBodegas.Name = "btnBodegas";
             btnBodegas.Padding = new Padding(20, 0, 0, 0);
-            btnBodegas.Size = new Size(283, 40);
+            btnBodegas.Size = new Size(279, 40);
             btnBodegas.TabIndex = 7;
             btnBodegas.Text = "Bodegas";
             btnBodegas.TextAlign = ContentAlignment.MiddleLeft;
@@ -960,7 +995,7 @@
             btnInventarioBodega.Location = new Point(0, 0);
             btnInventarioBodega.Name = "btnInventarioBodega";
             btnInventarioBodega.Padding = new Padding(20, 0, 0, 0);
-            btnInventarioBodega.Size = new Size(283, 40);
+            btnInventarioBodega.Size = new Size(279, 40);
             btnInventarioBodega.TabIndex = 2;
             btnInventarioBodega.Text = "Inventario de Bodegas";
             btnInventarioBodega.TextAlign = ContentAlignment.MiddleLeft;
@@ -979,7 +1014,7 @@
             btnInventarios.Location = new Point(0, 67);
             btnInventarios.Margin = new Padding(3, 4, 3, 4);
             btnInventarios.Name = "btnInventarios";
-            btnInventarios.Size = new Size(283, 80);
+            btnInventarios.Size = new Size(279, 80);
             btnInventarios.TabIndex = 29;
             btnInventarios.Texto = "Inventario";
             btnInventarios.Click += btbStocks_Click;
@@ -990,7 +1025,7 @@
             panDiv.Dock = DockStyle.Top;
             panDiv.Location = new Point(0, 65);
             panDiv.Name = "panDiv";
-            panDiv.Size = new Size(283, 2);
+            panDiv.Size = new Size(279, 2);
             panDiv.TabIndex = 4;
             // 
             // panelMneuLateral
@@ -1001,7 +1036,7 @@
             panelMneuLateral.ForeColor = Color.Coral;
             panelMneuLateral.Location = new Point(0, 0);
             panelMneuLateral.Name = "panelMneuLateral";
-            panelMneuLateral.Size = new Size(283, 65);
+            panelMneuLateral.Size = new Size(279, 65);
             panelMneuLateral.TabIndex = 0;
             panelMneuLateral.MouseDown += panel1_MouseDown;
             // 
@@ -1168,7 +1203,7 @@
             Codigo.MinimumWidth = 6;
             Codigo.Name = "Codigo";
             Codigo.ReadOnly = true;
-            Codigo.Width = 87;
+            Codigo.Width = 104;
             // 
             // Producto
             // 
@@ -1206,7 +1241,7 @@
             StockTotal.MinimumWidth = 6;
             StockTotal.Name = "StockTotal";
             StockTotal.ReadOnly = true;
-            StockTotal.Width = 78;
+            StockTotal.Width = 94;
             // 
             // StockMinimo
             // 
@@ -1219,7 +1254,7 @@
             StockMinimo.MinimumWidth = 130;
             StockMinimo.Name = "StockMinimo";
             StockMinimo.ReadOnly = true;
-            StockMinimo.Width = 130;
+            StockMinimo.Width = 146;
             // 
             // chart1
             // 
@@ -1272,7 +1307,7 @@
             lblHora.Location = new Point(20, 644);
             lblHora.Name = "lblHora";
             lblHora.RightToLeft = RightToLeft.Yes;
-            lblHora.Size = new Size(59, 23);
+            lblHora.Size = new Size(76, 29);
             lblHora.TabIndex = 34;
             lblHora.Text = "label3";
             lblHora.TextAlign = ContentAlignment.MiddleRight;
@@ -1286,7 +1321,7 @@
             lblFecha.Location = new Point(20, 667);
             lblFecha.Name = "lblFecha";
             lblFecha.RightToLeft = RightToLeft.Yes;
-            lblFecha.Size = new Size(59, 23);
+            lblFecha.Size = new Size(76, 29);
             lblFecha.TabIndex = 33;
             lblFecha.Text = "label3";
             lblFecha.TextAlign = ContentAlignment.MiddleRight;
@@ -1319,7 +1354,7 @@
             lblNotificaciones.ForeColor = Color.FromArgb(148, 168, 187);
             lblNotificaciones.Location = new Point(24, 408);
             lblNotificaciones.Name = "lblNotificaciones";
-            lblNotificaciones.Size = new Size(314, 23);
+            lblNotificaciones.Size = new Size(392, 29);
             lblNotificaciones.TabIndex = 0;
             lblNotificaciones.Text = "No tienes notificaciones pendientes...";
             // 
@@ -1330,7 +1365,7 @@
             // 
             // frmMenuPrincipal
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(224, 224, 224);
             ClientSize = new Size(1234, 761);
@@ -1347,6 +1382,7 @@
             Load += Form1_Load;
             panBarraControl.ResumeLayout(false);
             panBarraControl.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
             panel1.ResumeLayout(false);
@@ -1465,5 +1501,7 @@
         public Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Button btnSalir;
     }
 }

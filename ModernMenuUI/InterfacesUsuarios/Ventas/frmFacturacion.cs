@@ -1002,12 +1002,12 @@ namespace ModernMenuUI
 
                 if (seleccionado != null)
                 {
-                    _bloquearSugerencias = true;             // 🔥 BLOQUEAR sugerencias temporalmente
+                    _bloquearSugerencias = true;             //< BLOQUEAR sugerencias temporalmente
                     txtCliente.Text = seleccionado.NombreCliente;
                     _clienteSeleccionado = seleccionado;
 
                     lstClientes.Visible = false;             // Asegurar que no aparezca
-                    _bloquearSugerencias = false;            // 🔥 Volver a permitir sugerencias
+                    _bloquearSugerencias = false;            // Volver a permitir sugerencias
                 }
             }
         }
