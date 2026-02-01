@@ -92,7 +92,7 @@
             txtApellido.Font = new Font("Itim", 13F);
             txtApellido.Location = new Point(121, 99);
             txtApellido.Name = "txtApellido";
-            txtApellido.Size = new Size(315, 21);
+            txtApellido.Size = new Size(315, 26);
             txtApellido.TabIndex = 3;
             // 
             // label1
@@ -102,7 +102,7 @@
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(17, 69);
             label1.Name = "label1";
-            label1.Size = new Size(64, 18);
+            label1.Size = new Size(81, 23);
             label1.TabIndex = 13;
             label1.Text = "Nombre:";
             // 
@@ -113,7 +113,7 @@
             label2.ForeColor = Color.FromArgb(87, 99, 110);
             label2.Location = new Point(19, 102);
             label2.Name = "label2";
-            label2.Size = new Size(65, 18);
+            label2.Size = new Size(81, 23);
             label2.TabIndex = 14;
             label2.Text = "Apellido:";
             // 
@@ -124,7 +124,7 @@
             label8.ForeColor = Color.FromArgb(87, 99, 110);
             label8.Location = new Point(19, 29);
             label8.Name = "label8";
-            label8.Size = new Size(38, 18);
+            label8.Size = new Size(48, 23);
             label8.TabIndex = 12;
             label8.Text = "DNI:";
             // 
@@ -136,18 +136,17 @@
             txtTelefono.Location = new Point(121, 134);
             txtTelefono.Name = "txtTelefono";
             txtTelefono.PlaceholderText = "(Número de Teléfono sin espacios guiones)";
-            txtTelefono.Size = new Size(315, 20);
+            txtTelefono.Size = new Size(315, 24);
             txtTelefono.TabIndex = 4;
             // 
             // txtCorreo
             // 
             txtCorreo.BackColor = Color.White;
             txtCorreo.BorderStyle = BorderStyle.None;
-            txtCorreo.Enabled = false;
             txtCorreo.Font = new Font("Itim", 13F);
             txtCorreo.Location = new Point(121, 167);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(214, 21);
+            txtCorreo.Size = new Size(214, 26);
             txtCorreo.TabIndex = 5;
             // 
             // label4
@@ -157,7 +156,7 @@
             label4.ForeColor = Color.FromArgb(87, 99, 110);
             label4.Location = new Point(19, 136);
             label4.Name = "label4";
-            label4.Size = new Size(68, 18);
+            label4.Size = new Size(85, 23);
             label4.TabIndex = 15;
             label4.Text = "Teléfono:";
             // 
@@ -168,7 +167,7 @@
             label5.ForeColor = Color.FromArgb(87, 99, 110);
             label5.Location = new Point(19, 304);
             label5.Name = "label5";
-            label5.Size = new Size(57, 18);
+            label5.Size = new Size(70, 23);
             label5.TabIndex = 18;
             label5.Text = "Estado:";
             // 
@@ -179,7 +178,7 @@
             label6.ForeColor = Color.FromArgb(87, 99, 110);
             label6.Location = new Point(19, 169);
             label6.Name = "label6";
-            label6.Size = new Size(57, 18);
+            label6.Size = new Size(71, 23);
             label6.TabIndex = 16;
             label6.Text = "Correo:";
             // 
@@ -200,7 +199,7 @@
             rbInactivo.AutoSize = true;
             rbInactivo.Location = new Point(124, 20);
             rbInactivo.Name = "rbInactivo";
-            rbInactivo.Size = new Size(82, 23);
+            rbInactivo.Size = new Size(100, 28);
             rbInactivo.TabIndex = 8;
             rbInactivo.Text = "Inactivo";
             rbInactivo.UseVisualStyleBackColor = true;
@@ -211,7 +210,7 @@
             rbActivo.Checked = true;
             rbActivo.Location = new Point(8, 21);
             rbActivo.Name = "rbActivo";
-            rbActivo.Size = new Size(70, 23);
+            rbActivo.Size = new Size(84, 28);
             rbActivo.TabIndex = 7;
             rbActivo.TabStop = true;
             rbActivo.Text = "Activo";
@@ -235,7 +234,7 @@
             label3.ForeColor = Color.FromArgb(87, 99, 110);
             label3.Location = new Point(19, 207);
             label3.Name = "label3";
-            label3.Size = new Size(73, 18);
+            label3.Size = new Size(94, 23);
             label3.TabIndex = 17;
             label3.Text = "Dirección:";
             // 
@@ -280,7 +279,7 @@
             txtDni.Location = new Point(121, 27);
             txtDni.Name = "txtDni";
             txtDni.PlaceholderText = "(Ingrese DniEmpleado sin espacios ni guiones)";
-            txtDni.Size = new Size(315, 20);
+            txtDni.Size = new Size(315, 24);
             txtDni.TabIndex = 1;
             // 
             // txtNombre
@@ -290,7 +289,7 @@
             txtNombre.Font = new Font("Itim", 13F);
             txtNombre.Location = new Point(121, 66);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(315, 21);
+            txtNombre.Size = new Size(315, 26);
             txtNombre.TabIndex = 2;
             // 
             // btnModificarEmpleado
@@ -316,7 +315,7 @@
             label7.ForeColor = Color.FromArgb(87, 99, 110);
             label7.Location = new Point(341, 172);
             label7.Name = "label7";
-            label7.Size = new Size(92, 14);
+            label7.Size = new Size(115, 18);
             label7.TabIndex = 20;
             label7.Text = "(No Modificable)";
             // 
@@ -368,7 +367,7 @@
             // 
             // frmAgregarEditarEmpleado
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(744, 462);
             Controls.Add(panel2);

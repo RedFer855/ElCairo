@@ -701,5 +701,10 @@ namespace ModernMenuUI
         {
             Application.Exit();
         }
+
+        private void panelFormHijo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

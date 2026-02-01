@@ -45,6 +45,7 @@ namespace ModernMenuUI
         private ClienteRepositorio _clienteRepo = new ClienteRepositorio();
         private List<Cliente> _todosLosClientes = new List<Cliente>(); // La caché
         private Cliente _clienteSeleccionado = null; // Aquí guardaremos al elegido
+        
       
 
         public frmFacturacion()
@@ -794,6 +795,8 @@ namespace ModernMenuUI
                 }
 
                 int idEmpleado = respEmpleado.Models.First().IdUsuario;
+                string nombreComputadora = Environment.MachineName;
+                string nombreUsuarioWindows = Environment.UserName;
 
                 // ================================
                 // 3. EXTRAER DETALLES DE LA VENTA
@@ -818,7 +821,9 @@ namespace ModernMenuUI
                     p_id_rutas = (int?)null,
                     p_id_empleado = idEmpleado,
                     p_fecha_venta = DateTime.UtcNow,
-                    p_detalles = detallesVenta
+                    p_detalles = detallesVenta,
+                    p_nombre_host = nombreUsuarioWindows,
+                    p_computadora_host = nombreComputadora
                 };
 
                 // ================================

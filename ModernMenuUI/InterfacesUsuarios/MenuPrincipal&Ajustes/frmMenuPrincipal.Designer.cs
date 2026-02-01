@@ -43,8 +43,6 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            btnSalir = new Button();
             panel6 = new Panel();
             lblEstadoConexion = new Label();
             panel12 = new Panel();
@@ -57,6 +55,8 @@
             btnMinimizar = new Button();
             btnMiniMaxi = new Button();
             btnCerrar = new Button();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            btnSalir = new Button();
             panelMenuLateral = new Panel();
             pictureBox1 = new PictureBox();
             pnlDivisorReporteria = new Panel();
@@ -125,9 +125,9 @@
             HoraFecha = new System.Windows.Forms.Timer(components);
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
             panel6.SuspendLayout();
             panel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             panelMenuLateral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelReporteria.SuspendLayout();
@@ -152,7 +152,6 @@
             // panBarraControl
             // 
             panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
-            panBarraControl.Controls.Add(tableLayoutPanel2);
             panBarraControl.Controls.Add(panel6);
             panBarraControl.Controls.Add(btnNotificaciones);
             panBarraControl.Controls.Add(panel3);
@@ -168,37 +167,6 @@
             panBarraControl.Size = new Size(934, 65);
             panBarraControl.TabIndex = 1;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 2.238806F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 97.76119F));
-            tableLayoutPanel2.Controls.Add(btnSalir, 1, 0);
-            tableLayoutPanel2.Location = new Point(598, 3);
-            tableLayoutPanel2.Margin = new Padding(4);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 1;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Size = new Size(108, 62);
-            tableLayoutPanel2.TabIndex = 46;
-            // 
-            // btnSalir
-            // 
-            btnSalir.BackColor = Color.FromArgb(255, 128, 128);
-            btnSalir.Dock = DockStyle.Fill;
-            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSalir.ForeColor = Color.White;
-            btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(6, 4);
-            btnSalir.Margin = new Padding(4);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(98, 54);
-            btnSalir.TabIndex = 18;
-            btnSalir.Text = "Salir";
-            btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click;
             // 
             // panel6
             // 
@@ -368,6 +336,38 @@
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Visible = false;
             btnCerrar.Click += btnCerrar_Click;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            tableLayoutPanel2.AutoSize = true;
+            tableLayoutPanel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 2.238806F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 97.76119F));
+            tableLayoutPanel2.Controls.Add(btnSalir, 1, 0);
+            tableLayoutPanel2.Location = new Point(823, 611);
+            tableLayoutPanel2.Margin = new Padding(4);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(108, 62);
+            tableLayoutPanel2.TabIndex = 46;
+            // 
+            // btnSalir
+            // 
+            btnSalir.BackColor = Color.FromArgb(255, 128, 128);
+            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSalir.ForeColor = Color.White;
+            btnSalir.ImageAlign = ContentAlignment.TopCenter;
+            btnSalir.Location = new Point(6, 4);
+            btnSalir.Margin = new Padding(4);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(98, 54);
+            btnSalir.TabIndex = 18;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click;
             // 
             // panelMenuLateral
             // 
@@ -1063,6 +1063,7 @@
             // panelFormHijo
             // 
             panelFormHijo.BackColor = Color.White;
+            panelFormHijo.Controls.Add(tableLayoutPanel2);
             panelFormHijo.Controls.Add(pbxCalculadora);
             panelFormHijo.Controls.Add(tableLayoutPanel1);
             panelFormHijo.Controls.Add(lblHora);
@@ -1072,6 +1073,7 @@
             panelFormHijo.Name = "panelFormHijo";
             panelFormHijo.Size = new Size(934, 696);
             panelFormHijo.TabIndex = 2;
+            panelFormHijo.Paint += panelFormHijo_Paint;
             // 
             // pbxCalculadora
             // 
@@ -1382,11 +1384,11 @@
             Load += Form1_Load;
             panBarraControl.ResumeLayout(false);
             panBarraControl.PerformLayout();
-            tableLayoutPanel2.ResumeLayout(false);
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
             panelMenuLateral.ResumeLayout(false);
             panelMenuLateral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
