@@ -57,9 +57,10 @@
             // GridColumnas
             // 
             GridColumnas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            GridColumnas.Location = new Point(0, 84);
+            GridColumnas.AutoScroll = true;
+            GridColumnas.Location = new Point(0, 71);
             GridColumnas.Name = "GridColumnas";
-            GridColumnas.Size = new Size(1181, 556);
+            GridColumnas.Size = new Size(1181, 569);
             GridColumnas.TabIndex = 10;
             // 
             // ProductosCartas
