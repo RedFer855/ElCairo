@@ -265,13 +265,6 @@ namespace ModernMenuUI
                     }
                     // Imagen del SELECTOR → no hacer nada (solo URL)
 
-                    if (string.IsNullOrWhiteSpace(_nombreArchivo))
-                    {
-                        MessageBox.Show("Debe seleccionar una imagen para el producto.", "Imagen requerida",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
 
                     await repo.InsertarProducto(_productoInsertar);
                     MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
