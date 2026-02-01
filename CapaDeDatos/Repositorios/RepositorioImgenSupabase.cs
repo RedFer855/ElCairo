@@ -54,19 +54,56 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudo leer la imagen desde Supabase.", ex);
             }
         }
-
-        public async Task<List<string>> ListarImagenes()
+        public async Task<List<(string nombre, Image imagen)>> ObtenerTodasLasImagenes()
         {
-            var cliente = await GetClient();
+            try
+            {
+                var cliente = await GetClient();
 
-            var archivos = await cliente.Storage
-                .From("imagenes_productos")
-                .List(); 
+                var archivos = await cliente.Storage
+                                            .From("imagenes_productos")
+                                            .List();
 
+                var resultado = new List<(string, Image)>();
 
-            return archivos.Select(a => a.Name).ToList();
+                foreach (var archivo in archivos)
+                {
+                    var bytes = await cliente.Storage
+                                             .From("imagenes_productos")
+                                             .Download(archivo.Name, (sender, progress) => Debug.WriteLine($"{progress}%"));
+
+                    using var ms = new MemoryStream(bytes);
+                    using var imgTemp = Image.FromStream(ms);
+                    resultado.Add((archivo.Name, new Bitmap(imgTemp)));
+                }
+                return resultado;
+
+            }
+            catch
+            {
+                MessageBox.Show("No se pudieron cargar las imagenes","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                return null;
+            }
+
         }
+        public async Task<List<string>> GetUrl(string nombreArchivo)
+        {
+            try
+            {
+                var supabase = await Conexion.GetClientAsync();
+                var publicUrl = supabase.Storage.From("imagenes_productos").GetPublicUrl(nombreArchivo);
 
+                var resultado = new List<string>
+                {
+                    publicUrl
+                };
+                return resultado;
 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo obtener la URL de la imagen. Verifique los datos y la conexión.", ex);
+            }
+        }
     }
 }

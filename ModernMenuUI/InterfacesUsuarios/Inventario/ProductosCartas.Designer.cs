@@ -49,7 +49,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(1181, 68);
+            lblNombreModulo.Size = new Size(1108, 68);
             lblNombreModulo.TabIndex = 9;
             lblNombreModulo.Text = "SELECCIONE UNA IMAGEN ";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -60,14 +60,14 @@
             GridColumnas.AutoScroll = true;
             GridColumnas.Location = new Point(0, 71);
             GridColumnas.Name = "GridColumnas";
-            GridColumnas.Size = new Size(1181, 569);
+            GridColumnas.Size = new Size(1108, 569);
             GridColumnas.TabIndex = 10;
             // 
             // ProductosCartas
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(1181, 641);
+            ClientSize = new Size(1108, 641);
             Controls.Add(GridColumnas);
             Controls.Add(lblNombreModulo);
             Controls.Add(label1);

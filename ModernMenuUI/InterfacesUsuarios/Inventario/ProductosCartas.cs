@@ -14,6 +14,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
     public partial class ProductosCartas : Form
     {
         RepositorioImgenSupabase nombreImg = new RepositorioImgenSupabase();
+        public event EventHandler<string> ImagenSeleccionada;
+        public event EventHandler<Image> ImagenSeleccionada_;
+
         public ProductosCartas()
         {
             InitializeComponent();
@@ -26,6 +29,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private async Task cargarImagenes()
         {
+            /*
             var nombresImagenes = await nombreImg.ListarImagenes();
 
             GridColumnas.Controls.Clear();
@@ -38,7 +42,34 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 producto.AsignarImagen(imagen);
 
                 GridColumnas.Controls.Add(producto);
+            }*/
+            var repo = new RepositorioImgenSupabase();
+            var imagenes = await repo.ObtenerTodasLasImagenes();
+
+            GridColumnas.SuspendLayout();
+
+            foreach (var item in imagenes)
+            {
+                var tarjeta = new ProductoTarjeta();
+                tarjeta.AsignarImagen(item.imagen,item.nombre);
+                tarjeta.ImagenSeleccionada += (s, url) =>
+                {
+                    ImagenSeleccionada?.Invoke(this, url);
+                    this.Close();
+
+                };
+
+                tarjeta.ImagenSeleccionada_ += (s, img) =>
+                {
+                    ImagenSeleccionada_?.Invoke(this, img);
+                };
+
+                GridColumnas.Controls.Add(tarjeta);
             }
+
+            GridColumnas.ResumeLayout();
         }
+
+
     }
 }

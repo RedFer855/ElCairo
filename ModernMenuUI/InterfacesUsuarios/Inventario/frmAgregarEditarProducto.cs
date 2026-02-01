@@ -61,6 +61,7 @@ namespace ModernMenuUI
             btnModificarProducto.Visible = false;
         }
         RepositorioImgenSupabase repositorioImg = new RepositorioImgenSupabase();
+        public event EventHandler<Image> ImagenSeleccionada;
 
         /// <summary>
         /// Constructor para editar un producto existente.
@@ -101,6 +102,7 @@ namespace ModernMenuUI
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
 
         }
+        
         protected override async void OnShown(EventArgs e)
         {
 
@@ -123,21 +125,36 @@ namespace ModernMenuUI
 
 
             try
-            {
-                var imagen = await repositorioImg.LeerImagenes(_productoSeleccionado.ImagenProducto);
-                Imagen_Producto.Image = imagen;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "No se pudo cargar la imagen del producto.\n" + ex.Message,
-                    "Imagen",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-            }
+                {
+                    var imagen = await repositorioImg.LeerImagenes(_productoSeleccionado.ImagenProducto);
+                    Imagen_Producto.Image = imagen;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        "No se pudo cargar la imagen del producto.\n" + ex.Message,
+                        "Imagen",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
         }
 
+        private void ProductosCartas_ImagenSeleccionada(object sender, Image imagen)
+        {
+            // Mostrar imagen seleccionada en el PictureBox principal
+            Imagen_Producto.Image = imagen;
+
+            // Guardar datos para el guardado del producto
+            //_byteImagen = bytes;
+            //_nombreArchivo = nombreArchivo;
+        }
+
+        private void ProductoCartas_urlImagen(object sender, string url)
+        {
+            _nombreArchivo = url;
+            _byteImagen = null; // No es necesario subir bytes si es una imagen existente
+        }
 
         /// <summary>
         /// Maneja arrastre del formulario (mover ventana).
@@ -192,7 +209,6 @@ namespace ModernMenuUI
                     precioCosto = _productoSeleccionado.PrecioCosto;
                     cantidad = _productoSeleccionado.CantidadProducto;
                 }
-
                 // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
                 ProductoInsertar _productoInsertar = new ProductoInsertar
                 {
@@ -214,6 +230,7 @@ namespace ModernMenuUI
 
                 // 2. VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(_productoInsertar);
+
                 if (resultado.Error)
                 {
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -224,11 +241,7 @@ namespace ModernMenuUI
                     MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (_byteImagen == null)
-                {
-                    MessageBox.Show("Seleccione una imagen para el producto.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                
 
                 // 3. ASIGNAR ESTADO
                 _productoInsertar.EstadoProducto = rbHabilitado.Checked;
@@ -244,20 +257,39 @@ namespace ModernMenuUI
                 // 5. LÓGICA DECISIVA
                 if (_productoSeleccionado == null)
                 {
-                    // MODO INSERTAR
-                    await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
+                    // INSERTAR
+                    if (_byteImagen != null)
+                    {
+                        // Imagen LOCAL → subir
+                        await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
+                    }
+                    // Imagen del SELECTOR → no hacer nada (solo URL)
+
+                    if (string.IsNullOrWhiteSpace(_nombreArchivo))
+                    {
+                        MessageBox.Show("Debe seleccionar una imagen para el producto.", "Imagen requerida",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+
                     await repo.InsertarProducto(_productoInsertar);
                     MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // MODO ACTUALIZAR
+                    // ACTUALIZAR
                     _productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
-                    // Imagen_Producto.Image = imagen;
-                    await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
+
+                    if (_byteImagen != null)
+                    {
+                        await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
+                    }
+
                     await repo.ActualizarProducto(_productoInsertar);
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -415,6 +447,8 @@ namespace ModernMenuUI
         private void btnImagenes_Click(object sender, EventArgs e)
         {
             ProductosCartas productosCartas = new ProductosCartas();
+            productosCartas.ImagenSeleccionada += ProductoCartas_urlImagen;
+            productosCartas.ImagenSeleccionada_ += ProductosCartas_ImagenSeleccionada;
             productosCartas.ShowDialog();
         }
     }

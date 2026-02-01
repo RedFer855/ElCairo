@@ -13,7 +13,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class ProductoTarjeta : UserControl
     {
-        RepositorioImgenSupabase repositorioImg = new RepositorioImgenSupabase();
+        public string urlImagen{ get; set; }
+        public Image imagenSeleccionada { get; set; }
+
+        public event EventHandler<string> ImagenSeleccionada;
+
+        public event EventHandler<Image> ImagenSeleccionada_;
         public ProductoTarjeta()
         {
             InitializeComponent();
@@ -22,10 +27,18 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
         }
 
-        public void AsignarImagen(Image img)
+        public void AsignarImagen(Image img,string url)
         {
+            imagenSeleccionada = img;
+            urlImagen = url;
             imgProdTarjeta.Image = img;
-        }   
+        }
 
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            ImagenSeleccionada?.Invoke(this, urlImagen);
+            ImagenSeleccionada_?.Invoke(this, imagenSeleccionada);
+            MessageBox.Show("Imagen Seleccionada"+urlImagen);
+        }
     }
 }
