@@ -91,6 +91,7 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
+            btnImagenes = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
@@ -112,7 +113,7 @@
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(813, 37);
+            panBarraControl.Size = new Size(1011, 37);
             panBarraControl.TabIndex = 2;
             panBarraControl.MouseDown += panBarraControl_MouseDown;
             // 
@@ -123,7 +124,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(813, 37);
+            lblNombreModulo.Size = new Size(1011, 37);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "EDITAR PRODUCTO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -242,12 +243,13 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 37);
             panel2.Name = "panel2";
-            panel2.Size = new Size(813, 466);
+            panel2.Size = new Size(1011, 516);
             panel2.TabIndex = 12;
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(btnImagenes);
             panel1.Controls.Add(Imagen_Producto);
             panel1.Controls.Add(txtCantidad);
             panel1.Controls.Add(txtPrecioCompra);
@@ -279,7 +281,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(813, 466);
+            panel1.Size = new Size(1011, 516);
             panel1.TabIndex = 41;
             // 
             // Imagen_Producto
@@ -288,9 +290,9 @@
             Imagen_Producto.BackgroundImage = Properties.Resources.buscar;
             Imagen_Producto.BackgroundImageLayout = ImageLayout.Center;
             Imagen_Producto.BorderStyle = BorderStyle.FixedSingle;
-            Imagen_Producto.Location = new Point(488, 20);
+            Imagen_Producto.Location = new Point(670, 27);
             Imagen_Producto.Name = "Imagen_Producto";
-            Imagen_Producto.Size = new Size(300, 300);
+            Imagen_Producto.Size = new Size(300, 269);
             Imagen_Producto.SizeMode = PictureBoxSizeMode.Zoom;
             Imagen_Producto.TabIndex = 62;
             Imagen_Producto.TabStop = false;
@@ -300,7 +302,7 @@
             // 
             txtCantidad.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCantidad.ForeColor = Color.DimGray;
-            txtCantidad.Location = new Point(176, 347);
+            txtCantidad.Location = new Point(243, 347);
             txtCantidad.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtCantidad.Name = "txtCantidad";
             txtCantidad.Size = new Size(275, 30);
@@ -312,7 +314,7 @@
             txtPrecioCompra.DecimalPlaces = 2;
             txtPrecioCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioCompra.ForeColor = Color.DimGray;
-            txtPrecioCompra.Location = new Point(176, 147);
+            txtPrecioCompra.Location = new Point(243, 147);
             txtPrecioCompra.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioCompra.Name = "txtPrecioCompra";
             txtPrecioCompra.Size = new Size(275, 30);
@@ -323,7 +325,7 @@
             txtPrecioVenta.DecimalPlaces = 2;
             txtPrecioVenta.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioVenta.ForeColor = Color.DimGray;
-            txtPrecioVenta.Location = new Point(176, 107);
+            txtPrecioVenta.Location = new Point(243, 107);
             txtPrecioVenta.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioVenta.Name = "txtPrecioVenta";
             txtPrecioVenta.Size = new Size(275, 30);
@@ -334,7 +336,7 @@
             lblNota.BackColor = Color.FromArgb(148, 168, 187);
             lblNota.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNota.ForeColor = Color.White;
-            lblNota.Location = new Point(488, 347);
+            lblNota.Location = new Point(668, 385);
             lblNota.Name = "lblNota";
             lblNota.Size = new Size(300, 84);
             lblNota.TabIndex = 52;
@@ -345,7 +347,7 @@
             txtContenido.BackColor = Color.White;
             txtContenido.BorderStyle = BorderStyle.None;
             txtContenido.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContenido.Location = new Point(176, 307);
+            txtContenido.Location = new Point(243, 307);
             txtContenido.Name = "txtContenido";
             txtContenido.PlaceholderText = "(Cantidad)";
             txtContenido.Size = new Size(108, 24);
@@ -357,7 +359,7 @@
             cmbUnidadContenido.ForeColor = Color.DimGray;
             cmbUnidadContenido.FormattingEnabled = true;
             cmbUnidadContenido.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
-            cmbUnidadContenido.Location = new Point(374, 305);
+            cmbUnidadContenido.Location = new Point(441, 305);
             cmbUnidadContenido.Name = "cmbUnidadContenido";
             cmbUnidadContenido.Size = new Size(77, 31);
             cmbUnidadContenido.TabIndex = 57;
@@ -368,7 +370,7 @@
             label22.AutoSize = true;
             label22.Font = new Font("Itim", 11.9999981F);
             label22.ForeColor = Color.FromArgb(87, 99, 110);
-            label22.Location = new Point(290, 307);
+            label22.Location = new Point(357, 307);
             label22.Name = "label22";
             label22.Size = new Size(95, 24);
             label22.TabIndex = 56;
@@ -379,7 +381,7 @@
             flowLayoutPanel1.Controls.Add(btnGuardarProducto);
             flowLayoutPanel1.Controls.Add(btnModificarProducto);
             flowLayoutPanel1.Controls.Add(btnVolver);
-            flowLayoutPanel1.Location = new Point(34, 399);
+            flowLayoutPanel1.Location = new Point(89, 422);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(261, 47);
             flowLayoutPanel1.TabIndex = 51;
@@ -440,7 +442,7 @@
             btnBuscarPresentacion.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarPresentacion.FlatAppearance.BorderSize = 0;
             btnBuscarPresentacion.FlatStyle = FlatStyle.Flat;
-            btnBuscarPresentacion.Location = new Point(403, 267);
+            btnBuscarPresentacion.Location = new Point(470, 267);
             btnBuscarPresentacion.Name = "btnBuscarPresentacion";
             btnBuscarPresentacion.Size = new Size(48, 20);
             btnBuscarPresentacion.TabIndex = 49;
@@ -454,7 +456,7 @@
             btnBuscarMarca.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarMarca.FlatAppearance.BorderSize = 0;
             btnBuscarMarca.FlatStyle = FlatStyle.Flat;
-            btnBuscarMarca.Location = new Point(403, 227);
+            btnBuscarMarca.Location = new Point(470, 227);
             btnBuscarMarca.Name = "btnBuscarMarca";
             btnBuscarMarca.Size = new Size(48, 20);
             btnBuscarMarca.TabIndex = 45;
@@ -468,7 +470,7 @@
             btnBuscarCategoria.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarCategoria.FlatAppearance.BorderSize = 0;
             btnBuscarCategoria.FlatStyle = FlatStyle.Flat;
-            btnBuscarCategoria.Location = new Point(403, 186);
+            btnBuscarCategoria.Location = new Point(470, 186);
             btnBuscarCategoria.Name = "btnBuscarCategoria";
             btnBuscarCategoria.Size = new Size(48, 20);
             btnBuscarCategoria.TabIndex = 44;
@@ -480,7 +482,7 @@
             label19.AutoSize = true;
             label19.Font = new Font("Itim", 11.9999981F);
             label19.ForeColor = Color.FromArgb(87, 99, 110);
-            label19.Location = new Point(81, 307);
+            label19.Location = new Point(118, 301);
             label19.Name = "label19";
             label19.Size = new Size(103, 24);
             label19.TabIndex = 42;
@@ -491,7 +493,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Itim", 11.9999981F);
             label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(86, 347);
+            label9.Location = new Point(131, 344);
             label9.Name = "label9";
             label9.Size = new Size(93, 24);
             label9.TabIndex = 40;
@@ -503,7 +505,7 @@
             label11.AutoSize = true;
             label11.Font = new Font("Itim", 11.9999981F);
             label11.ForeColor = Color.FromArgb(87, 99, 110);
-            label11.Location = new Point(37, 147);
+            label11.Location = new Point(54, 144);
             label11.Name = "label11";
             label11.Size = new Size(167, 24);
             label11.TabIndex = 38;
@@ -514,7 +516,7 @@
             txtPresentacion.BackColor = Color.White;
             txtPresentacion.BorderStyle = BorderStyle.None;
             txtPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPresentacion.Location = new Point(176, 267);
+            txtPresentacion.Location = new Point(243, 267);
             txtPresentacion.Name = "txtPresentacion";
             txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
             txtPresentacion.ReadOnly = true;
@@ -526,7 +528,7 @@
             label12.AutoSize = true;
             label12.Font = new Font("Itim", 11.9999981F);
             label12.ForeColor = Color.FromArgb(87, 99, 110);
-            label12.Location = new Point(63, 267);
+            label12.Location = new Point(97, 264);
             label12.Name = "label12";
             label12.Size = new Size(127, 24);
             label12.TabIndex = 32;
@@ -537,7 +539,7 @@
             txtMarca.BackColor = Color.White;
             txtMarca.BorderStyle = BorderStyle.None;
             txtMarca.Font = new Font("Itim", 11.9999981F);
-            txtMarca.Location = new Point(176, 227);
+            txtMarca.Location = new Point(243, 227);
             txtMarca.Name = "txtMarca";
             txtMarca.PlaceholderText = "(Seleccione Buscar)";
             txtMarca.ReadOnly = true;
@@ -550,7 +552,7 @@
             groupBox1.Controls.Add(rbHabilitado);
             groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(570, 337);
+            groupBox1.Location = new Point(441, 383);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(196, 44);
             groupBox1.TabIndex = 30;
@@ -559,7 +561,7 @@
             // rbDeshabilitado
             // 
             rbDeshabilitado.AutoSize = true;
-            rbDeshabilitado.Location = new Point(89, 15);
+            rbDeshabilitado.Location = new Point(90, 15);
             rbDeshabilitado.Name = "rbDeshabilitado";
             rbDeshabilitado.Size = new Size(100, 28);
             rbDeshabilitado.TabIndex = 29;
@@ -583,7 +585,7 @@
             label13.AutoSize = true;
             label13.Font = new Font("Itim", 11.9999981F);
             label13.ForeColor = Color.FromArgb(87, 99, 110);
-            label13.Location = new Point(110, 227);
+            label13.Location = new Point(151, 224);
             label13.Name = "label13";
             label13.Size = new Size(68, 24);
             label13.TabIndex = 27;
@@ -594,7 +596,7 @@
             label14.AutoSize = true;
             label14.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label14.ForeColor = Color.FromArgb(87, 99, 110);
-            label14.Location = new Point(499, 353);
+            label14.Location = new Point(370, 399);
             label14.Name = "label14";
             label14.Size = new Size(73, 24);
             label14.TabIndex = 26;
@@ -605,7 +607,7 @@
             label15.AutoSize = true;
             label15.Font = new Font("Itim", 11.9999981F);
             label15.ForeColor = Color.FromArgb(87, 99, 110);
-            label15.Location = new Point(86, 187);
+            label15.Location = new Point(120, 188);
             label15.Name = "label15";
             label15.Size = new Size(99, 24);
             label15.TabIndex = 25;
@@ -616,7 +618,7 @@
             txtCategoria.BackColor = Color.White;
             txtCategoria.BorderStyle = BorderStyle.None;
             txtCategoria.Font = new Font("Itim", 11.9999981F);
-            txtCategoria.Location = new Point(176, 186);
+            txtCategoria.Location = new Point(243, 186);
             txtCategoria.Name = "txtCategoria";
             txtCategoria.PlaceholderText = "(Seleccione Buscar)";
             txtCategoria.ReadOnly = true;
@@ -628,7 +630,7 @@
             label16.AutoSize = true;
             label16.Font = new Font("Itim", 11.9999981F);
             label16.ForeColor = Color.FromArgb(87, 99, 110);
-            label16.Location = new Point(42, 29);
+            label16.Location = new Point(73, 26);
             label16.Name = "label16";
             label16.Size = new Size(154, 24);
             label16.TabIndex = 19;
@@ -639,7 +641,7 @@
             txtCodBarra.BackColor = Color.White;
             txtCodBarra.BorderStyle = BorderStyle.None;
             txtCodBarra.Font = new Font("Itim", 11.9999981F);
-            txtCodBarra.Location = new Point(176, 27);
+            txtCodBarra.Location = new Point(243, 27);
             txtCodBarra.MaxLength = 13;
             txtCodBarra.Name = "txtCodBarra";
             txtCodBarra.PlaceholderText = "(Ingrese o Escanee el Código)";
@@ -651,7 +653,7 @@
             label17.AutoSize = true;
             label17.Font = new Font("Itim", 11.9999981F);
             label17.ForeColor = Color.FromArgb(87, 99, 110);
-            label17.Location = new Point(45, 107);
+            label17.Location = new Point(72, 104);
             label17.Name = "label17";
             label17.Size = new Size(149, 24);
             label17.TabIndex = 16;
@@ -662,7 +664,7 @@
             label18.AutoSize = true;
             label18.Font = new Font("Itim", 11.9999981F);
             label18.ForeColor = Color.FromArgb(87, 99, 110);
-            label18.Location = new Point(89, 67);
+            label18.Location = new Point(126, 64);
             label18.Name = "label18";
             label18.Size = new Size(93, 24);
             label18.TabIndex = 15;
@@ -673,7 +675,7 @@
             txtNombreProducto.BackColor = Color.White;
             txtNombreProducto.BorderStyle = BorderStyle.None;
             txtNombreProducto.Font = new Font("Itim", 11.9999981F);
-            txtNombreProducto.Location = new Point(176, 67);
+            txtNombreProducto.Location = new Point(243, 67);
             txtNombreProducto.Name = "txtNombreProducto";
             txtNombreProducto.PlaceholderText = "(Nombre del Producto)";
             txtNombreProducto.Size = new Size(275, 24);
@@ -899,12 +901,26 @@
             textBox1.Size = new Size(197, 24);
             textBox1.TabIndex = 22;
             // 
+            // btnImagenes
+            // 
+            btnImagenes.BackColor = Color.FromArgb(149, 195, 172);
+            btnImagenes.Cursor = Cursors.Hand;
+            btnImagenes.Font = new Font("Itim", 11.9999981F);
+            btnImagenes.ForeColor = Color.White;
+            btnImagenes.Location = new Point(668, 307);
+            btnImagenes.Name = "btnImagenes";
+            btnImagenes.Size = new Size(302, 70);
+            btnImagenes.TabIndex = 63;
+            btnImagenes.Text = "Consultar Imagenes ya guardadas";
+            btnImagenes.UseVisualStyleBackColor = false;
+            btnImagenes.Click += btnImagenes_Click;
+            // 
             // frmAgregarEditarProducto
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(813, 503);
+            ClientSize = new Size(1011, 553);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -995,5 +1011,6 @@
         private NumericUpDown txtPrecioVenta;
         private NumericUpDown txtCantidad;
         private PictureBox Imagen_Producto;
+        private Button btnImagenes;
     }
 }

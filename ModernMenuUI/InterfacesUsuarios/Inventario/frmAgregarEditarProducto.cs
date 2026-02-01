@@ -105,7 +105,7 @@ namespace ModernMenuUI
         {
 
         }
-        
+
         private async void frmAgregarEditarProducto_Load(object sender, EventArgs e)
         {
             await CargarImagenProductoAsync();
@@ -412,6 +412,10 @@ namespace ModernMenuUI
             }
         }
 
-        
+        private void btnImagenes_Click(object sender, EventArgs e)
+        {
+            ProductosCartas productosCartas = new ProductosCartas();
+            productosCartas.ShowDialog();
+        }
     }
 }

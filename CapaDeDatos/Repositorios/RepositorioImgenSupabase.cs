@@ -1,4 +1,5 @@
 ﻿using CapaDeDatos.Datos;
+using Supabase.Storage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ namespace CapaDeDatos.Repositorios
 {
     public class RepositorioImgenSupabase
     {
-        private async Task<Client> GetClient()
+        private async Task<Supabase.Client> GetClient()
         {
             return await Conexion.ConnectWithTimeoutAsync(3);
         }
@@ -52,6 +53,20 @@ namespace CapaDeDatos.Repositorios
             {
                 throw new Exception("No se pudo leer la imagen desde Supabase.", ex);
             }
-        }//act y del
+        }
+
+        public async Task<List<string>> ListarImagenes()
+        {
+            var cliente = await GetClient();
+
+            var archivos = await cliente.Storage
+                .From("imagenes_productos")
+                .List(); 
+
+
+            return archivos.Select(a => a.Name).ToList();
+        }
+
+
     }
 }
