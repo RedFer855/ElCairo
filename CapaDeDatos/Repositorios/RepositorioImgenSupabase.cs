@@ -86,24 +86,5 @@ namespace CapaDeDatos.Repositorios
             }
 
         }
-        public async Task<List<string>> GetUrl(string nombreArchivo)
-        {
-            try
-            {
-                var supabase = await Conexion.GetClientAsync();
-                var publicUrl = supabase.Storage.From("imagenes_productos").GetPublicUrl(nombreArchivo);
-
-                var resultado = new List<string>
-                {
-                    publicUrl
-                };
-                return resultado;
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("No se pudo obtener la URL de la imagen. Verifique los datos y la conexión.", ex);
-            }
-        }
     }
 }
