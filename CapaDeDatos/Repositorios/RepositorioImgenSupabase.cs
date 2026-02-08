@@ -54,6 +54,22 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudo leer la imagen desde Supabase.", ex);
             }
         }
+        /*
+        public async Task<List<string>> ListarImagenes()
+        {
+            try
+            {
+                var cliente = await GetClient();
+                var archivos = await cliente.Storage
+                                            .From("imagenes_productos")
+                                            .List();
+                return archivos.Select(a => a.Name).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudieron listar las imágenes desde Supabase.", ex);
+            }
+        }*/
         public async Task<List<(string nombre, Image imagen)>> ObtenerTodasLasImagenes()
         {
             try

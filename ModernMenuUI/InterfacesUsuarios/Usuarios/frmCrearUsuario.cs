@@ -83,7 +83,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 
             // Cargar roles permitidos al combo
             cmbRol.DataSource = rolesPermitidos;
-            cmbRol.DisplayMember = "NombreEmpleado";   // Nombre visible en lista
+            cmbRol.DisplayMember = "NombreRolRol";   // Nombre visible en lista
             cmbRol.ValueMember = "IdRol";             // Valor real (llave)
 
             // Precargar correo desde el empleado
@@ -138,6 +138,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 
                 // Crear usuario en auth
                 await repo.RegistrarUsuario(correo, contra);
+                //hacer una validacion para hacer una consulta a la tabla de usuarios y verificar 
+                //que el correo que se esta ingresando no exista en la tabla, por que si este existe 
+                //va a pasar un error que nos va a cerrar la sesion del usuario que esta creando el nuevo usuario
 
                 // Restaurar sesión original (muy importante)
                 await client.Auth.SetSession(

@@ -29,7 +29,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private async Task cargarImagenes()
         {
-            /*
+            /*var nombreImg = new RepositorioImgenSupabase();
+
             var nombresImagenes = await nombreImg.ListarImagenes();
 
             GridColumnas.Controls.Clear();
@@ -39,10 +40,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 var imagen = await nombreImg.LeerImagenes(nombre);
 
                 ProductoTarjeta producto = new ProductoTarjeta();
-                producto.AsignarImagen(imagen);
+                //producto.AsignarImagen(imagen);
 
                 GridColumnas.Controls.Add(producto);
             }*/
+
             var repo = new RepositorioImgenSupabase();
             var imagenes = await repo.ObtenerTodasLasImagenes();
 
