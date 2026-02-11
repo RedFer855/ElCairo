@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using static Supabase.Postgrest.Constants;
@@ -54,7 +55,7 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudo leer la imagen desde Supabase.", ex);
             }
         }
-        /*
+        
         public async Task<List<string>> ListarImagenes()
         {
             try
@@ -69,7 +70,29 @@ namespace CapaDeDatos.Repositorios
             {
                 throw new Exception("No se pudieron listar las imágenes desde Supabase.", ex);
             }
-        }*/
+        }
+
+        public async Task<Image> descargarImagenes(string nombreArchivo)
+        {
+            try
+            {
+                var cliente = await GetClient();
+
+                var bytes = await cliente.Storage
+                                                 .From("imagenes_productos")
+                                                 .Download(nombreArchivo, (sender, progress) => Debug.WriteLine($"{progress}%"));
+                using var ms = new MemoryStream(bytes);
+                using var imgTemp = Image.FromStream(ms);
+
+                // IMPORTANTE: clonar la imagen
+                return new Bitmap(imgTemp);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo descargar la imagen desde Supabase.", ex);
+            }
+        }
+        
         public async Task<List<(string nombre, Image imagen)>> ObtenerTodasLasImagenes()
         {
             try

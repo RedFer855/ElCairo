@@ -108,7 +108,7 @@ namespace ModernMenuUI
                             }
                             else
                             {
-                                // MessageBox.Show("✅ Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
+                                // MessageBox.Show("Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
 
                             }
                         }

@@ -29,22 +29,31 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private async Task cargarImagenes()
         {
-            /*var nombreImg = new RepositorioImgenSupabase();
-
-            var nombresImagenes = await nombreImg.ListarImagenes();
+            var repo = new RepositorioImgenSupabase();
 
             GridColumnas.Controls.Clear();
 
+            var nombresImagenes = await repo.ListarImagenes();
+
+
             foreach (var nombre in nombresImagenes)
             {
-                var imagen = await nombreImg.LeerImagenes(nombre);
+                var tarjeta = new ProductoTarjeta();    
+                GridColumnas.Controls.Add(tarjeta);
 
-                ProductoTarjeta producto = new ProductoTarjeta();
-                //producto.AsignarImagen(imagen);
+                var imagen = await repo.descargarImagenes(nombre);
+                tarjeta.AsignarImagen(imagen, nombre);
 
-                GridColumnas.Controls.Add(producto);
-            }*/
+                tarjeta.ImagenSeleccionada += (s, url) =>
+                {
+                    ImagenSeleccionada?.Invoke(this, url);
+                    this.Close();
+                };
 
+                //await Task.Delay(75); 
+
+            }
+            /*
             var repo = new RepositorioImgenSupabase();
             var imagenes = await repo.ObtenerTodasLasImagenes();
 
@@ -69,7 +78,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 GridColumnas.Controls.Add(tarjeta);
             }
 
-            GridColumnas.ResumeLayout();
+            GridColumnas.ResumeLayout();*/
         }
 
 
