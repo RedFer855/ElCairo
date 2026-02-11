@@ -32,18 +32,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             var repo = new RepositorioImgenSupabase();
 
             GridColumnas.Controls.Clear();
-
+            //listando las imagenes (los nombres del archivo )
             var nombresImagenes = await repo.ListarImagenes();
 
-
+            //cargando las imagenes en las tarjetas
             foreach (var nombre in nombresImagenes)
             {
                 var tarjeta = new ProductoTarjeta();    
                 GridColumnas.Controls.Add(tarjeta);
 
+                //descargando la imagen para ponerla en la tarjeta
                 var imagen = await repo.descargarImagenes(nombre);
                 tarjeta.AsignarImagen(imagen, nombre);
 
+                //cuando la imagen se selecciona, se activa el evento, se envia el nombre y la url
+                //para ingresarlo al image view 
                 tarjeta.ImagenSeleccionada += (s, url) =>
                 {
                     ImagenSeleccionada?.Invoke(this, url);
