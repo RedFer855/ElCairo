@@ -2,6 +2,7 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using Sprache;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -142,7 +143,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     IdEstadoProveedor = rbActivo.Checked ? 1 : 2,
                     EstadoProveedor = rbActivo.Checked
                 };
-
+/*
+                if (txtDireccion.Text.Length>300)
+                {
+                    MessageBox.Show("La dirección no puede superar los 300 caracteres.", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+*/
                 // VALIDAR proveedor (igual que validas Marca)
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProveedor(proveedorTemp);
 
