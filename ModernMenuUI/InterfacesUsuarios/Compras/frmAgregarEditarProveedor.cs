@@ -190,5 +190,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
