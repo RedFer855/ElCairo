@@ -389,6 +389,7 @@
             dgvCarrito.Location = new Point(0, 0);
             dgvCarrito.Margin = new Padding(4);
             dgvCarrito.Name = "dgvCarrito";
+            dgvCarrito.ReadOnly = true;
             dgvCarrito.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
@@ -419,6 +420,7 @@
             dataGridViewTextBoxColumn1.HeaderText = "Código";
             dataGridViewTextBoxColumn1.MinimumWidth = 6;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -426,6 +428,7 @@
             dataGridViewTextBoxColumn2.HeaderText = "Producto";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -433,6 +436,7 @@
             dataGridViewTextBoxColumn3.HeaderText = "Precio";
             dataGridViewTextBoxColumn3.MinimumWidth = 6;
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -440,6 +444,7 @@
             dataGridViewTextBoxColumn4.HeaderText = "CantidadCierre";
             dataGridViewTextBoxColumn4.MinimumWidth = 6;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // Restar
             // 
@@ -447,6 +452,7 @@
             Restar.HeaderText = "";
             Restar.MinimumWidth = 6;
             Restar.Name = "Restar";
+            Restar.ReadOnly = true;
             Restar.Resizable = DataGridViewTriState.True;
             Restar.Width = 50;
             // 
@@ -456,6 +462,7 @@
             Sumar.HeaderText = "";
             Sumar.MinimumWidth = 6;
             Sumar.Name = "Sumar";
+            Sumar.ReadOnly = true;
             Sumar.Resizable = DataGridViewTriState.True;
             Sumar.Width = 50;
             // 
@@ -465,6 +472,7 @@
             Eliminar.HeaderText = "";
             Eliminar.MinimumWidth = 6;
             Eliminar.Name = "Eliminar";
+            Eliminar.ReadOnly = true;
             Eliminar.Resizable = DataGridViewTriState.True;
             Eliminar.Width = 50;
             // 
@@ -570,6 +578,7 @@
             dgvProductos.Location = new Point(0, 0);
             dgvProductos.Margin = new Padding(4);
             dgvProductos.Name = "dgvProductos";
+            dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = SystemColors.Control;
@@ -596,6 +605,7 @@
             Codigos.HeaderText = "Código";
             Codigos.MinimumWidth = 6;
             Codigos.Name = "Codigos";
+            Codigos.ReadOnly = true;
             // 
             // Producto
             // 
@@ -603,6 +613,7 @@
             Producto.HeaderText = "Producto";
             Producto.MinimumWidth = 6;
             Producto.Name = "Producto";
+            Producto.ReadOnly = true;
             // 
             // Precio
             // 
@@ -610,6 +621,7 @@
             Precio.HeaderText = "Precio";
             Precio.MinimumWidth = 6;
             Precio.Name = "Precio";
+            Precio.ReadOnly = true;
             // 
             // Stock
             // 
@@ -617,6 +629,7 @@
             Stock.HeaderText = "Stock";
             Stock.MinimumWidth = 6;
             Stock.Name = "Stock";
+            Stock.ReadOnly = true;
             // 
             // panel2
             // 
