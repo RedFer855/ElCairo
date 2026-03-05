@@ -250,7 +250,7 @@ namespace ModernMenuUI
                     // ASIGNACIÓN SEGURA (Desde el objeto original, no del TXT)
                     PrecioCompra = precioCompra,
                     PrecioVenta = precioVenta,
-                    PrecioCosto = precioCosto,
+                    PrecioCosto = precioCompra,
                     CantidadProducto = cantidad,
                     
                     ProductoPath = _nombreArchivo,
