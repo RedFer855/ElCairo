@@ -60,7 +60,7 @@
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Margin = new Padding(4, 4, 4, 4);
+            panBarraControl.Margin = new Padding(4);
             panBarraControl.Name = "panBarraControl";
             panBarraControl.Size = new Size(821, 46);
             panBarraControl.TabIndex = 21;
@@ -91,7 +91,7 @@
             panel2.Controls.Add(label2);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 46);
-            panel2.Margin = new Padding(4, 4, 4, 4);
+            panel2.Margin = new Padding(4);
             panel2.Name = "panel2";
             panel2.Size = new Size(821, 354);
             panel2.TabIndex = 20;
@@ -102,7 +102,7 @@
             flpAjustarBotones.Controls.Add(btnModificarPresentacion);
             flpAjustarBotones.Controls.Add(btnVolver);
             flpAjustarBotones.Location = new Point(12, 294);
-            flpAjustarBotones.Margin = new Padding(4, 4, 4, 4);
+            flpAjustarBotones.Margin = new Padding(4);
             flpAjustarBotones.Name = "flpAjustarBotones";
             flpAjustarBotones.Size = new Size(369, 46);
             flpAjustarBotones.TabIndex = 25;
@@ -116,7 +116,7 @@
             btnGuardarPresentacion.ForeColor = SystemColors.ButtonFace;
             btnGuardarPresentacion.ImageAlign = ContentAlignment.BottomLeft;
             btnGuardarPresentacion.Location = new Point(4, 4);
-            btnGuardarPresentacion.Margin = new Padding(4, 4, 4, 4);
+            btnGuardarPresentacion.Margin = new Padding(4);
             btnGuardarPresentacion.Name = "btnGuardarPresentacion";
             btnGuardarPresentacion.Size = new Size(111, 41);
             btnGuardarPresentacion.TabIndex = 9;
@@ -134,7 +134,7 @@
             btnModificarPresentacion.ForeColor = SystemColors.ButtonFace;
             btnModificarPresentacion.ImageAlign = ContentAlignment.BottomLeft;
             btnModificarPresentacion.Location = new Point(123, 4);
-            btnModificarPresentacion.Margin = new Padding(4, 4, 4, 4);
+            btnModificarPresentacion.Margin = new Padding(4);
             btnModificarPresentacion.Name = "btnModificarPresentacion";
             btnModificarPresentacion.Size = new Size(90, 41);
             btnModificarPresentacion.TabIndex = 19;
@@ -151,7 +151,7 @@
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
             btnVolver.Location = new Point(221, 4);
-            btnVolver.Margin = new Padding(4, 4, 4, 4);
+            btnVolver.Margin = new Padding(4);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(119, 41);
             btnVolver.TabIndex = 0;
@@ -165,10 +165,11 @@
             txtDescripcionPresentacion.BorderStyle = BorderStyle.None;
             txtDescripcionPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtDescripcionPresentacion.Location = new Point(150, 48);
-            txtDescripcionPresentacion.Margin = new Padding(4, 4, 4, 4);
+            txtDescripcionPresentacion.Margin = new Padding(4);
             txtDescripcionPresentacion.Multiline = true;
             txtDescripcionPresentacion.Name = "txtDescripcionPresentacion";
             txtDescripcionPresentacion.PlaceholderText = "(Ingrese una Descripción)";
+            txtDescripcionPresentacion.ScrollBars = ScrollBars.Vertical;
             txtDescripcionPresentacion.Size = new Size(382, 175);
             txtDescripcionPresentacion.TabIndex = 24;
             // 
@@ -176,7 +177,7 @@
             // 
             pbxImagenMarca.Image = (Image)resources.GetObject("pbxImagenMarca.Image");
             pbxImagenMarca.Location = new Point(562, 15);
-            pbxImagenMarca.Margin = new Padding(4, 4, 4, 4);
+            pbxImagenMarca.Margin = new Padding(4);
             pbxImagenMarca.Name = "pbxImagenMarca";
             pbxImagenMarca.Size = new Size(240, 324);
             pbxImagenMarca.SizeMode = PictureBoxSizeMode.Zoom;
@@ -189,7 +190,7 @@
             txtNombrePresentacion.BorderStyle = BorderStyle.None;
             txtNombrePresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNombrePresentacion.Location = new Point(150, 15);
-            txtNombrePresentacion.Margin = new Padding(4, 4, 4, 4);
+            txtNombrePresentacion.Margin = new Padding(4);
             txtNombrePresentacion.Name = "txtNombrePresentacion";
             txtNombrePresentacion.PlaceholderText = "(Ingrese el nombre de la presentacion)";
             txtNombrePresentacion.Size = new Size(382, 24);
@@ -202,9 +203,9 @@
             gbxEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(150, 230);
-            gbxEstado.Margin = new Padding(4, 4, 4, 4);
+            gbxEstado.Margin = new Padding(4);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Padding = new Padding(4, 4, 4, 4);
+            gbxEstado.Padding = new Padding(4);
             gbxEstado.Size = new Size(319, 56);
             gbxEstado.TabIndex = 7;
             gbxEstado.TabStop = false;
@@ -213,7 +214,7 @@
             // 
             rbInactivo.AutoSize = true;
             rbInactivo.Location = new Point(149, 19);
-            rbInactivo.Margin = new Padding(4, 4, 4, 4);
+            rbInactivo.Margin = new Padding(4);
             rbInactivo.Name = "rbInactivo";
             rbInactivo.Size = new Size(100, 28);
             rbInactivo.TabIndex = 8;
@@ -226,7 +227,7 @@
             rbActivo.AutoSize = true;
             rbActivo.Checked = true;
             rbActivo.Location = new Point(8, 19);
-            rbActivo.Margin = new Padding(4, 4, 4, 4);
+            rbActivo.Margin = new Padding(4);
             rbActivo.Name = "rbActivo";
             rbActivo.Size = new Size(84, 28);
             rbActivo.TabIndex = 7;
@@ -277,7 +278,7 @@
             ClientSize = new Size(821, 400);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "frmAgregarEditarPresentacion";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Presentación";

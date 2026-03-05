@@ -224,6 +224,7 @@
             txtDireccion.Location = new Point(121, 204);
             txtDireccion.Multiline = true;
             txtDireccion.Name = "txtDireccion";
+            txtDireccion.ScrollBars = ScrollBars.Vertical;
             txtDireccion.Size = new Size(315, 72);
             txtDireccion.TabIndex = 6;
             // 
