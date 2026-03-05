@@ -355,8 +355,8 @@ namespace CapaServiciosSeguridadValidacion
         {
             if (valor == null)
                 return (true, $"{nombrecampo} no puede estar vacío.");
-            if (valor.Length >= 301 || valor.Length < 10)
-                return (true, $"{nombrecampo} no puede ser menor de 10 o mayor de 300 caracteres.");
+            if (valor.Length >= 201 || valor.Length < 10)
+                return (true, $"{nombrecampo} no puede ser menor de 10 o mayor de 200 caracteres.");
             if (valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener multiples espacios.");
 

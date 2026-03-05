@@ -164,7 +164,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     (p, term) =>
                     {
                         if (int.TryParse(term, out int id))
-                            return p.IdProveedor == id;
+                            return p.IdProveedor == id ;
                         return false;
                     },
 
@@ -481,6 +481,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         }
 
         private void lstSugerencias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
         {
 
         }

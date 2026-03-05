@@ -75,7 +75,7 @@
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Margin = new Padding(4, 4, 4, 4);
+            panBarraControl.Margin = new Padding(4);
             panBarraControl.Name = "panBarraControl";
             panBarraControl.Size = new Size(958, 39);
             panBarraControl.TabIndex = 53;
@@ -85,7 +85,7 @@
             panel3.Controls.Add(lblNombreModulo);
             panel3.Dock = DockStyle.Left;
             panel3.Location = new Point(0, 0);
-            panel3.Margin = new Padding(4, 4, 4, 4);
+            panel3.Margin = new Padding(4);
             panel3.Name = "panel3";
             panel3.Size = new Size(272, 39);
             panel3.TabIndex = 9;
@@ -108,7 +108,7 @@
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
             panel1.Location = new Point(30, 194);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
             panel1.Size = new Size(896, 514);
             panel1.TabIndex = 46;
@@ -119,7 +119,7 @@
             panel10.AutoScroll = true;
             panel10.Controls.Add(dgvBitacora);
             panel10.Location = new Point(24, 25);
-            panel10.Margin = new Padding(4, 4, 4, 4);
+            panel10.Margin = new Padding(4);
             panel10.Name = "panel10";
             panel10.Size = new Size(850, 470);
             panel10.TabIndex = 17;
@@ -161,7 +161,7 @@
             dgvBitacora.EnableHeadersVisualStyles = false;
             dgvBitacora.GridColor = Color.FromArgb(189, 215, 238);
             dgvBitacora.Location = new Point(0, 0);
-            dgvBitacora.Margin = new Padding(4, 4, 4, 4);
+            dgvBitacora.Margin = new Padding(4);
             dgvBitacora.Name = "dgvBitacora";
             dgvBitacora.ReadOnly = true;
             dgvBitacora.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -184,7 +184,7 @@
             // 
             dateTimePicker1.CalendarFont = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker1.Location = new Point(30, 158);
-            dateTimePicker1.Margin = new Padding(4, 4, 4, 4);
+            dateTimePicker1.Margin = new Padding(4);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(249, 27);
             dateTimePicker1.TabIndex = 47;
@@ -193,7 +193,7 @@
             // 
             dateTimePicker2.CalendarFont = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker2.Location = new Point(332, 158);
-            dateTimePicker2.Margin = new Padding(4, 4, 4, 4);
+            dateTimePicker2.Margin = new Padding(4);
             dateTimePicker2.Name = "dateTimePicker2";
             dateTimePicker2.Size = new Size(249, 27);
             dateTimePicker2.TabIndex = 48;
@@ -224,7 +224,7 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Location = new Point(30, 62);
-            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.Margin = new Padding(4);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(896, 54);
             panelBusqueda.TabIndex = 54;
@@ -235,7 +235,7 @@
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(22, 15);
-            txtBuscar.Margin = new Padding(4, 4, 4, 4);
+            txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Usuarios...";
             txtBuscar.Size = new Size(851, 24);
@@ -250,7 +250,7 @@
             tableLayoutPanel1.Controls.Add(btnNuevoRol, 0, 0);
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
             tableLayoutPanel1.Location = new Point(30, 754);
-            tableLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
+            tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
@@ -264,7 +264,7 @@
             btnNuevoRol.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnNuevoRol.ForeColor = SystemColors.ButtonFace;
             btnNuevoRol.Location = new Point(4, 4);
-            btnNuevoRol.Margin = new Padding(4, 4, 4, 4);
+            btnNuevoRol.Margin = new Padding(4);
             btnNuevoRol.Name = "btnNuevoRol";
             btnNuevoRol.Size = new Size(200, 47);
             btnNuevoRol.TabIndex = 17;
@@ -279,7 +279,7 @@
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
             btnSalir.Location = new Point(212, 4);
-            btnSalir.Margin = new Padding(4, 4, 4, 4);
+            btnSalir.Margin = new Padding(4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(93, 47);
             btnSalir.TabIndex = 18;
@@ -299,6 +299,7 @@
             dataGridViewTextBoxColumn1.MinimumWidth = 6;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Visible = false;
             dataGridViewTextBoxColumn1.Width = 65;
             // 
             // Fecha
@@ -408,7 +409,7 @@
             Controls.Add(dateTimePicker1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "frmBitacora";
             Text = "frmBitacora";
             Load += frmBitacora_Load;

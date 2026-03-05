@@ -46,10 +46,6 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnAgregarCategoria = new Button();
             dgvCategorias = new DataGridView();
-            IdMarca = new DataGridViewTextBoxColumn();
-            Categoría = new DataGridViewTextBoxColumn();
-            Descripcion = new DataGridViewTextBoxColumn();
-            EstadoProducto = new DataGridViewCheckBoxColumn();
             panel10 = new Panel();
             panelCarrito = new Panel();
             panel1 = new Panel();
@@ -57,6 +53,10 @@
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             lstSugerencias = new ListBox();
+            IdMarca = new DataGridViewTextBoxColumn();
+            Categoría = new DataGridViewTextBoxColumn();
+            Descripcion = new DataGridViewTextBoxColumn();
+            EstadoProducto = new DataGridViewCheckBoxColumn();
             gbxEstado.SuspendLayout();
             panelBusqueda.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -75,7 +75,7 @@
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(22, 15);
-            txtBuscar.Margin = new Padding(4, 4, 4, 4);
+            txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Categorías...";
             txtBuscar.Size = new Size(390, 24);
@@ -92,7 +92,7 @@
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
             btnbuscar.Location = new Point(420, 15);
-            btnbuscar.Margin = new Padding(4, 4, 4, 4);
+            btnbuscar.Margin = new Padding(4);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(60, 25);
             btnbuscar.TabIndex = 0;
@@ -102,7 +102,7 @@
             // 
             rbMostrarDeshabilitados.AutoSize = true;
             rbMostrarDeshabilitados.Location = new Point(152, 28);
-            rbMostrarDeshabilitados.Margin = new Padding(4, 4, 4, 4);
+            rbMostrarDeshabilitados.Margin = new Padding(4);
             rbMostrarDeshabilitados.Name = "rbMostrarDeshabilitados";
             rbMostrarDeshabilitados.Size = new Size(149, 27);
             rbMostrarDeshabilitados.TabIndex = 30;
@@ -113,7 +113,7 @@
             // 
             rbMostrarTodos.AutoSize = true;
             rbMostrarTodos.Location = new Point(311, 28);
-            rbMostrarTodos.Margin = new Padding(4, 4, 4, 4);
+            rbMostrarTodos.Margin = new Padding(4);
             rbMostrarTodos.Name = "rbMostrarTodos";
             rbMostrarTodos.Size = new Size(150, 27);
             rbMostrarTodos.TabIndex = 29;
@@ -125,7 +125,7 @@
             rbMostrarHabilitados.AutoSize = true;
             rbMostrarHabilitados.Checked = true;
             rbMostrarHabilitados.Location = new Point(19, 26);
-            rbMostrarHabilitados.Margin = new Padding(4, 4, 4, 4);
+            rbMostrarHabilitados.Margin = new Padding(4);
             rbMostrarHabilitados.Name = "rbMostrarHabilitados";
             rbMostrarHabilitados.Size = new Size(124, 27);
             rbMostrarHabilitados.TabIndex = 28;
@@ -142,9 +142,9 @@
             gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(15, 79);
-            gbxEstado.Margin = new Padding(4, 4, 4, 4);
+            gbxEstado.Margin = new Padding(4);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Padding = new Padding(4, 4, 4, 4);
+            gbxEstado.Padding = new Padding(4);
             gbxEstado.Size = new Size(745, 66);
             gbxEstado.TabIndex = 45;
             gbxEstado.TabStop = false;
@@ -156,7 +156,7 @@
             btnModificarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnModificarCategoria.ForeColor = SystemColors.ButtonFace;
             btnModificarCategoria.Location = new Point(196, 4);
-            btnModificarCategoria.Margin = new Padding(4, 4, 4, 4);
+            btnModificarCategoria.Margin = new Padding(4);
             btnModificarCategoria.Name = "btnModificarCategoria";
             btnModificarCategoria.Size = new Size(160, 55);
             btnModificarCategoria.TabIndex = 36;
@@ -170,7 +170,7 @@
             btnSeleccionarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSeleccionarCategoria.ForeColor = SystemColors.ButtonFace;
             btnSeleccionarCategoria.Location = new Point(364, 4);
-            btnSeleccionarCategoria.Margin = new Padding(4, 4, 4, 4);
+            btnSeleccionarCategoria.Margin = new Padding(4);
             btnSeleccionarCategoria.Name = "btnSeleccionarCategoria";
             btnSeleccionarCategoria.Size = new Size(224, 55);
             btnSeleccionarCategoria.TabIndex = 38;
@@ -184,7 +184,7 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = SystemColors.ButtonFace;
             btnSalir.Location = new Point(596, 4);
-            btnSalir.Margin = new Padding(4, 4, 4, 4);
+            btnSalir.Margin = new Padding(4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(114, 55);
             btnSalir.TabIndex = 37;
@@ -199,7 +199,7 @@
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
             panelBusqueda.Location = new Point(15, 18);
-            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.Margin = new Padding(4);
             panelBusqueda.MaximumSize = new Size(875, 54);
             panelBusqueda.MinimumSize = new Size(412, 54);
             panelBusqueda.Name = "panelBusqueda";
@@ -214,7 +214,7 @@
             flowLayoutPanel1.Controls.Add(btnSeleccionarCategoria);
             flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Location = new Point(15, 521);
-            flowLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
+            flowLayoutPanel1.Margin = new Padding(4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(970, 64);
             flowLayoutPanel1.TabIndex = 44;
@@ -225,7 +225,7 @@
             btnAgregarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCategoria.ForeColor = SystemColors.ButtonFace;
             btnAgregarCategoria.Location = new Point(4, 4);
-            btnAgregarCategoria.Margin = new Padding(4, 4, 4, 4);
+            btnAgregarCategoria.Margin = new Padding(4);
             btnAgregarCategoria.Name = "btnAgregarCategoria";
             btnAgregarCategoria.Size = new Size(184, 55);
             btnAgregarCategoria.TabIndex = 35;
@@ -268,7 +268,7 @@
             dgvCategorias.EnableHeadersVisualStyles = false;
             dgvCategorias.GridColor = Color.FromArgb(189, 215, 238);
             dgvCategorias.Location = new Point(0, 0);
-            dgvCategorias.Margin = new Padding(4, 4, 4, 4);
+            dgvCategorias.Margin = new Padding(4);
             dgvCategorias.Name = "dgvCategorias";
             dgvCategorias.ReadOnly = true;
             dgvCategorias.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -289,6 +289,95 @@
             dgvCategorias.CellDoubleClick += dgvCategorias_CellDoubleClick;
             dgvCategorias.SelectionChanged += dgvCategorias_SelectionChanged;
             // 
+            // panel10
+            // 
+            panel10.AutoScroll = true;
+            panel10.Controls.Add(dgvCategorias);
+            panel10.Dock = DockStyle.Fill;
+            panel10.Location = new Point(0, 0);
+            panel10.Margin = new Padding(4);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(712, 328);
+            panel10.TabIndex = 17;
+            // 
+            // panelCarrito
+            // 
+            panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
+            panelCarrito.Controls.Add(panel10);
+            panelCarrito.Location = new Point(19, 18);
+            panelCarrito.Margin = new Padding(4);
+            panelCarrito.Name = "panelCarrito";
+            panelCarrito.Size = new Size(712, 328);
+            panelCarrito.TabIndex = 13;
+            // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(panelCarrito);
+            panel1.Location = new Point(15, 152);
+            panel1.Margin = new Padding(4);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(745, 361);
+            panel1.TabIndex = 43;
+            // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(552, 15);
+            pnlLimpiarFiltros.Margin = new Padding(4);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(208, 54);
+            pnlLimpiarFiltros.TabIndex = 57;
+            pnlLimpiarFiltros.Visible = false;
+            // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(4, 6);
+            btnLimpiarFiltros.Margin = new Padding(4);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(146, 40);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(151, 10);
+            pbxClean.Margin = new Padding(4);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(56, 30);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 23;
+            lstSugerencias.Location = new Point(38, 59);
+            lstSugerencias.Margin = new Padding(4);
+            lstSugerencias.MinimumSize = new Size(303, 26);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(389, 27);
+            lstSugerencias.TabIndex = 58;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            // 
             // IdMarca
             // 
             IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -297,6 +386,7 @@
             IdMarca.MinimumWidth = 6;
             IdMarca.Name = "IdMarca";
             IdMarca.ReadOnly = true;
+            IdMarca.Visible = false;
             IdMarca.Width = 106;
             // 
             // Categoría
@@ -330,95 +420,6 @@
             EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
             EstadoProducto.Width = 105;
             // 
-            // panel10
-            // 
-            panel10.AutoScroll = true;
-            panel10.Controls.Add(dgvCategorias);
-            panel10.Dock = DockStyle.Fill;
-            panel10.Location = new Point(0, 0);
-            panel10.Margin = new Padding(4, 4, 4, 4);
-            panel10.Name = "panel10";
-            panel10.Size = new Size(712, 328);
-            panel10.TabIndex = 17;
-            // 
-            // panelCarrito
-            // 
-            panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
-            panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(19, 18);
-            panelCarrito.Margin = new Padding(4, 4, 4, 4);
-            panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(712, 328);
-            panelCarrito.TabIndex = 13;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(15, 152);
-            panel1.Margin = new Padding(4, 4, 4, 4);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(745, 361);
-            panel1.TabIndex = 43;
-            // 
-            // pnlLimpiarFiltros
-            // 
-            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
-            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
-            pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(552, 15);
-            pnlLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
-            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
-            pnlLimpiarFiltros.Size = new Size(208, 54);
-            pnlLimpiarFiltros.TabIndex = 57;
-            pnlLimpiarFiltros.Visible = false;
-            // 
-            // btnLimpiarFiltros
-            // 
-            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
-            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLimpiarFiltros.ForeColor = Color.White;
-            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
-            btnLimpiarFiltros.Location = new Point(4, 6);
-            btnLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
-            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
-            btnLimpiarFiltros.Size = new Size(146, 40);
-            btnLimpiarFiltros.TabIndex = 34;
-            btnLimpiarFiltros.Text = "Limpiar Filtros";
-            btnLimpiarFiltros.UseVisualStyleBackColor = false;
-            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
-            // 
-            // pbxClean
-            // 
-            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
-            pbxClean.Location = new Point(151, 10);
-            pbxClean.Margin = new Padding(4, 4, 4, 4);
-            pbxClean.Name = "pbxClean";
-            pbxClean.Size = new Size(56, 30);
-            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
-            pbxClean.TabIndex = 35;
-            pbxClean.TabStop = false;
-            // 
-            // lstSugerencias
-            // 
-            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstSugerencias.ForeColor = Color.DimGray;
-            lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 23;
-            lstSugerencias.Location = new Point(38, 59);
-            lstSugerencias.Margin = new Padding(4, 4, 4, 4);
-            lstSugerencias.MinimumSize = new Size(303, 26);
-            lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(389, 27);
-            lstSugerencias.TabIndex = 58;
-            lstSugerencias.Visible = false;
-            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
-            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
-            // 
             // frmCategorias
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
@@ -432,7 +433,7 @@
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new Size(770, 588);
@@ -473,13 +474,13 @@
         private Panel panel10;
         private Panel panelCarrito;
         private Panel panel1;
-        private DataGridViewTextBoxColumn IdMarca;
-        private DataGridViewTextBoxColumn Categoría;
-        private DataGridViewTextBoxColumn Descripcion;
-        private DataGridViewCheckBoxColumn EstadoProducto;
         private Panel pnlLimpiarFiltros;
         private Button btnLimpiarFiltros;
         private PictureBox pbxClean;
         private ListBox lstSugerencias;
+        private DataGridViewTextBoxColumn IdMarca;
+        private DataGridViewTextBoxColumn Categoría;
+        private DataGridViewTextBoxColumn Descripcion;
+        private DataGridViewCheckBoxColumn EstadoProducto;
     }
 }

@@ -35,11 +35,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCierreDiario));
             panel1 = new Panel();
             dgvCierre = new DataGridView();
-            IdMarca = new DataGridViewTextBoxColumn();
-            ProductoCierre = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            Precios = new DataGridViewTextBoxColumn();
-            Precio = new DataGridViewTextBoxColumn();
             dtpFecha = new DateTimePicker();
             cmbEmpleado = new ComboBox();
             panel3 = new Panel();
@@ -54,6 +49,11 @@
             btnBuscarEmpleado = new Button();
             label5 = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            IdMarca = new DataGridViewTextBoxColumn();
+            ProductoCierre = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            Precios = new DataGridViewTextBoxColumn();
+            Precio = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCierre).BeginInit();
             panel3.SuspendLayout();
@@ -129,55 +129,6 @@
             dgvCierre.Size = new Size(1056, 607);
             dgvCierre.TabIndex = 3;
             dgvCierre.TabStop = false;
-            // 
-            // IdMarca
-            // 
-            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            IdMarca.DataPropertyName = "IdVenta";
-            IdMarca.HeaderText = "Código";
-            IdMarca.MinimumWidth = 6;
-            IdMarca.Name = "IdMarca";
-            IdMarca.ReadOnly = true;
-            IdMarca.Width = 106;
-            // 
-            // ProductoCierre
-            // 
-            ProductoCierre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ProductoCierre.DataPropertyName = "Producto";
-            ProductoCierre.HeaderText = "Producto";
-            ProductoCierre.MinimumWidth = 6;
-            ProductoCierre.Name = "ProductoCierre";
-            ProductoCierre.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewTextBoxColumn4.DataPropertyName = "Cantidad";
-            dataGridViewTextBoxColumn4.FillWeight = 120F;
-            dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
-            dataGridViewTextBoxColumn4.MinimumWidth = 100;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            dataGridViewTextBoxColumn4.Width = 125;
-            // 
-            // Precios
-            // 
-            Precios.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Precios.DataPropertyName = "Precio";
-            Precios.HeaderText = "Precio";
-            Precios.MinimumWidth = 6;
-            Precios.Name = "Precios";
-            Precios.ReadOnly = true;
-            // 
-            // Precio
-            // 
-            Precio.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Precio.DataPropertyName = "Subtotal";
-            Precio.HeaderText = "Subtotal";
-            Precio.MinimumWidth = 6;
-            Precio.Name = "Precio";
-            Precio.ReadOnly = true;
-            Precio.Width = 120;
             // 
             // dtpFecha
             // 
@@ -370,6 +321,55 @@
             flowLayoutPanel1.Size = new Size(413, 84);
             flowLayoutPanel1.TabIndex = 30;
             // 
+            // IdMarca
+            // 
+            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            IdMarca.DataPropertyName = "IdVenta";
+            IdMarca.HeaderText = "Código";
+            IdMarca.MinimumWidth = 6;
+            IdMarca.Name = "IdMarca";
+            IdMarca.ReadOnly = true;
+            IdMarca.Width = 106;
+            // 
+            // ProductoCierre
+            // 
+            ProductoCierre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ProductoCierre.DataPropertyName = "Producto";
+            ProductoCierre.HeaderText = "Producto";
+            ProductoCierre.MinimumWidth = 6;
+            ProductoCierre.Name = "ProductoCierre";
+            ProductoCierre.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewTextBoxColumn4.DataPropertyName = "Cantidad";
+            dataGridViewTextBoxColumn4.FillWeight = 120F;
+            dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
+            dataGridViewTextBoxColumn4.MinimumWidth = 100;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            dataGridViewTextBoxColumn4.Width = 125;
+            // 
+            // Precios
+            // 
+            Precios.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Precios.DataPropertyName = "Precio";
+            Precios.HeaderText = "Precio";
+            Precios.MinimumWidth = 6;
+            Precios.Name = "Precios";
+            Precios.ReadOnly = true;
+            // 
+            // Precio
+            // 
+            Precio.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Precio.DataPropertyName = "Subtotal";
+            Precio.HeaderText = "Subtotal";
+            Precio.MinimumWidth = 6;
+            Precio.Name = "Precio";
+            Precio.ReadOnly = true;
+            Precio.Width = 120;
+            // 
             // frmCierreDiario
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -408,11 +408,6 @@
         private Button btnImprimirCierre;
         private Button btnSalir;
         private DataGridView dgvCierre;
-        private DataGridViewTextBoxColumn IdMarca;
-        private DataGridViewTextBoxColumn ProductoCierre;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn Precios;
-        private DataGridViewTextBoxColumn Precio;
         private GroupBox gbxEstado;
         private TableLayoutPanel tableLayoutPanel2;
         private Label label4;
@@ -420,5 +415,10 @@
         private Button btnBuscarEmpleado;
         private Label label5;
         private FlowLayoutPanel flowLayoutPanel1;
+        private DataGridViewTextBoxColumn IdMarca;
+        private DataGridViewTextBoxColumn ProductoCierre;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn Precios;
+        private DataGridViewTextBoxColumn Precio;
     }
 }
