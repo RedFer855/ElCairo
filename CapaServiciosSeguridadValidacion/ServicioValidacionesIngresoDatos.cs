@@ -360,6 +360,11 @@ namespace CapaServiciosSeguridadValidacion
             if (valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener multiples espacios.");
 
+            string patron = @"^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,.\-#_]+$";
+
+            if (!Regex.IsMatch(valor, patron))
+                return (true, $"{nombrecampo} contiene caracteres no permitidos.");
+
             return (false, "");
         }
 
