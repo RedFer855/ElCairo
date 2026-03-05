@@ -45,6 +45,9 @@ namespace ModernMenuUI
 
         /// <summary>Filtro para limitar los productos por Categoría.</summary>
         private int? _filtroCategoriaId = null;
+
+        private Supabase.Realtime.RealtimeChannel? _productosSubscription;
+
         #endregion
 
         #region 2. Constructor y Load

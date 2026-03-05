@@ -28,7 +28,6 @@ namespace CapaServiciosSeguridadValidacion
                 p => ValidarSeleccion(p.IdCategoria, "una categoría"),
                 p => ValidarSeleccion(p.IdMarca, "una marca"),
                 p => ValidarSeleccion(p.IdPresentacion, "una presentación"),
-                p => ValidarEnteroValido(p.CantidadProducto, "CantidadCierre"),
                 p => ValidarCampoVacio(p.ContenidoProducto, "el contenido del producto"),
                 //p => ValidarDecimalValido(p.PrecioVenta, "Precio costo"),
                 //p => ValidarSeleccion(p.CantidadProducto,"La cantidad")

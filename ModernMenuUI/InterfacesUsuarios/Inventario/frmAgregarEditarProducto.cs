@@ -110,6 +110,7 @@ namespace ModernMenuUI
 
         private async void frmAgregarEditarProducto_Load(object sender, EventArgs e)
         {
+            rbActivo.Checked = true;
             await CargarImagenProductoAsync();
         }
         private async Task CargarImagenProductoAsync()
@@ -200,6 +201,7 @@ namespace ModernMenuUI
                 decimal precioVenta = 0;
                 decimal precioCosto = 0;
                 int cantidad = 0;
+                int contenido = int.Parse(txtContenido.Text);
 
                 // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos
                 if (_productoSeleccionado != null)
@@ -225,6 +227,7 @@ namespace ModernMenuUI
                     PrecioVenta = precioVenta,
                     PrecioCosto = precioCosto,
                     CantidadProducto = cantidad,
+                    
                     ProductoPath = _nombreArchivo,
                 };
 
@@ -241,7 +244,13 @@ namespace ModernMenuUI
                     MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
+
+                if (contenido<=0)
+                {
+                    MessageBox.Show("Contenido no puede ser menor o igual a 0.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
 
                 // 3. ASIGNAR ESTADO
                 _productoInsertar.EstadoProducto = rbHabilitado.Checked;

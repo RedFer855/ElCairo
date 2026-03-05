@@ -29,11 +29,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private async Task cargarImagenes()
         {
+            
             var repo = new RepositorioImgenSupabase();
 
             GridColumnas.Controls.Clear();
+            //GridColumnas.SuspendLayout(); //mejora rendimiento al agregar múltiples controles
             //listando las imagenes (los nombres del archivo )
-            var nombresImagenes = await repo.ListarImagenes();
+            var nombresImagenes = await repo.ListarImagenes(limite: 10);
 
             //cargando las imagenes en las tarjetas
             foreach (var nombre in nombresImagenes)
@@ -42,7 +44,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 GridColumnas.Controls.Add(tarjeta);
 
                 //descargando la imagen para ponerla en la tarjeta
-                var imagen = await repo.descargarImagenes(nombre);
+                var imagen = await repo.LeerImagenes(nombre);
                 tarjeta.AsignarImagen(imagen, nombre);
 
                 //cuando la imagen se selecciona, se activa el evento, se envia el nombre y la url
@@ -52,10 +54,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     ImagenSeleccionada?.Invoke(this, url);
                     this.Close();
                 };
+                tarjeta.ImagenSeleccionada_ += (s, img) =>
+                {
+                    ImagenSeleccionada_?.Invoke(this, img);
+                };
+                GridColumnas.Controls.Add(tarjeta);
 
                 //await Task.Delay(75); 
 
             }
+            GridColumnas.ResumeLayout(); //*/
+
             /*
             var repo = new RepositorioImgenSupabase();
             var imagenes = await repo.ObtenerTodasLasImagenes();

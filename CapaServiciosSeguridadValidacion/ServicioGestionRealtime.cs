@@ -73,10 +73,15 @@ namespace CapaServiciosSeguridadValidacion
             if (_subscription != null)
             {
                 try
-                {
-                    await Task.Run(() => _subscription.Unsubscribe());
+                {   
+                    _subscription.Unsubscribe();
+                    System.Diagnostics.Debug.WriteLine($"Desuscripción iniciada para {typeof(T).Name}");
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error al desuscribir: {ex.Message}");
+                }
+
                 _subscription = null;
             }
         }

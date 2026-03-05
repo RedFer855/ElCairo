@@ -40,6 +40,7 @@
             btnAgregar = new Button();
             panel2 = new Panel();
             panel1 = new Panel();
+            btnImagenes = new Button();
             Imagen_Producto = new PictureBox();
             txtCantidad = new NumericUpDown();
             txtPrecioCompra = new NumericUpDown();
@@ -91,7 +92,6 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
-            btnImagenes = new Button();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
@@ -283,6 +283,20 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1011, 516);
             panel1.TabIndex = 41;
+            // 
+            // btnImagenes
+            // 
+            btnImagenes.BackColor = Color.FromArgb(149, 195, 172);
+            btnImagenes.Cursor = Cursors.Hand;
+            btnImagenes.Font = new Font("Itim", 11.9999981F);
+            btnImagenes.ForeColor = Color.White;
+            btnImagenes.Location = new Point(668, 307);
+            btnImagenes.Name = "btnImagenes";
+            btnImagenes.Size = new Size(302, 70);
+            btnImagenes.TabIndex = 63;
+            btnImagenes.Text = "Consultar Imagenes ya guardadas";
+            btnImagenes.UseVisualStyleBackColor = false;
+            btnImagenes.Click += btnImagenes_Click;
             // 
             // Imagen_Producto
             // 
@@ -900,20 +914,6 @@
             textBox1.ReadOnly = true;
             textBox1.Size = new Size(197, 24);
             textBox1.TabIndex = 22;
-            // 
-            // btnImagenes
-            // 
-            btnImagenes.BackColor = Color.FromArgb(149, 195, 172);
-            btnImagenes.Cursor = Cursors.Hand;
-            btnImagenes.Font = new Font("Itim", 11.9999981F);
-            btnImagenes.ForeColor = Color.White;
-            btnImagenes.Location = new Point(668, 307);
-            btnImagenes.Name = "btnImagenes";
-            btnImagenes.Size = new Size(302, 70);
-            btnImagenes.TabIndex = 63;
-            btnImagenes.Text = "Consultar Imagenes ya guardadas";
-            btnImagenes.UseVisualStyleBackColor = false;
-            btnImagenes.Click += btnImagenes_Click;
             // 
             // frmAgregarEditarProducto
             // 

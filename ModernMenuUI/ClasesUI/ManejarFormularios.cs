@@ -40,6 +40,7 @@ namespace ModernMenuUI.ClasesUI
         {
             if (formularioActivo != null)
                 formularioActivo.Close();
+    
 
             formularioActivo = formularioHijo;
             formularioHijo.TopLevel = false;

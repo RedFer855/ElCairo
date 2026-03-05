@@ -56,14 +56,23 @@ namespace CapaDeDatos.Repositorios
             }
         }
         
-        public async Task<List<string>> ListarImagenes()
+        public async Task<List<string>> ListarImagenes(int limite = 0, int offset = 0)
         {
             try
             {
                 var cliente = await GetClient();
                 var archivos = await cliente.Storage
                                             .From("imagenes_productos")
-                                            .List();
+                                            .List(path: "", new Supabase.Storage.SearchOptions 
+                                            { 
+                                                Limit = limite,
+                                                Offset = offset,
+                                                SortBy = new Supabase.Storage.SortBy
+                                                {
+                                                    Column = "name",
+                                                    Order = "desc"
+                                                }
+                                            });
                 return archivos.Select(a => a.Name).ToList();
             }
             catch (Exception ex)
@@ -71,7 +80,7 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudieron listar las imágenes desde Supabase.", ex);
             }
         }
-
+        /*
         public async Task<Image> descargarImagenes(string nombreArchivo)
         {
             try
@@ -84,7 +93,7 @@ namespace CapaDeDatos.Repositorios
                 using var ms = new MemoryStream(bytes);
                 using var imgTemp = Image.FromStream(ms);
 
-                // IMPORTANTE: clonar la imagen
+                // clonando la imagen
                 return new Bitmap(imgTemp);
             }
             catch (Exception ex)
@@ -92,6 +101,7 @@ namespace CapaDeDatos.Repositorios
                 throw new Exception("No se pudo descargar la imagen desde Supabase.", ex);
             }
         }
+        */
         
         public async Task<List<(string nombre, Image imagen)>> ObtenerTodasLasImagenes()
         {
