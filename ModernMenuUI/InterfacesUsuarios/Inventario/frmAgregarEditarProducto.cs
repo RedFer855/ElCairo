@@ -203,6 +203,7 @@ namespace ModernMenuUI
                 int cantidad = 0;
                 int contenido = int.Parse(txtContenido.Text);
 
+                
                 // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos
                 if (_productoSeleccionado != null)
                 {
@@ -212,6 +213,30 @@ namespace ModernMenuUI
                     cantidad = _productoSeleccionado.CantidadProducto;
                 }
                 // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
+
+                decimal.TryParse(txtPrecioCompra.Text, out precioCompra);
+                decimal.TryParse(txtPrecioVenta.Text, out precioVenta);
+
+                /*
+                
+                if (!string.IsNullOrWhiteSpace(txtPrecioCompra.Text))
+                {
+                    if (decimal.TryParse(txtPrecioCompra.Text, out decimal nuevoPrecioCompra))
+                    {
+                        precioCompra = nuevoPrecioCompra;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(txtPrecioVenta.Text))
+                {
+                    if (decimal.TryParse(txtPrecioVenta.Text, out decimal nuevoPrecioVenta))
+                    {
+                        precioVenta = nuevoPrecioVenta;
+                    }
+                }
+
+                 */
+
                 ProductoInsertar _productoInsertar = new ProductoInsertar
                 {
                     NombreProducto = txtNombreProducto.Text.Trim(),
