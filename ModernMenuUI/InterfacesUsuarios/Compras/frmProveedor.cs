@@ -159,15 +159,31 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     lstSugerencias,
                     dgvProveedores,
                     _listaMaestraProveedores,
-                    (p, term) => p.IdProveedor.ToString() == term,
-                    (p, term) => p.NombreProveedor != null && p.NombreProveedor.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
+
+                    // ✅ CORREGIDO - Búsqueda por ID (coincidencia exacta solo si es número)
+                    (p, term) =>
+                    {
+                        if (int.TryParse(term, out int id))
+                            return p.IdProveedor == id;
+                        return false;
+                    },
+
+                    // ✅ CORREGIDO - Búsqueda por nombre (coincidencia parcial)
+                    (p, term) =>
+                        p.NombreProveedor != null &&
+                        p.NombreProveedor.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
+
+                    // Texto a mostrar
                     (p) => p.NombreProveedor,
+
+                    // Callback cuando cambia búsqueda
                     (busquedaActiva) =>
                     {
                         pnlLimpiarFiltros.Visible = busquedaActiva;
-
                         if (!busquedaActiva) RefrescarGrid();
                     },
+
+                    // Validador personalizado
                     (txt) => false
                 );
 
@@ -175,7 +191,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error inicializando datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error inicializando datos: {ex.Message}", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -459,6 +476,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         #endregion
 
         private void btnbuscar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstSugerencias_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
