@@ -64,7 +64,7 @@
             // 
             button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button4.Location = new Point(656, 116);
-            button4.Margin = new Padding(4, 4, 4, 4);
+            button4.Margin = new Padding(4);
             button4.Name = "button4";
             button4.Size = new Size(94, 29);
             button4.TabIndex = 5;
@@ -80,7 +80,7 @@
             tableLayoutPanel1.Controls.Add(btnSalir, 1, 0);
             tableLayoutPanel1.Controls.Add(btnEditarUsuarios, 0, 0);
             tableLayoutPanel1.Location = new Point(22, 702);
-            tableLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
+            tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
@@ -95,7 +95,7 @@
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
             btnSalir.Location = new Point(275, 4);
-            btnSalir.Margin = new Padding(4, 4, 4, 4);
+            btnSalir.Margin = new Padding(4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(156, 54);
             btnSalir.TabIndex = 18;
@@ -110,7 +110,7 @@
             btnEditarUsuarios.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditarUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
             btnEditarUsuarios.Location = new Point(4, 4);
-            btnEditarUsuarios.Margin = new Padding(4, 4, 4, 4);
+            btnEditarUsuarios.Margin = new Padding(4);
             btnEditarUsuarios.Name = "btnEditarUsuarios";
             btnEditarUsuarios.Size = new Size(263, 54);
             btnEditarUsuarios.TabIndex = 20;
@@ -127,9 +127,9 @@
             groupBox1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = SystemColors.ControlDarkDark;
             groupBox1.Location = new Point(22, 78);
-            groupBox1.Margin = new Padding(4, 4, 4, 4);
+            groupBox1.Margin = new Padding(4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(4, 4, 4, 4);
+            groupBox1.Padding = new Padding(4);
             groupBox1.Size = new Size(898, 66);
             groupBox1.TabIndex = 42;
             groupBox1.TabStop = false;
@@ -139,7 +139,7 @@
             // 
             rdbDeshabilitados.AutoSize = true;
             rdbDeshabilitados.Location = new Point(426, 26);
-            rdbDeshabilitados.Margin = new Padding(4, 4, 4, 4);
+            rdbDeshabilitados.Margin = new Padding(4);
             rdbDeshabilitados.Name = "rdbDeshabilitados";
             rdbDeshabilitados.Size = new Size(220, 27);
             rdbDeshabilitados.TabIndex = 30;
@@ -151,7 +151,7 @@
             rdbHabilitados.AutoSize = true;
             rdbHabilitados.Checked = true;
             rdbHabilitados.Location = new Point(198, 26);
-            rdbHabilitados.Margin = new Padding(4, 4, 4, 4);
+            rdbHabilitados.Margin = new Padding(4);
             rdbHabilitados.Name = "rdbHabilitados";
             rdbHabilitados.Size = new Size(194, 27);
             rdbHabilitados.TabIndex = 29;
@@ -163,7 +163,7 @@
             // 
             rdbTodos.AutoSize = true;
             rdbTodos.Location = new Point(22, 26);
-            rdbTodos.Margin = new Padding(4, 4, 4, 4);
+            rdbTodos.Margin = new Padding(4);
             rdbTodos.Name = "rdbTodos";
             rdbTodos.Size = new Size(150, 27);
             rdbTodos.TabIndex = 28;
@@ -177,7 +177,7 @@
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
             panelBusqueda.Location = new Point(22, 15);
-            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.Margin = new Padding(4);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(898, 54);
             panelBusqueda.TabIndex = 41;
@@ -188,7 +188,7 @@
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(22, 15);
-            txtBuscar.Margin = new Padding(4, 4, 4, 4);
+            txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Usuarios...";
             txtBuscar.Size = new Size(782, 24);
@@ -203,7 +203,7 @@
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
             btnbuscar.Location = new Point(820, 15);
-            btnbuscar.Margin = new Padding(4, 4, 4, 4);
+            btnbuscar.Margin = new Padding(4);
             btnbuscar.Name = "btnbuscar";
             btnbuscar.Size = new Size(60, 25);
             btnbuscar.TabIndex = 0;
@@ -215,7 +215,7 @@
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
             panel1.Location = new Point(22, 155);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
             panel1.Size = new Size(898, 526);
             panel1.TabIndex = 40;
@@ -226,7 +226,7 @@
             panel10.AutoScroll = true;
             panel10.Controls.Add(dgvUsuario);
             panel10.Location = new Point(20, 22);
-            panel10.Margin = new Padding(4, 4, 4, 4);
+            panel10.Margin = new Padding(4);
             panel10.Name = "panel10";
             panel10.Size = new Size(860, 481);
             panel10.TabIndex = 17;
@@ -267,8 +267,9 @@
             dgvUsuario.EnableHeadersVisualStyles = false;
             dgvUsuario.GridColor = Color.FromArgb(189, 215, 238);
             dgvUsuario.Location = new Point(0, 0);
-            dgvUsuario.Margin = new Padding(4, 4, 4, 4);
+            dgvUsuario.Margin = new Padding(4);
             dgvUsuario.Name = "dgvUsuario";
+            dgvUsuario.ReadOnly = true;
             dgvUsuario.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
@@ -294,6 +295,7 @@
             dataGridViewTextBoxColumn1.HeaderText = "Id";
             dataGridViewTextBoxColumn1.MinimumWidth = 6;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
             dataGridViewTextBoxColumn1.Resizable = DataGridViewTriState.True;
             // 
             // dataGridViewTextBoxColumn2
@@ -303,6 +305,7 @@
             dataGridViewTextBoxColumn2.HeaderText = "Usuario";
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // Categoria
             // 
@@ -311,6 +314,7 @@
             Categoria.HeaderText = "Rol";
             Categoria.MinimumWidth = 6;
             Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
             // 
             // EstadoUsuario
             // 
@@ -319,6 +323,7 @@
             EstadoUsuario.HeaderText = "Estado";
             EstadoUsuario.MinimumWidth = 6;
             EstadoUsuario.Name = "EstadoUsuario";
+            EstadoUsuario.ReadOnly = true;
             EstadoUsuario.Resizable = DataGridViewTriState.True;
             EstadoUsuario.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
@@ -333,7 +338,7 @@
             Controls.Add(panel1);
             Controls.Add(button4);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "frmUsuario";
             Text = "frmUsuario";
             tableLayoutPanel1.ResumeLayout(false);
