@@ -39,11 +39,15 @@ namespace ModernMenuUI.ClasesUI
         public void AbrirFormulario(Form formularioHijo)
         {
             if (formularioActivo != null)
+            {
                 formularioActivo.Close();
+                panelContenedor.Controls.Clear();
+            }
 
             formularioActivo = formularioHijo;
             formularioHijo.TopLevel = false;
             formularioHijo.Dock = DockStyle.Fill;
+            panelContenedor.Controls.Clear();
             panelContenedor.Controls.Add(formularioHijo);
             panelContenedor.Tag = formularioHijo;
             formularioHijo.BringToFront();

@@ -1,4 +1,5 @@
-﻿using CapaDeNegocio.Entidades;
+﻿// ModernMenuUI/ServiciosUI/FacturaReportService.cs
+using CapaDeNegocio.Entidades;
 using FastReport;
 using FastReport.Data;
 using FastReport.Export.PdfSimple;
@@ -6,69 +7,25 @@ using System;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace ModernMenuUI.ServiciosUI
 {
     public class FacturaReportService
     {
-        public void MostrarFactura()
+        /// <summary>
+        /// Genera y abre un PDF de la factura. Lanza excepciones en caso de error.
+        /// </summary>
+        public async Task<string> MostrarFacturaAsync(Factura factura)
         {
-            try
+            if (factura == null) throw new ArgumentNullException(nameof(factura));
+            if (factura.Items == null || factura.Items.Count == 0) throw new Exception("La factura no contiene productos.");
+
+            string rutaPdf = Path.Combine(Path.GetTempPath(), $"Factura_{factura.NumeroFactura}_{DateTime.Now:yyyyMMddHHmmss}.pdf");
+
+            await Task.Run(() =>
             {
-                Factura factura = new Factura
-                {
-                    NombreEmisor = "EL CAIRO S.A",
-                    RTNEmisor = "01010101010101",
-                    DireccionEmisor = "Tegucigalpa, Honduras",
-                    TelefonoEmisor = "504-9999-9999",
-                    CorreoEmisor = "info@elcairo.com",
-                    CAI = "A1B2-C3D4-E5F6",
-                    RangoAutorizado = "000-001-01-00000001 al 00000099",
-                    FechaLimiteEmision = new DateTime(2026, 12, 31),
-                    NumeroFactura = "000-001-01-00000025",
-                    FechaEmision = DateTime.Now,
-                    NombreCliente = "Supermercado La Colonia",
-                    RTNCliente = "08011999123456",
-                    DireccionCliente = "Comayagüela, M.D.C."
-                };
-
-                // EXENTO (0%) – con descuento
-                factura.Items.Add(new ItemFactura
-                {
-                    Cantidad = 5,
-                    Descripcion = "Tomate fresco (libra)",
-                    PrecioUnitario = 20m,     // 5 × 20 = 100
-                    Descuentos = 10m,         // descuento directo
-                    TasaImpuesto = 0m,
-                    EsExonerado = false
-                });
-
-                // GRAVADO 15% – con descuento
-                factura.Items.Add(new ItemFactura
-                {
-                    Cantidad = 2,
-                    Descripcion = "Perfume Árabe",
-                    PrecioUnitario = 1500m,   // 2 × 1500 = 3000
-                    Descuentos = 300m,        // descuento
-                    TasaImpuesto = 0.15m,
-                    EsExonerado = false
-                });
-
-                // GRAVADO 18% – con descuento
-                factura.Items.Add(new ItemFactura
-                {
-                    Cantidad = 1,
-                    Descripcion = "Licor importado",
-                    PrecioUnitario = 2200m,   // 1 × 2200 = 2200
-                    Descuentos = 200m,        // descuento
-                    TasaImpuesto = 0.18m,
-                    EsExonerado = false
-                });
-
-
-                Report rpt = new Report();
-
+                using var rpt = new Report();
                 string rutaReporte = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
                     "..", "..", "..",
@@ -77,77 +34,85 @@ namespace ModernMenuUI.ServiciosUI
 
                 rpt.Load(Path.GetFullPath(rutaReporte));
 
-                DataTable dtItems = new DataTable("Items");
-                dtItems.Columns.Add("Cantidad", typeof(int));
-                dtItems.Columns.Add("Descripcion", typeof(string));
-                dtItems.Columns.Add("PrecioUnitario", typeof(decimal));
-                dtItems.Columns.Add("TasaImpuesto", typeof(decimal));
-                dtItems.Columns.Add("Subtotal", typeof(decimal));
-                dtItems.Columns.Add("ISV", typeof(decimal));
-                dtItems.Columns.Add("TotalLinea", typeof(decimal));
-
-                foreach (var item in factura.Items)
-                {
-                    dtItems.Rows.Add(
-                        item.Cantidad,
-                        item.Descripcion,
-                        item.PrecioUnitario,
-                        item.TasaImpuesto,
-                        item.Subtotal,
-                        item.ISV,
-                        item.TotalLinea
-                    );
-                }
-
+                DataTable dtItems = CrearTablaItems(factura);
                 rpt.RegisterData(dtItems, "Items");
 
                 var itemsSource = rpt.GetDataSource("Items") as TableDataSource;
-                if (itemsSource == null)
-                    throw new Exception("TableDataSource 'Items' no encontrado en el .frx");
+                if (itemsSource == null) throw new Exception("TableDataSource 'Items' no encontrado en el reporte.");
 
                 itemsSource.Enabled = true;
-
-                rpt.SetParameterValue("NombreEmisor", factura.NombreEmisor);
-                rpt.SetParameterValue("RTNEmisor", factura.RTNEmisor);
-                rpt.SetParameterValue("DireccionEmisor", factura.DireccionEmisor);
-                rpt.SetParameterValue("TelefonoEmisor", factura.TelefonoEmisor);
-                rpt.SetParameterValue("CorreoEmisor", factura.CorreoEmisor);
-                rpt.SetParameterValue("CAI", factura.CAI);
-                rpt.SetParameterValue("RangoAutorizado", factura.RangoAutorizado);
-                rpt.SetParameterValue("FechaLimiteEmision", factura.FechaLimiteEmision);
-                rpt.SetParameterValue("NumeroFactura", factura.NumeroFactura);
-                rpt.SetParameterValue("FechaEmision", factura.FechaEmision);
-                rpt.SetParameterValue("NombreCliente", factura.NombreCliente);
-                rpt.SetParameterValue("RTNCliente", factura.RTNCliente);
-                rpt.SetParameterValue("DireccionCliente", factura.DireccionCliente);
-                rpt.SetParameterValue("ImporteExento", factura.ImporteExento);
-                rpt.SetParameterValue("ImporteGravado15", factura.ImporteGravado15);
-                rpt.SetParameterValue("ImporteGravado18", factura.ImporteGravado18);
-                rpt.SetParameterValue("ISV15", factura.ISV15);
-                rpt.SetParameterValue("ISV18", factura.ISV18);
-                rpt.SetParameterValue("Total", factura.Total);
+                CargarParametros(rpt, factura);
 
                 rpt.Prepare();
 
-                string rutaPdf = Path.Combine(Path.GetTempPath(), "Factura_Simulada.pdf");
-
-                PDFSimpleExport pdfExport = new PDFSimpleExport
-                {
-                    ShowProgress = false
-                };
-
+                using var pdfExport = new PDFSimpleExport { ShowProgress = false };
                 rpt.Export(pdfExport, rutaPdf);
+            });
 
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = rutaPdf,
-                    UseShellExecute = true
-                });
-            }
-            catch (Exception ex)
+            // Abrir el PDF en el SO
+            Process.Start(new ProcessStartInfo
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FileName = rutaPdf,
+                UseShellExecute = true
+            });
+
+            return rutaPdf;
+        }
+
+        private DataTable CrearTablaItems(Factura factura)
+        {
+            DataTable dt = new DataTable("Items");
+            dt.Columns.Add("Cantidad", typeof(int));
+            dt.Columns.Add("Descripcion", typeof(string));
+            dt.Columns.Add("PrecioUnitario", typeof(decimal));
+            dt.Columns.Add("TasaImpuesto", typeof(decimal));
+            dt.Columns.Add("Subtotal", typeof(decimal));
+            dt.Columns.Add("ISV", typeof(decimal));
+            dt.Columns.Add("TotalLinea", typeof(decimal));
+
+            foreach (var item in factura.Items)
+            {
+                dt.Rows.Add(
+                    item.Cantidad,
+                    item.Descripcion,
+                    item.PrecioUnitario,
+                    item.TasaImpuesto,
+                    item.Subtotal,
+                    item.ISV,
+                    item.TotalLinea
+                );
             }
+
+            return dt;
+        }
+
+        private void CargarParametros(Report rpt, Factura f)
+        {
+            rpt.SetParameterValue("NombreEmisor", f.NombreEmisor);
+            rpt.SetParameterValue("RTNEmisor", f.RTNEmisor);
+            rpt.SetParameterValue("DireccionEmisor", f.DireccionEmisor);
+            rpt.SetParameterValue("TelefonoEmisor", f.TelefonoEmisor);
+            rpt.SetParameterValue("CorreoEmisor", f.CorreoEmisor);
+            rpt.SetParameterValue("CAI", f.CAI);
+            rpt.SetParameterValue("RangoAutorizado", f.RangoAutorizado);
+            rpt.SetParameterValue("FechaLimiteEmision", f.FechaLimiteEmision);
+            rpt.SetParameterValue("NumeroFactura", f.NumeroFactura);
+            rpt.SetParameterValue("FechaEmision", f.FechaEmision);
+            rpt.SetParameterValue("NombreCliente", f.NombreCliente);
+            rpt.SetParameterValue("RTNCliente", f.RTNCliente);
+            rpt.SetParameterValue("DireccionCliente", f.DireccionCliente);
+
+            rpt.SetParameterValue("ImporteExento", f.ImporteExento);
+            rpt.SetParameterValue("ImporteGravado15", f.ImporteGravado15);
+            rpt.SetParameterValue("ImporteGravado18", f.ImporteGravado18);
+            rpt.SetParameterValue("ISV15", f.ISV15);
+            rpt.SetParameterValue("ISV18", f.ISV18);
+            rpt.SetParameterValue("Total", f.Total);
+        }
+
+        internal void MostrarFacturaAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

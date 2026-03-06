@@ -202,7 +202,7 @@ namespace ModernMenuUI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
-                return; 
+                return;
             }
 
             Image Eliminar = Properties.Resources.eliminar__1_;
@@ -256,7 +256,7 @@ namespace ModernMenuUI
             if (stock <= 0)
             {
                 MessageBox.Show("Este producto está agotado (Stock 0).", "Sin Stock", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; 
+                return;
             }
 
             if (cantidadFinal > stock)
@@ -270,9 +270,9 @@ namespace ModernMenuUI
 
         private void LimpiarCarrito()
         {
-            dgvCarrito.Rows.Clear();      
-            ActualizarTotales();          
-            ActualizarImagenCarrito();   
+            dgvCarrito.Rows.Clear();
+            ActualizarTotales();
+            ActualizarImagenCarrito();
             txtCodigo.Text = "";
             txtProducto.Text = "";
             txtPrecio.Text = "";
@@ -322,7 +322,7 @@ namespace ModernMenuUI
 
             var resultados = _productosCache
                 .Where(p => p.NombreProducto.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
-                .Take(10) 
+                .Take(10)
                 .ToList();
 
             if (resultados.Count == 0)
@@ -346,9 +346,9 @@ namespace ModernMenuUI
         {
             if (dgvProductos.CurrentRow != null && dgvProductos.CurrentRow.Selected)
             {
-                txtProducto.Text = dgvProductos.CurrentRow.Cells[1].Value.ToString(); 
-                txtPrecio.Text = dgvProductos.CurrentRow.Cells[2].Value.ToString();   
-                txtCodigo.Text = dgvProductos.CurrentRow.Cells[0].Value.ToString();   
+                txtProducto.Text = dgvProductos.CurrentRow.Cells[1].Value.ToString();
+                txtPrecio.Text = dgvProductos.CurrentRow.Cells[2].Value.ToString();
+                txtCodigo.Text = dgvProductos.CurrentRow.Cells[0].Value.ToString();
             }
             else
             {
@@ -382,9 +382,9 @@ namespace ModernMenuUI
 
         private void dgvCarrito_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == 5) 
+            if (e.RowIndex >= 0 && e.ColumnIndex == 5)
             {
-                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Gray; 
+                dgvCarrito[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Gray;
             }
         }
 
@@ -571,6 +571,8 @@ namespace ModernMenuUI
         }
         private async void Gestion_de_Ventas_Load(object sender, EventArgs e)
         {
+            
+            
             try
             {
                 _todosLosClientes = await _clienteRepo.ObtenerTodosLosClientes();
@@ -637,7 +639,7 @@ namespace ModernMenuUI
                 return;
             }
             FacturaReportService servicio = new FacturaReportService();
-            servicio.MostrarFactura();
+            servicio.MostrarFacturaAsync();
             LimpiarCarrito();
         }
 
@@ -761,14 +763,19 @@ namespace ModernMenuUI
 
                 if (seleccionado != null)
                 {
-                    _bloquearSugerencias = true;             
+                    _bloquearSugerencias = true;
                     txtCliente.Text = seleccionado.NombreCliente;
                     _clienteSeleccionado = seleccionado;
 
-                    lstClientes.Visible = false;            
-                    _bloquearSugerencias = false;            
+                    lstClientes.Visible = false;
+                    _bloquearSugerencias = false;
                 }
             }
+        }
+
+        private void panelCarrito_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -139,7 +139,7 @@
             pnlEditarProducto.Location = new Point(0, 0);
             pnlEditarProducto.Margin = new Padding(0);
             pnlEditarProducto.Name = "pnlEditarProducto";
-            pnlEditarProducto.Size = new Size(840, 497);
+            pnlEditarProducto.Size = new Size(840, 10);
             pnlEditarProducto.TabIndex = 41;
             // 
             // button1
@@ -915,7 +915,7 @@
             pnlVisualizacion.Controls.Add(flowLayoutPanel2);
             pnlVisualizacion.Controls.Add(lblPrecioVenta);
             pnlVisualizacion.Controls.Add(pbxImagenProductoVer);
-            pnlVisualizacion.Location = new Point(0, 497);
+            pnlVisualizacion.Location = new Point(0, 10);
             pnlVisualizacion.Margin = new Padding(0);
             pnlVisualizacion.Name = "pnlVisualizacion";
             pnlVisualizacion.Size = new Size(840, 460);

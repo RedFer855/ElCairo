@@ -92,9 +92,9 @@
             btnPresentaciones = new Button();
             btnCategorias = new Button();
             btnMarcas = new Button();
-            btnGestionInventario = new Button();
             btnBodegas = new Button();
             btnInventarioBodega = new Button();
+            btnGestionInventario = new Button();
             btnInventarios = new controlBotonesMenuPrincipal();
             panDiv = new Panel();
             panelMneuLateral = new Panel();
@@ -418,6 +418,7 @@
             btnReportesCreados.Text = "Reportes Creados";
             btnReportesCreados.TextAlign = ContentAlignment.MiddleLeft;
             btnReportesCreados.UseVisualStyleBackColor = false;
+            btnReportesCreados.Visible = false;
             btnReportesCreados.Click += btnReportesCreados_Click;
             // 
             // btnCrearReporte
@@ -831,9 +832,9 @@
             panelInventario.Controls.Add(btnPresentaciones);
             panelInventario.Controls.Add(btnCategorias);
             panelInventario.Controls.Add(btnMarcas);
-            panelInventario.Controls.Add(btnGestionInventario);
             panelInventario.Controls.Add(btnBodegas);
             panelInventario.Controls.Add(btnInventarioBodega);
+            panelInventario.Controls.Add(btnGestionInventario);
             panelInventario.Dock = DockStyle.Top;
             panelInventario.Location = new Point(0, 147);
             panelInventario.Name = "panelInventario";
@@ -916,24 +917,6 @@
             btnMarcas.Visible = false;
             btnMarcas.Click += btnMarcas_Click;
             // 
-            // btnGestionInventario
-            // 
-            btnGestionInventario.BackColor = Color.FromArgb(202, 223, 255);
-            btnGestionInventario.Dock = DockStyle.Top;
-            btnGestionInventario.FlatAppearance.BorderColor = Color.White;
-            btnGestionInventario.FlatStyle = FlatStyle.Flat;
-            btnGestionInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnGestionInventario.ForeColor = Color.FromArgb(87, 99, 110);
-            btnGestionInventario.Location = new Point(0, 80);
-            btnGestionInventario.Name = "btnGestionInventario";
-            btnGestionInventario.Padding = new Padding(20, 0, 0, 0);
-            btnGestionInventario.Size = new Size(283, 40);
-            btnGestionInventario.TabIndex = 0;
-            btnGestionInventario.Text = "Productos";
-            btnGestionInventario.TextAlign = ContentAlignment.MiddleLeft;
-            btnGestionInventario.UseVisualStyleBackColor = false;
-            btnGestionInventario.Click += btnGestionInventario_Click;
-            // 
             // btnBodegas
             // 
             btnBodegas.BackColor = Color.FromArgb(202, 223, 255);
@@ -942,7 +925,7 @@
             btnBodegas.FlatStyle = FlatStyle.Flat;
             btnBodegas.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnBodegas.ForeColor = Color.FromArgb(87, 99, 110);
-            btnBodegas.Location = new Point(0, 40);
+            btnBodegas.Location = new Point(0, 80);
             btnBodegas.Name = "btnBodegas";
             btnBodegas.Padding = new Padding(20, 0, 0, 0);
             btnBodegas.Size = new Size(283, 40);
@@ -960,7 +943,7 @@
             btnInventarioBodega.FlatStyle = FlatStyle.Flat;
             btnInventarioBodega.Font = new Font("Itim", 11.25F);
             btnInventarioBodega.ForeColor = Color.FromArgb(87, 99, 110);
-            btnInventarioBodega.Location = new Point(0, 0);
+            btnInventarioBodega.Location = new Point(0, 40);
             btnInventarioBodega.Name = "btnInventarioBodega";
             btnInventarioBodega.Padding = new Padding(20, 0, 0, 0);
             btnInventarioBodega.Size = new Size(283, 40);
@@ -969,6 +952,24 @@
             btnInventarioBodega.TextAlign = ContentAlignment.MiddleLeft;
             btnInventarioBodega.UseVisualStyleBackColor = false;
             btnInventarioBodega.Click += btnInventarioBodega_Click;
+            // 
+            // btnGestionInventario
+            // 
+            btnGestionInventario.BackColor = Color.FromArgb(202, 223, 255);
+            btnGestionInventario.Dock = DockStyle.Top;
+            btnGestionInventario.FlatAppearance.BorderColor = Color.White;
+            btnGestionInventario.FlatStyle = FlatStyle.Flat;
+            btnGestionInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGestionInventario.ForeColor = Color.FromArgb(87, 99, 110);
+            btnGestionInventario.Location = new Point(0, 0);
+            btnGestionInventario.Name = "btnGestionInventario";
+            btnGestionInventario.Padding = new Padding(20, 0, 0, 0);
+            btnGestionInventario.Size = new Size(283, 40);
+            btnGestionInventario.TabIndex = 0;
+            btnGestionInventario.Text = "Productos";
+            btnGestionInventario.TextAlign = ContentAlignment.MiddleLeft;
+            btnGestionInventario.UseVisualStyleBackColor = false;
+            btnGestionInventario.Click += btnGestionInventario_Click;
             // 
             // btnInventarios
             // 

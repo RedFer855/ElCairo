@@ -77,7 +77,13 @@
             Precio = new DataGridViewTextBoxColumn();
             Stock = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
-            pictureBox1 = new PictureBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            controlPanelRolesDinamicos1 = new controlPanelRolesDinamicos();
+            controlPanelRolesDinamicos2 = new controlPanelRolesDinamicos();
+            controlPanelRolesDinamicos3 = new controlPanelRolesDinamicos();
+            controlPanelRolesDinamicos4 = new controlPanelRolesDinamicos();
+            controlPanelRolesDinamicos5 = new controlPanelRolesDinamicos();
+            controlPanelRolesDinamicos6 = new controlPanelRolesDinamicos();
             nudCantidad = new NumericUpDown();
             label9 = new Label();
             label8 = new Label();
@@ -88,6 +94,7 @@
             txtProducto = new TextBox();
             txtPrecio = new TextBox();
             btnAgregar = new Button();
+            pictureBox1 = new PictureBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
             panel9 = new Panel();
@@ -106,8 +113,9 @@
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -151,7 +159,7 @@
             txtCliente.Location = new Point(10, 14);
             txtCliente.Name = "txtCliente";
             txtCliente.PlaceholderText = "Buscar Cliente...";
-            txtCliente.Size = new Size(283, 20);
+            txtCliente.Size = new Size(340, 20);
             txtCliente.TabIndex = 13;
             txtCliente.TextChanged += txtCliente_TextChanged;
             txtCliente.KeyDown += txtCliente_KeyDown;
@@ -165,7 +173,7 @@
             panel5.Location = new Point(0, 0);
             panel5.Margin = new Padding(0, 0, 5, 0);
             panel5.Name = "panel5";
-            panel5.Size = new Size(355, 51);
+            panel5.Size = new Size(412, 51);
             panel5.TabIndex = 14;
             // 
             // btnBuscarCliente
@@ -176,7 +184,7 @@
             btnBuscarCliente.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarCliente.FlatAppearance.BorderSize = 0;
             btnBuscarCliente.FlatStyle = FlatStyle.Flat;
-            btnBuscarCliente.Location = new Point(299, 14);
+            btnBuscarCliente.Location = new Point(356, 14);
             btnBuscarCliente.Name = "btnBuscarCliente";
             btnBuscarCliente.Size = new Size(48, 20);
             btnBuscarCliente.TabIndex = 17;
@@ -308,11 +316,12 @@
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
             panelCarrito.ForeColor = SystemColors.ControlText;
-            panelCarrito.Location = new Point(360, 57);
+            panelCarrito.Location = new Point(417, 57);
             panelCarrito.Margin = new Padding(0, 5, 0, 0);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(626, 529);
+            panelCarrito.Size = new Size(569, 529);
             panelCarrito.TabIndex = 12;
+            panelCarrito.Paint += panelCarrito_Paint;
             // 
             // panel10
             // 
@@ -321,7 +330,7 @@
             panel10.Controls.Add(dgvCarrito);
             panel10.Location = new Point(12, 13);
             panel10.Name = "panel10";
-            panel10.Size = new Size(601, 500);
+            panel10.Size = new Size(544, 500);
             panel10.TabIndex = 17;
             // 
             // pbxCarritoVacio
@@ -329,9 +338,9 @@
             pbxCarritoVacio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbxCarritoVacio.BackColor = Color.Transparent;
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
-            pbxCarritoVacio.Location = new Point(253, 187);
+            pbxCarritoVacio.Location = new Point(162, 187);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(108, 164);
+            pbxCarritoVacio.Size = new Size(142, 164);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
@@ -384,7 +393,7 @@
             dgvCarrito.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvCarrito.RowTemplate.Height = 50;
             dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCarrito.Size = new Size(601, 500);
+            dgvCarrito.Size = new Size(544, 500);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.TabStop = false;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
@@ -472,10 +481,10 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnBuscarProducto);
-            panelBusqueda.Location = new Point(360, 0);
+            panelBusqueda.Location = new Point(417, 0);
             panelBusqueda.Margin = new Padding(0);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(625, 51);
+            panelBusqueda.Size = new Size(569, 51);
             panelBusqueda.TabIndex = 9;
             // 
             // txtBuscar
@@ -486,7 +495,7 @@
             txtBuscar.Location = new Point(12, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(535, 20);
+            txtBuscar.Size = new Size(479, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
@@ -498,7 +507,7 @@
             btnBuscarProducto.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarProducto.FlatAppearance.BorderSize = 0;
             btnBuscarProducto.FlatStyle = FlatStyle.Flat;
-            btnBuscarProducto.Location = new Point(560, 14);
+            btnBuscarProducto.Location = new Point(504, 14);
             btnBuscarProducto.Name = "btnBuscarProducto";
             btnBuscarProducto.Size = new Size(48, 20);
             btnBuscarProducto.TabIndex = 0;
@@ -511,10 +520,10 @@
             lstSugerencias.ForeColor = Color.DimGray;
             lstSugerencias.FormattingEnabled = true;
             lstSugerencias.ItemHeight = 18;
-            lstSugerencias.Location = new Point(384, 47);
+            lstSugerencias.Location = new Point(441, 47);
             lstSugerencias.MaximumSize = new Size(536, 22);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(535, 22);
+            lstSugerencias.Size = new Size(479, 22);
             lstSugerencias.TabIndex = 19;
             lstSugerencias.Visible = false;
             lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
@@ -525,9 +534,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel7);
-            panel1.Location = new Point(176, 214);
+            panel1.Location = new Point(11, 200);
             panel1.Name = "panel1";
-            panel1.Size = new Size(106, 32);
+            panel1.Size = new Size(383, 326);
             panel1.TabIndex = 10;
             // 
             // panel7
@@ -538,7 +547,7 @@
             panel7.Controls.Add(dgvProductos);
             panel7.Location = new Point(21, 9);
             panel7.Name = "panel7";
-            panel7.Size = new Size(68, 20);
+            panel7.Size = new Size(345, 314);
             panel7.TabIndex = 11;
             // 
             // dgvProductos
@@ -592,7 +601,7 @@
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 30;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(68, 20);
+            dgvProductos.Size = new Size(345, 314);
             dgvProductos.TabIndex = 0;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -630,7 +639,7 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
-            panel2.Controls.Add(pictureBox1);
+            panel2.Controls.Add(flowLayoutPanel1);
             panel2.Controls.Add(nudCantidad);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(label8);
@@ -642,25 +651,69 @@
             panel2.Controls.Add(txtProducto);
             panel2.Controls.Add(txtPrecio);
             panel2.Controls.Add(btnAgregar);
+            panel2.Controls.Add(pictureBox1);
             panel2.Dock = DockStyle.Fill;
             panel2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panel2.Location = new Point(0, 57);
             panel2.Margin = new Padding(0, 5, 5, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(355, 529);
+            panel2.Size = new Size(412, 529);
             panel2.TabIndex = 11;
             // 
-            // pictureBox1
+            // flowLayoutPanel1
             // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Image = Properties.Resources.no_fotos__1_;
-            pictureBox1.Location = new Point(11, 258);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(331, 255);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 22;
-            pictureBox1.TabStop = false;
+            flowLayoutPanel1.Controls.Add(controlPanelRolesDinamicos1);
+            flowLayoutPanel1.Controls.Add(controlPanelRolesDinamicos2);
+            flowLayoutPanel1.Controls.Add(controlPanelRolesDinamicos3);
+            flowLayoutPanel1.Controls.Add(controlPanelRolesDinamicos4);
+            flowLayoutPanel1.Controls.Add(controlPanelRolesDinamicos5);
+            flowLayoutPanel1.Controls.Add(controlPanelRolesDinamicos6);
+            flowLayoutPanel1.Location = new Point(0, -3);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(412, 532);
+            flowLayoutPanel1.TabIndex = 1;
+            // 
+            // controlPanelRolesDinamicos1
+            // 
+            controlPanelRolesDinamicos1.Location = new Point(3, 3);
+            controlPanelRolesDinamicos1.Name = "controlPanelRolesDinamicos1";
+            controlPanelRolesDinamicos1.Size = new Size(180, 160);
+            controlPanelRolesDinamicos1.TabIndex = 0;
+            // 
+            // controlPanelRolesDinamicos2
+            // 
+            controlPanelRolesDinamicos2.Location = new Point(189, 3);
+            controlPanelRolesDinamicos2.Name = "controlPanelRolesDinamicos2";
+            controlPanelRolesDinamicos2.Size = new Size(180, 160);
+            controlPanelRolesDinamicos2.TabIndex = 1;
+            // 
+            // controlPanelRolesDinamicos3
+            // 
+            controlPanelRolesDinamicos3.Location = new Point(3, 169);
+            controlPanelRolesDinamicos3.Name = "controlPanelRolesDinamicos3";
+            controlPanelRolesDinamicos3.Size = new Size(180, 160);
+            controlPanelRolesDinamicos3.TabIndex = 2;
+            // 
+            // controlPanelRolesDinamicos4
+            // 
+            controlPanelRolesDinamicos4.Location = new Point(189, 169);
+            controlPanelRolesDinamicos4.Name = "controlPanelRolesDinamicos4";
+            controlPanelRolesDinamicos4.Size = new Size(180, 160);
+            controlPanelRolesDinamicos4.TabIndex = 3;
+            // 
+            // controlPanelRolesDinamicos5
+            // 
+            controlPanelRolesDinamicos5.Location = new Point(3, 335);
+            controlPanelRolesDinamicos5.Name = "controlPanelRolesDinamicos5";
+            controlPanelRolesDinamicos5.Size = new Size(180, 160);
+            controlPanelRolesDinamicos5.TabIndex = 4;
+            // 
+            // controlPanelRolesDinamicos6
+            // 
+            controlPanelRolesDinamicos6.Location = new Point(189, 335);
+            controlPanelRolesDinamicos6.Name = "controlPanelRolesDinamicos6";
+            controlPanelRolesDinamicos6.Size = new Size(180, 160);
+            controlPanelRolesDinamicos6.TabIndex = 5;
             // 
             // nudCantidad
             // 
@@ -670,7 +723,7 @@
             nudCantidad.Location = new Point(104, 167);
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
-            nudCantidad.Size = new Size(233, 27);
+            nudCantidad.Size = new Size(290, 27);
             nudCantidad.TabIndex = 21;
             nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -682,7 +735,7 @@
             label9.ForeColor = Color.WhiteSmoke;
             label9.Location = new Point(11, 13);
             label9.Name = "label9";
-            label9.Size = new Size(326, 32);
+            label9.Size = new Size(383, 32);
             label9.TabIndex = 20;
             label9.Text = "Datos del Producto:";
             label9.TextAlign = ContentAlignment.MiddleLeft;
@@ -707,7 +760,7 @@
             txtCodigo.Location = new Point(106, 65);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
-            txtCodigo.Size = new Size(231, 21);
+            txtCodigo.Size = new Size(288, 21);
             txtCodigo.TabIndex = 18;
             // 
             // label3
@@ -754,7 +807,7 @@
             txtProducto.Name = "txtProducto";
             txtProducto.ReadOnly = true;
             txtProducto.ScrollBars = ScrollBars.Vertical;
-            txtProducto.Size = new Size(231, 42);
+            txtProducto.Size = new Size(288, 42);
             txtProducto.TabIndex = 13;
             // 
             // txtPrecio
@@ -766,7 +819,7 @@
             txtPrecio.Location = new Point(106, 140);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.ReadOnly = true;
-            txtPrecio.Size = new Size(231, 21);
+            txtPrecio.Size = new Size(288, 21);
             txtPrecio.TabIndex = 12;
             // 
             // btnAgregar
@@ -778,7 +831,7 @@
             btnAgregar.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregar.ForeColor = SystemColors.ButtonFace;
             btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(11, 200);
+            btnAgregar.Location = new Point(242, 438);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Padding = new Padding(30, 0, 0, 0);
             btnAgregar.Size = new Size(121, 43);
@@ -786,6 +839,18 @@
             btnAgregar.Text = "Añadir";
             btnAgregar.UseVisualStyleBackColor = false;
             btnAgregar.Click += btnAgregar_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox1.Image = Properties.Resources.no_fotos__1_;
+            pictureBox1.Location = new Point(74, 379);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(126, 150);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 22;
+            pictureBox1.TabStop = false;
             // 
             // tableLayoutPanel1
             // 
@@ -836,7 +901,7 @@
             lstClientes.ItemHeight = 18;
             lstClientes.Location = new Point(23, 47);
             lstClientes.Name = "lstClientes";
-            lstClientes.Size = new Size(282, 22);
+            lstClientes.Size = new Size(339, 22);
             lstClientes.TabIndex = 18;
             lstClientes.Visible = false;
             lstClientes.MouseClick += lstClientes_MouseClick;
@@ -846,7 +911,7 @@
             // 
             tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 360F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 417F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.Controls.Add(panel2, 0, 1);
             tableLayoutPanel2.Controls.Add(panelCarrito, 1, 1);
@@ -900,8 +965,9 @@
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
@@ -964,5 +1030,12 @@
         private DataGridViewImageColumn Restar;
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private controlPanelRolesDinamicos controlPanelRolesDinamicos1;
+        private controlPanelRolesDinamicos controlPanelRolesDinamicos2;
+        private controlPanelRolesDinamicos controlPanelRolesDinamicos3;
+        private controlPanelRolesDinamicos controlPanelRolesDinamicos4;
+        private controlPanelRolesDinamicos controlPanelRolesDinamicos5;
+        private controlPanelRolesDinamicos controlPanelRolesDinamicos6;
     }
 }

@@ -88,13 +88,10 @@ namespace ModernMenuUI
             Cursor = Cursors.WaitCursor;
 
 
-
             await CargarDatos();
             await CargarBodegas();
 
             ConectarEventosUI();
-
-   
 
             await _rtInventario.SuscribirAsync();
             await _rtBodega.SuscribirAsync();
@@ -369,6 +366,11 @@ namespace ModernMenuUI
                 await CargarBodegas();
                 await RecargarDatos();
             }
+        }
+
+        private void frmInventarioBodega_FormClosing_1(object sender, FormClosingEventArgs e)
+        {
+
         }
     }
 }

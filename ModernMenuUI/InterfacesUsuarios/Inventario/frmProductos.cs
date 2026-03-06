@@ -93,6 +93,7 @@ namespace ModernMenuUI
         private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
         {
             await _gestorRealtime.DesuscribirAsync();
+            _gestorRealtime.Dispose();
         }
 
         #endregion

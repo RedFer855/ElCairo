@@ -37,6 +37,7 @@ namespace CapaServiciosSeguridadValidacion
                 await DesuscribirAsync();
             }
         }
+        
 
         public async Task SuscribirAsync()
         {
@@ -75,10 +76,16 @@ namespace CapaServiciosSeguridadValidacion
                 try
                 {
                     await Task.Run(() => _subscription.Unsubscribe());
+                    System.Diagnostics.Debug.WriteLine($"Desuscripción para {typeof(T).Name}");
                 }
                 catch { }
                 _subscription = null;
             }
+        }
+
+        public void Dispose()
+        {
+            ServicioVerificacionConexion1.Instancia.EstadoDeRedCambiado -= AlCambiarRed;
         }
     }
 }
