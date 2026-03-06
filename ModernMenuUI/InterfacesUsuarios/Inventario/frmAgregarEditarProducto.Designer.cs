@@ -956,6 +956,7 @@
             // tckGanaciaPorcentual
             // 
             tckGanaciaPorcentual.Location = new Point(243, 424);
+            tckGanaciaPorcentual.Maximum = 1000;
             tckGanaciaPorcentual.Name = "tckGanaciaPorcentual";
             tckGanaciaPorcentual.Size = new Size(275, 45);
             tckGanaciaPorcentual.TabIndex = 66;
@@ -976,7 +977,7 @@
             label23.AutoSize = true;
             label23.Font = new Font("Itim", 11.9999981F);
             label23.ForeColor = Color.FromArgb(87, 99, 110);
-            label23.Location = new Point(89, 462);
+            label23.Location = new Point(110, 463);
             label23.Name = "label23";
             label23.Size = new Size(83, 19);
             label23.TabIndex = 68;
