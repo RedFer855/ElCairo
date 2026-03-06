@@ -102,7 +102,7 @@ namespace ModernMenuUI
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
 
         }
-        
+
         protected override async void OnShown(EventArgs e)
         {
 
@@ -126,19 +126,19 @@ namespace ModernMenuUI
 
 
             try
-                {
-                    var imagen = await repositorioImg.LeerImagenes(_productoSeleccionado.ImagenProducto);
-                    Imagen_Producto.Image = imagen;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(
-                        "No se pudo cargar la imagen del producto.\n" + ex.Message,
-                        "Imagen",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                }
+            {
+                var imagen = await repositorioImg.LeerImagenes(_productoSeleccionado.ImagenProducto);
+                Imagen_Producto.Image = imagen;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo cargar la imagen del producto.\n" + ex.Message,
+                    "Imagen",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
         }
 
         private void ProductosCartas_ImagenSeleccionada(object sender, Image imagen)
@@ -203,7 +203,7 @@ namespace ModernMenuUI
                 int cantidad = 0;
                 int contenido = int.Parse(txtContenido.Text);
 
-                
+
                 // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos
                 if (_productoSeleccionado != null)
                 {
@@ -252,7 +252,7 @@ namespace ModernMenuUI
                     PrecioVenta = precioVenta,
                     PrecioCosto = precioCompra,
                     CantidadProducto = cantidad,
-                    
+
                     ProductoPath = _nombreArchivo,
                 };
 
@@ -270,7 +270,7 @@ namespace ModernMenuUI
                     return;
                 }
 
-                if (contenido<=0)
+                if (contenido <= 0)
                 {
                     MessageBox.Show("Contenido no puede ser menor o igual a 0.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -477,6 +477,11 @@ namespace ModernMenuUI
             productosCartas.ImagenSeleccionada += ProductoCartas_urlImagen;
             productosCartas.ImagenSeleccionada_ += ProductosCartas_ImagenSeleccionada;
             productosCartas.ShowDialog();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -92,6 +92,11 @@
             label4 = new Label();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
+            nudPrecioCosto = new NumericUpDown();
+            label20 = new Label();
+            tckGanaciaPorcentual = new TrackBar();
+            label21 = new Label();
+            label23 = new Label();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel2.SuspendLayout();
@@ -103,6 +108,8 @@
             flowLayoutPanel1.SuspendLayout();
             groupBox1.SuspendLayout();
             gbxEstado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudPrecioCosto).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tckGanaciaPorcentual).BeginInit();
             SuspendLayout();
             // 
             // panBarraControl
@@ -136,7 +143,7 @@
             label8.ForeColor = Color.FromArgb(87, 99, 110);
             label8.Location = new Point(82, 20);
             label8.Name = "label8";
-            label8.Size = new Size(74, 24);
+            label8.Size = new Size(60, 19);
             label8.TabIndex = 19;
             label8.Text = "Código:";
             // 
@@ -149,7 +156,7 @@
             txtCodigo.Location = new Point(153, 18);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
-            txtCodigo.Size = new Size(275, 24);
+            txtCodigo.Size = new Size(275, 20);
             txtCodigo.TabIndex = 18;
             // 
             // label2
@@ -159,7 +166,7 @@
             label2.ForeColor = Color.FromArgb(87, 99, 110);
             label2.Location = new Point(27, 91);
             label2.Name = "label2";
-            label2.Size = new Size(149, 24);
+            label2.Size = new Size(120, 19);
             label2.TabIndex = 16;
             label2.Text = "Precio de Venta:";
             // 
@@ -170,7 +177,7 @@
             label1.ForeColor = Color.FromArgb(87, 99, 110);
             label1.Location = new Point(71, 58);
             label1.Name = "label1";
-            label1.Size = new Size(93, 24);
+            label1.Size = new Size(76, 19);
             label1.TabIndex = 15;
             label1.Text = "Producto:";
             // 
@@ -183,7 +190,7 @@
             txtProducto.Location = new Point(153, 56);
             txtProducto.Name = "txtProducto";
             txtProducto.ReadOnly = true;
-            txtProducto.Size = new Size(275, 24);
+            txtProducto.Size = new Size(275, 20);
             txtProducto.TabIndex = 13;
             // 
             // txtPrecio
@@ -195,7 +202,7 @@
             txtPrecio.Location = new Point(153, 91);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.ReadOnly = true;
-            txtPrecio.Size = new Size(275, 24);
+            txtPrecio.Size = new Size(275, 20);
             txtPrecio.TabIndex = 12;
             // 
             // btnAgregar
@@ -243,12 +250,17 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 37);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1011, 516);
+            panel2.Size = new Size(1011, 585);
             panel2.TabIndex = 12;
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(label23);
+            panel1.Controls.Add(label21);
+            panel1.Controls.Add(tckGanaciaPorcentual);
+            panel1.Controls.Add(nudPrecioCosto);
+            panel1.Controls.Add(label20);
             panel1.Controls.Add(btnImagenes);
             panel1.Controls.Add(Imagen_Producto);
             panel1.Controls.Add(txtCantidad);
@@ -281,8 +293,9 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1011, 516);
+            panel1.Size = new Size(1011, 585);
             panel1.TabIndex = 41;
+            panel1.Paint += panel1_Paint;
             // 
             // btnImagenes
             // 
@@ -316,10 +329,10 @@
             // 
             txtCantidad.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCantidad.ForeColor = Color.DimGray;
-            txtCantidad.Location = new Point(243, 347);
+            txtCantidad.Location = new Point(243, 259);
             txtCantidad.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtCantidad.Name = "txtCantidad";
-            txtCantidad.Size = new Size(275, 30);
+            txtCantidad.Size = new Size(275, 25);
             txtCantidad.TabIndex = 61;
             txtCantidad.Visible = false;
             // 
@@ -328,10 +341,10 @@
             txtPrecioCompra.DecimalPlaces = 2;
             txtPrecioCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioCompra.ForeColor = Color.DimGray;
-            txtPrecioCompra.Location = new Point(243, 147);
+            txtPrecioCompra.Location = new Point(243, 349);
             txtPrecioCompra.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioCompra.Name = "txtPrecioCompra";
-            txtPrecioCompra.Size = new Size(275, 30);
+            txtPrecioCompra.Size = new Size(275, 25);
             txtPrecioCompra.TabIndex = 60;
             // 
             // txtPrecioVenta
@@ -339,10 +352,10 @@
             txtPrecioVenta.DecimalPlaces = 2;
             txtPrecioVenta.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrecioVenta.ForeColor = Color.DimGray;
-            txtPrecioVenta.Location = new Point(243, 107);
+            txtPrecioVenta.Location = new Point(243, 309);
             txtPrecioVenta.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             txtPrecioVenta.Name = "txtPrecioVenta";
-            txtPrecioVenta.Size = new Size(275, 30);
+            txtPrecioVenta.Size = new Size(275, 25);
             txtPrecioVenta.TabIndex = 59;
             // 
             // lblNota
@@ -361,10 +374,10 @@
             txtContenido.BackColor = Color.White;
             txtContenido.BorderStyle = BorderStyle.None;
             txtContenido.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContenido.Location = new Point(243, 307);
+            txtContenido.Location = new Point(243, 219);
             txtContenido.Name = "txtContenido";
             txtContenido.PlaceholderText = "(Cantidad)";
-            txtContenido.Size = new Size(108, 24);
+            txtContenido.Size = new Size(108, 20);
             txtContenido.TabIndex = 58;
             // 
             // cmbUnidadContenido
@@ -373,9 +386,9 @@
             cmbUnidadContenido.ForeColor = Color.DimGray;
             cmbUnidadContenido.FormattingEnabled = true;
             cmbUnidadContenido.Items.AddRange(new object[] { "(Unidades)", "mg", "kg", "g", "lb", "oz", "ml", "cl", "l", "fl(oz)" });
-            cmbUnidadContenido.Location = new Point(441, 305);
+            cmbUnidadContenido.Location = new Point(441, 217);
             cmbUnidadContenido.Name = "cmbUnidadContenido";
-            cmbUnidadContenido.Size = new Size(77, 31);
+            cmbUnidadContenido.Size = new Size(77, 26);
             cmbUnidadContenido.TabIndex = 57;
             cmbUnidadContenido.SelectedIndexChanged += cmbUnidadContenido_SelectedIndexChanged;
             // 
@@ -384,9 +397,9 @@
             label22.AutoSize = true;
             label22.Font = new Font("Itim", 11.9999981F);
             label22.ForeColor = Color.FromArgb(87, 99, 110);
-            label22.Location = new Point(357, 307);
+            label22.Location = new Point(357, 219);
             label22.Name = "label22";
-            label22.Size = new Size(95, 24);
+            label22.Size = new Size(78, 19);
             label22.TabIndex = 56;
             label22.Text = "Unidades:";
             // 
@@ -395,7 +408,7 @@
             flowLayoutPanel1.Controls.Add(btnGuardarProducto);
             flowLayoutPanel1.Controls.Add(btnModificarProducto);
             flowLayoutPanel1.Controls.Add(btnVolver);
-            flowLayoutPanel1.Location = new Point(89, 422);
+            flowLayoutPanel1.Location = new Point(12, 526);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(261, 47);
             flowLayoutPanel1.TabIndex = 51;
@@ -456,7 +469,7 @@
             btnBuscarPresentacion.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarPresentacion.FlatAppearance.BorderSize = 0;
             btnBuscarPresentacion.FlatStyle = FlatStyle.Flat;
-            btnBuscarPresentacion.Location = new Point(470, 267);
+            btnBuscarPresentacion.Location = new Point(470, 179);
             btnBuscarPresentacion.Name = "btnBuscarPresentacion";
             btnBuscarPresentacion.Size = new Size(48, 20);
             btnBuscarPresentacion.TabIndex = 49;
@@ -470,7 +483,7 @@
             btnBuscarMarca.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarMarca.FlatAppearance.BorderSize = 0;
             btnBuscarMarca.FlatStyle = FlatStyle.Flat;
-            btnBuscarMarca.Location = new Point(470, 227);
+            btnBuscarMarca.Location = new Point(470, 139);
             btnBuscarMarca.Name = "btnBuscarMarca";
             btnBuscarMarca.Size = new Size(48, 20);
             btnBuscarMarca.TabIndex = 45;
@@ -484,7 +497,7 @@
             btnBuscarCategoria.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarCategoria.FlatAppearance.BorderSize = 0;
             btnBuscarCategoria.FlatStyle = FlatStyle.Flat;
-            btnBuscarCategoria.Location = new Point(470, 186);
+            btnBuscarCategoria.Location = new Point(470, 98);
             btnBuscarCategoria.Name = "btnBuscarCategoria";
             btnBuscarCategoria.Size = new Size(48, 20);
             btnBuscarCategoria.TabIndex = 44;
@@ -496,9 +509,9 @@
             label19.AutoSize = true;
             label19.Font = new Font("Itim", 11.9999981F);
             label19.ForeColor = Color.FromArgb(87, 99, 110);
-            label19.Location = new Point(118, 301);
+            label19.Location = new Point(115, 217);
             label19.Name = "label19";
-            label19.Size = new Size(103, 24);
+            label19.Size = new Size(84, 19);
             label19.TabIndex = 42;
             label19.Text = "Contenido:";
             // 
@@ -507,9 +520,9 @@
             label9.AutoSize = true;
             label9.Font = new Font("Itim", 11.9999981F);
             label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(131, 344);
+            label9.Location = new Point(123, 259);
             label9.Name = "label9";
-            label9.Size = new Size(93, 24);
+            label9.Size = new Size(76, 19);
             label9.TabIndex = 40;
             label9.Text = "Cantidad:";
             label9.Visible = false;
@@ -519,9 +532,9 @@
             label11.AutoSize = true;
             label11.Font = new Font("Itim", 11.9999981F);
             label11.ForeColor = Color.FromArgb(87, 99, 110);
-            label11.Location = new Point(54, 144);
+            label11.Location = new Point(69, 350);
             label11.Name = "label11";
-            label11.Size = new Size(167, 24);
+            label11.Size = new Size(133, 19);
             label11.TabIndex = 38;
             label11.Text = "Precio de Compra:";
             // 
@@ -530,11 +543,11 @@
             txtPresentacion.BackColor = Color.White;
             txtPresentacion.BorderStyle = BorderStyle.None;
             txtPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPresentacion.Location = new Point(243, 267);
+            txtPresentacion.Location = new Point(243, 179);
             txtPresentacion.Name = "txtPresentacion";
             txtPresentacion.PlaceholderText = "(Seleccione Buscar)";
             txtPresentacion.ReadOnly = true;
-            txtPresentacion.Size = new Size(221, 24);
+            txtPresentacion.Size = new Size(221, 20);
             txtPresentacion.TabIndex = 37;
             // 
             // label12
@@ -542,9 +555,9 @@
             label12.AutoSize = true;
             label12.Font = new Font("Itim", 11.9999981F);
             label12.ForeColor = Color.FromArgb(87, 99, 110);
-            label12.Location = new Point(97, 264);
+            label12.Location = new Point(97, 176);
             label12.Name = "label12";
-            label12.Size = new Size(127, 24);
+            label12.Size = new Size(102, 19);
             label12.TabIndex = 32;
             label12.Text = "Presentación:";
             // 
@@ -553,11 +566,11 @@
             txtMarca.BackColor = Color.White;
             txtMarca.BorderStyle = BorderStyle.None;
             txtMarca.Font = new Font("Itim", 11.9999981F);
-            txtMarca.Location = new Point(243, 227);
+            txtMarca.Location = new Point(243, 139);
             txtMarca.Name = "txtMarca";
             txtMarca.PlaceholderText = "(Seleccione Buscar)";
             txtMarca.ReadOnly = true;
-            txtMarca.Size = new Size(221, 24);
+            txtMarca.Size = new Size(221, 20);
             txtMarca.TabIndex = 31;
             // 
             // groupBox1
@@ -566,7 +579,7 @@
             groupBox1.Controls.Add(rbHabilitado);
             groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(441, 383);
+            groupBox1.Location = new Point(742, 488);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(196, 44);
             groupBox1.TabIndex = 30;
@@ -577,7 +590,7 @@
             rbDeshabilitado.AutoSize = true;
             rbDeshabilitado.Location = new Point(90, 15);
             rbDeshabilitado.Name = "rbDeshabilitado";
-            rbDeshabilitado.Size = new Size(100, 28);
+            rbDeshabilitado.Size = new Size(82, 23);
             rbDeshabilitado.TabIndex = 29;
             rbDeshabilitado.Text = "Inactivo";
             rbDeshabilitado.UseVisualStyleBackColor = true;
@@ -588,7 +601,7 @@
             rbHabilitado.Checked = true;
             rbHabilitado.Location = new Point(7, 15);
             rbHabilitado.Name = "rbHabilitado";
-            rbHabilitado.Size = new Size(84, 28);
+            rbHabilitado.Size = new Size(70, 23);
             rbHabilitado.TabIndex = 28;
             rbHabilitado.TabStop = true;
             rbHabilitado.Text = "Activo";
@@ -599,9 +612,9 @@
             label13.AutoSize = true;
             label13.Font = new Font("Itim", 11.9999981F);
             label13.ForeColor = Color.FromArgb(87, 99, 110);
-            label13.Location = new Point(151, 224);
+            label13.Location = new Point(144, 138);
             label13.Name = "label13";
-            label13.Size = new Size(68, 24);
+            label13.Size = new Size(55, 19);
             label13.TabIndex = 27;
             label13.Text = "Marca:";
             // 
@@ -610,9 +623,9 @@
             label14.AutoSize = true;
             label14.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label14.ForeColor = Color.FromArgb(87, 99, 110);
-            label14.Location = new Point(370, 399);
+            label14.Location = new Point(671, 504);
             label14.Name = "label14";
-            label14.Size = new Size(73, 24);
+            label14.Size = new Size(60, 19);
             label14.TabIndex = 26;
             label14.Text = "Estado:";
             // 
@@ -621,9 +634,9 @@
             label15.AutoSize = true;
             label15.Font = new Font("Itim", 11.9999981F);
             label15.ForeColor = Color.FromArgb(87, 99, 110);
-            label15.Location = new Point(120, 188);
+            label15.Location = new Point(123, 98);
             label15.Name = "label15";
-            label15.Size = new Size(99, 24);
+            label15.Size = new Size(79, 19);
             label15.TabIndex = 25;
             label15.Text = "Categoría:";
             // 
@@ -632,11 +645,11 @@
             txtCategoria.BackColor = Color.White;
             txtCategoria.BorderStyle = BorderStyle.None;
             txtCategoria.Font = new Font("Itim", 11.9999981F);
-            txtCategoria.Location = new Point(243, 186);
+            txtCategoria.Location = new Point(243, 98);
             txtCategoria.Name = "txtCategoria";
             txtCategoria.PlaceholderText = "(Seleccione Buscar)";
             txtCategoria.ReadOnly = true;
-            txtCategoria.Size = new Size(221, 24);
+            txtCategoria.Size = new Size(221, 20);
             txtCategoria.TabIndex = 23;
             // 
             // label16
@@ -644,9 +657,9 @@
             label16.AutoSize = true;
             label16.Font = new Font("Itim", 11.9999981F);
             label16.ForeColor = Color.FromArgb(87, 99, 110);
-            label16.Location = new Point(73, 26);
+            label16.Location = new Point(76, 27);
             label16.Name = "label16";
-            label16.Size = new Size(154, 24);
+            label16.Size = new Size(123, 19);
             label16.TabIndex = 19;
             label16.Text = "Código de Barra:";
             // 
@@ -659,7 +672,7 @@
             txtCodBarra.MaxLength = 13;
             txtCodBarra.Name = "txtCodBarra";
             txtCodBarra.PlaceholderText = "(Ingrese o Escanee el Código)";
-            txtCodBarra.Size = new Size(275, 24);
+            txtCodBarra.Size = new Size(275, 20);
             txtCodBarra.TabIndex = 18;
             // 
             // label17
@@ -667,9 +680,9 @@
             label17.AutoSize = true;
             label17.Font = new Font("Itim", 11.9999981F);
             label17.ForeColor = Color.FromArgb(87, 99, 110);
-            label17.Location = new Point(72, 104);
+            label17.Location = new Point(82, 310);
             label17.Name = "label17";
-            label17.Size = new Size(149, 24);
+            label17.Size = new Size(120, 19);
             label17.TabIndex = 16;
             label17.Text = "Precio de Venta:";
             // 
@@ -680,7 +693,7 @@
             label18.ForeColor = Color.FromArgb(87, 99, 110);
             label18.Location = new Point(126, 64);
             label18.Name = "label18";
-            label18.Size = new Size(93, 24);
+            label18.Size = new Size(76, 19);
             label18.TabIndex = 15;
             label18.Text = "Producto:";
             // 
@@ -692,7 +705,7 @@
             txtNombreProducto.Location = new Point(243, 67);
             txtNombreProducto.Name = "txtNombreProducto";
             txtNombreProducto.PlaceholderText = "(Nombre del Producto)";
-            txtNombreProducto.Size = new Size(275, 24);
+            txtNombreProducto.Size = new Size(275, 20);
             txtNombreProducto.TabIndex = 13;
             // 
             // label10
@@ -702,7 +715,7 @@
             label10.ForeColor = Color.FromArgb(87, 99, 110);
             label10.Location = new Point(70, 259);
             label10.Name = "label10";
-            label10.Size = new Size(93, 24);
+            label10.Size = new Size(76, 19);
             label10.TabIndex = 40;
             label10.Text = "Cantidad:";
             // 
@@ -715,7 +728,7 @@
             textBox5.Location = new Point(153, 258);
             textBox5.Name = "textBox5";
             textBox5.ReadOnly = true;
-            textBox5.Size = new Size(197, 24);
+            textBox5.Size = new Size(197, 20);
             textBox5.TabIndex = 39;
             // 
             // label7
@@ -725,7 +738,7 @@
             label7.ForeColor = Color.FromArgb(87, 99, 110);
             label7.Location = new Point(34, 225);
             label7.Name = "label7";
-            label7.Size = new Size(142, 24);
+            label7.Size = new Size(112, 19);
             label7.TabIndex = 38;
             label7.Text = "Precio Compra:";
             // 
@@ -738,7 +751,7 @@
             textBox4.Location = new Point(153, 225);
             textBox4.Name = "textBox4";
             textBox4.ReadOnly = true;
-            textBox4.Size = new Size(197, 24);
+            textBox4.Size = new Size(197, 20);
             textBox4.TabIndex = 37;
             // 
             // button4
@@ -808,7 +821,7 @@
             label3.ForeColor = Color.FromArgb(87, 99, 110);
             label3.Location = new Point(45, 190);
             label3.Name = "label3";
-            label3.Size = new Size(127, 24);
+            label3.Size = new Size(102, 19);
             label3.TabIndex = 32;
             label3.Text = "Presentación:";
             // 
@@ -821,7 +834,7 @@
             textBox3.Location = new Point(153, 191);
             textBox3.Name = "textBox3";
             textBox3.ReadOnly = true;
-            textBox3.Size = new Size(197, 24);
+            textBox3.Size = new Size(197, 20);
             textBox3.TabIndex = 31;
             // 
             // gbxEstado
@@ -841,7 +854,7 @@
             radioButton1.AutoSize = true;
             radioButton1.Location = new Point(173, 20);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(84, 28);
+            radioButton1.Size = new Size(70, 23);
             radioButton1.TabIndex = 29;
             radioButton1.TabStop = true;
             radioButton1.Text = "Activo";
@@ -852,7 +865,7 @@
             rbActivo.AutoSize = true;
             rbActivo.Location = new Point(8, 21);
             rbActivo.Name = "rbActivo";
-            rbActivo.Size = new Size(84, 28);
+            rbActivo.Size = new Size(70, 23);
             rbActivo.TabIndex = 28;
             rbActivo.TabStop = true;
             rbActivo.Text = "Activo";
@@ -865,7 +878,7 @@
             label6.ForeColor = Color.FromArgb(87, 99, 110);
             label6.Location = new Point(92, 158);
             label6.Name = "label6";
-            label6.Size = new Size(68, 24);
+            label6.Size = new Size(55, 19);
             label6.TabIndex = 27;
             label6.Text = "Marca:";
             // 
@@ -876,7 +889,7 @@
             label5.ForeColor = Color.FromArgb(87, 99, 110);
             label5.Location = new Point(89, 355);
             label5.Name = "label5";
-            label5.Size = new Size(73, 24);
+            label5.Size = new Size(60, 19);
             label5.TabIndex = 26;
             label5.Text = "Estado:";
             // 
@@ -887,7 +900,7 @@
             label4.ForeColor = Color.FromArgb(87, 99, 110);
             label4.Location = new Point(68, 126);
             label4.Name = "label4";
-            label4.Size = new Size(99, 24);
+            label4.Size = new Size(79, 19);
             label4.TabIndex = 25;
             label4.Text = "Categoría:";
             // 
@@ -900,7 +913,7 @@
             textBox2.Location = new Point(153, 158);
             textBox2.Name = "textBox2";
             textBox2.ReadOnly = true;
-            textBox2.Size = new Size(197, 24);
+            textBox2.Size = new Size(197, 20);
             textBox2.TabIndex = 23;
             // 
             // textBox1
@@ -912,15 +925,69 @@
             textBox1.Location = new Point(153, 126);
             textBox1.Name = "textBox1";
             textBox1.ReadOnly = true;
-            textBox1.Size = new Size(197, 24);
+            textBox1.Size = new Size(197, 20);
             textBox1.TabIndex = 22;
+            // 
+            // nudPrecioCosto
+            // 
+            nudPrecioCosto.DecimalPlaces = 2;
+            nudPrecioCosto.Enabled = false;
+            nudPrecioCosto.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nudPrecioCosto.ForeColor = Color.DimGray;
+            nudPrecioCosto.Location = new Point(243, 387);
+            nudPrecioCosto.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
+            nudPrecioCosto.Name = "nudPrecioCosto";
+            nudPrecioCosto.Size = new Size(275, 25);
+            nudPrecioCosto.TabIndex = 65;
+            nudPrecioCosto.ValueChanged += this.numericUpDown1_ValueChanged;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Itim", 11.9999981F);
+            label20.ForeColor = Color.FromArgb(87, 99, 110);
+            label20.Location = new Point(80, 388);
+            label20.Name = "label20";
+            label20.Size = new Size(119, 19);
+            label20.TabIndex = 64;
+            label20.Text = "Precio de Costo:";
+            label20.Click += this.label20_Click;
+            // 
+            // tckGanaciaPorcentual
+            // 
+            tckGanaciaPorcentual.Location = new Point(243, 424);
+            tckGanaciaPorcentual.Name = "tckGanaciaPorcentual";
+            tckGanaciaPorcentual.Size = new Size(275, 45);
+            tckGanaciaPorcentual.TabIndex = 66;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Itim", 11.9999981F);
+            label21.ForeColor = Color.FromArgb(87, 99, 110);
+            label21.Location = new Point(89, 423);
+            label21.Name = "label21";
+            label21.Size = new Size(106, 19);
+            label21.TabIndex = 67;
+            label21.Text = "Ganancia Fija:";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Itim", 11.9999981F);
+            label23.ForeColor = Color.FromArgb(87, 99, 110);
+            label23.Location = new Point(89, 462);
+            label23.Name = "label23";
+            label23.Size = new Size(83, 19);
+            label23.TabIndex = 68;
+            label23.Text = "Precio Fijo:";
             // 
             // frmAgregarEditarProducto
             // 
-            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(1011, 553);
+            ClientSize = new Size(1011, 622);
             Controls.Add(panel2);
             Controls.Add(panBarraControl);
             Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -946,6 +1013,8 @@
             groupBox1.PerformLayout();
             gbxEstado.ResumeLayout(false);
             gbxEstado.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudPrecioCosto).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tckGanaciaPorcentual).EndInit();
             ResumeLayout(false);
         }
 
@@ -1012,5 +1081,10 @@
         private NumericUpDown txtCantidad;
         private PictureBox Imagen_Producto;
         private Button btnImagenes;
+        private NumericUpDown nudPrecioCosto;
+        private Label label20;
+        private Label label23;
+        private Label label21;
+        private TrackBar tckGanaciaPorcentual;
     }
 }
