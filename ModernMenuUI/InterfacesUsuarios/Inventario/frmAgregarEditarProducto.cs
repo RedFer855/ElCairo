@@ -97,7 +97,7 @@ namespace ModernMenuUI
                 rbDeshabilitado.Checked = true;
             }
 
-            lblNota.Visible = false;
+
 
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
 
@@ -482,6 +482,12 @@ namespace ModernMenuUI
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnModoGanancia_Click(object sender, EventArgs e)
+        {
+            frmAgregarEditarGananciaModo modoGanancia = new frmAgregarEditarGananciaModo();
+            modoGanancia.ShowDialog();
         }
     }
 }
