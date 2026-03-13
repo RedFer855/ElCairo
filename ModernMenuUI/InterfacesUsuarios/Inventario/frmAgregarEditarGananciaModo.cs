@@ -8,7 +8,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
     public partial class frmAgregarEditarGananciaModo : Form
     {
         private bool actualizando = false;
-        private readonly decimal TOLERANCIA = 0.005m; // evita micro-reasignaciones por redondeo
+        private readonly decimal TOLERANCIA = 0.005m;
+
+        public ConfiguracionGananciaProducto DatosGanancia { get; private set; }
 
         public frmAgregarEditarGananciaModo()
         {
@@ -18,45 +20,58 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private void ConfigurarNudPorDefecto()
         {
-            // Ajusta según necesites; importante: permitir negativos si quieres pérdidas
             nudPrecioCompra.DecimalPlaces = 2;
             nudPrecioCompra.Minimum = 0m;
-            nudPrecioCompra.Maximum = 999_999m;
+            nudPrecioCompra.Maximum = 999999m;
             nudPrecioCompra.Increment = 0.01m;
 
             nudPrecioCosto.DecimalPlaces = 2;
             nudPrecioCosto.Minimum = 0m;
-            nudPrecioCosto.Maximum = 999_999m;
+            nudPrecioCosto.Maximum = 999999m;
             nudPrecioCosto.Increment = 0.01m;
 
-            // Por defecto permitimos pérdidas (ganancia negativa). Si no quieres pérdidas pon Minimum = 0.
             nudGanancia.DecimalPlaces = 2;
-            nudGanancia.Minimum = -1000m; // permite hasta -1000% (pérdida)
+            nudGanancia.Minimum = 0m;
             nudGanancia.Maximum = 1000m;
             nudGanancia.Increment = 0.01m;
 
             nudPrecioFinal.DecimalPlaces = 2;
             nudPrecioFinal.Minimum = 0m;
-            nudPrecioFinal.Maximum = 999_999m;
+            nudPrecioFinal.Maximum = 999999m;
             nudPrecioFinal.Increment = 0.01m;
+
+            nudGanancia.Enabled = rbGanancia.Checked;
+            nudPrecioFinal.Enabled = rbPrecio.Checked;
         }
 
-
-
-        // Eventos: todos llaman al método central
         private void nudPrecioCompra_ValueChanged(object sender, EventArgs e)
         {
             if (actualizando) return;
+
             actualizando = true;
-            // el precio de compra es la fuente para costo
             AsignarNudSeguro(nudPrecioCosto, nudPrecioCompra.Value);
             actualizando = false;
+
             Calcular();
         }
 
-        private void nudPrecioCosto_ValueChanged(object sender, EventArgs e) => Calcular();
-        private void nudGanancia_ValueChanged(object sender, EventArgs e) => Calcular();
-        private void nudPrecioFinal_ValueChanged(object sender, EventArgs e) => Calcular();
+        private void nudPrecioCosto_ValueChanged(object sender, EventArgs e)
+        {
+            if (actualizando) return;
+            Calcular();
+        }
+
+        private void nudGanancia_ValueChanged(object sender, EventArgs e)
+        {
+            if (actualizando) return;
+            Calcular();
+        }
+
+        private void nudPrecioFinal_ValueChanged(object sender, EventArgs e)
+        {
+            if (actualizando) return;
+            Calcular();
+        }
 
         private void rbGanancia_CheckedChanged(object sender, EventArgs e)
         {
@@ -72,59 +87,88 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             Calcular();
         }
 
-        // Método central que usa la lógica de negocio y actualiza controles de forma segura
         private void Calcular()
         {
             if (actualizando) return;
 
             decimal costo = nudPrecioCosto.Value;
-            if (costo <= 0m) return; // según tus reglas: no calcular si costo es 0
+
+            if (costo <= 0m)
+            {
+                actualizando = true;
+                try
+                {
+                    AsignarNudSeguro(nudGanancia, 0m);
+                    AsignarNudSeguro(nudPrecioFinal, 0m);
+                }
+                finally
+                {
+                    actualizando = false;
+                }
+                return;
+            }
 
             actualizando = true;
             try
             {
                 if (rbGanancia.Checked)
                 {
-                    // fuente: porcentaje ganancia -> calcular precio final
                     decimal porcentaje = nudGanancia.Value;
-                    ResultadoCalculoGanancia res = CalculoGananciaPrecioCosto.CalcularPrecioDesdeGanancia(costo, porcentaje);
+
+                    if (porcentaje < 0m)
+                        porcentaje = 0m;
+
+                    ResultadoCalculoGanancia res =
+                        CalculoGananciaPrecioCosto.CalcularPrecioDesdeGanancia(costo, porcentaje);
 
                     if (!res.Success)
                     {
-                        // mostrar advertencia si corresponde y ajustar límites si es necesario
-                        MessageBox.Show(res.Message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(
+                            res.Message,
+                            "Advertencia",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
 
-                        // si excede limites, clamp en la UI:
-                        if (porcentaje > nudGanancia.Maximum) AsignarNudSeguro(nudGanancia, nudGanancia.Maximum);
-                        else if (porcentaje < nudGanancia.Minimum) AsignarNudSeguro(nudGanancia, nudGanancia.Minimum);
-
-                        // no asignamos precio inválido
+                        AsignarNudSeguro(nudGanancia, porcentaje);
                     }
                     else
                     {
-                        AsignarNudSeguro(nudPrecioFinal, res.PrecioFinal);
-                        // opcional: actualizar nudGanancia con valor redondeado por si cambió
-                        AsignarNudSeguro(nudGanancia, res.PorcentajeGanancia);
+                        decimal porcentajeSeguro = res.PorcentajeGanancia < 0m ? 0m : res.PorcentajeGanancia;
+                        decimal precioFinalSeguro = res.PrecioFinal < 0m ? 0m : res.PrecioFinal;
+
+                        AsignarNudSeguro(nudGanancia, porcentajeSeguro);
+                        AsignarNudSeguro(nudPrecioFinal, precioFinalSeguro);
                     }
                 }
-                else // modo precio (rbPrecio.Checked)
+                else
                 {
                     decimal precio = nudPrecioFinal.Value;
-                    ResultadoCalculoGanancia res = CalculoGananciaPrecioCosto.CalcularGananciaDesdePrecio(costo, precio);
+
+                    if (precio < 0m)
+                        precio = 0m;
+
+                    ResultadoCalculoGanancia res =
+                        CalculoGananciaPrecioCosto.CalcularGananciaDesdePrecio(costo, precio);
 
                     if (!res.Success)
                     {
-                        MessageBox.Show(res.Message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(
+                            res.Message,
+                            "Advertencia",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
 
-                        // si precio > max, ajustar
-                        if (precio > nudPrecioFinal.Maximum) AsignarNudSeguro(nudPrecioFinal, nudPrecioFinal.Maximum);
+                        AsignarNudSeguro(nudPrecioFinal, precio);
                     }
                     else
                     {
-                        // asignamos la ganancia calculada sin lanzar excepción (clamp interno)
-                        AsignarNudSeguro(nudGanancia, res.PorcentajeGanancia);
-                        // opcional: actualizar nudPrecioFinal con valor redondeado por si cambió
-                        AsignarNudSeguro(nudPrecioFinal, res.PrecioFinal);
+                        decimal gananciaSegura = res.PorcentajeGanancia < 0m ? 0m : res.PorcentajeGanancia;
+                        decimal precioFinalSeguro = res.PrecioFinal < 0m ? 0m : res.PrecioFinal;
+
+                        AsignarNudSeguro(nudGanancia, gananciaSegura);
+                        AsignarNudSeguro(nudPrecioFinal, precioFinalSeguro);
                     }
                 }
             }
@@ -134,18 +178,25 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
-        // Helper: asigna valor a un NumericUpDown de forma segura (clamp + redondeo + tolerancia)
         private void AsignarNudSeguro(NumericUpDown nud, decimal valor)
         {
-            // clamp al rango del control
-            if (valor < nud.Minimum) valor = nud.Minimum;
-            if (valor > nud.Maximum) valor = nud.Maximum;
+            if (valor < 0m)
+                valor = 0m;
 
-            // redondeo según DecimalPlaces del control
-            decimal redondeado = Math.Round(valor, nud.DecimalPlaces, MidpointRounding.AwayFromZero);
+            if (valor < nud.Minimum)
+                valor = nud.Minimum;
 
-            // si la diferencia es insignificante evitamos reasignar (evita 9.18 -> 9.16 por micro-fluctuación)
-            if (Math.Abs(nud.Value - redondeado) < TOLERANCIA) return;
+            if (valor > nud.Maximum)
+                valor = nud.Maximum;
+
+            decimal redondeado = Math.Round(
+                valor,
+                nud.DecimalPlaces,
+                MidpointRounding.AwayFromZero
+            );
+
+            if (Math.Abs(nud.Value - redondeado) < TOLERANCIA)
+                return;
 
             nud.Value = redondeado;
         }
@@ -154,21 +205,106 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             MessageBox.Show(
                 "Modo Ganancia: define un porcentaje de ganancia. Si cambia el costo, el sistema recalcula el precio manteniendo ese porcentaje.",
-                "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "Información",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
 
         private void btnPrecioFijoInfo_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
                 "Modo Precio: define un precio fijo. Si cambia el costo, el sistema recalcula la ganancia.",
-                "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "Información",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
 
         private void btnGuardarProducto_Click(object sender, EventArgs e)
         {
+            decimal precioCompra = nudPrecioCompra.Value;
+            decimal precioCosto = nudPrecioCosto.Value;
+            decimal porcentajeGanancia = nudGanancia.Value;
+            decimal precioFinal = nudPrecioFinal.Value;
 
+            if (precioCompra <= 0m)
+            {
+                MessageBox.Show(
+                    "El precio de compra debe ser mayor que 0.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                nudPrecioCompra.Focus();
+                return;
+            }
+
+            if (precioCosto <= 0m)
+            {
+                MessageBox.Show(
+                    "El precio costo debe ser mayor que 0.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                nudPrecioCosto.Focus();
+                return;
+            }
+
+            if (precioFinal <= 0m)
+            {
+                MessageBox.Show(
+                    "El precio final debe ser mayor que 0.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                nudPrecioFinal.Focus();
+                return;
+            }
+
+            if (precioFinal < precioCompra)
+            {
+                MessageBox.Show(
+                    "No se puede guardar un precio final menor al precio de compra.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                nudPrecioFinal.Focus();
+                return;
+            }
+
+            int tipoCalculo = rbGanancia.Checked ? 1 : 2;
+
+            DatosGanancia = new ConfiguracionGananciaProducto
+            {
+                PrecioCompra = precioCompra,
+                PrecioCosto = precioCosto,
+                PorcentajeGanancia = porcentajeGanancia,
+                PrecioFinal = precioFinal,
+                UsaModoGanancia = rbGanancia.Checked,
+                UsaModoPrecio = rbPrecio.Checked,
+                TipoCalculoGananciaProducto = tipoCalculo
+            };
+
+            MessageBox.Show(
+                "Datos enviados en el objeto:\n\n" +
+                $"PrecioCompra: {DatosGanancia.PrecioCompra:0.00}\n" +
+                $"PrecioCosto: {DatosGanancia.PrecioCosto:0.00}\n" +
+                $"PorcentajeGanancia: {DatosGanancia.PorcentajeGanancia:0.00}\n" +
+                $"PrecioFinal: {DatosGanancia.PrecioFinal:0.00}\n" +
+                $"UsaModoGanancia: {DatosGanancia.UsaModoGanancia}\n" +
+                $"UsaModoPrecio: {DatosGanancia.UsaModoPrecio}\n" +
+                $"TipoCalculoGananciaProducto: {DatosGanancia.TipoCalculoGananciaProducto}",
+                "Objeto creado",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
-
-
 }

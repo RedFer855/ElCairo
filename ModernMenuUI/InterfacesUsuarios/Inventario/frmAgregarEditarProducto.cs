@@ -3,6 +3,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
+using CapaDominio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ModernMenuUI
 {
@@ -50,6 +52,11 @@ namespace ModernMenuUI
         private byte[] _byteImagen;
 
         /// <summary>
+        /// Guarda la configuración devuelta por el formulario de ganancia.
+        /// </summary>
+        private ConfiguracionGananciaProducto _configGananciaProducto;
+
+        /// <summary>
         /// Constructor para crear un nuevo producto.
         /// Configura el formulario en modo "AGREGAR".
         /// </summary>
@@ -60,6 +67,7 @@ namespace ModernMenuUI
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
         }
+
         RepositorioImgenSupabase repositorioImg = new RepositorioImgenSupabase();
         public event EventHandler<Image> ImagenSeleccionada;
 
@@ -97,10 +105,7 @@ namespace ModernMenuUI
                 rbDeshabilitado.Checked = true;
             }
 
-
-
             CargarPresentacionEnControles(productoseleccionado.ContenidoProducto);
-
         }
 
         protected override async void OnShown(EventArgs e)
@@ -113,6 +118,7 @@ namespace ModernMenuUI
             rbActivo.Checked = true;
             await CargarImagenProductoAsync();
         }
+
         private async Task CargarImagenProductoAsync()
         {
             if (_productoSeleccionado == null)
@@ -123,7 +129,6 @@ namespace ModernMenuUI
                 MessageBox.Show($"imagen del producto : {_productoSeleccionado.ImagenProducto}");
                 return;
             }
-
 
             try
             {
@@ -143,68 +148,45 @@ namespace ModernMenuUI
 
         private void ProductosCartas_ImagenSeleccionada(object sender, Image imagen)
         {
-            // Mostrar imagen seleccionada en el PictureBox principal
             Imagen_Producto.Image = imagen;
-
-            // Guardar datos para el guardado del producto
-            //_byteImagen = bytes;
-            //_nombreArchivo = nombreArchivo;
         }
 
         private void ProductoCartas_urlImagen(object sender, string url)
         {
             _nombreArchivo = url;
-            _byteImagen = null; // No es necesario subir bytes si es una imagen existente
+            _byteImagen = null;
         }
 
-        /// <summary>
-        /// Maneja arrastre del formulario (mover ventana).
-        /// </summary>
         private void Editar_Producto_MouseDown(object sender, MouseEventArgs e)
         {
             clsAnmaciones.MoverFormulario(this.Handle);
         }
 
-        /// <summary>
-        /// Maneja arrastre de la barra de control (mover ventana).
-        /// </summary>
         private void panBarraControl_MouseDown(object sender, MouseEventArgs e)
         {
             clsAnmaciones.MoverFormulario(this.Handle);
         }
 
-        /// <summary>
-        /// Cierra el formulario al presionar el botón "Volver".
-        /// </summary>
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        /// <summary>
-        /// Evento que guarda o actualiza el producto.
-        /// - Construye un objeto <see cref="ProductoInsertar"/> con datos validados.
-        /// - Si <see cref="_productoSeleccionado"/> es null inserta, si no actualiza.
-        /// - Mantiene manejo de errores específico para clave duplicada (23505).
-        /// </summary>
         private async void btnGuardarProducto_Click(object sender, EventArgs e)
         {
-            //llamadas a repositorios
             RepositorioImgenSupabase repositorioImg = new RepositorioImgenSupabase();
             ProductoRepositorio repo = new ProductoRepositorio();
 
             try
             {
-
-                // VARIABLES PARA LOS DATOS NUMÉRICOS
-                decimal precioCompra = 0;
-                decimal precioVenta = 0;
-                decimal precioCosto = 0;
+                decimal precioCompra = 0m;
+                decimal precioVenta = 0m;
+                decimal precioCosto = 0m;
+                decimal porcentajeGananciaProducto = 0m;
+                int tipoCalculoGananciaProducto = 0;
                 int cantidad = 0;
                 int contenido = int.Parse(txtContenido.Text);
 
-
-                // Si estamos EDITANDO, recuperamos los valores originales para NO perderlos
                 if (_productoSeleccionado != null)
                 {
                     precioCompra = _productoSeleccionado.PrecioCompra;
@@ -212,30 +194,32 @@ namespace ModernMenuUI
                     precioCosto = _productoSeleccionado.PrecioCosto;
                     cantidad = _productoSeleccionado.CantidadProducto;
                 }
-                // 1. CONSTRUIR OBJETO CON LOS DATOS SEGUROS
 
-                decimal.TryParse(txtPrecioCompra.Text, out precioCompra);
-                decimal.TryParse(txtPrecioVenta.Text, out precioVenta);
-
-                /*
-                
-                if (!string.IsNullOrWhiteSpace(txtPrecioCompra.Text))
+                if (_productoSeleccionado == null)
                 {
-                    if (decimal.TryParse(txtPrecioCompra.Text, out decimal nuevoPrecioCompra))
+                    if (_configGananciaProducto == null)
                     {
-                        precioCompra = nuevoPrecioCompra;
+                        MessageBox.Show(
+                            "Debe configurar el modo de ganancia antes de guardar el producto.",
+                            "Validación",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                        return;
                     }
-                }
 
-                if (!string.IsNullOrWhiteSpace(txtPrecioVenta.Text))
+                    precioCompra = _configGananciaProducto.PrecioCompra;
+                    precioCosto = _configGananciaProducto.PrecioCosto;
+                    precioVenta = _configGananciaProducto.PrecioFinal;
+                    porcentajeGananciaProducto = _configGananciaProducto.PorcentajeGanancia;
+                    tipoCalculoGananciaProducto = _configGananciaProducto.TipoCalculoGananciaProducto;
+                }
+                else
                 {
-                    if (decimal.TryParse(txtPrecioVenta.Text, out decimal nuevoPrecioVenta))
-                    {
-                        precioVenta = nuevoPrecioVenta;
-                    }
+                    decimal.TryParse(txtPrecioCompra.Text, out precioCompra);
+                    decimal.TryParse(txtPrecioVenta.Text, out precioVenta);
+                    decimal.TryParse(txtPrecio.Text, out precioCosto);
                 }
-
-                 */
 
                 ProductoInsertar _productoInsertar = new ProductoInsertar
                 {
@@ -247,16 +231,16 @@ namespace ModernMenuUI
                     IdPresentacion = _idPresentacionSeleccionada,
                     ContenidoProducto = $"{txtContenido.Text.Trim()} {cmbUnidadContenido.SelectedItem?.ToString().Trim()}".Trim(),
 
-                    // ASIGNACIÓN SEGURA (Desde el objeto original, no del TXT)
                     PrecioCompra = precioCompra,
                     PrecioVenta = precioVenta,
-                    PrecioCosto = precioCompra,
+                    PrecioCosto = precioCosto,
+                    PorcentajeGananciaProducto = porcentajeGananciaProducto,
+                    TipoCalculoGananciaProducto = tipoCalculoGananciaProducto,
                     CantidadProducto = cantidad,
 
                     ProductoPath = _nombreArchivo,
                 };
 
-                // 2. VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProducto(_productoInsertar);
 
                 if (resultado.Error)
@@ -264,6 +248,7 @@ namespace ModernMenuUI
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 if (cmbUnidadContenido.SelectedIndex == -1)
                 {
                     MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -276,36 +261,24 @@ namespace ModernMenuUI
                     return;
                 }
 
-
-                // 3. ASIGNAR ESTADO
                 _productoInsertar.EstadoProducto = rbHabilitado.Checked;
                 _productoInsertar.IdEstado = rbHabilitado.Checked ? 1 : 2;
 
-                // 4. PREPARAR INTERFAZ
                 btnGuardarProducto.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                // Preparar imagen para mostrar después
-                // var imagen = await repositorioImg.LeerImagenes(_productoInsertar.ProductoPath);
-
-                // 5. LÓGICA DECISIVA
                 if (_productoSeleccionado == null)
                 {
-                    // INSERTAR
                     if (_byteImagen != null)
                     {
-                        // Imagen LOCAL → subir
                         await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
                     }
-                    // Imagen del SELECTOR → no hacer nada (solo URL)
-
 
                     await repo.InsertarProducto(_productoInsertar);
                     MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // ACTUALIZAR
                     _productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
 
                     if (_byteImagen != null)
@@ -316,7 +289,6 @@ namespace ModernMenuUI
                     await repo.ActualizarProducto(_productoInsertar);
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -349,25 +321,18 @@ namespace ModernMenuUI
             }
         }
 
-        /// <summary>
-        /// Abre el formulario de selección de categoría y asigna la categoría seleccionada al control.
-        /// </summary>
         private void btnBuscarCategoria_Click(object sender, EventArgs e)
         {
             using (var categoriasForm = new frmCategorias())
             {
                 if (categoriasForm.ShowDialog() == DialogResult.OK)
                 {
-                    // Suponiendo que tu frmCategorias tiene la propiedad pública CategoriaSeleccionada
                     txtCategoria.Text = categoriasForm.CategoriaSeleccionada.NombreCategoria;
                     _idCategoriaSeleccionada = categoriasForm.CategoriaSeleccionada.IdCategoria;
                 }
             }
         }
 
-        /// <summary>
-        /// Abre el formulario de selección de marca y asigna la marca seleccionada al control.
-        /// </summary>
         private void btnBuscarMarca_Click(object sender, EventArgs e)
         {
             using (var marcasForm = new frmMarcas())
@@ -380,9 +345,6 @@ namespace ModernMenuUI
             }
         }
 
-        /// <summary>
-        /// Abre el formulario de selección de presentaciones y asigna la seleccionada al control.
-        /// </summary>
         private void btnBuscarPresentacion_Click(object sender, EventArgs e)
         {
             using (var presentacionesForm = new frmPresentaciones())
@@ -395,17 +357,10 @@ namespace ModernMenuUI
             }
         }
 
-        /// <summary>
-        /// Rellena los controles de "contenido" a partir del texto guardado en la entidad.
-        /// - Espera cadenas en formato: "<valor> <unidad>" (ej. "250 ml").
-        /// - Si no puede parsear, deja los controles vacíos.
-        /// </summary>
-        /// <param name="presentacion">Texto guardado en ContenidoProducto.</param>
         private void CargarPresentacionEnControles(string presentacion)
         {
             presentacion = presentacion?.Trim() ?? "";
 
-            // Dividir en 2 partes máximo (valor y unidad)
             var partes = presentacion.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
 
             if (partes.Length == 2)
@@ -434,18 +389,12 @@ namespace ModernMenuUI
             }
         }
 
-        /// <summary>
-        /// Habilita el botón guardar y oculta el botón modificar (cambia a modo edición visual).
-        /// </summary>
         private void btnModificarProducto_Click(object sender, EventArgs e)
         {
             btnGuardarProducto.Visible = true;
             btnModificarProducto.Visible = false;
         }
 
-        /// <summary>
-        /// Evento del combobox de unidad de contenido. Actualmente vacío — reservado por si se requiere lógica adicional.
-        /// </summary>
         private void cmbUnidadContenido_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -453,7 +402,6 @@ namespace ModernMenuUI
 
         private async void Imagen_Producto_Click(object sender, EventArgs e)
         {
-            //file dialog (sacando la imagen de los archivos
             using (OpenFileDialog openfile = new OpenFileDialog())
             {
                 openfile.Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.webp";
@@ -461,10 +409,7 @@ namespace ModernMenuUI
 
                 if (openfile.ShowDialog() == DialogResult.OK)
                 {
-                    // Mostrar imagen en el PictureBox
                     Imagen_Producto.Image = Image.FromFile(openfile.FileName);
-
-                    // Guardar datos en memoria
                     _byteImagen = File.ReadAllBytes(openfile.FileName);
                     _nombreArchivo = $"{Guid.NewGuid()}{Path.GetExtension(openfile.FileName)}";
                 }
@@ -486,8 +431,20 @@ namespace ModernMenuUI
 
         private void btnModoGanancia_Click(object sender, EventArgs e)
         {
-            frmAgregarEditarGananciaModo modoGanancia = new frmAgregarEditarGananciaModo();
-            modoGanancia.ShowDialog();
+            using (frmAgregarEditarGananciaModo modoGanancia = new frmAgregarEditarGananciaModo())
+            {
+                if (modoGanancia.ShowDialog() == DialogResult.OK)
+                {
+                    _configGananciaProducto = modoGanancia.DatosGanancia;
+
+                    if (_configGananciaProducto != null)
+                    {
+                        txtPrecioCompra.Text = _configGananciaProducto.PrecioCompra.ToString("0.00");
+                        txtPrecio.Text = _configGananciaProducto.PrecioCosto.ToString("0.00");
+                        txtPrecioVenta.Text = _configGananciaProducto.PrecioFinal.ToString("0.00");
+                    }
+                }
+            }
         }
     }
 }

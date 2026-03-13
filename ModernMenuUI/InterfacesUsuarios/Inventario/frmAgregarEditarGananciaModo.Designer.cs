@@ -87,7 +87,6 @@
             btnGuardarProducto.TabIndex = 72;
             btnGuardarProducto.Text = "Guardar";
             btnGuardarProducto.UseVisualStyleBackColor = false;
-            btnGuardarProducto.Visible = false;
             btnGuardarProducto.Click += btnGuardarProducto_Click;
             // 
             // label3

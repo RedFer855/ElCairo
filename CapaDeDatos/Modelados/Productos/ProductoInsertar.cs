@@ -41,7 +41,9 @@ namespace CapaDeDatos.Modelados.Productos
 
         [Column("porcentaje_ganancia_producto")]
         public decimal PorcentajeGananciaProducto { get; set; }
-        
+
+        [Column("tipo_calculo_ganancia_producto")]
+        public int TipoCalculoGananciaProducto { get; set; }
 
         [Column("id_estado")]
         public int IdEstado { get; set; }
@@ -54,7 +56,5 @@ namespace CapaDeDatos.Modelados.Productos
 
         [Column("producto_path")]
         public string? ProductoPath { get; set; }
-
     }
-
 }
