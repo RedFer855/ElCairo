@@ -12,8 +12,9 @@ using JsonIgnoreAttribute = Newtonsoft.Json.JsonIgnoreAttribute;
 namespace CapaDeDatos.Modelados.Inventario
 {
     [Table("bodega")]
-    public class Bodega : BaseModel
+    public  class BodegaConsultaDepartamento : BaseModel
     {
+
         [PrimaryKey("id_bodega", false)]
         public int IdBodega { get; set; }
 
@@ -25,8 +26,8 @@ namespace CapaDeDatos.Modelados.Inventario
 
         [Column("id_departamento")]
         public short IdDepartamento { get; set; }
-        public Departamentos Departamento { get; set; }
-        public string NombreDepartamento_ => Departamento?.NombreDepartamento ?? "Sin Departamento";
+        public Departamentos Departamentos { get; set; }
+        public string NombreDepartamento => Departamentos?.NombreDepartamento ?? "Sin Departamento";
 
         [Column("direccion_sucursal")]
         public string DireccionSucursal { get; set; }
@@ -35,7 +36,6 @@ namespace CapaDeDatos.Modelados.Inventario
         public string TelefonoSucursal { get; set; }
 
         [Column("estado_bodega")]
-        public bool EstadoBodega  { get; set; }
+        public bool EstadoBodega { get; set; }
     }
-
 }

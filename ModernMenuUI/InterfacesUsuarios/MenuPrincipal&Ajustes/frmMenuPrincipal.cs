@@ -404,7 +404,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO BODEGAS");
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace ModernMenuUI
             bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmCategorias(tipo));
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CATEGORIAS");
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace ModernMenuUI
             bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new InterfacesUsuarios.Compras.frmProveedor(tipo));
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PROVEEDORES");
         }
 
         /// <summary>
@@ -447,7 +447,7 @@ namespace ModernMenuUI
             bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmPresentaciones(tipo));
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PRESENTACION");
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CLIENTES");
         }
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmEmpleado());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "EMPLEADOS");
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmRol());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "ROLES");
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "BITACORA");
         }
 
         /// <summary>
@@ -517,7 +517,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmCrearReporte());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERIA");
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace ModernMenuUI
         private void btnReportesCreados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERIA");
         }
 
         /// <summary>
@@ -535,7 +535,7 @@ namespace ModernMenuUI
         private void btnRegistroPerdida_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PERDIDAS");
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace ModernMenuUI
         private void btnDevoluciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "DEVOLUCIONES");
         }
 
         private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
@@ -688,8 +688,8 @@ namespace ModernMenuUI
         private void btnBodegas_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "Bodega");
+            ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega(modoSoloLectura: true));
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "BODEGAS");
         }
 
         private void chart1_Click(object sender, EventArgs e)

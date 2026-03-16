@@ -66,6 +66,7 @@
             ContenidoProducto = new DataGridViewTextBoxColumn();
             Presentacion = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
+            EstadoBodega = new DataGridViewCheckBoxColumn();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducto).BeginInit();
             panelBusqueda.SuspendLayout();
@@ -82,7 +83,7 @@
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(dgvProducto);
             panel1.Location = new Point(19, 145);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
             panel1.Size = new Size(1168, 592);
             panel1.TabIndex = 33;
@@ -90,6 +91,7 @@
             // dgvProducto
             // 
             dgvProducto.AllowUserToAddRows = false;
+            dgvProducto.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
@@ -110,7 +112,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProducto.Columns.AddRange(new DataGridViewColumn[] { Codigo, Bodega, Anaquel, StockTotal, StockMinimo, Producto, Marca, ContenidoProducto, Presentacion, Categoria });
+            dgvProducto.Columns.AddRange(new DataGridViewColumn[] { Codigo, Bodega, Anaquel, StockTotal, StockMinimo, Producto, Marca, ContenidoProducto, Presentacion, Categoria, EstadoBodega });
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = Color.White;
             dataGridViewCellStyle5.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -124,7 +126,7 @@
             dgvProducto.EnableHeadersVisualStyles = false;
             dgvProducto.GridColor = Color.FromArgb(189, 215, 238);
             dgvProducto.Location = new Point(22, 21);
-            dgvProducto.Margin = new Padding(4, 4, 4, 4);
+            dgvProducto.Margin = new Padding(4);
             dgvProducto.Name = "dgvProducto";
             dgvProducto.ReadOnly = true;
             dgvProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -152,7 +154,7 @@
             cmbBodega.ForeColor = Color.DimGray;
             cmbBodega.FormattingEnabled = true;
             cmbBodega.Location = new Point(209, 94);
-            cmbBodega.Margin = new Padding(4, 4, 4, 4);
+            cmbBodega.Margin = new Padding(4);
             cmbBodega.Name = "cmbBodega";
             cmbBodega.Size = new Size(236, 31);
             cmbBodega.TabIndex = 34;
@@ -176,7 +178,7 @@
             panelBusqueda.Controls.Add(btnBuscar);
             panelBusqueda.Dock = DockStyle.Fill;
             panelBusqueda.Location = new Point(4, 4);
-            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.Margin = new Padding(4);
             panelBusqueda.Name = "panelBusqueda";
             panelBusqueda.Size = new Size(618, 48);
             panelBusqueda.TabIndex = 36;
@@ -187,7 +189,7 @@
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(19, 15);
-            txtBuscar.Margin = new Padding(4, 4, 4, 4);
+            txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
             txtBuscar.Size = new Size(498, 24);
@@ -202,7 +204,7 @@
             btnBuscar.FlatAppearance.BorderSize = 0;
             btnBuscar.FlatStyle = FlatStyle.Flat;
             btnBuscar.Location = new Point(534, 15);
-            btnBuscar.Margin = new Padding(4, 4, 4, 4);
+            btnBuscar.Margin = new Padding(4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(60, 25);
             btnBuscar.TabIndex = 0;
@@ -215,7 +217,7 @@
             cmbEstado.ForeColor = Color.DimGray;
             cmbEstado.FormattingEnabled = true;
             cmbEstado.Location = new Point(602, 94);
-            cmbEstado.Margin = new Padding(4, 4, 4, 4);
+            cmbEstado.Margin = new Padding(4);
             cmbEstado.Name = "cmbEstado";
             cmbEstado.Size = new Size(242, 31);
             cmbEstado.TabIndex = 37;
@@ -240,7 +242,7 @@
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
             btnSalir.Location = new Point(194, 4);
-            btnSalir.Margin = new Padding(4, 4, 4, 4);
+            btnSalir.Margin = new Padding(4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(182, 64);
             btnSalir.TabIndex = 39;
@@ -256,7 +258,7 @@
             btnCambiarBodega.ForeColor = Color.White;
             btnCambiarBodega.ImageAlign = ContentAlignment.TopCenter;
             btnCambiarBodega.Location = new Point(404, 6);
-            btnCambiarBodega.Margin = new Padding(4, 4, 4, 4);
+            btnCambiarBodega.Margin = new Padding(4);
             btnCambiarBodega.Name = "btnCambiarBodega";
             btnCambiarBodega.Size = new Size(112, 38);
             btnCambiarBodega.TabIndex = 40;
@@ -271,7 +273,7 @@
             panel2.Controls.Add(txtBodegaActual);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(630, 4);
-            panel2.Margin = new Padding(4, 4, 4, 4);
+            panel2.Margin = new Padding(4);
             panel2.MaximumSize = new Size(625, 125);
             panel2.Name = "panel2";
             panel2.Size = new Size(534, 48);
@@ -296,7 +298,7 @@
             txtBodegaActual.Enabled = false;
             txtBodegaActual.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBodegaActual.Location = new Point(151, 12);
-            txtBodegaActual.Margin = new Padding(4, 4, 4, 4);
+            txtBodegaActual.Margin = new Padding(4);
             txtBodegaActual.Name = "txtBodegaActual";
             txtBodegaActual.Size = new Size(245, 24);
             txtBodegaActual.TabIndex = 2;
@@ -309,7 +311,7 @@
             btnCrearBodega.ForeColor = Color.White;
             btnCrearBodega.ImageAlign = ContentAlignment.TopCenter;
             btnCrearBodega.Location = new Point(4, 4);
-            btnCrearBodega.Margin = new Padding(4, 4, 4, 4);
+            btnCrearBodega.Margin = new Padding(4);
             btnCrearBodega.Name = "btnCrearBodega";
             btnCrearBodega.Size = new Size(182, 64);
             btnCrearBodega.TabIndex = 42;
@@ -326,7 +328,7 @@
             tlp.Controls.Add(panelBusqueda, 0, 0);
             tlp.Controls.Add(panel2, 1, 0);
             tlp.Location = new Point(19, 15);
-            tlp.Margin = new Padding(4, 4, 4, 4);
+            tlp.Margin = new Padding(4);
             tlp.Name = "tlp";
             tlp.RowCount = 1;
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
@@ -339,7 +341,7 @@
             flowLayoutPanel1.Controls.Add(btnCrearBodega);
             flowLayoutPanel1.Controls.Add(btnSalir);
             flowLayoutPanel1.Location = new Point(15, 750);
-            flowLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
+            flowLayoutPanel1.Margin = new Padding(4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(386, 74);
             flowLayoutPanel1.TabIndex = 44;
@@ -352,7 +354,7 @@
             lstSugerencias.FormattingEnabled = true;
             lstSugerencias.ItemHeight = 24;
             lstSugerencias.Location = new Point(41, 60);
-            lstSugerencias.Margin = new Padding(4, 4, 4, 4);
+            lstSugerencias.Margin = new Padding(4);
             lstSugerencias.MaximumSize = new Size(999, 499);
             lstSugerencias.MinimumSize = new Size(205, 28);
             lstSugerencias.Name = "lstSugerencias";
@@ -367,7 +369,7 @@
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
             pnlLimpiarFiltros.Location = new Point(979, 79);
-            pnlLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
+            pnlLimpiarFiltros.Margin = new Padding(4);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
             pnlLimpiarFiltros.Size = new Size(208, 54);
             pnlLimpiarFiltros.TabIndex = 46;
@@ -380,7 +382,7 @@
             btnLimpiarFiltros.ForeColor = Color.White;
             btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
             btnLimpiarFiltros.Location = new Point(4, 6);
-            btnLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
+            btnLimpiarFiltros.Margin = new Padding(4);
             btnLimpiarFiltros.Name = "btnLimpiarFiltros";
             btnLimpiarFiltros.Size = new Size(146, 40);
             btnLimpiarFiltros.TabIndex = 34;
@@ -392,7 +394,7 @@
             // 
             pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
             pbxClean.Location = new Point(151, 10);
-            pbxClean.Margin = new Padding(4, 4, 4, 4);
+            pbxClean.Margin = new Padding(4);
             pbxClean.Name = "pbxClean";
             pbxClean.Size = new Size(56, 30);
             pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
@@ -402,7 +404,7 @@
             // Codigo
             // 
             Codigo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Codigo.DataPropertyName = "CodigoBarraProducto";
+            Codigo.DataPropertyName = "IdBodega";
             Codigo.HeaderText = "Código";
             Codigo.MinimumWidth = 130;
             Codigo.Name = "Codigo";
@@ -422,6 +424,7 @@
             // Anaquel
             // 
             Anaquel.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Anaquel.DataPropertyName = "Anaquel";
             Anaquel.HeaderText = "Anaquel";
             Anaquel.MinimumWidth = 6;
             Anaquel.Name = "Anaquel";
@@ -501,6 +504,15 @@
             Categoria.Name = "Categoria";
             Categoria.ReadOnly = true;
             // 
+            // EstadoBodega
+            // 
+            EstadoBodega.DataPropertyName = "EstadoBodega";
+            EstadoBodega.HeaderText = "Estado";
+            EstadoBodega.MinimumWidth = 6;
+            EstadoBodega.Name = "EstadoBodega";
+            EstadoBodega.ReadOnly = true;
+            EstadoBodega.Visible = false;
+            // 
             // frmInventarioBodega
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
@@ -517,7 +529,7 @@
             Controls.Add(cmbBodega);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "frmInventarioBodega";
             Text = "frmInventarioBodega";
             Load += frmInventarioBodega_Load;
@@ -569,5 +581,6 @@
         private DataGridViewTextBoxColumn ContenidoProducto;
         private DataGridViewTextBoxColumn Presentacion;
         private DataGridViewTextBoxColumn Categoria;
+        private DataGridViewCheckBoxColumn EstadoBodega;
     }
 }

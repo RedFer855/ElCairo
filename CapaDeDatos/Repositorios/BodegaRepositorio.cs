@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using static Supabase.Postgrest.Constants;
 using BCrypt.Net;
 using CapaDeDatos.Modelados.Inventario;
+using System.Diagnostics;
 
 namespace CapaDeDatos.Repositorios
 {
@@ -26,6 +27,55 @@ namespace CapaDeDatos.Repositorios
             return response.Models;
         }
 
+        public async Task<List<BodegaConsultaDepartamento>> obtenerBodegas()
+        {
+            try
+            {
+                var client = await GetClient();
+
+                var response = await client
+                    .From<BodegaConsultaDepartamento>()
+                    .Select("*, departamentos(*)")
+                    .Order("id_bodega", Supabase.Postgrest.Constants.Ordering.Ascending)
+                    .Get();
+
+                var bodegas = response?.Models ?? new List<BodegaConsultaDepartamento>();
+
+                return bodegas;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener clientes: {ex.Message}");
+                throw;
+            }
+        }
+        public async Task<List<BodegaVista>> ObtenerBodegasConDepartamento()
+        {
+            try
+            {
+                var client = await GetClient();
+                var response = await client
+                    .From<Bodega>()
+                    .Order("id_bodega", Ordering.Ascending)
+                    .Get();
+
+                // Mapear Bodega + Departamento a BodegaVista
+                return response.Models.Select(b => new BodegaVista
+                {
+                    IdBodega = b.IdBodega,
+                    NombreBodega = b.NombreBodega,
+                    NombreDepartamento = b.Departamento?.NombreDepartamento ?? "Sin departamento",
+                    DireccionSucursal = b.DireccionSucursal,
+                    TelefonoSucursal = b.TelefonoSucursal,
+                    EstadoBodega = b.EstadoBodega
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                throw;
+            }
+        }
         public static async Task<bool> IniciarSesion(string idBodega, string passwordInput)
         {
             try

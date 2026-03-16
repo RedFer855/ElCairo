@@ -10,10 +10,12 @@ using ModernMenuUI.ClasesUI.Extenciones;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
 using ModernMenuUI.ServiciosUI;
 using ModernMenuUI.ServiciosUI.GridFormatters;
+using Org.BouncyCastle.Crypto.Digests;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -50,11 +52,19 @@ namespace ModernMenuUI
 
         /// <summary>Lista maestra de inventario en memoria.</summary>
         private List<Inventario> _maestro = new();
+        /// <summary>Indica si el formulario está en modo solo lectura .</summary>
+        private bool _modoSoloLectura = false;
 
         /// <summary>
         /// Constructor: inicializa componentes, config de DataGridView y suscripciones de eventos locales.
         /// No realiza cargas de datos — eso ocurre en el Load.
         /// </summary>
+
+        public frmInventarioBodega(bool modoSoloLectura) : this()
+        {
+            _modoSoloLectura = modoSoloLectura;
+        }
+
         public frmInventarioBodega()
         {
             InitializeComponent();
@@ -78,6 +88,7 @@ namespace ModernMenuUI
             _permUI.RegistrarBoton(btnCambiarBodega, "update_inventario");
             _permUI.RegistrarBoton(btnCrearBodega, "update_inventario");
         }
+       
 
         /// <summary>
         /// Evento Load del formulario. Carga datos iniciales, bodegas, configura controles y suscribe a realtime.
@@ -86,6 +97,23 @@ namespace ModernMenuUI
         {
             Cursor = Cursors.WaitCursor;
 
+            ResetGrid();
+
+            if (_modoSoloLectura)
+            {
+                await AplicarModoSoloLectura();
+                await cargarbodegas();
+            }
+            else
+            {
+                await CargarNormal();
+            }
+
+            Cursor = Cursors.Default;
+        }
+
+        private async Task CargarNormal()
+        {
             await CargarDatos();
             await CargarBodegas();
             ConfigurarComboEstado();
@@ -100,6 +128,59 @@ namespace ModernMenuUI
             Cursor = Cursors.Default;
         }
 
+        /// <sumary>
+        /// Funcion para quitar cosas dentro del form 
+        /// </sumary> 
+        private async Task AplicarModoSoloLectura()
+        {
+            //dgv();
+            botones();
+        }
+
+        protected async void botones()
+        {
+            this.SuspendLayout();
+            btnCambiarBodega.Visible = false;
+            btnCrearBodega.Visible = false;
+            label1.Visible = false;
+            cmbEstado.Visible = false;
+            cmbBodega.Visible = false;
+            label8.Visible = false;
+            pnlLimpiarFiltros.Visible = false;
+            btnLimpiarFiltros.Visible = false;
+            pbxClean.Visible = false;
+            this.ResumeLayout();
+        }
+
+        protected async void dgv()
+        {
+            /*
+            dgvProducto.SuspendLayout();
+            // Ocultar columnas del DGV
+            dgvProducto.Columns["Anaquel"].Visible = false;
+            dgvProducto.Columns["StockMinimo"].Visible = false;
+            dgvProducto.Columns["StockTotal"].Visible = false;
+            dgvProducto.Columns["Categoria"].Visible = false;
+            dgvProducto.Columns["Presentacion"].Visible = false;
+            dgvProducto.Columns["EstadoBodega"].Visible = true;
+            dgvProducto.CellFormatting -= dgvProducto_CellFormatting;
+            //cambiar el property value     
+            dgvProducto.Columns["Producto"].DataPropertyName = "NombreDepartamento"; 
+            dgvProducto.Columns["Marca"].DataPropertyName = "DireccionSucursal";
+            dgvProducto.Columns["ContenidoProducto"].DataPropertyName = "TelefonoSucursal"; // ojo el guion bajo
+
+            //cambiar el nomrbe de HeaderText
+            dgvProducto.Columns["Producto"].HeaderText = "Nombre departamento";
+            dgvProducto.Columns["Marca"].HeaderText = "Direccion sucursal";
+            dgvProducto.Columns["ContenidoProducto"].HeaderText = "Telefono sucursal";
+
+            //cambiar a checkbox
+            //dgvProducto.Columns["ContenidoProducto"].ColumnType = new DataGridViewCheckBoxCell();
+            dgvProducto.ResumeLayout();*/
+
+
+        }
+
         /// <summary>
         /// Evento FormClosing: intenta desuscribir de realtime limpiamente.
         /// </summary>
@@ -107,6 +188,61 @@ namespace ModernMenuUI
         {
             try { await _rtInventario.DesuscribirAsync(); } catch { }
             try { await _rtBodega.DesuscribirAsync(); } catch { }
+        }
+
+        /// <summary>
+        /// Solo las bodegas con sus datos
+        /// </summary>
+
+        private async Task cargarbodegas()
+        {
+            //dgvProducto.SuspendLayout();
+
+            var lista = await _bodegaRepo.obtenerBodegas();
+            dgvProducto.Columns.Clear();
+            dgvProducto.CellFormatting -= dgvProducto_CellFormatting;
+            dgvProducto.AutoGenerateColumns = false;
+
+            dgvProducto.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                HeaderText = "Bodega",
+                DataPropertyName = "NombreBodega"
+            });
+
+            dgvProducto.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                HeaderText = "Departamento",
+                DataPropertyName = "NombreDepartamento"
+            });
+
+            dgvProducto.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                HeaderText = "Dirección",
+                DataPropertyName = "DireccionSucursal"
+            });
+
+            dgvProducto.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                HeaderText = "Teléfono",
+                DataPropertyName = "TelefonoSucursal"
+            });
+            dgvProducto.Columns.Add(new DataGridViewCheckBoxColumn()
+            {
+                HeaderText = "Estado",
+                DataPropertyName = "EstadoBodega"
+            });
+            dgvProducto.DataSource = lista;
+
+            //dgvProducto.ResumeLayout();
+
+        }
+
+        private void ResetGrid()
+        {
+            dgvProducto.DataSource = null;
+            dgvProducto.Columns.Clear();
+            dgvProducto.AutoGenerateColumns = false;
+            dgvProducto.CellFormatting -= dgvProducto_CellFormatting;
         }
 
         /// <summary>
