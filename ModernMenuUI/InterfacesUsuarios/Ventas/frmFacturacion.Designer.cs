@@ -405,6 +405,7 @@
             dgvCarrito.Size = new Size(1061, 376);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
+            dgvCarrito.CellContentClick += dgvCarrito_CellContentClick;
             dgvCarrito.CellMouseDown += dgvCarrito_CellMouseDown;
             dgvCarrito.CellMouseEnter += dgvCarrito_CellMouseEnter;
             dgvCarrito.CellMouseLeave += dgvCarrito_CellMouseLeave;

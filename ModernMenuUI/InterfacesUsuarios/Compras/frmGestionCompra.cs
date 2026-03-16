@@ -45,6 +45,7 @@ namespace ModernMenuUI
         private bool _usuarioSeleccionoConMouse = false;
         private string _sugerenciaActual = "";
         private const int MAX_SUGGESTIONS = 10;
+        private decimal precio_nuevo = 0;
         #endregion
 
         #region Constructor
@@ -268,7 +269,11 @@ namespace ModernMenuUI
             if (e.ColumnIndex == 4)
             {
                 if (dgvCarrito.CurrentRow != null)
+                {
                     dgvCarrito.Rows.RemoveAt(e.RowIndex);
+                    ActualizarTotales();
+                }
+
                 return;
             }
 
@@ -281,6 +286,7 @@ namespace ModernMenuUI
                     if (cantidad > 1)
                     {
                         dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
+                        ActualizarTotales();
                     }
                     else
                     {
@@ -296,9 +302,14 @@ namespace ModernMenuUI
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
                     if (cantidad < 400)
+                    {
                         dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad + 1;
+                        ActualizarTotales();
+                    }
                     else
+                    {
                         MessageBox.Show("La cantidad máxima por producto es 400.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 return;
             }
@@ -359,82 +370,85 @@ namespace ModernMenuUI
             int cantidadFinal = Math.Min(cantidadAgregar, 400);
 
             // Índices: 0=Código, 1=Desc, 2=Precio, 3=Cant, 4=Del, 5=Restar, 6=Sumar
-            dgvCarrito.Rows.Add(codigoBuscado, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
+            if(txtNuevoPrecio.Enabled == false)
+            {
+                dgvCarrito.Rows.Add(codigoBuscado, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
+            }
+            else
+            {
+                decimal precioNuevo = txtNuevoPrecio.Value;
+                dgvCarrito.Rows.Add(codigoBuscado, descripcion, precioNuevo, cantidadFinal, Eliminar, Restar, Sumar);
+            }
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (nudCantidad.Value <= 0)
-            {
-                MessageBox.Show("No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            var datoscompra = ((int)nudCantidad.Value, txtCodigo.Text, txtProducto.Text);
 
-            if (nudCantidad.Value > 400)
+            var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesCompra(datoscompra);
+            if (resultado.Error)
             {
-                MessageBox.Show("El límite de compra es de 400 unidades por producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
-            {
-                MessageBox.Show("Por favor seleccione un producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Validación de texto vacío
-            if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
-            {
-                MessageBox.Show("Por favor seleccione un producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(resultado.Mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // --- CAMBIO AQUÍ ---
             // Pasamos txtCodigo.Text directamente (es string), ya no lo convertimos a Int32
-            AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
+            if (txtNuevoPrecio.Enabled == false && !chkprecioNuevo.Checked)
+            {
+                AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
-            // Reiniciar controles
-            nudCantidad.Value = 1;
-            txtCodigo.Text = null;
-            txtProducto.Text = null;
-            dgvProductos.ClearSelection();
-            txtPrecio.Text = null;
-            ActualizarTotales();
-            ActualizarImagenCarrito();
+                // Reiniciar controles
+                nudCantidad.Value = 1;
+                //txtNuevoPrecio.Value = 1;
+                txtCodigo.Text = null;
+                txtProducto.Text = null;
+                dgvProductos.ClearSelection();
+                chkprecioNuevo.Checked = false;
+                txtPrecio.Text = null;
+                ActualizarTotales();
+                ActualizarImagenCarrito();
+
+            }
+            else
+            {
+                precio_nuevo = txtNuevoPrecio.Value;
+
+
+                if (precio_nuevo == 0)
+                {
+                    MessageBox.Show("Error, campo vacio", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
+
+                //reiniciar controles
+                
+                nudCantidad.Value = 1;
+                txtCodigo.Text = null;
+                txtProducto.Text = null;
+                dgvProductos.ClearSelection();
+                txtNuevoPrecio.Enabled = false;
+                //chkprecioNuevo.Checked = false;
+
+                //guardar datos en los subtotales
+                ActualizarTotales();
+            }
         }
         #endregion
 
         #region Registrar Compra
         private async void btnAgregarCompra_Click(object sender, EventArgs e)
         {
-
-            if (_proveedorSeleccionado == null)
-            {
-                MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-
-            if (dgvCarrito.Rows.Count == 0)
-            {
-                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            int proveedrId = _proveedorSeleccionado.IdProveedor;
+            
+            //Variables
 
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
             var Actual = supabase.Auth.CurrentUser;
-
-            if (Actual == null)
-            {
-                throw new Exception("No hay usuario autenticado en la sesión actual.");
-            }
-            int proveedorId = _proveedorSeleccionado.IdProveedor;
-
-
+            var idProveedor = _proveedorSeleccionado?.IdProveedor;
             var respEmpleado = await CompraRepositorio.getUserId(Actual.Id);
-
+            int idEmpleado = respEmpleado.IdUsuario;
+            int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
             var detalles = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Where(r => !r.IsNewRow)
@@ -444,45 +458,46 @@ namespace ModernMenuUI
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
 
+            //validaciones locales, estoy viendo como putas ponerlas en la capa de validaciones sin que se vuelva un quilombo, por ahora las dejo aquí
+            if (_proveedorSeleccionado == null)
+            {
+                MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (dgvCarrito.Rows.Count == 0)
+            {
+                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (Actual == null)
+            {
+                throw new Exception("No hay usuario autenticado en la sesión actual.");
+            }
+
+            
             if (respEmpleado == null)
             {
                 MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
                 return;
             }
 
-            int idEmpleado = respEmpleado.IdUsuario;
-            int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
-
-            var parametros = new
-            {
-                p_id_empleado = idEmpleado,
-                p_id_proveedor = proveedrId,
-                p_id_bodega = idBodega,
-                p_fecha_compra = DateTime.UtcNow,
-                p_detalles = detalles
-            };
-
             try
             {
-                if (!string.IsNullOrWhiteSpace(txtNuevoPrecio.Text))
+                MessageBox.Show($"Enabled: {txtNuevoPrecio.Enabled} | Checked: {chkprecioNuevo.Checked}");
+                if (precio_nuevo != 0)
                 {
-                    decimal precioNuevo = Convert.ToDecimal(txtNuevoPrecio.Text);
-
-                    if (!decimal.TryParse(txtNuevoPrecio.Text, out precioNuevo))
-                    {
-                        MessageBox.Show("Ingrese un precio válido.", "Advertencia",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
+                    decimal precioNuevo = txtNuevoPrecio.Value;
 
                     foreach (DataGridViewRow row in dgvCarrito.Rows)
                     {
                         if (row.IsNewRow) continue;
 
+                        this.Cursor = Cursors.WaitCursor;
+
                         string codigoBarra = row.Cells[0].Value.ToString();
                         int cantidadIngresar = Convert.ToInt32(row.Cells[3].Value);
 
+                        //Preparar parámetros para la función RPC
                         var parametrosPrecio = new
                         {
                             p_id_empleado = idEmpleado,
@@ -493,22 +508,23 @@ namespace ModernMenuUI
                         };
 
                         await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
-                        MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.","Compra ingresada",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.", "Compra ingresada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    var result = await supabase.Rpc<int>("registrar_compra_nuevo_inv", parametros);
-
-                    if (result == 0)
+                    //Preparar parámetros para la función RPC
+                    var parametros = new
                     {
-                        MessageBox.Show("La función no retornó un id de compra. Puede haber ocurrido un error interno.");
-                        return;
-                    }
-
-                    //await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
-
+                        p_id_empleado = idEmpleado,
+                        p_id_proveedor = idProveedor,
+                        p_id_bodega = idBodega,
+                        p_fecha_compra = DateTime.UtcNow,
+                        p_detalles = detalles
+                    };
+                    await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
+                    
                     MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -518,20 +534,28 @@ namespace ModernMenuUI
             }
             finally
             {
-                this.Cursor = Cursors.Default;
-                dgvCarrito.Rows.Clear();
-                _proveedorSeleccionado = null;
-                txtNombreProveedor.Text = "";
-                txtNuevoPrecio.Text = "";
-                txtSubTotal.Text = "0.00";
-                txtImpuesto.Text = "0.00";
-                txtTotal.Text = "0.00";
-                nudCantidad.Value = 1;
-                _listaMaestraProductos.Clear();
-                dgvProductos.DataSource = null;
-                dgvProductos.Rows.Clear();
-                ActualizarImagenCarrito();
+                limpiarcosas();
             }
+        }
+        private void limpiarcosas()
+        {
+            this.Cursor = Cursors.Default;
+            dgvCarrito.Rows.Clear();
+            _proveedorSeleccionado = null;
+            txtNombreProveedor.Text = "";
+            txtSubTotal.Text = "0.00";
+            txtImpuesto.Text = "0.00";
+            txtTotal.Text = "0.00";
+            nudCantidad.Value = 1;
+            _listaMaestraProductos.Clear();
+            dgvProductos.DataSource = null;
+            dgvProductos.Rows.Clear();
+            chkprecioNuevo.CheckedChanged -= chkprecioNuevo_CheckedChanged;
+            chkprecioNuevo.Checked = false;
+            chkprecioNuevo.CheckedChanged += chkprecioNuevo_CheckedChanged;
+            txtNuevoPrecio.Enabled = false;
+            txtNuevoPrecio.Value = 1;
+            ActualizarImagenCarrito();
         }
         #endregion
 
@@ -821,14 +845,16 @@ namespace ModernMenuUI
                 // 5. Actualizar grid
                 _listaMaestraProductos = productos;
                 RefrescarGrid();
-
-                // Opcional (si quieres mostrar mensaje)
-                MessageBox.Show(
-                    $"Proveedor seleccionado:\nID: {_proveedorSeleccionado.IdProveedor}\nNombre: {_proveedorSeleccionado.NombreProveedor}",
-                    "Proveedor encontrado",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                /*
+                 *Esto es solo si se quiere mostrar el mensaje de que se selecciono un proveedor
+                 *
+                 *   MessageBox.Show(
+                 *       $"Proveedor seleccionado:\nID: {_proveedorSeleccionado.IdProveedor}\nNombre: {_proveedorSeleccionado.NombreProveedor}",
+                 *       "Proveedor encontrado",
+                 *       MessageBoxButtons.OK,
+                 *       MessageBoxIcon.Information
+                 *   );
+                 */
             }
             finally
             {
@@ -845,8 +871,8 @@ namespace ModernMenuUI
                 if (result == DialogResult.OK)
                 {
                     var prov = frm.ProveedorSeleccionado;
-                    txtNombreProveedor.Text = prov.NombreProveedor;       
-                    await HandleBuscarProveedorAsync(); 
+                    txtNombreProveedor.Text = prov.NombreProveedor;
+                    await HandleBuscarProveedorAsync();
                 }
             }
 
@@ -926,6 +952,29 @@ namespace ModernMenuUI
         private async void txtBuscarProv_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void chkprecioNuevo_CheckedChanged(object sender, EventArgs e)
+        {
+            if(_proveedorSeleccionado == null)
+            {
+                chkprecioNuevo.CheckedChanged -= chkprecioNuevo_CheckedChanged;
+                chkprecioNuevo.Checked = false;
+                chkprecioNuevo.CheckedChanged += chkprecioNuevo_CheckedChanged;
+
+                MessageBox.Show("Porfavor seleccione un proveedor.","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                txtNuevoPrecio.Enabled = chkprecioNuevo.Checked;
+                if (!chkprecioNuevo.Checked)
+                {
+                    txtNuevoPrecio.Value = 1;
+                    txtNuevoPrecio.Enabled = false;
+                }
+            }
+            
         }
     }
 

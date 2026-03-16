@@ -45,8 +45,8 @@ namespace ModernMenuUI
         private ClienteRepositorio _clienteRepo = new ClienteRepositorio();
         private List<Cliente> _todosLosClientes = new List<Cliente>(); // La caché
         private Cliente _clienteSeleccionado = null; // Aquí guardaremos al elegido
-        
-      
+
+
 
         public frmFacturacion()
         {
@@ -862,7 +862,7 @@ namespace ModernMenuUI
                 MessageBox.Show($"¡Venta registrada y factura generada para {_clienteSeleccionado.NombreCliente}! 😄",
                                 "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-               
+
 
                 await CargarProductosDeBodega(); // Actualiza stock en tiempo real
             }
@@ -889,7 +889,7 @@ namespace ModernMenuUI
 
         private void btnImprimirCotizacion_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
@@ -912,5 +912,9 @@ namespace ModernMenuUI
             }
         }
 
+        private void dgvCarrito_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

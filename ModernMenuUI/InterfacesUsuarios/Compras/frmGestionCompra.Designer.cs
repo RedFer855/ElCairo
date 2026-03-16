@@ -86,7 +86,8 @@
             Stock = new DataGridViewTextBoxColumn();
             Codigos = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
-            txtNuevoPrecio = new TextBox();
+            txtNuevoPrecio = new NumericUpDown();
+            chkprecioNuevo = new CheckBox();
             label10 = new Label();
             nudCantidad = new NumericUpDown();
             label9 = new Label();
@@ -115,6 +116,7 @@
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtNuevoPrecio).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
             SuspendLayout();
             // 
@@ -759,6 +761,7 @@
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
             panel2.Controls.Add(txtNuevoPrecio);
+            panel2.Controls.Add(chkprecioNuevo);
             panel2.Controls.Add(label10);
             panel2.Controls.Add(nudCantidad);
             panel2.Controls.Add(label9);
@@ -779,13 +782,30 @@
             // 
             // txtNuevoPrecio
             // 
-            txtNuevoPrecio.BorderStyle = BorderStyle.None;
-            txtNuevoPrecio.Font = new Font("Itim", 13F);
-            txtNuevoPrecio.Location = new Point(144, 170);
+            txtNuevoPrecio.DecimalPlaces = 2;
+            txtNuevoPrecio.Enabled = false;
+            txtNuevoPrecio.Font = new Font("Itim", 16.25F);
+            txtNuevoPrecio.ForeColor = Color.FromArgb(87, 99, 110);
+            txtNuevoPrecio.Location = new Point(137, 164);
             txtNuevoPrecio.Margin = new Padding(4);
+            txtNuevoPrecio.Maximum = new decimal(new int[] { 400, 0, 0, 0 });
+            txtNuevoPrecio.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             txtNuevoPrecio.Name = "txtNuevoPrecio";
-            txtNuevoPrecio.Size = new Size(240, 26);
-            txtNuevoPrecio.TabIndex = 23;
+            txtNuevoPrecio.Size = new Size(81, 40);
+            txtNuevoPrecio.TabIndex = 25;
+            txtNuevoPrecio.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // chkprecioNuevo
+            // 
+            chkprecioNuevo.AutoSize = true;
+            chkprecioNuevo.ForeColor = Color.FromArgb(87, 99, 110);
+            chkprecioNuevo.Location = new Point(233, 164);
+            chkprecioNuevo.Name = "chkprecioNuevo";
+            chkprecioNuevo.Size = new Size(136, 40);
+            chkprecioNuevo.TabIndex = 24;
+            chkprecioNuevo.Text = "¿Desea agregar\r\nun precio nuevo?";
+            chkprecioNuevo.UseVisualStyleBackColor = true;
+            chkprecioNuevo.CheckedChanged += chkprecioNuevo_CheckedChanged;
             // 
             // label10
             // 
@@ -803,7 +823,7 @@
             // 
             nudCantidad.Font = new Font("Itim", 16.25F);
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
-            nudCantidad.Location = new Point(110, 210);
+            nudCantidad.Location = new Point(110, 232);
             nudCantidad.Margin = new Padding(4);
             nudCantidad.Maximum = new decimal(new int[] { 400, 0, 0, 0 });
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -817,7 +837,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.ForeColor = Color.FromArgb(87, 99, 110);
-            label9.Location = new Point(12, 11);
+            label9.Location = new Point(12, 15);
             label9.Margin = new Padding(4, 0, 4, 0);
             label9.Name = "label9";
             label9.Size = new Size(244, 33);
@@ -853,7 +873,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(87, 99, 110);
-            label3.Location = new Point(12, 221);
+            label3.Location = new Point(12, 243);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(90, 23);
@@ -917,7 +937,7 @@
             btnAgregar.Font = new Font("Itim", 18.25F);
             btnAgregar.ForeColor = SystemColors.ButtonFace;
             btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(206, 210);
+            btnAgregar.Location = new Point(199, 222);
             btnAgregar.Margin = new Padding(4);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Padding = new Padding(50, 0, 0, 0);
@@ -991,6 +1011,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)txtNuevoPrecio).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
             ResumeLayout(false);
         }
@@ -1047,7 +1068,6 @@
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
         private Label label10;
-        private TextBox txtNuevoPrecio;
         private DataGridViewTextBoxColumn CodigoBarra;
         private DataGridViewTextBoxColumn Producto;
         private DataGridViewTextBoxColumn Marca;
@@ -1055,5 +1075,7 @@
         private DataGridViewTextBoxColumn Precio;
         private DataGridViewTextBoxColumn Stock;
         private DataGridViewTextBoxColumn Codigos;
+        private CheckBox chkprecioNuevo;
+        private NumericUpDown txtNuevoPrecio;
     }
 }

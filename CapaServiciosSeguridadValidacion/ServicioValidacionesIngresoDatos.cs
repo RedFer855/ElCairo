@@ -1,5 +1,6 @@
 ﻿
 using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Compras;
 using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
@@ -192,7 +193,45 @@ namespace CapaServiciosSeguridadValidacion
             return (false, "");
         }
 
+        public static readonly List<Func<(int Cantidad, string codigo, string producto), (bool Error, string Mensaje)>> ListaValidacionesCompra =
+            new List<Func<(int Cantidad, string codigo, string producto), (bool Error, string Mensaje)>>
+            {
+                cr => ValidarCantidadPositiva(cr.Cantidad,"Cantidad"),
+                cr => ValidarCantidadMaxima(cr.Cantidad,"Cantidad"),
+                cr => ValidarProductoSeleccionado(cr.codigo, cr.producto),
+            };
+        public static (bool Error, string Mensaje) EjecutarValidacionesCompra((int Cantidad, string codigo, string producto) compra)
+        {
+            foreach (var regla in ListaValidacionesCompra)
+            {
+                var resultado = regla(compra);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
+
+
         // --- Validaciones individuales ---
+        public static (bool Error, string Mensaje) ValidarCantidadPositiva(decimal cantidad, string nombrecampo)
+        {
+            if (cantidad <= 0)
+                return (true, $"La {nombrecampo} no puede ser negativa o igual a 0");
+            return (false, "");
+        }
+
+        public static (bool Error, string Mensaje) ValidarCantidadMaxima(decimal cantidad, string nombrecampo)
+        {
+            if (cantidad > 400)
+                return (true, $"La {nombrecampo} limite es de 400");
+            return (false, "");
+        }
+
+        public static (bool Error, string Mensaje) ValidarProductoSeleccionado(string codigo, string producto)
+        {
+            if (string.IsNullOrWhiteSpace(codigo) || string.IsNullOrWhiteSpace(producto))
+                return (true, "Por favor seleccione un producto");
+            return (false, "");
+        }
         public static (bool Error, string Mensaje) ValidarCampoVacio(string valor, string nombrecampo)
             => string.IsNullOrWhiteSpace(valor)
                 ? (true, $"Debe ingresar {nombrecampo}.")
