@@ -688,7 +688,7 @@ namespace ModernMenuUI
         private void btnBodegas_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega(modoSoloLectura: true));
+            ManejarFormularios.Instancia.AbrirFormulario(new frmBodegas());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "BODEGAS");
         }
 

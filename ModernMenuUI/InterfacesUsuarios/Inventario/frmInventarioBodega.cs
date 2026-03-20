@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Modelados.Inventario;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaDominio.Enums;
@@ -11,6 +12,7 @@ using ModernMenuUI.InterfacesUsuarios.Inventario;
 using ModernMenuUI.ServiciosUI;
 using ModernMenuUI.ServiciosUI.GridFormatters;
 using Org.BouncyCastle.Crypto.Digests;
+using Supabase.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -95,21 +97,19 @@ namespace ModernMenuUI
         /// </summary>
         private async void frmInventarioBodega_Load(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
+            this.Cursor = Cursors.WaitCursor;
+            // Cargar datos iniciales
+            await CargarDatos();
+            await CargarBodegas(); // Carga el Grid
+            ConfigurarComboEstado();
 
-            ResetGrid();
+            // Iniciar suscripciones Realtime
+            txtBodegaActual.Text = ServicioSesionUsuario.ObtenerNombreBodega();
 
-            if (_modoSoloLectura)
-            {
-                await AplicarModoSoloLectura();
-                await cargarbodegas();
-            }
-            else
-            {
-                await CargarNormal();
-            }
+            await _rtInventario.SuscribirAsync();
+            await _rtBodega.SuscribirAsync();
 
-            Cursor = Cursors.Default;
+
         }
 
         private async Task CargarNormal()
