@@ -30,7 +30,6 @@
         {
             panel1 = new Panel();
             btnGuardarProducto = new Button();
-            label3 = new Label();
             nudPrecioCosto = new NumericUpDown();
             label20 = new Label();
             nudPrecioCompra = new NumericUpDown();
@@ -38,7 +37,7 @@
             nudGanancia = new NumericUpDown();
             label2 = new Label();
             nudPrecioFinal = new NumericUpDown();
-            groupBox1 = new GroupBox();
+            gbxTipoGanancia = new GroupBox();
             btnPrecioFijoInfo = new Button();
             btnGananciaFijaInfo = new Button();
             rbPrecio = new RadioButton();
@@ -49,14 +48,13 @@
             ((System.ComponentModel.ISupportInitialize)nudPrecioCompra).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudGanancia).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudPrecioFinal).BeginInit();
-            groupBox1.SuspendLayout();
+            gbxTipoGanancia.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(btnGuardarProducto);
-            panel1.Controls.Add(label3);
             panel1.Controls.Add(nudPrecioCosto);
             panel1.Controls.Add(label20);
             panel1.Controls.Add(nudPrecioCompra);
@@ -64,13 +62,14 @@
             panel1.Controls.Add(nudGanancia);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(nudPrecioFinal);
-            panel1.Controls.Add(groupBox1);
+            panel1.Controls.Add(gbxTipoGanancia);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Fill;
             panel1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            panel1.ForeColor = Color.FromArgb(64, 64, 64);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(590, 481);
+            panel1.Size = new Size(590, 354);
             panel1.TabIndex = 0;
             // 
             // btnGuardarProducto
@@ -81,24 +80,13 @@
             btnGuardarProducto.Font = new Font("Itim", 11.9999981F);
             btnGuardarProducto.ForeColor = SystemColors.ButtonFace;
             btnGuardarProducto.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarProducto.Location = new Point(65, 409);
+            btnGuardarProducto.Location = new Point(126, 302);
             btnGuardarProducto.Name = "btnGuardarProducto";
-            btnGuardarProducto.Size = new Size(89, 40);
+            btnGuardarProducto.Size = new Size(329, 40);
             btnGuardarProducto.TabIndex = 72;
             btnGuardarProducto.Text = "Guardar";
             btnGuardarProducto.UseVisualStyleBackColor = false;
             btnGuardarProducto.Click += btnGuardarProducto_Click;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.Black;
-            label3.Location = new Point(65, 24);
-            label3.Name = "label3";
-            label3.Size = new Size(312, 29);
-            label3.TabIndex = 68;
-            label3.Text = "Ingreso de Precio y Ganancia";
             // 
             // nudPrecioCosto
             // 
@@ -106,7 +94,7 @@
             nudPrecioCosto.Enabled = false;
             nudPrecioCosto.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nudPrecioCosto.ForeColor = Color.DimGray;
-            nudPrecioCosto.Location = new Point(239, 152);
+            nudPrecioCosto.Location = new Point(233, 61);
             nudPrecioCosto.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             nudPrecioCosto.Name = "nudPrecioCosto";
             nudPrecioCosto.Size = new Size(275, 25);
@@ -117,8 +105,8 @@
             // 
             label20.AutoSize = true;
             label20.Font = new Font("Itim", 11.9999981F);
-            label20.ForeColor = Color.Black;
-            label20.Location = new Point(76, 153);
+            label20.ForeColor = Color.FromArgb(64, 64, 64);
+            label20.Location = new Point(70, 62);
             label20.Name = "label20";
             label20.Size = new Size(119, 19);
             label20.TabIndex = 70;
@@ -129,7 +117,7 @@
             nudPrecioCompra.DecimalPlaces = 2;
             nudPrecioCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nudPrecioCompra.ForeColor = Color.DimGray;
-            nudPrecioCompra.Location = new Point(239, 114);
+            nudPrecioCompra.Location = new Point(233, 23);
             nudPrecioCompra.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             nudPrecioCompra.Name = "nudPrecioCompra";
             nudPrecioCompra.Size = new Size(275, 25);
@@ -140,8 +128,8 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Itim", 11.9999981F);
-            label11.ForeColor = Color.Black;
-            label11.Location = new Point(65, 115);
+            label11.ForeColor = Color.FromArgb(64, 64, 64);
+            label11.Location = new Point(59, 24);
             label11.Name = "label11";
             label11.Size = new Size(133, 19);
             label11.TabIndex = 67;
@@ -150,20 +138,20 @@
             // nudGanancia
             // 
             nudGanancia.DecimalPlaces = 2;
-            nudGanancia.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nudGanancia.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nudGanancia.ForeColor = Color.DimGray;
             nudGanancia.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudGanancia.Location = new Point(239, 288);
+            nudGanancia.Location = new Point(233, 209);
             nudGanancia.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             nudGanancia.Name = "nudGanancia";
-            nudGanancia.Size = new Size(275, 30);
+            nudGanancia.Size = new Size(275, 27);
             nudGanancia.TabIndex = 63;
             nudGanancia.ValueChanged += nudGanancia_ValueChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(68, 341);
+            label2.Location = new Point(101, 259);
             label2.Name = "label2";
             label2.Size = new Size(88, 18);
             label2.TabIndex = 62;
@@ -172,34 +160,34 @@
             // nudPrecioFinal
             // 
             nudPrecioFinal.DecimalPlaces = 2;
-            nudPrecioFinal.Font = new Font("Itim", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nudPrecioFinal.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nudPrecioFinal.ForeColor = Color.DimGray;
             nudPrecioFinal.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudPrecioFinal.Location = new Point(239, 335);
+            nudPrecioFinal.Location = new Point(233, 256);
             nudPrecioFinal.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             nudPrecioFinal.Name = "nudPrecioFinal";
-            nudPrecioFinal.Size = new Size(275, 30);
+            nudPrecioFinal.Size = new Size(275, 27);
             nudPrecioFinal.TabIndex = 61;
             nudPrecioFinal.ValueChanged += nudPrecioFinal_ValueChanged;
             // 
-            // groupBox1
+            // gbxTipoGanancia
             // 
-            groupBox1.Controls.Add(btnPrecioFijoInfo);
-            groupBox1.Controls.Add(btnGananciaFijaInfo);
-            groupBox1.Controls.Add(rbPrecio);
-            groupBox1.Controls.Add(rbGanancia);
-            groupBox1.Location = new Point(68, 204);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(503, 78);
-            groupBox1.TabIndex = 2;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Seleccione un Modo de Ganancia:";
+            gbxTipoGanancia.Controls.Add(btnPrecioFijoInfo);
+            gbxTipoGanancia.Controls.Add(btnGananciaFijaInfo);
+            gbxTipoGanancia.Controls.Add(rbPrecio);
+            gbxTipoGanancia.Controls.Add(rbGanancia);
+            gbxTipoGanancia.Location = new Point(62, 113);
+            gbxTipoGanancia.Name = "gbxTipoGanancia";
+            gbxTipoGanancia.Size = new Size(459, 78);
+            gbxTipoGanancia.TabIndex = 2;
+            gbxTipoGanancia.TabStop = false;
+            gbxTipoGanancia.Text = "Seleccione un Modo de Ganancia:";
             // 
             // btnPrecioFijoInfo
             // 
             btnPrecioFijoInfo.BackColor = Color.FromArgb(0, 108, 190);
             btnPrecioFijoInfo.ForeColor = Color.White;
-            btnPrecioFijoInfo.Location = new Point(398, 38);
+            btnPrecioFijoInfo.Location = new Point(290, 40);
             btnPrecioFijoInfo.Name = "btnPrecioFijoInfo";
             btnPrecioFijoInfo.Size = new Size(24, 24);
             btnPrecioFijoInfo.TabIndex = 3;
@@ -211,7 +199,7 @@
             // 
             btnGananciaFijaInfo.BackColor = Color.FromArgb(0, 108, 190);
             btnGananciaFijaInfo.ForeColor = Color.White;
-            btnGananciaFijaInfo.Location = new Point(136, 38);
+            btnGananciaFijaInfo.Location = new Point(117, 38);
             btnGananciaFijaInfo.Name = "btnGananciaFijaInfo";
             btnGananciaFijaInfo.Size = new Size(24, 24);
             btnGananciaFijaInfo.TabIndex = 2;
@@ -222,12 +210,12 @@
             // rbPrecio
             // 
             rbPrecio.AutoSize = true;
-            rbPrecio.Location = new Point(298, 38);
+            rbPrecio.Location = new Point(171, 40);
             rbPrecio.Name = "rbPrecio";
-            rbPrecio.Size = new Size(94, 22);
+            rbPrecio.Size = new Size(113, 22);
             rbPrecio.TabIndex = 1;
             rbPrecio.TabStop = true;
-            rbPrecio.Text = "Precio Fijo";
+            rbPrecio.Text = "Ganancia Fijo";
             rbPrecio.UseVisualStyleBackColor = true;
             rbPrecio.CheckedChanged += rbPrecio_CheckedChanged;
             // 
@@ -236,17 +224,17 @@
             rbGanancia.AutoSize = true;
             rbGanancia.Location = new Point(17, 38);
             rbGanancia.Name = "rbGanancia";
-            rbGanancia.Size = new Size(113, 22);
+            rbGanancia.Size = new Size(94, 22);
             rbGanancia.TabIndex = 0;
             rbGanancia.TabStop = true;
-            rbGanancia.Text = "Ganancia Fija";
+            rbGanancia.Text = "Precio Fijo";
             rbGanancia.UseVisualStyleBackColor = true;
             rbGanancia.CheckedChanged += rbGanancia_CheckedChanged;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(68, 294);
+            label1.Location = new Point(103, 212);
             label1.Name = "label1";
             label1.Size = new Size(86, 18);
             label1.TabIndex = 1;
@@ -256,28 +244,29 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(590, 481);
+            ClientSize = new Size(590, 354);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmAgregarEditarGananciaModo";
             Text = "Ganancia de Productos";
+            Load += frmAgregarEditarGananciaModo_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nudPrecioCosto).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudPrecioCompra).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudGanancia).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudPrecioFinal).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gbxTipoGanancia.ResumeLayout(false);
+            gbxTipoGanancia.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panel1;
-        private GroupBox groupBox1;
+        private GroupBox gbxTipoGanancia;
         private TrackBar trackBar1;
         private Button btnPrecioFijoInfo;
         private Button btnGananciaFijaInfo;
@@ -291,7 +280,6 @@
         private Label label20;
         private NumericUpDown nudPrecioCompra;
         private Label label11;
-        private Label label3;
         private Button btnGuardarProducto;
     }
 }

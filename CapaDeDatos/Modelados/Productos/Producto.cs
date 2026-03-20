@@ -47,6 +47,9 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("precio_compra")]
         public decimal PrecioCompra { get; set; }
 
+        [Column("tipo_calculo_ganancia_producto")]
+        public int TipoCalculoGananciaProducto { get; set; }
+
         [Column("precio_costo")]
         public decimal PrecioCosto { get; set; }
 

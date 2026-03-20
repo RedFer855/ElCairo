@@ -7,6 +7,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
     public partial class frmAgregarEditarGananciaModo : Form
     {
+        private readonly bool _modoEdicion;
+        private readonly ConfiguracionGananciaProducto _datosIniciales;
         private bool actualizando = false;
         private readonly decimal TOLERANCIA = 0.005m;
 
@@ -15,7 +17,44 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         public frmAgregarEditarGananciaModo()
         {
             InitializeComponent();
+            _modoEdicion = false;
+            _datosIniciales = null;
             ConfigurarNudPorDefecto();
+        }
+
+        public frmAgregarEditarGananciaModo(bool modoEdicion, ConfiguracionGananciaProducto datosIniciales)
+        {
+            InitializeComponent();
+            _modoEdicion = modoEdicion;
+            _datosIniciales = datosIniciales;
+            ConfigurarNudPorDefecto();
+        }
+
+        private void frmAgregarEditarGananciaModo_Load(object sender, EventArgs e)
+        {
+            if (_modoEdicion && _datosIniciales != null)
+            {
+                actualizando = true;
+                try
+                {
+                    AsignarNudSeguro(nudPrecioCompra, _datosIniciales.PrecioCompra);
+                    AsignarNudSeguro(nudPrecioCosto, _datosIniciales.PrecioCosto);
+                    AsignarNudSeguro(nudGanancia, _datosIniciales.PorcentajeGanancia);
+                    AsignarNudSeguro(nudPrecioFinal, _datosIniciales.PrecioFinal);
+
+                    rbGanancia.Checked = _datosIniciales.TipoCalculoGananciaProducto == 1;
+                    rbPrecio.Checked = _datosIniciales.TipoCalculoGananciaProducto == 2;
+                }
+                finally
+                {
+                    actualizando = false;
+                }
+
+                nudGanancia.Enabled = rbGanancia.Checked;
+                nudPrecioFinal.Enabled = rbPrecio.Checked;
+            }
+
+            Calcular();
         }
 
         private void ConfigurarNudPorDefecto()
@@ -49,8 +88,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             if (actualizando) return;
 
             actualizando = true;
-            AsignarNudSeguro(nudPrecioCosto, nudPrecioCompra.Value);
-            actualizando = false;
+            try
+            {
+                AsignarNudSeguro(nudPrecioCosto, nudPrecioCompra.Value);
+            }
+            finally
+            {
+                actualizando = false;
+            }
 
             Calcular();
         }
@@ -289,22 +334,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 TipoCalculoGananciaProducto = tipoCalculo
             };
 
-            MessageBox.Show(
-                "Datos enviados en el objeto:\n\n" +
-                $"PrecioCompra: {DatosGanancia.PrecioCompra:0.00}\n" +
-                $"PrecioCosto: {DatosGanancia.PrecioCosto:0.00}\n" +
-                $"PorcentajeGanancia: {DatosGanancia.PorcentajeGanancia:0.00}\n" +
-                $"PrecioFinal: {DatosGanancia.PrecioFinal:0.00}\n" +
-                $"UsaModoGanancia: {DatosGanancia.UsaModoGanancia}\n" +
-                $"UsaModoPrecio: {DatosGanancia.UsaModoPrecio}\n" +
-                $"TipoCalculoGananciaProducto: {DatosGanancia.TipoCalculoGananciaProducto}",
-                "Objeto creado",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }
