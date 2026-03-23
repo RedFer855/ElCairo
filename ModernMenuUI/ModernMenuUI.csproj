@@ -31,10 +31,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CapaDeAplicacion\CapaDeAplicacion.csproj" />
     <ProjectReference Include="..\CapaDeDatos\CapaDeDatos.csproj" />
     <ProjectReference Include="..\CapaDominio\CapaDominio.csproj" />
     <ProjectReference Include="..\CapaServiciosSeguridadValidacion\CapaServiciosSeguridadValidacion.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CapaDeAplicacion">
+      <HintPath>..\CapaDeAplicacion\obj\Release\net8.0\CapaDeAplicacion.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
