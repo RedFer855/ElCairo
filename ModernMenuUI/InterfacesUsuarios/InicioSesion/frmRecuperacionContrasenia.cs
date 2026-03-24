@@ -64,5 +64,10 @@ namespace ModernMenuUI
             lblRegresar.ForeColor = Color.DimGray;
             lblRegresar.Font = new Font(lblRegresar.Font, FontStyle.Regular);
         }
+
+        private void panBarraControl_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
