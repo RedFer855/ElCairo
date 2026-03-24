@@ -58,7 +58,6 @@
             lblTitulo.Size = new Size(349, 24);
             lblTitulo.TabIndex = 7;
             lblTitulo.Text = "RECUPERACIÓN DE CONTRASEÑA";
-            lblTitulo.Click += this.lblTitulo_Click;
             lblTitulo.MouseDown += lblTitulo_MouseDown;
             // 
             // btnAcceder
@@ -74,7 +73,6 @@
             btnAcceder.TabIndex = 0;
             btnAcceder.Text = "ENVIAR CÓDIGO";
             btnAcceder.UseVisualStyleBackColor = false;
-            btnAcceder.Click += this.btnAcceder_Click;
             // 
             // pbxLogoEmpresa
             // 
@@ -87,7 +85,6 @@
             pbxLogoEmpresa.SizeMode = PictureBoxSizeMode.Zoom;
             pbxLogoEmpresa.TabIndex = 9;
             pbxLogoEmpresa.TabStop = false;
-            pbxLogoEmpresa.Click += this.pbxLogoEmpresa_Click;
             pbxLogoEmpresa.MouseDown += pbxLogoEmpresa_MouseDown;
             // 
             // panLogo
@@ -100,7 +97,6 @@
             panLogo.Name = "panLogo";
             panLogo.Size = new Size(250, 450);
             panLogo.TabIndex = 3;
-            panLogo.Paint += this.panLogo_Paint;
             // 
             // panDatosIngreso
             // 
@@ -115,7 +111,6 @@
             panDatosIngreso.Name = "panDatosIngreso";
             panDatosIngreso.Size = new Size(550, 450);
             panDatosIngreso.TabIndex = 4;
-            panDatosIngreso.Paint += this.panDatosIngreso_Paint;
             panDatosIngreso.MouseDown += panDatosIngreso_MouseDown;
             // 
             // lblRegresar
@@ -143,7 +138,6 @@
             txtUsuario.Size = new Size(420, 25);
             txtUsuario.TabIndex = 7;
             txtUsuario.Text = "Correo...";
-            txtUsuario.TextChanged += this.txtUsuario_TextChanged;
             // 
             // panel3
             // 
@@ -153,7 +147,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(420, 2);
             panel3.TabIndex = 1;
-            panel3.Paint += this.panel3_Paint;
             // 
             // panel4
             // 
@@ -162,7 +155,6 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(420, 2);
             panel4.TabIndex = 2;
-            panel4.Paint += this.panel4_Paint;
             // 
             // btnCerrar
             // 
