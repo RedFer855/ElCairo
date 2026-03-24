@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Security.Credentials;
 using Windows.Security.Credentials.UI;
+using System.Security.Principal;
 
 namespace ModernMenuUI.ServiciosUI
 {
@@ -28,6 +29,15 @@ namespace ModernMenuUI.ServiciosUI
                 return (int)resultado == 0;
             }
             catch { return false; }
+        }
+        public string ObtenerSidWindowsActual()
+        {
+            try
+            {
+                // Retorna el identificador único del usuario que tiene la sesión iniciada en Windows
+                return WindowsIdentity.GetCurrent().User.Value;
+            }
+            catch { return string.Empty; }
         }
 
         public void GuardarTokenSeguro(string emailUsuario, string refreshToken)

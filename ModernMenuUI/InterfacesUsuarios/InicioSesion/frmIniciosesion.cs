@@ -85,16 +85,28 @@ namespace ModernMenuUI
                             var contexto = await validacionRepo.ConstruirContexto(uuidUsuario);
 
                             ServicioSesionUsuario.IniciarSesion(Actual, contexto);
+
+                            // --- PARCHE DE SEGURIDAD: CONSENTIMIENTO Y VINCULACIÓN ---
                             try
                             {
-                                if (supabase.Auth.CurrentSession != null)
+                                if (supabase.Auth.CurrentSession != null && await _biometrico.EsPosibleUsarHuella())
                                 {
-                                    // Guardamos el token FRESCO que acabamos de recibir
-                                    _biometrico.GuardarTokenSeguro(Actual.Email, supabase.Auth.CurrentSession.RefreshToken);
+                                    // Preguntamos explícitamente al usuario [Mejora de Privacidad]
+                                    var result = MessageBox.Show(
+                                        "¿Desea habilitar el inicio de sesión con huella en este equipo?",
+                                        "Configuración Biométrica",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question);
 
-                                    // Recordamos el email
-                                    Properties.Settings.Default.UltimoUsuario = Actual.Email;
-                                    Properties.Settings.Default.Save();
+                                    if (result == DialogResult.Yes)
+                                    {
+                                        _biometrico.GuardarTokenSeguro(Actual.Email, supabase.Auth.CurrentSession.RefreshToken);
+
+                                        // Guardamos email y el SID de Windows para vincular identidades [Mejora de Seguridad]
+                                        Properties.Settings.Default.UltimoUsuario = Actual.Email;
+                                        Properties.Settings.Default.WindowsSidVinculado = _biometrico.ObtenerSidWindowsActual();
+                                        Properties.Settings.Default.Save();
+                                    }
                                 }
                             }
                             catch { } // Fallo silencioso si no hay permisos (se arregla luego)
@@ -331,9 +343,20 @@ namespace ModernMenuUI
 
             // 1. Validaciones iniciales
             string ultimoEmail = Properties.Settings.Default.UltimoUsuario;
+            string sidRegistrado = Properties.Settings.Default.WindowsSidVinculado;
+            string sidActual = _biometrico.ObtenerSidWindowsActual();
             if (string.IsNullOrEmpty(ultimoEmail))
             {
                 MessageBox.Show("Inicia sesión con contraseña primero.", "Aviso");
+                this.Cursor = Cursors.Default;
+                return;
+            }
+
+            // --- PARCHE DE SEGURIDAD: VALIDACIÓN DE SID ---
+            if (string.IsNullOrEmpty(sidRegistrado) || sidRegistrado != sidActual)
+            {
+                MessageBox.Show("La cuenta de Windows actual no coincide con el usuario que registró la huella.",
+                                "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 this.Cursor = Cursors.Default;
                 return;
             }
