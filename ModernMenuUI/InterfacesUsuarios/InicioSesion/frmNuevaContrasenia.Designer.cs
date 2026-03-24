@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNuevaContrasenia));
             panDatosIngreso = new Panel();
+            btnVerConfirmacion = new Button();
+            btnVerNueva = new Button();
             panBarraControl = new Panel();
             btnMinimizar = new Button();
             btnCerrar = new Button();
@@ -55,6 +57,8 @@
             // panDatosIngreso
             // 
             panDatosIngreso.BackColor = Color.FromArgb(15, 15, 15);
+            panDatosIngreso.Controls.Add(btnVerConfirmacion);
+            panDatosIngreso.Controls.Add(btnVerNueva);
             panDatosIngreso.Controls.Add(panBarraControl);
             panDatosIngreso.Controls.Add(txtConfirContra);
             panDatosIngreso.Controls.Add(panel1);
@@ -64,11 +68,43 @@
             panDatosIngreso.Controls.Add(panel3);
             panDatosIngreso.Controls.Add(btnCambiar);
             panDatosIngreso.Dock = DockStyle.Fill;
-            panDatosIngreso.Location = new Point(250, 0);
-            panDatosIngreso.Margin = new Padding(4, 3, 4, 3);
+            panDatosIngreso.Location = new Point(286, 0);
+            panDatosIngreso.Margin = new Padding(5, 4, 5, 4);
             panDatosIngreso.Name = "panDatosIngreso";
-            panDatosIngreso.Size = new Size(625, 422);
+            panDatosIngreso.Size = new Size(714, 563);
             panDatosIngreso.TabIndex = 7;
+            // 
+            // btnVerConfirmacion
+            // 
+            btnVerConfirmacion.BackColor = Color.FromArgb(15, 15, 15);
+            btnVerConfirmacion.BackgroundImage = Properties.Resources.ojo;
+            btnVerConfirmacion.BackgroundImageLayout = ImageLayout.Stretch;
+            btnVerConfirmacion.FlatAppearance.BorderSize = 0;
+            btnVerConfirmacion.FlatStyle = FlatStyle.Flat;
+            btnVerConfirmacion.ForeColor = SystemColors.ControlText;
+            btnVerConfirmacion.Location = new Point(576, 272);
+            btnVerConfirmacion.Name = "btnVerConfirmacion";
+            btnVerConfirmacion.Size = new Size(34, 34);
+            btnVerConfirmacion.TabIndex = 13;
+            btnVerConfirmacion.UseVisualStyleBackColor = false;
+            btnVerConfirmacion.MouseDown += btnVerConfirmacion_MouseDown;
+            btnVerConfirmacion.MouseUp += btnVerConfirmacion_MouseUp;
+            // 
+            // btnVerNueva
+            // 
+            btnVerNueva.BackColor = Color.FromArgb(15, 15, 15);
+            btnVerNueva.BackgroundImage = Properties.Resources.ojo;
+            btnVerNueva.BackgroundImageLayout = ImageLayout.Stretch;
+            btnVerNueva.FlatAppearance.BorderSize = 0;
+            btnVerNueva.FlatStyle = FlatStyle.Flat;
+            btnVerNueva.ForeColor = SystemColors.ControlText;
+            btnVerNueva.Location = new Point(576, 199);
+            btnVerNueva.Name = "btnVerNueva";
+            btnVerNueva.Size = new Size(34, 34);
+            btnVerNueva.TabIndex = 12;
+            btnVerNueva.UseVisualStyleBackColor = false;
+            btnVerNueva.MouseDown += btnVerNueva_MouseDown;
+            btnVerNueva.MouseUp += btnVerNueva_MouseUp;
             // 
             // panBarraControl
             // 
@@ -78,9 +114,9 @@
             panBarraControl.Controls.Add(btnCerrar);
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Margin = new Padding(4, 3, 4, 3);
+            panBarraControl.Margin = new Padding(5, 4, 5, 4);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(625, 47);
+            panBarraControl.Size = new Size(714, 63);
             panBarraControl.TabIndex = 11;
             // 
             // btnMinimizar
@@ -92,10 +128,10 @@
             btnMinimizar.Dock = DockStyle.Right;
             btnMinimizar.FlatAppearance.BorderSize = 0;
             btnMinimizar.FlatStyle = FlatStyle.Flat;
-            btnMinimizar.Location = new Point(527, 0);
-            btnMinimizar.Margin = new Padding(4, 3, 4, 3);
+            btnMinimizar.Location = new Point(602, 0);
+            btnMinimizar.Margin = new Padding(5, 4, 5, 4);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(49, 47);
+            btnMinimizar.Size = new Size(56, 63);
             btnMinimizar.TabIndex = 1;
             btnMinimizar.UseVisualStyleBackColor = false;
             // 
@@ -108,10 +144,10 @@
             btnCerrar.Dock = DockStyle.Right;
             btnCerrar.FlatAppearance.BorderSize = 0;
             btnCerrar.FlatStyle = FlatStyle.Flat;
-            btnCerrar.Location = new Point(576, 0);
-            btnCerrar.Margin = new Padding(4, 3, 4, 3);
+            btnCerrar.Location = new Point(658, 0);
+            btnCerrar.Margin = new Padding(5, 4, 5, 4);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(49, 47);
+            btnCerrar.Size = new Size(56, 63);
             btnCerrar.TabIndex = 0;
             btnCerrar.UseVisualStyleBackColor = false;
             // 
@@ -121,30 +157,32 @@
             txtConfirContra.BorderStyle = BorderStyle.None;
             txtConfirContra.Font = new Font("Century Gothic", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtConfirContra.ForeColor = Color.FromArgb(142, 142, 142);
-            txtConfirContra.Location = new Point(80, 206);
-            txtConfirContra.Margin = new Padding(4, 3, 4, 3);
+            txtConfirContra.Location = new Point(91, 275);
+            txtConfirContra.Margin = new Padding(5, 4, 5, 4);
             txtConfirContra.Name = "txtConfirContra";
-            txtConfirContra.Size = new Size(459, 25);
+            txtConfirContra.Size = new Size(525, 31);
             txtConfirContra.TabIndex = 10;
             txtConfirContra.Text = "Confirmar Contraseña...";
+            txtConfirContra.Enter += txtConfirContra_Enter;
+            txtConfirContra.Leave += txtConfirContra_Leave;
             // 
             // panel1
             // 
             panel1.BackColor = Color.DimGray;
             panel1.Controls.Add(panel2);
-            panel1.Location = new Point(80, 235);
-            panel1.Margin = new Padding(4, 3, 4, 3);
+            panel1.Location = new Point(91, 313);
+            panel1.Margin = new Padding(5, 4, 5, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(459, 2);
+            panel1.Size = new Size(525, 3);
             panel1.TabIndex = 9;
             // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(142, 142, 142);
             panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(4, 3, 4, 3);
+            panel2.Margin = new Padding(5, 4, 5, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(459, 2);
+            panel2.Size = new Size(525, 3);
             panel2.TabIndex = 2;
             // 
             // lblRegresar
@@ -152,22 +190,25 @@
             lblRegresar.AutoSize = true;
             lblRegresar.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblRegresar.ForeColor = Color.FromArgb(142, 142, 142);
-            lblRegresar.Location = new Point(272, 344);
-            lblRegresar.Margin = new Padding(4, 0, 4, 0);
+            lblRegresar.Location = new Point(311, 459);
+            lblRegresar.Margin = new Padding(5, 0, 5, 0);
             lblRegresar.Name = "lblRegresar";
-            lblRegresar.Size = new Size(83, 20);
+            lblRegresar.Size = new Size(107, 22);
             lblRegresar.TabIndex = 8;
             lblRegresar.Text = "REGRESAR";
+            lblRegresar.Click += lblRegresar_Click;
+            lblRegresar.MouseEnter += lblRegresar_MouseEnter;
+            lblRegresar.MouseLeave += lblRegresar_MouseLeave;
             // 
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Century Gothic", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblTitulo.ForeColor = Color.FromArgb(142, 142, 142);
-            lblTitulo.Location = new Point(127, 82);
-            lblTitulo.Margin = new Padding(4, 0, 4, 0);
+            lblTitulo.Location = new Point(145, 109);
+            lblTitulo.Margin = new Padding(5, 0, 5, 0);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(332, 24);
+            lblTitulo.Size = new Size(423, 33);
             lblTitulo.TabIndex = 7;
             lblTitulo.Text = "INGRESAR NUEVA CONTRASEÑA";
             lblTitulo.Click += lblTitulo_Click;
@@ -178,30 +219,32 @@
             txtNuevaContra.BorderStyle = BorderStyle.None;
             txtNuevaContra.Font = new Font("Century Gothic", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNuevaContra.ForeColor = Color.FromArgb(142, 142, 142);
-            txtNuevaContra.Location = new Point(80, 151);
-            txtNuevaContra.Margin = new Padding(4, 3, 4, 3);
+            txtNuevaContra.Location = new Point(91, 201);
+            txtNuevaContra.Margin = new Padding(5, 4, 5, 4);
             txtNuevaContra.Name = "txtNuevaContra";
-            txtNuevaContra.Size = new Size(459, 25);
+            txtNuevaContra.Size = new Size(525, 31);
             txtNuevaContra.TabIndex = 7;
             txtNuevaContra.Text = "Nueva Contraseña...";
+            txtNuevaContra.Enter += txtNuevaContra_Enter;
+            txtNuevaContra.Leave += txtNuevaContra_Leave;
             // 
             // panel3
             // 
             panel3.BackColor = Color.DimGray;
             panel3.Controls.Add(panel4);
-            panel3.Location = new Point(74, 180);
-            panel3.Margin = new Padding(4, 3, 4, 3);
+            panel3.Location = new Point(85, 240);
+            panel3.Margin = new Padding(5, 4, 5, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(459, 2);
+            panel3.Size = new Size(525, 3);
             panel3.TabIndex = 1;
             // 
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(142, 142, 142);
             panel4.Location = new Point(0, 0);
-            panel4.Margin = new Padding(4, 3, 4, 3);
+            panel4.Margin = new Padding(5, 4, 5, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(459, 2);
+            panel4.Size = new Size(525, 3);
             panel4.TabIndex = 2;
             // 
             // btnCambiar
@@ -211,10 +254,10 @@
             btnCambiar.FlatStyle = FlatStyle.Flat;
             btnCambiar.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCambiar.ForeColor = Color.White;
-            btnCambiar.Location = new Point(181, 280);
-            btnCambiar.Margin = new Padding(4, 3, 4, 3);
+            btnCambiar.Location = new Point(207, 373);
+            btnCambiar.Margin = new Padding(5, 4, 5, 4);
             btnCambiar.Name = "btnCambiar";
-            btnCambiar.Size = new Size(274, 38);
+            btnCambiar.Size = new Size(313, 51);
             btnCambiar.TabIndex = 0;
             btnCambiar.Text = "CAMBIAR CONTRASEÑA";
             btnCambiar.UseVisualStyleBackColor = false;
@@ -226,9 +269,9 @@
             pbxLogoEmpresa.Dock = DockStyle.Fill;
             pbxLogoEmpresa.Image = Properties.Resources.el_cairo_2__1__12;
             pbxLogoEmpresa.Location = new Point(0, 0);
-            pbxLogoEmpresa.Margin = new Padding(4, 3, 4, 3);
+            pbxLogoEmpresa.Margin = new Padding(5, 4, 5, 4);
             pbxLogoEmpresa.Name = "pbxLogoEmpresa";
-            pbxLogoEmpresa.Size = new Size(250, 422);
+            pbxLogoEmpresa.Size = new Size(286, 563);
             pbxLogoEmpresa.SizeMode = PictureBoxSizeMode.Zoom;
             pbxLogoEmpresa.TabIndex = 9;
             pbxLogoEmpresa.TabStop = false;
@@ -240,20 +283,19 @@
             panLogo.Controls.Add(pbxLogoEmpresa);
             panLogo.Dock = DockStyle.Left;
             panLogo.Location = new Point(0, 0);
-            panLogo.Margin = new Padding(4, 3, 4, 3);
+            panLogo.Margin = new Padding(5, 4, 5, 4);
             panLogo.Name = "panLogo";
-            panLogo.Size = new Size(250, 422);
+            panLogo.Size = new Size(286, 563);
             panLogo.TabIndex = 6;
             // 
             // frmNuevaContrasenia
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(875, 422);
+            ClientSize = new Size(1000, 563);
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 2, 3, 2);
             Name = "frmNuevaContrasenia";
             Text = "frmNuevaContrasenia";
             panDatosIngreso.ResumeLayout(false);
@@ -283,5 +325,7 @@
         private Panel panBarraControl;
         private Button btnMinimizar;
         private Button btnCerrar;
+        private Button btnVerConfirmacion;
+        private Button btnVerNueva;
     }
 }

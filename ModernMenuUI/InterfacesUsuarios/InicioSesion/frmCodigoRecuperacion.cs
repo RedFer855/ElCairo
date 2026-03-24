@@ -107,5 +107,35 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 e.Handled = true;
         }
+
+        private void txtCodigo_Enter(object sender, EventArgs e)
+        {
+            if (txtCodigo.Text == "Código...")
+            {
+                txtCodigo.Text = "";
+                txtCodigo.ForeColor = Color.White;
+            }
+        }
+
+        private void txtCodigo_Leave(object sender, EventArgs e)
+        {
+            if (txtCodigo.Text == "")
+            {
+                txtCodigo.Text = "Código...";
+                txtCodigo.ForeColor = Color.White;
+            }
+        }
+
+        private void lblRegresar_MouseEnter(object sender, EventArgs e)
+        {
+            lblRegresar.ForeColor = Color.Blue;
+            lblRegresar.Font = new Font(lblRegresar.Font, FontStyle.Underline);
+        }
+
+        private void lblRegresar_MouseLeave(object sender, EventArgs e)
+        {
+            lblRegresar.ForeColor = Color.DimGray;
+            lblRegresar.Font = new Font(lblRegresar.Font, FontStyle.Regular);
+        }
     }
 }

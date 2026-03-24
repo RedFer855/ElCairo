@@ -56,9 +56,10 @@
             btnVerificar.FlatStyle = FlatStyle.Flat;
             btnVerificar.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnVerificar.ForeColor = Color.White;
-            btnVerificar.Location = new Point(103, 211);
+            btnVerificar.Location = new Point(118, 281);
+            btnVerificar.Margin = new Padding(3, 4, 3, 4);
             btnVerificar.Name = "btnVerificar";
-            btnVerificar.Size = new Size(418, 40);
+            btnVerificar.Size = new Size(478, 53);
             btnVerificar.TabIndex = 0;
             btnVerificar.Text = "VERFICAR CÓDIGO";
             btnVerificar.UseVisualStyleBackColor = false;
@@ -68,17 +69,19 @@
             // 
             panel3.BackColor = Color.DimGray;
             panel3.Controls.Add(panel4);
-            panel3.Location = new Point(104, 170);
+            panel3.Location = new Point(119, 227);
+            panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(420, 2);
+            panel3.Size = new Size(480, 3);
             panel3.TabIndex = 1;
             // 
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(142, 142, 142);
             panel4.Location = new Point(0, 0);
+            panel4.Margin = new Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(420, 2);
+            panel4.Size = new Size(480, 3);
             panel4.TabIndex = 2;
             // 
             // txtCodigo
@@ -87,22 +90,25 @@
             txtCodigo.BorderStyle = BorderStyle.None;
             txtCodigo.Font = new Font("Century Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCodigo.ForeColor = Color.FromArgb(142, 142, 142);
-            txtCodigo.Location = new Point(104, 136);
+            txtCodigo.Location = new Point(119, 181);
+            txtCodigo.Margin = new Padding(3, 4, 3, 4);
             txtCodigo.MaxLength = 6;
             txtCodigo.Name = "txtCodigo";
-            txtCodigo.Size = new Size(420, 30);
+            txtCodigo.Size = new Size(480, 37);
             txtCodigo.TabIndex = 7;
             txtCodigo.Text = "Código...";
             txtCodigo.TextAlign = HorizontalAlignment.Center;
+            txtCodigo.Enter += txtCodigo_Enter;
+            txtCodigo.Leave += txtCodigo_Leave;
             // 
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Century Gothic", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblTitulo.ForeColor = Color.FromArgb(142, 142, 142);
-            lblTitulo.Location = new Point(200, 76);
+            lblTitulo.Location = new Point(229, 101);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(219, 24);
+            lblTitulo.Size = new Size(280, 33);
             lblTitulo.TabIndex = 7;
             lblTitulo.Text = "INGRESE EL CÓDIGO";
             lblTitulo.Click += lblTitulo_Click;
@@ -112,12 +118,14 @@
             lblRegresar.AutoSize = true;
             lblRegresar.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblRegresar.ForeColor = Color.FromArgb(142, 142, 142);
-            lblRegresar.Location = new Point(228, 344);
+            lblRegresar.Location = new Point(261, 459);
             lblRegresar.Name = "lblRegresar";
-            lblRegresar.Size = new Size(160, 20);
+            lblRegresar.Size = new Size(202, 22);
             lblRegresar.TabIndex = 8;
             lblRegresar.Text = "REGRESAR AL INICIO";
             lblRegresar.Click += lblRegresar_Click;
+            lblRegresar.MouseEnter += lblRegresar_MouseEnter;
+            lblRegresar.MouseLeave += lblRegresar_MouseLeave;
             // 
             // panDatosIngreso
             // 
@@ -130,9 +138,10 @@
             panDatosIngreso.Controls.Add(panel3);
             panDatosIngreso.Controls.Add(btnVerificar);
             panDatosIngreso.Dock = DockStyle.Fill;
-            panDatosIngreso.Location = new Point(250, 0);
+            panDatosIngreso.Location = new Point(286, 0);
+            panDatosIngreso.Margin = new Padding(3, 4, 3, 4);
             panDatosIngreso.Name = "panDatosIngreso";
-            panDatosIngreso.Size = new Size(625, 422);
+            panDatosIngreso.Size = new Size(714, 563);
             panDatosIngreso.TabIndex = 7;
             // 
             // btnReenviar
@@ -142,9 +151,10 @@
             btnReenviar.FlatStyle = FlatStyle.Flat;
             btnReenviar.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReenviar.ForeColor = Color.White;
-            btnReenviar.Location = new Point(220, 271);
+            btnReenviar.Location = new Point(251, 361);
+            btnReenviar.Margin = new Padding(3, 4, 3, 4);
             btnReenviar.Name = "btnReenviar";
-            btnReenviar.Size = new Size(177, 40);
+            btnReenviar.Size = new Size(202, 53);
             btnReenviar.TabIndex = 10;
             btnReenviar.Text = "REENVIAR CÓDIGO";
             btnReenviar.UseVisualStyleBackColor = false;
@@ -158,9 +168,9 @@
             panBarraControl.Controls.Add(btnCerrar);
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Margin = new Padding(4, 3, 4, 3);
+            panBarraControl.Margin = new Padding(5, 4, 5, 4);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(625, 47);
+            panBarraControl.Size = new Size(714, 63);
             panBarraControl.TabIndex = 9;
             // 
             // btnMinimizar
@@ -172,10 +182,10 @@
             btnMinimizar.Dock = DockStyle.Right;
             btnMinimizar.FlatAppearance.BorderSize = 0;
             btnMinimizar.FlatStyle = FlatStyle.Flat;
-            btnMinimizar.Location = new Point(527, 0);
-            btnMinimizar.Margin = new Padding(4, 3, 4, 3);
+            btnMinimizar.Location = new Point(602, 0);
+            btnMinimizar.Margin = new Padding(5, 4, 5, 4);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(49, 47);
+            btnMinimizar.Size = new Size(56, 63);
             btnMinimizar.TabIndex = 1;
             btnMinimizar.UseVisualStyleBackColor = false;
             // 
@@ -188,10 +198,10 @@
             btnCerrar.Dock = DockStyle.Right;
             btnCerrar.FlatAppearance.BorderSize = 0;
             btnCerrar.FlatStyle = FlatStyle.Flat;
-            btnCerrar.Location = new Point(576, 0);
-            btnCerrar.Margin = new Padding(4, 3, 4, 3);
+            btnCerrar.Location = new Point(658, 0);
+            btnCerrar.Margin = new Padding(5, 4, 5, 4);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(49, 47);
+            btnCerrar.Size = new Size(56, 63);
             btnCerrar.TabIndex = 0;
             btnCerrar.UseVisualStyleBackColor = false;
             // 
@@ -202,8 +212,9 @@
             panLogo.Controls.Add(pbxLogoEmpresa);
             panLogo.Dock = DockStyle.Left;
             panLogo.Location = new Point(0, 0);
+            panLogo.Margin = new Padding(3, 4, 3, 4);
             panLogo.Name = "panLogo";
-            panLogo.Size = new Size(250, 422);
+            panLogo.Size = new Size(286, 563);
             panLogo.TabIndex = 6;
             // 
             // pbxLogoEmpresa
@@ -212,21 +223,23 @@
             pbxLogoEmpresa.Dock = DockStyle.Fill;
             pbxLogoEmpresa.Image = Properties.Resources.el_cairo_2__1__12;
             pbxLogoEmpresa.Location = new Point(0, 0);
+            pbxLogoEmpresa.Margin = new Padding(3, 4, 3, 4);
             pbxLogoEmpresa.Name = "pbxLogoEmpresa";
-            pbxLogoEmpresa.Size = new Size(250, 422);
+            pbxLogoEmpresa.Size = new Size(286, 563);
             pbxLogoEmpresa.SizeMode = PictureBoxSizeMode.Zoom;
             pbxLogoEmpresa.TabIndex = 9;
             pbxLogoEmpresa.TabStop = false;
             // 
             // frmCodigoRecuperacion
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(875, 422);
+            ClientSize = new Size(1000, 563);
             ControlBox = false;
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "frmCodigoRecuperacion";
             Text = "frmCodigoRecuperacion";
             panel3.ResumeLayout(false);

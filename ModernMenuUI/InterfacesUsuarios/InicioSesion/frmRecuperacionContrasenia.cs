@@ -118,5 +118,23 @@ namespace ModernMenuUI
                 }
             }
         }
+
+        private void txtCorreo_Enter(object sender, EventArgs e)
+        {
+            if (txtCorreo.Text == "Correo...")
+            {
+                txtCorreo.Text = "";
+                txtCorreo.ForeColor = Color.White;
+            }
+        }
+
+        private void txtCorreo_Leave(object sender, EventArgs e)
+        {
+            if (txtCorreo.Text == "")
+            {
+                txtCorreo.Text = "Correo...";
+                txtCorreo.ForeColor = Color.Gray;
+            }
+        }
     }
 }
