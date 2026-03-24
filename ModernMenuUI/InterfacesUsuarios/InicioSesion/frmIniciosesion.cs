@@ -289,6 +289,8 @@ namespace ModernMenuUI
             this.Visible = false;
             ContraNueva.ShowDialog();
             this.Visible = true;
+
+
         }
 
         private void btnVer_MouseDown(object sender, MouseEventArgs e)

@@ -37,5 +37,32 @@ namespace ModernMenuUI
         {
             clsAnmaciones.MoverFormulario(this.Handle);
         }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void lblRegresar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void lblRegresar_MouseEnter(object sender, EventArgs e)
+        {
+            lblRegresar.ForeColor = Color.Blue;
+            lblRegresar.Font = new Font(lblRegresar.Font, FontStyle.Underline);
+        }
+
+        private void lblRegresar_MouseLeave(object sender, EventArgs e)
+        {
+            lblRegresar.ForeColor = Color.DimGray;
+            lblRegresar.Font = new Font(lblRegresar.Font, FontStyle.Regular);
+        }
     }
 }
