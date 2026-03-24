@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
 {
-    public partial class frmCodigoRecuperacion : Form
+    public partial class frmNuevaContrasenia : Form
     {
-        public frmCodigoRecuperacion()
+        public frmNuevaContrasenia()
         {
             InitializeComponent();
         }
@@ -23,4 +23,3 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
         }
     }
 }
-//xd
