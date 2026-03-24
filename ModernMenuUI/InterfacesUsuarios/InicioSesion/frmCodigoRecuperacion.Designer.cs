@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCodigoRecuperacion));
             panDatosIngreso = new Panel();
+            panel1 = new Panel();
+            button1 = new Button();
+            button2 = new Button();
             lblRegresar = new Label();
             lblTitulo = new Label();
             txtUsuario = new TextBox();
@@ -38,51 +41,91 @@
             btnAcceder = new Button();
             panLogo = new Panel();
             pbxLogoEmpresa = new PictureBox();
-            btnMinimizar = new Button();
-            btnCerrar = new Button();
-            panBarraControl = new Panel();
             panDatosIngreso.SuspendLayout();
+            panel1.SuspendLayout();
             panel3.SuspendLayout();
             panLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxLogoEmpresa).BeginInit();
-            panBarraControl.SuspendLayout();
             SuspendLayout();
             // 
             // panDatosIngreso
             // 
             panDatosIngreso.BackColor = Color.FromArgb(15, 15, 15);
+            panDatosIngreso.Controls.Add(panel1);
             panDatosIngreso.Controls.Add(lblRegresar);
             panDatosIngreso.Controls.Add(lblTitulo);
             panDatosIngreso.Controls.Add(txtUsuario);
             panDatosIngreso.Controls.Add(panel3);
             panDatosIngreso.Controls.Add(btnAcceder);
             panDatosIngreso.Dock = DockStyle.Fill;
-            panDatosIngreso.Location = new Point(250, 47);
+            panDatosIngreso.Location = new Point(250, 0);
             panDatosIngreso.Name = "panDatosIngreso";
-            panDatosIngreso.Size = new Size(550, 403);
+            panDatosIngreso.Size = new Size(550, 450);
             panDatosIngreso.TabIndex = 7;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(15, 15, 15);
+            panel1.CausesValidation = false;
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(button2);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(550, 47);
+            panel1.TabIndex = 9;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(15, 15, 15);
+            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
+            button1.BackgroundImageLayout = ImageLayout.Center;
+            button1.DialogResult = DialogResult.Retry;
+            button1.Dock = DockStyle.Right;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(460, 0);
+            button1.Name = "button1";
+            button1.Size = new Size(45, 47);
+            button1.TabIndex = 1;
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(15, 15, 15);
+            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
+            button2.BackgroundImageLayout = ImageLayout.Center;
+            button2.DialogResult = DialogResult.Retry;
+            button2.Dock = DockStyle.Right;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Location = new Point(505, 0);
+            button2.Name = "button2";
+            button2.Size = new Size(45, 47);
+            button2.TabIndex = 0;
+            button2.UseVisualStyleBackColor = false;
             // 
             // lblRegresar
             // 
             lblRegresar.AutoSize = true;
             lblRegresar.Font = new Font("Century Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblRegresar.ForeColor = Color.FromArgb(142, 142, 142);
-            lblRegresar.Location = new Point(192, 346);
+            lblRegresar.Location = new Point(227, 343);
             lblRegresar.Name = "lblRegresar";
-            lblRegresar.Size = new Size(160, 20);
+            lblRegresar.Size = new Size(83, 20);
             lblRegresar.TabIndex = 8;
-            lblRegresar.Text = "REGRESAR AL INICIO";
+            lblRegresar.Text = "REGRESAR";
             // 
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Century Gothic", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblTitulo.ForeColor = Color.FromArgb(142, 142, 142);
-            lblTitulo.Location = new Point(100, 95);
+            lblTitulo.Location = new Point(167, 97);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(349, 24);
+            lblTitulo.Size = new Size(219, 24);
             lblTitulo.TabIndex = 7;
-            lblTitulo.Text = "RECUPERACIÓN DE CONTRASEÑA";
+            lblTitulo.Text = "INGRESE EL CÓDIGO";
             // 
             // txtUsuario
             // 
@@ -124,7 +167,7 @@
             btnAcceder.Name = "btnAcceder";
             btnAcceder.Size = new Size(418, 40);
             btnAcceder.TabIndex = 0;
-            btnAcceder.Text = "ENVIAR CÓDIGO";
+            btnAcceder.Text = "VERIFICAR CÓDIGO";
             btnAcceder.UseVisualStyleBackColor = false;
             // 
             // panLogo
@@ -133,9 +176,9 @@
             panLogo.BackgroundImage = Properties.Resources.imglogin;
             panLogo.Controls.Add(pbxLogoEmpresa);
             panLogo.Dock = DockStyle.Left;
-            panLogo.Location = new Point(0, 47);
+            panLogo.Location = new Point(0, 0);
             panLogo.Name = "panLogo";
-            panLogo.Size = new Size(250, 403);
+            panLogo.Size = new Size(250, 450);
             panLogo.TabIndex = 6;
             // 
             // pbxLogoEmpresa
@@ -145,52 +188,10 @@
             pbxLogoEmpresa.Image = Properties.Resources.el_cairo_2__1__12;
             pbxLogoEmpresa.Location = new Point(0, 0);
             pbxLogoEmpresa.Name = "pbxLogoEmpresa";
-            pbxLogoEmpresa.Size = new Size(250, 403);
+            pbxLogoEmpresa.Size = new Size(250, 450);
             pbxLogoEmpresa.SizeMode = PictureBoxSizeMode.Zoom;
             pbxLogoEmpresa.TabIndex = 9;
             pbxLogoEmpresa.TabStop = false;
-            // 
-            // btnMinimizar
-            // 
-            btnMinimizar.BackColor = Color.FromArgb(15, 15, 15);
-            btnMinimizar.BackgroundImage = (Image)resources.GetObject("btnMinimizar.BackgroundImage");
-            btnMinimizar.BackgroundImageLayout = ImageLayout.Center;
-            btnMinimizar.DialogResult = DialogResult.Retry;
-            btnMinimizar.Dock = DockStyle.Right;
-            btnMinimizar.FlatAppearance.BorderSize = 0;
-            btnMinimizar.FlatStyle = FlatStyle.Flat;
-            btnMinimizar.Location = new Point(710, 0);
-            btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(45, 47);
-            btnMinimizar.TabIndex = 1;
-            btnMinimizar.UseVisualStyleBackColor = false;
-            // 
-            // btnCerrar
-            // 
-            btnCerrar.BackColor = Color.FromArgb(15, 15, 15);
-            btnCerrar.BackgroundImage = (Image)resources.GetObject("btnCerrar.BackgroundImage");
-            btnCerrar.BackgroundImageLayout = ImageLayout.Center;
-            btnCerrar.DialogResult = DialogResult.Retry;
-            btnCerrar.Dock = DockStyle.Right;
-            btnCerrar.FlatAppearance.BorderSize = 0;
-            btnCerrar.FlatStyle = FlatStyle.Flat;
-            btnCerrar.Location = new Point(755, 0);
-            btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(45, 47);
-            btnCerrar.TabIndex = 0;
-            btnCerrar.UseVisualStyleBackColor = false;
-            // 
-            // panBarraControl
-            // 
-            panBarraControl.BackColor = Color.FromArgb(15, 15, 15);
-            panBarraControl.CausesValidation = false;
-            panBarraControl.Controls.Add(btnMinimizar);
-            panBarraControl.Controls.Add(btnCerrar);
-            panBarraControl.Dock = DockStyle.Top;
-            panBarraControl.Location = new Point(0, 0);
-            panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(800, 47);
-            panBarraControl.TabIndex = 8;
             // 
             // frmCodigoRecuperacion
             // 
@@ -200,16 +201,15 @@
             ControlBox = false;
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
-            Controls.Add(panBarraControl);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmCodigoRecuperacion";
             Text = "frmCodigoRecuperacion";
             panDatosIngreso.ResumeLayout(false);
             panDatosIngreso.PerformLayout();
+            panel1.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxLogoEmpresa).EndInit();
-            panBarraControl.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -223,9 +223,9 @@
         private Panel panel4;
         private Button btnAcceder;
         private Panel panLogo;
-        private Button btnMinimizar;
-        private Button btnCerrar;
-        private Panel panBarraControl;
         private PictureBox pbxLogoEmpresa;
+        private Panel panel1;
+        private Button button1;
+        private Button button2;
     }
 }
