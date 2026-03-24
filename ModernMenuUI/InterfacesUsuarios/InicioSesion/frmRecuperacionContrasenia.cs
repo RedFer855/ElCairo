@@ -1,4 +1,6 @@
 ﻿using ModernMenuUI.ClasesUI;
+using ModernMenuUI.InterfacesUsuarios.InicioSesion;
+using ModernMenuUI.ServiciosUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,10 +15,16 @@ namespace ModernMenuUI
 {
     public partial class frmRecuperacionContrasenia : Form
     {
+
+        private readonly ServicioRecuperacionContrasenia _servicio;
         public frmRecuperacionContrasenia()
         {
             InitializeComponent();
+            _servicio = new ServicioRecuperacionContrasenia();
         }
+
+
+
 
         private void pbxLogoEmpresa_MouseDown(object sender, MouseEventArgs e)
         {
@@ -68,6 +76,47 @@ namespace ModernMenuUI
         private void panBarraControl_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private async void btnEnviar_Click(object sender, EventArgs e)
+        {
+            {
+                this.Cursor = Cursors.AppStarting;
+                btnEnviar.Enabled = false;
+
+                try
+                {
+                    var resultado = await _servicio.EnviarCodigoAsync(txtCorreo.Text);
+
+                    if (!resultado.ok)
+                    {
+                        MessageBox.Show(
+                            resultado.mensaje,
+                            "Recuperación de contraseña",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                        return;
+                    }
+
+                    MessageBox.Show(
+                        resultado.mensaje,
+                        "Recuperación de contraseña",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+
+                    frmCodigoRecuperacion frm = new frmCodigoRecuperacion(resultado.correoNormalizado);
+                    this.Hide();
+                    frm.ShowDialog();
+                    this.Close();
+                }
+                finally
+                {
+                    btnEnviar.Enabled = true;
+                    this.Cursor = Cursors.Default;
+                }
+            }
         }
     }
 }
