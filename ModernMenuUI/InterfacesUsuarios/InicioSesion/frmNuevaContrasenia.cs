@@ -72,7 +72,8 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
-                this.Close();
+                
+                this.Close();           
 
             }
             finally
@@ -80,11 +81,17 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
                 btnCambiar.Enabled = true;
                 this.Cursor = Cursors.Default;
             }
+
+            frmIniciosesion Inicio = new frmIniciosesion();
+            Inicio.Show();
         }
 
         private void lblRegresar_Click(object sender, EventArgs e)
         {
+            frmIniciosesion Inicio = new frmIniciosesion();
             this.Close();
+            Inicio.Show();
+            
         }
 
         private void lblRegresar_MouseEnter(object sender, EventArgs e)

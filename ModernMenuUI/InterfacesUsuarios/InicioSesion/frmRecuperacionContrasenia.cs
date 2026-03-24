@@ -58,7 +58,9 @@ namespace ModernMenuUI
 
         private void lblRegresar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            frmIniciosesion inicio = new frmIniciosesion();
+            inicio.Show();
+            this.Hide();
         }
 
         private void lblRegresar_MouseEnter(object sender, EventArgs e)
@@ -80,42 +82,58 @@ namespace ModernMenuUI
 
         private async void btnEnviar_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.AppStarting;
+            btnEnviar.Enabled = false;
+
+            try
             {
-                this.Cursor = Cursors.AppStarting;
-                btnEnviar.Enabled = false;
+                // 🔹 VALIDAR CORREO
+                var validacion = await _servicio.ValidarCorreoRegistradoAsync(txtCorreo.Text);
 
-                try
+                if (!validacion.ok)
                 {
-                    var resultado = await _servicio.EnviarCodigoAsync(txtCorreo.Text);
+                    MessageBox.Show(
+                        validacion.mensaje,
+                        "Recuperación de contraseña",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
 
-                    if (!resultado.ok)
-                    {
-                        MessageBox.Show(
-                            resultado.mensaje,
-                            "Recuperación de contraseña",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning
-                        );
-                        return;
-                    }
+                    txtCorreo.Focus();
+                    txtCorreo.SelectAll();
+                    return;
+                }
 
+                // 🔹 ENVIAR CÓDIGO
+                var resultado = await _servicio.EnviarCodigoAsync(validacion.correoNormalizado);
+
+                if (!resultado.ok)
+                {
                     MessageBox.Show(
                         resultado.mensaje,
                         "Recuperación de contraseña",
                         MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
+                        MessageBoxIcon.Warning
                     );
+                    return;
+                }
 
-                    frmCodigoRecuperacion frm = new frmCodigoRecuperacion(resultado.correoNormalizado);
-                    this.Hide();
-                    frm.ShowDialog();
-                    this.Close();
-                }
-                finally
-                {
-                    btnEnviar.Enabled = true;
-                    this.Cursor = Cursors.Default;
-                }
+                MessageBox.Show(
+                    resultado.mensaje,
+                    "Recuperación de contraseña",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                frmCodigoRecuperacion frm = new frmCodigoRecuperacion(validacion.correoNormalizado);
+                this.Hide();
+                frm.ShowDialog();
+                this.Close();
+            }
+            finally
+            {
+                btnEnviar.Enabled = true;
+                this.Cursor = Cursors.Default;
             }
         }
 

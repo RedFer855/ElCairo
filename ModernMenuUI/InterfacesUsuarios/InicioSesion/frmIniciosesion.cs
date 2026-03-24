@@ -289,7 +289,7 @@ namespace ModernMenuUI
             this.Visible = false;
             ContraNueva.ShowDialog();
             this.Visible = true;
-
+            this.Hide();
 
         }
 

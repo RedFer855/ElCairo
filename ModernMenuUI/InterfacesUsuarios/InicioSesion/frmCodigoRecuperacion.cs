@@ -23,6 +23,32 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
             _correo = correo;
         }
 
+        private int segundosRestantes = 60;
+
+        private void IniciarContadorReenvio()
+        {
+            segundosRestantes = 60;
+            btnReenviar.Enabled = false;
+            lblContadorReenvio.Text = $"Podrás reenviar el código en {segundosRestantes} s";
+            timerReenvio.Start();
+        }
+
+        private void timerReenvio_Tick(object sender, EventArgs e)
+        {
+            segundosRestantes--;
+
+            if (segundosRestantes > 0)
+            {
+                lblContadorReenvio.Text = $"Podrás reenviar el código en {segundosRestantes} s";
+            }
+            else
+            {
+                timerReenvio.Stop();
+                btnReenviar.Enabled = true;
+                lblContadorReenvio.Text = "Ya puedes reenviar el código.";
+            }
+        }
+
         private void lblTitulo_Click(object sender, EventArgs e)
         {
 
@@ -30,7 +56,7 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
 
         private void lblRegresar_Click(object sender, EventArgs e)
         {
-            frmIniciosesion login = new frmIniciosesion();
+            frmRecuperacionContrasenia login = new frmRecuperacionContrasenia();
             this.Hide();
             login.Show();
         }
@@ -67,9 +93,9 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
                     );
 
                     frmNuevaContrasenia frm = new frmNuevaContrasenia();
-                    this.Hide();
-                    frm.ShowDialog();
                     this.Close();
+                    frm.Show();
+              
                 }
                 finally
                 {
@@ -88,16 +114,19 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
             {
                 var resultado = await _servicio.EnviarCodigoAsync(_correo);
 
-                MessageBox.Show(
-                    resultado.mensaje,
-                    "Reenvío de código",
-                    MessageBoxButtons.OK,
-                    resultado.ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning
-                );
+                if (resultado.ok)
+                {
+                    MessageBox.Show("Se envió un nuevo código al correo.");
+                    IniciarContadorReenvio();
+                }
+                else
+                {
+                    MessageBox.Show(resultado.mensaje);
+                    btnReenviar.Enabled = true;
+                }
             }
             finally
             {
-                btnReenviar.Enabled = true;
                 this.Cursor = Cursors.Default;
             }
         }
@@ -136,6 +165,12 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
         {
             lblRegresar.ForeColor = Color.DimGray;
             lblRegresar.Font = new Font(lblRegresar.Font, FontStyle.Regular);
+        }
+
+        private void frmCodigoRecuperacion_Load(object sender, EventArgs e)
+        {
+            txtCodigo.MaxLength = 6;
+            IniciarContadorReenvio();
         }
     }
 }

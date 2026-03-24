@@ -1,4 +1,5 @@
 ﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
 using Supabase.Gotrue;
 using Supabase.Gotrue.Exceptions;
 using System;
@@ -10,6 +11,39 @@ namespace ModernMenuUI.ServiciosUI
 {
     public class ServicioRecuperacionContrasenia
     {
+
+        public async Task<(bool ok, string mensaje, string correoNormalizado)> ValidarCorreoRegistradoAsync(string correo)
+        {
+            try
+            {
+                correo = (correo ?? string.Empty).Trim().ToLower();
+
+                if (string.IsNullOrWhiteSpace(correo))
+                    return (false, "Debe ingresar un correo.", null);
+
+                if (!correo.Contains("@"))
+                    correo += "@gmail.com";
+
+                var client = await Conexion.GetClientAsync();
+
+                var resultado = await client
+                    .From<Usuario>()
+                    .Where(x => x.AliasUsuario == correo && x.EstadoUsuario == true)
+                    .Get();
+
+                if (resultado.Models == null || resultado.Models.Count == 0)
+                    return (false, "El correo no está registrado en el sistema.", null);
+
+                return (true, "Correo válido.", correo);
+            }
+            catch (Exception ex)
+            {
+                return (false, "Error al validar el correo: " + ex.Message, null);
+            }
+        }
+
+
+
         private string NormalizarCorreo(string correo)
         {
             correo = (correo ?? string.Empty).Trim();
@@ -123,5 +157,7 @@ namespace ModernMenuUI.ServiciosUI
                 return (false, "Error al cambiar la contraseña: " + ex.Message);
             }
         }
+
+
     }
 }
