@@ -348,7 +348,7 @@ namespace ModernMenuUI
         /// </summary>
         private void btnAjustes_Click(object sender, EventArgs e)
         {
-            ManejarFormularios.Instancia.AbrirFormulario(new frmAjustes());
+            //ManejarFormularios.Instancia.AbrirFormulario(new frmAjustes());
         }
 
         /// <summary>
@@ -495,9 +495,9 @@ namespace ModernMenuUI
         /// </summary>
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
-            CerrarSubmenu();
-            ManejarFormularios.Instancia.AbrirFormulario(new frmRol());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "ROLES");
+            //CerrarSubmenu();
+            //ManejarFormularios.Instancia.AbrirFormulario(new frmRol());
+            //clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "ROLES");
         }
 
         /// <summary>
@@ -703,6 +703,11 @@ namespace ModernMenuUI
         }
 
         private void panelFormHijo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnSalir_Click_1(object sender, EventArgs e)
         {
 
         }
