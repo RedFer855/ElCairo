@@ -73,7 +73,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             try
             {
-                // Objeto temporal para validar e insertar/actualizar
                 Presentacion presentacionTemp = new Presentacion
                 {
                     NombrePresentacion = txtNombrePresentacion.Text.Trim(),
@@ -81,22 +80,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     EstadoPresentacion = rbActivo.Checked
                 };
 
-                // EJECUTAR VALIDACIONES
                 var resultado = ServicioValidacionesIngresoDatos
                                 .EjecutarValidacionesPresentacion(presentacionTemp);
-
                 if (resultado.Error)
                 {
-                    MessageBox.Show(resultado.Mensaje,
-                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Validar estado
                 if (!rbActivo.Checked && !rbInactivo.Checked)
                 {
-                    MessageBox.Show("Debe seleccionar un estado.",
-                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Debe seleccionar un estado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -105,29 +99,40 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                 PresentacionRepositorio repo = new PresentacionRepositorio();
 
-                // ---------------------------------------------------------------------
-                //                              INSERTAR
-                // ---------------------------------------------------------------------
+                // ====== INICIO MÉTRICAS ======
+                System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+                System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+                swTotal.Start();
+
                 if (_presentacionSeleccionada == null)
                 {
+                    swPaso.Start();
                     await repo.InsertarPresentacion(presentacionTemp);
-
-                    MessageBox.Show("Presentación guardada correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
                 }
                 else
                 {
-                    // ---------------------------------------------------------------------
-                    //                              ACTUALIZAR
-                    // ---------------------------------------------------------------------
                     presentacionTemp.IdPresentacionProducto =
                         _presentacionSeleccionada.IdPresentacionProducto;
 
+                    swPaso.Start();
                     await repo.ActualizarPresentacion(presentacionTemp);
-
-                    MessageBox.Show("Presentación actualizada correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
                 }
+
+                swTotal.Stop();
+                string operacion = _presentacionSeleccionada == null ? "Inserción" : "Actualización";
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"{operacion} Presentación: {swPaso.ElapsedMilliseconds} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show(_presentacionSeleccionada == null ?
+                    "Presentación guardada correctamente." : "Presentación actualizada correctamente.",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
