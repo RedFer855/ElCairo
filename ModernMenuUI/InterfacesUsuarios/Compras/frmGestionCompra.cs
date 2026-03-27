@@ -440,9 +440,6 @@ namespace ModernMenuUI
         #region Registrar Compra
         private async void btnAgregarCompra_Click(object sender, EventArgs e)
         {
-            
-            //Variables
-
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
             var Actual = supabase.Auth.CurrentUser;
             var idProveedor = _proveedorSeleccionado?.IdProveedor;
@@ -458,7 +455,6 @@ namespace ModernMenuUI
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
 
-            //validaciones locales, estoy viendo como putas ponerlas en la capa de validaciones sin que se vuelva un quilombo, por ahora las dejo aquí
             if (_proveedorSeleccionado == null)
             {
                 MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -466,38 +462,39 @@ namespace ModernMenuUI
             }
             if (dgvCarrito.Rows.Count == 0)
             {
-                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (Actual == null)
-            {
                 throw new Exception("No hay usuario autenticado en la sesión actual.");
-            }
-
-            
             if (respEmpleado == null)
             {
                 MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
                 return;
             }
 
+            // ====== INICIO MÉTRICAS ======
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
+
             try
             {
                 MessageBox.Show($"Enabled: {txtNuevoPrecio.Enabled} | Checked: {chkprecioNuevo.Checked}");
+
                 if (precio_nuevo != 0)
                 {
                     decimal precioNuevo = txtNuevoPrecio.Value;
 
+                    swPaso.Start();
                     foreach (DataGridViewRow row in dgvCarrito.Rows)
                     {
                         if (row.IsNewRow) continue;
 
                         this.Cursor = Cursors.WaitCursor;
-
                         string codigoBarra = row.Cells[0].Value.ToString();
                         int cantidadIngresar = Convert.ToInt32(row.Cells[3].Value);
 
-                        //Preparar parámetros para la función RPC
                         var parametrosPrecio = new
                         {
                             p_id_empleado = idEmpleado,
@@ -508,13 +505,25 @@ namespace ModernMenuUI
                         };
 
                         await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
-                        MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.", "Compra ingresada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    swPaso.Stop();
+                    swTotal.Stop();
+
+                    string resumen =
+                        $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                        $"Actualización de Precios (RPC): {swPaso.ElapsedMilliseconds} ms\n" +
+                        $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                        $"-------------------------------";
+                    MessageBox.Show(resumen, "Evaluación del Sistema",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.",
+                                    "Compra ingresada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    //Preparar parámetros para la función RPC
+
                     var parametros = new
                     {
                         p_id_empleado = idEmpleado,
@@ -523,17 +532,35 @@ namespace ModernMenuUI
                         p_fecha_compra = DateTime.UtcNow,
                         p_detalles = detalles
                     };
+
+                    swPaso.Start();
                     await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
-                    
-                    MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
+                    swTotal.Stop();
+
+                    string resumen =
+                        $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                        $"Registro de Compra (RPC): {swPaso.ElapsedMilliseconds} ms\n" +
+                        $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                        $"-------------------------------";
+                    MessageBox.Show(resumen, "Evaluación del Sistema",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    MessageBox.Show("Compra registrada exitosamente", "Éxito",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al registrar la compra: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                swTotal.Stop();
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
+                this.Cursor = Cursors.Default;
                 limpiarcosas();
             }
         }

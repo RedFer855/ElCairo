@@ -119,11 +119,23 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
+                    // ====== INICIO MÉTRICAS ======
+                    System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+                    System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+                    swTotal.Start();
+
                     try
                     {
+                        // PASO A: Obtener logo
+                        swPaso.Start();
                         byte[] logoBytes = null;
                         try { logoBytes = ObtenerLogoEnBytes(); } catch { }
+                        swPaso.Stop();
+                        long tiempoLogo = swPaso.ElapsedMilliseconds;
+                        swPaso.Reset();
 
+                        // PASO B: Generar PDF
+                        swPaso.Start();
                         var document = Document.Create(container =>
                         {
                             container.Page(page =>
@@ -136,20 +148,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                                     {
                                         col.Item().AlignLeft().Text("Orden de Compra")
                                             .SemiBold().FontSize(24).FontColor(Colors.Blue.Medium);
-
                                         col.Item().AlignLeft().Text($"Fecha de Emisión: {fechaActual}")
                                             .FontSize(10);
-
                                         col.Item().AlignLeft().Text($"Proveedor: {_nombreProveedor}")
                                             .FontSize(14).SemiBold().FontColor(Colors.Grey.Darken2);
-
                                         col.Item().AlignLeft().Text($"Generado por: {_nombreUsuario}")
                                             .FontSize(10).FontColor(Colors.Grey.Medium);
                                     });
 
                                     if (logoBytes != null)
                                     {
-                                        row.ConstantItem(20); 
+                                        row.ConstantItem(20);
                                         row.ConstantItem(80).Image(logoBytes, ImageScaling.FitArea);
                                     }
                                 });
@@ -198,12 +207,30 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                         });
 
                         document.GeneratePdf(sfd.FileName);
-                        MessageBox.Show("¡Exportado a PDF con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        swPaso.Stop();
+                        long tiempoPDF = swPaso.ElapsedMilliseconds;
+
+                        swTotal.Stop();
+                        string resumen =
+                            $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                            $"Obtención de Logo: {tiempoLogo} ms\n" +
+                            $"Generación PDF: {tiempoPDF} ms\n" +
+                            $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                            $"-------------------------------";
+                        MessageBox.Show(resumen, "Evaluación del Sistema",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        MessageBox.Show("¡Exportado a PDF con éxito!", "Éxito",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Process.Start(new ProcessStartInfo(sfd.FileName) { UseShellExecute = true });
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error al exportar a PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        swTotal.Stop();
+                        MessageBox.Show($"FALLO DETECTADO:\n" +
+                                        $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                        $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -224,60 +251,86 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
+                    // ====== INICIO MÉTRICAS ======
+                    System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+                    System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+                    swTotal.Start();
+
                     try
                     {
                         using (var workbook = new XLWorkbook())
                         {
                             var worksheet = workbook.Worksheets.Add("OrdenCompra");
 
+                            // PASO A: Obtener logo
+                            swPaso.Start();
                             try
                             {
                                 byte[] imagenBytes = ObtenerLogoEnBytes();
-
                                 using (var logoStream = new MemoryStream(imagenBytes))
                                 {
                                     worksheet.AddPicture(logoStream)
-                                        .MoveTo(worksheet.Cell("E1")) 
-                                        .Scale(0.15); 
+                                        .MoveTo(worksheet.Cell("E1"))
+                                        .Scale(0.15);
                                 }
                             }
-                            catch
-                            {
-                            }
+                            catch { }
+                            swPaso.Stop();
+                            long tiempoLogo = swPaso.ElapsedMilliseconds;
+                            swPaso.Reset();
 
+                            // PASO B: Construir contenido Excel
+                            swPaso.Start();
                             worksheet.Cell("A1").Value = "Orden de Compra";
                             worksheet.Cell("A1").Style.Font.Bold = true;
                             worksheet.Cell("A1").Style.Font.FontSize = 16;
-
                             worksheet.Cell("A2").Value = $"Fecha de Emisión: {fechaActual}";
-
                             worksheet.Cell("A3").Value = $"Proveedor: {_nombreProveedor}";
                             worksheet.Cell("A3").Style.Font.Bold = true;
-
                             worksheet.Cell("A4").Value = $"Generado por: {_nombreUsuario}";
                             worksheet.Cell("A4").Style.Font.Italic = true;
-
                             worksheet.Cell("A6").InsertTable(_listaItems);
                             int lastRow = worksheet.LastRowUsed().RowNumber();
-
                             worksheet.Cell(lastRow + 2, 4).Value = "Subtotal:";
                             worksheet.Cell(lastRow + 2, 5).Value = _subtotal;
                             worksheet.Cell(lastRow + 3, 4).Value = "Impuesto:";
                             worksheet.Cell(lastRow + 3, 5).Value = _impuesto;
                             worksheet.Cell(lastRow + 4, 4).Value = "Total General:";
                             worksheet.Cell(lastRow + 4, 5).Value = _totalGeneral;
-
                             worksheet.Columns().AdjustToContents();
+                            swPaso.Stop();
+                            long tiempoContenido = swPaso.ElapsedMilliseconds;
+                            swPaso.Reset();
 
+                            // PASO C: Guardar archivo
+                            swPaso.Start();
                             workbook.SaveAs(sfd.FileName);
+                            swPaso.Stop();
+                            long tiempoGuardado = swPaso.ElapsedMilliseconds;
+
+                            swTotal.Stop();
+                            string resumen =
+                                $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                                $"Obtención de Logo: {tiempoLogo} ms\n" +
+                                $"Construcción Contenido: {tiempoContenido} ms\n" +
+                                $"Guardado de Archivo: {tiempoGuardado} ms\n" +
+                                $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"-------------------------------";
+                            MessageBox.Show(resumen, "Evaluación del Sistema",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
 
-                        MessageBox.Show("¡Exportado a Excel con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("¡Exportado a Excel con éxito!", "Éxito",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Process.Start(new ProcessStartInfo(sfd.FileName) { UseShellExecute = true });
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error al exportar a Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        swTotal.Stop();
+                        MessageBox.Show($"FALLO DETECTADO:\n" +
+                                        $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                        $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

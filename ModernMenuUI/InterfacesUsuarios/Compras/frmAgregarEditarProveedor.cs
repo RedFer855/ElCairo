@@ -146,34 +146,48 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     EstadoProveedor = rbActivo.Checked
                 };
 
-                // VALIDAR proveedor (igual que validas Marca)
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProveedor(proveedorTemp);
-
                 if (resultado.Error)
                 {
-                    MessageBox.Show(resultado.Mensaje, "Validación",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 ProveedorRepositorio _repoProv = new ProveedorRepositorio();
 
+                // ====== INICIO MÉTRICAS ======
+                System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+                System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+                swTotal.Start();
+
                 if (_proveedorActual == null)
                 {
+                    swPaso.Start();
                     await _repoProv.InsertarProveedor(proveedorTemp);
-
-                    MessageBox.Show("Proveedor guardado correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
                 }
                 else
                 {
                     proveedorTemp.IdProveedor = _proveedorActual.IdProveedor;
 
+                    swPaso.Start();
                     await _repoProv.ActualizarProveedor(proveedorTemp);
-
-                    MessageBox.Show("Proveedor actualizado correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
                 }
+
+                swTotal.Stop();
+                string operacion = _proveedorActual == null ? "Inserción" : "Actualización";
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"{operacion} Proveedor: {swPaso.ElapsedMilliseconds} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show(_proveedorActual == null ?
+                    "Proveedor guardado correctamente." : "Proveedor actualizado correctamente.",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
