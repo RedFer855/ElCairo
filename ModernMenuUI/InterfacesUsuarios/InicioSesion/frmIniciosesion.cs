@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -43,6 +44,10 @@ namespace ModernMenuUI
 
         private async void btnAcceder_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
+
             this.Cursor = Cursors.AppStarting;
             btnAcceder.Enabled = false;
             lblRecuperarContrasenia.Enabled = false;
@@ -52,7 +57,6 @@ namespace ModernMenuUI
                 btnAcceder.Enabled = true;
                 MessageBox.Show("El Usuario o contraseña estan vacios", "Credenciales Vacias", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 LimpiarDatos(e, e);
-
             }
             else
             {
@@ -67,12 +71,16 @@ namespace ModernMenuUI
 
                 try
                 {
-
                     pbxCargando.Visible = true;
 
+                    // PASO A: Autenticación
+                    swPaso.Start();
                     var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
                     var usuario = await supabase.Auth.SignIn(username, password);
                     var Actual = supabase.Auth.CurrentUser;
+                    swPaso.Stop();
+                    long tiempoAuth = swPaso.ElapsedMilliseconds;
+                    swPaso.Reset();
 
                     if (usuario != null)
                     {
@@ -80,16 +88,30 @@ namespace ModernMenuUI
 
                         try
                         {
+                            // PASO B: Carga de permisos
+                            swPaso.Start();
                             var uuidUsuario = Actual.Id;
                             var validacionRepo = new ValidacionRolRepositorio();
                             var contexto = await validacionRepo.ConstruirContexto(uuidUsuario);
-
                             ServicioSesionUsuario.IniciarSesion(Actual, contexto);
+                            swPaso.Stop();
+                            long tiempoPermisos = swPaso.ElapsedMilliseconds;
+
+                            // REPORTE DE MÉTRICAS
+                            swTotal.Stop();
+                            string resumen =
+                                $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                                $"Autenticación Supabase: {tiempoAuth} ms\n" +
+                                $"Carga de Permisos: {tiempoPermisos} ms\n" +
+                                $"Tiempo Total Login: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"-------------------------------";
+                            MessageBox.Show(resumen, "Evaluación del Sistema",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                             try
                             {
                                 if (supabase.Auth.CurrentSession != null && await _biometrico.EsPosibleUsarHuella())
                                 {
-                                    // Preguntamos explícitamente al usuario [Mejora de Privacidad]
                                     var result = MessageBox.Show(
                                         "¿Desea habilitar el inicio de sesión con huella en este equipo?",
                                         "Configuración Biométrica",
@@ -99,15 +121,13 @@ namespace ModernMenuUI
                                     if (result == DialogResult.Yes)
                                     {
                                         _biometrico.GuardarTokenSeguro(Actual.Email, supabase.Auth.CurrentSession.RefreshToken);
-
-                                        // Guardamos email y el SID de Windows para vincular identidades [Mejora de Seguridad]
                                         Properties.Settings.Default.UltimoUsuario = Actual.Email;
                                         Properties.Settings.Default.Save();
                                         MessageBox.Show("¡Huella vinculada con éxito!", "Proyecto El Cairo");
                                     }
                                 }
                             }
-                            catch { } // Fallo silencioso si no hay permisos (se arregla luego)
+                            catch { }
 
                             pbxCargando.Visible = false;
 
@@ -116,19 +136,11 @@ namespace ModernMenuUI
                             {
                                 MessageBox.Show("⚠️ El usuario no tiene acciones cargadas. El menú aparecerá vacío.");
                             }
-                            else
-                            {
-                                // MessageBox.Show("Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
-
-                            }
                         }
                         catch (Exception ex)
                         {
                             pbxCargando.Visible = false;
                             throw;
-                            MessageBox.Show($"Error crítico al cargar permisos: {ex.Message}. Cierre la aplicación.", "Error de Permisos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            LimpiarDatos(e, e);
-                            return;
                         }
 
                         Form formcarga = new frmInicioBodega();
@@ -142,45 +154,39 @@ namespace ModernMenuUI
                         lblMensajeError.Visible = true;
                         lblMensajeError.ForeColor = Color.Red;
                         lblMensajeError.Text = "Usuario o Contraseña incorrectos";
-
                         LimpiarDatos(e, e);
                     }
                 }
                 catch (GotrueException gex)
                 {
+                    swTotal.Stop();
                     pbxCargando.Visible = false;
                     lblMensajeError.Visible = true;
                     lblMensajeError.ForeColor = Color.Red;
 
                     if (gex.Message.Contains("Invalid login credentials"))
-                    {
                         lblMensajeError.Text = "Usuario o Contraseña incorrectos";
-                    }
                     else if (gex.Message.Contains("Email not confirmed"))
-                    {
                         lblMensajeError.Text = "El email no ha sido confirmado.";
-                    }
                     else
                     {
                         lblMensajeError.Text = "Error de autenticación.";
                         Console.WriteLine($"GotrueError: {gex.Message}");
                     }
-
                     LimpiarDatos(e, e);
-
                 }
                 catch (System.Net.WebException wex)
                 {
+                    swTotal.Stop();
                     pbxCargando.Visible = false;
-
                     MessageBox.Show($"Fallo de conexión: {wex.Message}\nAsegúrese de que el Wi-Fi o su conexión de red estén activos.",
                                     "Error de Conexión de Red", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     LimpiarDatos(e, e);
                     lblMensajeError.Visible = false;
-                    lblMensajeError.Visible = false;
                 }
                 catch (TimeoutException tex)
                 {
+                    swTotal.Stop();
                     pbxCargando.Visible = false;
                     MessageBox.Show(tex.Message, "Tiempo de Espera del Servidor Excedido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     LimpiarDatos(e, e);
@@ -188,6 +194,7 @@ namespace ModernMenuUI
                 }
                 catch (ApplicationException aex)
                 {
+                    swTotal.Stop();
                     pbxCargando.Visible = false;
                     MessageBox.Show($"Error de configuración: {aex.Message}\nEl programa terminará.", "Error en el Sistema", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     this.Close();
@@ -195,16 +202,12 @@ namespace ModernMenuUI
                 }
                 catch (Exception ex)
                 {
+                    swTotal.Stop();
                     pbxCargando.Visible = false;
-
                     if (ex.Message.Contains("Unable to connect to the remote server", StringComparison.OrdinalIgnoreCase))
-                    {
                         MessageBox.Show("No se pudo conectar con el servidor. Verifica tu conexión a Internet o intenta más tarde.", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
                     else
-                    {
                         MessageBox.Show("Ocurrió un error inesperado al intentar iniciar sesión." + ex.Message, "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
 
                     LimpiarDatos(e, e);
                     lblMensajeError.Visible = false;
@@ -339,7 +342,7 @@ namespace ModernMenuUI
 
         private async void btnBiometrico_Click(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.AppStarting;
+
 
             // 1. Validaciones iniciales
             string ultimoEmail = Properties.Settings.Default.UltimoUsuario;
@@ -395,17 +398,16 @@ namespace ModernMenuUI
                     _biometrico.BorrarToken(ultimoEmail);
                     btnBiometrico.Enabled = true;
                 }
-                finally 
-                { 
+                finally
+                {
                     this.Cursor = Cursors.Default;
                     pbxCargando.Visible = false;
                     btnAcceder.Enabled = true;
                     btnBiometrico.Enabled = true;
+
+               
                 }
             }
-
-
-
         }
 
         private async void AnimacionInicio()
@@ -426,6 +428,12 @@ namespace ModernMenuUI
             lblMensajeError.ForeColor = Color.Green;
             lblMensajeError.Text = "Inicio exitoso Bienvenido a El Cairo...";
             await Task.Delay(100);
+        }
+
+        private void frmIniciosesion_Load(object sender, EventArgs e)
+        {
+            var sw = Stopwatch.StartNew();
+ 
         }
     }
 }

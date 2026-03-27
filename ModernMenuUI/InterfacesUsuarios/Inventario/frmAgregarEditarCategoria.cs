@@ -55,7 +55,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 };
 
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesCategoria(categoriaTemp);
-
                 if (resultado.Error)
                 {
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -71,12 +70,18 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 btnGuardarCategoria.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
+                // ====== INICIO MÉTRICAS ======
+                System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+                System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+                swTotal.Start();
+
                 if (_categoriaSeleccionada == null)
                 {
                     categoriaTemp.IdEstado = rbInactivo.Checked ? 2 : 1;
-                    await CategoriaRepositorio.InsertarCategoria(categoriaTemp);
 
-                    MessageBox.Show("Categoría guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Start();
+                    await CategoriaRepositorio.InsertarCategoria(categoriaTemp);
+                    swPaso.Stop();
                 }
                 else
                 {
@@ -84,17 +89,32 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     categoriaTemp.IdEstado = rbInactivo.Checked ? 2 : 1;
                     categoriaTemp.EstadoCategoria = rbActivo.Checked;
 
+                    swPaso.Start();
                     await CategoriaRepositorio.ActualizarCategoria(categoriaTemp);
-
-                    MessageBox.Show("Categoría actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
                 }
+
+                swTotal.Stop();
+                string operacion = _categoriaSeleccionada == null ? "Inserción" : "Actualización";
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"{operacion} Categoría: {swPaso.ElapsedMilliseconds} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show(_categoriaSeleccionada == null ?
+                    "Categoría guardada correctamente." : "Categoría actualizada correctamente.",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar o actualizar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar o actualizar: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
