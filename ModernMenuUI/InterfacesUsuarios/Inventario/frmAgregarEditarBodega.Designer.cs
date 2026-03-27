@@ -42,6 +42,10 @@
             label2 = new Label();
             label8 = new Label();
             panel2 = new Panel();
+            cmbDepartamentos = new ComboBox();
+            label4 = new Label();
+            txtNumero = new TextBox();
+            label3 = new Label();
             label1 = new Label();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
@@ -103,7 +107,7 @@
             flpAjustarBotones.Controls.Add(btnGuardarBodega);
             flpAjustarBotones.Controls.Add(btnModificarBodega);
             flpAjustarBotones.Controls.Add(btnVolver);
-            flpAjustarBotones.Location = new Point(85, 237);
+            flpAjustarBotones.Location = new Point(60, 374);
             flpAjustarBotones.Margin = new Padding(3, 4, 3, 4);
             flpAjustarBotones.Name = "flpAjustarBotones";
             flpAjustarBotones.Size = new Size(315, 49);
@@ -165,10 +169,10 @@
             txtContrasenia.BackColor = Color.White;
             txtContrasenia.BorderStyle = BorderStyle.None;
             txtContrasenia.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtContrasenia.Location = new Point(142, 120);
+            txtContrasenia.Location = new Point(142, 129);
             txtContrasenia.Margin = new Padding(3, 4, 3, 4);
             txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.PlaceholderText = "Ingrese la contraseña";
+            txtContrasenia.PlaceholderText = "Ingrese la contraseña...";
             txtContrasenia.Size = new Size(291, 24);
             txtContrasenia.TabIndex = 24;
             // 
@@ -180,7 +184,7 @@
             txtNombreBodega.Location = new Point(142, 84);
             txtNombreBodega.Margin = new Padding(3, 4, 3, 4);
             txtNombreBodega.Name = "txtNombreBodega";
-            txtNombreBodega.PlaceholderText = "Ingrese el nombre de la bodega";
+            txtNombreBodega.PlaceholderText = "Ingrese el nombre de la bodega...";
             txtNombreBodega.Size = new Size(291, 24);
             txtNombreBodega.TabIndex = 1;
             // 
@@ -190,7 +194,7 @@
             gbxEstado.Controls.Add(rbActivo);
             gbxEstado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
-            gbxEstado.Location = new Point(142, 155);
+            gbxEstado.Location = new Point(137, 291);
             gbxEstado.Margin = new Padding(3, 4, 3, 4);
             gbxEstado.Name = "gbxEstado";
             gbxEstado.Padding = new Padding(3, 4, 3, 4);
@@ -203,7 +207,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(87, 99, 110);
-            label2.Location = new Point(37, 121);
+            label2.Location = new Point(26, 130);
             label2.Name = "label2";
             label2.Size = new Size(110, 23);
             label2.TabIndex = 14;
@@ -214,7 +218,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(87, 99, 110);
-            label8.Location = new Point(65, 84);
+            label8.Location = new Point(60, 85);
             label8.Name = "label8";
             label8.Size = new Size(76, 23);
             label8.TabIndex = 12;
@@ -223,6 +227,10 @@
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
+            panel2.Controls.Add(cmbDepartamentos);
+            panel2.Controls.Add(label4);
+            panel2.Controls.Add(txtNumero);
+            panel2.Controls.Add(label3);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(flpAjustarBotones);
             panel2.Controls.Add(txtContrasenia);
@@ -234,15 +242,58 @@
             panel2.Location = new Point(0, 0);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(477, 324);
+            panel2.Size = new Size(477, 444);
             panel2.TabIndex = 18;
+            // 
+            // cmbDepartamentos
+            // 
+            cmbDepartamentos.FormattingEnabled = true;
+            cmbDepartamentos.Location = new Point(142, 234);
+            cmbDepartamentos.Name = "cmbDepartamentos";
+            cmbDepartamentos.Size = new Size(151, 28);
+            cmbDepartamentos.TabIndex = 30;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.FromArgb(87, 99, 110);
+            label4.Location = new Point(4, 239);
+            label4.Name = "label4";
+            label4.Size = new Size(132, 23);
+            label4.TabIndex = 29;
+            label4.Text = "Departamento:";
+            // 
+            // txtNumero
+            // 
+            txtNumero.BackColor = Color.White;
+            txtNumero.BorderStyle = BorderStyle.None;
+            txtNumero.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNumero.Location = new Point(142, 178);
+            txtNumero.Margin = new Padding(3, 4, 3, 4);
+            txtNumero.Name = "txtNumero";
+            txtNumero.PlaceholderText = "Ingrese el número...";
+            txtNumero.Size = new Size(189, 24);
+            txtNumero.TabIndex = 28;
+            txtNumero.TextChanged += textBox1_TextChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.FromArgb(87, 99, 110);
+            label3.Location = new Point(51, 179);
+            label3.Name = "label3";
+            label3.Size = new Size(85, 23);
+            label3.TabIndex = 27;
+            label3.Text = "Teléfono:";
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(87, 99, 110);
-            label1.Location = new Point(70, 175);
+            label1.Location = new Point(65, 311);
             label1.Name = "label1";
             label1.Size = new Size(70, 23);
             label1.TabIndex = 26;
@@ -252,7 +303,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(477, 324);
+            ClientSize = new Size(477, 444);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -262,6 +313,7 @@
             Name = "frmAgregarEditarBodega";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Bodegas";
+            Load += frmAgregarEditarBodega_Load;
             panBarraControl.ResumeLayout(false);
             flpAjustarBotones.ResumeLayout(false);
             gbxEstado.ResumeLayout(false);
@@ -286,5 +338,9 @@
         private Label label8;
         private Panel panel2;
         private Label label1;
+        private TextBox txtNumero;
+        private Label label3;
+        private ComboBox cmbDepartamentos;
+        private Label label4;
     }
 }

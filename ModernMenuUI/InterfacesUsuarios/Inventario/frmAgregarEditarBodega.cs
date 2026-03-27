@@ -1,5 +1,6 @@
 ﻿using CapaDeDatos.Datos;
 using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using System;
 using System.Windows.Forms;
@@ -23,6 +24,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             InitializeComponent();
             btnGuardarBodega.Visible = true;
             btnModificarBodega.Visible = false;
+            rbActivo.Checked = true;
+            rbInactivo.Enabled = false;
         }
 
         /// <summary>
@@ -49,6 +52,30 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             btnGuardarBodega.Visible = false;
             btnModificarBodega.Visible = true;
         }
+        private async void frmAgregarEditarBodega_Load(object sender, EventArgs e)
+        {
+            await CargarDepartamentos();
+        }
+
+        /// <summary>
+        /// Metodo para cargar los departamentos en el cmbDepartamentos.
+        /// </summary>
+        private async Task CargarDepartamentos()
+        {
+            try
+            {
+                var repo = new BodegaRepositorio(); // la clase donde está obtenerDepartamentos
+                var departamentos = await repo.obtenerDepartamentos();
+
+                cmbDepartamentos.DataSource = departamentos;
+                cmbDepartamentos.DisplayMember = "NombreDepartamento"; // lo que se muestra
+                cmbDepartamentos.ValueMember = "IdDepartamento"; // el valor interno
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error cargando departamentos");
+            }
+        }
 
         /// <summary>
         /// Cierra el formulario y regresa a la ventana anterior.
@@ -68,6 +95,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             {
                 NombreBodega = txtNombreBodega.Text.Trim(),
                 ContraseniaBodega = txtContrasenia.Text.Trim(),
+                TelefonoSucursal = txtNumero.Text.Trim(),
+                IdDepartamento = Convert.ToByte(cmbDepartamentos.SelectedValue),
                 EstadoBodega = rbActivo.Checked
             };
 
@@ -92,6 +121,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 {
                     p_nombre_bodega = bodega.NombreBodega,
                     p_contrasenia = bodega.ContraseniaBodega,
+                    p_numero_telefono = bodega.TelefonoSucursal,
+                    p_departamento = bodega.IdDepartamento,
                     p_estado_bodega = rbActivo.Checked,
                     p_id_estado = rbActivo.Checked ? 1 : 2
                 });
@@ -162,5 +193,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 MessageBox.Show("Error al modificar la bodega: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

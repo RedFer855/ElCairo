@@ -76,6 +76,23 @@ namespace CapaDeDatos.Repositorios
                 throw;
             }
         }
+        public async Task<List<Departamentos>> obtenerDepartamentos()
+        {
+            try
+            {
+                var client = await GetClient();
+                var resultado = await client.From<Departamentos>()
+                                            .Order("nombre_departamento", Ordering.Ascending)
+                                            .Get();
+
+                return resultado?.Models ?? new List<Departamentos>();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("ocurrio un error al cargar los departamentos");
+                throw;
+            }
+        }
         public static async Task<bool> IniciarSesion(string idBodega, string passwordInput)
         {
             try
@@ -151,15 +168,5 @@ namespace CapaDeDatos.Repositorios
                 return BCrypt.Net.BCrypt.Verify(passwordInput, storedHash);
             }
         }
-
-        public async Task<List<Bodega>> ObtenerBodegasActivas()
-        {
-            var client = await GetClient();
-            var response = await client.From<Bodega>()
-                .Where(b => b.EstadoBodega == true) // Asume que el modelo Bodega tiene 'EstadoBodega'
-                .Get();
-            return response.Models.OrderBy(b => b.NombreBodega).ToList();
-        }
-
     }
 }
