@@ -1004,7 +1004,7 @@
             pbxCalculadora.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCalculadora.TabIndex = 20;
             pbxCalculadora.TabStop = false;
-            pbxCalculadora.Click += pbxCalculadora_Click_1;
+            //pbxCalculadora.Click += pbxCalculadora_Click_1;
             // 
             // btnSalir
             // 
@@ -1020,7 +1020,7 @@
             btnSalir.TabIndex = 19;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click_1;
+            //btnSalir.Click += btnSalir_Click_1;
             // 
             // pictureBox3
             // 
