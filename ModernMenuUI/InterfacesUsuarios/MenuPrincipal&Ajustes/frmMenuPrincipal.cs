@@ -725,7 +725,14 @@ namespace ModernMenuUI
 
         private void pbxCalculadora_Click_1(object sender, EventArgs e)
         {
-
+            try
+            {
+                Process.Start("calc.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
+            }
         }
     }
 }
