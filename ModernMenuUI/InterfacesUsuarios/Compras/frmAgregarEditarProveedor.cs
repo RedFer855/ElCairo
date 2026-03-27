@@ -2,6 +2,7 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using Serilog;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,6 +19,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         /// Instancia del proveedor que se está editando. Si es null, el formulario está en modo creación.
         /// </summary>
         private Proveedor _proveedorActual;
+
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/Proveedor.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
 
         /// <summary>
         /// Inicializa una nueva instancia de <see cref="frmAgregarEditarProveedor"/> en modo creación.
@@ -146,13 +153,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     EstadoProveedor = rbActivo.Checked
                 };
 
-                // VALIDAR proveedor (igual que validas Marca)
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesProveedor(proveedorTemp);
-
                 if (resultado.Error)
                 {
-                    MessageBox.Show(resultado.Mensaje, "Validación",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _log.Warning("Validación de proveedor fallida: {Mensaje}", resultado.Mensaje);
+                    MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -160,19 +165,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
 
                 if (_proveedorActual == null)
                 {
+                    _log.Information("Insertando nuevo proveedor: {Nombre}", proveedorTemp.NombreProveedor);
                     await _repoProv.InsertarProveedor(proveedorTemp);
+                    _log.Information("Proveedor guardado correctamente: {Nombre}", proveedorTemp.NombreProveedor);
 
-                    MessageBox.Show("Proveedor guardado correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Proveedor guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     proveedorTemp.IdProveedor = _proveedorActual.IdProveedor;
 
+                    _log.Information("Actualizando proveedor ID {Id}: {Nombre}", proveedorTemp.IdProveedor, proveedorTemp.NombreProveedor);
                     await _repoProv.ActualizarProveedor(proveedorTemp);
+                    _log.Information("Proveedor actualizado correctamente: {Nombre}", proveedorTemp.NombreProveedor);
 
-                    MessageBox.Show("Proveedor actualizado correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Proveedor actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 this.DialogResult = DialogResult.OK;
@@ -180,8 +187,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar el proveedor: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _log.Error(ex, "Error inesperado al guardar/actualizar proveedor: {Nombre}", txtNombreProveedor.Text);
+                MessageBox.Show("Error al guardar el proveedor: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
