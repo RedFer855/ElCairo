@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sprache;
 
 namespace ModernMenuUI
 {
@@ -257,6 +258,8 @@ namespace ModernMenuUI
                     return;
                 }
 
+                int cantidadP = Convert.ToInt32(txtCantidad.Value);
+
                 ProductoInsertar productoInsertar = new ProductoInsertar
                 {
                     NombreProducto = txtNombreProducto.Text.Trim(),
@@ -270,7 +273,7 @@ namespace ModernMenuUI
                     PrecioCosto = precioCosto,
                     PorcentajeGananciaProducto = porcentajeGananciaProducto,
                     TipoCalculoGananciaProducto = tipoCalculoGananciaProducto,
-                    CantidadProducto = cantidad,
+                    CantidadProducto = cantidadP,
                     ProductoPath = _nombreArchivo,
                     EstadoProducto = rbHabilitado.Checked,
                     IdEstado = rbHabilitado.Checked ? 1 : 2
