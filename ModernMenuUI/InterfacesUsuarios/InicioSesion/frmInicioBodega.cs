@@ -2,7 +2,9 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using ModernMenuUI.ServiciosUI;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace ModernMenuUI
@@ -53,27 +55,45 @@ namespace ModernMenuUI
 
             if (codigoInvalido || contraseniaInvalida)
             {
-                MessageBox.Show(
-                    "Debe llenar todos los campos para iniciar sesión.",
-                    "Campos incompletos",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show("Debe llenar todos los campos para iniciar sesión.",
+                    "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
 
             try
             {
                 btnAcceder.Enabled = false;
 
+                // PASO A: Login de bodega
+                swPaso.Start();
                 bool loginCorrecto = await BodegaRepositorio.IniciarSesion(codigo, contrasenia);
+                swPaso.Stop();
+                long tiempoLogin = swPaso.ElapsedMilliseconds;
+                swPaso.Reset();
 
                 if (loginCorrecto)
                 {
+                    // PASO B: Obtener datos de bodega
+                    swPaso.Start();
                     var bodega = await BodegaRepositorio.ObtenerBodegaPorIdAsync(codigo);
-
                     if (bodega != null)
                         ServicioSesionUsuario.AsignarBodegaActual(bodega);
+                    swPaso.Stop();
+                    long tiempoBodega = swPaso.ElapsedMilliseconds;
+
+                    swTotal.Stop();
+                    string resumen =
+                        $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                        $"Login Bodega: {tiempoLogin} ms\n" +
+                        $"Carga Datos Bodega: {tiempoBodega} ms\n" +
+                        $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                        $"-------------------------------";
+                    MessageBox.Show(resumen, "Evaluación del Sistema",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     Form pantallaCarga = new frmPantallaDeCarga();
                     this.Visible = false;
@@ -81,15 +101,19 @@ namespace ModernMenuUI
                 }
                 else
                 {
+                    swTotal.Stop();
                     lblMensajeError.Visible = true;
                     lblMensajeError.Text = "Código o contraseña incorrectos.";
                     ResetearCamposLogin();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Error al intentar iniciar sesión.", "Error",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                swTotal.Stop();
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -197,6 +221,16 @@ namespace ModernMenuUI
                 e.SuppressKeyPress = true;
                 btnAcceder.PerformClick();
             }
+        }
+
+        private void frmInicioBodega_Load(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void btnVer_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

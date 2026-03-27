@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -63,45 +64,53 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
 
         private async void btnVerificar_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.AppStarting;
+            btnVerificar.Enabled = false;
+
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
+
+            try
             {
-                this.Cursor = Cursors.AppStarting;
-                btnVerificar.Enabled = false;
+                // PASO A: Verificar código
+                var resultado = await _servicio.VerificarCodigoAsync(_correo, txtCodigo.Text);
+                swTotal.Stop();
 
-                try
+                if (!resultado.ok)
                 {
-                    var resultado = await _servicio.VerificarCodigoAsync(_correo, txtCodigo.Text);
-
-                    if (!resultado.ok)
-                    {
-                        MessageBox.Show(
-                            resultado.mensaje,
-                            "Verificación de código",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning
-                        );
-
-                        txtCodigo.Focus();
-                        txtCodigo.SelectAll();
-                        return;
-                    }
-
-                    MessageBox.Show(
-                        resultado.mensaje,
-                        "Verificación de código",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
-
-                    frmNuevaContrasenia frm = new frmNuevaContrasenia();
-                    this.Close();
-                    frm.Show();
-              
+                    MessageBox.Show(resultado.mensaje, "Verificación de código",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCodigo.Focus();
+                    txtCodigo.SelectAll();
+                    return;
                 }
-                finally
-                {
-                    btnVerificar.Enabled = true;
-                    this.Cursor = Cursors.Default;
-                }
+
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"Verificación de Código: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show(resultado.mensaje, "Verificación de código",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                frmNuevaContrasenia frm = new frmNuevaContrasenia();
+                this.Close();
+                frm.Show();
+            }
+            catch (Exception ex)
+            {
+                swTotal.Stop();
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnVerificar.Enabled = true;
+                this.Cursor = Cursors.Default;
             }
         }
 
@@ -110,12 +119,23 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
             this.Cursor = Cursors.AppStarting;
             btnReenviar.Enabled = false;
 
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
+
             try
             {
                 var resultado = await _servicio.EnviarCodigoAsync(_correo);
+                swTotal.Stop();
 
                 if (resultado.ok)
                 {
+                    string resumen =
+                        $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                        $"Reenvío de Código: {swTotal.ElapsedMilliseconds} ms\n" +
+                        $"-------------------------------";
+                    MessageBox.Show(resumen, "Evaluación del Sistema",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     MessageBox.Show("Se envió un nuevo código al correo.");
                     IniciarContadorReenvio();
                 }
@@ -124,6 +144,14 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
                     MessageBox.Show(resultado.mensaje);
                     btnReenviar.Enabled = true;
                 }
+            }
+            catch (Exception ex)
+            {
+                swTotal.Stop();
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -169,8 +197,11 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
 
         private void frmCodigoRecuperacion_Load(object sender, EventArgs e)
         {
+            var sw = Stopwatch.StartNew();
             txtCodigo.MaxLength = 6;
             IniciarContadorReenvio();
+
+         
         }
     }
 }

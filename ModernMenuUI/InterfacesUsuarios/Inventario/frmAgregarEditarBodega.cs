@@ -60,7 +60,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         /// </summary>
         private async void btnGuardarBodega_Click(object sender, EventArgs e)
         {
-            // Construcción del objeto bodega a partir de los valores ingresados
             Bodega bodega = new Bodega
             {
                 NombreBodega = txtNombreBodega.Text.Trim(),
@@ -68,7 +67,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 EstadoBodega = rbActivo.Checked
             };
 
-            // Ejecución del conjunto de validaciones definidas en el servicio
             var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesBodega(bodega);
             if (resultado.Error)
             {
@@ -76,20 +74,28 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 return;
             }
 
-            // Validación adicional del estado
             if (!rbActivo.Checked && !rbInactivo.Checked)
             {
                 MessageBox.Show("Seleccione un estado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
+
             try
             {
-                // Obtiene el cliente Supabase actual
+                // PASO A: Conexión a Supabase
+                swPaso.Start();
                 var supabase = await Conexion.GetClientAsync();
                 var usuarioAuth = supabase.Auth.CurrentUser;
+                swPaso.Stop();
+                long tiempoConexion = swPaso.ElapsedMilliseconds;
+                swPaso.Reset();
 
-                // Llamada RPC a la función 'insertar_bodega' en PostgreSQL/Supabase
+                // PASO B: Insertar bodega
+                swPaso.Start();
                 await supabase.Rpc("insertar_bodega", new
                 {
                     p_nombre_bodega = txtNombreBodega.Text,
@@ -97,16 +103,32 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     p_estado_bodega = rbActivo.Checked,
                     p_id_estado = rbActivo.Checked ? 1 : 2
                 });
+                swPaso.Stop();
+                long tiempoInsercion = swPaso.ElapsedMilliseconds;
 
-                MessageBox.Show("Bodega guardada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                swTotal.Stop();
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"Conexión Supabase: {tiempoConexion} ms\n" +
+                    $"Inserción Bodega (RPC): {tiempoInsercion} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show("Bodega guardada exitosamente.", "Éxito",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar la bodega: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                swTotal.Stop();
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                // Cierra el formulario tras intentar guardar
                 this.Close();
             }
         }

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ModernMenuUI.ServiciosUI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -48,6 +50,11 @@ namespace ModernMenuUI
         private void pbInicioSistema_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void frmPantallaDeCarga_Load(object sender, EventArgs e)
+        {
+          
         }
     }
 }

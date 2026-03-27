@@ -127,7 +127,7 @@
             btnBiometrico.BackgroundImageLayout = ImageLayout.Zoom;
             btnBiometrico.FlatAppearance.BorderSize = 0;
             btnBiometrico.FlatStyle = FlatStyle.Flat;
-            btnBiometrico.Font = new Font("Itim", 12F);
+            btnBiometrico.Font = new Font("Microsoft Sans Serif", 12F);
             btnBiometrico.Location = new Point(486, 312);
             btnBiometrico.Margin = new Padding(0);
             btnBiometrico.Name = "btnBiometrico";
@@ -167,7 +167,7 @@
             // lblMensajeError
             // 
             lblMensajeError.BackColor = Color.Transparent;
-            lblMensajeError.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblMensajeError.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensajeError.ForeColor = Color.DarkRed;
             lblMensajeError.Location = new Point(114, 284);
             lblMensajeError.Name = "lblMensajeError";
@@ -186,7 +186,7 @@
             txtContrasenia.Location = new Point(59, 181);
             txtContrasenia.Margin = new Padding(3, 4, 3, 4);
             txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.Size = new Size(427, 24);
+            txtContrasenia.Size = new Size(427, 30);
             txtContrasenia.TabIndex = 4;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContra_Enter;
@@ -202,7 +202,7 @@
             txtUsuario.Location = new Point(59, 119);
             txtUsuario.Margin = new Padding(3, 4, 3, 4);
             txtUsuario.Name = "txtUsuario";
-            txtUsuario.Size = new Size(480, 24);
+            txtUsuario.Size = new Size(480, 30);
             txtUsuario.TabIndex = 3;
             txtUsuario.Text = "USUARIO";
             txtUsuario.Enter += txtUsuario_Enter;
@@ -216,7 +216,7 @@
             lblRecuperarContrasenia.ForeColor = Color.FromArgb(142, 142, 142);
             lblRecuperarContrasenia.Location = new Point(201, 388);
             lblRecuperarContrasenia.Name = "lblRecuperarContrasenia";
-            lblRecuperarContrasenia.Size = new Size(204, 20);
+            lblRecuperarContrasenia.Size = new Size(259, 25);
             lblRecuperarContrasenia.TabIndex = 7;
             lblRecuperarContrasenia.Text = "¿Has olvidado tu contraseña?";
             lblRecuperarContrasenia.Click += lblRecuperarContrasenia_Click;
@@ -284,7 +284,7 @@
             label3.ForeColor = Color.FromArgb(142, 142, 142);
             label3.Location = new Point(201, 12);
             label3.Name = "label3";
-            label3.Size = new Size(185, 24);
+            label3.Size = new Size(235, 33);
             label3.TabIndex = 10;
             label3.Text = "INICIO DE SESIÓN";
             // 
@@ -338,18 +338,19 @@
             // 
             // frmIniciosesion
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(880, 450);
             Controls.Add(panBarraControl);
             Controls.Add(panDatosIngreso);
             Controls.Add(panLogo);
-            Font = new Font("Itim", 6.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new Font("Microsoft Sans Serif", 6.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 4, 3, 4);
             Name = "frmIniciosesion";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormInicioUsurio";
+            Load += frmIniciosesion_Load;
             panLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxContenedorImagen).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

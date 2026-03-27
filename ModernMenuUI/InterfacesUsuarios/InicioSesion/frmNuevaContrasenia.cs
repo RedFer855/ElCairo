@@ -31,6 +31,7 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
         {
             string contra = txtNuevaContra.Text.Trim();
             string contra2 = txtConfirContra.Text.Trim();
+
             var v1 = ServicioValidacionesIngresoDatos.ValidarContrasenia(contra, "La contraseña");
             if (v1.Error)
             {
@@ -45,8 +46,12 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
                 btnCambiar.Enabled = true;
                 return;
             }
+
             this.Cursor = Cursors.AppStarting;
             btnCambiar.Enabled = false;
+
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
 
             try
             {
@@ -54,27 +59,34 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
                     txtNuevaContra.Text,
                     txtConfirContra.Text
                 );
+                swTotal.Stop();
 
                 if (!resultado.ok)
                 {
-                    MessageBox.Show(
-                        resultado.mensaje,
-                        "Cambio de contraseña",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    MessageBox.Show(resultado.mensaje, "Cambio de contraseña",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                MessageBox.Show(
-                    resultado.mensaje,
-                    "Cambio de contraseña",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-                
-                this.Close();           
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"Cambio de Contraseña: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                MessageBox.Show(resultado.mensaje, "Cambio de contraseña",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                swTotal.Stop();
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

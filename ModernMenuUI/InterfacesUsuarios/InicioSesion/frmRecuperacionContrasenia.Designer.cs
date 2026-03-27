@@ -230,6 +230,7 @@
             Name = "frmRecuperacionContrasenia";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "RecuperacionContrasenia";
+            Load += frmRecuperacionContrasenia_Load;
             ((System.ComponentModel.ISupportInitialize)pbxLogoEmpresa).EndInit();
             panLogo.ResumeLayout(false);
             panDatosIngreso.ResumeLayout(false);

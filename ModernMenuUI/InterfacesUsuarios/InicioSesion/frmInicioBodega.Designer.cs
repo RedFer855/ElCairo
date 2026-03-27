@@ -80,6 +80,7 @@
             btnVer.Size = new Size(37, 36);
             btnVer.TabIndex = 21;
             btnVer.UseVisualStyleBackColor = true;
+            btnVer.Click += btnVer_Click;
             btnVer.MouseDown += btnVer_MouseDown;
             btnVer.MouseUp += btnVer_MouseUp;
             // 
@@ -104,7 +105,7 @@
             // lblMensajeError
             // 
             lblMensajeError.BackColor = Color.Transparent;
-            lblMensajeError.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblMensajeError.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblMensajeError.ForeColor = Color.FromArgb(134, 27, 45);
             lblMensajeError.Location = new Point(77, 238);
             lblMensajeError.Margin = new Padding(4, 0, 4, 0);
@@ -124,7 +125,7 @@
             txtContrasenia.Location = new Point(77, 130);
             txtContrasenia.Margin = new Padding(4);
             txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.Size = new Size(328, 24);
+            txtContrasenia.Size = new Size(328, 30);
             txtContrasenia.TabIndex = 17;
             txtContrasenia.Text = "CONTRASEÑA";
             txtContrasenia.Enter += txtContrasenia_Enter;
@@ -204,7 +205,7 @@
             txtCodigoBodega.Location = new Point(77, 77);
             txtCodigoBodega.Margin = new Padding(4);
             txtCodigoBodega.Name = "txtCodigoBodega";
-            txtCodigoBodega.Size = new Size(380, 24);
+            txtCodigoBodega.Size = new Size(380, 30);
             txtCodigoBodega.TabIndex = 15;
             txtCodigoBodega.Text = "CÓDIGO";
             txtCodigoBodega.Enter += txtCodigoBodega_Enter;
@@ -264,17 +265,18 @@
             // 
             // frmInicioBodega
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(805, 362);
             Controls.Add(panLogo);
             Controls.Add(panel1);
-            Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
             Name = "frmInicioBodega";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmInicioBodega";
+            Load += frmInicioBodega_Load;
             panLogo.ResumeLayout(false);
             panLogo.PerformLayout();
             panBarraControl.ResumeLayout(false);

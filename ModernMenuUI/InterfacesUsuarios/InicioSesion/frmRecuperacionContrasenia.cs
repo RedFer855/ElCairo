@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -82,53 +83,68 @@ namespace ModernMenuUI
 
         private async void btnEnviar_Click(object sender, EventArgs e)
         {
-            this.Cursor = Cursors.AppStarting;
             btnEnviar.Enabled = false;
+
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
 
             try
             {
-                // 🔹 VALIDAR CORREO
+                // PASO A: Validar correo
+                swPaso.Start();
                 var validacion = await _servicio.ValidarCorreoRegistradoAsync(txtCorreo.Text);
+                swPaso.Stop();
+                long tiempoValidacion = swPaso.ElapsedMilliseconds;
+                swPaso.Reset();
 
                 if (!validacion.ok)
                 {
-                    MessageBox.Show(
-                        validacion.mensaje,
-                        "Recuperación de contraseña",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-
+                    MessageBox.Show(validacion.mensaje, "Recuperación de contraseña",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtCorreo.Focus();
                     txtCorreo.SelectAll();
                     return;
                 }
 
-                // 🔹 ENVIAR CÓDIGO
+                // PASO B: Enviar código
+                swPaso.Start();
                 var resultado = await _servicio.EnviarCodigoAsync(validacion.correoNormalizado);
+                swPaso.Stop();
+                long tiempoEnvio = swPaso.ElapsedMilliseconds;
 
                 if (!resultado.ok)
                 {
-                    MessageBox.Show(
-                        resultado.mensaje,
-                        "Recuperación de contraseña",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    MessageBox.Show(resultado.mensaje, "Recuperación de contraseña",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                MessageBox.Show(
-                    resultado.mensaje,
-                    "Recuperación de contraseña",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                swTotal.Stop();
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"Validación de Correo: {tiempoValidacion} ms\n" +
+                    $"Envío de Código: {tiempoEnvio} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show(resultado.mensaje, "Recuperación de contraseña",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 frmCodigoRecuperacion frm = new frmCodigoRecuperacion(validacion.correoNormalizado);
                 this.Hide();
                 frm.ShowDialog();
                 this.Close();
+            }
+            catch (Exception ex)
+            {
+                swTotal.Stop();
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -153,6 +169,12 @@ namespace ModernMenuUI
                 txtCorreo.Text = "Correo...";
                 txtCorreo.ForeColor = Color.Gray;
             }
+        }
+
+        private void frmRecuperacionContrasenia_Load(object sender, EventArgs e)
+        {
+            var sw = Stopwatch.StartNew();
+
         }
     }
 }

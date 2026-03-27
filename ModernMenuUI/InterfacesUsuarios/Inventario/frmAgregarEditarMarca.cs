@@ -106,21 +106,18 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             try
             {
-                // VALIDAR QUE HAYA PROVEEDOR SELECCIONADO
                 if (_idProveedorSeleccionado <= 0)
                 {
                     MessageBox.Show("Debe seleccionar un proveedor.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Crear objeto intermedio para validaciones e inserción
                 MarcaInsertar _marcaTemporal = new MarcaInsertar
                 {
                     NombreMarca = txtNombreMarca.Text.Trim(),
                     IdProveedor = _idProveedorSeleccionado
                 };
 
-                // Ejecutar validaciones personalizadas
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesMarca(_marcaTemporal);
                 if (resultado.Error)
                 {
@@ -131,30 +128,44 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 btnGuardarMarca.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                // --- INSERTAR O ACTUALIZAR SEGÚN EL CONTEXTO ---
+                // ====== INICIO MÉTRICAS ======
+                System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+                System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+                swTotal.Start();
+
                 if (_marcaSeleccionada == null)
                 {
-                    // ----------------------- MODO INSERTAR -----------------------
                     _marcaTemporal.EstadoMarca = rbActivo.Checked;
                     _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
 
+                    swPaso.Start();
                     await MarcaRepositorio.InsertarMarca(_marcaTemporal);
-
-                    MessageBox.Show("Marca guardada correctamente.", "Éxito",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
                 }
                 else
                 {
-                    // ----------------------- MODO ACTUALIZAR -----------------------
-                    _marcaTemporal.IdMarca = _marcaSeleccionada.IdMarca; // ID original a actualizar
+                    _marcaTemporal.IdMarca = _marcaSeleccionada.IdMarca;
                     _marcaTemporal.EstadoMarca = rbActivo.Checked;
                     _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
 
+                    swPaso.Start();
                     await MarcaRepositorio.ActualizarMarca(_marcaTemporal);
-
-                    MessageBox.Show("Marca actualizada correctamente.", "Éxito",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    swPaso.Stop();
                 }
+
+                swTotal.Stop();
+                string operacion = _marcaSeleccionada == null ? "Inserción" : "Actualización";
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"{operacion} Marca: {swPaso.ElapsedMilliseconds} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show(_marcaSeleccionada == null ?
+                    "Marca guardada correctamente." : "Marca actualizada correctamente.",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
