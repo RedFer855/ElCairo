@@ -2,6 +2,7 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.InterfacesUsuarios.Compras;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,6 +39,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         /// Constructor principal utilizado para agregar nuevas marcas.
         /// Configura visibilidad de botones y rotula el módulo.
         /// </summary>
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/Marca.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
         public frmAgregarEditarMarca()
         {
             InitializeComponent();
@@ -106,24 +112,23 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             try
             {
-                // VALIDAR QUE HAYA PROVEEDOR SELECCIONADO
                 if (_idProveedorSeleccionado <= 0)
                 {
+                    _log.Warning("Intento de guardar marca sin proveedor seleccionado");
                     MessageBox.Show("Debe seleccionar un proveedor.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Crear objeto intermedio para validaciones e inserción
                 MarcaInsertar _marcaTemporal = new MarcaInsertar
                 {
                     NombreMarca = txtNombreMarca.Text.Trim(),
                     IdProveedor = _idProveedorSeleccionado
                 };
 
-                // Ejecutar validaciones personalizadas
                 var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesMarca(_marcaTemporal);
                 if (resultado.Error)
                 {
+                    _log.Warning("Validación de marca fallida: {Mensaje}", resultado.Mensaje);
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -131,29 +136,32 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 btnGuardarMarca.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                // --- INSERTAR O ACTUALIZAR SEGÚN EL CONTEXTO ---
                 if (_marcaSeleccionada == null)
                 {
-                    // ----------------------- MODO INSERTAR -----------------------
                     _marcaTemporal.EstadoMarca = rbActivo.Checked;
                     _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
+
+                    _log.Information("Insertando nueva marca: {Nombre} con proveedor ID {IdProveedor}",
+                        _marcaTemporal.NombreMarca, _marcaTemporal.IdProveedor);
 
                     await MarcaRepositorio.InsertarMarca(_marcaTemporal);
 
-                    MessageBox.Show("Marca guardada correctamente.", "Éxito",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _log.Information("Marca guardada correctamente: {Nombre}", _marcaTemporal.NombreMarca);
+                    MessageBox.Show("Marca guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // ----------------------- MODO ACTUALIZAR -----------------------
-                    _marcaTemporal.IdMarca = _marcaSeleccionada.IdMarca; // ID original a actualizar
+                    _marcaTemporal.IdMarca = _marcaSeleccionada.IdMarca;
                     _marcaTemporal.EstadoMarca = rbActivo.Checked;
                     _marcaTemporal.IdEstado = rbInactivo.Checked ? 2 : 1;
 
+                    _log.Information("Actualizando marca ID {Id}: {Nombre}",
+                        _marcaTemporal.IdMarca, _marcaTemporal.NombreMarca);
+
                     await MarcaRepositorio.ActualizarMarca(_marcaTemporal);
 
-                    MessageBox.Show("Marca actualizada correctamente.", "Éxito",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _log.Information("Marca actualizada correctamente: {Nombre}", _marcaTemporal.NombreMarca);
+                    MessageBox.Show("Marca actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 this.DialogResult = DialogResult.OK;
@@ -161,8 +169,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar/actualizar: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _log.Error(ex, "Error inesperado al guardar/actualizar marca: {Nombre}", txtNombreMarca.Text);
+                MessageBox.Show("Error al guardar/actualizar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

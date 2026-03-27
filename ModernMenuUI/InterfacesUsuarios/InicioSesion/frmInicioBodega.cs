@@ -2,6 +2,7 @@
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
+using Serilog;
 using System;
 using System.Windows.Forms;
 
@@ -12,10 +13,18 @@ namespace ModernMenuUI
         private string _placeholderCodigo = "CÓDIGO";
         private string _placeholderContrasenia = "CONTRASEÑA";
 
+        private static readonly ILogger _log = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .WriteTo.Console()
+        .WriteTo.File("logs/loginbodega.txt", rollingInterval: RollingInterval.Day)
+        .CreateLogger();
+
         public frmInicioBodega()
         {
             InitializeComponent();
             this.Shown += (s, e) => txtCodigoBodega.Focus();
+
+            _log.Information("Formulario de inicio de sesión por bodega abierto");
         }
 
         public static class SessionData
@@ -53,6 +62,7 @@ namespace ModernMenuUI
 
             if (codigoInvalido || contraseniaInvalida)
             {
+                _log.Warning("Intento de acceso a bodega con campos vacíos");
                 MessageBox.Show(
                     "Debe llenar todos los campos para iniciar sesión.",
                     "Campos incompletos",
@@ -65,6 +75,7 @@ namespace ModernMenuUI
             try
             {
                 btnAcceder.Enabled = false;
+                _log.Information("Intentando acceso a bodega con código: {Codigo}", codigo);
 
                 bool loginCorrecto = await BodegaRepositorio.IniciarSesion(codigo, contrasenia);
 
@@ -73,7 +84,14 @@ namespace ModernMenuUI
                     var bodega = await BodegaRepositorio.ObtenerBodegaPorIdAsync(codigo);
 
                     if (bodega != null)
+                    {
                         ServicioSesionUsuario.AsignarBodegaActual(bodega);
+                        _log.Information("Acceso exitoso a bodega: {Codigo}", codigo);
+                    }
+                    else
+                    {
+                        _log.Warning("Login correcto pero bodega no encontrada para código: {Codigo}", codigo);
+                    }
 
                     Form pantallaCarga = new frmPantallaDeCarga();
                     this.Visible = false;
@@ -81,13 +99,15 @@ namespace ModernMenuUI
                 }
                 else
                 {
+                    _log.Warning("Código o contraseña incorrectos para bodega: {Codigo}", codigo);
                     lblMensajeError.Visible = true;
                     lblMensajeError.Text = "Código o contraseña incorrectos.";
                     ResetearCamposLogin();
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                _log.Error(ex, "Error inesperado al intentar acceder a bodega: {Codigo}", codigo);
                 MessageBox.Show("Error al intentar iniciar sesión.", "Error",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }

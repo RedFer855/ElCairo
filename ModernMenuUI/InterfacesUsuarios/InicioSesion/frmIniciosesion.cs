@@ -3,6 +3,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.ServiciosUI;
+using Serilog;
 using Supabase.Gotrue.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,19 @@ namespace ModernMenuUI
         private readonly UsuarioRepositorio _usuarioRepo;
         private readonly ServicioBiometrico _biometrico;
 
+        private static readonly ILogger _log = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .WriteTo.Console()
+        .WriteTo.File("logs/login.txt", rollingInterval: RollingInterval.Day)
+        .CreateLogger();
+
         public frmIniciosesion()
         {
             InitializeComponent();
             _usuarioRepo = new UsuarioRepositorio();
             _biometrico = new ServicioBiometrico();
+
+            _log.Information("Formulario de inicio de sesión abierto"); 
         }
 
         public void LimpiarDatos(object sender, EventArgs e)
@@ -49,10 +58,10 @@ namespace ModernMenuUI
 
             if (txtContrasenia.Text == "" || txtUsuario.Text == "")
             {
+                _log.Warning("Intento de login con campos vacíos");
                 btnAcceder.Enabled = true;
                 MessageBox.Show("El Usuario o contraseña estan vacios", "Credenciales Vacias", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 LimpiarDatos(e, e);
-
             }
             else
             {
@@ -67,8 +76,8 @@ namespace ModernMenuUI
 
                 try
                 {
-
                     pbxCargando.Visible = true;
+                    _log.Information("Intentando iniciar sesión para: {Usuario}", txtUsuario.Text);
 
                     var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
                     var usuario = await supabase.Auth.SignIn(username, password);
@@ -76,6 +85,7 @@ namespace ModernMenuUI
 
                     if (usuario != null)
                     {
+                        _log.Information("Autenticación exitosa para: {Usuario}", txtUsuario.Text);
                         AnimacionInicio();
 
                         try
@@ -85,11 +95,11 @@ namespace ModernMenuUI
                             var contexto = await validacionRepo.ConstruirContexto(uuidUsuario);
 
                             ServicioSesionUsuario.IniciarSesion(Actual, contexto);
+
                             try
                             {
                                 if (supabase.Auth.CurrentSession != null && await _biometrico.EsPosibleUsarHuella())
                                 {
-                                    // Preguntamos explícitamente al usuario [Mejora de Privacidad]
                                     var result = MessageBox.Show(
                                         "¿Desea habilitar el inicio de sesión con huella en este equipo?",
                                         "Configuración Biométrica",
@@ -99,36 +109,33 @@ namespace ModernMenuUI
                                     if (result == DialogResult.Yes)
                                     {
                                         _biometrico.GuardarTokenSeguro(Actual.Email, supabase.Auth.CurrentSession.RefreshToken);
-
-                                        // Guardamos email y el SID de Windows para vincular identidades [Mejora de Seguridad]
                                         Properties.Settings.Default.UltimoUsuario = Actual.Email;
                                         Properties.Settings.Default.Save();
+                                        _log.Information("Huella biométrica vinculada para: {Email}", Actual.Email);
                                         MessageBox.Show("¡Huella vinculada con éxito!", "Proyecto El Cairo");
                                     }
                                 }
                             }
-                            catch { } // Fallo silencioso si no hay permisos (se arregla luego)
+                            catch { } // Fallo silencioso si no hay permisos
 
                             pbxCargando.Visible = false;
 
                             var acciones = contexto.AccionesPermitidas;
                             if (acciones == null || acciones.Count == 0)
                             {
+                                _log.Warning("Usuario {Usuario} no tiene acciones permitidas asignadas", txtUsuario.Text);
                                 MessageBox.Show("⚠️ El usuario no tiene acciones cargadas. El menú aparecerá vacío.");
                             }
                             else
                             {
-                                // MessageBox.Show("Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
-
+                                _log.Information("Permisos cargados correctamente: {CantidadAcciones} acciones", acciones.Count);
                             }
                         }
                         catch (Exception ex)
                         {
                             pbxCargando.Visible = false;
+                            _log.Error(ex, "Error crítico al cargar permisos para: {Usuario}", txtUsuario.Text);
                             throw;
-                            MessageBox.Show($"Error crítico al cargar permisos: {ex.Message}. Cierre la aplicación.", "Error de Permisos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            LimpiarDatos(e, e);
-                            return;
                         }
 
                         Form formcarga = new frmInicioBodega();
@@ -139,10 +146,10 @@ namespace ModernMenuUI
                     else
                     {
                         pbxCargando.Visible = false;
+                        _log.Warning("Credenciales incorrectas para: {Usuario}", txtUsuario.Text);
                         lblMensajeError.Visible = true;
                         lblMensajeError.ForeColor = Color.Red;
                         lblMensajeError.Text = "Usuario o Contraseña incorrectos";
-
                         LimpiarDatos(e, e);
                     }
                 }
@@ -151,6 +158,7 @@ namespace ModernMenuUI
                     pbxCargando.Visible = false;
                     lblMensajeError.Visible = true;
                     lblMensajeError.ForeColor = Color.Red;
+                    _log.Error(gex, "Error de autenticación Gotrue para: {Usuario}", txtUsuario.Text);
 
                     if (gex.Message.Contains("Invalid login credentials"))
                     {
@@ -167,21 +175,20 @@ namespace ModernMenuUI
                     }
 
                     LimpiarDatos(e, e);
-
                 }
                 catch (System.Net.WebException wex)
                 {
                     pbxCargando.Visible = false;
-
+                    _log.Error(wex, "Error de conexión de red al iniciar sesión");
                     MessageBox.Show($"Fallo de conexión: {wex.Message}\nAsegúrese de que el Wi-Fi o su conexión de red estén activos.",
                                     "Error de Conexión de Red", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     LimpiarDatos(e, e);
-                    lblMensajeError.Visible = false;
                     lblMensajeError.Visible = false;
                 }
                 catch (TimeoutException tex)
                 {
                     pbxCargando.Visible = false;
+                    _log.Error(tex, "Tiempo de espera agotado al conectar con el servidor");
                     MessageBox.Show(tex.Message, "Tiempo de Espera del Servidor Excedido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     LimpiarDatos(e, e);
                     lblMensajeError.Visible = false;
@@ -189,6 +196,7 @@ namespace ModernMenuUI
                 catch (ApplicationException aex)
                 {
                     pbxCargando.Visible = false;
+                    _log.Error(aex, "Error de configuración crítico, cerrando aplicación");
                     MessageBox.Show($"Error de configuración: {aex.Message}\nEl programa terminará.", "Error en el Sistema", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     this.Close();
                     lblMensajeError.Visible = false;
@@ -196,6 +204,7 @@ namespace ModernMenuUI
                 catch (Exception ex)
                 {
                     pbxCargando.Visible = false;
+                    _log.Error(ex, "Error inesperado al iniciar sesión para: {Usuario}", txtUsuario.Text);
 
                     if (ex.Message.Contains("Unable to connect to the remote server", StringComparison.OrdinalIgnoreCase))
                     {

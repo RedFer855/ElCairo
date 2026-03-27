@@ -1,6 +1,7 @@
 ﻿using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,6 +29,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         /// Si es null, el formulario funciona en modo "agregar".
         /// </summary>
         private Presentacion _presentacionSeleccionada;
+
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/Presentacion.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
 
         /// <summary>
         /// Constructor por defecto para agregar una nueva presentación.
@@ -73,7 +80,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             try
             {
-                // Objeto temporal para validar e insertar/actualizar
                 Presentacion presentacionTemp = new Presentacion
                 {
                     NombrePresentacion = txtNombrePresentacion.Text.Trim(),
@@ -81,22 +87,18 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     EstadoPresentacion = rbActivo.Checked
                 };
 
-                // EJECUTAR VALIDACIONES
-                var resultado = ServicioValidacionesIngresoDatos
-                                .EjecutarValidacionesPresentacion(presentacionTemp);
-
+                var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesPresentacion(presentacionTemp);
                 if (resultado.Error)
                 {
-                    MessageBox.Show(resultado.Mensaje,
-                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _log.Warning("Validación de presentación fallida: {Mensaje}", resultado.Mensaje);
+                    MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Validar estado
                 if (!rbActivo.Checked && !rbInactivo.Checked)
                 {
-                    MessageBox.Show("Debe seleccionar un estado.",
-                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _log.Warning("Intento de guardar presentación sin estado seleccionado: {Nombre}", presentacionTemp.NombrePresentacion);
+                    MessageBox.Show("Debe seleccionar un estado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -105,28 +107,23 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                 PresentacionRepositorio repo = new PresentacionRepositorio();
 
-                // ---------------------------------------------------------------------
-                //                              INSERTAR
-                // ---------------------------------------------------------------------
                 if (_presentacionSeleccionada == null)
                 {
+                    _log.Information("Insertando nueva presentación: {Nombre}", presentacionTemp.NombrePresentacion);
                     await repo.InsertarPresentacion(presentacionTemp);
+                    _log.Information("Presentación guardada correctamente: {Nombre}", presentacionTemp.NombrePresentacion);
 
-                    MessageBox.Show("Presentación guardada correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Presentación guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // ---------------------------------------------------------------------
-                    //                              ACTUALIZAR
-                    // ---------------------------------------------------------------------
-                    presentacionTemp.IdPresentacionProducto =
-                        _presentacionSeleccionada.IdPresentacionProducto;
+                    presentacionTemp.IdPresentacionProducto = _presentacionSeleccionada.IdPresentacionProducto;
 
+                    _log.Information("Actualizando presentación ID {Id}: {Nombre}", presentacionTemp.IdPresentacionProducto, presentacionTemp.NombrePresentacion);
                     await repo.ActualizarPresentacion(presentacionTemp);
+                    _log.Information("Presentación actualizada correctamente: {Nombre}", presentacionTemp.NombrePresentacion);
 
-                    MessageBox.Show("Presentación actualizada correctamente.",
-                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Presentación actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 this.DialogResult = DialogResult.OK;
@@ -134,8 +131,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar/actualizar: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _log.Error(ex, "Error inesperado al guardar/actualizar presentación: {Nombre}", txtNombrePresentacion.Text);
+                MessageBox.Show("Error al guardar/actualizar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

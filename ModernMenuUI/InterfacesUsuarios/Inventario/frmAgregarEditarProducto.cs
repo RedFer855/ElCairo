@@ -1,9 +1,10 @@
 ﻿using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
+using CapaDominio.Entidades;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
-using CapaDominio.Entidades;
+using Serilog;
 using System;
 using System.Drawing;
 using System.IO;
@@ -25,6 +26,11 @@ namespace ModernMenuUI
         private ConfiguracionGananciaProducto _configGananciaProducto;
 
         private readonly RepositorioImgenSupabase repositorioImg = new RepositorioImgenSupabase();
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/Producto.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
 
         public event EventHandler<Image> ImagenSeleccionada;
 
@@ -159,12 +165,8 @@ namespace ModernMenuUI
 
                 if (!int.TryParse(txtContenido.Text.Trim(), out contenido))
                 {
-                    MessageBox.Show(
-                        "El contenido debe ser numérico.",
-                        "Validación",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    _log.Warning("Contenido no numérico ingresado: {Valor}", txtContenido.Text);
+                    MessageBox.Show("El contenido debe ser numérico.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtContenido.Focus();
                     return;
                 }
@@ -178,12 +180,10 @@ namespace ModernMenuUI
                 {
                     if (_configGananciaProducto == null)
                     {
+                        _log.Warning("Intento de guardar producto sin configurar modo de ganancia");
                         MessageBox.Show(
                             "Debe configurar el modo de ganancia antes de guardar el producto.",
-                            "Validación",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning
-                        );
+                            "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -192,13 +192,13 @@ namespace ModernMenuUI
                     precioVenta = _configGananciaProducto.PrecioFinal;
                     porcentajeGananciaProducto = _configGananciaProducto.PorcentajeGanancia;
                     tipoCalculoGananciaProducto = _configGananciaProducto.TipoCalculoGananciaProducto;
-
                     txtTipoGanancia.Text = tipoCalculoGananciaProducto.ToString();
                 }
                 else
                 {
                     if (!decimal.TryParse(txtPrecioCompra.Text.Trim(), out precioCompra))
                     {
+                        _log.Warning("Precio de compra inválido: {Valor}", txtPrecioCompra.Text);
                         MessageBox.Show("Precio de compra inválido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtPrecioCompra.Focus();
                         return;
@@ -206,6 +206,7 @@ namespace ModernMenuUI
 
                     if (!decimal.TryParse(txtPrecioVenta.Text.Trim(), out precioVenta))
                     {
+                        _log.Warning("Precio de venta inválido: {Valor}", txtPrecioVenta.Text);
                         MessageBox.Show("Precio de venta inválido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtPrecioVenta.Focus();
                         return;
@@ -213,6 +214,7 @@ namespace ModernMenuUI
 
                     if (!decimal.TryParse(txtPrecioCosto.Text.Trim(), out precioCosto))
                     {
+                        _log.Warning("Precio costo inválido: {Valor}", txtPrecioCosto.Text);
                         MessageBox.Show("Precio costo inválido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtPrecioCosto.Focus();
                         return;
@@ -220,40 +222,27 @@ namespace ModernMenuUI
 
                     if (!int.TryParse(txtTipoGanancia.Text.Trim(), out tipoCalculoGananciaProducto))
                     {
-                        MessageBox.Show(
-                            "No se pudo obtener el tipo de cálculo de ganancia.",
-                            "Validación",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning
-                        );
+                        _log.Warning("Tipo de cálculo de ganancia inválido: {Valor}", txtTipoGanancia.Text);
+                        MessageBox.Show("No se pudo obtener el tipo de cálculo de ganancia.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    if (_configGananciaProducto != null)
-                        porcentajeGananciaProducto = _configGananciaProducto.PorcentajeGanancia;
-                    else
-                        porcentajeGananciaProducto = _productoSeleccionado.PorcentajeGananciaProducto;
+                    porcentajeGananciaProducto = _configGananciaProducto != null
+                        ? _configGananciaProducto.PorcentajeGanancia
+                        : _productoSeleccionado.PorcentajeGananciaProducto;
                 }
 
                 if (cmbUnidadContenido.SelectedIndex == -1)
                 {
-                    MessageBox.Show(
-                        "Seleccione una unidad de contenido válida.",
-                        "Validación",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    _log.Warning("Intento de guardar producto sin unidad de contenido seleccionada");
+                    MessageBox.Show("Seleccione una unidad de contenido válida.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (contenido <= 0)
                 {
-                    MessageBox.Show(
-                        "Contenido no puede ser menor o igual a 0.",
-                        "Validación",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    _log.Warning("Contenido menor o igual a 0: {Valor}", contenido);
+                    MessageBox.Show("Contenido no puede ser menor o igual a 0.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -280,6 +269,7 @@ namespace ModernMenuUI
 
                 if (resultado.Error)
                 {
+                    _log.Warning("Validación de producto fallida: {Mensaje}", resultado.Mensaje);
                     MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -289,18 +279,23 @@ namespace ModernMenuUI
 
                 if (_byteImagen != null && !string.IsNullOrWhiteSpace(_nombreArchivo))
                 {
+                    _log.Information("Subiendo imagen del producto: {NombreArchivo}", _nombreArchivo);
                     await repositorioImg.IngresarImagen(_byteImagen, _nombreArchivo);
                 }
 
                 if (_productoSeleccionado == null)
                 {
+                    _log.Information("Insertando nuevo producto: {Nombre}", productoInsertar.NombreProducto);
                     await repo.InsertarProducto(productoInsertar);
+                    _log.Information("Producto guardado correctamente: {Nombre}", productoInsertar.NombreProducto);
                     MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     productoInsertar.IdProducto = _productoSeleccionado.IdProducto;
+                    _log.Information("Actualizando producto ID {Id}: {Nombre}", productoInsertar.IdProducto, productoInsertar.NombreProducto);
                     await repo.ActualizarProducto(productoInsertar);
+                    _log.Information("Producto actualizado correctamente: {Nombre}", productoInsertar.NombreProducto);
                     MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -311,21 +306,15 @@ namespace ModernMenuUI
             {
                 if (ex.Message.Contains("23505") || ex.Message.Contains("duplicate key value"))
                 {
+                    _log.Warning("Producto o código de barra duplicado: {Codigo}", txtCodBarra.Text);
                     MessageBox.Show(
                         "El producto o código de barra ya existe. Por favor ingrese uno diferente.",
-                        "Código o producto duplicado",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                        "Código o producto duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    MessageBox.Show(
-                        "Ocurrió un error: " + ex.Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
+                    _log.Error(ex, "Error inesperado al guardar producto: {Nombre}", txtNombreProducto.Text);
+                    MessageBox.Show("Ocurrió un error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             finally

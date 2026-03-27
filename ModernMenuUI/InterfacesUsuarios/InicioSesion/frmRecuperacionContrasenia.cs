@@ -1,6 +1,7 @@
 ﻿using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.InicioSesion;
 using ModernMenuUI.ServiciosUI;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,13 @@ namespace ModernMenuUI
     {
 
         private readonly ServicioRecuperacionContrasenia _servicio;
+
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/RecuContra.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
+
         public frmRecuperacionContrasenia()
         {
             InitializeComponent();
@@ -87,28 +95,29 @@ namespace ModernMenuUI
 
             try
             {
-                // 🔹 VALIDAR CORREO
+                _log.Information("Solicitud de recuperación de contraseña para: {Correo}", txtCorreo.Text);
+
                 var validacion = await _servicio.ValidarCorreoRegistradoAsync(txtCorreo.Text);
 
                 if (!validacion.ok)
                 {
+                    _log.Warning("Correo no registrado en recuperación: {Correo}", txtCorreo.Text);
                     MessageBox.Show(
                         validacion.mensaje,
                         "Recuperación de contraseña",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
-
                     txtCorreo.Focus();
                     txtCorreo.SelectAll();
                     return;
                 }
 
-                // 🔹 ENVIAR CÓDIGO
                 var resultado = await _servicio.EnviarCodigoAsync(validacion.correoNormalizado);
 
                 if (!resultado.ok)
                 {
+                    _log.Warning("Fallo al enviar código de recuperación a: {Correo}", validacion.correoNormalizado);
                     MessageBox.Show(
                         resultado.mensaje,
                         "Recuperación de contraseña",
@@ -118,6 +127,7 @@ namespace ModernMenuUI
                     return;
                 }
 
+                _log.Information("Código de recuperación enviado exitosamente a: {Correo}", validacion.correoNormalizado);
                 MessageBox.Show(
                     resultado.mensaje,
                     "Recuperación de contraseña",
@@ -129,6 +139,11 @@ namespace ModernMenuUI
                 this.Hide();
                 frm.ShowDialog();
                 this.Close();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex, "Error inesperado en recuperación de contraseña para: {Correo}", txtCorreo.Text);
+                MessageBox.Show("Ocurrió un error inesperado. Intente de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

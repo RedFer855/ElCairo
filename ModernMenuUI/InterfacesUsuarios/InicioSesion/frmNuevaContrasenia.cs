@@ -1,5 +1,6 @@
 ﻿using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ServiciosUI;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,12 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
     {
 
         private readonly ServicioRecuperacionContrasenia _servicio;
+
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/NuevaContra.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
         public frmNuevaContrasenia()
         {
             InitializeComponent();
@@ -31,25 +38,32 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
         {
             string contra = txtNuevaContra.Text.Trim();
             string contra2 = txtConfirContra.Text.Trim();
+
             var v1 = ServicioValidacionesIngresoDatos.ValidarContrasenia(contra, "La contraseña");
             if (v1.Error)
             {
+                _log.Warning("Contraseña nueva no cumple validaciones: {Mensaje}", v1.Mensaje);
                 MessageBox.Show(v1.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 btnCambiar.Enabled = true;
                 return;
             }
-            var v2 = ServicioValidacionesIngresoDatos.ValidarContrasenia(contra, "La contraseña");
+
+            var v2 = ServicioValidacionesIngresoDatos.ValidarContrasenia(contra2, "La confirmación");
             if (v2.Error)
             {
+                _log.Warning("Confirmación de contraseña no cumple validaciones: {Mensaje}", v2.Mensaje);
                 MessageBox.Show(v2.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 btnCambiar.Enabled = true;
                 return;
             }
+
             this.Cursor = Cursors.AppStarting;
             btnCambiar.Enabled = false;
 
             try
             {
+                _log.Information("Intentando cambiar contraseña");
+
                 var resultado = await _servicio.CambiarContraseniaAsync(
                     txtNuevaContra.Text,
                     txtConfirContra.Text
@@ -57,6 +71,7 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
 
                 if (!resultado.ok)
                 {
+                    _log.Warning("Fallo al cambiar contraseña: {Mensaje}", resultado.mensaje);
                     MessageBox.Show(
                         resultado.mensaje,
                         "Cambio de contraseña",
@@ -66,15 +81,20 @@ namespace ModernMenuUI.InterfacesUsuarios.InicioSesion
                     return;
                 }
 
+                _log.Information("Contraseña cambiada exitosamente");
                 MessageBox.Show(
                     resultado.mensaje,
                     "Cambio de contraseña",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
-                
-                this.Close();           
 
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex, "Error inesperado al cambiar contraseña");
+                MessageBox.Show("Ocurrió un error inesperado. Intente de nuevo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
