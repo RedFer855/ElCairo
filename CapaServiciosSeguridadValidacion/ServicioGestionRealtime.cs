@@ -1,88 +1,113 @@
 ﻿using CapaDeDatos.Datos;
-using CapaServiciosSeguridadValidacion;
+using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Inventario;
+using CapaDeDatos.Modelados.Productos;
+using CapaDeDatos.Modelados.UsuariosEmpleados;
+using CapaDeDatos.Modelados.Ventas;
 using Supabase.Realtime;
-using Supabase.Realtime.Interfaces;
 using Supabase.Realtime.PostgresChanges;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using static Supabase.Realtime.PostgresChanges.PostgresChangesOptions;
 
 namespace CapaServiciosSeguridadValidacion
 {
-    public class GestorRealtime<T> where T : Supabase.Postgrest.Models.BaseModel, new()
+    public static class RealtimeManager
     {
-        private Supabase.Client _client;
-        private RealtimeChannel _subscription;
+        private static Supabase.Client? _client;
 
-        public event Action<PostgresChangesResponse> OnCambioBaseDatos;
-        public event Action OnReconexionExitosa;
+        private static RealtimeChannel? _bodegaChannel;
+        private static RealtimeChannel? _categoriaChannel;
+        private static RealtimeChannel? _marcaChannel;
+        private static RealtimeChannel? _presentacionChannel;
+        private static RealtimeChannel? _productoChannel;
+        private static RealtimeChannel? _empleadoChannel;
+        private static RealtimeChannel? _clienteChannel;
+        private static RealtimeChannel? _proveedorChannel;
+        private static RealtimeChannel? _inventarioChannel;
 
-        public GestorRealtime()
+        private static bool _iniciado = false;
+        private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+
+        public static event Action<PostgresChangesResponse>? OnBodegaChanged;
+        public static event Action<PostgresChangesResponse>? OnCategoriaChanged;
+        public static event Action<PostgresChangesResponse>? OnMarcaChanged;
+        public static event Action<PostgresChangesResponse>? OnPresentacionChanged;
+        public static event Action<PostgresChangesResponse>? OnProductoChanged;
+        public static event Action<PostgresChangesResponse>? OnEmpleadoChanged;
+        public static event Action<PostgresChangesResponse>? OnClienteChanged;
+        public static event Action<PostgresChangesResponse>? OnProveedorChanged;
+        public static event Action<PostgresChangesResponse>? OnInventarioChanged;
+
+        public static bool EstaIniciado => _iniciado;
+
+        public static async Task IniciarAsync()
         {
-            // Ahora que corregiste el archivo del Servicio, esto funcionará
-            ServicioVerificacionConexion1.Instancia.EstadoDeRedCambiado += AlCambiarRed;
-        }
+            if (_iniciado) return;
 
-        private async void AlCambiarRed(NetworkStatus status)
-        {
-            if (status == NetworkStatus.Internet)
-            {
-                System.Diagnostics.Debug.WriteLine("Red volvió. GestorRealtime reconectando...");
-                await SuscribirAsync();
-                OnReconexionExitosa?.Invoke();
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("Red perdida. Pausando suscripción...");
-                await DesuscribirAsync();
-            }
-        }
-
-        public async Task SuscribirAsync()
-        {
+            await _lock.WaitAsync();
             try
             {
-                await DesuscribirAsync();
+                if (_iniciado) return;
 
                 _client = await Conexion.ConnectWithTimeoutAsync(3);
 
-                // CORRECCIÓN AQUÍ:
-                // 1. Obtenemos la referencia a la tabla
-                var tableRef = _client.From<T>();
+                if (_client == null)
+                    throw new Exception("No se pudo crear el cliente de Supabase.");
 
-                // 2. Configuramos el evento. El método .On devuelve la suscripción activa.
-                // No hace falta llamar a .Subscribe() manualmente en este objeto.
-                var channel = await tableRef.On(ListenType.All, (sender, change) =>
+                _bodegaChannel = await _client.From<Bodega>().On(ListenType.All, (sender, change) =>
                 {
-                    OnCambioBaseDatos?.Invoke(change);
+                    try { OnBodegaChanged?.Invoke(change); } catch { }
                 });
 
-                // 3. Guardamos la referencia (hacemos un cast si es necesario, o usamos la variable devuelta)
-                _subscription = channel;
-
-                System.Diagnostics.Debug.WriteLine($"Suscripción iniciada para {typeof(T).Name}");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error Realtime {typeof(T).Name}: {ex.Message}");
-            }
-        }
-
-        public async Task DesuscribirAsync()
-        {
-            if (_subscription != null)
-            {
-                try
-                {   
-                    _subscription.Unsubscribe();
-                    System.Diagnostics.Debug.WriteLine($"Desuscripción iniciada para {typeof(T).Name}");
-                }
-                catch (Exception ex)
+                _categoriaChannel = await _client.From<Categoria>().On(ListenType.All, (sender, change) =>
                 {
-                    System.Diagnostics.Debug.WriteLine($"Error al desuscribir: {ex.Message}");
-                }
+                    try { OnCategoriaChanged?.Invoke(change); } catch { }
+                });
 
-                _subscription = null;
+                _marcaChannel = await _client.From<Marca>().On(ListenType.All, (sender, change) =>
+                {
+                    try { OnMarcaChanged?.Invoke(change); } catch { }
+                });
+
+                _presentacionChannel = await _client.From<Presentacion>().On(ListenType.All, (sender, change) =>
+                {
+                    try { OnPresentacionChanged?.Invoke(change); } catch { }
+                });
+
+                _productoChannel = await _client.From<Producto>().On(ListenType.All, (sender, change) =>
+                {
+                    try { OnProductoChanged?.Invoke(change); } catch { }
+                });
+
+                _empleadoChannel = await _client.From<Empleado>().On(ListenType.All, (sender, change) =>
+                {
+                    try { OnEmpleadoChanged?.Invoke(change); } catch { }
+                });
+
+                _clienteChannel = await _client.From<Cliente>().On(ListenType.All, (sender, change) =>
+                {
+                    try { OnClienteChanged?.Invoke(change); } catch { }
+                });
+
+                _proveedorChannel = await _client.From<Proveedor>().On(ListenType.All, (sender, change) =>
+                {
+                    try { OnProveedorChanged?.Invoke(change); } catch { }
+                });
+
+                _inventarioChannel = await _client.From<Inventario>().On(ListenType.All, (sender, change) =>
+                {
+                    try { OnInventarioChanged?.Invoke(change); } catch { }
+                });
+
+                _iniciado = true;
+
+                System.Diagnostics.Debug.WriteLine("Realtime global iniciado correctamente.");
+            }
+            finally
+            {
+                _lock.Release();
             }
         }
     }

@@ -8,25 +8,23 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.ServiciosUI
 {
-    public class BuscadorInteractivo<T> where T : class
+    public class BuscadorInteractivo<T> : IDisposable where T : class
     {
-        // --- CONTROLES ---
-        private readonly TextBox _txtBuscar;
-        private readonly ListBox _lstSugerencias;
-        private readonly DataGridView _dgvResultados;
+        private TextBox _txtBuscar;
+        private ListBox _lstSugerencias;
+        private DataGridView _dgvResultados;
 
-        // --- LÓGICA Y VARIABLES ---
         private GestorBusqueda<T> _gestorLogico;
         private CancellationTokenSource _cts;
 
-        // --- DELEGADOS ---
         private readonly Func<T, string, bool> _criterioExacto;
         private readonly Func<T, string, bool> _criterioParcial;
         private readonly Func<T, string> _formatoVisualLista;
         private readonly Action<bool> _notificadorEstado;
         private readonly Func<string, bool> _detectorCodigoBarra;
 
-        // --- CONSTRUCTOR ---
+        private bool _disposed = false;
+
         public BuscadorInteractivo(
             TextBox txt,
             ListBox lst,
@@ -53,45 +51,46 @@ namespace ModernMenuUI.ServiciosUI
 
         public void ActualizarDatosMaestros(IEnumerable<T> nuevosDatos)
         {
+            if (_disposed) return;
             _gestorLogico = new GestorBusqueda<T>(nuevosDatos);
         }
 
         public async Task ManejarKeyUpAsync(KeyEventArgs e)
         {
+            if (_disposed) return;
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) return;
 
             _cts?.Cancel();
+            _cts?.Dispose();
             _cts = new CancellationTokenSource();
 
             try
             {
-
                 await Task.Delay(300, _cts.Token);
 
+                if (_disposed) return;
 
-                EjecutarBusqueda(forzarGrid: false);
+                EjecutarBusqueda(false);
             }
-            catch (TaskCanceledException) { }
+            catch (TaskCanceledException)
+            {
+            }
         }
 
         public void ManejarKeyDown(KeyEventArgs e)
         {
+            if (_disposed) return;
+
             if (e.KeyCode == Keys.Enter)
             {
-                // 1. Matar timer pendiente
                 _cts?.Cancel();
 
-                // 2. Decidir acción:
                 bool esCodigo = _detectorCodigoBarra != null && _detectorCodigoBarra(_txtBuscar.Text.Trim());
 
                 if (!_lstSugerencias.Visible || esCodigo)
-                {
-                    EjecutarBusqueda(forzarGrid: true);
-                }
+                    EjecutarBusqueda(true);
                 else
-                {
                     ConfirmarSeleccion();
-                }
 
                 e.SuppressKeyPress = true;
                 e.Handled = true;
@@ -103,32 +102,53 @@ namespace ModernMenuUI.ServiciosUI
                 if (e.KeyCode == Keys.Down)
                 {
                     int next = Math.Min(_lstSugerencias.SelectedIndex + 1, _lstSugerencias.Items.Count - 1);
-                    if (next >= 0) _lstSugerencias.SelectedIndex = next;
+                    if (next >= 0)
+                        _lstSugerencias.SelectedIndex = next;
+
                     e.Handled = true;
                 }
                 else if (e.KeyCode == Keys.Up)
                 {
                     int prev = Math.Max(_lstSugerencias.SelectedIndex - 1, 0);
-                    if (prev >= 0) _lstSugerencias.SelectedIndex = prev;
+                    if (prev >= 0)
+                        _lstSugerencias.SelectedIndex = prev;
+
                     e.Handled = true;
                 }
             }
         }
 
-        public void ManejarClickLista() => ConfirmarSeleccion();
+        public void ManejarClickLista()
+        {
+            ConfirmarSeleccion();
+        }
 
         public async void ManejarLeave()
         {
-            await Task.Delay(200);
-            if (!_lstSugerencias.Focused) _lstSugerencias.Visible = false;
+            try
+            {
+                await Task.Delay(200);
+
+                if (_disposed) return;
+                if (_lstSugerencias == null) return;
+
+                if (!_lstSugerencias.Focused)
+                    _lstSugerencias.Visible = false;
+            }
+            catch
+            {
+            }
         }
 
         private void EjecutarBusqueda(bool forzarGrid)
         {
-            var texto = _txtBuscar.Text.Trim();
-            bool hayTexto = !string.IsNullOrEmpty(texto);
+            if (_disposed) return;
+            if (_gestorLogico == null) return;
+            if (_txtBuscar == null || _lstSugerencias == null || _dgvResultados == null) return;
 
-            if (!hayTexto)
+            var texto = _txtBuscar.Text.Trim();
+
+            if (string.IsNullOrEmpty(texto))
             {
                 _lstSugerencias.Visible = false;
                 return;
@@ -140,18 +160,17 @@ namespace ModernMenuUI.ServiciosUI
             {
                 if (forzarGrid)
                 {
+                    _dgvResultados.DataSource = null;
                     _dgvResultados.DataSource = resultados;
-                    _lstSugerencias.Visible = false;
-                    _notificadorEstado?.Invoke(true); // Mostrar botón limpiar
 
+                    _lstSugerencias.Visible = false;
+                    _notificadorEstado?.Invoke(true);
                     _txtBuscar.Clear();
                 }
                 else
                 {
-                    // Mostrar Sugerencias
                     _lstSugerencias.DataSource = null;
                     _lstSugerencias.DataSource = resultados.Take(10).ToList();
-                    _lstSugerencias.DisplayMember = "";
 
                     int cantidad = Math.Min(resultados.Count, 10);
                     _lstSugerencias.Height = (_lstSugerencias.ItemHeight * cantidad) + 10;
@@ -161,6 +180,7 @@ namespace ModernMenuUI.ServiciosUI
             else
             {
                 _lstSugerencias.Visible = false;
+
                 if (forzarGrid)
                 {
                     MessageBox.Show(
@@ -170,32 +190,52 @@ namespace ModernMenuUI.ServiciosUI
                         MessageBoxIcon.Information
                     );
                 }
-
             }
         }
 
         private void ConfirmarSeleccion()
         {
+            if (_disposed) return;
+            if (_lstSugerencias == null || _dgvResultados == null || _txtBuscar == null) return;
+
             if (_lstSugerencias.SelectedItem is T seleccionado)
             {
-                // CAMBIO PRINCIPAL: En vez de poner texto, lo borramos
                 _txtBuscar.Clear();
-
-                // Llenamos el grid con la selección
+                _dgvResultados.DataSource = null;
                 _dgvResultados.DataSource = new List<T> { seleccionado };
 
                 _notificadorEstado?.Invoke(true);
-
                 _lstSugerencias.Visible = false;
+
                 _cts?.Cancel();
             }
         }
 
         public void LimpiarBusqueda()
         {
+            if (_disposed) return;
+            if (_txtBuscar == null || _lstSugerencias == null) return;
+
             _txtBuscar.Clear();
             _lstSugerencias.Visible = false;
             _notificadorEstado?.Invoke(false);
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
+
+            _txtBuscar = null;
+            _lstSugerencias = null;
+            _dgvResultados = null;
+            _gestorLogico = null;
+
+            _disposed = true;
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             InitializeComponent();
             btnGuardarCategoria.Visible = true;
+            btnModificarCategoria.Visible = false;
             lblNombreModulo.Text = "AGREGAR CATEGORÍA";
         }
 
@@ -27,16 +28,22 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         public frmAgregarEditarCategoria(Categoria categoriaParaEditar)
         {
             InitializeComponent();
+
             _categoriaSeleccionada = categoriaParaEditar;
 
-            txtNombreCategoria.Text = _categoriaSeleccionada.NombreCategoria;
-            txtDescripcionCategoria.Text = _categoriaSeleccionada.DescripcionCategoria;
+            if (_categoriaSeleccionada != null)
+            {
+                txtNombreCategoria.Text = _categoriaSeleccionada.NombreCategoria ?? string.Empty;
+                txtDescripcionCategoria.Text = _categoriaSeleccionada.DescripcionCategoria ?? string.Empty;
 
-            if (_categoriaSeleccionada.EstadoCategoria)
-                rbActivo.Checked = true;
-            else
-                rbInactivo.Checked = true;
+                if (_categoriaSeleccionada.EstadoCategoria)
+                    rbActivo.Checked = true;
+                else
+                    rbInactivo.Checked = true;
+            }
 
+            btnGuardarCategoria.Visible = true;
+            btnModificarCategoria.Visible = false;
             lblNombreModulo.Text = "EDITAR CATEGORÍA";
         }
 
@@ -98,8 +105,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
             finally
             {
-                btnGuardarCategoria.Enabled = true;
-                this.Cursor = Cursors.Default;
+                if (!IsDisposed)
+                {
+                    btnGuardarCategoria.Enabled = true;
+                    this.Cursor = Cursors.Default;
+                }
             }
         }
 

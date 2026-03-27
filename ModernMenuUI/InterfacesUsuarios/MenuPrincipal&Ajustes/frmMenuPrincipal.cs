@@ -535,6 +535,7 @@ namespace ModernMenuUI
         private void btnRegistroPerdida_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            ManejarFormularios.Instancia.AbrirFormulario(new frmPruebaInventario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PERDIDAS");
         }
 
@@ -705,6 +706,28 @@ namespace ModernMenuUI
         private void panelFormHijo_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            string listaForms = "";
+
+            foreach (Form frm in Application.OpenForms)
+            {
+                listaForms += frm.Name + " | " + frm.GetType().Name + Environment.NewLine;
+            }
+
+            long memoriaMB = GC.GetTotalMemory(false) / (1024 * 1024);
+
+            MessageBox.Show(
+                "Forms abiertos: " + Application.OpenForms.Count +
+                "\nMemoria .NET: " + memoriaMB + " MB\n\n" +
+                listaForms
+            );
         }
     }
 }

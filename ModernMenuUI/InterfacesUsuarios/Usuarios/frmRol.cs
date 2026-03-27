@@ -1,24 +1,21 @@
 ﻿using ModernMenuUI.ClasesUI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
     public partial class frmRol : Form
     {
-        private int contadorRoles = 0; // contador global
-        private ManejarFormularios manejador;
+        private int contadorRoles = 0;
+        private bool _cerrando = false;
+
         public frmRol()
         {
             InitializeComponent();
 
+            this.FormClosing += frmRol_FormClosing;
+            this.FormClosed += frmRol_FormClosed;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -27,49 +24,72 @@ namespace ModernMenuUI
             this.Close();
         }
 
-        private void btnSalir_Click_1(object sender, EventArgs e)
-        {
-            clsAnmaciones.NombreMenuPrincipal();
-            this.Close();
-
-        }
-
         private void btnNuevoRol_Click(object sender, EventArgs e)
         {
+            if (_cerrando) return;
+
             if (contadorRoles >= 6)
             {
-                MessageBox.Show
-                (
+                MessageBox.Show(
                     "Solo puede tener 6 roles dinámicos.",
                     "Advertencia",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
-
                 return;
             }
 
-            // Obtener el panel destino por nombre dinámico
             string nombrePanel = $"pnlRolDinamico{contadorRoles + 1}";
             Control panelDestino = pnlContenedorRoles.Controls[nombrePanel];
 
-            if (panelDestino != null)
+            if (panelDestino == null)
             {
-                // Limpiar contenido anterior si lo hubiera
-                panelDestino.Controls.Clear();
-
-                // Crear y agregar el control personalizado
-                controlPanelRolesDinamicos nuevoRol = new controlPanelRolesDinamicos();
-                nuevoRol.Dock = DockStyle.Fill; // ocupa todo el panel
-                nuevoRol.Name = $"controlPanelRolesDinamicos{contadorRoles + 1}";
-
-                panelDestino.Controls.Add(nuevoRol);
-                contadorRoles++;
+                MessageBox.Show(
+                    $"No se encontró el panel {nombrePanel}.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
             }
-            else
+
+            for (int i = panelDestino.Controls.Count - 1; i >= 0; i--)
             {
-                MessageBox.Show($"No se encontró el panel {nombrePanel}.");
+                Control ctrl = panelDestino.Controls[i];
+                panelDestino.Controls.RemoveAt(i);
+                ctrl.Dispose();
             }
+
+            controlPanelRolesDinamicos nuevoRol = new controlPanelRolesDinamicos
+            {
+                Dock = DockStyle.Fill,
+                Name = $"controlPanelRolesDinamicos{contadorRoles + 1}"
+            };
+
+            panelDestino.Controls.Add(nuevoRol);
+            contadorRoles++;
+        }
+
+        private void frmRol_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _cerrando = true;
+        }
+
+        private void frmRol_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                foreach (Control panel in pnlContenedorRoles.Controls.OfType<Control>())
+                {
+                    for (int i = panel.Controls.Count - 1; i >= 0; i--)
+                    {
+                        Control ctrl = panel.Controls[i];
+                        panel.Controls.RemoveAt(i);
+                        ctrl.Dispose();
+                    }
+                }
+            }
+            catch { }
         }
     }
 }
