@@ -662,12 +662,12 @@ namespace ModernMenuUI
 
             _servicioPermisos.RegistrarBoton(btnUsuarios, "select_usuario", "update_usuario", "create_usuario");
             _servicioPermisos.RegistrarBoton(btnGestionUsuarios, "select_usuario", "update_usuario", "create_usuario");
-            _servicioPermisos.RegistrarBoton(btnGestionRoles, "select_usuario", "update_usuario", "create_usuario");
+            //_servicioPermisos.RegistrarBoton(btnGestionRoles, "select_usuario", "update_usuario", "create_usuario");
             _servicioPermisos.RegistrarBoton(btnBitacora, "select_usuario", "update_usuario", "create_usuario");
 
             _servicioPermisos.RegistrarBoton(btnReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnCrearReporte, "select_reporte", "update_reporte", "create_reporte");
-            _servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
+            //_servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
         }
 
         private void btnMarcas_Click(object sender, EventArgs e)
