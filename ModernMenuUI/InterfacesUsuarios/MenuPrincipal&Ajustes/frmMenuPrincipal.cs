@@ -601,14 +601,7 @@ namespace ModernMenuUI
 
         private void pbxCalculadora_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Process.Start("calc.exe");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
-            }
+
         }
 
         private void pbxCalculadora_MouseDown(object sender, MouseEventArgs e)
@@ -654,7 +647,7 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnInventarios, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnInventarioBodega, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnGestionInventario, "select_inventario", "update_inventario", "create_inventario");
-            _servicioPermisos.RegistrarBoton(btnRegistroPerdida, "select_inventario", "update_inventario", "create_inventario");
+            //_servicioPermisos.RegistrarBoton(btnRegistroPerdida, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnMarcas, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnCategorias, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnPresentaciones, "select_inventario", "update_inventario", "create_inventario");
@@ -705,6 +698,23 @@ namespace ModernMenuUI
         private void panelFormHijo_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void pbxCalculadora_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("calc.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
+            }
+        }
+
+        private void btnSalir_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
