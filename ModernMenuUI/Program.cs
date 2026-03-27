@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using CapaDeDatos;
+using CapaServiciosSeguridadValidacion;
 using ModernMenuUI;
+using Supabase.Realtime;
+using System;
 using System;
 using System.Windows.Forms;
-using CapaDeDatos;
-using Supabase.Realtime;
+using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
@@ -20,6 +21,9 @@ namespace ModernMenuUI
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            RealtimeManager.IniciarAsync().GetAwaiter().GetResult();
+
             Application.Run(new frmIniciosesion());
         }
     }
