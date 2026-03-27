@@ -562,6 +562,7 @@
             lblHora.TabIndex = 29;
             lblHora.Text = "1";
             lblHora.Visible = false;
+            lblHora.Click += lblHora_Click;
             // 
             // HoraFecha
             // 

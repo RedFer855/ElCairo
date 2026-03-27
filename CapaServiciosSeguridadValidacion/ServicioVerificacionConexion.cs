@@ -1,95 +1,107 @@
-﻿using Microsoft.VisualBasic.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.NetworkInformation;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Supabase.Gotrue;
-using System;
 
 namespace CapaServiciosSeguridadValidacion
 {
     public enum NetworkStatus
     {
-        SinRed,          // No hay WiFi/Cable (Rojo)
-        RedSinInternet,  // Hay WiFi, pero no hay Ping (Amarillo)
-        Internet         // Hay WiFi y hay Ping (Verde)
+        SinRed,          // No hay WiFi/Cable
+        RedSinInternet,  // Hay red física, pero no internet real
+        Internet         // Hay red y hay internet
     }
-    public class ServicioVerificacionConexion
+
+    public class ServicioVerificacionConexion : IDisposable
     {
-        // Evento original
         public event Action<NetworkStatus> EstadoDeRedCambiado;
 
-        // Variables internas para la lógica del Timer
         private readonly System.Timers.Timer _timerVerificacion;
-        private NetworkStatus _ultimoEstadoConocido;
-        private bool _verificandoActualmente = false;
+        private readonly SemaphoreSlim _semaforoVerificacion = new SemaphoreSlim(1, 1);
+
+        private NetworkStatus _ultimoEstadoConocido = NetworkStatus.SinRed;
+        private bool _liberado = false;
 
         public ServicioVerificacionConexion()
         {
-            // 1. Configurar el Timer (Watchdog)
-            // Se ejecutará cada 3 segundos (3000ms)
-            _timerVerificacion = new System.Timers.Timer(3000);
-            _timerVerificacion.Elapsed += async (s, e) => await VerificarConexionCompleta();
+            _timerVerificacion = new System.Timers.Timer(10000); // 10 segundos
             _timerVerificacion.AutoReset = true;
+            _timerVerificacion.Elapsed += TimerVerificacion_Elapsed;
 
-            // 2. Escuchar cambios físicos (Cable/WiFi)
-            NetworkChange.NetworkAvailabilityChanged += (s, e) =>
-            {
-                // Al detectar cambio físico, verificamos inmediatamente
-                Task.Run(() => VerificarConexionCompleta());
-            };
+            NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
 
-            // 3. Verificación inicial al arrancar la clase
-            Task.Run(() => VerificarConexionCompleta());
+            _ = VerificarConexionCompletaAsync();
         }
 
-        // Este método lo usa tu formulario para saber el estado actual sin esperar
         public NetworkStatus HayConexionAhora()
         {
             return _ultimoEstadoConocido;
         }
 
-        // --- LÓGICA INTERNA (Timer y Ping) ---
-
-        private async Task VerificarConexionCompleta()
+        public void ForzarVerificacion()
         {
-            // Evitamos que se monten verificaciones si una está tardando
-            if (_verificandoActualmente) return;
-            _verificandoActualmente = true;
+            if (_liberado)
+                return;
 
-            NetworkStatus nuevoEstado;
+            _ = VerificarConexionCompletaAsync();
+        }
+
+        private void TimerVerificacion_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (_liberado)
+                return;
+
+            _ = VerificarConexionCompletaAsync();
+        }
+
+        private void NetworkChange_NetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
+        {
+            if (_liberado)
+                return;
+
+            _ = VerificarConexionCompletaAsync();
+        }
+
+        private async Task VerificarConexionCompletaAsync()
+        {
+            if (_liberado)
+                return;
+
+            // Evita que entren varias verificaciones al mismo tiempo
+            if (!await _semaforoVerificacion.WaitAsync(0))
+                return;
 
             try
             {
-                // PASO 1: Verificar Hardware (Cable/WiFi)
+                if (_liberado)
+                    return;
+
+                NetworkStatus nuevoEstado;
+
+                // Paso 1: verificar si existe red física
                 if (!NetworkInterface.GetIsNetworkAvailable())
                 {
                     nuevoEstado = NetworkStatus.SinRed;
-                    // Si no hay cable, apagamos el Timer (ahorro de recursos)
-                    _timerVerificacion.Stop();
+                    DetenerTimerRecuperacion();
                 }
                 else
                 {
-                    // PASO 2: Verificar Internet real (Ping a Google)
+                    // Paso 2: verificar internet real
                     bool hayInternet = await PingInternetAsync();
 
                     if (hayInternet)
                     {
                         nuevoEstado = NetworkStatus.Internet;
-                        // Si ya tenemos internet, apagamos el Timer
-                        _timerVerificacion.Stop();
+                        DetenerTimerRecuperacion();
                     }
                     else
                     {
                         nuevoEstado = NetworkStatus.RedSinInternet;
-                        // Estamos en AMARILLO: Encendemos el Timer para vigilar el regreso
-                        if (!_timerVerificacion.Enabled) _timerVerificacion.Start();
+                        IniciarTimerRecuperacion();
                     }
                 }
 
-                // PASO 3: Notificar solo si hubo cambio
+                // Paso 3: notificar solo si cambia el estado
                 if (_ultimoEstadoConocido != nuevoEstado)
                 {
                     _ultimoEstadoConocido = nuevoEstado;
@@ -98,22 +110,35 @@ namespace CapaServiciosSeguridadValidacion
             }
             catch
             {
-                // Manejo silencioso
+                // Silencioso por ahora
             }
             finally
             {
-                _verificandoActualmente = false;
+                _semaforoVerificacion.Release();
             }
         }
 
-        // Método interno asíncrono para no congelar la UI
+        private void IniciarTimerRecuperacion()
+        {
+            if (_liberado)
+                return;
+
+            if (!_timerVerificacion.Enabled)
+                _timerVerificacion.Start();
+        }
+
+        private void DetenerTimerRecuperacion()
+        {
+            if (_timerVerificacion.Enabled)
+                _timerVerificacion.Stop();
+        }
+
         private async Task<bool> PingInternetAsync()
         {
             try
             {
                 using (var ping = new Ping())
                 {
-                    // Ping a Google (8.8.8.8) con 2 segundos de espera máxima
                     var reply = await ping.SendPingAsync("8.8.8.8", 2000);
                     return reply.Status == IPStatus.Success;
                 }
@@ -122,6 +147,46 @@ namespace CapaServiciosSeguridadValidacion
             {
                 return false;
             }
+        }
+
+        public void Dispose()
+        {
+            if (_liberado)
+                return;
+
+            _liberado = true;
+
+            try
+            {
+                _timerVerificacion.Stop();
+            }
+            catch { }
+
+            try
+            {
+                _timerVerificacion.Elapsed -= TimerVerificacion_Elapsed;
+            }
+            catch { }
+
+            try
+            {
+                _timerVerificacion.Dispose();
+            }
+            catch { }
+
+            try
+            {
+                NetworkChange.NetworkAvailabilityChanged -= NetworkChange_NetworkAvailabilityChanged;
+            }
+            catch { }
+
+            EstadoDeRedCambiado = null;
+
+            try
+            {
+                _semaforoVerificacion.Dispose();
+            }
+            catch { }
         }
     }
 }
