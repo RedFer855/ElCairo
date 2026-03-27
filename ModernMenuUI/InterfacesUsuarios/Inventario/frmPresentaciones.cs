@@ -3,6 +3,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.ServiciosUI;
+using Supabase.Realtime.PostgresChanges;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,67 +13,36 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Inventario
 {
-    /// <summary>
-    /// Formulario encargado de administrar, buscar, filtrar y seleccionar presentaciones de productos.
-    /// Proporciona:
-    /// - Búsqueda interactiva mediante BuscadorInteractivo{T}.
-    /// - Filtrado por estado (habilitada / deshabilitada / todas).
-    /// - Recarga automática vía Realtime cuando se detectan cambios externos.
-    /// - Operaciones CRUD mediante formularios auxiliares.
-    /// </summary>
     public partial class frmPresentaciones : Form
     {
-        #region 1. Campos y Dependencias
-
-        /// <summary>Repositorio encargado de ejecutar operaciones CRUD sobre Presentación.</summary>
         private readonly PresentacionRepositorio _presentacionRepositorio;
-
-        /// <summary>Gestor de cambios en tiempo real para reflejar modificaciones externas.</summary>
-        private readonly GestorRealtime<Presentacion> _gestorRealtime;
-
-        /// <summary>Manejador de búsqueda inteligente basado en texto y sugerencias.</summary>
         private BuscadorInteractivo<Presentacion> _buscadorCtrl;
-
-        /// <summary>Lista maestra que contiene todas las presentaciones cargadas desde la DB.</summary>
         private List<Presentacion> _listaCompletaPresentaciones = new List<Presentacion>();
-
-        /// <summary>Presentación seleccionada en la grilla.</summary>
         private Presentacion _presentacionSeleccionada;
 
-        /// <summary>Presentación retornada cuando el formulario actúa como selector modal.</summary>
+        private Action<PostgresChangesResponse> _handlerCambio;
+
         public Presentacion PresentacionSeleccionada { get; private set; }
 
-        #endregion
-
-        #region 2. Constructores
-
-        /// <summary>
-        /// Constructor por defecto para modo administración.
-        /// </summary>
         public frmPresentaciones()
         {
             InitializeComponent();
             ConfigurarFormulario();
 
             _presentacionRepositorio = new PresentacionRepositorio();
-            _gestorRealtime = new GestorRealtime<Presentacion>();
 
             if (pnlLimpiarFiltros != null) pnlLimpiarFiltros.Visible = false;
+
             ConfigurarRealtime();
         }
 
-        /// <summary>
-        /// Constructor alternativo para modo selección.
-        /// </summary>
         public frmPresentaciones(bool soloSeleccion)
         {
             InitializeComponent();
             ConfigurarFormulario();
 
             _presentacionRepositorio = new PresentacionRepositorio();
-            _gestorRealtime = new GestorRealtime<Presentacion>();
 
-            // En modo modal: sin bordes y sin el botón seleccionar (opcional).
             FormBorderStyle = FormBorderStyle.None;
 
             if (soloSeleccion)
@@ -83,9 +53,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             ConfigurarRealtime();
         }
 
-        /// <summary>
-        /// Configuración general del formulario: performance, estilos y eventos básicos.
-        /// </summary>
         private void ConfigurarFormulario()
         {
             this.DoubleBuffered = true;
@@ -93,25 +60,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             ConfigurarEventosUnificados();
         }
 
-        /// <summary>
-        /// Configura eventos del gestor realtime para actualizar la interfaz cuando la base cambia.
-        /// </summary>
         private void ConfigurarRealtime()
         {
-            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
-            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+            _handlerCambio = (c) => RecargarInterfazSafe();
+            RealtimeManager.OnPresentacionChanged += _handlerCambio;
         }
 
-        #endregion
-
-        #region 3. Carga y Lógica Principal
-
-        /// <summary>
-        /// Al inicializar, carga datos, activa el buscador y suscribe al realtime.
-        /// </summary>
         private async void frmPresentaciones_Load(object sender, EventArgs e)
         {
-            // Asegurar selección de estado válida
             if (!rbMostrarTodos.Checked &&
                 !rbMostrarHabilitados.Checked &&
                 !rbMostrarDeshabilitados.Checked)
@@ -120,29 +76,24 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
 
             await InicializarDatosYBuscador();
-            await _gestorRealtime.SuscribirAsync();
         }
 
-        /// <summary>
-        /// Al cerrar el formulario, se desuscribe del realtime.
-        /// </summary>
-        private async void frmPresentaciones_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmPresentaciones_FormClosing(object sender, FormClosingEventArgs e)
         {
-            await _gestorRealtime.DesuscribirAsync();
+            try
+            {
+                if (_handlerCambio != null)
+                    RealtimeManager.OnPresentacionChanged -= _handlerCambio;
+            }
+            catch { }
         }
 
-        /// <summary>
-        /// Recarga segura desde hilos externos (invocado por realtime).
-        /// </summary>
         private void RecargarInterfazSafe()
         {
             if (!this.IsDisposed && this.IsHandleCreated)
                 this.BeginInvoke((MethodInvoker)(async () => await CargarPresentacionesMaestras()));
         }
 
-        /// <summary>
-        /// Carga inicial de datos y configuración del buscador interactivo.
-        /// </summary>
         private async Task InicializarDatosYBuscador()
         {
             try
@@ -158,18 +109,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     dgvPresentaciones,
                     _listaCompletaPresentaciones,
 
-                    // Búsqueda exacta por ID
                     (p, term) => p.IdPresentacionProducto.ToString() == term,
 
-                    // Búsqueda parcial por nombre
                     (p, term) =>
                         p.NombrePresentacion != null &&
                         p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
 
-                    // Representación textual en sugerencias
                     (p) => p.NombrePresentacion,
 
-                    // Callback al activar/desactivar la búsqueda
                     (buscando) =>
                     {
                         if (pnlLimpiarFiltros != null)
@@ -179,7 +126,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                             RefrescarGrid();
                     },
 
-                    // Extra validator no usado
                     (txt) => false
                 );
 
@@ -192,9 +138,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             finally { this.Cursor = Cursors.Default; }
         }
 
-        /// <summary>
-        /// Recarga los datos desde el repositorio y actualiza la grilla.
-        /// </summary>
         private async Task CargarPresentacionesMaestras()
         {
             try
@@ -211,9 +154,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
-        /// <summary>
-        /// Aplica filtros de estado y texto, actualiza el DataGridView y el estado visual de filtros activos.
-        /// </summary>
         private void RefrescarGrid()
         {
             if (_listaCompletaPresentaciones == null) return;
@@ -222,7 +162,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             IEnumerable<Presentacion> query = _listaCompletaPresentaciones;
 
-            // Filtro por estado
             if (rbMostrarHabilitados.Checked)
                 query = query.Where(p => p.EstadoPresentacion == true);
             else if (rbMostrarDeshabilitados.Checked)
@@ -230,7 +169,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             _buscadorCtrl?.ActualizarDatosMaestros(query.ToList());
 
-            // Filtro textual
             string texto = txtBuscar.Text.Trim();
             if (!string.IsNullOrEmpty(texto))
             {
@@ -239,12 +177,10 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     p.NombrePresentacion.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
-            // Bind final
             var listaFinal = query.ToList();
             dgvPresentaciones.DataSource = null;
             dgvPresentaciones.DataSource = listaFinal;
 
-            // Mostrar / ocultar panel limpiar
             if (pnlLimpiarFiltros != null)
             {
                 bool hayFiltros =
@@ -259,9 +195,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             this.Cursor = Cursors.Default;
         }
 
-        /// <summary>
-        /// Conexión de eventos de los radio buttons en una sola función lambda.
-        /// </summary>
         private void ConfigurarEventosUnificados()
         {
             rbMostrarTodos.CheckedChanged += (s, e) =>
@@ -279,10 +212,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 if (((RadioButton)s).Checked) RefrescarGrid();
             };
         }
-
-        #endregion
-
-        #region 4. Eventos Buscador (Delegados)
 
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
         {
@@ -317,10 +246,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             RefrescarGrid();
         }
 
-        #endregion
-
-        #region 5. Selección y Salida
-
         private void dgvPresentaciones_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvPresentaciones.SelectedRows.Count > 0)
@@ -336,9 +261,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         private void dgvPresentaciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
             => ConfirmarSeleccion();
 
-        /// <summary>
-        /// Cierra el formulario devolviendo la presentación seleccionada.
-        /// </summary>
         private void ConfirmarSeleccion()
         {
             if (dgvPresentaciones.SelectedRows.Count > 0)
@@ -353,10 +275,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
         private void btnSalir_Click(object sender, EventArgs e)
             => this.Close();
-
-        #endregion
-
-        #region 6. CRUD
 
         private async void btnModificarPresentacion_Click(object sender, EventArgs e)
         {
@@ -383,7 +301,5 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 await CargarPresentacionesMaestras();
             }
         }
-
-        #endregion
     }
 }

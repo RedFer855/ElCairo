@@ -4,46 +4,55 @@ using System.Threading.Tasks;
 
 namespace CapaServiciosSeguridadValidacion
 {
-    public class ServicioVerificacionConexion1
+    public class ServicioVerificacionConexion1 : IDisposable
     {
         private static readonly ServicioVerificacionConexion1 _instancia = new ServicioVerificacionConexion1();
         public static ServicioVerificacionConexion1 Instancia => _instancia;
+
         public event Action<NetworkStatus> EstadoDeRedCambiado;
+
         private readonly System.Timers.Timer _timerVerificacion;
         private NetworkStatus _ultimoEstado;
         private bool _verificandoActualmente = false;
+        private bool _disposed = false;
 
         private ServicioVerificacionConexion1()
         {
             _timerVerificacion = new System.Timers.Timer(3000);
-            _timerVerificacion.Elapsed += async (s, e) => await VerificarConexionCompleta();
             _timerVerificacion.AutoReset = true;
+            _timerVerificacion.Elapsed += TimerVerificacion_Elapsed;
 
-            NetworkChange.NetworkAvailabilityChanged += (s, e) =>
-            {
-                Task.Run(() => VerificarConexionCompleta());
-            };
+            NetworkChange.NetworkAvailabilityChanged += NetworkAvailabilityChanged_Handler;
 
-            _ultimoEstado = NetworkStatus.SinRed; 
-            Task.Run(() => VerificarConexionCompleta());
+            _ultimoEstado = NetworkStatus.SinRed;
+            _ = VerificarConexionCompleta();
         }
 
-        // Método público para forzar verificación si fuera necesario
+        private async void TimerVerificacion_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            await VerificarConexionCompleta();
+        }
+
+        private void NetworkAvailabilityChanged_Handler(object sender, NetworkAvailabilityEventArgs e)
+        {
+            _ = VerificarConexionCompleta();
+        }
+
         public void ForzarVerificacion()
         {
-            Task.Run(() => VerificarConexionCompleta());
+            _ = VerificarConexionCompleta();
         }
 
         private async Task VerificarConexionCompleta()
         {
-            if (_verificandoActualmente) return;
-            _verificandoActualmente = true;
+            if (_verificandoActualmente || _disposed) return;
 
-            NetworkStatus nuevoEstado;
+            _verificandoActualmente = true;
 
             try
             {
-                // PASO 1: Verificar Hardware
+                NetworkStatus nuevoEstado;
+
                 if (!NetworkInterface.GetIsNetworkAvailable())
                 {
                     nuevoEstado = NetworkStatus.SinRed;
@@ -51,34 +60,31 @@ namespace CapaServiciosSeguridadValidacion
                 }
                 else
                 {
-                    // PASO 2: Verificar Internet real (Ping a Google)
                     bool hayInternet = await PingInternetAsync();
 
                     if (hayInternet)
                     {
                         nuevoEstado = NetworkStatus.Internet;
-                        // Si ya tenemos internet, apagamos el timer (GestorRealtime ya reconectará)
                         _timerVerificacion.Stop();
                     }
                     else
                     {
                         nuevoEstado = NetworkStatus.RedSinInternet;
-                        // Estamos en AMARILLO: Encendemos timer para detectar cuando vuelva
-                        if (!_timerVerificacion.Enabled) _timerVerificacion.Start();
+
+                        if (!_timerVerificacion.Enabled)
+                            _timerVerificacion.Start();
                     }
                 }
 
-                // PASO 3: Notificar solo si hubo cambio
                 if (_ultimoEstado != nuevoEstado)
                 {
                     _ultimoEstado = nuevoEstado;
-                    // Esto disparará el evento en GestorRealtime -> AlCambiarRed
                     EstadoDeRedCambiado?.Invoke(nuevoEstado);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Manejo silencioso
+                System.Diagnostics.Debug.WriteLine($"Error verificando conexión: {ex.Message}");
             }
             finally
             {
@@ -86,7 +92,6 @@ namespace CapaServiciosSeguridadValidacion
             }
         }
 
-        // Ping Asíncrono (No congela la app)
         private async Task<bool> PingInternetAsync()
         {
             try
@@ -101,6 +106,18 @@ namespace CapaServiciosSeguridadValidacion
             {
                 return false;
             }
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            NetworkChange.NetworkAvailabilityChanged -= NetworkAvailabilityChanged_Handler;
+
+            _timerVerificacion.Stop();
+            _timerVerificacion.Elapsed -= TimerVerificacion_Elapsed;
+            _timerVerificacion.Dispose();
         }
     }
 }

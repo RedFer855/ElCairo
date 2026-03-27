@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ModernMenuUI.ClasesUI
 {
@@ -10,22 +7,19 @@ namespace ModernMenuUI.ClasesUI
     {
         private static ManejarFormularios instancia;
         private Form formularioActivo;
-        private Panel panelContenedor;
+        private readonly Panel panelContenedor;
 
-        // Constructor privado para evitar instanciación externa
         private ManejarFormularios(Panel panel)
         {
             panelContenedor = panel;
         }
 
-        // Método para inicializar la instancia con el panel del MenuPrincipal
         public static void Inicializar(Panel panel)
         {
             if (instancia == null)
                 instancia = new ManejarFormularios(panel);
         }
 
-        // Propiedad para acceder a la instancia desde cualquier parte
         public static ManejarFormularios Instancia
         {
             get
@@ -38,29 +32,83 @@ namespace ModernMenuUI.ClasesUI
 
         public void AbrirFormulario(Form formularioHijo)
         {
-            if (formularioActivo != null)
-                formularioActivo.Close();
-    
+            if (formularioHijo == null || formularioHijo.IsDisposed)
+                return;
+
+            CerrarFormularioActual();
 
             formularioActivo = formularioHijo;
             formularioHijo.TopLevel = false;
+            formularioHijo.FormBorderStyle = FormBorderStyle.None;
             formularioHijo.Dock = DockStyle.Fill;
-            panelContenedor.Controls.Add(formularioHijo);
-            panelContenedor.Tag = formularioHijo;
-            formularioHijo.BringToFront();
-            formularioHijo.Show();
+
+            panelContenedor.SuspendLayout();
+            try
+            {
+                panelContenedor.Controls.Add(formularioHijo);
+                panelContenedor.Tag = formularioHijo;
+
+                formularioHijo.BringToFront();
+                formularioHijo.Show();
+            }
+            finally
+            {
+                panelContenedor.ResumeLayout();
+            }
         }
 
         public void AbrirFormularioEncima(Form formularioHijo)
         {
+            if (formularioHijo == null || formularioHijo.IsDisposed)
+                return;
+
+            CerrarFormularioActual();
+
             formularioActivo = formularioHijo;
             formularioHijo.TopLevel = false;
+            formularioHijo.FormBorderStyle = FormBorderStyle.None;
             formularioHijo.Dock = DockStyle.Fill;
-            panelContenedor.Controls.Add(formularioHijo);
-            panelContenedor.Tag = formularioHijo;
-            formularioHijo.BringToFront();
-            formularioHijo.Show();
+
+            panelContenedor.SuspendLayout();
+            try
+            {
+                panelContenedor.Controls.Add(formularioHijo);
+                panelContenedor.Tag = formularioHijo;
+
+                formularioHijo.BringToFront();
+                formularioHijo.Show();
+            }
+            finally
+            {
+                panelContenedor.ResumeLayout();
+            }
         }
 
+        public void CerrarFormularioActual()
+        {
+            if (formularioActivo == null)
+                return;
+
+            try
+            {
+                if (panelContenedor.Controls.Contains(formularioActivo))
+                    panelContenedor.Controls.Remove(formularioActivo);
+
+                if (!formularioActivo.IsDisposed)
+                {
+                    formularioActivo.Close();
+                    formularioActivo.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cerrar formulario activo: {ex.Message}");
+            }
+            finally
+            {
+                formularioActivo = null;
+                panelContenedor.Tag = null;
+            }
+        }
     }
 }

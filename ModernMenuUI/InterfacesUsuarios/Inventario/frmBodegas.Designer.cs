@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panel1 = new Panel();
             dgvProducto = new DataGridView();
             Codigo = new DataGridViewTextBoxColumn();
@@ -53,20 +53,20 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(dgvProducto);
-            panel1.Location = new Point(84, 75);
-            panel1.Margin = new Padding(4);
+            panel1.Location = new Point(74, 56);
+            panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(999, 469);
+            panel1.Size = new Size(874, 352);
             panel1.TabIndex = 34;
             // 
             // dgvProducto
             // 
             dgvProducto.AllowUserToAddRows = false;
             dgvProducto.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProducto.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvProducto.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvProducto.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvProducto.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProducto.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
@@ -74,46 +74,46 @@
             dgvProducto.BorderStyle = BorderStyle.None;
             dgvProducto.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvProducto.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProducto.Columns.AddRange(new DataGridViewColumn[] { Codigo, Bodega, Departamento, Direccion, Telefono, EstadoBodega });
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.White;
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle7.NullValue = "(Vacío)";
-            dataGridViewCellStyle7.Padding = new Padding(5);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle7.SelectionForeColor = Color.White;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            dgvProducto.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle3.NullValue = "(Vacío)";
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvProducto.DefaultCellStyle = dataGridViewCellStyle3;
             dgvProducto.EnableHeadersVisualStyles = false;
             dgvProducto.GridColor = Color.FromArgb(189, 215, 238);
-            dgvProducto.Location = new Point(18, 21);
-            dgvProducto.Margin = new Padding(4);
+            dgvProducto.Location = new Point(16, 16);
+            dgvProducto.Margin = new Padding(4, 3, 4, 3);
             dgvProducto.Name = "dgvProducto";
             dgvProducto.ReadOnly = true;
             dgvProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvProducto.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvProducto.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvProducto.RowHeadersWidth = 30;
             dgvProducto.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProducto.RowTemplate.Height = 50;
             dgvProducto.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducto.Size = new Size(961, 400);
+            dgvProducto.Size = new Size(841, 300);
             dgvProducto.TabIndex = 14;
             // 
             // Codigo
@@ -136,7 +136,7 @@
             Bodega.Name = "Bodega";
             Bodega.ReadOnly = true;
             Bodega.Resizable = DataGridViewTriState.False;
-            Bodega.Width = 111;
+            Bodega.Width = 98;
             // 
             // Departamento
             // 
@@ -146,7 +146,7 @@
             Departamento.MinimumWidth = 6;
             Departamento.Name = "Departamento";
             Departamento.ReadOnly = true;
-            Departamento.Width = 173;
+            Departamento.Width = 145;
             // 
             // Direccion
             // 
@@ -156,7 +156,7 @@
             Direccion.MinimumWidth = 6;
             Direccion.Name = "Direccion";
             Direccion.ReadOnly = true;
-            Direccion.Width = 127;
+            Direccion.Width = 108;
             // 
             // Telefono
             // 
@@ -180,23 +180,23 @@
             flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnCrearBodega);
             flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(13, 552);
-            flowLayoutPanel1.Margin = new Padding(4);
+            flowLayoutPanel1.Location = new Point(11, 414);
+            flowLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(386, 107);
+            flowLayoutPanel1.Size = new Size(338, 80);
             flowLayoutPanel1.TabIndex = 45;
             // 
             // btnCrearBodega
             // 
             btnCrearBodega.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnCrearBodega.BackColor = Color.FromArgb(149, 195, 172);
-            btnCrearBodega.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCrearBodega.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCrearBodega.ForeColor = Color.White;
             btnCrearBodega.ImageAlign = ContentAlignment.TopCenter;
-            btnCrearBodega.Location = new Point(4, 4);
-            btnCrearBodega.Margin = new Padding(4);
+            btnCrearBodega.Location = new Point(4, 3);
+            btnCrearBodega.Margin = new Padding(4, 3, 4, 3);
             btnCrearBodega.Name = "btnCrearBodega";
-            btnCrearBodega.Size = new Size(182, 64);
+            btnCrearBodega.Size = new Size(159, 48);
             btnCrearBodega.TabIndex = 42;
             btnCrearBodega.Text = "Crear Bodega";
             btnCrearBodega.UseVisualStyleBackColor = false;
@@ -206,13 +206,13 @@
             // 
             btnSalir.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
-            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSalir.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(194, 4);
-            btnSalir.Margin = new Padding(4);
+            btnSalir.Location = new Point(171, 3);
+            btnSalir.Margin = new Padding(4, 3, 4, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(182, 64);
+            btnSalir.Size = new Size(159, 48);
             btnSalir.TabIndex = 39;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -220,16 +220,17 @@
             // 
             // frmBodegas
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1182, 692);
+            ClientSize = new Size(1034, 519);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "frmBodegas";
             Text = "frmBodegas";
-            FormClosing += frmBodegas_FormClosing;
+            FormClosed += frmBodegas_FormClosed;
             Load += frmBodegas_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProducto).EndInit();

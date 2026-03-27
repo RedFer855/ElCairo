@@ -174,10 +174,10 @@
             panel6.Controls.Add(panel12);
             panel6.Controls.Add(panel9);
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(741, 0);
+            panel6.Location = new Point(733, 0);
             panel6.Name = "panel6";
             panel6.RightToLeft = RightToLeft.Yes;
-            panel6.Size = new Size(132, 65);
+            panel6.Size = new Size(140, 65);
             panel6.TabIndex = 11;
             // 
             // lblEstadoConexion
@@ -185,12 +185,12 @@
             lblEstadoConexion.AutoSize = true;
             lblEstadoConexion.BackColor = Color.Transparent;
             lblEstadoConexion.Dock = DockStyle.Fill;
-            lblEstadoConexion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblEstadoConexion.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblEstadoConexion.ForeColor = Color.White;
             lblEstadoConexion.Location = new Point(0, 26);
             lblEstadoConexion.Name = "lblEstadoConexion";
             lblEstadoConexion.RightToLeft = RightToLeft.Yes;
-            lblEstadoConexion.Size = new Size(132, 24);
+            lblEstadoConexion.Size = new Size(140, 25);
             lblEstadoConexion.TabIndex = 3;
             lblEstadoConexion.Text = "Estado de Red";
             // 
@@ -199,7 +199,7 @@
             panel12.Dock = DockStyle.Bottom;
             panel12.Location = new Point(0, 48);
             panel12.Name = "panel12";
-            panel12.Size = new Size(132, 17);
+            panel12.Size = new Size(140, 17);
             panel12.TabIndex = 15;
             // 
             // panel9
@@ -207,7 +207,7 @@
             panel9.Dock = DockStyle.Top;
             panel9.Location = new Point(0, 0);
             panel9.Name = "panel9";
-            panel9.Size = new Size(132, 26);
+            panel9.Size = new Size(140, 26);
             panel9.TabIndex = 4;
             // 
             // btnNotificaciones
@@ -243,18 +243,18 @@
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(65, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(218, 65);
+            panel1.Size = new Size(412, 65);
             panel1.TabIndex = 9;
             panel1.MouseDown += panel1_MouseDown_1;
             // 
             // lblNombreModulo
             // 
             lblNombreModulo.AutoSize = true;
-            lblNombreModulo.Font = new Font("Itim", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNombreModulo.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(3, 17);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(251, 35);
+            lblNombreModulo.Size = new Size(271, 36);
             lblNombreModulo.TabIndex = 8;
             lblNombreModulo.Text = "MENU PRINCIPAL";
             lblNombreModulo.MouseDown += lblNombreModulo_MouseDown;
@@ -423,7 +423,7 @@
             btnCrearReporte.Dock = DockStyle.Top;
             btnCrearReporte.FlatAppearance.BorderColor = Color.White;
             btnCrearReporte.FlatStyle = FlatStyle.Flat;
-            btnCrearReporte.Font = new Font("Itim", 11.25F);
+            btnCrearReporte.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnCrearReporte.ForeColor = Color.FromArgb(87, 99, 110);
             btnCrearReporte.Location = new Point(0, 0);
             btnCrearReporte.Name = "btnCrearReporte";
@@ -481,7 +481,7 @@
             btnBitacora.Dock = DockStyle.Top;
             btnBitacora.FlatAppearance.BorderColor = Color.White;
             btnBitacora.FlatStyle = FlatStyle.Flat;
-            btnBitacora.Font = new Font("Itim", 11.25F);
+            btnBitacora.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnBitacora.ForeColor = Color.FromArgb(87, 99, 110);
             btnBitacora.Location = new Point(0, 80);
             btnBitacora.Name = "btnBitacora";
@@ -499,7 +499,7 @@
             btnGestionUsuarios.Dock = DockStyle.Top;
             btnGestionUsuarios.FlatAppearance.BorderColor = Color.White;
             btnGestionUsuarios.FlatStyle = FlatStyle.Flat;
-            btnGestionUsuarios.Font = new Font("Itim", 11.25F);
+            btnGestionUsuarios.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnGestionUsuarios.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionUsuarios.Location = new Point(0, 40);
             btnGestionUsuarios.Name = "btnGestionUsuarios";
@@ -517,7 +517,7 @@
             btnGestionEmpleados.Dock = DockStyle.Top;
             btnGestionEmpleados.FlatAppearance.BorderColor = Color.White;
             btnGestionEmpleados.FlatStyle = FlatStyle.Flat;
-            btnGestionEmpleados.Font = new Font("Itim", 11.25F);
+            btnGestionEmpleados.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnGestionEmpleados.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionEmpleados.Location = new Point(0, 0);
             btnGestionEmpleados.Name = "btnGestionEmpleados";
@@ -571,33 +571,33 @@
             // lblBodega
             // 
             lblBodega.AutoSize = true;
-            lblBodega.Font = new Font("Itim", 11.25F);
+            lblBodega.Font = new Font("Microsoft Sans Serif", 11.25F);
             lblBodega.ForeColor = Color.White;
             lblBodega.Location = new Point(106, 55);
             lblBodega.Name = "lblBodega";
-            lblBodega.Size = new Size(165, 23);
+            lblBodega.Size = new Size(177, 24);
             lblBodega.TabIndex = 11;
             lblBodega.Text = "Bodega: Mi Bodega";
             // 
             // lblRol
             // 
             lblRol.AutoSize = true;
-            lblRol.Font = new Font("Itim", 11.25F);
+            lblRol.Font = new Font("Microsoft Sans Serif", 11.25F);
             lblRol.ForeColor = Color.White;
             lblRol.Location = new Point(106, 32);
             lblRol.Name = "lblRol";
-            lblRol.Size = new Size(99, 23);
+            lblRol.Size = new Size(103, 24);
             lblRol.TabIndex = 10;
             lblRol.Text = "Rol: Admin";
             // 
             // lblUsuario
             // 
             lblUsuario.AutoSize = true;
-            lblUsuario.Font = new Font("Itim", 11.25F);
+            lblUsuario.Font = new Font("Microsoft Sans Serif", 11.25F);
             lblUsuario.ForeColor = Color.White;
             lblUsuario.Location = new Point(106, 6);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(169, 23);
+            lblUsuario.Size = new Size(179, 24);
             lblUsuario.TabIndex = 9;
             lblUsuario.Text = "Fernando Barahona";
             // 
@@ -632,7 +632,7 @@
             btnCierreDiario.Dock = DockStyle.Top;
             btnCierreDiario.FlatAppearance.BorderColor = Color.White;
             btnCierreDiario.FlatStyle = FlatStyle.Flat;
-            btnCierreDiario.Font = new Font("Itim", 11.25F);
+            btnCierreDiario.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnCierreDiario.ForeColor = Color.FromArgb(87, 99, 110);
             btnCierreDiario.Location = new Point(0, 80);
             btnCierreDiario.Name = "btnCierreDiario";
@@ -650,7 +650,7 @@
             btnClientes.Dock = DockStyle.Top;
             btnClientes.FlatAppearance.BorderColor = Color.White;
             btnClientes.FlatStyle = FlatStyle.Flat;
-            btnClientes.Font = new Font("Itim", 11.25F);
+            btnClientes.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnClientes.ForeColor = Color.FromArgb(87, 99, 110);
             btnClientes.Location = new Point(0, 40);
             btnClientes.Name = "btnClientes";
@@ -668,7 +668,7 @@
             btnGestionVentas.Dock = DockStyle.Top;
             btnGestionVentas.FlatAppearance.BorderColor = Color.White;
             btnGestionVentas.FlatStyle = FlatStyle.Flat;
-            btnGestionVentas.Font = new Font("Itim", 11.25F);
+            btnGestionVentas.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnGestionVentas.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionVentas.Location = new Point(0, 0);
             btnGestionVentas.Name = "btnGestionVentas";
@@ -725,7 +725,7 @@
             btnProveedores.Dock = DockStyle.Top;
             btnProveedores.FlatAppearance.BorderColor = Color.White;
             btnProveedores.FlatStyle = FlatStyle.Flat;
-            btnProveedores.Font = new Font("Itim", 11.25F);
+            btnProveedores.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnProveedores.ForeColor = Color.FromArgb(87, 99, 110);
             btnProveedores.Location = new Point(0, 40);
             btnProveedores.Name = "btnProveedores";
@@ -743,7 +743,7 @@
             btnGestionCompra.Dock = DockStyle.Top;
             btnGestionCompra.FlatAppearance.BorderColor = Color.White;
             btnGestionCompra.FlatStyle = FlatStyle.Flat;
-            btnGestionCompra.Font = new Font("Itim", 11.25F);
+            btnGestionCompra.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnGestionCompra.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionCompra.Location = new Point(0, 0);
             btnGestionCompra.Name = "btnGestionCompra";
@@ -804,7 +804,7 @@
             btnPresentaciones.Dock = DockStyle.Top;
             btnPresentaciones.FlatAppearance.BorderColor = Color.White;
             btnPresentaciones.FlatStyle = FlatStyle.Flat;
-            btnPresentaciones.Font = new Font("Itim", 11.25F);
+            btnPresentaciones.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnPresentaciones.ForeColor = Color.FromArgb(87, 99, 110);
             btnPresentaciones.Location = new Point(0, 200);
             btnPresentaciones.Name = "btnPresentaciones";
@@ -823,7 +823,7 @@
             btnCategorias.Dock = DockStyle.Top;
             btnCategorias.FlatAppearance.BorderColor = Color.White;
             btnCategorias.FlatStyle = FlatStyle.Flat;
-            btnCategorias.Font = new Font("Itim", 11.25F);
+            btnCategorias.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnCategorias.ForeColor = Color.FromArgb(87, 99, 110);
             btnCategorias.Location = new Point(0, 160);
             btnCategorias.Name = "btnCategorias";
@@ -842,7 +842,7 @@
             btnMarcas.Dock = DockStyle.Top;
             btnMarcas.FlatAppearance.BorderColor = Color.White;
             btnMarcas.FlatStyle = FlatStyle.Flat;
-            btnMarcas.Font = new Font("Itim", 11.25F);
+            btnMarcas.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnMarcas.ForeColor = Color.FromArgb(87, 99, 110);
             btnMarcas.Location = new Point(0, 120);
             btnMarcas.Name = "btnMarcas";
@@ -861,7 +861,7 @@
             btnGestionInventario.Dock = DockStyle.Top;
             btnGestionInventario.FlatAppearance.BorderColor = Color.White;
             btnGestionInventario.FlatStyle = FlatStyle.Flat;
-            btnGestionInventario.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGestionInventario.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnGestionInventario.ForeColor = Color.FromArgb(87, 99, 110);
             btnGestionInventario.Location = new Point(0, 80);
             btnGestionInventario.Name = "btnGestionInventario";
@@ -879,7 +879,7 @@
             btnBodegas.Dock = DockStyle.Top;
             btnBodegas.FlatAppearance.BorderColor = Color.White;
             btnBodegas.FlatStyle = FlatStyle.Flat;
-            btnBodegas.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnBodegas.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnBodegas.ForeColor = Color.FromArgb(87, 99, 110);
             btnBodegas.Location = new Point(0, 40);
             btnBodegas.Name = "btnBodegas";
@@ -897,7 +897,7 @@
             btnInventarioBodega.Dock = DockStyle.Top;
             btnInventarioBodega.FlatAppearance.BorderColor = Color.White;
             btnInventarioBodega.FlatStyle = FlatStyle.Flat;
-            btnInventarioBodega.Font = new Font("Itim", 11.25F);
+            btnInventarioBodega.Font = new Font("Microsoft Sans Serif", 11.25F);
             btnInventarioBodega.ForeColor = Color.FromArgb(87, 99, 110);
             btnInventarioBodega.Location = new Point(0, 0);
             btnInventarioBodega.Name = "btnInventarioBodega";
@@ -1020,7 +1020,7 @@
             btnSalir.TabIndex = 19;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click_1;
+            btnSalir.Click += btnSalir_Click;
             // 
             // pictureBox3
             // 
@@ -1058,7 +1058,7 @@
             tableLayoutPanel1.SetColumnSpan(panel4, 2);
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(dgvProducto);
-            panel4.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            panel4.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panel4.Location = new Point(0, 327);
             panel4.Margin = new Padding(0, 0, 0, 10);
             panel4.Name = "panel4";
@@ -1077,7 +1077,7 @@
             // 
             // label1
             // 
-            label1.Font = new Font("Itim", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
@@ -1101,7 +1101,7 @@
             dgvProducto.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -1111,7 +1111,7 @@
             dgvProducto.Columns.AddRange(new DataGridViewColumn[] { Codigo, Producto, Bodega, Anaquel, StockTotal, StockMinimo });
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = Color.White;
-            dataGridViewCellStyle5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle5.NullValue = "(Vacío)";
             dataGridViewCellStyle5.Padding = new Padding(5);
@@ -1127,7 +1127,7 @@
             dgvProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle6.ForeColor = Color.FromArgb(102, 102, 102);
             dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(148, 168, 187);
             dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
@@ -1148,7 +1148,7 @@
             Codigo.MinimumWidth = 6;
             Codigo.Name = "Codigo";
             Codigo.ReadOnly = true;
-            Codigo.Width = 104;
+            Codigo.Width = 108;
             // 
             // Producto
             // 
@@ -1186,7 +1186,7 @@
             StockTotal.MinimumWidth = 6;
             StockTotal.Name = "StockTotal";
             StockTotal.ReadOnly = true;
-            StockTotal.Width = 94;
+            StockTotal.Width = 93;
             // 
             // StockMinimo
             // 
@@ -1199,7 +1199,7 @@
             StockMinimo.MinimumWidth = 130;
             StockMinimo.Name = "StockMinimo";
             StockMinimo.ReadOnly = true;
-            StockMinimo.Width = 146;
+            StockMinimo.Width = 147;
             // 
             // chart1
             // 
@@ -1247,12 +1247,12 @@
             // 
             lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             lblHora.AutoSize = true;
-            lblHora.Font = new Font("Itim", 14.25F);
+            lblHora.Font = new Font("Microsoft Sans Serif", 14.25F);
             lblHora.ForeColor = Color.DimGray;
             lblHora.Location = new Point(20, 645);
             lblHora.Name = "lblHora";
             lblHora.RightToLeft = RightToLeft.Yes;
-            lblHora.Size = new Size(76, 29);
+            lblHora.Size = new Size(79, 29);
             lblHora.TabIndex = 34;
             lblHora.Text = "label3";
             lblHora.TextAlign = ContentAlignment.MiddleRight;
@@ -1261,12 +1261,12 @@
             // 
             lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 14.25F);
+            lblFecha.Font = new Font("Microsoft Sans Serif", 14.25F);
             lblFecha.ForeColor = Color.DimGray;
             lblFecha.Location = new Point(20, 668);
             lblFecha.Name = "lblFecha";
             lblFecha.RightToLeft = RightToLeft.Yes;
-            lblFecha.Size = new Size(76, 29);
+            lblFecha.Size = new Size(79, 29);
             lblFecha.TabIndex = 33;
             lblFecha.Text = "label3";
             lblFecha.TextAlign = ContentAlignment.MiddleRight;
@@ -1295,11 +1295,11 @@
             // lblNotificaciones
             // 
             lblNotificaciones.AutoSize = true;
-            lblNotificaciones.Font = new Font("Itim", 14F);
+            lblNotificaciones.Font = new Font("Microsoft Sans Serif", 14F);
             lblNotificaciones.ForeColor = Color.FromArgb(148, 168, 187);
             lblNotificaciones.Location = new Point(24, 408);
             lblNotificaciones.Name = "lblNotificaciones";
-            lblNotificaciones.Size = new Size(392, 29);
+            lblNotificaciones.Size = new Size(413, 29);
             lblNotificaciones.TabIndex = 0;
             lblNotificaciones.Text = "No tienes notificaciones pendientes...";
             // 

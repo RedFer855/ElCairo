@@ -535,6 +535,7 @@ namespace ModernMenuUI
         private void btnRegistroPerdida_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
+            ManejarFormularios.Instancia.AbrirFormulario(new frmPruebaInventario());
             clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PERDIDAS");
         }
 
@@ -700,6 +701,28 @@ namespace ModernMenuUI
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            string listaForms = "";
+
+            foreach (Form frm in Application.OpenForms)
+            {
+                listaForms += frm.Name + " | " + frm.GetType().Name + Environment.NewLine;
+            }
+
+            long memoriaMB = GC.GetTotalMemory(false) / (1024 * 1024);
+
+            MessageBox.Show(
+                "Forms abiertos: " + Application.OpenForms.Count +
+                "\nMemoria .NET: " + memoriaMB + " MB\n\n" +
+                listaForms
+            );
+        }
+
         private void pbxCalculadora_Click_1(object sender, EventArgs e)
         {
             try
@@ -710,11 +733,6 @@ namespace ModernMenuUI
             {
                 MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
             }
-        }
-
-        private void btnSalir_Click_1(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
     }
 }

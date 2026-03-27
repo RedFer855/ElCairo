@@ -182,7 +182,7 @@
             // 
             btnNuevoRol.BackColor = Color.FromArgb(149, 195, 172);
             btnNuevoRol.Dock = DockStyle.Fill;
-            btnNuevoRol.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnNuevoRol.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnNuevoRol.ForeColor = SystemColors.ButtonFace;
             btnNuevoRol.Location = new Point(3, 3);
             btnNuevoRol.Name = "btnNuevoRol";
@@ -196,7 +196,7 @@
             // 
             btnSalir.BackColor = Color.FromArgb(148, 168, 187);
             btnSalir.Dock = DockStyle.Fill;
-            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSalir.Font = new Font("Microsoft Sans Serif", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
             btnSalir.Location = new Point(169, 3);
@@ -205,7 +205,7 @@
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click_1;
+            btnSalir.Click += btnSalir_Click;
             // 
             // panel1
             // 
@@ -293,11 +293,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
             label1.Location = new Point(15, 9);
             label1.Name = "label1";
-            label1.Size = new Size(240, 18);
+            label1.Size = new Size(273, 18);
             label1.TabIndex = 0;
             label1.Text = "ROLES POR DEFECTO DEL SISTEMA";
             // 
@@ -316,11 +316,11 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
             label2.Location = new Point(15, 9);
             label2.Name = "label2";
-            label2.Size = new Size(292, 18);
+            label2.Size = new Size(323, 18);
             label2.TabIndex = 0;
             label2.Text = "ROLES CREADOS POR EL ADMINISTRADOR";
             // 
@@ -338,6 +338,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmRol";
             Text = "frmRoles";
+            FormClosing += frmRol_FormClosing;
+            FormClosed += frmRol_FormClosed;
             pnlContenedorRoles.ResumeLayout(false);
             panel10.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
