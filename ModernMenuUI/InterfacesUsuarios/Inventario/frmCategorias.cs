@@ -101,7 +101,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             lstSugerencias.DataSource = null;
             dgvCategorias.DataSource = null;
-            CategoriaSeleccionada = null;
+            //CategoriaSeleccionada = null;
         }
 
         private void RecargarInterfazSafe()
