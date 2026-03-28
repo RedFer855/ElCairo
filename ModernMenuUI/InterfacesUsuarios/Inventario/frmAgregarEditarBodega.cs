@@ -2,6 +2,7 @@
 using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
+using Serilog;
 using System;
 using System.Windows.Forms;
 
@@ -16,6 +17,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
     {
         private readonly Bodega _bodegaEdicion;
 
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/app.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
         /// <summary>
         /// Constructor para el modo creación de bodega.
         /// </summary>
@@ -103,20 +109,35 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesBodega(bodega);
             if (resultado.Error)
             {
+                _log.Warning("Validación de bodega fallida: {Mensaje}", resultado.Mensaje);
                 MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!rbActivo.Checked && !rbInactivo.Checked)
             {
+                _log.Warning("Intento de guardar bodega sin estado seleccionado: {Nombre}", bodega.NombreBodega);
                 MessageBox.Show("Seleccione un estado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // ====== INICIO MÉTRICAS ======
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
+
             try
             {
+                // PASO A: Conexión
+                swPaso.Start();
                 var supabase = await Conexion.GetClientAsync();
+                swPaso.Stop();
+                long tiempoConexion = swPaso.ElapsedMilliseconds;
+                swPaso.Reset();
 
+                // PASO B: Insertar bodega
+                _log.Information("Insertando nueva bodega: {Nombre}", bodega.NombreBodega);
+                swPaso.Start();
                 await supabase.Rpc("insertar_bodega", new
                 {
                     p_nombre_bodega = bodega.NombreBodega,
@@ -126,17 +147,37 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     p_estado_bodega = rbActivo.Checked,
                     p_id_estado = rbActivo.Checked ? 1 : 2
                 });
+                swPaso.Stop();
+                long tiempoInsercion = swPaso.ElapsedMilliseconds;
 
-                MessageBox.Show("Bodega guardada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                swTotal.Stop();
+                _log.Information("Bodega guardada exitosamente: {Nombre}", bodega.NombreBodega);
 
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"Conexión Supabase: {tiempoConexion} ms\n" +
+                    $"Inserción Bodega (RPC): {tiempoInsercion} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show("Bodega guardada exitosamente.", "Éxito",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar la bodega: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                swTotal.Stop();
+                _log.Error(ex, "Error al guardar bodega: {Nombre}", bodega.NombreBodega);
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         /// <summary>
         /// Evento que maneja la modificación de una bodega existente.
@@ -145,6 +186,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             if (_bodegaEdicion == null)
             {
+                _log.Warning("Intento de modificar bodega sin objeto de edición");
                 MessageBox.Show("No se encontró la bodega a modificar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -160,20 +202,35 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesBodega(bodegaActualizada);
             if (resultado.Error)
             {
+                _log.Warning("Validación de bodega fallida al modificar: {Mensaje}", resultado.Mensaje);
                 MessageBox.Show(resultado.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!rbActivo.Checked && !rbInactivo.Checked)
             {
+                _log.Warning("Intento de modificar bodega sin estado seleccionado: {Nombre}", bodegaActualizada.NombreBodega);
                 MessageBox.Show("Seleccione un estado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // ====== INICIO MÉTRICAS ======
+            System.Diagnostics.Stopwatch swTotal = new System.Diagnostics.Stopwatch();
+            System.Diagnostics.Stopwatch swPaso = new System.Diagnostics.Stopwatch();
+            swTotal.Start();
+
             try
             {
+                // PASO A: Conexión
+                swPaso.Start();
                 var supabase = await Conexion.GetClientAsync();
+                swPaso.Stop();
+                long tiempoConexion = swPaso.ElapsedMilliseconds;
+                swPaso.Reset();
 
+                // PASO B: Actualizar bodega
+                _log.Information("Actualizando bodega ID {Id}: {Nombre}", bodegaActualizada.IdBodega, bodegaActualizada.NombreBodega);
+                swPaso.Start();
                 await supabase.Rpc("actualizar_bodega", new
                 {
                     p_id_bodega = bodegaActualizada.IdBodega,
@@ -182,15 +239,34 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     p_estado_bodega = bodegaActualizada.EstadoBodega,
                     p_id_estado = rbActivo.Checked ? 1 : 2
                 });
+                swPaso.Stop();
+                long tiempoActualizacion = swPaso.ElapsedMilliseconds;
 
-                MessageBox.Show("Bodega modificada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                swTotal.Stop();
+                _log.Information("Bodega modificada exitosamente: {Nombre}", bodegaActualizada.NombreBodega);
 
+                string resumen =
+                    $"--- MÉTRICAS DE RENDIMIENTO ---\n" +
+                    $"Conexión Supabase: {tiempoConexion} ms\n" +
+                    $"Actualización Bodega (RPC): {tiempoActualizacion} ms\n" +
+                    $"Tiempo Total: {swTotal.ElapsedMilliseconds} ms\n" +
+                    $"-------------------------------";
+                MessageBox.Show(resumen, "Evaluación del Sistema",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MessageBox.Show("Bodega modificada exitosamente.", "Éxito",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al modificar la bodega: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                swTotal.Stop();
+                _log.Error(ex, "Error al modificar bodega ID {Id}: {Nombre}", bodegaActualizada.IdBodega, bodegaActualizada.NombreBodega);
+                MessageBox.Show($"FALLO DETECTADO:\n" +
+                                $"Tiempo hasta el error: {swTotal.ElapsedMilliseconds} ms\n" +
+                                $"Error: {ex.Message}", "Análisis de Fiabilidad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

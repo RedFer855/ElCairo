@@ -4,6 +4,7 @@ using QuestPDF;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,6 +53,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
         /// Nombre del usuario que genera la orden de compra.
         /// </summary>
         private string _nombreUsuario;
+
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/ReporteOrdenCompra.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
 
         /// <summary>
         /// Inicializa una nueva instancia de <see cref="frmReporteOrdenCompra"/> con los datos de la orden de compra.
@@ -121,6 +128,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 {
                     try
                     {
+                        _log.Information("Generando PDF de orden de compra para proveedor: {Proveedor}", _nombreProveedor);
+
                         byte[] logoBytes = null;
                         try { logoBytes = ObtenerLogoEnBytes(); } catch { }
 
@@ -136,73 +145,67 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                                     {
                                         col.Item().AlignLeft().Text("Orden de Compra")
                                             .SemiBold().FontSize(24).FontColor(Colors.Blue.Medium);
-
-                                        col.Item().AlignLeft().Text($"Fecha de Emisión: {fechaActual}")
-                                            .FontSize(10);
-
+                                        col.Item().AlignLeft().Text($"Fecha de Emisión: {fechaActual}").FontSize(10);
                                         col.Item().AlignLeft().Text($"Proveedor: {_nombreProveedor}")
                                             .FontSize(14).SemiBold().FontColor(Colors.Grey.Darken2);
-
                                         col.Item().AlignLeft().Text($"Generado por: {_nombreUsuario}")
                                             .FontSize(10).FontColor(Colors.Grey.Medium);
                                     });
 
                                     if (logoBytes != null)
                                     {
-                                        row.ConstantItem(20); 
+                                        row.ConstantItem(20);
                                         row.ConstantItem(80).Image(logoBytes, ImageScaling.FitArea);
                                     }
                                 });
 
-                                page.Content()
-                                    .PaddingTop(20)
-                                    .Table(table =>
+                                page.Content().PaddingTop(20).Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
                                     {
-                                        table.ColumnsDefinition(columns =>
-                                        {
-                                            columns.RelativeColumn(1.5f);
-                                            columns.RelativeColumn(4);
-                                            columns.RelativeColumn(2);
-                                            columns.RelativeColumn(1.5f);
-                                            columns.RelativeColumn(2);
-                                        });
-
-                                        table.Header(header =>
-                                        {
-                                            header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Código").FontColor(Colors.White).Bold();
-                                            header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Producto").FontColor(Colors.White).Bold();
-                                            header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Precio").FontColor(Colors.White).Bold();
-                                            header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Cantidad").FontColor(Colors.White).Bold();
-                                            header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Total Línea").FontColor(Colors.White).Bold();
-                                        });
-
-                                        foreach (var item in _listaItems)
-                                        {
-                                            table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Codigo);
-                                            table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Producto);
-                                            table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Precio.ToString("F2"));
-                                            table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Cantidad.ToString());
-                                            table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.TotalLinea.ToString("F2"));
-                                        }
+                                        columns.RelativeColumn(1.5f);
+                                        columns.RelativeColumn(4);
+                                        columns.RelativeColumn(2);
+                                        columns.RelativeColumn(1.5f);
+                                        columns.RelativeColumn(2);
                                     });
 
-                                page.Footer()
-                                    .AlignRight()
-                                    .Column(col =>
+                                    table.Header(header =>
                                     {
-                                        col.Item().Text($"Subtotal: {_subtotal}").FontSize(12);
-                                        col.Item().Text($"Impuesto: {_impuesto}").FontSize(12);
-                                        col.Item().Text($"Total General: {_totalGeneral}").FontSize(14).Bold();
+                                        header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Código").FontColor(Colors.White).Bold();
+                                        header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Producto").FontColor(Colors.White).Bold();
+                                        header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Precio").FontColor(Colors.White).Bold();
+                                        header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Cantidad").FontColor(Colors.White).Bold();
+                                        header.Cell().Background(Colors.Blue.Medium).Padding(5).Text("Total Línea").FontColor(Colors.White).Bold();
                                     });
+
+                                    foreach (var item in _listaItems)
+                                    {
+                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Codigo);
+                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Producto);
+                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Precio.ToString("F2"));
+                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.Cantidad.ToString());
+                                        table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten3).Padding(5).Text(item.TotalLinea.ToString("F2"));
+                                    }
+                                });
+
+                                page.Footer().AlignRight().Column(col =>
+                                {
+                                    col.Item().Text($"Subtotal: {_subtotal}").FontSize(12);
+                                    col.Item().Text($"Impuesto: {_impuesto}").FontSize(12);
+                                    col.Item().Text($"Total General: {_totalGeneral}").FontSize(14).Bold();
+                                });
                             });
                         });
 
                         document.GeneratePdf(sfd.FileName);
+                        _log.Information("PDF generado exitosamente: {Archivo}", sfd.FileName);
                         MessageBox.Show("¡Exportado a PDF con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Process.Start(new ProcessStartInfo(sfd.FileName) { UseShellExecute = true });
                     }
                     catch (Exception ex)
                     {
+                        _log.Error(ex, "Error al exportar a PDF para proveedor: {Proveedor}", _nombreProveedor);
                         MessageBox.Show("Error al exportar a PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -226,6 +229,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 {
                     try
                     {
+                        _log.Information("Generando Excel de orden de compra para proveedor: {Proveedor}", _nombreProveedor);
+
                         using (var workbook = new XLWorkbook())
                         {
                             var worksheet = workbook.Worksheets.Add("OrdenCompra");
@@ -233,27 +238,19 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                             try
                             {
                                 byte[] imagenBytes = ObtenerLogoEnBytes();
-
                                 using (var logoStream = new MemoryStream(imagenBytes))
                                 {
-                                    worksheet.AddPicture(logoStream)
-                                        .MoveTo(worksheet.Cell("E1")) 
-                                        .Scale(0.15); 
+                                    worksheet.AddPicture(logoStream).MoveTo(worksheet.Cell("E1")).Scale(0.15);
                                 }
                             }
-                            catch
-                            {
-                            }
+                            catch { }
 
                             worksheet.Cell("A1").Value = "Orden de Compra";
                             worksheet.Cell("A1").Style.Font.Bold = true;
                             worksheet.Cell("A1").Style.Font.FontSize = 16;
-
                             worksheet.Cell("A2").Value = $"Fecha de Emisión: {fechaActual}";
-
                             worksheet.Cell("A3").Value = $"Proveedor: {_nombreProveedor}";
                             worksheet.Cell("A3").Style.Font.Bold = true;
-
                             worksheet.Cell("A4").Value = $"Generado por: {_nombreUsuario}";
                             worksheet.Cell("A4").Style.Font.Italic = true;
 
@@ -268,15 +265,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                             worksheet.Cell(lastRow + 4, 5).Value = _totalGeneral;
 
                             worksheet.Columns().AdjustToContents();
-
                             workbook.SaveAs(sfd.FileName);
                         }
 
+                        _log.Information("Excel generado exitosamente: {Archivo}", sfd.FileName);
                         MessageBox.Show("¡Exportado a Excel con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Process.Start(new ProcessStartInfo(sfd.FileName) { UseShellExecute = true });
                     }
                     catch (Exception ex)
                     {
+                        _log.Error(ex, "Error al exportar a Excel para proveedor: {Proveedor}", _nombreProveedor);
                         MessageBox.Show("Error al exportar a Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }

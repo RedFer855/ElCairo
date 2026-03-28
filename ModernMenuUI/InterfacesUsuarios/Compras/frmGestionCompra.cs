@@ -6,6 +6,7 @@ using CapaDominio.Reportes;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Compras;
+using Serilog;
 using Sprache;
 using Supabase;
 using Supabase.Realtime;
@@ -46,6 +47,12 @@ namespace ModernMenuUI
         private string _sugerenciaActual = "";
         private const int MAX_SUGGESTIONS = 10;
         private decimal precio_nuevo = 0;
+
+        private static readonly Serilog.ILogger _log = new Serilog.LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/GestionCompra.txt", rollingInterval: Serilog.RollingInterval.Day)
+    .CreateLogger();
         #endregion
 
         #region Constructor
@@ -388,19 +395,17 @@ namespace ModernMenuUI
             var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesCompra(datoscompra);
             if (resultado.Error)
             {
+                _log.Warning("Validación de compra fallida: {Mensaje}", resultado.Mensaje);
                 MessageBox.Show(resultado.Mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // --- CAMBIO AQUÍ ---
-            // Pasamos txtCodigo.Text directamente (es string), ya no lo convertimos a Int32
             if (txtNuevoPrecio.Enabled == false && !chkprecioNuevo.Checked)
             {
+                _log.Information("Agregando producto al carrito: {Codigo} cantidad: {Cantidad}", txtCodigo.Text, nudCantidad.Value);
                 AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
-                // Reiniciar controles
                 nudCantidad.Value = 1;
-                //txtNuevoPrecio.Value = 1;
                 txtCodigo.Text = null;
                 txtProducto.Text = null;
                 dgvProductos.ClearSelection();
@@ -408,30 +413,26 @@ namespace ModernMenuUI
                 txtPrecio.Text = null;
                 ActualizarTotales();
                 ActualizarImagenCarrito();
-
             }
             else
             {
                 precio_nuevo = txtNuevoPrecio.Value;
 
-
                 if (precio_nuevo == 0)
                 {
+                    _log.Warning("Intento de agregar producto con precio nuevo en 0: {Codigo}", txtCodigo.Text);
                     MessageBox.Show("Error, campo vacio", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
+                _log.Information("Agregando producto con precio nuevo: {Codigo} precio: {Precio}", txtCodigo.Text, precio_nuevo);
                 AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
-                //reiniciar controles
-                
                 nudCantidad.Value = 1;
                 txtCodigo.Text = null;
                 txtProducto.Text = null;
                 dgvProductos.ClearSelection();
                 txtNuevoPrecio.Enabled = false;
-                //chkprecioNuevo.Checked = false;
-
-                //guardar datos en los subtotales
                 ActualizarTotales();
             }
         }
@@ -440,9 +441,6 @@ namespace ModernMenuUI
         #region Registrar Compra
         private async void btnAgregarCompra_Click(object sender, EventArgs e)
         {
-            
-            //Variables
-
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
             var Actual = supabase.Auth.CurrentUser;
             var idProveedor = _proveedorSeleccionado?.IdProveedor;
@@ -458,25 +456,29 @@ namespace ModernMenuUI
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
 
-            //validaciones locales, estoy viendo como putas ponerlas en la capa de validaciones sin que se vuelva un quilombo, por ahora las dejo aquí
             if (_proveedorSeleccionado == null)
             {
+                _log.Warning("Intento de registrar compra sin proveedor seleccionado");
                 MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             if (dgvCarrito.Rows.Count == 0)
             {
-                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _log.Warning("Intento de registrar compra con carrito vacío");
+                MessageBox.Show("Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             if (Actual == null)
             {
+                _log.Error("Intento de registrar compra sin usuario autenticado");
                 throw new Exception("No hay usuario autenticado en la sesión actual.");
             }
 
-            
             if (respEmpleado == null)
             {
+                _log.Error("No se encontró empleado asociado al usuario autenticado: {UserId}", Actual.Id);
                 MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
                 return;
             }
@@ -484,9 +486,11 @@ namespace ModernMenuUI
             try
             {
                 MessageBox.Show($"Enabled: {txtNuevoPrecio.Enabled} | Checked: {chkprecioNuevo.Checked}");
+
                 if (precio_nuevo != 0)
                 {
                     decimal precioNuevo = txtNuevoPrecio.Value;
+                    _log.Information("Registrando compra con precio nuevo: {Precio} por empleado ID {IdEmpleado}", precioNuevo, idEmpleado);
 
                     foreach (DataGridViewRow row in dgvCarrito.Rows)
                     {
@@ -497,7 +501,6 @@ namespace ModernMenuUI
                         string codigoBarra = row.Cells[0].Value.ToString();
                         int cantidadIngresar = Convert.ToInt32(row.Cells[3].Value);
 
-                        //Preparar parámetros para la función RPC
                         var parametrosPrecio = new
                         {
                             p_id_empleado = idEmpleado,
@@ -508,13 +511,15 @@ namespace ModernMenuUI
                         };
 
                         await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
+                        _log.Information("Precio actualizado correctamente para producto: {Codigo}", codigoBarra);
                         MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.", "Compra ingresada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    //Preparar parámetros para la función RPC
+                    _log.Information("Registrando compra normal, proveedor ID {IdProveedor}, bodega ID {IdBodega}, empleado ID {IdEmpleado}", idProveedor, idBodega, idEmpleado);
+
                     var parametros = new
                     {
                         p_id_empleado = idEmpleado,
@@ -523,13 +528,15 @@ namespace ModernMenuUI
                         p_fecha_compra = DateTime.UtcNow,
                         p_detalles = detalles
                     };
+
                     await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
-                    
-                    MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _log.Information("Compra registrada exitosamente por empleado ID {IdEmpleado}", idEmpleado);
+                    MessageBox.Show("Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
+                _log.Error(ex, "Error al registrar compra, proveedor ID {IdProveedor}, empleado ID {IdEmpleado}", idProveedor, idEmpleado);
                 MessageBox.Show($"Error al registrar la compra: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
