@@ -288,5 +288,10 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
             //_servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
         }
+
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -145,6 +145,7 @@
             rdbDeshabilitados.TabIndex = 30;
             rdbDeshabilitados.Text = "Mostrar Deshabilitados";
             rdbDeshabilitados.UseVisualStyleBackColor = true;
+            rdbDeshabilitados.CheckedChanged += rdbDeshabilitados_CheckedChanged;
             // 
             // rdbHabilitados
             // 
@@ -158,6 +159,7 @@
             rdbHabilitados.TabStop = true;
             rdbHabilitados.Text = "Mostrar Habilitados";
             rdbHabilitados.UseVisualStyleBackColor = true;
+            rdbHabilitados.CheckedChanged += rdbHabilitados_CheckedChanged;
             // 
             // rdbTodos
             // 
@@ -169,6 +171,7 @@
             rdbTodos.TabIndex = 28;
             rdbTodos.Text = "Mostrar Todos";
             rdbTodos.UseVisualStyleBackColor = true;
+            rdbTodos.CheckedChanged += rdbTodos_CheckedChanged;
             // 
             // panelBusqueda
             // 
@@ -234,6 +237,7 @@
             // dgvUsuario
             // 
             dgvUsuario.AllowUserToAddRows = false;
+            dgvUsuario.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
@@ -248,8 +252,8 @@
             dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle2.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvUsuario.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvUsuario.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -268,6 +272,7 @@
             dgvUsuario.GridColor = Color.FromArgb(189, 215, 238);
             dgvUsuario.Location = new Point(0, 0);
             dgvUsuario.Margin = new Padding(4);
+            dgvUsuario.MultiSelect = false;
             dgvUsuario.Name = "dgvUsuario";
             dgvUsuario.ReadOnly = true;
             dgvUsuario.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -309,7 +314,7 @@
             // 
             // Categoria
             // 
-            Categoria.DataPropertyName = "RolUsuario";
+            Categoria.DataPropertyName = "NombreRol";
             Categoria.FillWeight = 80F;
             Categoria.HeaderText = "Rol";
             Categoria.MinimumWidth = 6;

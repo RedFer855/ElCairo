@@ -50,7 +50,7 @@
             btnSalir = new Button();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             Fecha = new DataGridViewTextBoxColumn();
-            Usuario = new DataGridViewTextBoxColumn();
+            aliasUsuario = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             Modulo = new DataGridViewTextBoxColumn();
             EstadoAnterior = new DataGridViewTextBoxColumn();
@@ -58,6 +58,7 @@
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             Estado = new DataGridViewTextBoxColumn();
             User = new DataGridViewTextBoxColumn();
+            UsuarioId = new DataGridViewTextBoxColumn();
             panBarraControl = new Panel();
             panBarraControl.SuspendLayout();
             panel3.SuspendLayout();
@@ -127,6 +128,7 @@
             // dgvBitacora
             // 
             dgvBitacora.AllowUserToAddRows = false;
+            dgvBitacora.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
@@ -146,7 +148,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvBitacora.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvBitacora.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBitacora.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, Fecha, Usuario, dataGridViewTextBoxColumn2, Modulo, EstadoAnterior, EstadoActual, dataGridViewTextBoxColumn3, Estado, User });
+            dgvBitacora.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, Fecha, aliasUsuario, dataGridViewTextBoxColumn2, Modulo, EstadoAnterior, EstadoActual, dataGridViewTextBoxColumn3, Estado, User, UsuarioId });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = Color.White;
             dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -188,6 +190,7 @@
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(249, 27);
             dateTimePicker1.TabIndex = 47;
+            dateTimePicker1.Visible = false;
             // 
             // dateTimePicker2
             // 
@@ -197,6 +200,7 @@
             dateTimePicker2.Name = "dateTimePicker2";
             dateTimePicker2.Size = new Size(249, 27);
             dateTimePicker2.TabIndex = 48;
+            dateTimePicker2.Visible = false;
             // 
             // label1
             // 
@@ -207,6 +211,7 @@
             label1.Size = new Size(93, 20);
             label1.TabIndex = 50;
             label1.Text = "Fecha Inicial:";
+            label1.Visible = false;
             // 
             // label2
             // 
@@ -217,6 +222,7 @@
             label2.Size = new Size(83, 20);
             label2.TabIndex = 51;
             label2.Text = "Fecha final:";
+            label2.Visible = false;
             // 
             // panelBusqueda
             // 
@@ -313,15 +319,15 @@
             Fecha.ReadOnly = true;
             Fecha.Width = 95;
             // 
-            // Usuario
+            // aliasUsuario
             // 
-            Usuario.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Usuario.DataPropertyName = "IdEmpleado";
-            Usuario.HeaderText = "Usuario";
-            Usuario.MinimumWidth = 6;
-            Usuario.Name = "Usuario";
-            Usuario.ReadOnly = true;
-            Usuario.Width = 113;
+            aliasUsuario.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            aliasUsuario.DataPropertyName = "NombreEmpleado";
+            aliasUsuario.HeaderText = "Nombre";
+            aliasUsuario.MinimumWidth = 6;
+            aliasUsuario.Name = "aliasUsuario";
+            aliasUsuario.ReadOnly = true;
+            aliasUsuario.Width = 116;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -395,6 +401,17 @@
             User.Name = "User";
             User.ReadOnly = true;
             // 
+            // UsuarioId
+            // 
+            UsuarioId.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            UsuarioId.DataPropertyName = "IdUsuario";
+            UsuarioId.HeaderText = "Usuarioid";
+            UsuarioId.MinimumWidth = 6;
+            UsuarioId.Name = "UsuarioId";
+            UsuarioId.ReadOnly = true;
+            UsuarioId.Visible = false;
+            UsuarioId.Width = 129;
+            // 
             // frmBitacora
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
@@ -444,7 +461,7 @@
         private Button btnSalir;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn Fecha;
-        private DataGridViewTextBoxColumn Usuario;
+        private DataGridViewTextBoxColumn aliasUsuario;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Modulo;
         private DataGridViewTextBoxColumn EstadoAnterior;
@@ -452,5 +469,6 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn Estado;
         private DataGridViewTextBoxColumn User;
+        private DataGridViewTextBoxColumn UsuarioId;
     }
 }

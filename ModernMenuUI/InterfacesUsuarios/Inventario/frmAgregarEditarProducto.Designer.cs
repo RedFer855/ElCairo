@@ -416,7 +416,7 @@
             flowLayoutPanel1.Controls.Add(btnVolver);
             flowLayoutPanel1.Location = new Point(540, 387);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(200, 102);
+            flowLayoutPanel1.Size = new Size(200, 127);
             flowLayoutPanel1.TabIndex = 51;
             // 
             // btnGuardarProducto
@@ -578,7 +578,6 @@
             groupBox1.Size = new Size(196, 44);
             groupBox1.TabIndex = 30;
             groupBox1.TabStop = false;
-            groupBox1.Visible = false;
             // 
             // rbDeshabilitado
             // 
@@ -623,7 +622,6 @@
             label14.Size = new Size(73, 24);
             label14.TabIndex = 26;
             label14.Text = "Estado:";
-            label14.Visible = false;
             // 
             // label15
             // 

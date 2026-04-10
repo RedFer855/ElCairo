@@ -15,6 +15,10 @@ namespace CapaDeDatos.Modelados.UsuariosEmpleados
         [Column("id_empleado")]
         public int IdEmpleado { get; set; }
 
+        public Usuario Usuario { get; set; }
+
+        public string NombreEmpleado => Usuario?.AliasUsuario ?? "Desconocido";
+
         [Column("estado_anterior")]
         public string EstadoAnterior { get; set; }
 

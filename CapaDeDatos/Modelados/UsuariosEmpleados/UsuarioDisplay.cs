@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Supabase;
 using Supabase.Postgrest.Attributes;
 
-
 namespace CapaDeDatos.Modelados.UsuariosEmpleados
 {
     [Table("usuario")]
-    public class Usuario : BaseModel
+
+    public class UsuarioDisplay : BaseModel
     {
         [PrimaryKey("id_empleado", false)]
         public int IdUsuario { get; set; }
@@ -21,7 +21,9 @@ namespace CapaDeDatos.Modelados.UsuariosEmpleados
 
         [Column("id_rol")]
         public int RolUsuario { get; set; }
-        
+
+        public Rol Roles { get; set; }
+        public string NombreRol => Roles?.NombreRolRol ?? "Desconocido";
 
         [Column("estado_usuario")]
         public bool EstadoUsuario { get; set; }

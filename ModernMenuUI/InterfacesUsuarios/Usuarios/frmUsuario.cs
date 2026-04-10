@@ -45,7 +45,7 @@ namespace ModernMenuUI
 
         /// <summary>Canal Realtime para escuchar cambios en la tabla Usuario.</summary>
         private RealtimeChannel? _canalRealtime;
-
+        private List<UsuarioDisplay> _listaMaestraUsuarios = new();
 
         // -------------------------------------------------------------
         // 2. CONSTRUCTOR
@@ -112,12 +112,12 @@ namespace ModernMenuUI
                 {
                     cts.CancelAfter(TimeSpan.FromSeconds(10));
 
-                    List<Usuario> listaDeUsuarios =
-                        await _usuarioRepo.ObtenerTodosLosUsuarios(cts.Token);
-
-                    dgvUsuario.DataSource = null;
-                    dgvUsuario.DataSource = listaDeUsuarios;
+                    // 🔹 Guardas la lista completa (SIN filtrar)
+                    _listaMaestraUsuarios = await _usuarioRepo.ObtenerTodosLosUsuarios(cts.Token);
                 }
+
+                // 🔥 En lugar de asignar directo al grid
+                RefrescarGrid();
 
                 if (dgvUsuario.Rows.Count > 0)
                     dgvUsuario.ClearSelection();
@@ -298,6 +298,40 @@ namespace ModernMenuUI
         private void btnSalir_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+
+        private void rdbTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            RefrescarGrid();
+        }
+        private void RefrescarGrid()
+        {
+            var query = _listaMaestraUsuarios.AsEnumerable();
+
+            // 🔹 Filtro por estado (ejemplo: activo/inactivo)
+            if (rdbHabilitados.Checked)
+                query = query.Where(u => u.EstadoUsuario); // cambia por tu propiedad real
+            else if (rdbDeshabilitados.Checked)
+                query = query.Where(u => !u.EstadoUsuario);
+
+            var listaFinal = query.ToList();
+
+            dgvUsuario.DataSource = null;
+            dgvUsuario.DataSource = listaFinal;
+
+            if (listaFinal.Count > 0)
+                dgvUsuario.ClearSelection();
+        }
+
+        private void rdbHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            RefrescarGrid();
+        }
+
+        private void rdbDeshabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            RefrescarGrid();
         }
     }
 }
