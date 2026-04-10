@@ -108,6 +108,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                     (m, term) =>
                     {
+                        if (!m.EstadoMarca) return false;
+
                         bool porNombreMarca = m.NombreMarca != null &&
                             m.NombreMarca.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
 
@@ -121,6 +123,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                     (busquedaActiva) =>
                     {
+
                         if (pnlLimpiarFiltros != null)
                             pnlLimpiarFiltros.Visible = busquedaActiva;
 
@@ -194,7 +197,11 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             string textoBusqueda = txtBuscar.Text.Trim();
             if (!string.IsNullOrEmpty(textoBusqueda))
             {
+                
                 query = query.Where(m =>
+                    
+                    
+
                     (m.NombreMarca != null &&
                      m.NombreMarca.IndexOf(textoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)
                     ||

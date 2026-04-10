@@ -224,7 +224,7 @@ namespace ModernMenuUI
         private void AlternarMenu()
         {
             lblEstadoConexion.Visible = false;
-            btnNotificaciones.Visible = false;
+            //btnNotificaciones.Visible = false;
             panelFormHijo.Visible = false;
             panelFormHijo.SuspendLayout();
 
@@ -242,7 +242,7 @@ namespace ModernMenuUI
 
             panelFormHijo.ResumeLayout();
             panelFormHijo.Visible = true;
-            btnNotificaciones.Visible = true;
+            //btnNotificaciones.Visible = true;
             lblEstadoConexion.Visible = true;
         }
 
@@ -372,9 +372,9 @@ namespace ModernMenuUI
 
                 if (estaCerrado)
                 {
-                    btnNotificaciones.Enabled = false;
+                    //btnNotificaciones.Enabled = false;
                     _animadorNotificaciones?.Abrir();
-                    btnNotificaciones.Enabled = true;
+                    //btnNotificaciones.Enabled = true;
                 }
                 else
                 {

@@ -37,6 +37,10 @@
             panelCarrito = new Panel();
             panel10 = new Panel();
             dgvMarcas = new DataGridView();
+            IdMarca = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            Proveedor = new DataGridViewTextBoxColumn();
+            EstadoProducto = new DataGridViewCheckBoxColumn();
             btnAgregarMarca = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnSeleccionarMarca = new Button();
@@ -52,15 +56,10 @@
             rbMostrarHablilitados = new RadioButton();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            btnBuscar = new Button();
             lstSugerencias = new ListBox();
             pnlLimpiarFiltros = new Panel();
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
-            IdMarca = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            Proveedor = new DataGridViewTextBoxColumn();
-            EstadoProducto = new DataGridViewCheckBoxColumn();
             panel1.SuspendLayout();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
@@ -162,6 +161,48 @@
             dgvMarcas.TabStop = false;
             dgvMarcas.CellDoubleClick += dgvMarcas_CellDoubleClick;
             dgvMarcas.SelectionChanged += dgvMarcas_SelectionChanged;
+            // 
+            // IdMarca
+            // 
+            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            IdMarca.DataPropertyName = "IdMarca";
+            IdMarca.HeaderText = "Código";
+            IdMarca.MinimumWidth = 6;
+            IdMarca.Name = "IdMarca";
+            IdMarca.ReadOnly = true;
+            IdMarca.Visible = false;
+            IdMarca.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn4.DataPropertyName = "NombreMarca";
+            dataGridViewTextBoxColumn4.FillWeight = 120F;
+            dataGridViewTextBoxColumn4.HeaderText = "Marca";
+            dataGridViewTextBoxColumn4.MinimumWidth = 100;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // Proveedor
+            // 
+            Proveedor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Proveedor.DataPropertyName = "NombreProveedor";
+            Proveedor.HeaderText = "Proveedor";
+            Proveedor.MinimumWidth = 6;
+            Proveedor.Name = "Proveedor";
+            Proveedor.ReadOnly = true;
+            // 
+            // EstadoProducto
+            // 
+            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            EstadoProducto.DataPropertyName = "EstadoMarca";
+            EstadoProducto.HeaderText = "Estado";
+            EstadoProducto.MinimumWidth = 6;
+            EstadoProducto.Name = "EstadoProducto";
+            EstadoProducto.ReadOnly = true;
+            EstadoProducto.Resizable = DataGridViewTriState.True;
+            EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
+            EstadoProducto.Width = 105;
             // 
             // btnAgregarMarca
             // 
@@ -348,7 +389,6 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnBuscar);
             panelBusqueda.Location = new Point(17, 16);
             panelBusqueda.Margin = new Padding(3, 4, 3, 4);
             panelBusqueda.MaximumSize = new Size(800, 57);
@@ -367,26 +407,10 @@
             txtBuscar.Margin = new Padding(3, 4, 3, 4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Marcas...";
-            txtBuscar.Size = new Size(445, 24);
+            txtBuscar.Size = new Size(504, 24);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
-            // 
-            // btnBuscar
-            // 
-            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscar.BackgroundImage = (Image)resources.GetObject("btnBuscar.BackgroundImage");
-            btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscar.FlatAppearance.BorderSize = 0;
-            btnBuscar.FlatStyle = FlatStyle.Flat;
-            btnBuscar.Location = new Point(472, 16);
-            btnBuscar.Margin = new Padding(3, 4, 3, 4);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(55, 27);
-            btnBuscar.TabIndex = 0;
-            btnBuscar.UseVisualStyleBackColor = false;
-            btnBuscar.Click += btnBuscar_Click;
             // 
             // lstSugerencias
             // 
@@ -399,7 +423,7 @@
             lstSugerencias.Margin = new Padding(3, 4, 3, 4);
             lstSugerencias.MinimumSize = new Size(277, 28);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(444, 27);
+            lstSugerencias.Size = new Size(504, 27);
             lstSugerencias.TabIndex = 39;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -411,10 +435,10 @@
             pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(753, 16);
+            pnlLimpiarFiltros.Location = new Point(731, 16);
             pnlLimpiarFiltros.Margin = new Padding(3, 4, 3, 4);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
-            pnlLimpiarFiltros.Size = new Size(190, 57);
+            pnlLimpiarFiltros.Size = new Size(212, 57);
             pnlLimpiarFiltros.TabIndex = 56;
             pnlLimpiarFiltros.Visible = false;
             // 
@@ -443,48 +467,6 @@
             pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
             pbxClean.TabIndex = 35;
             pbxClean.TabStop = false;
-            // 
-            // IdMarca
-            // 
-            IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            IdMarca.DataPropertyName = "IdMarca";
-            IdMarca.HeaderText = "Código";
-            IdMarca.MinimumWidth = 6;
-            IdMarca.Name = "IdMarca";
-            IdMarca.ReadOnly = true;
-            IdMarca.Visible = false;
-            IdMarca.Width = 106;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn4.DataPropertyName = "NombreMarca";
-            dataGridViewTextBoxColumn4.FillWeight = 120F;
-            dataGridViewTextBoxColumn4.HeaderText = "Marca";
-            dataGridViewTextBoxColumn4.MinimumWidth = 100;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // Proveedor
-            // 
-            Proveedor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Proveedor.DataPropertyName = "NombreProveedor";
-            Proveedor.HeaderText = "Proveedor";
-            Proveedor.MinimumWidth = 6;
-            Proveedor.Name = "Proveedor";
-            Proveedor.ReadOnly = true;
-            // 
-            // EstadoProducto
-            // 
-            EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            EstadoProducto.DataPropertyName = "EstadoMarca";
-            EstadoProducto.HeaderText = "Estado";
-            EstadoProducto.MinimumWidth = 6;
-            EstadoProducto.Name = "EstadoProducto";
-            EstadoProducto.ReadOnly = true;
-            EstadoProducto.Resizable = DataGridViewTriState.True;
-            EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoProducto.Width = 105;
             // 
             // frmMarcas
             // 
@@ -544,7 +526,6 @@
         private Label label1;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button btnBuscar;
         private Button btnSeleccionarMarca;
         private ListBox lstSugerencias;
         private Panel pnlLimpiarFiltros;

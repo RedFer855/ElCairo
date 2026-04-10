@@ -24,11 +24,11 @@ namespace CapaDeDatos.Repositorios
             try
             {
                 var client = await GetClient();
-                var queryBuilder = client.From<Inventario>();
-                queryBuilder.Select("*, producto(*, marca(*), categoria(*), presentacion(*)), bodega(*)");
-                queryBuilder.Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending);
-
-                var response = await queryBuilder.Get(cancellationToken);
+                var response = await client
+                                        .From<Inventario>()
+                                        .Select("*, producto(*, marca(*), categoria(*), presentacion(*)), bodega(*)")
+                                        .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending)
+                                        .Get(cancellationToken);
 
                 return response.Models ?? new List<Inventario>();
             }

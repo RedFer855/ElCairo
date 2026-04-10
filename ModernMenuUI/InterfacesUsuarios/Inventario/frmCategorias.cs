@@ -133,9 +133,19 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     lstSugerencias,
                     dgvCategorias,
                     _listaCompletaCategorias,
+
                     (c, t) => c.IdCategoria.ToString() == t,
-                    (c, t) => c.NombreCategoria != null && c.NombreCategoria.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0,
+
+                    (c, t) =>
+                    {
+                        if (!c.EstadoCategoria) return false;
+
+                        return c.NombreCategoria != null &&
+                               c.NombreCategoria.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0;
+                    },
+
                     (c) => c.NombreCategoria,
+
                     (b) =>
                     {
                         if (pnlLimpiarFiltros != null)
@@ -144,6 +154,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                         if (!b)
                             RefrescarGrid();
                     },
+
                     (txt) => false
                 );
 

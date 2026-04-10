@@ -117,6 +117,7 @@ namespace ModernMenuUI
 
                     (c, txt) =>
                     {
+                        if (!c.EstadoCliente) return false;
                         var display = $"{c.NombreCliente} {c.DniCliente} {c.CorreoCliente} {c.TelefonoCliente}".ToLowerInvariant();
                         return display.Contains(txt.ToLowerInvariant());
                     },

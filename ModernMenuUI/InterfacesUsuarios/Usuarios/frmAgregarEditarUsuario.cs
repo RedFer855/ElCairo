@@ -159,7 +159,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
         {
             try
             {
-                MessageBox.Show("ENTRÓ AL LOAD");
                 UsuarioRepositorio userRepo = new UsuarioRepositorio();
 
                 // Obtener todos los roles disponibles

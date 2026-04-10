@@ -36,6 +36,12 @@ namespace CapaDeDatos.Modelados.Inventario
 
         [Column("estado_bodega")]
         public bool EstadoBodega  { get; set; }
+
+        public override string ToString()
+        {
+            return NombreBodega;
+        }
+
     }
 
 }

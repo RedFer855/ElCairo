@@ -47,7 +47,6 @@
             lblEstadoConexion = new Label();
             panel12 = new Panel();
             panel9 = new Panel();
-            btnNotificaciones = new Button();
             panel3 = new Panel();
             panel1 = new Panel();
             lblNombreModulo = new Label();
@@ -152,7 +151,6 @@
             // 
             panBarraControl.BackColor = Color.FromArgb(148, 168, 187);
             panBarraControl.Controls.Add(panel6);
-            panBarraControl.Controls.Add(btnNotificaciones);
             panBarraControl.Controls.Add(panel3);
             panBarraControl.Controls.Add(panel1);
             panBarraControl.Controls.Add(btnAjustes);
@@ -174,7 +172,7 @@
             panel6.Controls.Add(panel12);
             panel6.Controls.Add(panel9);
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(733, 0);
+            panel6.Location = new Point(798, 0);
             panel6.Name = "panel6";
             panel6.RightToLeft = RightToLeft.Yes;
             panel6.Size = new Size(140, 65);
@@ -209,23 +207,6 @@
             panel9.Name = "panel9";
             panel9.Size = new Size(140, 26);
             panel9.TabIndex = 4;
-            // 
-            // btnNotificaciones
-            // 
-            btnNotificaciones.BackColor = Color.FromArgb(148, 168, 187);
-            btnNotificaciones.Dock = DockStyle.Right;
-            btnNotificaciones.FlatAppearance.BorderSize = 0;
-            btnNotificaciones.FlatStyle = FlatStyle.Flat;
-            btnNotificaciones.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            btnNotificaciones.ForeColor = Color.FromArgb(87, 99, 110);
-            btnNotificaciones.Image = (Image)resources.GetObject("btnNotificaciones.Image");
-            btnNotificaciones.Location = new Point(873, 0);
-            btnNotificaciones.Name = "btnNotificaciones";
-            btnNotificaciones.Size = new Size(65, 65);
-            btnNotificaciones.TabIndex = 6;
-            btnNotificaciones.Text = "99+";
-            btnNotificaciones.UseVisualStyleBackColor = false;
-            btnNotificaciones.Click += btnNotificaciones_Click;
             // 
             // panel3
             // 
@@ -1323,7 +1304,7 @@
             MinimumSize = new Size(900, 500);
             Name = "frmMenuPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "zW";
+            Text = "El Cairo";
             Load += Form1_Load;
             panBarraControl.ResumeLayout(false);
             panBarraControl.PerformLayout();
@@ -1393,7 +1374,6 @@
         private Panel panelNotificaciones;
         private Panel panel1;
         private Label lblNotificaciones;
-        private Button btnNotificaciones;
         private Panel panel3;
         private Button btnMinimizar;
         private Button btnMiniMaxi;

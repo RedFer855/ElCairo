@@ -52,7 +52,7 @@ namespace ModernMenuUI
             txtTipoGanancia.Text = productoseleccionado.TipoCalculoGananciaProducto.ToString();
             txtCodBarra.Text = productoseleccionado.CodigoBarraProducto;
             txtPresentacion.Text = productoseleccionado.NombrePresentacion?.ToString();
-            txtCantidad.Text = productoseleccionado.CantidadProducto.ToString();
+            //txtCantidad.Text = productoseleccionado.CantidadProducto.ToString();
 
             _idMarcaSeleccionada = productoseleccionado.IdMarca;
             _idCategoriaSeleccionada = productoseleccionado.IdCategoria;
@@ -258,7 +258,7 @@ namespace ModernMenuUI
                     return;
                 }
 
-                int cantidadP = Convert.ToInt32(txtCantidad.Value);
+               // int cantidadP = Convert.ToInt32(txtCantidad.Value);
 
                 ProductoInsertar productoInsertar = new ProductoInsertar
                 {
@@ -273,7 +273,7 @@ namespace ModernMenuUI
                     PrecioCosto = precioCosto,
                     PorcentajeGananciaProducto = porcentajeGananciaProducto,
                     TipoCalculoGananciaProducto = tipoCalculoGananciaProducto,
-                    CantidadProducto = cantidadP,
+                    //CantidadProducto = cantidadP,
                     ProductoPath = _nombreArchivo,
                     EstadoProducto = rbHabilitado.Checked,
                     IdEstado = rbHabilitado.Checked ? 1 : 2

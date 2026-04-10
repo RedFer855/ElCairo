@@ -82,9 +82,19 @@ namespace ModernMenuUI
                         (emp.DniEmpleado != null && emp.DniEmpleado == txt),
 
                     (emp, txt) =>
-                        (emp.NombreEmpleado + " " + emp.ApellidoEmpleado)
-                            .IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0
-                        || (emp.DniEmpleado != null && emp.DniEmpleado.Contains(txt)),
+                    {
+                        if (!emp.EstadoEmpleado) return false;
+
+                        bool porNombre =
+                            (emp.NombreEmpleado + " " + emp.ApellidoEmpleado)
+                                .IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                        bool porDni =
+                            emp.DniEmpleado != null &&
+                            emp.DniEmpleado.Contains(txt);
+
+                        return porNombre || porDni;
+                    },
 
                     (emp) => $"{emp.NombreEmpleado} {emp.ApellidoEmpleado}",
 
@@ -254,6 +264,11 @@ namespace ModernMenuUI
         {
             clsAnmaciones.NombreMenuPrincipal();
             this.Close();
+        }
+
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

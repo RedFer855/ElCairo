@@ -72,17 +72,26 @@ namespace ModernMenuUI
                     lstSugerencias,
                     dgvProductos,
                     _listaMaestraProductos,
+
                     (p, txt) => p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(txt),
-                    (p, txt) => p.ToString().IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0,
+
+                    (p, txt) =>
+                    {
+                        if (!p.EstadoProducto) return false;
+
+                        return p.ToString().IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
+                    },
+
                     (p) => p.ToString(),
+
                     (busquedaActiva) =>
                     {
                         pnlLimpiarFiltros.Visible = busquedaActiva;
                         if (!busquedaActiva) RefrescarGrid();
                     },
+
                     (txt) => txt.All(char.IsDigit) && txt.Length >= 8 && txt.Length <= 13
                 );
-
                 RefrescarGrid();
             }
             catch (Exception ex)
@@ -277,7 +286,7 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
-            _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
+            //_servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
         }
     }
 }

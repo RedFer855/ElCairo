@@ -101,7 +101,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 this.Cursor = Cursors.WaitCursor;
 
                 _listaCompletaPresentaciones =
-                    await _presentacionRepositorio.ObtenerTodasLasPresentaciones();
+                                        await _presentacionRepositorio.ObtenerTodasLasPresentaciones();
 
                 _buscadorCtrl = new BuscadorInteractivo<Presentacion>(
                     txtBuscar,
@@ -112,8 +112,12 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                     (p, term) => p.IdPresentacionProducto.ToString() == term,
 
                     (p, term) =>
-                        p.NombrePresentacion != null &&
-                        p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
+                    {
+                        if (!p.EstadoPresentacion) return false;
+
+                        return p.NombrePresentacion != null &&
+                               p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
+                    },
 
                     (p) => p.NombrePresentacion,
 
