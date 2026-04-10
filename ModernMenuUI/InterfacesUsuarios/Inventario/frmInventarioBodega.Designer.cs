@@ -377,6 +377,7 @@
             btnCambiarBodega.TabIndex = 40;
             btnCambiarBodega.Text = "Cambiar";
             btnCambiarBodega.UseVisualStyleBackColor = false;
+            btnCambiarBodega.Visible = false;
             // 
             // panel2
             // 

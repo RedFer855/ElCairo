@@ -181,7 +181,7 @@ namespace ModernMenuUI
                     dgvProductos.Rows.Add(
                         p.IdProducto,
                         p.NombreProducto,
-                        p.PrecioCompra, // O PrecioVenta
+                        p.PrecioVenta, // O PrecioVenta
                         p.StockEnBodega // <--- ¡OJO! Usamos el stock específico de esta bodega
                     );
                 }

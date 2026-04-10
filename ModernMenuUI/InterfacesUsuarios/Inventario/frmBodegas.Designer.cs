@@ -321,6 +321,7 @@
             rbMostrarDeshabilitados.TabIndex = 30;
             rbMostrarDeshabilitados.Text = "Deshabilitados";
             rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrarDeshabilitados.CheckedChanged += rbMostrarDeshabilitados_CheckedChanged;
             // 
             // rbMostrarTodos
             // 
@@ -332,6 +333,7 @@
             rbMostrarTodos.TabIndex = 29;
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
+            rbMostrarTodos.CheckedChanged += rbMostrarTodos_CheckedChanged;
             // 
             // rbMostrarHabilitados
             // 
@@ -345,6 +347,7 @@
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
             rbMostrarHabilitados.UseVisualStyleBackColor = true;
+            rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
             // pnlLimpiarFiltros
             // 

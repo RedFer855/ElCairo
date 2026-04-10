@@ -119,13 +119,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                     (m, term) =>
                     {
-                        if(!m.EstadoBodega) return false;
+                        if (!m.EstadoBodega) return false;
 
                         bool porNombreMarca = m.NombreBodega != null &&
                             m.NombreBodega.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
 
-                       // bool porProveedor = m.NombreDepartamento != null &&
-                         //   m.NombreDepartamento.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
+                        // bool porProveedor = m.NombreDepartamento != null &&
+                        //   m.NombreDepartamento.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
 
                         return porNombreMarca /*|| porProveedor*/;
                     },
@@ -161,24 +161,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             if (_listaMaestraBodegas == null) return;
 
-            this.Cursor = Cursors.WaitCursor;
-
             IEnumerable<Bodega> query = _listaMaestraBodegas;
 
+            // 🔹 Filtro por estado
             if (rbMostrarHabilitados.Checked)
-                query = query.Where(m => m.EstadoBodega == true);
+                query = query.Where(m => m.EstadoBodega);
             else if (rbMostrarDeshabilitados.Checked)
-                query = query.Where(m => m.EstadoBodega == false);
+                query = query.Where(m => !m.EstadoBodega);
 
+            // 🔹 Filtro por búsqueda
             string textoBusqueda = txtBuscar.Text.Trim();
             if (!string.IsNullOrEmpty(textoBusqueda))
             {
                 query = query.Where(m =>
-                    (m.NombreBodega != null &&
-                     m.NombreBodega.IndexOf(textoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)
-                    /*||
-                    (m.NombreDepartamento != null &&
-                     m.NombreDepartamento.IndexOf(textoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0)*/
+                    m.NombreBodega != null &&
+                    m.NombreBodega.IndexOf(textoBusqueda, StringComparison.OrdinalIgnoreCase) >= 0
                 );
             }
 
@@ -187,40 +184,55 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             dgvProducto.DataSource = null;
             dgvProducto.DataSource = listaFinal;
 
-            bool hayFiltrosActivos =
-                !rbMostrarHabilitados.Checked ||
-                !string.IsNullOrEmpty(textoBusqueda);
-
-            if (pnlLimpiarFiltros != null)
-                pnlLimpiarFiltros.Visible = hayFiltrosActivos;
-
             if (dgvProducto.Rows.Count > 0)
                 dgvProducto.ClearSelection();
 
-            this.Cursor = Cursors.Default;
+            if (pnlLimpiarFiltros != null)
+                pnlLimpiarFiltros.Visible =
+                    !rbMostrarHabilitados.Checked ||
+                    !string.IsNullOrEmpty(textoBusqueda);
         }
 
 
-        private async Task CargarBodegas()
+        private async Task CargarBodegas(CancellationToken ct = default)
         {
             if (_cerrandoFormulario || IsDisposed) return;
 
-            var lista = await bodegaRepositorio.obtenerBodegas();
-
-            if (_cerrandoFormulario || IsDisposed) return;
-
-            dgvProducto.SuspendLayout();
             try
             {
-                dgvProducto.DataSource = null;
-                dgvProducto.DataSource = lista;
+                this.Cursor = Cursors.WaitCursor;
+
+                using (var cts = CancellationTokenSource.CreateLinkedTokenSource(ct))
+                {
+                    cts.CancelAfter(TimeSpan.FromSeconds(10));
+
+                    // 🔹 Guardar lista maestra
+                    _listaMaestraBodegas = await bodegaRepositorio.ObtenerTodasLasBodegasAsync();
+                }
+
+                if (_cerrandoFormulario || IsDisposed) return;
+
+                // 🔹 Actualizar buscador + refrescar con filtros
+                _buscadorCtrl?.ActualizarDatosMaestros(_listaMaestraBodegas);
+                RefrescarGrid();
 
                 if (dgvProducto.Rows.Count > 0)
                     dgvProducto.ClearSelection();
             }
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show("No se pudo conectar con el servidor (tiempo de espera agotado).",
+                                "Error de Red", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar bodegas: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             finally
             {
-                dgvProducto.ResumeLayout();
+                if (!IsDisposed)
+                    this.Cursor = Cursors.Default;
             }
         }
 
@@ -290,6 +302,21 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         {
             if (e.KeyCode == Keys.Enter)
                 _buscadorCtrl.ManejarClickLista();
+        }
+
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            RefrescarGrid();
+        }
+
+        private void rbMostrarDeshabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            RefrescarGrid();
+        }
+
+        private void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            RefrescarGrid();
         }
     }
 }
