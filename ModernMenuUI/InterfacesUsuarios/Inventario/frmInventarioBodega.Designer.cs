@@ -321,6 +321,7 @@
             btnBuscar.Size = new Size(60, 25);
             btnBuscar.TabIndex = 0;
             btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Visible = false;
             btnBuscar.Click += btnBuscar_Click;
             // 
             // cmbEstado

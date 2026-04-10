@@ -39,7 +39,6 @@
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             btnSalir = new Button();
-            btnImprimirCotizacion = new Button();
             txtCliente = new TextBox();
             panel5 = new Panel();
             btnBuscarCliente = new Button();
@@ -126,21 +125,6 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
-            // btnImprimirCotizacion
-            // 
-            btnImprimirCotizacion.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnImprimirCotizacion.BackColor = Color.FromArgb(189, 215, 238);
-            btnImprimirCotizacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnImprimirCotizacion.ForeColor = Color.FromArgb(87, 99, 110);
-            btnImprimirCotizacion.Location = new Point(854, 755);
-            btnImprimirCotizacion.Margin = new Padding(4);
-            btnImprimirCotizacion.Name = "btnImprimirCotizacion";
-            btnImprimirCotizacion.Size = new Size(168, 79);
-            btnImprimirCotizacion.TabIndex = 15;
-            btnImprimirCotizacion.Text = "Imprimir Cotización";
-            btnImprimirCotizacion.UseVisualStyleBackColor = false;
-            btnImprimirCotizacion.Click += btnImprimirCotizacion_Click;
-            // 
             // txtCliente
             // 
             txtCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -212,7 +196,7 @@
             btnFacturar.BackColor = Color.FromArgb(149, 195, 172);
             btnFacturar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnFacturar.ForeColor = SystemColors.ButtonFace;
-            btnFacturar.Location = new Point(711, 755);
+            btnFacturar.Location = new Point(872, 755);
             btnFacturar.Margin = new Padding(4);
             btnFacturar.Name = "btnFacturar";
             btnFacturar.Size = new Size(135, 79);
@@ -500,6 +484,7 @@
             txtBuscar.PlaceholderText = "Buscar Productos...";
             txtBuscar.Size = new Size(630, 24);
             txtBuscar.TabIndex = 1;
+            txtBuscar.Visible = false;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
             // buscar
@@ -516,6 +501,7 @@
             buscar.Size = new Size(60, 25);
             buscar.TabIndex = 0;
             buscar.UseVisualStyleBackColor = false;
+            buscar.Visible = false;
             // 
             // panel1
             // 
@@ -862,7 +848,6 @@
             Controls.Add(lstSugerencias);
             Controls.Add(lstClientes);
             Controls.Add(btnSalir);
-            Controls.Add(btnImprimirCotizacion);
             Controls.Add(panel5);
             Controls.Add(btnFacturar);
             Controls.Add(panel4);
@@ -907,7 +892,6 @@
         #endregion
 
         private Button btnSalir;
-        private Button btnImprimirCotizacion;
         private TextBox txtCliente;
         private Panel panel5;
         private Label label7;

@@ -211,6 +211,7 @@
             btnbuscar.Size = new Size(60, 25);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
+            btnbuscar.Visible = false;
             // 
             // panel1
             // 

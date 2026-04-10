@@ -370,7 +370,7 @@ namespace ModernMenuUI
             int cantidadFinal = Math.Min(cantidadAgregar, 400);
 
             // Índices: 0=Código, 1=Desc, 2=Precio, 3=Cant, 4=Del, 5=Restar, 6=Sumar
-            if(txtNuevoPrecio.Enabled == false)
+            if (txtNuevoPrecio.Enabled == false)
             {
                 dgvCarrito.Rows.Add(codigoBuscado, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
             }
@@ -423,7 +423,7 @@ namespace ModernMenuUI
                 AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
                 //reiniciar controles
-                
+
                 nudCantidad.Value = 1;
                 txtCodigo.Text = null;
                 txtProducto.Text = null;
@@ -440,7 +440,7 @@ namespace ModernMenuUI
         #region Registrar Compra
         private async void btnAgregarCompra_Click(object sender, EventArgs e)
         {
-            
+
             //Variables
 
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
@@ -474,7 +474,7 @@ namespace ModernMenuUI
                 throw new Exception("No hay usuario autenticado en la sesión actual.");
             }
 
-            
+
             if (respEmpleado == null)
             {
                 MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
@@ -524,7 +524,7 @@ namespace ModernMenuUI
                         p_detalles = detalles
                     };
                     await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
-                    
+
                     MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -956,13 +956,13 @@ namespace ModernMenuUI
 
         private void chkprecioNuevo_CheckedChanged(object sender, EventArgs e)
         {
-            if(_proveedorSeleccionado == null)
+            if (_proveedorSeleccionado == null)
             {
                 chkprecioNuevo.CheckedChanged -= chkprecioNuevo_CheckedChanged;
                 chkprecioNuevo.Checked = false;
                 chkprecioNuevo.CheckedChanged += chkprecioNuevo_CheckedChanged;
 
-                MessageBox.Show("Porfavor seleccione un proveedor.","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("Porfavor seleccione un proveedor.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else
@@ -974,7 +974,12 @@ namespace ModernMenuUI
                     txtNuevoPrecio.Enabled = false;
                 }
             }
-            
+
+        }
+
+        private void btnBuscarProductos_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

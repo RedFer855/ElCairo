@@ -884,14 +884,6 @@ namespace ModernMenuUI
             }
         }
 
-
-
-
-        private void btnImprimirCotizacion_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
             frmClientes selector = new frmClientes(true);

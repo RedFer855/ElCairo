@@ -28,17 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPresentaciones));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPresentaciones));
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            btnbuscar = new Button();
             panelCarrito = new Panel();
             panel10 = new Panel();
             dgvPresentaciones = new DataGridView();
+            IdPresentacion = new DataGridViewTextBoxColumn();
+            NombrePresentacion = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            EstadoPresentacion = new DataGridViewCheckBoxColumn();
             gbxEstado = new GroupBox();
             rbMostrarDeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
@@ -53,10 +56,6 @@
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             lstSugerencias = new ListBox();
-            IdPresentacion = new DataGridViewTextBoxColumn();
-            NombrePresentacion = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            EstadoPresentacion = new DataGridViewCheckBoxColumn();
             panelBusqueda.SuspendLayout();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
@@ -73,13 +72,12 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnbuscar);
             panelBusqueda.Location = new Point(15, 14);
-            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.Margin = new Padding(4);
             panelBusqueda.MaximumSize = new Size(875, 54);
             panelBusqueda.MinimumSize = new Size(412, 54);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(619, 54);
+            panelBusqueda.Size = new Size(549, 54);
             panelBusqueda.TabIndex = 46;
             // 
             // txtBuscar
@@ -89,28 +87,13 @@
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBuscar.Location = new Point(22, 15);
-            txtBuscar.Margin = new Padding(4, 4, 4, 4);
+            txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Presentaciones...";
-            txtBuscar.Size = new Size(502, 24);
+            txtBuscar.Size = new Size(503, 24);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
-            // 
-            // btnbuscar
-            // 
-            btnbuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(532, 15);
-            btnbuscar.Margin = new Padding(4, 4, 4, 4);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(60, 25);
-            btnbuscar.TabIndex = 0;
-            btnbuscar.UseVisualStyleBackColor = false;
             // 
             // panelCarrito
             // 
@@ -118,7 +101,7 @@
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(19, 18);
-            panelCarrito.Margin = new Padding(4, 4, 4, 4);
+            panelCarrito.Margin = new Padding(4);
             panelCarrito.Name = "panelCarrito";
             panelCarrito.Size = new Size(810, 330);
             panelCarrito.TabIndex = 13;
@@ -129,7 +112,7 @@
             panel10.Controls.Add(dgvPresentaciones);
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
-            panel10.Margin = new Padding(4, 4, 4, 4);
+            panel10.Margin = new Padding(4);
             panel10.Name = "panel10";
             panel10.Size = new Size(810, 330);
             panel10.TabIndex = 17;
@@ -169,7 +152,7 @@
             dgvPresentaciones.EnableHeadersVisualStyles = false;
             dgvPresentaciones.GridColor = Color.FromArgb(189, 215, 238);
             dgvPresentaciones.Location = new Point(0, 0);
-            dgvPresentaciones.Margin = new Padding(4, 4, 4, 4);
+            dgvPresentaciones.Margin = new Padding(4);
             dgvPresentaciones.Name = "dgvPresentaciones";
             dgvPresentaciones.ReadOnly = true;
             dgvPresentaciones.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -190,194 +173,6 @@
             dgvPresentaciones.CellDoubleClick += dgvPresentaciones_CellDoubleClick;
             dgvPresentaciones.SelectionChanged += dgvPresentaciones_SelectionChanged;
             // 
-            // gbxEstado
-            // 
-            gbxEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            gbxEstado.Controls.Add(rbMostrarDeshabilitados);
-            gbxEstado.Controls.Add(rbMostrarTodos);
-            gbxEstado.Controls.Add(rbMostrarHabilitados);
-            gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            gbxEstado.ForeColor = Color.DimGray;
-            gbxEstado.Location = new Point(15, 75);
-            gbxEstado.Margin = new Padding(4, 4, 4, 4);
-            gbxEstado.Name = "gbxEstado";
-            gbxEstado.Padding = new Padding(4, 4, 4, 4);
-            gbxEstado.Size = new Size(848, 66);
-            gbxEstado.TabIndex = 45;
-            gbxEstado.TabStop = false;
-            gbxEstado.Text = "Filtros de Búsqueda:";
-            // 
-            // rbMostrarDeshabilitados
-            // 
-            rbMostrarDeshabilitados.AutoSize = true;
-            rbMostrarDeshabilitados.Location = new Point(152, 28);
-            rbMostrarDeshabilitados.Margin = new Padding(4, 4, 4, 4);
-            rbMostrarDeshabilitados.Name = "rbMostrarDeshabilitados";
-            rbMostrarDeshabilitados.Size = new Size(149, 27);
-            rbMostrarDeshabilitados.TabIndex = 30;
-            rbMostrarDeshabilitados.Text = "Deshabilitados";
-            rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
-            // 
-            // rbMostrarTodos
-            // 
-            rbMostrarTodos.AutoSize = true;
-            rbMostrarTodos.Location = new Point(311, 28);
-            rbMostrarTodos.Margin = new Padding(4, 4, 4, 4);
-            rbMostrarTodos.Name = "rbMostrarTodos";
-            rbMostrarTodos.Size = new Size(150, 27);
-            rbMostrarTodos.TabIndex = 29;
-            rbMostrarTodos.Text = "Mostrar Todos";
-            rbMostrarTodos.UseVisualStyleBackColor = true;
-            // 
-            // rbMostrarHabilitados
-            // 
-            rbMostrarHabilitados.AutoSize = true;
-            rbMostrarHabilitados.Checked = true;
-            rbMostrarHabilitados.Location = new Point(19, 26);
-            rbMostrarHabilitados.Margin = new Padding(4, 4, 4, 4);
-            rbMostrarHabilitados.Name = "rbMostrarHabilitados";
-            rbMostrarHabilitados.Size = new Size(124, 27);
-            rbMostrarHabilitados.TabIndex = 28;
-            rbMostrarHabilitados.TabStop = true;
-            rbMostrarHabilitados.Text = "Habilitados";
-            rbMostrarHabilitados.UseVisualStyleBackColor = true;
-            // 
-            // btnAgregarPresentacion
-            // 
-            btnAgregarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
-            btnAgregarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAgregarPresentacion.ForeColor = SystemColors.ButtonFace;
-            btnAgregarPresentacion.Location = new Point(4, 4);
-            btnAgregarPresentacion.Margin = new Padding(4, 4, 4, 4);
-            btnAgregarPresentacion.Name = "btnAgregarPresentacion";
-            btnAgregarPresentacion.Size = new Size(225, 55);
-            btnAgregarPresentacion.TabIndex = 35;
-            btnAgregarPresentacion.Text = "Agregar Presentación";
-            btnAgregarPresentacion.UseVisualStyleBackColor = false;
-            btnAgregarPresentacion.Click += btnAgregarPresentacion_Click;
-            // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            flowLayoutPanel1.Controls.Add(btnAgregarPresentacion);
-            flowLayoutPanel1.Controls.Add(btnModificarPresentacion);
-            flowLayoutPanel1.Controls.Add(btnSeleccionarPresentacion);
-            flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(15, 520);
-            flowLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(846, 64);
-            flowLayoutPanel1.TabIndex = 44;
-            // 
-            // btnModificarPresentacion
-            // 
-            btnModificarPresentacion.BackColor = Color.FromArgb(148, 168, 187);
-            btnModificarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnModificarPresentacion.ForeColor = SystemColors.ButtonFace;
-            btnModificarPresentacion.Location = new Point(237, 4);
-            btnModificarPresentacion.Margin = new Padding(4, 4, 4, 4);
-            btnModificarPresentacion.Name = "btnModificarPresentacion";
-            btnModificarPresentacion.Size = new Size(186, 55);
-            btnModificarPresentacion.TabIndex = 36;
-            btnModificarPresentacion.Text = "Ver Presentación";
-            btnModificarPresentacion.UseVisualStyleBackColor = false;
-            btnModificarPresentacion.Click += btnModificarPresentacion_Click;
-            // 
-            // btnSeleccionarPresentacion
-            // 
-            btnSeleccionarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
-            btnSeleccionarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSeleccionarPresentacion.ForeColor = SystemColors.ButtonFace;
-            btnSeleccionarPresentacion.Location = new Point(431, 4);
-            btnSeleccionarPresentacion.Margin = new Padding(4, 4, 4, 4);
-            btnSeleccionarPresentacion.Name = "btnSeleccionarPresentacion";
-            btnSeleccionarPresentacion.Size = new Size(250, 55);
-            btnSeleccionarPresentacion.TabIndex = 38;
-            btnSeleccionarPresentacion.Text = "Seleccionar Presentación";
-            btnSeleccionarPresentacion.UseVisualStyleBackColor = false;
-            btnSeleccionarPresentacion.Click += btnSeleccionarPresentacion_Click;
-            // 
-            // btnSalir
-            // 
-            btnSalir.BackColor = Color.FromArgb(148, 168, 187);
-            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSalir.ForeColor = SystemColors.ButtonFace;
-            btnSalir.Location = new Point(689, 4);
-            btnSalir.Margin = new Padding(4, 4, 4, 4);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(114, 55);
-            btnSalir.TabIndex = 37;
-            btnSalir.Text = "Salir";
-            btnSalir.UseVisualStyleBackColor = false;
-            btnSalir.Click += btnSalir_Click;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(15, 149);
-            panel1.Margin = new Padding(4, 4, 4, 4);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(848, 364);
-            panel1.TabIndex = 43;
-            // 
-            // pnlLimpiarFiltros
-            // 
-            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
-            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
-            pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(654, 14);
-            pnlLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
-            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
-            pnlLimpiarFiltros.Size = new Size(208, 54);
-            pnlLimpiarFiltros.TabIndex = 47;
-            pnlLimpiarFiltros.Visible = false;
-            // 
-            // btnLimpiarFiltros
-            // 
-            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
-            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLimpiarFiltros.ForeColor = Color.White;
-            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
-            btnLimpiarFiltros.Location = new Point(4, 6);
-            btnLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
-            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
-            btnLimpiarFiltros.Size = new Size(146, 40);
-            btnLimpiarFiltros.TabIndex = 34;
-            btnLimpiarFiltros.Text = "Limpiar Filtros";
-            btnLimpiarFiltros.UseVisualStyleBackColor = false;
-            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
-            // 
-            // pbxClean
-            // 
-            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
-            pbxClean.Location = new Point(151, 10);
-            pbxClean.Margin = new Padding(4, 4, 4, 4);
-            pbxClean.Name = "pbxClean";
-            pbxClean.Size = new Size(56, 30);
-            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
-            pbxClean.TabIndex = 35;
-            pbxClean.TabStop = false;
-            // 
-            // lstSugerencias
-            // 
-            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstSugerencias.ForeColor = Color.DimGray;
-            lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 23;
-            lstSugerencias.Location = new Point(38, 55);
-            lstSugerencias.Margin = new Padding(4, 4, 4, 4);
-            lstSugerencias.MinimumSize = new Size(303, 26);
-            lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(502, 27);
-            lstSugerencias.TabIndex = 48;
-            lstSugerencias.Visible = false;
-            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
-            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
-            // 
             // IdPresentacion
             // 
             IdPresentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -387,7 +182,7 @@
             IdPresentacion.Name = "IdPresentacion";
             IdPresentacion.ReadOnly = true;
             IdPresentacion.Visible = false;
-            IdPresentacion.Width = 106;
+            IdPresentacion.Width = 125;
             // 
             // NombrePresentacion
             // 
@@ -421,6 +216,194 @@
             EstadoPresentacion.SortMode = DataGridViewColumnSortMode.Automatic;
             EstadoPresentacion.Width = 105;
             // 
+            // gbxEstado
+            // 
+            gbxEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            gbxEstado.Controls.Add(rbMostrarDeshabilitados);
+            gbxEstado.Controls.Add(rbMostrarTodos);
+            gbxEstado.Controls.Add(rbMostrarHabilitados);
+            gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gbxEstado.ForeColor = Color.DimGray;
+            gbxEstado.Location = new Point(15, 75);
+            gbxEstado.Margin = new Padding(4);
+            gbxEstado.Name = "gbxEstado";
+            gbxEstado.Padding = new Padding(4);
+            gbxEstado.Size = new Size(848, 66);
+            gbxEstado.TabIndex = 45;
+            gbxEstado.TabStop = false;
+            gbxEstado.Text = "Filtros de Búsqueda:";
+            // 
+            // rbMostrarDeshabilitados
+            // 
+            rbMostrarDeshabilitados.AutoSize = true;
+            rbMostrarDeshabilitados.Location = new Point(152, 28);
+            rbMostrarDeshabilitados.Margin = new Padding(4);
+            rbMostrarDeshabilitados.Name = "rbMostrarDeshabilitados";
+            rbMostrarDeshabilitados.Size = new Size(149, 27);
+            rbMostrarDeshabilitados.TabIndex = 30;
+            rbMostrarDeshabilitados.Text = "Deshabilitados";
+            rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
+            // 
+            // rbMostrarTodos
+            // 
+            rbMostrarTodos.AutoSize = true;
+            rbMostrarTodos.Location = new Point(311, 28);
+            rbMostrarTodos.Margin = new Padding(4);
+            rbMostrarTodos.Name = "rbMostrarTodos";
+            rbMostrarTodos.Size = new Size(150, 27);
+            rbMostrarTodos.TabIndex = 29;
+            rbMostrarTodos.Text = "Mostrar Todos";
+            rbMostrarTodos.UseVisualStyleBackColor = true;
+            // 
+            // rbMostrarHabilitados
+            // 
+            rbMostrarHabilitados.AutoSize = true;
+            rbMostrarHabilitados.Checked = true;
+            rbMostrarHabilitados.Location = new Point(19, 26);
+            rbMostrarHabilitados.Margin = new Padding(4);
+            rbMostrarHabilitados.Name = "rbMostrarHabilitados";
+            rbMostrarHabilitados.Size = new Size(124, 27);
+            rbMostrarHabilitados.TabIndex = 28;
+            rbMostrarHabilitados.TabStop = true;
+            rbMostrarHabilitados.Text = "Habilitados";
+            rbMostrarHabilitados.UseVisualStyleBackColor = true;
+            // 
+            // btnAgregarPresentacion
+            // 
+            btnAgregarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
+            btnAgregarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarPresentacion.ForeColor = SystemColors.ButtonFace;
+            btnAgregarPresentacion.Location = new Point(4, 4);
+            btnAgregarPresentacion.Margin = new Padding(4);
+            btnAgregarPresentacion.Name = "btnAgregarPresentacion";
+            btnAgregarPresentacion.Size = new Size(225, 55);
+            btnAgregarPresentacion.TabIndex = 35;
+            btnAgregarPresentacion.Text = "Agregar Presentación";
+            btnAgregarPresentacion.UseVisualStyleBackColor = false;
+            btnAgregarPresentacion.Click += btnAgregarPresentacion_Click;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            flowLayoutPanel1.Controls.Add(btnAgregarPresentacion);
+            flowLayoutPanel1.Controls.Add(btnModificarPresentacion);
+            flowLayoutPanel1.Controls.Add(btnSeleccionarPresentacion);
+            flowLayoutPanel1.Controls.Add(btnSalir);
+            flowLayoutPanel1.Location = new Point(15, 520);
+            flowLayoutPanel1.Margin = new Padding(4);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(846, 64);
+            flowLayoutPanel1.TabIndex = 44;
+            // 
+            // btnModificarPresentacion
+            // 
+            btnModificarPresentacion.BackColor = Color.FromArgb(148, 168, 187);
+            btnModificarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnModificarPresentacion.ForeColor = SystemColors.ButtonFace;
+            btnModificarPresentacion.Location = new Point(237, 4);
+            btnModificarPresentacion.Margin = new Padding(4);
+            btnModificarPresentacion.Name = "btnModificarPresentacion";
+            btnModificarPresentacion.Size = new Size(186, 55);
+            btnModificarPresentacion.TabIndex = 36;
+            btnModificarPresentacion.Text = "Ver Presentación";
+            btnModificarPresentacion.UseVisualStyleBackColor = false;
+            btnModificarPresentacion.Click += btnModificarPresentacion_Click;
+            // 
+            // btnSeleccionarPresentacion
+            // 
+            btnSeleccionarPresentacion.BackColor = Color.FromArgb(149, 195, 172);
+            btnSeleccionarPresentacion.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSeleccionarPresentacion.ForeColor = SystemColors.ButtonFace;
+            btnSeleccionarPresentacion.Location = new Point(431, 4);
+            btnSeleccionarPresentacion.Margin = new Padding(4);
+            btnSeleccionarPresentacion.Name = "btnSeleccionarPresentacion";
+            btnSeleccionarPresentacion.Size = new Size(250, 55);
+            btnSeleccionarPresentacion.TabIndex = 38;
+            btnSeleccionarPresentacion.Text = "Seleccionar Presentación";
+            btnSeleccionarPresentacion.UseVisualStyleBackColor = false;
+            btnSeleccionarPresentacion.Click += btnSeleccionarPresentacion_Click;
+            // 
+            // btnSalir
+            // 
+            btnSalir.BackColor = Color.FromArgb(148, 168, 187);
+            btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnSalir.ForeColor = SystemColors.ButtonFace;
+            btnSalir.Location = new Point(689, 4);
+            btnSalir.Margin = new Padding(4);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(114, 55);
+            btnSalir.TabIndex = 37;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click;
+            // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(panelCarrito);
+            panel1.Location = new Point(15, 149);
+            panel1.Margin = new Padding(4);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(848, 364);
+            panel1.TabIndex = 43;
+            // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(654, 14);
+            pnlLimpiarFiltros.Margin = new Padding(4);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(208, 54);
+            pnlLimpiarFiltros.TabIndex = 47;
+            pnlLimpiarFiltros.Visible = false;
+            // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(4, 6);
+            btnLimpiarFiltros.Margin = new Padding(4);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(146, 40);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(151, 10);
+            pbxClean.Margin = new Padding(4);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(56, 30);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 23;
+            lstSugerencias.Location = new Point(38, 55);
+            lstSugerencias.Margin = new Padding(4);
+            lstSugerencias.MinimumSize = new Size(303, 26);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(502, 27);
+            lstSugerencias.TabIndex = 48;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            // 
             // frmPresentaciones
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
@@ -434,7 +417,7 @@
             Controls.Add(flowLayoutPanel1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new Size(870, 582);
@@ -460,7 +443,6 @@
         #endregion
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button btnbuscar;
         private Panel panelCarrito;
         private Panel panel10;
         private DataGridView dgvPresentaciones;
