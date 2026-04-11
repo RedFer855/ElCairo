@@ -483,7 +483,7 @@ namespace ModernMenuUI
 
             try
             {
-                MessageBox.Show($"Enabled: {txtNuevoPrecio.Enabled} | Checked: {chkprecioNuevo.Checked}");
+                //MessageBox.Show($"Enabled: {txtNuevoPrecio.Enabled} | Checked: {chkprecioNuevo.Checked}");
                 if (precio_nuevo != 0)
                 {
                     decimal precioNuevo = txtNuevoPrecio.Value;
@@ -612,12 +612,29 @@ namespace ModernMenuUI
             return resultados;
         }
 
+        private List<Producto> BuscarProductos(string textoBusqueda)
+        {
+            string busqueda = textoBusqueda?.ToLower().Trim() ?? "";
+
+            if (string.IsNullOrEmpty(busqueda))
+                return _listaMaestraProductos;
+
+            return _listaMaestraProductos
+                .Where(p =>
+                    (p.NombreProducto != null && p.NombreProducto.ToLower().Contains(busqueda)) ||
+                    (p.CodigoBarraProducto != null && p.CodigoBarraProducto.ToLower().Contains(busqueda))
+                )
+                .ToList();
+        }
+
         private void AjustarAlturaListBox(int numeroDeResultados)
         {
             int alturaItem = lstSugerencias.ItemHeight;
             int alturaMaxima = (alturaItem * MAX_SUGGESTIONS) + 10;
             int alturaNecesaria = (alturaItem * numeroDeResultados) + 10;
             lstSugerencias.Height = Math.Min(alturaNecesaria, alturaMaxima);
+
+            lstSugerenciasCompra.Height = Math.Min(alturaNecesaria, alturaMaxima);
         }
 
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
@@ -654,6 +671,38 @@ namespace ModernMenuUI
             {
                 // Búsqueda cancelada por el usuario: normal
             }
+        }
+
+        private async void txtBuscarProductos_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+                return;
+
+            _ctsBusqueda?.Cancel();
+            _ctsBusqueda = new CancellationTokenSource();
+
+            try
+            {
+                await Task.Delay(300, _ctsBusqueda.Token);
+
+                var resultados = BuscarProductos(txtBuscarProducto.Text);
+                var top = resultados.Take(10).ToList();
+
+                if (top.Count > 0 && !string.IsNullOrEmpty(txtBuscarProducto.Text))
+                {
+                    lstSugerenciasCompra.DataSource = null;
+                    lstSugerenciasCompra.DataSource = top;
+                    lstSugerenciasCompra.DisplayMember = "NombreProducto";
+
+                    AjustarAlturaListBox(top.Count);
+                    lstSugerenciasCompra.Visible = true;
+                }
+                else
+                {
+                    lstSugerenciasCompra.Visible = false;
+                }
+            }
+            catch (TaskCanceledException) { }
         }
 
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
@@ -693,6 +742,41 @@ namespace ModernMenuUI
                 }
             }
         }
+
+        private void txtBuscarProductos_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!lstSugerenciasCompra.Visible) return;
+
+            if (e.KeyCode == Keys.Down)
+            {
+                int i = Math.Min(lstSugerenciasCompra.SelectedIndex + 1, lstSugerenciasCompra.Items.Count - 1);
+                if (i >= 0) lstSugerenciasCompra.SelectedIndex = i;
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                int i = Math.Max(lstSugerenciasCompra.SelectedIndex - 1, 0);
+                if (i >= 0) lstSugerenciasCompra.SelectedIndex = i;
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                if (lstSugerenciasCompra.SelectedItem is Producto prod)
+                {
+                    txtBuscarProducto.Text = prod.NombreProducto;
+
+                    txtCodigo.Text = prod.CodigoBarraProducto;
+                    txtProducto.Text = prod.NombreProducto;
+                    txtPrecio.Text = prod.PrecioVenta.ToString();
+
+                    lstSugerenciasCompra.Visible = false;
+                }
+
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
         private async Task EjecutarBusqueda()
         {
             try
@@ -721,6 +805,13 @@ namespace ModernMenuUI
             }
         }
 
+        private async void txtBuscarProductos_Leave(object sender, EventArgs e)
+        {
+            await Task.Delay(150);
+            if (!lstSugerenciasCompra.Focused)
+                lstSugerenciasCompra.Visible = false;
+        }
+
         private void lstSugerencias_MouseClick(object sender, MouseEventArgs e)
         {
             if (lstSugerencias.SelectedItem != null)
@@ -731,6 +822,22 @@ namespace ModernMenuUI
                 lstSugerencias.Visible = false;
                 _ctsBusqueda?.Cancel();
                 _proveedorSeleccionado = proveedorSel;
+            }
+        }
+
+        private void lstSugerenciasCompra_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (lstSugerenciasCompra.SelectedItem is Producto prod)
+            {
+                txtBuscarProducto.Text = prod.NombreProducto;
+                txtBuscarProducto.SelectionStart = txtBuscarProducto.Text.Length;
+
+                lstSugerenciasCompra.Visible = false;
+
+                // Cargar en inputs (igual que tu grid)
+                txtCodigo.Text = prod.CodigoBarraProducto;
+                txtProducto.Text = prod.NombreProducto;
+                txtPrecio.Text = prod.PrecioVenta.ToString();
             }
         }
 

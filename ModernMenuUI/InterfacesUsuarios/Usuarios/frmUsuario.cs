@@ -4,6 +4,7 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion; // Para ServicioVerificacionConexion
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.InterfacesUsuarios.Usuarios;
+using ModernMenuUI.ServiciosUI;
 using Supabase.Realtime;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace ModernMenuUI
         private readonly UsuarioRepositorio _usuarioRepo;
 
         /// <summary>Usuario actualmente seleccionado en el DataGridView.</summary>
-        private Usuario _usuarioSeleccionado = null;
+        private UsuarioDisplay _usuarioSeleccionado = null;
 
         /// <summary>Monitor que detecta cambios de conectividad de red.</summary>
         private readonly ServicioVerificacionConexion _monitorConexion = new();
@@ -46,6 +47,8 @@ namespace ModernMenuUI
         /// <summary>Canal Realtime para escuchar cambios en la tabla Usuario.</summary>
         private RealtimeChannel? _canalRealtime;
         private List<UsuarioDisplay> _listaMaestraUsuarios = new();
+
+        private BuscadorInteractivo<UsuarioDisplay> _buscadorCtrl;
 
         // -------------------------------------------------------------
         // 2. CONSTRUCTOR
@@ -112,11 +115,11 @@ namespace ModernMenuUI
                 {
                     cts.CancelAfter(TimeSpan.FromSeconds(10));
 
-                    // 🔹 Guardas la lista completa (SIN filtrar)
                     _listaMaestraUsuarios = await _usuarioRepo.ObtenerTodosLosUsuarios(cts.Token);
                 }
 
-                // 🔥 En lugar de asignar directo al grid
+                InicializarBuscador();
+
                 RefrescarGrid();
 
                 if (dgvUsuario.Rows.Count > 0)
@@ -139,6 +142,123 @@ namespace ModernMenuUI
             }
         }
 
+        private List<UsuarioDisplay> ObtenerUsuariosSegunFiltro()
+        {
+            IEnumerable<UsuarioDisplay> query = _listaMaestraUsuarios;
+
+            if (rdbHabilitados.Checked)
+                query = query.Where(u => u.EstadoUsuario == true);
+
+            else if (rdbDeshabilitados.Checked)
+                query = query.Where(u => u.EstadoUsuario == false);
+
+            // Si es "Todos", no se filtra
+
+            return query.ToList();
+        }
+        private List<UsuarioDisplay> BuscarUsuarios(string textoBusqueda)
+        {
+            string busqueda = textoBusqueda?.ToLower().Trim() ?? "";
+
+            var listaBase = ObtenerUsuariosSegunFiltro();
+
+            if (string.IsNullOrEmpty(busqueda))
+                return listaBase;
+
+            return listaBase.Where(u =>
+                (!string.IsNullOrEmpty(u.AliasUsuario) && u.AliasUsuario.ToLower().Contains(busqueda))
+                //(!string.IsNullOrEmpty(u.Email) && u.Email.ToLower().Contains(busqueda))
+            ).ToList();
+        }
+
+        private void InicializarBuscador()
+        {
+            _buscadorCtrl = new BuscadorInteractivo<UsuarioDisplay>(
+                txtBuscar,
+                lstSugerencias,
+                dgvUsuario,
+                _listaMaestraUsuarios,
+
+                // BÚSQUEDA EXACTA
+                (u, txt) =>
+                    u.IdUsuario.ToString() == txt ||
+                    (u.AliasUsuario != null && u.AliasUsuario.Equals(txt, StringComparison.OrdinalIgnoreCase)),
+
+                // BÚSQUEDA PARCIAL
+                (u, txt) =>
+                {
+                    if (!u.EstadoUsuario) return false;
+
+                    bool porAlias =
+                        u.AliasUsuario != null &&
+                        u.AliasUsuario.IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                    return porAlias;
+                },
+
+                // TEXTO MOSTRADO
+                (u) => u.AliasUsuario,
+
+                // EVENTO FILTRO ACTIVO
+                (busquedaActiva) =>
+                {
+                    pnlLimpiarFiltros.Visible = busquedaActiva;
+                    if (!busquedaActiva) RefrescarGrid();
+                },
+
+                // SOLO NÚMEROS
+                (txt) => txt.All(char.IsDigit)
+            );
+        }
+
+
+        private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+                return;
+
+            var resultados = BuscarUsuarios(txtBuscar.Text);
+            var top = resultados.Take(10).ToList();
+            var listaFinal = resultados.Take(10).ToList();
+
+
+            if (top.Count > 0 && !string.IsNullOrEmpty(txtBuscar.Text))
+            {
+                lstSugerencias.DataSource = null;
+                lstSugerencias.DataSource = top;
+                AjustarAlturaListBoxUsuarios(listaFinal.Count);
+                lstSugerencias.Visible = true;
+            }
+            else
+            {
+                lstSugerencias.Visible = false;
+            }
+        }
+
+        private void AjustarAlturaListBoxUsuarios(int numeroDeResultados)
+        {
+            int alturaItem = lstSugerencias.ItemHeight;
+
+            int alturaMaxima = (alturaItem * 10) + 10; // máximo 10 visibles
+            int alturaNecesaria = (alturaItem * numeroDeResultados) + 10;
+
+            lstSugerencias.Height = Math.Min(alturaNecesaria, alturaMaxima);
+        }
+
+        private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorCtrl.ManejarKeyDown(e);
+        private void txtBuscar_Leave(object sender, EventArgs e) => _buscadorCtrl.ManejarLeave();
+        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) => _buscadorCtrl.ManejarClickLista();
+
+        private void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                _buscadorCtrl.ManejarClickLista();
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
+        }
 
         // -------------------------------------------------------------
         // 5. MONITOR DE RED Y REALTIME
@@ -188,7 +308,7 @@ namespace ModernMenuUI
                 _supabaseClient = await Conexion.ConnectWithTimeoutAsync(10);
 
                 _canalRealtime = await _supabaseClient
-                    .From<Usuario>()
+                    .From<UsuarioDisplay>()
                     .On(ListenType.All, (sender, change) =>
                     {
                         try
@@ -259,7 +379,7 @@ namespace ModernMenuUI
             if (dgvUsuario.SelectedRows.Count > 0)
             {
                 var filaSeleccionada = dgvUsuario.SelectedRows[0];
-                _usuarioSeleccionado = filaSeleccionada.DataBoundItem as Usuario;
+                _usuarioSeleccionado = filaSeleccionada.DataBoundItem as UsuarioDisplay;
             }
             else
             {
@@ -304,14 +424,15 @@ namespace ModernMenuUI
         private void rdbTodos_CheckedChanged(object sender, EventArgs e)
         {
             RefrescarGrid();
+            ActualizarBuscador();
+
         }
         private void RefrescarGrid()
         {
             var query = _listaMaestraUsuarios.AsEnumerable();
 
-            // 🔹 Filtro por estado (ejemplo: activo/inactivo)
             if (rdbHabilitados.Checked)
-                query = query.Where(u => u.EstadoUsuario); // cambia por tu propiedad real
+                query = query.Where(u => u.EstadoUsuario);
             else if (rdbDeshabilitados.Checked)
                 query = query.Where(u => !u.EstadoUsuario);
 
@@ -320,18 +441,42 @@ namespace ModernMenuUI
             dgvUsuario.DataSource = null;
             dgvUsuario.DataSource = listaFinal;
 
+            bool hayFiltrosExtras = !rdbHabilitados.Checked;
+            pnlLimpiarFiltros.Visible = hayFiltrosExtras;
+
             if (listaFinal.Count > 0)
                 dgvUsuario.ClearSelection();
+        }
+
+        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
+        {
+            rdbHabilitados.Checked = true;
+            _buscadorCtrl.LimpiarBusqueda();
+            RefrescarGrid();
         }
 
         private void rdbHabilitados_CheckedChanged(object sender, EventArgs e)
         {
             RefrescarGrid();
+            ActualizarBuscador();
+
         }
 
         private void rdbDeshabilitados_CheckedChanged(object sender, EventArgs e)
         {
             RefrescarGrid();
+            ActualizarBuscador();
+
         }
+
+        private void ActualizarBuscador()
+        {
+            var listaFiltrada = ObtenerUsuariosSegunFiltro();
+
+            lstSugerencias.DataSource = null;
+            lstSugerencias.DataSource = listaFiltrada.Take(10).ToList();
+            lstSugerencias.DisplayMember = "AliasUsuario";
+        }
+
     }
 }

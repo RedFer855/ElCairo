@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUsuario));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUsuario));
             button4 = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnSalir = new Button();
@@ -44,7 +44,6 @@
             rdbTodos = new RadioButton();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            btnbuscar = new Button();
             panel1 = new Panel();
             panel10 = new Panel();
             dgvUsuario = new DataGridView();
@@ -52,12 +51,18 @@
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             Categoria = new DataGridViewTextBoxColumn();
             EstadoUsuario = new DataGridViewCheckBoxColumn();
+            lstSugerencias = new ListBox();
+            pnlLimpiarFiltros = new Panel();
+            btnLimpiarFiltros = new Button();
+            pbxClean = new PictureBox();
             tableLayoutPanel1.SuspendLayout();
             groupBox1.SuspendLayout();
             panelBusqueda.SuspendLayout();
             panel1.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvUsuario).BeginInit();
+            pnlLimpiarFiltros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxClean).BeginInit();
             SuspendLayout();
             // 
             // button4
@@ -178,11 +183,10 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnbuscar);
             panelBusqueda.Location = new Point(22, 15);
             panelBusqueda.Margin = new Padding(4);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(898, 54);
+            panelBusqueda.Size = new Size(632, 54);
             panelBusqueda.TabIndex = 41;
             // 
             // txtBuscar
@@ -194,24 +198,12 @@
             txtBuscar.Margin = new Padding(4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Usuarios...";
-            txtBuscar.Size = new Size(782, 24);
+            txtBuscar.Size = new Size(592, 24);
             txtBuscar.TabIndex = 1;
-            // 
-            // btnbuscar
-            // 
-            btnbuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnbuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnbuscar.BackgroundImage = (Image)resources.GetObject("btnbuscar.BackgroundImage");
-            btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnbuscar.FlatAppearance.BorderSize = 0;
-            btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(820, 15);
-            btnbuscar.Margin = new Padding(4);
-            btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(60, 25);
-            btnbuscar.TabIndex = 0;
-            btnbuscar.UseVisualStyleBackColor = false;
-            btnbuscar.Visible = false;
+            txtBuscar.Click += btnBuscar_Click;
+            txtBuscar.KeyDown += txtBuscar_KeyDown;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
+            txtBuscar.Leave += txtBuscar_Leave;
             // 
             // panel1
             // 
@@ -288,6 +280,7 @@
             dgvUsuario.RowHeadersWidth = 30;
             dgvUsuario.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvUsuario.RowTemplate.Height = 50;
+            dgvUsuario.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsuario.Size = new Size(860, 481);
             dgvUsuario.TabIndex = 1;
             // 
@@ -333,11 +326,69 @@
             EstadoUsuario.Resizable = DataGridViewTriState.True;
             EstadoUsuario.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 23;
+            lstSugerencias.Location = new Point(42, 52);
+            lstSugerencias.Margin = new Padding(4);
+            lstSugerencias.MinimumSize = new Size(303, 26);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(592, 27);
+            lstSugerencias.TabIndex = 60;
+            lstSugerencias.Visible = false;
+            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            // 
+            // pnlLimpiarFiltros
+            // 
+            pnlLimpiarFiltros.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
+            pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
+            pnlLimpiarFiltros.Controls.Add(pbxClean);
+            pnlLimpiarFiltros.Location = new Point(712, 16);
+            pnlLimpiarFiltros.Margin = new Padding(4);
+            pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
+            pnlLimpiarFiltros.Size = new Size(208, 54);
+            pnlLimpiarFiltros.TabIndex = 61;
+            pnlLimpiarFiltros.Visible = false;
+            // 
+            // btnLimpiarFiltros
+            // 
+            btnLimpiarFiltros.BackColor = Color.FromArgb(148, 168, 187);
+            btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLimpiarFiltros.ForeColor = Color.White;
+            btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
+            btnLimpiarFiltros.Location = new Point(4, 6);
+            btnLimpiarFiltros.Margin = new Padding(4);
+            btnLimpiarFiltros.Name = "btnLimpiarFiltros";
+            btnLimpiarFiltros.Size = new Size(146, 40);
+            btnLimpiarFiltros.TabIndex = 34;
+            btnLimpiarFiltros.Text = "Limpiar Filtros";
+            btnLimpiarFiltros.UseVisualStyleBackColor = false;
+            btnLimpiarFiltros.Click += btnLimpiarFiltros_Click;
+            // 
+            // pbxClean
+            // 
+            pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
+            pbxClean.Location = new Point(151, 10);
+            pbxClean.Margin = new Padding(4);
+            pbxClean.Name = "pbxClean";
+            pbxClean.Size = new Size(56, 30);
+            pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxClean.TabIndex = 35;
+            pbxClean.TabStop = false;
+            // 
             // frmUsuario
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(935, 780);
+            Controls.Add(pnlLimpiarFiltros);
+            Controls.Add(lstSugerencias);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(groupBox1);
             Controls.Add(panelBusqueda);
@@ -355,6 +406,8 @@
             panel1.ResumeLayout(false);
             panel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvUsuario).EndInit();
+            pnlLimpiarFiltros.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxClean).EndInit();
             ResumeLayout(false);
         }
 
@@ -369,7 +422,6 @@
         private RadioButton rdbTodos;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button btnbuscar;
         private Panel panel1;
         private Panel panel10;
         private DataGridView dgvProductos;
@@ -378,5 +430,9 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Categoria;
         private DataGridViewCheckBoxColumn EstadoUsuario;
+        private ListBox lstSugerencias;
+        private Panel pnlLimpiarFiltros;
+        private Button btnLimpiarFiltros;
+        private PictureBox pbxClean;
     }
 }

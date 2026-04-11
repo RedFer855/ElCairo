@@ -228,6 +228,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmAgregarEditarUsuario";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Usuario";
             Load += frmAgregarEditarUsuario_Load;
             panBarraControl.ResumeLayout(false);

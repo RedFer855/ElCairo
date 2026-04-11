@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGestionCompra));
-            DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle31 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle34 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle35 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle36 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle32 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle33 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             btnSalir = new Button();
             btnImprimirOrden = new Button();
             panel5 = new Panel();
@@ -73,7 +73,7 @@
             Sumar = new DataGridViewImageColumn();
             Eliminar = new DataGridViewImageColumn();
             panelBusqueda = new Panel();
-            txtBuscar = new TextBox();
+            txtBuscarProducto = new TextBox();
             btnBuscarProductos = new Button();
             panel1 = new Panel();
             panel7 = new Panel();
@@ -100,6 +100,7 @@
             txtPrecio = new TextBox();
             btnAgregar = new Button();
             lstSugerencias = new ListBox();
+            lstSugerenciasCompra = new ListBox();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -435,26 +436,26 @@
             dgvCarrito.BorderStyle = BorderStyle.None;
             dgvCarrito.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvCarrito.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle25.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle25.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle25.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle25.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle25.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle25.WrapMode = DataGridViewTriState.True;
-            dgvCarrito.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvCarrito.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvCarrito.ColumnHeadersHeight = 40;
             dgvCarrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvCarrito.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, Restar, Sumar, Eliminar });
-            dataGridViewCellStyle27.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle27.BackColor = Color.White;
-            dataGridViewCellStyle27.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle27.ForeColor = Color.White;
-            dataGridViewCellStyle27.Padding = new Padding(5);
-            dataGridViewCellStyle27.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle27.SelectionForeColor = Color.White;
-            dataGridViewCellStyle27.WrapMode = DataGridViewTriState.False;
-            dgvCarrito.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvCarrito.DefaultCellStyle = dataGridViewCellStyle3;
             dgvCarrito.Dock = DockStyle.Fill;
             dgvCarrito.EnableHeadersVisualStyles = false;
             dgvCarrito.GridColor = Color.FromArgb(189, 215, 238);
@@ -463,21 +464,21 @@
             dgvCarrito.Name = "dgvCarrito";
             dgvCarrito.ReadOnly = true;
             dgvCarrito.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle28.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle28.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle28.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle28.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle28.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle28.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle28.WrapMode = DataGridViewTriState.True;
-            dgvCarrito.RowHeadersDefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle4.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvCarrito.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvCarrito.RowHeadersWidth = 51;
             dgvCarrito.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle29.BackColor = Color.White;
-            dataGridViewCellStyle29.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle29.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle29.SelectionForeColor = Color.White;
-            dgvCarrito.RowsDefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle5.SelectionForeColor = Color.White;
+            dgvCarrito.RowsDefaultCellStyle = dataGridViewCellStyle5;
             dgvCarrito.RowTemplate.Height = 50;
             dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCarrito.Size = new Size(1061, 390);
@@ -489,9 +490,9 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle26.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle26.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle2.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewTextBoxColumn1.FillWeight = 50F;
             dataGridViewTextBoxColumn1.HeaderText = "Código";
             dataGridViewTextBoxColumn1.MinimumWidth = 6;
@@ -559,7 +560,7 @@
             // 
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
-            panelBusqueda.Controls.Add(txtBuscar);
+            panelBusqueda.Controls.Add(txtBuscarProducto);
             panelBusqueda.Controls.Add(btnBuscarProductos);
             panelBusqueda.Location = new Point(445, 5);
             panelBusqueda.Margin = new Padding(4);
@@ -567,19 +568,20 @@
             panelBusqueda.Size = new Size(681, 64);
             panelBusqueda.TabIndex = 18;
             // 
-            // txtBuscar
+            // txtBuscarProducto
             // 
-            txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtBuscar.BorderStyle = BorderStyle.None;
-            txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(26, 18);
-            txtBuscar.Margin = new Padding(4);
-            txtBuscar.Name = "txtBuscar";
-            txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(562, 24);
-            txtBuscar.TabIndex = 1;
-            txtBuscar.Visible = false;
-           // txtBuscar.TextChanged += this.txtBuscar_TextChanged_1;
+            txtBuscarProducto.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscarProducto.BorderStyle = BorderStyle.None;
+            txtBuscarProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtBuscarProducto.Location = new Point(26, 18);
+            txtBuscarProducto.Margin = new Padding(4);
+            txtBuscarProducto.Name = "txtBuscarProducto";
+            txtBuscarProducto.PlaceholderText = "Buscar Productos...";
+            txtBuscarProducto.Size = new Size(562, 24);
+            txtBuscarProducto.TabIndex = 1;
+            txtBuscarProducto.KeyDown += txtBuscarProductos_KeyDown;
+            txtBuscarProducto.KeyUp += txtBuscarProductos_KeyUp;
+            txtBuscarProducto.Leave += txtBuscarProductos_Leave;
             // 
             // btnBuscarProductos
             // 
@@ -625,36 +627,36 @@
             // 
             dgvProductos.AllowUserToAddRows = false;
             dgvProductos.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle30.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle30.ForeColor = Color.DimGray;
-            dataGridViewCellStyle30.SelectionBackColor = Color.FromArgb(147, 167, 186);
-            dataGridViewCellStyle30.SelectionForeColor = Color.White;
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle6.ForeColor = Color.DimGray;
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(147, 167, 186);
+            dataGridViewCellStyle6.SelectionForeColor = Color.White;
+            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
             dgvProductos.BorderStyle = BorderStyle.None;
             dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle31.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle31.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle31.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle31.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle31.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle31.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle31.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle7.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle7.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle7.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dgvProductos.ColumnHeadersHeight = 31;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvProductos.Columns.AddRange(new DataGridViewColumn[] { CodigoBarra, Producto, Marca, Categoria, Precio, Stock, Codigos });
-            dataGridViewCellStyle34.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle34.BackColor = Color.White;
-            dataGridViewCellStyle34.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle34.ForeColor = Color.White;
-            dataGridViewCellStyle34.Padding = new Padding(5);
-            dataGridViewCellStyle34.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle34.SelectionForeColor = Color.White;
-            dataGridViewCellStyle34.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = Color.White;
+            dataGridViewCellStyle10.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle10.ForeColor = Color.White;
+            dataGridViewCellStyle10.Padding = new Padding(5);
+            dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle10.SelectionForeColor = Color.White;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
+            dgvProductos.DefaultCellStyle = dataGridViewCellStyle10;
             dgvProductos.Dock = DockStyle.Fill;
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
@@ -663,21 +665,21 @@
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle35.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle35.BackColor = SystemColors.Control;
-            dataGridViewCellStyle35.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle35.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle35.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle35.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle35.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = SystemColors.Control;
+            dataGridViewCellStyle11.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle11.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle11.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
             dgvProductos.RowHeadersWidth = 30;
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle36.BackColor = Color.White;
-            dataGridViewCellStyle36.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle36.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle36.SelectionForeColor = Color.White;
-            dgvProductos.RowsDefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle12.BackColor = Color.White;
+            dataGridViewCellStyle12.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle12.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle12.SelectionForeColor = Color.White;
+            dgvProductos.RowsDefaultCellStyle = dataGridViewCellStyle12;
             dgvProductos.RowTemplate.Height = 30;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProductos.Size = new Size(630, 262);
@@ -738,8 +740,8 @@
             // 
             Stock.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             Stock.DataPropertyName = "CantidadProducto";
-            dataGridViewCellStyle32.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Stock.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Stock.DefaultCellStyle = dataGridViewCellStyle8;
             Stock.FillWeight = 80F;
             Stock.HeaderText = "Stock";
             Stock.MinimumWidth = 6;
@@ -751,9 +753,9 @@
             // 
             Codigos.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             Codigos.DataPropertyName = "IdProducto";
-            dataGridViewCellStyle33.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle33.Padding = new Padding(0, 1, 0, 0);
-            Codigos.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle9.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle9.Padding = new Padding(0, 1, 0, 0);
+            Codigos.DefaultCellStyle = dataGridViewCellStyle9;
             Codigos.FillWeight = 90F;
             Codigos.HeaderText = "Código";
             Codigos.MinimumWidth = 6;
@@ -969,6 +971,20 @@
             lstSugerencias.MouseDown += lstSugerencias_MouseDown;
             lstSugerencias.MouseUp += lstSugerencias_MouseUp;
             // 
+            // lstSugerenciasCompra
+            // 
+            lstSugerenciasCompra.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerenciasCompra.ForeColor = Color.DimGray;
+            lstSugerenciasCompra.FormattingEnabled = true;
+            lstSugerenciasCompra.ItemHeight = 23;
+            lstSugerenciasCompra.Location = new Point(471, 50);
+            lstSugerenciasCompra.Margin = new Padding(4);
+            lstSugerenciasCompra.Name = "lstSugerenciasCompra";
+            lstSugerenciasCompra.Size = new Size(562, 27);
+            lstSugerenciasCompra.TabIndex = 28;
+            lstSugerenciasCompra.Visible = false;
+            lstSugerenciasCompra.MouseClick += lstSugerenciasCompra_MouseClick;
+            // 
             // frmGestionCompra
             // 
             AccessibleRole = AccessibleRole.None;
@@ -976,6 +992,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(1141, 890);
+            Controls.Add(lstSugerenciasCompra);
             Controls.Add(lstSugerencias);
             Controls.Add(btnSalir);
             Controls.Add(btnImprimirOrden);
@@ -983,9 +1000,9 @@
             Controls.Add(btnAgregarCompra);
             Controls.Add(panel4);
             Controls.Add(panelCarrito);
+            Controls.Add(panel2);
             Controls.Add(panelBusqueda);
             Controls.Add(panel1);
-            Controls.Add(panel2);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
@@ -1045,7 +1062,7 @@
         private PictureBox pbxCarrito;
         private DataGridView dgvCarrito;
         private Panel panelBusqueda;
-        private TextBox txtBuscar;
+        private TextBox txtBuscarProducto;
         private Button btnBuscarProductos;
         private Panel panel1;
         private Panel panel2;
@@ -1081,5 +1098,6 @@
         private DataGridViewTextBoxColumn Codigos;
         private CheckBox chkprecioNuevo;
         private NumericUpDown txtNuevoPrecio;
+        private ListBox lstSugerenciasCompra;
     }
 }

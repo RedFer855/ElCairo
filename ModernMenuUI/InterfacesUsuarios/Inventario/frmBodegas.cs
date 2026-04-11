@@ -18,9 +18,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
         private BuscadorInteractivo<Bodega> _buscadorCtrl;
         private readonly BodegaRepositorio bodegaRepositorio = new();
         private List<Bodega> _listaMaestraBodegas = new List<Bodega>();
-
-
-
         private Action<Supabase.Realtime.PostgresChanges.PostgresChangesResponse>? _handlerCambioBD;
 
         public frmBodegas()

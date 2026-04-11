@@ -20,7 +20,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
     public partial class frmAgregarEditarUsuario : Form
     {
         /// <summary>Usuario que se está editando.</summary>
-        private Usuario _usuarioEditado;
+        private UsuarioDisplay _usuarioEditado;
 
         /// <summary>Usuario actualmente logueado en el sistema.</summary>
         private Usuario _usuarioActualSistema;
@@ -45,7 +45,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
         /// </summary>
         /// <param name="editado">Usuario que será modificado.</param>
         /// <param name="actual">Usuario que está logueado y ejecutando la acción.</param>
-        public frmAgregarEditarUsuario(Usuario editado, Usuario actual)
+        public frmAgregarEditarUsuario(UsuarioDisplay editado, Usuario actual)
         {
             InitializeComponent();
             _usuarioEditado = editado;
@@ -163,7 +163,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
 
                 // Obtener todos los roles disponibles
                 var roles = await userRepo.ObtenerTodosLosUsuariosRoles();
-                MessageBox.Show(roles[0].NombreRolRol);
 
                 cmbRol.DataSource = null;
                 cmbRol.DisplayMember = "NombreRolRol";

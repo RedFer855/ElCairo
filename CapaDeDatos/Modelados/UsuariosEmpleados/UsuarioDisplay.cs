@@ -30,5 +30,10 @@ namespace CapaDeDatos.Modelados.UsuariosEmpleados
 
         [Column("user_id")]
         public string Uuid { get; set; }
+
+        public override string ToString()
+        {
+            return AliasUsuario;
+        }
     }
 }
