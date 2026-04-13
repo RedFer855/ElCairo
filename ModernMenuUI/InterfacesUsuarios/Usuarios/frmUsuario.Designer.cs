@@ -337,7 +337,7 @@
             lstSugerencias.Margin = new Padding(4);
             lstSugerencias.MinimumSize = new Size(303, 26);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(592, 27);
+            lstSugerencias.Size = new Size(594, 27);
             lstSugerencias.TabIndex = 60;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
