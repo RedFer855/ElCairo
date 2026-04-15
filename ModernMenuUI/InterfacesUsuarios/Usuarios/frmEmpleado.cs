@@ -27,8 +27,6 @@ namespace ModernMenuUI
         private List<Empleado> _listaMaestra = new List<Empleado>();
         private Empleado EmpleadoSeleccionado = null;
 
-        private bool? _filtroEstado = null;
-
         private Action<PostgresChangesResponse> _handlerCambio;
 
         public frmEmpleado()
@@ -41,8 +39,6 @@ namespace ModernMenuUI
             dgvEmpleados.AutoGenerateColumns = false;
             dgvEmpleados.ActivarDobleBuffer();
             dgvEmpleados.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 241);
-
-            ConfigurarEventosUnificados();
 
             _handlerCambio = (c) => RecargarInterfazSafe();
             RealtimeManager.OnEmpleadoChanged += _handlerCambio;
@@ -63,6 +59,9 @@ namespace ModernMenuUI
             catch { }
         }
 
+        // -------------------------------------------------------------
+        // CARGA DE DATOS
+        // -------------------------------------------------------------
         private async Task InicializarDatosYBuscador()
         {
             try
@@ -71,42 +70,7 @@ namespace ModernMenuUI
 
                 _listaMaestra = await _empleadoRepo.ObtenerTodosLosEmpleados();
 
-                _buscadorCtrl = new BuscadorInteractivo<Empleado>(
-                    txtBuscar,
-                    lstSugerencias,
-                    dgvEmpleados,
-                    _listaMaestra,
-
-                    (emp, txt) =>
-                        emp.Id.ToString() == txt ||
-                        (emp.DniEmpleado != null && emp.DniEmpleado == txt),
-
-                    (emp, txt) =>
-                    {
-                        if (!emp.EstadoEmpleado) return false;
-
-                        bool porNombre =
-                            (emp.NombreEmpleado + " " + emp.ApellidoEmpleado)
-                                .IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
-
-                        bool porDni =
-                            emp.DniEmpleado != null &&
-                            emp.DniEmpleado.Contains(txt);
-
-                        return porNombre || porDni;
-                    },
-
-                    (emp) => $"{emp.NombreEmpleado} {emp.ApellidoEmpleado}",
-
-                    (busquedaActiva) =>
-                    {
-                        pnlLimpiarFiltros.Visible = busquedaActiva;
-                        if (!busquedaActiva) RefrescarGrid();
-                    },
-
-                    (txt) => txt.All(char.IsDigit)
-                );
-
+                InicializarBuscador();
                 RefrescarGrid();
             }
             catch (Exception ex)
@@ -126,8 +90,8 @@ namespace ModernMenuUI
             try
             {
                 _listaMaestra = await _empleadoRepo.ObtenerTodosLosEmpleados();
-                _buscadorCtrl?.ActualizarDatosMaestros(_listaMaestra);
                 RefrescarGrid();
+                ActualizarBuscador();
             }
             catch (Exception ex)
             {
@@ -141,6 +105,70 @@ namespace ModernMenuUI
                 this.BeginInvoke((MethodInvoker)(async () => await CargarEmpleadosMaestros()));
         }
 
+        // -------------------------------------------------------------
+        // FILTRO + BUSCADOR (igual que en frmUsuario)
+        // -------------------------------------------------------------
+        private List<Empleado> ObtenerEmpleadosSegunFiltro()
+        {
+            IEnumerable<Empleado> query = _listaMaestra;
+
+            if (rbMostrarHabilitados.Checked)
+                query = query.Where(e => e.EstadoEmpleado == true);
+            else if (rbMostrarDeshabilitados.Checked)
+                query = query.Where(e => e.EstadoEmpleado == false);
+            // Si es "Todos", no se filtra
+
+            return query.ToList();
+        }
+
+        private void InicializarBuscador()
+        {
+            _buscadorCtrl = new BuscadorInteractivo<Empleado>(
+                txtBuscar,
+                lstSugerencias,
+                dgvEmpleados,
+                ObtenerEmpleadosSegunFiltro(),
+
+                // BÚSQUEDA EXACTA
+                (emp, txt) =>
+                    emp.Id.ToString() == txt ||
+                    (emp.DniEmpleado != null && emp.DniEmpleado == txt),
+
+                // BÚSQUEDA PARCIAL (sin forzar estado — lo controla el filtro)
+                (emp, txt) =>
+                {
+                    bool porNombre =
+                        (emp.NombreEmpleado + " " + emp.ApellidoEmpleado)
+                            .IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                    bool porDni =
+                        emp.DniEmpleado != null &&
+                        emp.DniEmpleado.IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                    return porNombre || porDni;
+                },
+
+                // TEXTO MOSTRADO
+                (emp) => $"{emp.NombreEmpleado} {emp.ApellidoEmpleado}",
+
+                // EVENTO FILTRO ACTIVO
+                (busquedaActiva) =>
+                {
+                    pnlLimpiarFiltros.Visible = busquedaActiva;
+                    if (!busquedaActiva) RefrescarGrid();
+                },
+
+                // SOLO NÚMEROS (búsqueda exacta cuando es numérico)
+                (txt) => txt.All(char.IsDigit)
+            );
+        }
+
+        private void ActualizarBuscador()
+        {
+            if (_buscadorCtrl == null) return;
+            _buscadorCtrl.ActualizarDatosMaestros(ObtenerEmpleadosSegunFiltro());
+        }
+
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorCtrl.ManejarKeyUpAsync(e);
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorCtrl.ManejarKeyDown(e);
         private void txtBuscar_Leave(object sender, EventArgs e) => _buscadorCtrl.ManejarLeave();
@@ -151,16 +179,16 @@ namespace ModernMenuUI
         }
         private void btnBuscar_Click(object sender, EventArgs e) => _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
 
+        // -------------------------------------------------------------
+        // GRID
+        // -------------------------------------------------------------
         private void RefrescarGrid()
         {
             gbxFiltros.Enabled = false;
 
-            var query = _listaMaestra.AsEnumerable();
+            var listaFinal = ObtenerEmpleadosSegunFiltro();
 
-            if (rbMostrarHabilitados.Checked) query = query.Where(e => e.EstadoEmpleado == true);
-            else if (rbMostrarDeshabilitados.Checked) query = query.Where(e => e.EstadoEmpleado == false);
-
-            var listaFinal = query.ToList();
+            dgvEmpleados.DataSource = null;
             dgvEmpleados.DataSource = listaFinal;
 
             bool hayFiltrosExtras = !rbMostrarHabilitados.Checked;
@@ -172,19 +200,6 @@ namespace ModernMenuUI
             gbxFiltros.Enabled = true;
         }
 
-        private void ConfigurarEventosUnificados()
-        {
-            rbMostrarTodos.CheckedChanged += FiltroEstado_Changed;
-            rbMostrarHabilitados.CheckedChanged += FiltroEstado_Changed;
-            rbMostrarDeshabilitados.CheckedChanged += FiltroEstado_Changed;
-        }
-
-        private void FiltroEstado_Changed(object sender, EventArgs e)
-        {
-            if (sender is RadioButton rb && rb.Checked)
-                RefrescarGrid();
-        }
-
         private void dgvEmpleados_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvEmpleados.SelectedRows.Count > 0)
@@ -193,11 +208,45 @@ namespace ModernMenuUI
                 EmpleadoSeleccionado = null;
         }
 
+        // -------------------------------------------------------------
+        // RADIO BUTTONS
+        // -------------------------------------------------------------
+        private void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarTodos.Checked)
+            {
+                RefrescarGrid();
+                ActualizarBuscador();
+            }
+        }
+
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarHabilitados.Checked)
+            {
+                RefrescarGrid();
+                ActualizarBuscador();
+            }
+        }
+
+        private void rbMostrarDeshabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarDeshabilitados.Checked)
+            {
+                RefrescarGrid();
+                ActualizarBuscador();
+            }
+        }
+
+        // -------------------------------------------------------------
+        // BOTONES
+        // -------------------------------------------------------------
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             rbMostrarHabilitados.Checked = true;
             _buscadorCtrl.LimpiarBusqueda();
             RefrescarGrid();
+            ActualizarBuscador();
         }
 
         private async void btnAgregarEmpleado_Click(object sender, EventArgs e)
@@ -264,11 +313,6 @@ namespace ModernMenuUI
         {
             clsAnmaciones.NombreMenuPrincipal();
             this.Close();
-        }
-
-        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
