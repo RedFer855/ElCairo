@@ -94,6 +94,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 this.BeginInvoke((MethodInvoker)(async () => await CargarPresentacionesMaestras()));
         }
 
+        // -------------------------------------------------------------
+        // CARGA DE DATOS
+        // -------------------------------------------------------------
         private async Task InicializarDatosYBuscador()
         {
             try
@@ -101,38 +104,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 this.Cursor = Cursors.WaitCursor;
 
                 _listaCompletaPresentaciones =
-                                        await _presentacionRepositorio.ObtenerTodasLasPresentaciones();
+                    await _presentacionRepositorio.ObtenerTodasLasPresentaciones();
 
-                _buscadorCtrl = new BuscadorInteractivo<Presentacion>(
-                    txtBuscar,
-                    lstSugerencias,
-                    dgvPresentaciones,
-                    _listaCompletaPresentaciones,
-
-                    (p, term) => p.IdPresentacionProducto.ToString() == term,
-
-                    (p, term) =>
-                    {
-                        if (!p.EstadoPresentacion) return false;
-
-                        return p.NombrePresentacion != null &&
-                               p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0;
-                    },
-
-                    (p) => p.NombrePresentacion,
-
-                    (buscando) =>
-                    {
-                        if (pnlLimpiarFiltros != null)
-                            pnlLimpiarFiltros.Visible = buscando;
-
-                        if (!buscando)
-                            RefrescarGrid();
-                    },
-
-                    (txt) => false
-                );
-
+                InicializarBuscador();
                 RefrescarGrid();
             }
             catch (Exception ex)
@@ -149,8 +123,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 _listaCompletaPresentaciones =
                     await _presentacionRepositorio.ObtenerTodasLasPresentaciones();
 
-                _buscadorCtrl?.ActualizarDatosMaestros(_listaCompletaPresentaciones);
                 RefrescarGrid();
+                ActualizarBuscador();
             }
             catch (Exception ex)
             {
@@ -158,11 +132,13 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
-        private void RefrescarGrid()
+        // -------------------------------------------------------------
+        // FILTRO + BUSCADOR (igual que en frmUsuario)
+        // -------------------------------------------------------------
+        private List<Presentacion> ObtenerPresentacionesSegunFiltro()
         {
-            if (_listaCompletaPresentaciones == null) return;
-
-            this.Cursor = Cursors.WaitCursor;
+            if (_listaCompletaPresentaciones == null)
+                return new List<Presentacion>();
 
             IEnumerable<Presentacion> query = _listaCompletaPresentaciones;
 
@@ -170,25 +146,69 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 query = query.Where(p => p.EstadoPresentacion == true);
             else if (rbMostrarDeshabilitados.Checked)
                 query = query.Where(p => p.EstadoPresentacion == false);
+            // Si es "Todos", no se filtra
 
-            _buscadorCtrl?.ActualizarDatosMaestros(query.ToList());
+            return query.ToList();
+        }
 
-            string texto = txtBuscar.Text.Trim();
-            if (!string.IsNullOrEmpty(texto))
-            {
-                query = query.Where(p =>
+        private void InicializarBuscador()
+        {
+            _buscadorCtrl = new BuscadorInteractivo<Presentacion>(
+                txtBuscar,
+                lstSugerencias,
+                dgvPresentaciones,
+                ObtenerPresentacionesSegunFiltro(),
+
+                // BÚSQUEDA EXACTA
+                (p, term) => p.IdPresentacionProducto.ToString() == term,
+
+                // BÚSQUEDA PARCIAL (sin forzar estado — lo controla el filtro)
+                (p, term) =>
                     p.NombrePresentacion != null &&
-                    p.NombrePresentacion.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0);
-            }
+                    p.NombrePresentacion.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
 
-            var listaFinal = query.ToList();
+                // TEXTO MOSTRADO
+                (p) => p.NombrePresentacion,
+
+                // EVENTO FILTRO ACTIVO
+                (buscando) =>
+                {
+                    if (pnlLimpiarFiltros != null)
+                        pnlLimpiarFiltros.Visible = buscando;
+
+                    if (!buscando)
+                        RefrescarGrid();
+                },
+
+                // SOLO NÚMEROS
+                (txt) => false
+            );
+        }
+
+        private void ActualizarBuscador()
+        {
+            if (_buscadorCtrl == null) return;
+            _buscadorCtrl.ActualizarDatosMaestros(ObtenerPresentacionesSegunFiltro());
+        }
+
+        // -------------------------------------------------------------
+        // GRID
+        // -------------------------------------------------------------
+        private void RefrescarGrid()
+        {
+            if (_listaCompletaPresentaciones == null) return;
+
+            this.Cursor = Cursors.WaitCursor;
+
+            var listaFinal = ObtenerPresentacionesSegunFiltro();
+
             dgvPresentaciones.DataSource = null;
             dgvPresentaciones.DataSource = listaFinal;
 
             if (pnlLimpiarFiltros != null)
             {
-                bool hayFiltros =
-                    !rbMostrarHabilitados.Checked || !string.IsNullOrEmpty(texto);
+                bool hayFiltros = rbMostrarHabilitados.Checked ||
+                                  rbMostrarDeshabilitados.Checked;
 
                 pnlLimpiarFiltros.Visible = hayFiltros;
             }
@@ -199,24 +219,42 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             this.Cursor = Cursors.Default;
         }
 
+        // -------------------------------------------------------------
+        // RADIO BUTTONS
+        // -------------------------------------------------------------
         private void ConfigurarEventosUnificados()
         {
             rbMostrarTodos.CheckedChanged += (s, e) =>
             {
-                if (((RadioButton)s).Checked) RefrescarGrid();
+                if (((RadioButton)s).Checked)
+                {
+                    RefrescarGrid();
+                    ActualizarBuscador();
+                }
             };
 
             rbMostrarHabilitados.CheckedChanged += (s, e) =>
             {
-                if (((RadioButton)s).Checked) RefrescarGrid();
+                if (((RadioButton)s).Checked)
+                {
+                    RefrescarGrid();
+                    ActualizarBuscador();
+                }
             };
 
             rbMostrarDeshabilitados.CheckedChanged += (s, e) =>
             {
-                if (((RadioButton)s).Checked) RefrescarGrid();
+                if (((RadioButton)s).Checked)
+                {
+                    RefrescarGrid();
+                    ActualizarBuscador();
+                }
             };
         }
 
+        // -------------------------------------------------------------
+        // BUSCADOR (eventos UI)
+        // -------------------------------------------------------------
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
         {
             if (_buscadorCtrl != null)
@@ -239,6 +277,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 _buscadorCtrl?.ManejarClickLista();
         }
 
+        // -------------------------------------------------------------
+        // BOTONES
+        // -------------------------------------------------------------
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             _buscadorCtrl?.LimpiarBusqueda();
@@ -248,6 +289,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 pnlLimpiarFiltros.Visible = false;
 
             RefrescarGrid();
+            ActualizarBuscador();
         }
 
         private void dgvPresentaciones_SelectionChanged(object sender, EventArgs e)

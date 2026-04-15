@@ -101,10 +101,9 @@
             panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(19, 21);
-            panelCarrito.Margin = new Padding(4);
+            panelCarrito.Location = new Point(15, 17);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(898, 509);
+            panelCarrito.Size = new Size(718, 407);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -113,9 +112,8 @@
             panel10.Controls.Add(dgvProductos);
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
-            panel10.Margin = new Padding(4);
             panel10.Name = "panel10";
-            panel10.Size = new Size(898, 509);
+            panel10.Size = new Size(718, 407);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -153,7 +151,6 @@
             dgvProductos.EnableHeadersVisualStyles = false;
             dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
             dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Margin = new Padding(4);
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -169,7 +166,7 @@
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(898, 509);
+            dgvProductos.Size = new Size(718, 407);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -185,7 +182,7 @@
             dataGridViewTextBoxColumn1.MinimumWidth = 65;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 106;
+            dataGridViewTextBoxColumn1.Width = 89;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -204,7 +201,7 @@
             Contenido.MinimumWidth = 6;
             Contenido.Name = "Contenido";
             Contenido.ReadOnly = true;
-            Contenido.Width = 135;
+            Contenido.Width = 113;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -224,7 +221,7 @@
             Categoria.MinimumWidth = 120;
             Categoria.Name = "Categoria";
             Categoria.ReadOnly = true;
-            Categoria.Width = 131;
+            Categoria.Width = 120;
             // 
             // Presentacion
             // 
@@ -234,7 +231,7 @@
             Presentacion.MinimumWidth = 6;
             Presentacion.Name = "Presentacion";
             Presentacion.ReadOnly = true;
-            Presentacion.Width = 159;
+            Presentacion.Width = 131;
             // 
             // CantidadProducto
             // 
@@ -246,7 +243,7 @@
             CantidadProducto.MinimumWidth = 6;
             CantidadProducto.Name = "CantidadProducto";
             CantidadProducto.ReadOnly = true;
-            CantidadProducto.Width = 125;
+            CantidadProducto.Width = 105;
             // 
             // PrecioVenta
             // 
@@ -259,7 +256,7 @@
             PrecioVenta.MinimumWidth = 6;
             PrecioVenta.Name = "PrecioVenta";
             PrecioVenta.ReadOnly = true;
-            PrecioVenta.Width = 155;
+            PrecioVenta.Width = 127;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -272,7 +269,7 @@
             dataGridViewTextBoxColumn3.MinimumWidth = 6;
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             dataGridViewTextBoxColumn3.ReadOnly = true;
-            dataGridViewTextBoxColumn3.Width = 155;
+            dataGridViewTextBoxColumn3.Width = 127;
             // 
             // PrecioCompra
             // 
@@ -285,7 +282,7 @@
             PrecioCompra.MinimumWidth = 6;
             PrecioCompra.Name = "PrecioCompra";
             PrecioCompra.ReadOnly = true;
-            PrecioCompra.Width = 174;
+            PrecioCompra.Width = 141;
             // 
             // PorcentajeGanancia
             // 
@@ -298,7 +295,7 @@
             PorcentajeGanancia.MinimumWidth = 95;
             PorcentajeGanancia.Name = "PorcentajeGanancia";
             PorcentajeGanancia.ReadOnly = true;
-            PorcentajeGanancia.Width = 127;
+            PorcentajeGanancia.Width = 107;
             // 
             // EstadoProducto
             // 
@@ -310,7 +307,7 @@
             EstadoProducto.ReadOnly = true;
             EstadoProducto.Resizable = DataGridViewTriState.True;
             EstadoProducto.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoProducto.Width = 105;
+            EstadoProducto.Width = 89;
             // 
             // panelBusqueda
             // 
@@ -318,12 +315,11 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnBuscar);
-            panelBusqueda.Location = new Point(15, 15);
-            panelBusqueda.Margin = new Padding(4);
-            panelBusqueda.MaximumSize = new Size(1106, 54);
-            panelBusqueda.MinimumSize = new Size(312, 54);
+            panelBusqueda.Location = new Point(12, 12);
+            panelBusqueda.MaximumSize = new Size(885, 43);
+            panelBusqueda.MinimumSize = new Size(250, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(535, 54);
+            panelBusqueda.Size = new Size(428, 43);
             panelBusqueda.TabIndex = 14;
             // 
             // txtBuscar
@@ -332,11 +328,10 @@
             txtBuscar.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(22, 15);
-            txtBuscar.Margin = new Padding(4);
+            txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(429, 24);
+            txtBuscar.Size = new Size(343, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
@@ -350,10 +345,9 @@
             btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscar.FlatAppearance.BorderSize = 0;
             btnBuscar.FlatStyle = FlatStyle.Flat;
-            btnBuscar.Location = new Point(459, 15);
-            btnBuscar.Margin = new Padding(4);
+            btnBuscar.Location = new Point(367, 12);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(60, 25);
+            btnBuscar.Size = new Size(48, 20);
             btnBuscar.TabIndex = 0;
             btnBuscar.UseVisualStyleBackColor = false;
             btnBuscar.Click += btnBuscar_Click;
@@ -363,10 +357,9 @@
             btnNuevoProducto.BackColor = Color.FromArgb(149, 195, 172);
             btnNuevoProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnNuevoProducto.ForeColor = SystemColors.ButtonFace;
-            btnNuevoProducto.Location = new Point(4, 4);
-            btnNuevoProducto.Margin = new Padding(4);
+            btnNuevoProducto.Location = new Point(3, 3);
             btnNuevoProducto.Name = "btnNuevoProducto";
-            btnNuevoProducto.Size = new Size(231, 55);
+            btnNuevoProducto.Size = new Size(185, 44);
             btnNuevoProducto.TabIndex = 17;
             btnNuevoProducto.Text = "Nuevo Producto";
             btnNuevoProducto.UseVisualStyleBackColor = false;
@@ -378,10 +371,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(243, 67);
-            btnSalir.Margin = new Padding(4);
+            btnSalir.Location = new Point(194, 53);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(175, 55);
+            btnSalir.Size = new Size(140, 44);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -392,10 +384,9 @@
             btnAgregarMarca.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarMarca.ForeColor = SystemColors.ButtonFace;
-            btnAgregarMarca.Location = new Point(243, 4);
-            btnAgregarMarca.Margin = new Padding(4);
+            btnAgregarMarca.Location = new Point(194, 3);
             btnAgregarMarca.Name = "btnAgregarMarca";
-            btnAgregarMarca.Size = new Size(175, 55);
+            btnAgregarMarca.Size = new Size(140, 44);
             btnAgregarMarca.TabIndex = 21;
             btnAgregarMarca.Text = "Marcas";
             btnAgregarMarca.UseVisualStyleBackColor = false;
@@ -410,11 +401,9 @@
             gbxEstado.Controls.Add(rbMostrarHabilitados);
             gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = Color.DimGray;
-            gbxEstado.Location = new Point(15, 76);
-            gbxEstado.Margin = new Padding(4);
+            gbxEstado.Location = new Point(12, 61);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Padding = new Padding(4);
-            gbxEstado.Size = new Size(932, 66);
+            gbxEstado.Size = new Size(746, 53);
             gbxEstado.TabIndex = 28;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -423,35 +412,33 @@
             // 
             tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel2.ColumnCount = 6;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 118F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 94F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 41F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 84F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 33F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 67F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 42F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 34F));
             tableLayoutPanel2.Controls.Add(label1, 3, 0);
             tableLayoutPanel2.Controls.Add(txtFiltroMarca, 4, 0);
             tableLayoutPanel2.Controls.Add(btnMarca, 5, 0);
             tableLayoutPanel2.Controls.Add(btnCategoria, 2, 0);
             tableLayoutPanel2.Controls.Add(txtFiltroCategoria, 1, 0);
             tableLayoutPanel2.Controls.Add(label2, 0, 0);
-            tableLayoutPanel2.Location = new Point(469, 21);
-            tableLayoutPanel2.Margin = new Padding(4);
-            tableLayoutPanel2.MinimumSize = new Size(438, 38);
+            tableLayoutPanel2.Location = new Point(375, 17);
+            tableLayoutPanel2.MinimumSize = new Size(350, 30);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(438, 38);
+            tableLayoutPanel2.Size = new Size(350, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(239, 0);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(191, 0);
             label1.Name = "label1";
-            label1.Size = new Size(76, 38);
+            label1.Size = new Size(61, 30);
             label1.TabIndex = 40;
             label1.Text = "Marcas:";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -459,12 +446,11 @@
             // txtFiltroMarca
             // 
             txtFiltroMarca.Dock = DockStyle.Fill;
-            txtFiltroMarca.Location = new Point(323, 4);
-            txtFiltroMarca.Margin = new Padding(4);
+            txtFiltroMarca.Location = new Point(258, 3);
             txtFiltroMarca.Name = "txtFiltroMarca";
             txtFiltroMarca.PlaceholderText = "(Todas)";
             txtFiltroMarca.ReadOnly = true;
-            txtFiltroMarca.Size = new Size(68, 30);
+            txtFiltroMarca.Size = new Size(55, 25);
             txtFiltroMarca.TabIndex = 34;
             // 
             // btnMarca
@@ -475,10 +461,9 @@
             btnMarca.Dock = DockStyle.Fill;
             btnMarca.FlatAppearance.BorderSize = 0;
             btnMarca.FlatStyle = FlatStyle.Flat;
-            btnMarca.Location = new Point(399, 4);
-            btnMarca.Margin = new Padding(4);
+            btnMarca.Location = new Point(319, 3);
             btnMarca.Name = "btnMarca";
-            btnMarca.Size = new Size(35, 30);
+            btnMarca.Size = new Size(28, 24);
             btnMarca.TabIndex = 2;
             btnMarca.UseVisualStyleBackColor = false;
             btnMarca.Click += btnMarca_Click;
@@ -491,10 +476,9 @@
             btnCategoria.Dock = DockStyle.Fill;
             btnCategoria.FlatAppearance.BorderSize = 0;
             btnCategoria.FlatStyle = FlatStyle.Flat;
-            btnCategoria.Location = new Point(198, 4);
-            btnCategoria.Margin = new Padding(4);
+            btnCategoria.Location = new Point(158, 3);
             btnCategoria.Name = "btnCategoria";
-            btnCategoria.Size = new Size(33, 30);
+            btnCategoria.Size = new Size(27, 24);
             btnCategoria.TabIndex = 38;
             btnCategoria.UseVisualStyleBackColor = false;
             btnCategoria.Click += btnCategoria_Click;
@@ -502,22 +486,20 @@
             // txtFiltroCategoria
             // 
             txtFiltroCategoria.Dock = DockStyle.Fill;
-            txtFiltroCategoria.Location = new Point(122, 4);
-            txtFiltroCategoria.Margin = new Padding(4);
+            txtFiltroCategoria.Location = new Point(97, 3);
             txtFiltroCategoria.Name = "txtFiltroCategoria";
             txtFiltroCategoria.PlaceholderText = "(Todas)";
             txtFiltroCategoria.ReadOnly = true;
-            txtFiltroCategoria.Size = new Size(68, 30);
+            txtFiltroCategoria.Size = new Size(55, 25);
             txtFiltroCategoria.TabIndex = 35;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(4, 0);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(3, 0);
             label2.Name = "label2";
-            label2.Size = new Size(110, 38);
+            label2.Size = new Size(88, 30);
             label2.TabIndex = 39;
             label2.Text = "Categorías:";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -525,10 +507,9 @@
             // rbMostrardeshabilitados
             // 
             rbMostrardeshabilitados.AutoSize = true;
-            rbMostrardeshabilitados.Location = new Point(141, 28);
-            rbMostrardeshabilitados.Margin = new Padding(4);
+            rbMostrardeshabilitados.Location = new Point(113, 22);
             rbMostrardeshabilitados.Name = "rbMostrardeshabilitados";
-            rbMostrardeshabilitados.Size = new Size(149, 27);
+            rbMostrardeshabilitados.Size = new Size(121, 22);
             rbMostrardeshabilitados.TabIndex = 30;
             rbMostrardeshabilitados.Text = "Deshabilitados";
             rbMostrardeshabilitados.UseVisualStyleBackColor = true;
@@ -536,10 +517,9 @@
             // rbMostrarTodos
             // 
             rbMostrarTodos.AutoSize = true;
-            rbMostrarTodos.Location = new Point(300, 28);
-            rbMostrarTodos.Margin = new Padding(4);
+            rbMostrarTodos.Location = new Point(240, 22);
             rbMostrarTodos.Name = "rbMostrarTodos";
-            rbMostrarTodos.Size = new Size(150, 27);
+            rbMostrarTodos.Size = new Size(120, 22);
             rbMostrarTodos.TabIndex = 29;
             rbMostrarTodos.Text = "Mostrar Todos";
             rbMostrarTodos.UseVisualStyleBackColor = true;
@@ -548,10 +528,9 @@
             // 
             rbMostrarHabilitados.AutoSize = true;
             rbMostrarHabilitados.Checked = true;
-            rbMostrarHabilitados.Location = new Point(8, 28);
-            rbMostrarHabilitados.Margin = new Padding(4);
+            rbMostrarHabilitados.Location = new Point(6, 22);
             rbMostrarHabilitados.Name = "rbMostrarHabilitados";
-            rbMostrarHabilitados.Size = new Size(124, 27);
+            rbMostrarHabilitados.Size = new Size(101, 22);
             rbMostrarHabilitados.TabIndex = 28;
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
@@ -564,10 +543,9 @@
             lblFecha.AutoSize = true;
             lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(912, 802);
-            lblFecha.Margin = new Padding(4, 0, 4, 0);
+            lblFecha.Location = new Point(730, 642);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(28, 33);
+            lblFecha.Size = new Size(22, 25);
             lblFecha.TabIndex = 30;
             lblFecha.Text = "1";
             lblFecha.Visible = false;
@@ -578,10 +556,9 @@
             lblHora.AutoSize = true;
             lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(912, 770);
-            lblHora.Margin = new Padding(4, 0, 4, 0);
+            lblHora.Location = new Point(730, 616);
             lblHora.Name = "lblHora";
-            lblHora.Size = new Size(33, 40);
+            lblHora.Size = new Size(28, 33);
             lblHora.TabIndex = 29;
             lblHora.Text = "1";
             lblHora.Visible = false;
@@ -595,10 +572,9 @@
             btnAgregarCategoria.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCategoria.ForeColor = SystemColors.ButtonFace;
-            btnAgregarCategoria.Location = new Point(426, 4);
-            btnAgregarCategoria.Margin = new Padding(4);
+            btnAgregarCategoria.Location = new Point(340, 3);
             btnAgregarCategoria.Name = "btnAgregarCategoria";
-            btnAgregarCategoria.Size = new Size(175, 55);
+            btnAgregarCategoria.Size = new Size(140, 44);
             btnAgregarCategoria.TabIndex = 22;
             btnAgregarCategoria.Text = "Categorias";
             btnAgregarCategoria.UseVisualStyleBackColor = false;
@@ -609,10 +585,9 @@
             btnEditarProducto.BackColor = Color.FromArgb(189, 215, 238);
             btnEditarProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditarProducto.ForeColor = Color.FromArgb(87, 99, 110);
-            btnEditarProducto.Location = new Point(4, 67);
-            btnEditarProducto.Margin = new Padding(4);
+            btnEditarProducto.Location = new Point(3, 53);
             btnEditarProducto.Name = "btnEditarProducto";
-            btnEditarProducto.Size = new Size(231, 55);
+            btnEditarProducto.Size = new Size(185, 44);
             btnEditarProducto.TabIndex = 20;
             btnEditarProducto.Text = "Editar Producto";
             btnEditarProducto.UseVisualStyleBackColor = false;
@@ -623,10 +598,9 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panelCarrito);
-            panel1.Location = new Point(15, 150);
-            panel1.Margin = new Padding(4);
+            panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
-            panel1.Size = new Size(932, 546);
+            panel1.Size = new Size(746, 437);
             panel1.TabIndex = 32;
             // 
             // lstSugerencias
@@ -635,13 +609,12 @@
             lstSugerencias.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lstSugerencias.ForeColor = Color.DimGray;
             lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 24;
-            lstSugerencias.Location = new Point(38, 56);
-            lstSugerencias.Margin = new Padding(4);
-            lstSugerencias.MaximumSize = new Size(999, 499);
-            lstSugerencias.MinimumSize = new Size(205, 28);
+            lstSugerencias.ItemHeight = 19;
+            lstSugerencias.Location = new Point(30, 45);
+            lstSugerencias.MaximumSize = new Size(800, 400);
+            lstSugerencias.MinimumSize = new Size(165, 23);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(428, 28);
+            lstSugerencias.Size = new Size(343, 23);
             lstSugerencias.TabIndex = 2;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -655,10 +628,9 @@
             flowLayoutPanel1.Controls.Add(btnAgregarCategoria);
             flowLayoutPanel1.Controls.Add(btnEditarProducto);
             flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(15, 709);
-            flowLayoutPanel1.Margin = new Padding(4);
+            flowLayoutPanel1.Location = new Point(12, 567);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(612, 125);
+            flowLayoutPanel1.Size = new Size(490, 100);
             flowLayoutPanel1.TabIndex = 33;
             // 
             // btnLimpiarFiltros
@@ -667,10 +639,9 @@
             btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLimpiarFiltros.ForeColor = Color.White;
             btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
-            btnLimpiarFiltros.Location = new Point(4, 6);
-            btnLimpiarFiltros.Margin = new Padding(4);
+            btnLimpiarFiltros.Location = new Point(3, 5);
             btnLimpiarFiltros.Name = "btnLimpiarFiltros";
-            btnLimpiarFiltros.Size = new Size(146, 40);
+            btnLimpiarFiltros.Size = new Size(117, 32);
             btnLimpiarFiltros.TabIndex = 34;
             btnLimpiarFiltros.Text = "Limpiar Filtros";
             btnLimpiarFiltros.UseVisualStyleBackColor = false;
@@ -679,10 +650,9 @@
             // pbxClean
             // 
             pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
-            pbxClean.Location = new Point(151, 10);
-            pbxClean.Margin = new Padding(4);
+            pbxClean.Location = new Point(121, 8);
             pbxClean.Name = "pbxClean";
-            pbxClean.Size = new Size(56, 30);
+            pbxClean.Size = new Size(45, 24);
             pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
             pbxClean.TabIndex = 35;
             pbxClean.TabStop = false;
@@ -693,10 +663,9 @@
             pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(558, 15);
-            pnlLimpiarFiltros.Margin = new Padding(4);
+            pnlLimpiarFiltros.Location = new Point(446, 12);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
-            pnlLimpiarFiltros.Size = new Size(208, 54);
+            pnlLimpiarFiltros.Size = new Size(166, 43);
             pnlLimpiarFiltros.TabIndex = 36;
             pnlLimpiarFiltros.Visible = false;
             // 
@@ -706,20 +675,19 @@
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.DimGray;
-            label3.Location = new Point(784, 21);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(627, 17);
             label3.Name = "label3";
             label3.RightToLeft = RightToLeft.Yes;
-            label3.Size = new Size(165, 46);
+            label3.Size = new Size(132, 36);
             label3.TabIndex = 37;
             label3.Text = ":Total de Productos\r\n110\r\n";
             // 
             // frmProductos
             // 
-            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(962, 849);
+            ClientSize = new Size(770, 679);
             Controls.Add(label3);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(flowLayoutPanel1);
@@ -731,7 +699,6 @@
             Controls.Add(panel1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4);
             Name = "frmProductos";
             Text = "frmProductos";
             FormClosing += frmProductos_FormClosing;
