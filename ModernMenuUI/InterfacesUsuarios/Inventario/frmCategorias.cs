@@ -101,7 +101,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             lstSugerencias.DataSource = null;
             dgvCategorias.DataSource = null;
-            //CategoriaSeleccionada = null;
         }
 
         private void RecargarInterfazSafe()
@@ -119,6 +118,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             catch { }
         }
 
+        // -------------------------------------------------------------
+        // CARGA DE DATOS
+        // -------------------------------------------------------------
         private async Task InicializarDatosYBuscador()
         {
             try
@@ -127,37 +129,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
                 _listaCompletaCategorias = await _categoriaRepositorio.ObtenerTodasLasCategorias(null);
 
-                _buscadorCtrl?.Dispose();
-                _buscadorCtrl = new BuscadorInteractivo<Categoria>(
-                    txtBuscar,
-                    lstSugerencias,
-                    dgvCategorias,
-                    _listaCompletaCategorias,
-
-                    (c, t) => c.IdCategoria.ToString() == t,
-
-                    (c, t) =>
-                    {
-                        if (!c.EstadoCategoria) return false;
-
-                        return c.NombreCategoria != null &&
-                               c.NombreCategoria.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0;
-                    },
-
-                    (c) => c.NombreCategoria,
-
-                    (b) =>
-                    {
-                        if (pnlLimpiarFiltros != null)
-                            pnlLimpiarFiltros.Visible = b;
-
-                        if (!b)
-                            RefrescarGrid();
-                    },
-
-                    (txt) => false
-                );
-
+                InicializarBuscador();
                 RefrescarGrid();
             }
             finally
@@ -175,12 +147,74 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             if (_cerrando || this.IsDisposed) return;
 
-            if (_buscadorCtrl != null)
-                _buscadorCtrl.ActualizarDatosMaestros(_listaCompletaCategorias);
-
             RefrescarGrid();
+            ActualizarBuscador();
         }
 
+        // -------------------------------------------------------------
+        // FILTRO + BUSCADOR (igual que en frmUsuario)
+        // -------------------------------------------------------------
+        private List<Categoria> ObtenerCategoriasSegunFiltro()
+        {
+            if (_listaCompletaCategorias == null)
+                return new List<Categoria>();
+
+            IEnumerable<Categoria> query = _listaCompletaCategorias;
+
+            if (rbMostrarHabilitados.Checked)
+                query = query.Where(c => c.EstadoCategoria);
+            else if (rbMostrarDeshabilitados.Checked)
+                query = query.Where(c => !c.EstadoCategoria);
+            // Si es "Todos", no se filtra
+
+            return query.ToList();
+        }
+
+        private void InicializarBuscador()
+        {
+            _buscadorCtrl?.Dispose();
+
+            _buscadorCtrl = new BuscadorInteractivo<Categoria>(
+                txtBuscar,
+                lstSugerencias,
+                dgvCategorias,
+                ObtenerCategoriasSegunFiltro(),
+
+                // BÚSQUEDA EXACTA
+                (c, t) => c.IdCategoria.ToString() == t,
+
+                // BÚSQUEDA PARCIAL (sin forzar estado — lo controla el filtro)
+                (c, t) =>
+                    c.NombreCategoria != null &&
+                    c.NombreCategoria.IndexOf(t, StringComparison.OrdinalIgnoreCase) >= 0,
+
+                // TEXTO MOSTRADO
+                (c) => c.NombreCategoria,
+
+                // EVENTO FILTRO ACTIVO
+                (b) =>
+                {
+                    if (pnlLimpiarFiltros != null)
+                        pnlLimpiarFiltros.Visible = b;
+
+                    if (!b)
+                        RefrescarGrid();
+                },
+
+                // SOLO NÚMEROS
+                (txt) => false
+            );
+        }
+
+        private void ActualizarBuscador()
+        {
+            if (_buscadorCtrl == null) return;
+            _buscadorCtrl.ActualizarDatosMaestros(ObtenerCategoriasSegunFiltro());
+        }
+
+        // -------------------------------------------------------------
+        // GRID
+        // -------------------------------------------------------------
         private void RefrescarGrid()
         {
             if (_cerrando || IsDisposed || _listaCompletaCategorias == null)
@@ -190,23 +224,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
 
             try
             {
-                IEnumerable<Categoria> query = _listaCompletaCategorias;
-
-                if (rbMostrarHabilitados.Checked)
-                    query = query.Where(c => c.EstadoCategoria);
-                else if (rbMostrarDeshabilitados.Checked)
-                    query = query.Where(c => !c.EstadoCategoria);
-
-                string texto = txtBuscar.Text.Trim();
-
-                if (!string.IsNullOrWhiteSpace(texto))
-                {
-                    query = query.Where(c =>
-                        !string.IsNullOrWhiteSpace(c.NombreCategoria) &&
-                        c.NombreCategoria.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0);
-                }
-
-                var listaFinal = query.ToList();
+                var listaFinal = ObtenerCategoriasSegunFiltro();
 
                 dgvCategorias.SuspendLayout();
                 try
@@ -225,8 +243,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 if (pnlLimpiarFiltros != null)
                 {
                     bool hayFiltros = rbMostrarHabilitados.Checked ||
-                                      rbMostrarDeshabilitados.Checked ||
-                                      !string.IsNullOrWhiteSpace(texto);
+                                      rbMostrarDeshabilitados.Checked;
 
                     pnlLimpiarFiltros.Visible = hayFiltros;
                 }
@@ -238,27 +255,42 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             }
         }
 
+        // -------------------------------------------------------------
+        // RADIO BUTTONS
+        // -------------------------------------------------------------
         private void ConfigurarEventosUnificados()
         {
             rbMostrarTodos.CheckedChanged += (s, e) =>
             {
                 if (((RadioButton)s).Checked)
+                {
                     RefrescarGrid();
+                    ActualizarBuscador();
+                }
             };
 
             rbMostrarHabilitados.CheckedChanged += (s, e) =>
             {
                 if (((RadioButton)s).Checked)
+                {
                     RefrescarGrid();
+                    ActualizarBuscador();
+                }
             };
 
             rbMostrarDeshabilitados.CheckedChanged += (s, e) =>
             {
                 if (((RadioButton)s).Checked)
+                {
                     RefrescarGrid();
+                    ActualizarBuscador();
+                }
             };
         }
 
+        // -------------------------------------------------------------
+        // BUSCADOR (eventos UI)
+        // -------------------------------------------------------------
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
         {
             if (_buscadorCtrl != null)
@@ -281,6 +313,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 _buscadorCtrl?.ManejarClickLista();
         }
 
+        // -------------------------------------------------------------
+        // BOTONES
+        // -------------------------------------------------------------
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             _buscadorCtrl?.LimpiarBusqueda();
@@ -290,6 +325,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
                 pnlLimpiarFiltros.Visible = false;
 
             RefrescarGrid();
+            ActualizarBuscador();
         }
 
         private async void btnAgregarCategoria_Click(object sender, EventArgs e)
