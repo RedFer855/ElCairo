@@ -83,7 +83,7 @@
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             pnlLimpiarFiltros = new Panel();
-            label3 = new Label();
+            lblTotalProductos = new Label();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
@@ -669,18 +669,18 @@
             pnlLimpiarFiltros.TabIndex = 36;
             pnlLimpiarFiltros.Visible = false;
             // 
-            // label3
+            // lblTotalProductos
             // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.DimGray;
-            label3.Location = new Point(627, 17);
-            label3.Name = "label3";
-            label3.RightToLeft = RightToLeft.Yes;
-            label3.Size = new Size(132, 36);
-            label3.TabIndex = 37;
-            label3.Text = ":Total de Productos\r\n110\r\n";
+            lblTotalProductos.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblTotalProductos.AutoSize = true;
+            lblTotalProductos.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTotalProductos.ForeColor = Color.DimGray;
+            lblTotalProductos.Location = new Point(627, 17);
+            lblTotalProductos.Name = "lblTotalProductos";
+            lblTotalProductos.RightToLeft = RightToLeft.Yes;
+            lblTotalProductos.Size = new Size(128, 18);
+            lblTotalProductos.TabIndex = 37;
+            lblTotalProductos.Text = "Total de Productos\r\n";
             // 
             // frmProductos
             // 
@@ -688,7 +688,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(770, 679);
-            Controls.Add(label3);
+            Controls.Add(lblTotalProductos);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(lstSugerencias);
@@ -753,7 +753,7 @@
         private Panel pnlLimpiarFiltros;
         private Label label2;
         private Label label1;
-        private Label label3;
+        private Label lblTotalProductos;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn Contenido;

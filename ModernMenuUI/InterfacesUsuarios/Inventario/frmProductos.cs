@@ -253,7 +253,14 @@ namespace ModernMenuUI
             if (listaFinal.Count > 0)
                 dgvProductos.ClearSelection();
 
+            ActualizarTotalProductos(listaFinal.Count);
+
             gbxEstado.Enabled = true;
+        }
+
+        private void ActualizarTotalProductos(int cantidad)
+        {
+            lblTotalProductos.Text = $"Total de Productos{Environment.NewLine}{cantidad}";
         }
 
         // -------------------------------------------------------------
