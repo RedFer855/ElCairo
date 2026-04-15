@@ -67,6 +67,14 @@ namespace ModernMenuUI
         }
         #endregion
 
+        #region Setter centralizado de proveedor
+        private void SetProveedorSeleccionado(Proveedor prov)
+        {
+            _proveedorSeleccionado = prov;
+            lblMensaje.Visible = (prov == null);
+        }
+        #endregion
+
         #region Load y Suscripciones Realtime
         private async void frmGestionCompra_Load(object sender, EventArgs e)
         {
@@ -262,10 +270,8 @@ namespace ModernMenuUI
 
         private void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Validar que se hizo clic dentro de una fila válida
             if (e.RowIndex < 0 || e.RowIndex >= dgvCarrito.RowCount) return;
 
-            // --- COLUMNA 4: ELIMINAR ---
             if (e.ColumnIndex == 4)
             {
                 if (dgvCarrito.CurrentRow != null)
@@ -273,14 +279,11 @@ namespace ModernMenuUI
                     dgvCarrito.Rows.RemoveAt(e.RowIndex);
                     ActualizarTotales();
                 }
-
                 return;
             }
 
-            // --- COLUMNA 5: RESTAR ---
             if (e.ColumnIndex == 5)
             {
-                // Leemos la cantidad actual (Celda 3)
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
                     if (cantidad > 1)
@@ -296,7 +299,6 @@ namespace ModernMenuUI
                 return;
             }
 
-            // --- COLUMNA 6: SUMAR (Posición Original) ---
             if (e.ColumnIndex == 6)
             {
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
@@ -317,16 +319,13 @@ namespace ModernMenuUI
 
         private void AgregarAlCarrito(string codigoBarra, int cantidadAgregar)
         {
-            // 1. Validaciones básicas
             if (string.IsNullOrWhiteSpace(codigoBarra)) return;
             string codigoBuscado = codigoBarra.Trim();
 
-            // 2. Recursos
             Image Eliminar = Properties.Resources.eliminar__1_;
             Image Restar = Properties.Resources.signo_menos__1_;
             Image Sumar = Properties.Resources.mas__2_;
 
-            // 3. Buscar producto en la Grilla de Productos (dgvProductos)
             DataGridViewRow producto = null;
             foreach (DataGridViewRow fila in dgvProductos.Rows)
             {
@@ -345,12 +344,10 @@ namespace ModernMenuUI
                 return;
             }
 
-            // 4. Obtener datos
             string descripcion = producto.Cells[1].Value?.ToString() ?? "";
             decimal costo = 0;
             decimal.TryParse(producto.Cells[4].Value?.ToString(), out costo);
 
-            // 5. Verificar si ya existe en el Carrito (para sumar)
             foreach (DataGridViewRow filaCarrito in dgvCarrito.Rows)
             {
                 string codCarrito = filaCarrito.Cells[0].Value?.ToString();
@@ -362,14 +359,12 @@ namespace ModernMenuUI
                     if (nuevaCant > 400) nuevaCant = 400;
 
                     filaCarrito.Cells[3].Value = nuevaCant;
-                    return; // Ya actualizamos, salimos.
+                    return;
                 }
             }
 
-            // 6. Agregar nueva fila (ESTRUCTURA ORIGINAL DE 7 COLUMNAS)
             int cantidadFinal = Math.Min(cantidadAgregar, 400);
 
-            // Índices: 0=Código, 1=Desc, 2=Precio, 3=Cant, 4=Del, 5=Restar, 6=Sumar
             if (txtNuevoPrecio.Enabled == false)
             {
                 dgvCarrito.Rows.Add(codigoBuscado, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
@@ -392,15 +387,11 @@ namespace ModernMenuUI
                 return;
             }
 
-            // --- CAMBIO AQUÍ ---
-            // Pasamos txtCodigo.Text directamente (es string), ya no lo convertimos a Int32
             if (txtNuevoPrecio.Enabled == false && !chkprecioNuevo.Checked)
             {
                 AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
-                // Reiniciar controles
                 nudCantidad.Value = 1;
-                //txtNuevoPrecio.Value = 1;
                 txtCodigo.Text = null;
                 txtProducto.Text = null;
                 dgvProductos.ClearSelection();
@@ -408,12 +399,10 @@ namespace ModernMenuUI
                 txtPrecio.Text = null;
                 ActualizarTotales();
                 ActualizarImagenCarrito();
-
             }
             else
             {
                 precio_nuevo = txtNuevoPrecio.Value;
-
 
                 if (precio_nuevo == 0)
                 {
@@ -422,16 +411,12 @@ namespace ModernMenuUI
                 }
                 AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
-                //reiniciar controles
-
                 nudCantidad.Value = 1;
                 txtCodigo.Text = null;
                 txtProducto.Text = null;
                 dgvProductos.ClearSelection();
                 txtNuevoPrecio.Enabled = false;
-                //chkprecioNuevo.Checked = false;
 
-                //guardar datos en los subtotales
                 ActualizarTotales();
             }
         }
@@ -440,9 +425,6 @@ namespace ModernMenuUI
         #region Registrar Compra
         private async void btnAgregarCompra_Click(object sender, EventArgs e)
         {
-
-            //Variables
-
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
             var Actual = supabase.Auth.CurrentUser;
             var idProveedor = _proveedorSeleccionado?.IdProveedor;
@@ -458,7 +440,6 @@ namespace ModernMenuUI
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
 
-            //validaciones locales, estoy viendo como putas ponerlas en la capa de validaciones sin que se vuelva un quilombo, por ahora las dejo aquí
             if (_proveedorSeleccionado == null)
             {
                 MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -474,7 +455,6 @@ namespace ModernMenuUI
                 throw new Exception("No hay usuario autenticado en la sesión actual.");
             }
 
-
             if (respEmpleado == null)
             {
                 MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
@@ -483,7 +463,6 @@ namespace ModernMenuUI
 
             try
             {
-                //MessageBox.Show($"Enabled: {txtNuevoPrecio.Enabled} | Checked: {chkprecioNuevo.Checked}");
                 if (precio_nuevo != 0)
                 {
                     decimal precioNuevo = txtNuevoPrecio.Value;
@@ -497,7 +476,6 @@ namespace ModernMenuUI
                         string codigoBarra = row.Cells[0].Value.ToString();
                         int cantidadIngresar = Convert.ToInt32(row.Cells[3].Value);
 
-                        //Preparar parámetros para la función RPC
                         var parametrosPrecio = new
                         {
                             p_id_empleado = idEmpleado,
@@ -514,7 +492,6 @@ namespace ModernMenuUI
                 else
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    //Preparar parámetros para la función RPC
                     var parametros = new
                     {
                         p_id_empleado = idEmpleado,
@@ -537,11 +514,12 @@ namespace ModernMenuUI
                 limpiarcosas();
             }
         }
+
         private void limpiarcosas()
         {
             this.Cursor = Cursors.Default;
             dgvCarrito.Rows.Clear();
-            _proveedorSeleccionado = null;
+            SetProveedorSeleccionado(null);
             txtNombreProveedor.Text = "";
             txtSubTotal.Text = "0.00";
             txtImpuesto.Text = "0.00";
@@ -575,7 +553,6 @@ namespace ModernMenuUI
             }
 
             decimal impuesto = subtotal * 0.15m;
-
             decimal total = subtotal + impuesto;
 
             txtSubTotal.Text = subtotal.ToString("N2");
@@ -591,7 +568,6 @@ namespace ModernMenuUI
         #endregion
 
         #region Búsqueda y Sugerencias Proveedores
-        // Filtra la lista maestra de proveedores (sin usar teléfono)
         private List<Proveedor> BuscarProveedores(string textoBusqueda)
         {
             string busqueda = textoBusqueda?.ToLower().Trim() ?? "";
@@ -669,7 +645,6 @@ namespace ModernMenuUI
             }
             catch (TaskCanceledException)
             {
-                // Búsqueda cancelada por el usuario: normal
             }
         }
 
@@ -707,7 +682,6 @@ namespace ModernMenuUI
 
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (!lstSugerencias.Visible) return;
 
             if (e.KeyCode == Keys.Down)
@@ -736,7 +710,7 @@ namespace ModernMenuUI
                     txtNombreProveedor.SelectionStart = txtNombreProveedor.Text.Length;
                     lstSugerencias.Visible = false;
                     _ctsBusqueda?.Cancel();
-                    _proveedorSeleccionado = proveedorSel;
+                    SetProveedorSeleccionado(proveedorSel);
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
@@ -793,7 +767,7 @@ namespace ModernMenuUI
         {
             if (_ignorarTextChanged) return;
             _sugerenciaActual = "";
-            _proveedorSeleccionado = null;
+            SetProveedorSeleccionado(null);
         }
 
         private async void txtBuscar_Leave(object sender, EventArgs e)
@@ -821,7 +795,7 @@ namespace ModernMenuUI
                 txtNombreProveedor.SelectionStart = txtNombreProveedor.Text.Length;
                 lstSugerencias.Visible = false;
                 _ctsBusqueda?.Cancel();
-                _proveedorSeleccionado = proveedorSel;
+                SetProveedorSeleccionado(proveedorSel);
             }
         }
 
@@ -834,7 +808,6 @@ namespace ModernMenuUI
 
                 lstSugerenciasCompra.Visible = false;
 
-                // Cargar en inputs (igual que tu grid)
                 txtCodigo.Text = prod.CodigoBarraProducto;
                 txtProducto.Text = prod.NombreProducto;
                 txtPrecio.Text = prod.PrecioVenta.ToString();
@@ -856,7 +829,7 @@ namespace ModernMenuUI
 
                     lstSugerencias.Visible = false;
                     _sugerenciaActual = "";
-                    _proveedorSeleccionado = proveedorSel;
+                    SetProveedorSeleccionado(proveedorSel);
                 }
 
                 e.Handled = true;
@@ -875,7 +848,7 @@ namespace ModernMenuUI
                 {
                     txtNombreProveedor.Text = proveedorSel.NombreProveedor;
                     lstSugerencias.Visible = false;
-                    _proveedorSeleccionado = proveedorSel;
+                    SetProveedorSeleccionado(proveedorSel);
                 }
             }
         }
@@ -896,7 +869,6 @@ namespace ModernMenuUI
         #endregion
 
         #region Buscar Proveedor (botones)
-        // Método helper para evitar duplicación entre dos botones que hacían lo mismo.
         private async Task HandleBuscarProveedorAsync()
         {
             string nombre = txtNombreProveedor.Text?.Trim() ?? "";
@@ -910,7 +882,6 @@ namespace ModernMenuUI
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                // 1. Obtener id del proveedor por nombre
                 var idProveedor = await ProveedorRepositorio.ObtenerIdProveedorPorNombreAsync(nombre);
 
                 if (idProveedor == null)
@@ -919,24 +890,24 @@ namespace ModernMenuUI
                     return;
                 }
 
-                // 2. Cargar proveedor (desde memoria o Supabase)
-                _proveedorSeleccionado = _listaMaestraProveedores
+                var provEncontrado = _listaMaestraProveedores
                     .FirstOrDefault(p => p.IdProveedor == idProveedor.Value);
 
-                if (_proveedorSeleccionado == null)
+                if (provEncontrado == null)
                 {
-                    _proveedorSeleccionado = await ProveedorRepositorio.CargarProveedorPorIdAsync(idProveedor.Value);
-                    if (_proveedorSeleccionado != null)
-                        _listaMaestraProveedores.Add(_proveedorSeleccionado);
+                    provEncontrado = await ProveedorRepositorio.CargarProveedorPorIdAsync(idProveedor.Value);
+                    if (provEncontrado != null)
+                        _listaMaestraProveedores.Add(provEncontrado);
                 }
 
-                if (_proveedorSeleccionado == null)
+                if (provEncontrado == null)
                 {
                     MessageBox.Show("Error cargando la información del proveedor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // 3. Obtener marcas asociadas al proveedor
+                SetProveedorSeleccionado(provEncontrado);
+
                 var marcas = await MarcaRepositorio.ObtenerMarcasPorProveedorAsync(_proveedorSeleccionado.IdProveedor);
 
                 if (marcas == null || marcas.Count == 0)
@@ -945,30 +916,17 @@ namespace ModernMenuUI
                     return;
                 }
 
-                // 4. Obtener productos por hoja de marcas
                 var idMarcas = marcas.Select(m => m.IdMarca).ToList();
                 var productos = await _productoRepositorio.ObtenerProductosPorMarcasAsync(idMarcas);
 
-                // 5. Actualizar grid
                 _listaMaestraProductos = productos;
                 RefrescarGrid();
-                /*
-                 *Esto es solo si se quiere mostrar el mensaje de que se selecciono un proveedor
-                 *
-                 *   MessageBox.Show(
-                 *       $"Proveedor seleccionado:\nID: {_proveedorSeleccionado.IdProveedor}\nNombre: {_proveedorSeleccionado.NombreProveedor}",
-                 *       "Proveedor encontrado",
-                 *       MessageBoxButtons.OK,
-                 *       MessageBoxIcon.Information
-                 *   );
-                 */
             }
             finally
             {
                 this.Cursor = Cursors.Default;
             }
         }
-
 
         private async void btnBuscarProv_Click(object sender, EventArgs e)
         {
@@ -982,7 +940,6 @@ namespace ModernMenuUI
                     await HandleBuscarProveedorAsync();
                 }
             }
-
         }
         #endregion
 
@@ -1003,47 +960,32 @@ namespace ModernMenuUI
                 return;
             }
 
-            // 3. OBTENER EL NOMBRE DEL USUARIO
             this.Cursor = Cursors.WaitCursor;
             string nombreUsuario = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
             this.Cursor = Cursors.Default;
 
             List<OrdenCompra> itemsParaReporte = new List<OrdenCompra>();
 
-            // 4. LEER EL CARRITO (CORREGIDO)
             foreach (DataGridViewRow row in dgvCarrito.Rows)
             {
                 if (row.IsNewRow) continue;
 
                 OrdenCompra item = new OrdenCompra();
 
-                // --- CAMBIOS AQUÍ: Usar índices en lugar de nombres ---
-                // Índice 0: Código de Barra (String)
                 item.Codigo = row.Cells[0].Value?.ToString() ?? "";
-
-                // Índice 1: Descripción/Producto
                 item.Producto = row.Cells[1].Value?.ToString() ?? "";
-
-                // Índice 2: Precio/Costo
                 item.Precio = Convert.ToDecimal(row.Cells[2].Value ?? 0);
-
-                // Índice 3: Cantidad
                 item.Cantidad = Convert.ToInt32(row.Cells[3].Value ?? 0);
 
                 itemsParaReporte.Add(item);
             }
 
-            // ... (El resto del método paso 5, 6 y 7 queda igual) ...
-
-            // 5. LEER LOS TOTALES
             string sub = txtSubTotal.Text;
             string imp = txtImpuesto.Text;
             string total = txtTotal.Text;
 
-            // 6. OBTENER EL PROVEEDOR
             string nombreProveedor = txtNombreProveedor.Text.Trim();
 
-            // 7. CREAR Y MOSTRAR EL REPORTE
             frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(
                 itemsParaReporte,
                 sub,
@@ -1081,7 +1023,6 @@ namespace ModernMenuUI
                     txtNuevoPrecio.Enabled = false;
                 }
             }
-
         }
 
         private void btnBuscarProductos_Click(object sender, EventArgs e)
@@ -1089,5 +1030,4 @@ namespace ModernMenuUI
 
         }
     }
-
 }

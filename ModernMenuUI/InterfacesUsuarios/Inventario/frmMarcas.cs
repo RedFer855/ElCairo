@@ -46,8 +46,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Inventario
             ConfigurarFormulario();
 
             _marcaRepositorio = new MarcaRepositorio();
-
-            FormBorderStyle = FormBorderStyle.None;
             btnSeleccionarMarca.Visible = false;
 
             ConfigurarRealtime();

@@ -79,7 +79,7 @@
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 121);
             panel1.Name = "panel1";
-            panel1.Size = new Size(813, 282);
+            panel1.Size = new Size(701, 365);
             panel1.TabIndex = 34;
             // 
             // panelCarrito
@@ -89,7 +89,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 19);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(780, 243);
+            panelCarrito.Size = new Size(668, 326);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -99,7 +99,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(780, 243);
+            panel10.Size = new Size(668, 326);
             panel10.TabIndex = 17;
             // 
             // dgvMarcas
@@ -152,7 +152,7 @@
             dgvMarcas.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvMarcas.RowTemplate.Height = 50;
             dgvMarcas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMarcas.Size = new Size(780, 243);
+            dgvMarcas.Size = new Size(668, 326);
             dgvMarcas.TabIndex = 1;
             dgvMarcas.TabStop = false;
             dgvMarcas.CellDoubleClick += dgvMarcas_CellDoubleClick;
@@ -219,7 +219,7 @@
             flowLayoutPanel1.Controls.Add(btnSeleccionarMarca);
             flowLayoutPanel1.Controls.Add(btnModificarMarca);
             flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(12, 418);
+            flowLayoutPanel1.Location = new Point(12, 501);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(527, 51);
             flowLayoutPanel1.TabIndex = 36;
@@ -274,7 +274,7 @@
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(12, 62);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(813, 53);
+            gbxEstado.Size = new Size(701, 53);
             gbxEstado.TabIndex = 37;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -295,7 +295,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(420, 30);
+            tableLayoutPanel2.Size = new Size(308, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
             // txtFiltroProveedor
@@ -305,7 +305,7 @@
             txtFiltroProveedor.Name = "txtFiltroProveedor";
             txtFiltroProveedor.PlaceholderText = "(Todos los Proveedores)";
             txtFiltroProveedor.ReadOnly = true;
-            txtFiltroProveedor.Size = new Size(282, 25);
+            txtFiltroProveedor.Size = new Size(170, 25);
             txtFiltroProveedor.TabIndex = 34;
             // 
             // btnProveedores
@@ -316,7 +316,7 @@
             btnProveedores.BackgroundImageLayout = ImageLayout.Zoom;
             btnProveedores.FlatAppearance.BorderSize = 0;
             btnProveedores.FlatStyle = FlatStyle.Flat;
-            btnProveedores.Location = new Point(392, 3);
+            btnProveedores.Location = new Point(280, 3);
             btnProveedores.Name = "btnProveedores";
             btnProveedores.Size = new Size(25, 24);
             btnProveedores.TabIndex = 2;
@@ -375,7 +375,7 @@
             panelBusqueda.MaximumSize = new Size(700, 43);
             panelBusqueda.MinimumSize = new Size(330, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(476, 43);
+            panelBusqueda.Size = new Size(364, 43);
             panelBusqueda.TabIndex = 38;
             // 
             // txtBuscar
@@ -387,7 +387,7 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Marcas...";
-            txtBuscar.Size = new Size(441, 20);
+            txtBuscar.Size = new Size(329, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
@@ -402,7 +402,7 @@
             lstSugerencias.Location = new Point(33, 45);
             lstSugerencias.MinimumSize = new Size(243, 22);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(442, 22);
+            lstSugerencias.Size = new Size(330, 22);
             lstSugerencias.TabIndex = 39;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -414,7 +414,7 @@
             pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(640, 12);
+            pnlLimpiarFiltros.Location = new Point(528, 12);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
             pnlLimpiarFiltros.Size = new Size(186, 43);
             pnlLimpiarFiltros.TabIndex = 56;
@@ -449,7 +449,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(837, 481);
+            ClientSize = new Size(725, 564);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(lstSugerencias);
             Controls.Add(flowLayoutPanel1);
