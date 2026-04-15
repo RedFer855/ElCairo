@@ -59,6 +59,9 @@ namespace ModernMenuUI
             catch { }
         }
 
+        // -------------------------------------------------------------
+        // CARGA DE DATOS
+        // -------------------------------------------------------------
         private async Task InicializarDatosYBuscador()
         {
             try
@@ -67,31 +70,7 @@ namespace ModernMenuUI
 
                 _listaMaestraProductos = await _productoRepositorio.ObtenerTodosLosProductos(null);
 
-                _buscadorCtrl = new BuscadorInteractivo<Producto>(
-                    txtBuscar,
-                    lstSugerencias,
-                    dgvProductos,
-                    _listaMaestraProductos,
-
-                    (p, txt) => p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(txt),
-
-                    (p, txt) =>
-                    {
-                        if (!p.EstadoProducto) return false;
-
-                        return p.ToString().IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
-                    },
-
-                    (p) => p.ToString(),
-
-                    (busquedaActiva) =>
-                    {
-                        pnlLimpiarFiltros.Visible = busquedaActiva;
-                        if (!busquedaActiva) RefrescarGrid();
-                    },
-
-                    (txt) => txt.All(char.IsDigit) && txt.Length >= 8 && txt.Length <= 13
-                );
+                InicializarBuscador();
                 RefrescarGrid();
             }
             catch (Exception ex)
@@ -112,8 +91,8 @@ namespace ModernMenuUI
             try
             {
                 _listaMaestraProductos = await _productoRepositorio.ObtenerTodosLosProductos(null);
-                _buscadorCtrl?.ActualizarDatosMaestros(_listaMaestraProductos);
                 RefrescarGrid();
+                ActualizarBuscador();
             }
             catch (Exception ex)
             {
@@ -127,8 +106,169 @@ namespace ModernMenuUI
                 this.BeginInvoke((MethodInvoker)(async () => await CargarProductosMaestros()));
         }
 
+        // -------------------------------------------------------------
+        // FILTROS COMBINADOS (estado + marca + categoría)
+        // -------------------------------------------------------------
+        private List<Producto> ObtenerProductosSegunFiltro()
+        {
+            if (_listaMaestraProductos == null)
+                return new List<Producto>();
+
+            IEnumerable<Producto> query = _listaMaestraProductos;
+
+            if (rbMostrarHabilitados.Checked)
+                query = query.Where(p => p.EstadoProducto);
+            else if (rbMostrardeshabilitados.Checked)
+                query = query.Where(p => !p.EstadoProducto);
+
+            if (_filtroMarcaId.HasValue)
+                query = query.Where(p => p.IdMarca == _filtroMarcaId.Value);
+
+            if (_filtroCategoriaId.HasValue)
+                query = query.Where(p => p.IdCategoria == _filtroCategoriaId.Value);
+
+            return query.ToList();
+        }
+
+        private void InicializarBuscador()
+        {
+            _buscadorCtrl = new BuscadorInteractivo<Producto>(
+                txtBuscar,
+                lstSugerencias,
+                dgvProductos,
+                ObtenerProductosSegunFiltro(),
+
+                // BÚSQUEDA EXACTA (código de barras)
+                (p, txt) => p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(txt),
+
+                // BÚSQUEDA PARCIAL
+                (p, txt) =>
+                    p.ToString().IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0,
+
+                // TEXTO MOSTRADO
+                (p) => p.ToString(),
+
+                // EVENTO FILTRO ACTIVO
+                (busquedaActiva) =>
+                {
+                    pnlLimpiarFiltros.Visible = busquedaActiva || HayFiltrosExtras();
+                    if (!busquedaActiva) RefrescarGrid();
+                },
+
+                // CÓDIGO DE BARRAS (8-13 dígitos)
+                (txt) => txt.All(char.IsDigit) && txt.Length >= 8 && txt.Length <= 13
+            );
+        }
+
+        private void ActualizarBuscador()
+        {
+            if (_buscadorCtrl == null) return;
+            _buscadorCtrl.ActualizarDatosMaestros(ObtenerProductosSegunFiltro());
+        }
+
+        private bool HayFiltrosExtras()
+        {
+            return !rbMostrarHabilitados.Checked ||
+                   _filtroMarcaId.HasValue ||
+                   _filtroCategoriaId.HasValue;
+        }
+
+        // -------------------------------------------------------------
+        // BÚSQUEDA GLOBAL POR CÓDIGO DE BARRAS (ignora filtros)
+        // -------------------------------------------------------------
+        private bool IntentarBusquedaPorCodigoBarras(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto)) return false;
+            if (!(texto.All(char.IsDigit) && texto.Length >= 8 && texto.Length <= 13))
+                return false;
+
+            var producto = _listaMaestraProductos
+                .FirstOrDefault(p => p.CodigoBarraProducto != null &&
+                                     p.CodigoBarraProducto.Equals(texto));
+
+            if (producto == null)
+            {
+                MessageBox.Show(
+                    "No se encontró ningún producto con ese código de barras.",
+                    "No encontrado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return true;
+            }
+
+            if (!producto.EstadoProducto)
+            {
+                MessageBox.Show(
+                    "Este producto está deshabilitado. Consulte con su administrador.",
+                    "Producto deshabilitado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return true;
+            }
+
+            // Producto habilitado → si está oculto por filtros, limpiamos filtros
+            bool visibleEnGridActual = ObtenerProductosSegunFiltro()
+                .Any(p => p.IdProducto == producto.IdProducto);
+
+            if (!visibleEnGridActual)
+            {
+                rbMostrarTodos.Checked = true;
+                _filtroMarcaId = null;
+                _filtroCategoriaId = null;
+                txtFiltroMarca.Text = "";
+                txtFiltroCategoria.Text = "";
+                RefrescarGrid();
+                ActualizarBuscador();
+            }
+
+            // Seleccionar la fila correspondiente
+            foreach (DataGridViewRow row in dgvProductos.Rows)
+            {
+                if (row.DataBoundItem is Producto p && p.IdProducto == producto.IdProducto)
+                {
+                    row.Selected = true;
+                    dgvProductos.CurrentCell = row.Cells[0];
+                    break;
+                }
+            }
+
+            txtBuscar.Clear();
+            return true;
+        }
+
+        // -------------------------------------------------------------
+        // GRID
+        // -------------------------------------------------------------
+        private void RefrescarGrid()
+        {
+            gbxEstado.Enabled = false;
+
+            var listaFinal = ObtenerProductosSegunFiltro();
+
+            dgvProductos.DataSource = null;
+            dgvProductos.DataSource = listaFinal;
+
+            pnlLimpiarFiltros.Visible = HayFiltrosExtras();
+
+            if (listaFinal.Count > 0)
+                dgvProductos.ClearSelection();
+
+            gbxEstado.Enabled = true;
+        }
+
+        // -------------------------------------------------------------
+        // EVENTOS BUSCADOR
+        // -------------------------------------------------------------
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
-            => await _buscadorCtrl.ManejarKeyUpAsync(e);
+        {
+            if (e.KeyCode == Keys.Enter &&
+                IntentarBusquedaPorCodigoBarras(txtBuscar.Text.Trim()))
+            {
+                return;
+            }
+
+            await _buscadorCtrl.ManejarKeyUpAsync(e);
+        }
 
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
             => _buscadorCtrl.ManejarKeyDown(e);
@@ -145,37 +285,16 @@ namespace ModernMenuUI
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
-            => _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
-
-        private void RefrescarGrid()
         {
-            gbxEstado.Enabled = false;
+            if (IntentarBusquedaPorCodigoBarras(txtBuscar.Text.Trim()))
+                return;
 
-            var query = _listaMaestraProductos.AsEnumerable();
-
-            if (rbMostrarHabilitados.Checked)
-                query = query.Where(p => p.EstadoProducto);
-            else if (rbMostrardeshabilitados.Checked)
-                query = query.Where(p => !p.EstadoProducto);
-
-            if (_filtroMarcaId.HasValue)
-                query = query.Where(p => p.IdMarca == _filtroMarcaId.Value);
-
-            if (_filtroCategoriaId.HasValue)
-                query = query.Where(p => p.IdCategoria == _filtroCategoriaId.Value);
-
-            var listaFinal = query.ToList();
-            dgvProductos.DataSource = listaFinal;
-
-            bool hayFiltros = !rbMostrarHabilitados.Checked || _filtroMarcaId != null || _filtroCategoriaId != null;
-            pnlLimpiarFiltros.Visible = hayFiltros;
-
-            if (listaFinal.Count > 0)
-                dgvProductos.ClearSelection();
-
-            gbxEstado.Enabled = true;
+            _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
         }
 
+        // -------------------------------------------------------------
+        // RADIO BUTTONS
+        // -------------------------------------------------------------
         private void ConfigurarEventosUnificados()
         {
             rbMostrarTodos.CheckedChanged += FiltroEstado_Changed;
@@ -186,7 +305,10 @@ namespace ModernMenuUI
         private void FiltroEstado_Changed(object sender, EventArgs e)
         {
             if (sender is RadioButton rb && rb.Checked)
+            {
                 RefrescarGrid();
+                ActualizarBuscador();
+            }
         }
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
@@ -197,6 +319,9 @@ namespace ModernMenuUI
                 ProductoSeleccionado = null;
         }
 
+        // -------------------------------------------------------------
+        // LIMPIAR FILTROS
+        // -------------------------------------------------------------
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             _filtroMarcaId = null;
@@ -209,8 +334,12 @@ namespace ModernMenuUI
 
             _buscadorCtrl.LimpiarBusqueda();
             RefrescarGrid();
+            ActualizarBuscador();
         }
 
+        // -------------------------------------------------------------
+        // CRUD PRODUCTOS
+        // -------------------------------------------------------------
         private async void btnNuevoProducto_Click(object sender, EventArgs e)
         {
             await AbrirEditorProducto(null);
@@ -242,6 +371,9 @@ namespace ModernMenuUI
             new frmAgregarEditarProducto().ShowDialog();
         }
 
+        // -------------------------------------------------------------
+        // FILTROS MARCA Y CATEGORÍA
+        // -------------------------------------------------------------
         private void AbrirFiltro<TForm>(Func<TForm> factory, Action<TForm> onSuccess)
             where TForm : Form
         {
@@ -258,6 +390,7 @@ namespace ModernMenuUI
                 txtFiltroMarca.Text = f.MarcaSeleccionada.NombreMarca;
                 _filtroMarcaId = f.MarcaSeleccionada.IdMarca;
                 RefrescarGrid();
+                ActualizarBuscador();
             });
 
         private void btnCategoria_Click(object sender, EventArgs e)
@@ -266,6 +399,7 @@ namespace ModernMenuUI
                 txtFiltroCategoria.Text = f.CategoriaSeleccionada.NombreCategoria;
                 _filtroCategoriaId = f.CategoriaSeleccionada.IdCategoria;
                 RefrescarGrid();
+                ActualizarBuscador();
             });
 
         private void btnAgregarMarca_Click(object sender, EventArgs e)
@@ -286,7 +420,6 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
-            //_servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
         }
 
         private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
