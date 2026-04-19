@@ -55,9 +55,9 @@ namespace ModernMenuUI
 
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
-
             ConfigurarEventosUnificados();
-            ConfigurarPaginador();
+
+            ConfigurarPaginador(); 
 
             _timerDebounce = new System.Windows.Forms.Timer { Interval = 350 };
             _timerDebounce.Tick += TimerDebounce_Tick;
@@ -101,13 +101,13 @@ namespace ModernMenuUI
         // =========================================================
         private void ConfigurarPaginador()
         {
-            paginador.PaginaCambiada += async (s, nueva) =>
+            paginadorProductos.PaginaCambiada += async (s, nueva) =>
             {
                 _filtros.Pagina = nueva;
                 await CargarPaginaAsync();
             };
 
-            paginador.TamanioPaginaCambiado += async (s, tam) =>
+            paginadorProductos.TamanioPaginaCambiado += async (s, tam) =>
             {
                 _filtros.TamanioPagina = tam;
                 _filtros.Pagina = 1;
@@ -138,7 +138,7 @@ namespace ModernMenuUI
                 dgvProductos.DataSource = null;
                 dgvProductos.DataSource = resultado.Items;
 
-                paginador.Actualizar(
+                paginadorProductos.Actualizar(
                     resultado.PaginaActual,
                     resultado.TotalPaginas,
                     resultado.TotalRegistros);

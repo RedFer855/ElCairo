@@ -76,7 +76,7 @@
             btnAgregarCategoria = new Button();
             btnEditarProducto = new Button();
             panel1 = new Panel();
-            paginador = new ModernMenuUI.ClasesUI.PaginadorControl();
+            paginadorProductos = new ModernMenuUI.ClasesUI.PaginadorControl();
             lstSugerencias = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnLimpiarFiltros = new Button();
@@ -570,24 +570,24 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(paginador);
+            panel1.Controls.Add(paginadorProductos);
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
             panel1.Size = new Size(746, 499);
             panel1.TabIndex = 32;
             // 
-            // paginador
+            // paginadorProductos
             // 
-            paginador.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            paginador.BackColor = Color.FromArgb(189, 215, 238);
-            paginador.Font = new Font("Itim", 10.5F);
-            paginador.Location = new Point(6, 457);
-            paginador.Margin = new Padding(3, 4, 3, 4);
-            paginador.MinimumSize = new Size(550, 38);
-            paginador.Name = "paginador";
-            paginador.Size = new Size(550, 38);
-            paginador.TabIndex = 0;
+            paginadorProductos.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            paginadorProductos.BackColor = Color.FromArgb(189, 215, 238);
+            paginadorProductos.Font = new Font("Itim", 10.5F);
+            paginadorProductos.Location = new Point(15, 457);
+            paginadorProductos.Margin = new Padding(3, 4, 3, 4);
+            paginadorProductos.MinimumSize = new Size(550, 38);
+            paginadorProductos.Name = "paginadorProductos";
+            paginadorProductos.Size = new Size(550, 38);
+            paginadorProductos.TabIndex = 14;
             // 
             // lstSugerencias
             // 
@@ -749,5 +749,6 @@
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn EstadoProducto;
         private ClasesUI.PaginadorControl paginador;
+        private ClasesUI.PaginadorControl paginadorProductos;
     }
 }

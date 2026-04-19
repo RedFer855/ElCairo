@@ -27,7 +27,9 @@ namespace ModernMenuUI.ClasesUI
         {
             InitializeComponent();
 
-            // Valor inicial del combo
+            // ✅ Agregar items como enteros, no como strings
+            cmbTamanioPagina.Items.Clear();
+            cmbTamanioPagina.Items.AddRange(new object[] { 50, 100, 200, 500 });
             cmbTamanioPagina.SelectedItem = 100;
 
             // Suscribir eventos
