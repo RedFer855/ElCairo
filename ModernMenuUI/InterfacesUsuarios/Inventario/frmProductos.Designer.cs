@@ -72,12 +72,11 @@
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
             rbMostrarHabilitados = new RadioButton();
-            lblFecha = new Label();
-            lblHora = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
             btnAgregarCategoria = new Button();
             btnEditarProducto = new Button();
             panel1 = new Panel();
+            paginador = new ModernMenuUI.ClasesUI.PaginadorControl();
             lstSugerencias = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnLimpiarFiltros = new Button();
@@ -103,7 +102,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 17);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(718, 407);
+            panelCarrito.Size = new Size(718, 433);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -113,7 +112,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(718, 407);
+            panel10.Size = new Size(718, 433);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -166,7 +165,7 @@
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(718, 407);
+            dgvProductos.Size = new Size(718, 433);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -359,7 +358,7 @@
             btnNuevoProducto.ForeColor = SystemColors.ButtonFace;
             btnNuevoProducto.Location = new Point(3, 3);
             btnNuevoProducto.Name = "btnNuevoProducto";
-            btnNuevoProducto.Size = new Size(185, 44);
+            btnNuevoProducto.Size = new Size(133, 33);
             btnNuevoProducto.TabIndex = 17;
             btnNuevoProducto.Text = "Nuevo Producto";
             btnNuevoProducto.UseVisualStyleBackColor = false;
@@ -371,9 +370,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(194, 53);
+            btnSalir.Location = new Point(442, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(140, 44);
+            btnSalir.Size = new Size(67, 33);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -384,9 +383,9 @@
             btnAgregarMarca.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarMarca.ForeColor = SystemColors.ButtonFace;
-            btnAgregarMarca.Location = new Point(194, 3);
+            btnAgregarMarca.Location = new Point(142, 3);
             btnAgregarMarca.Name = "btnAgregarMarca";
-            btnAgregarMarca.Size = new Size(140, 44);
+            btnAgregarMarca.Size = new Size(74, 33);
             btnAgregarMarca.TabIndex = 21;
             btnAgregarMarca.Text = "Marcas";
             btnAgregarMarca.UseVisualStyleBackColor = false;
@@ -537,32 +536,6 @@
             rbMostrarHabilitados.UseVisualStyleBackColor = true;
             rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
-            // lblFecha
-            // 
-            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(730, 642);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(22, 25);
-            lblFecha.TabIndex = 30;
-            lblFecha.Text = "1";
-            lblFecha.Visible = false;
-            // 
-            // lblHora
-            // 
-            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblHora.AutoSize = true;
-            lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(730, 616);
-            lblHora.Name = "lblHora";
-            lblHora.Size = new Size(28, 33);
-            lblHora.TabIndex = 29;
-            lblHora.Text = "1";
-            lblHora.Visible = false;
-            // 
             // HoraFecha
             // 
             HoraFecha.Enabled = true;
@@ -572,9 +545,9 @@
             btnAgregarCategoria.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCategoria.ForeColor = SystemColors.ButtonFace;
-            btnAgregarCategoria.Location = new Point(340, 3);
+            btnAgregarCategoria.Location = new Point(222, 3);
             btnAgregarCategoria.Name = "btnAgregarCategoria";
-            btnAgregarCategoria.Size = new Size(140, 44);
+            btnAgregarCategoria.Size = new Size(98, 33);
             btnAgregarCategoria.TabIndex = 22;
             btnAgregarCategoria.Text = "Categorias";
             btnAgregarCategoria.UseVisualStyleBackColor = false;
@@ -585,11 +558,11 @@
             btnEditarProducto.BackColor = Color.FromArgb(189, 215, 238);
             btnEditarProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditarProducto.ForeColor = Color.FromArgb(87, 99, 110);
-            btnEditarProducto.Location = new Point(3, 53);
+            btnEditarProducto.Location = new Point(326, 3);
             btnEditarProducto.Name = "btnEditarProducto";
-            btnEditarProducto.Size = new Size(185, 44);
+            btnEditarProducto.Size = new Size(110, 33);
             btnEditarProducto.TabIndex = 20;
-            btnEditarProducto.Text = "Editar Producto";
+            btnEditarProducto.Text = "Ver Producto";
             btnEditarProducto.UseVisualStyleBackColor = false;
             btnEditarProducto.Click += btnEditarProducto_Click;
             // 
@@ -597,11 +570,24 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(paginador);
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
-            panel1.Size = new Size(746, 437);
+            panel1.Size = new Size(746, 499);
             panel1.TabIndex = 32;
+            // 
+            // paginador
+            // 
+            paginador.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            paginador.BackColor = Color.FromArgb(189, 215, 238);
+            paginador.Font = new Font("Itim", 10.5F);
+            paginador.Location = new Point(6, 457);
+            paginador.Margin = new Padding(3, 4, 3, 4);
+            paginador.MinimumSize = new Size(550, 38);
+            paginador.Name = "paginador";
+            paginador.Size = new Size(550, 38);
+            paginador.TabIndex = 0;
             // 
             // lstSugerencias
             // 
@@ -628,9 +614,9 @@
             flowLayoutPanel1.Controls.Add(btnAgregarCategoria);
             flowLayoutPanel1.Controls.Add(btnEditarProducto);
             flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(12, 567);
+            flowLayoutPanel1.Location = new Point(12, 625);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(490, 100);
+            flowLayoutPanel1.Size = new Size(746, 42);
             flowLayoutPanel1.TabIndex = 33;
             // 
             // btnLimpiarFiltros
@@ -694,8 +680,6 @@
             Controls.Add(lstSugerencias);
             Controls.Add(gbxEstado);
             Controls.Add(panelBusqueda);
-            Controls.Add(lblFecha);
-            Controls.Add(lblHora);
             Controls.Add(panel1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
@@ -735,8 +719,6 @@
         private RadioButton rbMostrardeshabilitados;
         private RadioButton rbMostrarTodos;
         private RadioButton rbMostrarHabilitados;
-        private Label lblFecha;
-        private Label lblHora;
         private System.Windows.Forms.Timer HoraFecha;
         private Button btnAgregarCategoria;
         private Button btnEditarProducto;
@@ -766,5 +748,6 @@
         private DataGridViewTextBoxColumn PrecioCompra;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn EstadoProducto;
+        private ClasesUI.PaginadorControl paginador;
     }
 }

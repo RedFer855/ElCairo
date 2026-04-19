@@ -734,5 +734,10 @@ namespace ModernMenuUI
                 MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
             }
         }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
