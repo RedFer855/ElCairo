@@ -227,72 +227,52 @@ namespace CapaDeDatos.Repositorios
         /// Consulta ligera: solo nombres de producto para autocompletar.
         /// No incluye joins, es MUY rápida.
         /// </summary>
-        public async Task<List<string>> ObtenerSugerenciasAsync(
-            string texto,
-            bool? estado = true,
-            int limite = 10,
-            CancellationToken ct = default)
+        public async Task<List<Producto>> ObtenerSugerenciasAsync(
+     string texto,
+     bool? estado = true,
+     int limite = 10,
+     CancellationToken ct = default)
         {
             if (string.IsNullOrWhiteSpace(texto))
-                return new List<string>();
+                return new List<Producto>();
 
             try
             {
                 var client = await GetClient();
                 var query = client.From<Producto>();
 
-                // Filtro de estado
                 if (estado.HasValue)
-                {
                     query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
                         query.Filter("estado_producto", Operator.Equals,
                                      estado.Value.ToString().ToLower());
-                }
 
-                // Filtro por texto: código de barras exacto o nombre parcial
                 string textoLimpio = texto.Trim();
                 bool esCodigo = textoLimpio.All(char.IsDigit)
                                 && textoLimpio.Length >= 8
                                 && textoLimpio.Length <= 13;
 
                 if (esCodigo)
-                {
                     query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
                         query.Filter("codigo_barra_producto", Operator.Equals, textoLimpio);
-                }
                 else
-                {
                     query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
                         query.Filter("nombre_producto", Operator.ILike, $"%{textoLimpio}%");
-                }
 
                 var response = await query
-                    .Select("nombre_producto, codigo_barra_producto, contenido_producto")
-                    .Order("nombre_producto", Supabase.Postgrest.Constants.Ordering.Ascending)
+                    .Select("nombre_producto, codigo_barra_producto, contenido_producto, marca(*), presentacion(*)")
                     .Limit(limite)
                     .Get(ct);
 
-                if (response?.Models == null) return new List<string>();
-
-                // Devolvemos un string descriptivo: nombre + contenido
-                return response.Models
-                    .Select(p => string.IsNullOrEmpty(p.ContenidoProducto)
-                        ? p.NombreProducto
-                        : $"{p.NombreProducto} {p.ContenidoProducto}")
-                    .Where(s => !string.IsNullOrEmpty(s))
-                    .ToList();
+                // ← Retorna Producto completo, no string
+                return response?.Models ?? new List<Producto>();
             }
-            catch (OperationCanceledException)
-            {
-                throw;
-            }
+            catch (OperationCanceledException) { throw; }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error obteniendo sugerencias: {ex.Message}");
-                return new List<string>();
+                System.Diagnostics.Debug.WriteLine($"Error sugerencias: {ex.Message}");
+                return new List<Producto>();
             }
         }
-
         /// <summary>
         /// Busca UN producto exacto por código de barras (para lector POS).
         /// </summary>

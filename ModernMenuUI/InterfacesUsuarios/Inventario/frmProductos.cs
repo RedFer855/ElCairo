@@ -193,8 +193,8 @@ namespace ModernMenuUI
         private async void TimerDebounce_Tick(object sender, EventArgs e)
         {
             _timerDebounce.Stop();
-
             string texto = txtBuscar.Text?.Trim();
+
             if (string.IsNullOrEmpty(texto))
             {
                 lstSugerencias.Visible = false;
@@ -208,10 +208,7 @@ namespace ModernMenuUI
             try
             {
                 var sugerencias = await _productoRepositorio.ObtenerSugerenciasAsync(
-                    texto,
-                    _filtros.Estado,
-                    10,
-                    _ctsSugerencias.Token);
+                    texto, _filtros.Estado, 10, _ctsSugerencias.Token);
 
                 if (_ctsSugerencias.IsCancellationRequested) return;
 
@@ -219,6 +216,8 @@ namespace ModernMenuUI
                 {
                     lstSugerencias.DataSource = null;
                     lstSugerencias.DataSource = sugerencias;
+                    // ← NombreCompleto muestra el nombre concatenado visualmente
+                    lstSugerencias.DisplayMember = "NombreCompleto";
 
                     int alto = (lstSugerencias.ItemHeight * sugerencias.Count) + 6;
                     lstSugerencias.Height = Math.Min(alto, 250);
@@ -298,15 +297,17 @@ namespace ModernMenuUI
                 txtBuscar.Focus();
             }
         }
-
         private async Task AplicarSugerenciaSeleccionada()
         {
-            if (lstSugerencias.SelectedItem is string seleccion)
+            // ← Ahora es Producto, no string
+            if (lstSugerencias.SelectedItem is Producto productoSeleccionado)
             {
-                txtBuscar.Text = seleccion;
+                // Mostrar el nombre completo en el textbox visualmente
+                txtBuscar.Text = productoSeleccionado.NombreCompleto;
                 lstSugerencias.Visible = false;
 
-                _filtros.TextoBusqueda = seleccion;
+                // ← FILTRAR SOLO POR NombreProducto REAL (no el concatenado)
+                _filtros.TextoBusqueda = productoSeleccionado.NombreProducto;
                 _filtros.Pagina = 1;
                 await CargarPaginaAsync();
             }

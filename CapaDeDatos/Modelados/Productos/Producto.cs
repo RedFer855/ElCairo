@@ -85,5 +85,17 @@ namespace CapaDeDatos.Modelados.Productos
             return string.Join(" ", new[] { NombreProducto, NombreMarca, NombrePresentacion, ContenidoProducto }
                    .Where(s => !string.IsNullOrEmpty(s)));
         }
+
+        // Agregar en Producto.cs, junto a los otros computed properties
+        public string NombreCompleto => string.Join(" ", new[]
+        {
+            NombreProducto,
+            NombreMarca,
+            NombrePresentacion,
+            ContenidoProducto
+        }.Where(s => !string.IsNullOrWhiteSpace(s)
+              && s != "N/A"
+              && s != "Sin Marca"
+              && s != "Sin Presentación"));
     }
 }

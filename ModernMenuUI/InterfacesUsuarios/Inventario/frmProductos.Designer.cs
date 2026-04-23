@@ -45,10 +45,10 @@
             dgvProductos = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Contenido = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
+            Contenido = new DataGridViewTextBoxColumn();
             Presentacion = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
             CantidadProducto = new DataGridViewTextBoxColumn();
             PrecioVenta = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
@@ -136,7 +136,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Contenido, dataGridViewTextBoxColumn4, Categoria, Presentacion, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn4, Contenido, Presentacion, Categoria, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.White;
             dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -192,16 +192,6 @@
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
-            // Contenido
-            // 
-            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Contenido.DataPropertyName = "ContenidoProducto";
-            Contenido.HeaderText = "Contenido";
-            Contenido.MinimumWidth = 6;
-            Contenido.Name = "Contenido";
-            Contenido.ReadOnly = true;
-            Contenido.Width = 113;
-            // 
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
@@ -212,15 +202,15 @@
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
-            // Categoria
+            // Contenido
             // 
-            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Categoria.DataPropertyName = "NombreCategoria";
-            Categoria.HeaderText = "Categoría";
-            Categoria.MinimumWidth = 120;
-            Categoria.Name = "Categoria";
-            Categoria.ReadOnly = true;
-            Categoria.Width = 120;
+            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Contenido.DataPropertyName = "ContenidoProducto";
+            Contenido.HeaderText = "Contenido";
+            Contenido.MinimumWidth = 6;
+            Contenido.Name = "Contenido";
+            Contenido.ReadOnly = true;
+            Contenido.Width = 113;
             // 
             // Presentacion
             // 
@@ -231,6 +221,16 @@
             Presentacion.Name = "Presentacion";
             Presentacion.ReadOnly = true;
             Presentacion.Width = 131;
+            // 
+            // Categoria
+            // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Categoria.DataPropertyName = "NombreCategoria";
+            Categoria.HeaderText = "Categoría";
+            Categoria.MinimumWidth = 120;
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
+            Categoria.Width = 120;
             // 
             // CantidadProducto
             // 
@@ -736,19 +736,19 @@
         private Label label2;
         private Label label1;
         private Label lblTotalProductos;
+        private ClasesUI.PaginadorControl paginador;
+        private ClasesUI.PaginadorControl paginadorProductos;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Contenido;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn Categoria;
+        private DataGridViewTextBoxColumn Contenido;
         private DataGridViewTextBoxColumn Presentacion;
+        private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn PrecioCompra;
         private DataGridViewTextBoxColumn PorcentajeGanancia;
         private DataGridViewCheckBoxColumn EstadoProducto;
-        private ClasesUI.PaginadorControl paginador;
-        private ClasesUI.PaginadorControl paginadorProductos;
     }
 }

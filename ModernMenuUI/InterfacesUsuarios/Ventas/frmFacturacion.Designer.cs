@@ -33,11 +33,6 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             btnSalir = new Button();
             txtCliente = new TextBox();
             panel5 = new Panel();
@@ -65,16 +60,13 @@
             Sumar = new DataGridViewImageColumn();
             Eliminar = new DataGridViewImageColumn();
             panelBusqueda = new Panel();
-            lstSugerencias = new ListBox();
             txtBuscar = new TextBox();
             buscar = new Button();
-            panel1 = new Panel();
-            panel7 = new Panel();
-            dgvProductos = new DataGridView();
-            Codigos = new DataGridViewTextBoxColumn();
-            Producto = new DataGridViewTextBoxColumn();
-            Precio = new DataGridViewTextBoxColumn();
-            Stock = new DataGridViewTextBoxColumn();
+            lstSugerencias = new ListBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panel4 = new Panel();
+            panel9 = new Panel();
+            lstClientes = new ListBox();
             panel2 = new Panel();
             nudCantidad = new NumericUpDown();
             label9 = new Label();
@@ -86,10 +78,8 @@
             txtProducto = new TextBox();
             txtPrecio = new TextBox();
             btnAgregar = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            panel4 = new Panel();
-            panel9 = new Panel();
-            lstClientes = new ListBox();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            barraProductos = new ModernMenuUI.ClasesUI.BarraProductosSugeridos();
             panel5.SuspendLayout();
             panel8.SuspendLayout();
             panel6.SuspendLayout();
@@ -100,13 +90,11 @@
             ((System.ComponentModel.ISupportInitialize)pbxCarrito).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).BeginInit();
             panelBusqueda.SuspendLayout();
-            panel1.SuspendLayout();
-            panel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
+            tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // btnSalir
@@ -116,7 +104,7 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(823, 604);
+            btnSalir.Location = new Point(1173, 741);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(80, 63);
             btnSalir.TabIndex = 17;
@@ -132,7 +120,7 @@
             txtCliente.Location = new Point(21, 14);
             txtCliente.Name = "txtCliente";
             txtCliente.PlaceholderText = "Buscar Cliente...";
-            txtCliente.Size = new Size(197, 20);
+            txtCliente.Size = new Size(328, 20);
             txtCliente.TabIndex = 13;
             txtCliente.TextChanged += txtCliente_TextChanged;
             txtCliente.KeyDown += txtCliente_KeyDown;
@@ -144,7 +132,7 @@
             panel5.Controls.Add(txtCliente);
             panel5.Location = new Point(12, 12);
             panel5.Name = "panel5";
-            panel5.Size = new Size(290, 51);
+            panel5.Size = new Size(421, 51);
             panel5.TabIndex = 14;
             // 
             // btnBuscarCliente
@@ -155,7 +143,7 @@
             btnBuscarCliente.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarCliente.FlatAppearance.BorderSize = 0;
             btnBuscarCliente.FlatStyle = FlatStyle.Flat;
-            btnBuscarCliente.Location = new Point(224, 14);
+            btnBuscarCliente.Location = new Point(355, 14);
             btnBuscarCliente.Name = "btnBuscarCliente";
             btnBuscarCliente.Size = new Size(48, 20);
             btnBuscarCliente.TabIndex = 17;
@@ -190,7 +178,7 @@
             btnFacturar.BackColor = Color.FromArgb(149, 195, 172);
             btnFacturar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnFacturar.ForeColor = SystemColors.ButtonFace;
-            btnFacturar.Location = new Point(698, 604);
+            btnFacturar.Location = new Point(1048, 741);
             btnFacturar.Name = "btnFacturar";
             btnFacturar.Size = new Size(108, 63);
             btnFacturar.TabIndex = 16;
@@ -203,9 +191,9 @@
             panel8.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel8.Controls.Add(txtTotal);
             panel8.Controls.Add(label6);
-            panel8.Location = new Point(358, 3);
+            panel8.Location = new Point(603, 3);
             panel8.Name = "panel8";
-            panel8.Size = new Size(146, 51);
+            panel8.Size = new Size(250, 51);
             panel8.TabIndex = 24;
             // 
             // txtTotal
@@ -218,7 +206,7 @@
             txtTotal.Name = "txtTotal";
             txtTotal.PlaceholderText = "L0,00";
             txtTotal.ReadOnly = true;
-            txtTotal.Size = new Size(146, 29);
+            txtTotal.Size = new Size(250, 29);
             txtTotal.TabIndex = 24;
             // 
             // panel6
@@ -226,9 +214,9 @@
             panel6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel6.Controls.Add(txtSubtotal);
             panel6.Controls.Add(label5);
-            panel6.Location = new Point(29, 3);
+            panel6.Location = new Point(47, 3);
             panel6.Name = "panel6";
-            panel6.Size = new Size(148, 51);
+            panel6.Size = new Size(255, 51);
             panel6.TabIndex = 23;
             // 
             // txtSubtotal
@@ -241,7 +229,7 @@
             txtSubtotal.Name = "txtSubtotal";
             txtSubtotal.PlaceholderText = "L0,00";
             txtSubtotal.ReadOnly = true;
-            txtSubtotal.Size = new Size(148, 29);
+            txtSubtotal.Size = new Size(255, 29);
             txtSubtotal.TabIndex = 23;
             // 
             // label5
@@ -260,9 +248,9 @@
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel3.Controls.Add(txtImpuesto);
             panel3.Controls.Add(label7);
-            panel3.Location = new Point(220, 3);
+            panel3.Location = new Point(371, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(100, 51);
+            panel3.Size = new Size(172, 51);
             panel3.TabIndex = 22;
             // 
             // txtImpuesto
@@ -275,17 +263,17 @@
             txtImpuesto.Name = "txtImpuesto";
             txtImpuesto.PlaceholderText = "L0,00";
             txtImpuesto.ReadOnly = true;
-            txtImpuesto.Size = new Size(100, 29);
+            txtImpuesto.Size = new Size(172, 29);
             txtImpuesto.TabIndex = 22;
             // 
             // panelCarrito
             // 
-            panelCarrito.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelCarrito.BackColor = Color.FromArgb(189, 215, 238);
             panelCarrito.Controls.Add(panel10);
-            panelCarrito.Location = new Point(12, 268);
+            panelCarrito.Dock = DockStyle.Fill;
+            panelCarrito.Location = new Point(503, 3);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(891, 330);
+            panelCarrito.Size = new Size(735, 654);
             panelCarrito.TabIndex = 12;
             // 
             // panel10
@@ -296,7 +284,7 @@
             panel10.Controls.Add(dgvCarrito);
             panel10.Location = new Point(21, 16);
             panel10.Name = "panel10";
-            panel10.Size = new Size(849, 301);
+            panel10.Size = new Size(693, 625);
             panel10.TabIndex = 17;
             // 
             // pbxCarritoVacio
@@ -304,9 +292,9 @@
             pbxCarritoVacio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pbxCarritoVacio.BackColor = Color.Transparent;
             pbxCarritoVacio.Image = (Image)resources.GetObject("pbxCarritoVacio.Image");
-            pbxCarritoVacio.Location = new Point(275, 92);
+            pbxCarritoVacio.Location = new Point(269, 220);
             pbxCarritoVacio.Name = "pbxCarritoVacio";
-            pbxCarritoVacio.Size = new Size(308, 143);
+            pbxCarritoVacio.Size = new Size(142, 159);
             pbxCarritoVacio.SizeMode = PictureBoxSizeMode.Zoom;
             pbxCarritoVacio.TabIndex = 3;
             pbxCarritoVacio.TabStop = false;
@@ -367,7 +355,7 @@
             dgvCarrito.RowHeadersWidth = 51;
             dgvCarrito.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvCarrito.RowTemplate.Height = 50;
-            dgvCarrito.Size = new Size(849, 301);
+            dgvCarrito.Size = new Size(693, 625);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
             dgvCarrito.CellContentClick += dgvCarrito_CellContentClick;
@@ -407,7 +395,7 @@
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "CantidadCierre";
+            dataGridViewTextBoxColumn4.HeaderText = "Cantidad";
             dataGridViewTextBoxColumn4.MinimumWidth = 6;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
@@ -446,27 +434,12 @@
             // 
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
-            panelBusqueda.Controls.Add(lstSugerencias);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(buscar);
-            panelBusqueda.Location = new Point(308, 12);
+            panelBusqueda.Location = new Point(439, 12);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(595, 51);
+            panelBusqueda.Size = new Size(814, 51);
             panelBusqueda.TabIndex = 9;
-            // 
-            // lstSugerencias
-            // 
-            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstSugerencias.ForeColor = Color.DimGray;
-            lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 18;
-            lstSugerencias.Location = new Point(21, 30);
-            lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(504, 22);
-            lstSugerencias.TabIndex = 19;
-            lstSugerencias.Visible = false;
-            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
-            lstSugerencias.Leave += lstSugerencias_Leave;
             // 
             // txtBuscar
             // 
@@ -476,9 +449,9 @@
             txtBuscar.Location = new Point(21, 14);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(504, 20);
+            txtBuscar.Size = new Size(723, 20);
             txtBuscar.TabIndex = 1;
-            txtBuscar.TextChanged += txtBuscar_TextChanged;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
             // 
             // buscar
             // 
@@ -488,124 +461,81 @@
             buscar.BackgroundImageLayout = ImageLayout.Zoom;
             buscar.FlatAppearance.BorderSize = 0;
             buscar.FlatStyle = FlatStyle.Flat;
-            buscar.Location = new Point(532, 14);
+            buscar.Location = new Point(751, 14);
             buscar.Name = "buscar";
             buscar.Size = new Size(48, 20);
             buscar.TabIndex = 0;
             buscar.UseVisualStyleBackColor = false;
-            buscar.Visible = false;
             // 
-            // panel1
+            // lstSugerencias
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = Color.FromArgb(189, 215, 238);
-            panel1.Controls.Add(panel7);
-            panel1.Location = new Point(308, 69);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(595, 193);
-            panel1.TabIndex = 10;
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(460, 46);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(724, 22);
+            lstSugerencias.TabIndex = 19;
+            lstSugerencias.Visible = false;
+            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
             // 
-            // panel7
+            // tableLayoutPanel1
             // 
-            panel7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel7.AutoSize = true;
-            panel7.BackColor = Color.FromArgb(189, 215, 238);
-            panel7.Controls.Add(dgvProductos);
-            panel7.Location = new Point(21, 9);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(556, 170);
-            panel7.TabIndex = 11;
+            tableLayoutPanel1.ColumnCount = 7;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5.147059F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.3921566F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.352941F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.833334F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6.372549F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.90196F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 42F));
+            tableLayoutPanel1.Controls.Add(panel8, 5, 0);
+            tableLayoutPanel1.Controls.Add(panel3, 3, 0);
+            tableLayoutPanel1.Controls.Add(panel6, 1, 0);
+            tableLayoutPanel1.Dock = DockStyle.Top;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(901, 63);
+            tableLayoutPanel1.TabIndex = 0;
             // 
-            // dgvProductos
+            // panel4
             // 
-            dgvProductos.AllowUserToAddRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle5.ForeColor = Color.DimGray;
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle5.SelectionForeColor = Color.White;
-            dgvProductos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-            dgvProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvProductos.BackgroundColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.BorderStyle = BorderStyle.None;
-            dgvProductos.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            dgvProductos.ColumnHeadersHeight = 31;
-            dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { Codigos, Producto, Precio, Stock });
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.White;
-            dataGridViewCellStyle8.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle8.Padding = new Padding(5);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle8.SelectionForeColor = Color.White;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dgvProductos.DefaultCellStyle = dataGridViewCellStyle8;
-            dgvProductos.Dock = DockStyle.Fill;
-            dgvProductos.EnableHeadersVisualStyles = false;
-            dgvProductos.GridColor = Color.FromArgb(189, 215, 238);
-            dgvProductos.Location = new Point(0, 0);
-            dgvProductos.Name = "dgvProductos";
-            dgvProductos.ReadOnly = true;
-            dgvProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = SystemColors.Control;
-            dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle9.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dgvProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            dgvProductos.RowHeadersWidth = 30;
-            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dgvProductos.RowTemplate.Height = 30;
-            dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(556, 170);
-            dgvProductos.TabIndex = 0;
-            dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
+            panel4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel4.BackColor = Color.FromArgb(189, 215, 238);
+            panel4.Controls.Add(panel9);
+            panel4.Controls.Add(tableLayoutPanel1);
+            panel4.Location = new Point(12, 741);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(901, 63);
+            panel4.TabIndex = 13;
             // 
-            // Codigos
+            // panel9
             // 
-            dataGridViewCellStyle7.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.Padding = new Padding(0, 1, 0, 0);
-            Codigos.DefaultCellStyle = dataGridViewCellStyle7;
-            Codigos.FillWeight = 90F;
-            Codigos.HeaderText = "Código";
-            Codigos.MinimumWidth = 6;
-            Codigos.Name = "Codigos";
-            Codigos.ReadOnly = true;
+            panel9.Dock = DockStyle.Left;
+            panel9.Location = new Point(0, 63);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(30, 0);
+            panel9.TabIndex = 1;
             // 
-            // Producto
+            // lstClientes
             // 
-            Producto.FillWeight = 200F;
-            Producto.HeaderText = "Producto";
-            Producto.MinimumWidth = 6;
-            Producto.Name = "Producto";
-            Producto.ReadOnly = true;
-            // 
-            // Precio
-            // 
-            Precio.FillWeight = 80F;
-            Precio.HeaderText = "Precio";
-            Precio.MinimumWidth = 6;
-            Precio.Name = "Precio";
-            Precio.ReadOnly = true;
-            // 
-            // Stock
-            // 
-            Stock.FillWeight = 80F;
-            Stock.HeaderText = "Stock";
-            Stock.MinimumWidth = 6;
-            Stock.Name = "Stock";
-            Stock.ReadOnly = true;
+            lstClientes.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstClientes.ForeColor = Color.DimGray;
+            lstClientes.FormattingEnabled = true;
+            lstClientes.ItemHeight = 18;
+            lstClientes.Location = new Point(33, 47);
+            lstClientes.Name = "lstClientes";
+            lstClientes.Size = new Size(328, 22);
+            lstClientes.TabIndex = 18;
+            lstClientes.Visible = false;
+            lstClientes.MouseClick += lstClientes_MouseClick;
+            lstClientes.KeyDown += lstClientes_KeyDown;
             // 
             // panel2
             // 
@@ -620,19 +550,20 @@
             panel2.Controls.Add(txtProducto);
             panel2.Controls.Add(txtPrecio);
             panel2.Controls.Add(btnAgregar);
-            panel2.Location = new Point(12, 69);
+            panel2.Location = new Point(946, 744);
             panel2.Name = "panel2";
-            panel2.Size = new Size(290, 193);
+            panel2.Size = new Size(418, 235);
             panel2.TabIndex = 11;
+            panel2.Visible = false;
             // 
             // nudCantidad
             // 
-            nudCantidad.Font = new Font("Itim", 16.25F);
+            nudCantidad.Font = new Font("Itim", 9.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nudCantidad.ForeColor = Color.FromArgb(87, 99, 110);
-            nudCantidad.Location = new Point(82, 142);
+            nudCantidad.Location = new Point(240, 102);
             nudCantidad.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudCantidad.Name = "nudCantidad";
-            nudCantidad.Size = new Size(59, 33);
+            nudCantidad.Size = new Size(59, 23);
             nudCantidad.TabIndex = 21;
             nudCantidad.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -643,7 +574,7 @@
             label9.ForeColor = Color.WhiteSmoke;
             label9.Location = new Point(11, 9);
             label9.Name = "label9";
-            label9.Size = new Size(265, 23);
+            label9.Size = new Size(206, 23);
             label9.TabIndex = 20;
             label9.Text = "Datos del Producto:";
             // 
@@ -666,7 +597,7 @@
             txtCodigo.Location = new Point(82, 43);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.ReadOnly = true;
-            txtCodigo.Size = new Size(194, 21);
+            txtCodigo.Size = new Size(135, 21);
             txtCodigo.TabIndex = 18;
             // 
             // label3
@@ -674,7 +605,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(87, 99, 110);
-            label3.Location = new Point(10, 151);
+            label3.Location = new Point(166, 106);
             label3.Name = "label3";
             label3.Size = new Size(72, 18);
             label3.TabIndex = 17;
@@ -710,7 +641,7 @@
             txtProducto.Location = new Point(82, 73);
             txtProducto.Name = "txtProducto";
             txtProducto.ReadOnly = true;
-            txtProducto.Size = new Size(194, 21);
+            txtProducto.Size = new Size(217, 21);
             txtProducto.TabIndex = 13;
             // 
             // txtPrecio
@@ -721,7 +652,7 @@
             txtPrecio.Location = new Point(82, 104);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.ReadOnly = true;
-            txtPrecio.Size = new Size(194, 21);
+            txtPrecio.Size = new Size(78, 21);
             txtPrecio.TabIndex = 12;
             // 
             // btnAgregar
@@ -733,69 +664,37 @@
             btnAgregar.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregar.ForeColor = SystemColors.ButtonFace;
             btnAgregar.ImageAlign = ContentAlignment.BottomLeft;
-            btnAgregar.Location = new Point(147, 136);
+            btnAgregar.Location = new Point(223, 9);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Padding = new Padding(30, 0, 0, 0);
-            btnAgregar.Size = new Size(121, 43);
+            btnAgregar.Size = new Size(121, 40);
             btnAgregar.TabIndex = 10;
             btnAgregar.Text = "Añadir";
             btnAgregar.UseVisualStyleBackColor = false;
-            btnAgregar.Click += btnAgregar_Click;
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel2
             // 
-            tableLayoutPanel1.ColumnCount = 7;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5.147059F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.3921566F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.352941F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.833334F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6.372549F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.90196F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 42F));
-            tableLayoutPanel1.Controls.Add(panel8, 5, 0);
-            tableLayoutPanel1.Controls.Add(panel3, 3, 0);
-            tableLayoutPanel1.Controls.Add(panel6, 1, 0);
-            tableLayoutPanel1.Dock = DockStyle.Top;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(551, 63);
-            tableLayoutPanel1.TabIndex = 0;
+            tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 500F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Controls.Add(panelCarrito, 1, 0);
+            tableLayoutPanel2.Controls.Add(barraProductos, 0, 0);
+            tableLayoutPanel2.Location = new Point(12, 75);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(1241, 660);
+            tableLayoutPanel2.TabIndex = 19;
             // 
-            // panel4
+            // barraProductos
             // 
-            panel4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel4.BackColor = Color.FromArgb(189, 215, 238);
-            panel4.Controls.Add(panel9);
-            panel4.Controls.Add(tableLayoutPanel1);
-            panel4.Location = new Point(12, 604);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(551, 63);
-            panel4.TabIndex = 13;
-            // 
-            // panel9
-            // 
-            panel9.Dock = DockStyle.Left;
-            panel9.Location = new Point(0, 63);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(30, 0);
-            panel9.TabIndex = 1;
-            // 
-            // lstClientes
-            // 
-            lstClientes.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstClientes.ForeColor = Color.DimGray;
-            lstClientes.FormattingEnabled = true;
-            lstClientes.ItemHeight = 18;
-            lstClientes.Location = new Point(33, 47);
-            lstClientes.Name = "lstClientes";
-            lstClientes.Size = new Size(197, 22);
-            lstClientes.TabIndex = 18;
-            lstClientes.Visible = false;
-            lstClientes.MouseClick += lstClientes_MouseClick;
-            lstClientes.KeyDown += lstClientes_KeyDown;
+            barraProductos.Dock = DockStyle.Fill;
+            barraProductos.ForeColor = Color.FromArgb(220, 230, 241);
+            barraProductos.Location = new Point(3, 3);
+            barraProductos.Name = "barraProductos";
+            barraProductos.Size = new Size(494, 654);
+            barraProductos.TabIndex = 13;
             // 
             // frmFacturacion
             // 
@@ -803,16 +702,16 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.White;
-            ClientSize = new Size(915, 679);
+            ClientSize = new Size(1265, 816);
+            Controls.Add(lstSugerencias);
+            Controls.Add(panel2);
+            Controls.Add(tableLayoutPanel2);
             Controls.Add(lstClientes);
             Controls.Add(btnSalir);
             Controls.Add(panel5);
             Controls.Add(btnFacturar);
             Controls.Add(panel4);
-            Controls.Add(panelCarrito);
             Controls.Add(panelBusqueda);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmFacturacion";
@@ -834,15 +733,12 @@
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).EndInit();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
+            panel4.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
-            tableLayoutPanel1.ResumeLayout(false);
-            panel4.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -858,21 +754,9 @@
         private Panel panelBusqueda;
         private TextBox txtBuscar;
         private Button buscar;
-        private Panel panel1;
-        private Panel panel2;
-        private Label label3;
-        private Label label2;
-        private Label label1;
-        private TextBox txtProducto;
-        private TextBox txtPrecio;
-        private Button btnAgregar;
-        private DataGridView dgvProductos;
-        private Panel panel7;
         private Panel panel10;
         private DataGridView dgvCarrito;
         private PictureBox pbxCarrito;
-        private Label label8;
-        private TextBox txtCodigo;
         private Panel panel3;
         private Panel panel8;
         private Panel panel6;
@@ -884,8 +768,6 @@
         private Panel panel9;
         private PictureBox pbxCarritoVacio;
         private Label label5;
-        private Label label9;
-        private NumericUpDown nudCantidad;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -893,12 +775,21 @@
         private DataGridViewImageColumn Restar;
         private DataGridViewImageColumn Sumar;
         private DataGridViewImageColumn Eliminar;
-        private DataGridViewTextBoxColumn Codigos;
-        private DataGridViewTextBoxColumn Producto;
-        private DataGridViewTextBoxColumn Precio;
-        private DataGridViewTextBoxColumn Stock;
         private ListBox lstClientes;
         private ListBox lstSugerencias;
         private Button btnBuscarCliente;
+        private Panel panel2;
+        private NumericUpDown nudCantidad;
+        private Label label9;
+        private Label label8;
+        private TextBox txtCodigo;
+        private Label label3;
+        private Label label2;
+        private Label label1;
+        private TextBox txtProducto;
+        private TextBox txtPrecio;
+        private Button btnAgregar;
+        private TableLayoutPanel tableLayoutPanel2;
+        private ClasesUI.BarraProductosSugeridos barraProductos;
     }
 }
