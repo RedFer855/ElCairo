@@ -87,14 +87,24 @@ namespace ModernMenuUI
                             ServicioSesionUsuario.IniciarSesion(Actual, contexto);
                             try
                             {
-                                if (supabase.Auth.CurrentSession != null)
+                                if (supabase.Auth.CurrentSession != null && await _biometrico.EsPosibleUsarHuella())
                                 {
-                                    // Guardamos el token FRESCO que acabamos de recibir
-                                    _biometrico.GuardarTokenSeguro(Actual.Email, supabase.Auth.CurrentSession.RefreshToken);
+                                    // Preguntamos explícitamente al usuario [Mejora de Privacidad]
+                                    var result = MessageBox.Show(
+                                        "¿Desea habilitar el inicio de sesión con huella en este equipo?",
+                                        "Configuración Biométrica",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question);
 
-                                    // Recordamos el email
-                                    Properties.Settings.Default.UltimoUsuario = Actual.Email;
-                                    Properties.Settings.Default.Save();
+                                    if (result == DialogResult.Yes)
+                                    {
+                                        _biometrico.GuardarTokenSeguro(Actual.Email, supabase.Auth.CurrentSession.RefreshToken);
+
+                                        // Guardamos email y el SID de Windows para vincular identidades [Mejora de Seguridad]
+                                        Properties.Settings.Default.UltimoUsuario = Actual.Email;
+                                        Properties.Settings.Default.Save();
+                                        MessageBox.Show("¡Huella vinculada con éxito!", "Proyecto El Cairo");
+                                    }
                                 }
                             }
                             catch { } // Fallo silencioso si no hay permisos (se arregla luego)
@@ -108,7 +118,7 @@ namespace ModernMenuUI
                             }
                             else
                             {
-                                // MessageBox.Show("✅ Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
+                                // MessageBox.Show("Acciones cargadas: " + string.Join(", ", acciones.Select(a => a.NombreAccion)));
 
                             }
                         }
@@ -289,6 +299,8 @@ namespace ModernMenuUI
             this.Visible = false;
             ContraNueva.ShowDialog();
             this.Visible = true;
+            this.Hide();
+
         }
 
         private void btnVer_MouseDown(object sender, MouseEventArgs e)

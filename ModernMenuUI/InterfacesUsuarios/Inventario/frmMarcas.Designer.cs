@@ -48,7 +48,7 @@
             btnSalir = new Button();
             gbxEstado = new GroupBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            txtMarca = new TextBox();
+            txtFiltroProveedor = new TextBox();
             btnProveedores = new Button();
             label1 = new Label();
             rbMostrarDeshablitados = new RadioButton();
@@ -56,7 +56,6 @@
             rbMostrarHablilitados = new RadioButton();
             panelBusqueda = new Panel();
             txtBuscar = new TextBox();
-            btnBuscar = new Button();
             lstSugerencias = new ListBox();
             pnlLimpiarFiltros = new Panel();
             btnLimpiarFiltros = new Button();
@@ -80,7 +79,7 @@
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 121);
             panel1.Name = "panel1";
-            panel1.Size = new Size(813, 282);
+            panel1.Size = new Size(701, 365);
             panel1.TabIndex = 34;
             // 
             // panelCarrito
@@ -90,7 +89,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 19);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(780, 243);
+            panelCarrito.Size = new Size(668, 326);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -100,7 +99,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(780, 243);
+            panel10.Size = new Size(668, 326);
             panel10.TabIndex = 17;
             // 
             // dgvMarcas
@@ -153,7 +152,7 @@
             dgvMarcas.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvMarcas.RowTemplate.Height = 50;
             dgvMarcas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMarcas.Size = new Size(780, 243);
+            dgvMarcas.Size = new Size(668, 326);
             dgvMarcas.TabIndex = 1;
             dgvMarcas.TabStop = false;
             dgvMarcas.CellDoubleClick += dgvMarcas_CellDoubleClick;
@@ -164,9 +163,10 @@
             IdMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             IdMarca.DataPropertyName = "IdMarca";
             IdMarca.HeaderText = "Código";
+            IdMarca.MinimumWidth = 6;
             IdMarca.Name = "IdMarca";
             IdMarca.ReadOnly = true;
-            IdMarca.Width = 89;
+            IdMarca.Visible = false;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -183,6 +183,7 @@
             Proveedor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Proveedor.DataPropertyName = "NombreProveedor";
             Proveedor.HeaderText = "Proveedor";
+            Proveedor.MinimumWidth = 6;
             Proveedor.Name = "Proveedor";
             Proveedor.ReadOnly = true;
             // 
@@ -191,6 +192,7 @@
             EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             EstadoProducto.DataPropertyName = "EstadoMarca";
             EstadoProducto.HeaderText = "Estado";
+            EstadoProducto.MinimumWidth = 6;
             EstadoProducto.Name = "EstadoProducto";
             EstadoProducto.ReadOnly = true;
             EstadoProducto.Resizable = DataGridViewTriState.True;
@@ -217,7 +219,7 @@
             flowLayoutPanel1.Controls.Add(btnSeleccionarMarca);
             flowLayoutPanel1.Controls.Add(btnModificarMarca);
             flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(12, 418);
+            flowLayoutPanel1.Location = new Point(12, 501);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(527, 51);
             flowLayoutPanel1.TabIndex = 36;
@@ -272,7 +274,7 @@
             gbxEstado.ForeColor = Color.DimGray;
             gbxEstado.Location = new Point(12, 62);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(813, 53);
+            gbxEstado.Size = new Size(701, 53);
             gbxEstado.TabIndex = 37;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtros de Búsqueda:";
@@ -284,7 +286,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 32F));
-            tableLayoutPanel2.Controls.Add(txtMarca, 1, 0);
+            tableLayoutPanel2.Controls.Add(txtFiltroProveedor, 1, 0);
             tableLayoutPanel2.Controls.Add(btnProveedores, 2, 0);
             tableLayoutPanel2.Controls.Add(label1, 0, 0);
             tableLayoutPanel2.Location = new Point(382, 17);
@@ -293,18 +295,18 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(420, 30);
+            tableLayoutPanel2.Size = new Size(308, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
-            // txtMarca
+            // txtFiltroProveedor
             // 
-            txtMarca.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMarca.Location = new Point(103, 3);
-            txtMarca.Name = "txtMarca";
-            txtMarca.PlaceholderText = "(Todos los Proveedores)";
-            txtMarca.ReadOnly = true;
-            txtMarca.Size = new Size(282, 25);
-            txtMarca.TabIndex = 34;
+            txtFiltroProveedor.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtFiltroProveedor.Location = new Point(103, 3);
+            txtFiltroProveedor.Name = "txtFiltroProveedor";
+            txtFiltroProveedor.PlaceholderText = "(Todos los Proveedores)";
+            txtFiltroProveedor.ReadOnly = true;
+            txtFiltroProveedor.Size = new Size(170, 25);
+            txtFiltroProveedor.TabIndex = 34;
             // 
             // btnProveedores
             // 
@@ -314,7 +316,7 @@
             btnProveedores.BackgroundImageLayout = ImageLayout.Zoom;
             btnProveedores.FlatAppearance.BorderSize = 0;
             btnProveedores.FlatStyle = FlatStyle.Flat;
-            btnProveedores.Location = new Point(392, 3);
+            btnProveedores.Location = new Point(280, 3);
             btnProveedores.Name = "btnProveedores";
             btnProveedores.Size = new Size(25, 24);
             btnProveedores.TabIndex = 2;
@@ -369,12 +371,11 @@
             panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(btnBuscar);
             panelBusqueda.Location = new Point(15, 12);
             panelBusqueda.MaximumSize = new Size(700, 43);
             panelBusqueda.MinimumSize = new Size(330, 43);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(476, 43);
+            panelBusqueda.Size = new Size(364, 43);
             panelBusqueda.TabIndex = 38;
             // 
             // txtBuscar
@@ -386,25 +387,10 @@
             txtBuscar.Location = new Point(18, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Marcas...";
-            txtBuscar.Size = new Size(389, 20);
+            txtBuscar.Size = new Size(329, 20);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
-            // 
-            // btnBuscar
-            // 
-            btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBuscar.BackColor = Color.FromArgb(168, 191, 212);
-            btnBuscar.BackgroundImage = (Image)resources.GetObject("btnBuscar.BackgroundImage");
-            btnBuscar.BackgroundImageLayout = ImageLayout.Zoom;
-            btnBuscar.FlatAppearance.BorderSize = 0;
-            btnBuscar.FlatStyle = FlatStyle.Flat;
-            btnBuscar.Location = new Point(413, 12);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(48, 20);
-            btnBuscar.TabIndex = 0;
-            btnBuscar.UseVisualStyleBackColor = false;
-            btnBuscar.Click += btnBuscar_Click;
             // 
             // lstSugerencias
             // 
@@ -416,7 +402,7 @@
             lstSugerencias.Location = new Point(33, 45);
             lstSugerencias.MinimumSize = new Size(243, 22);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(389, 22);
+            lstSugerencias.Size = new Size(330, 22);
             lstSugerencias.TabIndex = 39;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -428,9 +414,9 @@
             pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(659, 12);
+            pnlLimpiarFiltros.Location = new Point(528, 12);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
-            pnlLimpiarFiltros.Size = new Size(166, 43);
+            pnlLimpiarFiltros.Size = new Size(186, 43);
             pnlLimpiarFiltros.TabIndex = 56;
             pnlLimpiarFiltros.Visible = false;
             // 
@@ -463,7 +449,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(837, 481);
+            ClientSize = new Size(725, 564);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(lstSugerencias);
             Controls.Add(flowLayoutPanel1);
@@ -473,7 +459,7 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            MinimumSize = new Size(716, 481);
+            MinimumSize = new Size(716, 479);
             Name = "frmMarcas";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Marcas";
@@ -507,7 +493,7 @@
         private Button btnSalir;
         private GroupBox gbxEstado;
         private TableLayoutPanel tableLayoutPanel2;
-        private TextBox txtMarca;
+        private TextBox txtFiltroProveedor;
         private Button btnProveedores;
         private RadioButton rbMostrarDeshablitados;
         private RadioButton rbMostrarTodos;
@@ -515,15 +501,14 @@
         private Label label1;
         private Panel panelBusqueda;
         private TextBox txtBuscar;
-        private Button btnBuscar;
         private Button btnSeleccionarMarca;
-        private DataGridViewTextBoxColumn IdMarca;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn Proveedor;
-        private DataGridViewCheckBoxColumn EstadoProducto;
         private ListBox lstSugerencias;
         private Panel pnlLimpiarFiltros;
         private Button btnLimpiarFiltros;
         private PictureBox pbxClean;
+        private DataGridViewTextBoxColumn IdMarca;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn Proveedor;
+        private DataGridViewCheckBoxColumn EstadoProducto;
     }
 }

@@ -88,6 +88,17 @@ namespace ModernMenuUI
             lblBodega.Text = ServicioSesionUsuario.ObtenerNombreBodega();
         }
 
+        private async void frmMenuPrincipal_Shown(object sender, EventArgs e)
+        {
+            await CargarDatosPesadosAsync();
+        }
+    
+        private async Task CargarDatosPesadosAsync()
+        {
+            int idBodega = ServicioSesionUsuario.ObtenerIdBodega();
+            await barraProductosMenu.CargarMasVendidosAsync(idBodega, 20);
+        }
+
         /// <summary>
         /// Configura el controlador/animador de notificaciones en modo overlay.
         /// </summary>
@@ -224,7 +235,7 @@ namespace ModernMenuUI
         private void AlternarMenu()
         {
             lblEstadoConexion.Visible = false;
-            btnNotificaciones.Visible = false;
+            //btnNotificaciones.Visible = false;
             panelFormHijo.Visible = false;
             panelFormHijo.SuspendLayout();
 
@@ -242,7 +253,7 @@ namespace ModernMenuUI
 
             panelFormHijo.ResumeLayout();
             panelFormHijo.Visible = true;
-            btnNotificaciones.Visible = true;
+            //btnNotificaciones.Visible = true;
             lblEstadoConexion.Visible = true;
         }
 
@@ -372,9 +383,9 @@ namespace ModernMenuUI
 
                 if (estaCerrado)
                 {
-                    btnNotificaciones.Enabled = false;
+                    //btnNotificaciones.Enabled = false;
                     _animadorNotificaciones?.Abrir();
-                    btnNotificaciones.Enabled = true;
+                    //btnNotificaciones.Enabled = true;
                 }
                 else
                 {
@@ -404,7 +415,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO BODEGAS");
         }
 
         /// <summary>
@@ -415,7 +426,7 @@ namespace ModernMenuUI
             bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmCategorias(tipo));
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CATEGORIAS");
         }
 
         /// <summary>
@@ -436,7 +447,7 @@ namespace ModernMenuUI
             bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new InterfacesUsuarios.Compras.frmProveedor(tipo));
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "COMPRAS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PROVEEDORES");
         }
 
         /// <summary>
@@ -447,7 +458,7 @@ namespace ModernMenuUI
             bool tipo = true;
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmPresentaciones(tipo));
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PRESENTACION");
         }
 
         /// <summary>
@@ -467,7 +478,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmClientes());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CLIENTES");
         }
 
         /// <summary>
@@ -477,7 +488,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmEmpleado());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "EMPLEADOS");
         }
 
         /// <summary>
@@ -497,7 +508,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmRol());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "ROLES");
         }
 
         /// <summary>
@@ -507,7 +518,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmBitacora());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "USUARIOS");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "BITACORA");
         }
 
         /// <summary>
@@ -517,7 +528,7 @@ namespace ModernMenuUI
         {
             CerrarSubmenu();
             ManejarFormularios.Instancia.AbrirFormulario(new frmCrearReporte());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERIA");
         }
 
         /// <summary>
@@ -526,7 +537,7 @@ namespace ModernMenuUI
         private void btnReportesCreados_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTER�A");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "REPORTERIA");
         }
 
         /// <summary>
@@ -535,7 +546,8 @@ namespace ModernMenuUI
         private void btnRegistroPerdida_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "INVENTARIO");
+            ManejarFormularios.Instancia.AbrirFormulario(new frmPruebaInventario());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "PERDIDAS");
         }
 
         /// <summary>
@@ -554,7 +566,7 @@ namespace ModernMenuUI
         private void btnDevoluciones_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "CIERRE DIARIO");
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "DEVOLUCIONES");
         }
 
         private void lblNombreModulo_MouseDown(object sender, MouseEventArgs e)
@@ -601,14 +613,7 @@ namespace ModernMenuUI
 
         private void pbxCalculadora_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Process.Start("calc.exe");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
-            }
+
         }
 
         private void pbxCalculadora_MouseDown(object sender, MouseEventArgs e)
@@ -654,7 +659,7 @@ namespace ModernMenuUI
             _servicioPermisos.RegistrarBoton(btnInventarios, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnInventarioBodega, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnGestionInventario, "select_inventario", "update_inventario", "create_inventario");
-            _servicioPermisos.RegistrarBoton(btnRegistroPerdida, "select_inventario", "update_inventario", "create_inventario");
+            //_servicioPermisos.RegistrarBoton(btnRegistroPerdida, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnMarcas, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnCategorias, "select_inventario", "update_inventario", "create_inventario");
             _servicioPermisos.RegistrarBoton(btnPresentaciones, "select_inventario", "update_inventario", "create_inventario");
@@ -669,12 +674,12 @@ namespace ModernMenuUI
 
             _servicioPermisos.RegistrarBoton(btnUsuarios, "select_usuario", "update_usuario", "create_usuario");
             _servicioPermisos.RegistrarBoton(btnGestionUsuarios, "select_usuario", "update_usuario", "create_usuario");
-            _servicioPermisos.RegistrarBoton(btnGestionRoles, "select_usuario", "update_usuario", "create_usuario");
+            //_servicioPermisos.RegistrarBoton(btnGestionRoles, "select_usuario", "update_usuario", "create_usuario");
             _servicioPermisos.RegistrarBoton(btnBitacora, "select_usuario", "update_usuario", "create_usuario");
 
             _servicioPermisos.RegistrarBoton(btnReporte, "select_reporte", "update_reporte", "create_reporte");
             _servicioPermisos.RegistrarBoton(btnCrearReporte, "select_reporte", "update_reporte", "create_reporte");
-            _servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
+            //_servicioPermisos.RegistrarBoton(btnReportesCreados, "select_reporte", "update_reporte", "create_reporte");
         }
 
         private void btnMarcas_Click(object sender, EventArgs e)
@@ -688,13 +693,64 @@ namespace ModernMenuUI
         private void btnBodegas_Click(object sender, EventArgs e)
         {
             CerrarSubmenu();
-            ManejarFormularios.Instancia.AbrirFormulario(new frmInventarioBodega());
-            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "Bodega");
+            ManejarFormularios.Instancia.AbrirFormulario(new frmBodegas());
+            clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "BODEGAS");
         }
 
         private void chart1_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void panelFormHijo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            string listaForms = "";
+
+            foreach (Form frm in Application.OpenForms)
+            {
+                listaForms += frm.Name + " | " + frm.GetType().Name + Environment.NewLine;
+            }
+
+            long memoriaMB = GC.GetTotalMemory(false) / (1024 * 1024);
+
+            MessageBox.Show(
+                "Forms abiertos: " + Application.OpenForms.Count +
+                "\nMemoria .NET: " + memoriaMB + " MB\n\n" +
+                listaForms
+            );
+        }
+
+        private void pbxCalculadora_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("calc.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir la calculadora: " + ex.Message);
+            }
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+      
     }
 }

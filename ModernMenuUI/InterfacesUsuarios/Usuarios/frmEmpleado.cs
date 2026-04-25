@@ -7,6 +7,7 @@ using ModernMenuUI.ClasesUI;
 using ModernMenuUI.ClasesUI.Extenciones;
 using ModernMenuUI.InterfacesUsuarios.Usuarios;
 using ModernMenuUI.ServiciosUI;
+using Supabase.Realtime.PostgresChanges;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,141 +18,65 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    /// <summary>
-    /// Formulario principal para la administración de empleados.
-    /// 
-    /// Funciones:
-    /// ✔ Listado de empleados con filtros en memoria  
-    /// ✔ Buscador interactivo (ID, DNI, Nombre, Apellido)  
-    /// ✔ CRUD de empleados  
-    /// ✔ Creación de cuenta de usuario para un empleado  
-    /// ✔ Realtime: recarga automática cuando hay cambios en BD (Supabase)  
-    /// 
-    /// Optimizado con:
-    /// - DoubleBuffer para evitar parpadeos
-    /// - BuscadorInteractivo reutilizado como en productos/marcas
-    /// </summary>
     public partial class frmEmpleado : Form
     {
-        #region 1. Campos y Dependencias
-
-        /// <summary>Repositorio oficial de empleados.</summary>
         private readonly EmpleadoRepositorio _empleadoRepo;
-
-        /// <summary>Sistema de permisos UI (comentado por solicitud).</summary>
         private readonly ServicioPermisosUI _servicioPermisos;
 
-        /// <summary>Maneja suscripciones y eventos Realtime de Supabase.</summary>
-        private readonly GestorRealtime<Empleado> _gestorRealtime;
-
-        /// <summary>Controlador del buscador dinámico asignado al TextBox.</summary>
         private BuscadorInteractivo<Empleado> _buscadorCtrl;
-
-        /// <summary>Lista en memoria con todos los empleados. Base para filtrar.</summary>
         private List<Empleado> _listaMaestra = new List<Empleado>();
-
-        /// <summary>Empleado actualmente seleccionado en el grid.</summary>
         private Empleado EmpleadoSeleccionado = null;
 
-        /// <summary>Estado del filtro (true=activos, false=inactivos, null=todos).</summary>
-        private bool? _filtroEstado = null;
-
-        #endregion
-
-        #region 2. Constructor y Load
+        private Action<PostgresChangesResponse> _handlerCambio;
 
         public frmEmpleado()
         {
             InitializeComponent();
 
-            // Repositorios y servicios
             _empleadoRepo = new EmpleadoRepositorio();
             _servicioPermisos = new ServicioPermisosUI();
-            _gestorRealtime = new GestorRealtime<Empleado>();
 
-            // Configuración del Grid
             dgvEmpleados.AutoGenerateColumns = false;
-            dgvEmpleados.ActivarDobleBuffer(); // Optimización visual
+            dgvEmpleados.ActivarDobleBuffer();
             dgvEmpleados.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 241);
 
-            // Permisos UI (desactivado por solicitud)
-            //RegistrarBotonesConPermisos();
-            //_servicioPermisos.AplicarPermisos();
-
-            // Filtros: unificación de eventos
-            ConfigurarEventosUnificados();
-
-            // Realtime: recargar cuando Supabase detecte cambios
-            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
-            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+            _handlerCambio = (c) => RecargarInterfazSafe();
+            RealtimeManager.OnEmpleadoChanged += _handlerCambio;
         }
 
         private async void frmEmpleado_Load(object sender, EventArgs e)
         {
             await InicializarDatosYBuscador();
-            await _gestorRealtime.SuscribirAsync(); // Activa escuchas realtime
         }
 
-        private async void frmEmpleado_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmEmpleado_FormClosing(object sender, FormClosingEventArgs e)
         {
-            await _gestorRealtime.DesuscribirAsync();
+            try
+            {
+                if (_handlerCambio != null)
+                    RealtimeManager.OnEmpleadoChanged -= _handlerCambio;
+            }
+            catch { }
         }
 
-        #endregion
-
-        #region 3. Carga y Realtime
-
-        /// <summary>
-        /// Carga inicial de empleados y asigna el BuscadorInteractivo a txtBuscar.
-        /// </summary>
+        // -------------------------------------------------------------
+        // CARGA DE DATOS
+        // -------------------------------------------------------------
         private async Task InicializarDatosYBuscador()
         {
             try
             {
                 this.Cursor = Cursors.WaitCursor;
 
-                // Cargar empleados desde Supabase
                 _listaMaestra = await _empleadoRepo.ObtenerTodosLosEmpleados();
 
-                // Configuración del buscador dinámico
-                _buscadorCtrl = new BuscadorInteractivo<Empleado>(
-                    txtBuscar,
-                    lstSugerencias,
-                    dgvEmpleados,
-                    _listaMaestra,
-
-                    // 1. CRITERIO EXACTO → Enter o botón Buscar
-                    (emp, txt) =>
-                        emp.Id.ToString() == txt ||
-                        (emp.DniEmpleado != null && emp.DniEmpleado == txt),
-
-                    // 2. CRITERIO PARCIAL dinámico (mientras escribe)
-                    (emp, txt) =>
-                        (emp.NombreEmpleado + " " + emp.ApellidoEmpleado)
-                            .IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0
-                        || (emp.DniEmpleado != null && emp.DniEmpleado.Contains(txt)),
-
-                    // 3. Display en lista
-                    (emp) => $"{emp.NombreEmpleado} {emp.ApellidoEmpleado}",
-
-                    // 4. Acción visual: mostrar/ocultar panel
-                    (busquedaActiva) =>
-                    {
-                        pnlLimpiarFiltros.Visible = busquedaActiva;
-                        if (!busquedaActiva) RefrescarGrid();
-                    },
-
-                    // 5. Validación de entrada (ID / DNI numérico)
-                    (txt) => txt.All(char.IsDigit)
-                );
-
-                // Primer llenado
+                InicializarBuscador();
                 RefrescarGrid();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    $"No se pudieron cargar los empleados.\nPosible causa: Internet inestable o servidor.\n\nDetalle: {ex.Message}",
+                    $"No se pudieron cargar los empleados.\n\nDetalle: {ex.Message}",
                     "Error de Carga",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
@@ -160,16 +85,13 @@ namespace ModernMenuUI
             finally { this.Cursor = Cursors.Default; }
         }
 
-        /// <summary>
-        /// Reconsulta empleados desde Supabase cuando llega un evento realtime.
-        /// </summary>
         private async Task CargarEmpleadosMaestros()
         {
             try
             {
                 _listaMaestra = await _empleadoRepo.ObtenerTodosLosEmpleados();
-                _buscadorCtrl?.ActualizarDatosMaestros(_listaMaestra);
                 RefrescarGrid();
+                ActualizarBuscador();
             }
             catch (Exception ex)
             {
@@ -177,18 +99,75 @@ namespace ModernMenuUI
             }
         }
 
-        /// <summary>
-        /// Realtime-safe → usa BeginInvoke para actualizar UI desde otro hilo.
-        /// </summary>
         private void RecargarInterfazSafe()
         {
             if (!this.IsDisposed && this.IsHandleCreated)
                 this.BeginInvoke((MethodInvoker)(async () => await CargarEmpleadosMaestros()));
         }
 
-        #endregion
+        // -------------------------------------------------------------
+        // FILTRO + BUSCADOR (igual que en frmUsuario)
+        // -------------------------------------------------------------
+        private List<Empleado> ObtenerEmpleadosSegunFiltro()
+        {
+            IEnumerable<Empleado> query = _listaMaestra;
 
-        #region 4. Búsqueda
+            if (rbMostrarHabilitados.Checked)
+                query = query.Where(e => e.EstadoEmpleado == true);
+            else if (rbMostrarDeshabilitados.Checked)
+                query = query.Where(e => e.EstadoEmpleado == false);
+            // Si es "Todos", no se filtra
+
+            return query.ToList();
+        }
+
+        private void InicializarBuscador()
+        {
+            _buscadorCtrl = new BuscadorInteractivo<Empleado>(
+                txtBuscar,
+                lstSugerencias,
+                dgvEmpleados,
+                ObtenerEmpleadosSegunFiltro(),
+
+                // BÚSQUEDA EXACTA
+                (emp, txt) =>
+                    emp.Id.ToString() == txt ||
+                    (emp.DniEmpleado != null && emp.DniEmpleado == txt),
+
+                // BÚSQUEDA PARCIAL (sin forzar estado — lo controla el filtro)
+                (emp, txt) =>
+                {
+                    bool porNombre =
+                        (emp.NombreEmpleado + " " + emp.ApellidoEmpleado)
+                            .IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                    bool porDni =
+                        emp.DniEmpleado != null &&
+                        emp.DniEmpleado.IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                    return porNombre || porDni;
+                },
+
+                // TEXTO MOSTRADO
+                (emp) => $"{emp.NombreEmpleado} {emp.ApellidoEmpleado}",
+
+                // EVENTO FILTRO ACTIVO
+                (busquedaActiva) =>
+                {
+                    pnlLimpiarFiltros.Visible = busquedaActiva;
+                    if (!busquedaActiva) RefrescarGrid();
+                },
+
+                // SOLO NÚMEROS (búsqueda exacta cuando es numérico)
+                (txt) => txt.All(char.IsDigit)
+            );
+        }
+
+        private void ActualizarBuscador()
+        {
+            if (_buscadorCtrl == null) return;
+            _buscadorCtrl.ActualizarDatosMaestros(ObtenerEmpleadosSegunFiltro());
+        }
 
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorCtrl.ManejarKeyUpAsync(e);
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscadorCtrl.ManejarKeyDown(e);
@@ -200,23 +179,16 @@ namespace ModernMenuUI
         }
         private void btnBuscar_Click(object sender, EventArgs e) => _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
 
-        #endregion
-
-        #region 5. Filtrado y Grid
-
-        /// <summary>
-        /// Aplica filtros en memoria (rápido) y actualiza el grid.
-        /// </summary>
+        // -------------------------------------------------------------
+        // GRID
+        // -------------------------------------------------------------
         private void RefrescarGrid()
         {
             gbxFiltros.Enabled = false;
 
-            var query = _listaMaestra.AsEnumerable();
+            var listaFinal = ObtenerEmpleadosSegunFiltro();
 
-            if (rbMostrarHabilitados.Checked) query = query.Where(e => e.EstadoEmpleado == true);
-            else if (rbMostrarDeshabilitados.Checked) query = query.Where(e => e.EstadoEmpleado == false);
-
-            var listaFinal = query.ToList();
+            dgvEmpleados.DataSource = null;
             dgvEmpleados.DataSource = listaFinal;
 
             bool hayFiltrosExtras = !rbMostrarHabilitados.Checked;
@@ -228,19 +200,6 @@ namespace ModernMenuUI
             gbxFiltros.Enabled = true;
         }
 
-        private void ConfigurarEventosUnificados()
-        {
-            rbMostrarTodos.CheckedChanged += FiltroEstado_Changed;
-            rbMostrarHabilitados.CheckedChanged += FiltroEstado_Changed;
-            rbMostrarDeshabilitados.CheckedChanged += FiltroEstado_Changed;
-        }
-
-        private void FiltroEstado_Changed(object sender, EventArgs e)
-        {
-            if (sender is RadioButton rb && rb.Checked)
-                RefrescarGrid();
-        }
-
         private void dgvEmpleados_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvEmpleados.SelectedRows.Count > 0)
@@ -249,16 +208,46 @@ namespace ModernMenuUI
                 EmpleadoSeleccionado = null;
         }
 
+        // -------------------------------------------------------------
+        // RADIO BUTTONS
+        // -------------------------------------------------------------
+        private void rbMostrarTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarTodos.Checked)
+            {
+                RefrescarGrid();
+                ActualizarBuscador();
+            }
+        }
+
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarHabilitados.Checked)
+            {
+                RefrescarGrid();
+                ActualizarBuscador();
+            }
+        }
+
+        private void rbMostrarDeshabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMostrarDeshabilitados.Checked)
+            {
+                RefrescarGrid();
+                ActualizarBuscador();
+            }
+        }
+
+        // -------------------------------------------------------------
+        // BOTONES
+        // -------------------------------------------------------------
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             rbMostrarHabilitados.Checked = true;
             _buscadorCtrl.LimpiarBusqueda();
             RefrescarGrid();
+            ActualizarBuscador();
         }
-
-        #endregion
-
-        #region 6. CRUD y Acciones
 
         private async void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
@@ -280,12 +269,6 @@ namespace ModernMenuUI
                 await CargarEmpleadosMaestros();
         }
 
-        /// <summary>
-        /// Flujo para asignar usuario a un empleado:
-        /// 1. Obtiene usuario actual supabase
-        /// 2. Obtiene su registro en tabla interna Usuario
-        /// 3. Abre frmCrearUsuario con permisos correctos
-        /// </summary>
         private async void btnCrearUsuario_Click(object sender, EventArgs e)
         {
             if (EmpleadoSeleccionado == null)
@@ -307,7 +290,6 @@ namespace ModernMenuUI
                     return;
                 }
 
-                // Buscar usuario actual en tabla interna
                 var usuarioActualSistema = await client
                     .From<Usuario>()
                     .Where(u => u.Uuid == authUser.Id)
@@ -327,26 +309,10 @@ namespace ModernMenuUI
             }
         }
 
-        #endregion
-
-        #region 7. UI y Permisos
-
         private void btnSalir_Click(object sender, EventArgs e)
         {
             clsAnmaciones.NombreMenuPrincipal();
             this.Close();
         }
-
-        // Permisos desactivados por solicitud:
-        /*
-        private void RegistrarBotonesConPermisos()
-        {
-            _servicioPermisos.RegistrarBoton(btnAgregarEmpleado, "insert_empleados");
-            _servicioPermisos.RegistrarBoton(btnEditarEmpleado, "update_empleados");
-            _servicioPermisos.RegistrarBoton(btnCrearUsuario, "insert_usuarios");
-        }
-        */
-
-        #endregion
     }
 }

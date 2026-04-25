@@ -74,9 +74,10 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
             panel1.Controls.Add(panel10);
-            panel1.Location = new Point(12, 121);
+            panel1.Location = new Point(15, 151);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(669, 350);
+            panel1.Size = new Size(836, 438);
             panel1.TabIndex = 33;
             // 
             // panel10
@@ -84,9 +85,10 @@
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel10.AutoScroll = true;
             panel10.Controls.Add(dgvClientes);
-            panel10.Location = new Point(16, 19);
+            panel10.Location = new Point(20, 24);
+            panel10.Margin = new Padding(4, 4, 4, 4);
             panel10.Name = "panel10";
-            panel10.Size = new Size(632, 312);
+            panel10.Size = new Size(790, 390);
             panel10.TabIndex = 17;
             // 
             // dgvClientes
@@ -126,6 +128,7 @@
             dgvClientes.EnableHeadersVisualStyles = false;
             dgvClientes.GridColor = Color.FromArgb(189, 215, 238);
             dgvClientes.Location = new Point(0, 0);
+            dgvClientes.Margin = new Padding(4, 4, 4, 4);
             dgvClientes.Name = "dgvClientes";
             dgvClientes.ReadOnly = true;
             dgvClientes.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -141,7 +144,7 @@
             dgvClientes.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvClientes.RowTemplate.Height = 50;
             dgvClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvClientes.Size = new Size(632, 312);
+            dgvClientes.Size = new Size(790, 390);
             dgvClientes.TabIndex = 1;
             dgvClientes.CellDoubleClick += dgvClientes_CellDoubleClick;
             dgvClientes.SelectionChanged += dgvClientes_SelectionChanged;
@@ -154,7 +157,7 @@
             Dni.MinimumWidth = 6;
             Dni.Name = "Dni";
             Dni.ReadOnly = true;
-            Dni.Width = 70;
+            Dni.Width = 81;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -165,7 +168,7 @@
             dataGridViewTextBoxColumn2.MinimumWidth = 6;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 96;
+            dataGridViewTextBoxColumn2.Width = 116;
             // 
             // PorcentajeGanancia
             // 
@@ -176,7 +179,7 @@
             PorcentajeGanancia.MinimumWidth = 6;
             PorcentajeGanancia.Name = "PorcentajeGanancia";
             PorcentajeGanancia.ReadOnly = true;
-            PorcentajeGanancia.Width = 101;
+            PorcentajeGanancia.Width = 121;
             // 
             // Correo
             // 
@@ -186,7 +189,7 @@
             Correo.MinimumWidth = 6;
             Correo.Name = "Correo";
             Correo.ReadOnly = true;
-            Correo.Width = 88;
+            Correo.Width = 106;
             // 
             // RTN
             // 
@@ -196,7 +199,7 @@
             RTN.MinimumWidth = 6;
             RTN.Name = "RTN";
             RTN.ReadOnly = true;
-            RTN.Width = 72;
+            RTN.Width = 84;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -213,11 +216,12 @@
             EstadoCliente.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             EstadoCliente.DataPropertyName = "EstadoCliente";
             EstadoCliente.HeaderText = "Estado";
+            EstadoCliente.MinimumWidth = 6;
             EstadoCliente.Name = "EstadoCliente";
             EstadoCliente.ReadOnly = true;
             EstadoCliente.Resizable = DataGridViewTriState.True;
             EstadoCliente.SortMode = DataGridViewColumnSortMode.Automatic;
-            EstadoCliente.Width = 89;
+            EstadoCliente.Width = 105;
             // 
             // panelBusqueda
             // 
@@ -225,11 +229,12 @@
             panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
             panelBusqueda.Controls.Add(txtBuscar);
             panelBusqueda.Controls.Add(btnbuscar);
-            panelBusqueda.Location = new Point(12, 13);
-            panelBusqueda.MaximumSize = new Size(885, 43);
-            panelBusqueda.MinimumSize = new Size(250, 43);
+            panelBusqueda.Location = new Point(15, 16);
+            panelBusqueda.Margin = new Padding(4, 4, 4, 4);
+            panelBusqueda.MaximumSize = new Size(1106, 54);
+            panelBusqueda.MinimumSize = new Size(312, 54);
             panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(498, 43);
+            panelBusqueda.Size = new Size(622, 54);
             panelBusqueda.TabIndex = 37;
             // 
             // txtBuscar
@@ -237,10 +242,11 @@
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(18, 12);
+            txtBuscar.Location = new Point(22, 15);
+            txtBuscar.Margin = new Padding(4, 4, 4, 4);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Buscar Clientes...";
-            txtBuscar.Size = new Size(410, 20);
+            txtBuscar.Size = new Size(512, 24);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyDown += txtBuscar_KeyDown;
             txtBuscar.KeyUp += txtBuscar_KeyUp;
@@ -254,11 +260,13 @@
             btnbuscar.BackgroundImageLayout = ImageLayout.Zoom;
             btnbuscar.FlatAppearance.BorderSize = 0;
             btnbuscar.FlatStyle = FlatStyle.Flat;
-            btnbuscar.Location = new Point(434, 12);
+            btnbuscar.Location = new Point(542, 15);
+            btnbuscar.Margin = new Padding(4, 4, 4, 4);
             btnbuscar.Name = "btnbuscar";
-            btnbuscar.Size = new Size(48, 20);
+            btnbuscar.Size = new Size(60, 25);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
+            btnbuscar.Visible = false;
             btnbuscar.Click += btnBuscar_Click;
             // 
             // gbxEstado
@@ -269,9 +277,11 @@
             gbxEstado.Controls.Add(rbTodos);
             gbxEstado.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             gbxEstado.ForeColor = SystemColors.ControlDarkDark;
-            gbxEstado.Location = new Point(11, 62);
+            gbxEstado.Location = new Point(14, 78);
+            gbxEstado.Margin = new Padding(4, 4, 4, 4);
             gbxEstado.Name = "gbxEstado";
-            gbxEstado.Size = new Size(670, 53);
+            gbxEstado.Padding = new Padding(4, 4, 4, 4);
+            gbxEstado.Size = new Size(838, 66);
             gbxEstado.TabIndex = 38;
             gbxEstado.TabStop = false;
             gbxEstado.Text = "Filtro";
@@ -279,9 +289,10 @@
             // rbDeshabilitados
             // 
             rbDeshabilitados.AutoSize = true;
-            rbDeshabilitados.Location = new Point(306, 21);
+            rbDeshabilitados.Location = new Point(382, 26);
+            rbDeshabilitados.Margin = new Padding(4, 4, 4, 4);
             rbDeshabilitados.Name = "rbDeshabilitados";
-            rbDeshabilitados.Size = new Size(178, 22);
+            rbDeshabilitados.Size = new Size(220, 27);
             rbDeshabilitados.TabIndex = 30;
             rbDeshabilitados.Text = "Mostrar Deshabilitados";
             rbDeshabilitados.UseVisualStyleBackColor = true;
@@ -290,9 +301,10 @@
             // 
             rbHabilitados.AutoSize = true;
             rbHabilitados.Checked = true;
-            rbHabilitados.Location = new Point(18, 21);
+            rbHabilitados.Location = new Point(22, 26);
+            rbHabilitados.Margin = new Padding(4, 4, 4, 4);
             rbHabilitados.Name = "rbHabilitados";
-            rbHabilitados.Size = new Size(156, 22);
+            rbHabilitados.Size = new Size(194, 27);
             rbHabilitados.TabIndex = 29;
             rbHabilitados.TabStop = true;
             rbHabilitados.Text = "Mostrar Habilitados";
@@ -301,9 +313,10 @@
             // rbTodos
             // 
             rbTodos.AutoSize = true;
-            rbTodos.Location = new Point(180, 21);
+            rbTodos.Location = new Point(225, 26);
+            rbTodos.Margin = new Padding(4, 4, 4, 4);
             rbTodos.Name = "rbTodos";
-            rbTodos.Size = new Size(120, 22);
+            rbTodos.Size = new Size(150, 27);
             rbTodos.TabIndex = 28;
             rbTodos.Text = "Mostrar Todos";
             rbTodos.UseVisualStyleBackColor = true;
@@ -314,9 +327,10 @@
             btnSeleccionarCliente.BackColor = Color.FromArgb(149, 195, 172);
             btnSeleccionarCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSeleccionarCliente.ForeColor = SystemColors.ButtonFace;
-            btnSeleccionarCliente.Location = new Point(204, 3);
+            btnSeleccionarCliente.Location = new Point(256, 4);
+            btnSeleccionarCliente.Margin = new Padding(4, 4, 4, 4);
             btnSeleccionarCliente.Name = "btnSeleccionarCliente";
-            btnSeleccionarCliente.Size = new Size(193, 44);
+            btnSeleccionarCliente.Size = new Size(241, 55);
             btnSeleccionarCliente.TabIndex = 23;
             btnSeleccionarCliente.Text = "Seleccionar Cliente";
             btnSeleccionarCliente.UseVisualStyleBackColor = false;
@@ -330,9 +344,10 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(519, 3);
+            btnSalir.Location = new Point(651, 4);
+            btnSalir.Margin = new Padding(4, 4, 4, 4);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(82, 44);
+            btnSalir.Size = new Size(102, 55);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -344,9 +359,10 @@
             btnVerCliente.BackColor = Color.FromArgb(189, 215, 238);
             btnVerCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnVerCliente.ForeColor = Color.FromArgb(87, 99, 110);
-            btnVerCliente.Location = new Point(403, 3);
+            btnVerCliente.Location = new Point(505, 4);
+            btnVerCliente.Margin = new Padding(4, 4, 4, 4);
             btnVerCliente.Name = "btnVerCliente";
-            btnVerCliente.Size = new Size(110, 44);
+            btnVerCliente.Size = new Size(138, 55);
             btnVerCliente.TabIndex = 20;
             btnVerCliente.Text = "Ver Cliente";
             btnVerCliente.UseVisualStyleBackColor = false;
@@ -358,9 +374,10 @@
             btnAgregarCliente.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarCliente.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCliente.ForeColor = SystemColors.ButtonFace;
-            btnAgregarCliente.Location = new Point(3, 3);
+            btnAgregarCliente.Location = new Point(4, 4);
+            btnAgregarCliente.Margin = new Padding(4, 4, 4, 4);
             btnAgregarCliente.Name = "btnAgregarCliente";
-            btnAgregarCliente.Size = new Size(195, 44);
+            btnAgregarCliente.Size = new Size(244, 55);
             btnAgregarCliente.TabIndex = 22;
             btnAgregarCliente.Text = "Agregar Cliente";
             btnAgregarCliente.UseVisualStyleBackColor = false;
@@ -372,12 +389,13 @@
             lstSugerencias.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lstSugerencias.ForeColor = Color.DimGray;
             lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 19;
-            lstSugerencias.Location = new Point(30, 46);
-            lstSugerencias.MaximumSize = new Size(800, 400);
-            lstSugerencias.MinimumSize = new Size(165, 23);
+            lstSugerencias.ItemHeight = 24;
+            lstSugerencias.Location = new Point(38, 58);
+            lstSugerencias.Margin = new Padding(4, 4, 4, 4);
+            lstSugerencias.MaximumSize = new Size(999, 499);
+            lstSugerencias.MinimumSize = new Size(205, 28);
             lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(410, 23);
+            lstSugerencias.Size = new Size(512, 28);
             lstSugerencias.TabIndex = 40;
             lstSugerencias.Visible = false;
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
@@ -389,9 +407,10 @@
             pnlLimpiarFiltros.BackColor = Color.FromArgb(189, 215, 238);
             pnlLimpiarFiltros.Controls.Add(btnLimpiarFiltros);
             pnlLimpiarFiltros.Controls.Add(pbxClean);
-            pnlLimpiarFiltros.Location = new Point(516, 13);
+            pnlLimpiarFiltros.Location = new Point(645, 16);
+            pnlLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
             pnlLimpiarFiltros.Name = "pnlLimpiarFiltros";
-            pnlLimpiarFiltros.Size = new Size(166, 43);
+            pnlLimpiarFiltros.Size = new Size(208, 54);
             pnlLimpiarFiltros.TabIndex = 41;
             pnlLimpiarFiltros.Visible = false;
             // 
@@ -401,9 +420,10 @@
             btnLimpiarFiltros.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLimpiarFiltros.ForeColor = Color.White;
             btnLimpiarFiltros.ImageAlign = ContentAlignment.TopCenter;
-            btnLimpiarFiltros.Location = new Point(3, 5);
+            btnLimpiarFiltros.Location = new Point(4, 6);
+            btnLimpiarFiltros.Margin = new Padding(4, 4, 4, 4);
             btnLimpiarFiltros.Name = "btnLimpiarFiltros";
-            btnLimpiarFiltros.Size = new Size(117, 32);
+            btnLimpiarFiltros.Size = new Size(146, 40);
             btnLimpiarFiltros.TabIndex = 34;
             btnLimpiarFiltros.Text = "Limpiar Filtros";
             btnLimpiarFiltros.UseVisualStyleBackColor = false;
@@ -412,9 +432,10 @@
             // pbxClean
             // 
             pbxClean.Image = (Image)resources.GetObject("pbxClean.Image");
-            pbxClean.Location = new Point(121, 8);
+            pbxClean.Location = new Point(151, 10);
+            pbxClean.Margin = new Padding(4, 4, 4, 4);
             pbxClean.Name = "pbxClean";
-            pbxClean.Size = new Size(45, 24);
+            pbxClean.Size = new Size(56, 30);
             pbxClean.SizeMode = PictureBoxSizeMode.Zoom;
             pbxClean.TabIndex = 35;
             pbxClean.TabStop = false;
@@ -426,18 +447,19 @@
             fwBotones.Controls.Add(btnSeleccionarCliente);
             fwBotones.Controls.Add(btnVerCliente);
             fwBotones.Controls.Add(btnSalir);
-            fwBotones.Location = new Point(12, 477);
-            fwBotones.MinimumSize = new Size(670, 52);
+            fwBotones.Location = new Point(15, 596);
+            fwBotones.Margin = new Padding(4, 4, 4, 4);
+            fwBotones.MinimumSize = new Size(838, 65);
             fwBotones.Name = "fwBotones";
-            fwBotones.Size = new Size(670, 52);
+            fwBotones.Size = new Size(838, 65);
             fwBotones.TabIndex = 42;
             // 
             // frmClientes
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
-            ClientSize = new Size(694, 541);
+            ClientSize = new Size(868, 676);
             Controls.Add(fwBotones);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(lstSugerencias);
@@ -445,6 +467,7 @@
             Controls.Add(panelBusqueda);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(4, 4, 4, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmClientes";

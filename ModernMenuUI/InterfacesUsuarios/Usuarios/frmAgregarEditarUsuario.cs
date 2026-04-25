@@ -20,7 +20,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
     public partial class frmAgregarEditarUsuario : Form
     {
         /// <summary>Usuario que se está editando.</summary>
-        private Usuario _usuarioEditado;
+        private UsuarioDisplay _usuarioEditado;
 
         /// <summary>Usuario actualmente logueado en el sistema.</summary>
         private Usuario _usuarioActualSistema;
@@ -45,7 +45,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
         /// </summary>
         /// <param name="editado">Usuario que será modificado.</param>
         /// <param name="actual">Usuario que está logueado y ejecutando la acción.</param>
-        public frmAgregarEditarUsuario(Usuario editado, Usuario actual)
+        public frmAgregarEditarUsuario(UsuarioDisplay editado, Usuario actual)
         {
             InitializeComponent();
             _usuarioEditado = editado;
@@ -142,6 +142,7 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
             await userRepo.OtrosValores(cambios);
 
             MessageBox.Show("Cambios guardados correctamente.");
+            this.Close();
         }
 
         // =====================================================================
@@ -156,24 +157,38 @@ namespace ModernMenuUI.InterfacesUsuarios.Usuarios
         /// </summary>
         private async void frmAgregarEditarUsuario_Load(object sender, EventArgs e)
         {
-            UsuarioRepositorio userRepo = new UsuarioRepositorio();
-
-            // Obtener todos los roles disponibles
-            var roles = await userRepo.ObtenerTodosLosUsuariosRoles();
-
-            cmbRol.DataSource = roles;
-            cmbRol.DisplayMember = "NombreRol";
-            cmbRol.ValueMember = "IdRol";
-
-            // Si estamos editando, cargar valores originales
-            if (_usuarioEditado != null)
+            try
             {
-                txtCorreo.Text = _usuarioEditado.AliasUsuario;
-                rdbActivo.Checked = _usuarioEditado.EstadoUsuario;
+                UsuarioRepositorio userRepo = new UsuarioRepositorio();
 
-                // Seleccionar el rol del usuario editado
-                cmbRol.SelectedValue = _usuarioEditado.RolUsuario;
+                // Obtener todos los roles disponibles
+                var roles = await userRepo.ObtenerTodosLosUsuariosRoles();
+
+                cmbRol.DataSource = null;
+                cmbRol.DisplayMember = "NombreRolRol";
+                cmbRol.ValueMember = "IdRol";
+                cmbRol.DataSource = roles;
+
+                // Si estamos editando, cargar valores originales
+                if (_usuarioEditado != null)
+                {
+                    txtCorreo.Text = _usuarioEditado.AliasUsuario;
+                    rdbActivo.Checked = _usuarioEditado.EstadoUsuario;
+
+                    // Seleccionar el rol del usuario editado
+                    cmbRol.SelectedValue = _usuarioEditado.RolUsuario;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar datos del usuario: {ex.Message}");
+            }
+
+        }
+
+        private void cmbRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

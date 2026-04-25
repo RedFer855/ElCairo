@@ -21,12 +21,16 @@ namespace CapaDeDatos.Repositorios
             try
             {
                 var client = await GetClient();
-                var queryBuilder = client.From<Bitacora>();
+                var response = await client
+                                        .From<Bitacora>()
+                                        .Select("*, usuario(*)") 
+                                        .Order("fecha_hora", Supabase.Postgrest.Constants.Ordering.Descending)
+                                        .Get(cancellationToken);
 
-                queryBuilder.Order("fecha_hora", Supabase.Postgrest.Constants.Ordering.Descending);
+                //queryBuilder.Order("fecha_hora", Supabase.Postgrest.Constants.Ordering.Descending);
 
                 // Se pasa el token al método .Get() para permitir la cancelación
-                var response = await queryBuilder.Get(cancellationToken);
+               // var response = await queryBuilder.Get(cancellationToken);
 
                 return response.Models ?? new List<Bitacora>();
             }

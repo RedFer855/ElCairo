@@ -10,7 +10,7 @@ namespace CapaDeDatos.Modelados.Compras
     public class DetalleFacturaCompra : BaseModel
     {
         [PrimaryKey("id_detalle_compra", false)]
-        public int Id { get; set; }
+        public int IdDetalleCompra { get; set; }
 
         [Column("id_compra")]
         public int IdCompra { get; set; }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Supabase.Postgrest.Constants;
+using CapaDeDatos.Modelados.Paginacion;
+using System.Threading;
 
 namespace CapaDeDatos.Repositorios
 {
@@ -154,6 +156,194 @@ namespace CapaDeDatos.Repositorios
             {
                 Console.WriteLine($"Error al obtener productos activos: {ex.Message}");
                 throw;
+            }
+
+
+        }
+
+        // =========================================================
+        // ===== MÉTODOS PAGINADOS (NUEVOS) ========================
+        // =========================================================
+
+        /// <summary>
+        /// Obtiene productos paginados desde Supabase aplicando filtros en servidor.
+        /// Solo trae la página solicitada, NO carga todo en memoria.
+        /// </summary>
+        public async Task<ResultadoPaginado<Producto>> ObtenerProductosPaginadosAsync(
+            FiltrosProducto filtros,
+            CancellationToken ct = default)
+        {
+            if (filtros == null)
+                throw new ArgumentNullException(nameof(filtros));
+
+            if (filtros.Pagina < 1) filtros.Pagina = 1;
+            if (filtros.TamanioPagina < 1) filtros.TamanioPagina = 100;
+
+            try
+            {
+                var client = await GetClient();
+                var queryCount = client.From<Producto>();
+                var queryData = client.From<Producto>();
+
+                // --- Aplicar filtros (se aplican a AMBAS queries) ---
+                AplicarFiltrosBase(ref queryCount, filtros);
+                AplicarFiltrosBase(ref queryData, filtros);
+
+                // 1. Contar total (sin traer datos) ---
+                long total = await queryCount
+                    .Count(Supabase.Postgrest.Constants.CountType.Exact, ct);
+
+                // 2. Calcular rango ---
+                int desde = (filtros.Pagina - 1) * filtros.TamanioPagina;
+                int hasta = desde + filtros.TamanioPagina - 1;
+
+                // 3. Traer solo la página con joins ---
+                var response = await queryData
+                    .Select("*, presentacion(*), marca(*), categoria(*)")
+                    .Order("id_producto", Supabase.Postgrest.Constants.Ordering.Ascending)
+                    .Range(desde, hasta)
+                    .Get(ct);
+
+                return new ResultadoPaginado<Producto>
+                {
+                    Items = response?.Models ?? new List<Producto>(),
+                    PaginaActual = filtros.Pagina,
+                    TamanioPagina = filtros.TamanioPagina,
+                    TotalRegistros = total
+                };
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error paginación productos: {ex.Message}");
+                throw new Exception("No se pudo cargar la página de productos.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Consulta ligera: solo nombres de producto para autocompletar.
+        /// No incluye joins, es MUY rápida.
+        /// </summary>
+        public async Task<List<Producto>> ObtenerSugerenciasAsync(
+     string texto,
+     bool? estado = true,
+     int limite = 10,
+     CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return new List<Producto>();
+
+            try
+            {
+                var client = await GetClient();
+                var query = client.From<Producto>();
+
+                if (estado.HasValue)
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                        query.Filter("estado_producto", Operator.Equals,
+                                     estado.Value.ToString().ToLower());
+
+                string textoLimpio = texto.Trim();
+                bool esCodigo = textoLimpio.All(char.IsDigit)
+                                && textoLimpio.Length >= 8
+                                && textoLimpio.Length <= 13;
+
+                if (esCodigo)
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                        query.Filter("codigo_barra_producto", Operator.Equals, textoLimpio);
+                else
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                        query.Filter("nombre_producto", Operator.ILike, $"%{textoLimpio}%");
+
+                var response = await query
+                    .Select("nombre_producto, codigo_barra_producto, contenido_producto, marca(*), presentacion(*)")
+                    .Limit(limite)
+                    .Get(ct);
+
+                // ← Retorna Producto completo, no string
+                return response?.Models ?? new List<Producto>();
+            }
+            catch (OperationCanceledException) { throw; }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error sugerencias: {ex.Message}");
+                return new List<Producto>();
+            }
+        }
+        /// <summary>
+        /// Busca UN producto exacto por código de barras (para lector POS).
+        /// </summary>
+        public async Task<Producto> BuscarPorCodigoBarraAsync(
+            string codigo,
+            CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(codigo)) return null;
+
+            try
+            {
+                var client = await GetClient();
+                var response = await client
+                    .From<Producto>()
+                    .Select("*, presentacion(*), marca(*), categoria(*)")
+                    .Filter("codigo_barra_producto", Operator.Equals, codigo.Trim())
+                    .Limit(1)
+                    .Get(ct);
+
+                return response?.Models?.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error buscar por código: {ex.Message}");
+                return null;
+            }
+        }
+
+        // =========================================================
+        // Helper privado para aplicar filtros comunes
+        // =========================================================
+        private void AplicarFiltrosBase(
+            ref Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel> query,
+            FiltrosProducto filtros)
+        {
+            if (filtros.Estado.HasValue)
+            {
+                query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                    query.Filter("estado_producto", Operator.Equals,
+                                 filtros.Estado.Value.ToString().ToLower());
+            }
+
+            if (filtros.IdMarca.HasValue && filtros.IdMarca.Value > 0)
+            {
+                query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                    query.Filter("id_marca", Operator.Equals, filtros.IdMarca.Value);
+            }
+
+            if (filtros.IdCategoria.HasValue && filtros.IdCategoria.Value > 0)
+            {
+                query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                    query.Filter("id_categoria", Operator.Equals, filtros.IdCategoria.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filtros.TextoBusqueda))
+            {
+                string texto = filtros.TextoBusqueda.Trim();
+                bool esCodigo = texto.All(char.IsDigit)
+                                && texto.Length >= 8
+                                && texto.Length <= 13;
+
+                if (esCodigo)
+                {
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                        query.Filter("codigo_barra_producto", Operator.Equals, texto);
+                }
+                else
+                {
+                    query = (Supabase.Interfaces.ISupabaseTable<Producto, Supabase.Realtime.RealtimeChannel>)
+                        query.Filter("nombre_producto", Operator.ILike, $"%{texto}%");
+                }
             }
         }
     }

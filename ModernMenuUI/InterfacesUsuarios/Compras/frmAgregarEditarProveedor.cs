@@ -103,6 +103,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "GUARDAR PROVEEDOR");
 
                 btnEditarProveedor.Visible = false;
+                //correción hecha, proveedor siempre activo si se ingresa uno nuevo.
+                rbActivo.Checked = true;
+                rbActivo.Enabled = false;
                 btnGuardarProveedor.Visible = true;
 
                 SetReadOnlyMode(false);
@@ -194,5 +197,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

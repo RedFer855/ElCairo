@@ -1,240 +1,330 @@
-﻿using CapaDeDatos.Modelados.Productos;
+﻿using CapaDeDatos.Modelados.Paginacion;
+using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
-using ModernMenuUI.InterfacesUsuarios.Inventario;
-using ModernMenuUI.ServiciosUI;
-using System.Data;
 using ModernMenuUI.ClasesUI.Extenciones;
-
+using ModernMenuUI.InterfacesUsuarios.Inventario;
+using Supabase.Realtime.PostgresChanges;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    /// <summary>
-    /// Formulario principal para la administración, filtrado, búsqueda y edición de productos.
-    /// Integra:
-    /// - Búsqueda interactiva con sugerencias.
-    /// - Filtros por estado, marca y categoría.
-    /// - Actualización automática mediante Realtime.
-    /// - Operaciones CRUD vía formularios secundarios.
-    /// - Aplicación de permisos UI dinámicos.
-    /// </summary>
     public partial class frmProductos : Form
     {
-        #region 1. Campos y Dependencias
-        /// <summary>Repositorio encargado de obtener, insertar y actualizar productos.</summary>
         private readonly ProductoRepositorio _productoRepositorio;
-
-        /// <summary>Servicio encargado de habilitar o bloquear botones según permisos del usuario.</summary>
         private readonly ServiciosUI.ServicioPermisosUI _servicioPermisos;
 
-        /// <summary>Gestor de cambios en tiempo real para reflejar alteraciones externas a nivel de productos.</summary>
-        private readonly GestorRealtime<Producto> _gestorRealtime;
+        // Estado actual de filtros + paginación
+        private readonly FiltrosProducto _filtros = new FiltrosProducto
+        {
+            Estado = true,
+            Pagina = 1,
+            TamanioPagina = 100
+        };
 
-        /// <summary>Buscador interactivo que gestiona texto, sugerencias y acciones sobre DataGridView.</summary>
-        private BuscadorInteractivo<Producto> _buscadorCtrl;
+        private Producto _productoSeleccionado;
 
-        /// <summary>Lista maestra con todos los productos cargados inicialmente.</summary>
-        private List<Producto> _listaMaestraProductos = new List<Producto>();
+        // Cancelación para búsquedas concurrentes
+        private CancellationTokenSource _ctsPagina;
+        private CancellationTokenSource _ctsSugerencias;
 
-        /// <summary>Producto actualmente seleccionado en la grilla.</summary>
-        private Producto ProductoSeleccionado;
+        // Debounce para búsqueda/sugerencias (no consultar por cada tecla)
+        private readonly System.Windows.Forms.Timer _timerDebounce;
 
-        /// <summary>Filtro para limitar los productos por Marca.</summary>
-        private int? _filtroMarcaId = null;
+        // Realtime
+        private Action<PostgresChangesResponse> _handlerCambio;
 
-        /// <summary>Filtro para limitar los productos por Categoría.</summary>
-        private int? _filtroCategoriaId = null;
-        #endregion
-
-        #region 2. Constructor y Load
-
-        /// <summary>
-        /// Constructor principal: configura repositorios, permisos, grilla, realtime y eventos generales.
-        /// </summary>
         public frmProductos()
         {
             InitializeComponent();
 
-            // A. Inicialización de dependencias
             _productoRepositorio = new ProductoRepositorio();
             _servicioPermisos = new ServiciosUI.ServicioPermisosUI();
-            _gestorRealtime = new GestorRealtime<Producto>();
 
-            // B. Configuración visual y de rendimiento del grid
             dgvProductos.AutoGenerateColumns = false;
             dgvProductos.ActivarDobleBuffer();
-            dgvProductos.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 241);
+            dgvProductos.ColumnHeadersDefaultCellStyle.SelectionBackColor =
+                Color.FromArgb(220, 230, 241);
 
-            // C. Registrar botones bajo control de permisos
             RegistrarBotonesConPermisos();
             _servicioPermisos.AplicarPermisos();
-
-            // D. Evento unificado para los RadioButtons de estado
             ConfigurarEventosUnificados();
 
-            // E. Callbacks Realtime para recargar datos cuando la BD cambie
-            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
-            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+            ConfigurarPaginador(); 
+
+            _timerDebounce = new System.Windows.Forms.Timer { Interval = 350 };
+            _timerDebounce.Tick += TimerDebounce_Tick;
+
+            _handlerCambio = (c) => RecargarInterfazSafe();
+            RealtimeManager.OnProductoChanged += _handlerCambio;
         }
 
-        /// <summary>
-        /// Carga inicial del formulario: obtiene productos, configura buscador y suscribe a Realtime.
-        /// </summary>
+        // =========================================================
+        // CICLO DE VIDA
+        // =========================================================
         private async void frmProductos_Load(object sender, EventArgs e)
         {
-            await InicializarDatosYBuscador();
-            await _gestorRealtime.SuscribirAsync();
+            await CargarPaginaAsync();
         }
 
-        /// <summary>
-        /// Al cerrar el formulario se desuscribe del canal Realtime.
-        /// </summary>
-        private async void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmProductos_FormClosing(object sender, FormClosingEventArgs e)
         {
-            await _gestorRealtime.DesuscribirAsync();
+            try
+            {
+                if (_handlerCambio != null)
+                    RealtimeManager.OnProductoChanged -= _handlerCambio;
+
+                _ctsPagina?.Cancel();
+                _ctsPagina?.Dispose();
+                _ctsPagina = null;
+
+                _ctsSugerencias?.Cancel();
+                _ctsSugerencias?.Dispose();
+                _ctsSugerencias = null;
+
+                _timerDebounce.Stop();
+                _timerDebounce.Tick -= TimerDebounce_Tick;
+                _timerDebounce.Dispose();
+            }
+            catch { /* silencioso al cerrar */ }
         }
 
-        #endregion
-
-        #region 3. Lógica de Carga y Realtime
-
-        /// <summary>
-        /// Carga inicial de productos, crea el buscador interactivo y refresca la vista.
-        /// </summary>
-        private async Task InicializarDatosYBuscador()
+        // =========================================================
+        // PAGINADOR
+        // =========================================================
+        private void ConfigurarPaginador()
         {
+            paginadorProductos.PaginaCambiada += async (s, nueva) =>
+            {
+                _filtros.Pagina = nueva;
+                await CargarPaginaAsync();
+            };
+
+            paginadorProductos.TamanioPaginaCambiado += async (s, tam) =>
+            {
+                _filtros.TamanioPagina = tam;
+                _filtros.Pagina = 1;
+                await CargarPaginaAsync();
+            };
+        }
+
+        // =========================================================
+        // MÉTODO CENTRAL: carga una página del servidor
+        // =========================================================
+        private async Task CargarPaginaAsync()
+        {
+            _ctsPagina?.Cancel();
+            _ctsPagina?.Dispose();
+            _ctsPagina = new CancellationTokenSource();
+            var token = _ctsPagina.Token;
+
             try
             {
                 this.Cursor = Cursors.WaitCursor;
+                gbxEstado.Enabled = false;
 
-                // Obtener todos los productos
-                _listaMaestraProductos = await _productoRepositorio.ObtenerTodosLosProductos(null);
+                var resultado = await _productoRepositorio
+                    .ObtenerProductosPaginadosAsync(_filtros, token);
 
-                // Crear buscador interactivo usando tus criterios originales
-                _buscadorCtrl = new BuscadorInteractivo<Producto>(
-                    txtBuscar,
-                    lstSugerencias,
-                    dgvProductos,
-                    _listaMaestraProductos,
-                    (p, txt) => p.CodigoBarraProducto != null && p.CodigoBarraProducto.Equals(txt),
-                    (p, txt) => p.ToString().IndexOf(txt, StringComparison.OrdinalIgnoreCase) >= 0,
-                    (p) => p.ToString(),
-                    (busquedaActiva) =>
-                    {
-                        pnlLimpiarFiltros.Visible = busquedaActiva;
-                        if (!busquedaActiva) RefrescarGrid();
-                    },
-                    (txt) => txt.All(char.IsDigit) && txt.Length >= 8 && txt.Length <= 13
-                );
+                if (token.IsCancellationRequested) return;
 
-                RefrescarGrid();
+                dgvProductos.DataSource = null;
+                dgvProductos.DataSource = resultado.Items;
+
+                paginadorProductos.Actualizar(
+                    resultado.PaginaActual,
+                    resultado.TotalPaginas,
+                    resultado.TotalRegistros);
+
+                ActualizarTotalProductos(resultado.TotalRegistros);
+                pnlLimpiarFiltros.Visible = HayFiltrosActivos();
+
+                if (resultado.Items.Count > 0)
+                    dgvProductos.ClearSelection();
+            }
+            catch (OperationCanceledException)
+            {
+                // Esperado — el usuario escribió algo más
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error carga inicial: {ex.Message}");
                 MessageBox.Show(
-                    $"No se pudieron cargar los productos.\nPosible causa: Internet inestable o servidor en mantenimiento.\n\nDetalle: {ex.Message}",
-                    "Error de Carga",
+                    $"No se pudo cargar la página.\n\nDetalle: {ex.Message}",
+                    "Error",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                    MessageBoxIcon.Error);
             }
-            finally { this.Cursor = Cursors.Default; }
-        }
-
-        /// <summary>
-        /// Recarga la lista maestra desde la BD y actualiza el buscador + grid.
-        /// </summary>
-        private async Task CargarProductosMaestros()
-        {
-            try
+            finally
             {
-                _listaMaestraProductos = await _productoRepositorio.ObtenerTodosLosProductos(null);
-                _buscadorCtrl?.ActualizarDatosMaestros(_listaMaestraProductos);
-                RefrescarGrid();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error recarga: {ex.Message}");
+                gbxEstado.Enabled = true;
+                this.Cursor = Cursors.Default;
             }
         }
 
-        /// <summary>
-        /// Ejecuta recarga de forma segura (evita cross-thread exceptions).
-        /// </summary>
         private void RecargarInterfazSafe()
         {
             if (!this.IsDisposed && this.IsHandleCreated)
-                this.BeginInvoke((MethodInvoker)(async () => await CargarProductosMaestros()));
+                this.BeginInvoke((MethodInvoker)(async () => await CargarPaginaAsync()));
         }
 
-        #endregion
+        private void ActualizarTotalProductos(long total)
+        {
+            lblTotalProductos.Text = $"Total de Productos{Environment.NewLine}{total:N0}";
+        }
 
-        #region 4. Búsqueda (Delegada al Controlador de Sugerencias)
+        private bool HayFiltrosActivos()
+        {
+            return !string.IsNullOrWhiteSpace(_filtros.TextoBusqueda)
+                || _filtros.IdMarca.HasValue
+                || _filtros.IdCategoria.HasValue
+                || _filtros.Estado != true;
+        }
+
+        // =========================================================
+        // BUSCADOR con sugerencias (top 10)
+        // =========================================================
+        private async void TimerDebounce_Tick(object sender, EventArgs e)
+        {
+            _timerDebounce.Stop();
+            string texto = txtBuscar.Text?.Trim();
+
+            if (string.IsNullOrEmpty(texto))
+            {
+                lstSugerencias.Visible = false;
+                return;
+            }
+
+            _ctsSugerencias?.Cancel();
+            _ctsSugerencias?.Dispose();
+            _ctsSugerencias = new CancellationTokenSource();
+
+            try
+            {
+                var sugerencias = await _productoRepositorio.ObtenerSugerenciasAsync(
+                    texto, _filtros.Estado, 10, _ctsSugerencias.Token);
+
+                if (_ctsSugerencias.IsCancellationRequested) return;
+
+                if (sugerencias.Count > 0)
+                {
+                    lstSugerencias.DataSource = null;
+                    lstSugerencias.DataSource = sugerencias;
+                    // ← NombreCompleto muestra el nombre concatenado visualmente
+                    lstSugerencias.DisplayMember = "NombreCompleto";
+
+                    int alto = (lstSugerencias.ItemHeight * sugerencias.Count) + 6;
+                    lstSugerencias.Height = Math.Min(alto, 250);
+                    lstSugerencias.Visible = true;
+                    lstSugerencias.BringToFront();
+                }
+                else
+                {
+                    lstSugerencias.Visible = false;
+                }
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error sugerencias: {ex.Message}");
+                lstSugerencias.Visible = false;
+            }
+        }
 
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
-            => await _buscadorCtrl.ManejarKeyUpAsync(e);
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                _timerDebounce.Stop();
+                lstSugerencias.Visible = false;
+                _filtros.TextoBusqueda = txtBuscar.Text?.Trim();
+                _filtros.Pagina = 1;
+                await CargarPaginaAsync();
+                return;
+            }
+
+            if (e.KeyCode == Keys.Down && lstSugerencias.Visible
+                && lstSugerencias.Items.Count > 0)
+            {
+                lstSugerencias.Focus();
+                lstSugerencias.SelectedIndex = 0;
+                return;
+            }
+
+            if (e.KeyCode == Keys.Escape)
+            {
+                lstSugerencias.Visible = false;
+                return;
+            }
+
+            _timerDebounce.Stop();
+            _timerDebounce.Start();
+        }
 
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
-            => _buscadorCtrl.ManejarKeyDown(e);
-
-        private void txtBuscar_Leave(object sender, EventArgs e)
-            => _buscadorCtrl.ManejarLeave();
-
-        private void lstSugerencias_MouseClick(object sender, MouseEventArgs e)
-            => _buscadorCtrl.ManejarClickLista();
-
-        private void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) _buscadorCtrl.ManejarClickLista();
+            // nada — KeyUp maneja todo
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
-            => _buscadorCtrl.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
-
-        #endregion
-
-        #region 5. Filtrado y Grid
-
-        /// <summary>
-        /// Aplica todos los filtros activos (estado, marca, categoría) y refresca DataGridView.
-        /// </summary>
-        private void RefrescarGrid()
+        private async void txtBuscar_Leave(object sender, EventArgs e)
         {
-            gbxEstado.Enabled = false;
-
-            var query = _listaMaestraProductos.AsEnumerable();
-
-            // Filtro por estado
-            if (rbMostrarHabilitados.Checked)
-                query = query.Where(p => p.EstadoProducto);
-            else if (rbMostrardeshabilitados.Checked)
-                query = query.Where(p => !p.EstadoProducto);
-
-            // Filtros adicionales
-            if (_filtroMarcaId.HasValue)
-                query = query.Where(p => p.IdMarca == _filtroMarcaId.Value);
-
-            if (_filtroCategoriaId.HasValue)
-                query = query.Where(p => p.IdCategoria == _filtroCategoriaId.Value);
-
-            var listaFinal = query.ToList();
-            dgvProductos.DataSource = listaFinal;
-
-            // Mostrar botón de limpiar filtros si corresponde
-            bool hayFiltros = !rbMostrarHabilitados.Checked || _filtroMarcaId != null || _filtroCategoriaId != null;
-            pnlLimpiarFiltros.Visible = hayFiltros;
-
-            if (listaFinal.Count > 0)
-                dgvProductos.ClearSelection();
-
-            gbxEstado.Enabled = true;
+            await Task.Delay(200);
+            if (!this.IsDisposed && !lstSugerencias.Focused)
+                lstSugerencias.Visible = false;
         }
 
-        /// <summary>
-        /// Suscribe los radio buttons al mismo manejador para evitar código repetido.
-        /// </summary>
+        private async void lstSugerencias_MouseClick(object sender, MouseEventArgs e)
+        {
+            await AplicarSugerenciaSeleccionada();
+        }
+
+        private async void lstSugerencias_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                await AplicarSugerenciaSeleccionada();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                lstSugerencias.Visible = false;
+                txtBuscar.Focus();
+            }
+        }
+        private async Task AplicarSugerenciaSeleccionada()
+        {
+            // ← Ahora es Producto, no string
+            if (lstSugerencias.SelectedItem is Producto productoSeleccionado)
+            {
+                // Mostrar el nombre completo en el textbox visualmente
+                txtBuscar.Text = productoSeleccionado.NombreCompleto;
+                lstSugerencias.Visible = false;
+
+                // ← FILTRAR SOLO POR NombreProducto REAL (no el concatenado)
+                _filtros.TextoBusqueda = productoSeleccionado.NombreProducto;
+                _filtros.Pagina = 1;
+                await CargarPaginaAsync();
+            }
+        }
+
+        private async void btnBuscar_Click(object sender, EventArgs e)
+        {
+            _timerDebounce.Stop();
+            lstSugerencias.Visible = false;
+            _filtros.TextoBusqueda = txtBuscar.Text?.Trim();
+            _filtros.Pagina = 1;
+            await CargarPaginaAsync();
+        }
+
+        // =========================================================
+        // FILTROS
+        // =========================================================
         private void ConfigurarEventosUnificados()
         {
             rbMostrarTodos.CheckedChanged += FiltroEstado_Changed;
@@ -242,120 +332,110 @@ namespace ModernMenuUI
             rbMostrardeshabilitados.CheckedChanged += FiltroEstado_Changed;
         }
 
-        private void FiltroEstado_Changed(object sender, EventArgs e)
+        private async void FiltroEstado_Changed(object sender, EventArgs e)
         {
-            if (sender is RadioButton rb && rb.Checked)
-                RefrescarGrid();
+            if (!(sender is RadioButton rb) || !rb.Checked) return;
+
+            if (rbMostrarHabilitados.Checked) _filtros.Estado = true;
+            else if (rbMostrardeshabilitados.Checked) _filtros.Estado = false;
+            else _filtros.Estado = null;
+
+            _filtros.Pagina = 1;
+            await CargarPaginaAsync();
         }
 
         private void dgvProductos_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvProductos.SelectedRows.Count > 0)
-                ProductoSeleccionado = dgvProductos.SelectedRows[0].DataBoundItem as Producto;
-            else
-                ProductoSeleccionado = null;
+            _productoSeleccionado = dgvProductos.SelectedRows.Count > 0
+                ? dgvProductos.SelectedRows[0].DataBoundItem as Producto
+                : null;
         }
 
-        private void btnLimpiarFiltros_Click(object sender, EventArgs e)
+        private async void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
-            _filtroMarcaId = null;
-            _filtroCategoriaId = null;
+            _filtros.TextoBusqueda = null;
+            _filtros.IdMarca = null;
+            _filtros.IdCategoria = null;
+            _filtros.Estado = true;
+            _filtros.Pagina = 1;
 
             txtFiltroMarca.Text = "";
             txtFiltroCategoria.Text = "";
-
+            txtBuscar.Text = "";
+            lstSugerencias.Visible = false;
             rbMostrarHabilitados.Checked = true;
 
-            _buscadorCtrl.LimpiarBusqueda();
-            RefrescarGrid();
+            await CargarPaginaAsync();
         }
 
-        #endregion
-
-        #region 6. CRUD
-
-        /// <summary>Abre un formulario para crear un nuevo producto.</summary>
+        // =========================================================
+        // CRUD
+        // =========================================================
         private async void btnNuevoProducto_Click(object sender, EventArgs e)
-        {
-            await AbrirEditorProducto(null);
-        }
+            => await AbrirEditorProducto(null);
 
-        /// <summary>Abre un formulario para editar el producto seleccionado.</summary>
         private async void btnEditarProducto_Click(object sender, EventArgs e)
         {
-            if (ProductoSeleccionado == null)
+            if (_productoSeleccionado == null)
             {
-                MessageBox.Show(
-                    "Seleccione un producto primero.",
-                    "Aviso",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione un producto primero.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            await AbrirEditorProducto(ProductoSeleccionado);
+            await AbrirEditorProducto(_productoSeleccionado);
         }
 
-        /// <summary>
-        /// Lanza el form de edición/inserción y refresca la grilla si hubo cambios.
-        /// </summary>
         private async Task AbrirEditorProducto(Producto prod)
         {
-            var frm = prod == null
+            using (var frm = prod == null
                 ? new frmAgregarEditarProducto()
-                : new frmAgregarEditarProducto(prod);
-
-            if (frm.ShowDialog() == DialogResult.OK)
-                await CargarProductosMaestros();
-        }
-
-        private void btnIngresarPerdida_Click(object sender, EventArgs e)
-        {
-            new frmAgregarEditarProducto().ShowDialog();
-        }
-
-        #endregion
-
-        #region 7. Filtros de Marcas y Categorías
-
-        /// <summary>
-        /// Helper genérico que abre formularios de selección (Marcas / Categorías).
-        /// </summary>
-        private void AbrirFiltro<TForm>(Func<TForm> factory, Action<TForm> onSuccess)
-            where TForm : Form
-        {
-            using (var frm = factory())
+                : new frmAgregarEditarProducto(prod))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
-                    onSuccess(frm);
+                    await CargarPaginaAsync();
             }
         }
 
-        private void btnMarca_Click(object sender, EventArgs e)
-            => AbrirFiltro(() => new frmMarcas(), f =>
+        // =========================================================
+        // FILTROS DE MARCA / CATEGORÍA
+        // =========================================================
+        private async void btnMarca_Click(object sender, EventArgs e)
+        {
+            using (var frm = new frmMarcas())
             {
-                txtFiltroMarca.Text = f.MarcaSeleccionada.NombreMarca;
-                _filtroMarcaId = f.MarcaSeleccionada.IdMarca;
-                RefrescarGrid();
-            });
+                if (frm.ShowDialog() == DialogResult.OK && frm.MarcaSeleccionada != null)
+                {
+                    txtFiltroMarca.Text = frm.MarcaSeleccionada.NombreMarca;
+                    _filtros.IdMarca = frm.MarcaSeleccionada.IdMarca;
+                    _filtros.Pagina = 1;
+                    await CargarPaginaAsync();
+                }
+            }
+        }
 
-        private void btnCategoria_Click(object sender, EventArgs e)
-            => AbrirFiltro(() => new frmCategorias(), f =>
+        private async void btnCategoria_Click(object sender, EventArgs e)
+        {
+            using (var frm = new frmCategorias())
             {
-                txtFiltroCategoria.Text = f.CategoriaSeleccionada.NombreCategoria;
-                _filtroCategoriaId = f.CategoriaSeleccionada.IdCategoria;
-                RefrescarGrid();
-            });
+                if (frm.ShowDialog() == DialogResult.OK && frm.CategoriaSeleccionada != null)
+                {
+                    txtFiltroCategoria.Text = frm.CategoriaSeleccionada.NombreCategoria;
+                    _filtros.IdCategoria = frm.CategoriaSeleccionada.IdCategoria;
+                    _filtros.Pagina = 1;
+                    await CargarPaginaAsync();
+                }
+            }
+        }
 
         private void btnAgregarMarca_Click(object sender, EventArgs e)
-            => new frmMarcas().ShowDialog();
+        {
+            using (var frm = new frmMarcas()) frm.ShowDialog();
+        }
 
         private void btnAgregarCategoria_Click(object sender, EventArgs e)
-            => new frmCategorias().ShowDialog();
-
-        #endregion
-
-        #region 8. Helpers y UI
+        {
+            using (var frm = new frmCategorias()) frm.ShowDialog();
+        }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
@@ -363,18 +443,14 @@ namespace ModernMenuUI
             this.Close();
         }
 
-        /// <summary>
-        /// Registra todos los botones que dependen de permisos del usuario.
-        /// </summary>
         private void RegistrarBotonesConPermisos()
         {
             _servicioPermisos.RegistrarBoton(btnNuevoProducto, "create_inventario");
             _servicioPermisos.RegistrarBoton(btnEditarProducto, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarCategoria, "update_inventario");
             _servicioPermisos.RegistrarBoton(btnAgregarMarca, "update_inventario");
-            _servicioPermisos.RegistrarBoton(btnIngresarPerdida, "update_inventario");
         }
 
-        #endregion
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e) { }
     }
 }

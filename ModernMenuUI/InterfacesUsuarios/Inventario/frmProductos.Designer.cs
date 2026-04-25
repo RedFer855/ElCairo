@@ -45,10 +45,10 @@
             dgvProductos = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Contenido = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
+            Contenido = new DataGridViewTextBoxColumn();
             Presentacion = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
             CantidadProducto = new DataGridViewTextBoxColumn();
             PrecioVenta = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
@@ -72,19 +72,17 @@
             rbMostrardeshabilitados = new RadioButton();
             rbMostrarTodos = new RadioButton();
             rbMostrarHabilitados = new RadioButton();
-            lblFecha = new Label();
-            lblHora = new Label();
             HoraFecha = new System.Windows.Forms.Timer(components);
-            btnIngresarPerdida = new Button();
             btnAgregarCategoria = new Button();
             btnEditarProducto = new Button();
             panel1 = new Panel();
+            paginadorProductos = new ModernMenuUI.ClasesUI.PaginadorControl();
             lstSugerencias = new ListBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             pnlLimpiarFiltros = new Panel();
-            label3 = new Label();
+            lblTotalProductos = new Label();
             panelCarrito.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
@@ -104,7 +102,7 @@
             panelCarrito.Controls.Add(panel10);
             panelCarrito.Location = new Point(15, 17);
             panelCarrito.Name = "panelCarrito";
-            panelCarrito.Size = new Size(718, 407);
+            panelCarrito.Size = new Size(718, 433);
             panelCarrito.TabIndex = 13;
             // 
             // panel10
@@ -114,7 +112,7 @@
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new Size(718, 407);
+            panel10.Size = new Size(718, 433);
             panel10.TabIndex = 17;
             // 
             // dgvProductos
@@ -138,7 +136,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, Contenido, dataGridViewTextBoxColumn4, Categoria, Presentacion, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn4, Contenido, Presentacion, Categoria, CantidadProducto, PrecioVenta, dataGridViewTextBoxColumn3, PrecioCompra, PorcentajeGanancia, EstadoProducto });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = Color.White;
             dataGridViewCellStyle9.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -167,7 +165,7 @@
             dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProductos.RowTemplate.Height = 50;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(718, 407);
+            dgvProductos.Size = new Size(718, 433);
             dgvProductos.TabIndex = 1;
             dgvProductos.SelectionChanged += dgvProductos_SelectionChanged;
             // 
@@ -194,15 +192,6 @@
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
-            // Contenido
-            // 
-            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Contenido.DataPropertyName = "ContenidoProducto";
-            Contenido.HeaderText = "Contenido";
-            Contenido.Name = "Contenido";
-            Contenido.ReadOnly = true;
-            Contenido.Width = 113;
-            // 
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
@@ -212,6 +201,26 @@
             dataGridViewTextBoxColumn4.MinimumWidth = 100;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // Contenido
+            // 
+            Contenido.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            Contenido.DataPropertyName = "ContenidoProducto";
+            Contenido.HeaderText = "Contenido";
+            Contenido.MinimumWidth = 6;
+            Contenido.Name = "Contenido";
+            Contenido.ReadOnly = true;
+            Contenido.Width = 113;
+            // 
+            // Presentacion
+            // 
+            Presentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Presentacion.DataPropertyName = "NombrePresentacion";
+            Presentacion.HeaderText = "Presentación";
+            Presentacion.MinimumWidth = 6;
+            Presentacion.Name = "Presentacion";
+            Presentacion.ReadOnly = true;
+            Presentacion.Width = 131;
             // 
             // Categoria
             // 
@@ -223,15 +232,6 @@
             Categoria.ReadOnly = true;
             Categoria.Width = 120;
             // 
-            // Presentacion
-            // 
-            Presentacion.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Presentacion.DataPropertyName = "NombrePresentacion";
-            Presentacion.HeaderText = "Presentación";
-            Presentacion.Name = "Presentacion";
-            Presentacion.ReadOnly = true;
-            Presentacion.Width = 131;
-            // 
             // CantidadProducto
             // 
             CantidadProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -239,6 +239,7 @@
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             CantidadProducto.DefaultCellStyle = dataGridViewCellStyle4;
             CantidadProducto.HeaderText = "Cantidad";
+            CantidadProducto.MinimumWidth = 6;
             CantidadProducto.Name = "CantidadProducto";
             CantidadProducto.ReadOnly = true;
             CantidadProducto.Width = 105;
@@ -251,6 +252,7 @@
             PrecioVenta.DefaultCellStyle = dataGridViewCellStyle5;
             PrecioVenta.FillWeight = 80F;
             PrecioVenta.HeaderText = "Precio Venta";
+            PrecioVenta.MinimumWidth = 6;
             PrecioVenta.Name = "PrecioVenta";
             PrecioVenta.ReadOnly = true;
             PrecioVenta.Width = 127;
@@ -263,6 +265,7 @@
             dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle6;
             dataGridViewTextBoxColumn3.FillWeight = 80F;
             dataGridViewTextBoxColumn3.HeaderText = "Precio Costo";
+            dataGridViewTextBoxColumn3.MinimumWidth = 6;
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             dataGridViewTextBoxColumn3.ReadOnly = true;
             dataGridViewTextBoxColumn3.Width = 127;
@@ -275,6 +278,7 @@
             PrecioCompra.DefaultCellStyle = dataGridViewCellStyle7;
             PrecioCompra.FillWeight = 80F;
             PrecioCompra.HeaderText = "Precio Compra";
+            PrecioCompra.MinimumWidth = 6;
             PrecioCompra.Name = "PrecioCompra";
             PrecioCompra.ReadOnly = true;
             PrecioCompra.Width = 141;
@@ -297,6 +301,7 @@
             EstadoProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             EstadoProducto.DataPropertyName = "EstadoProducto";
             EstadoProducto.HeaderText = "Estado";
+            EstadoProducto.MinimumWidth = 6;
             EstadoProducto.Name = "EstadoProducto";
             EstadoProducto.ReadOnly = true;
             EstadoProducto.Resizable = DataGridViewTriState.True;
@@ -353,7 +358,7 @@
             btnNuevoProducto.ForeColor = SystemColors.ButtonFace;
             btnNuevoProducto.Location = new Point(3, 3);
             btnNuevoProducto.Name = "btnNuevoProducto";
-            btnNuevoProducto.Size = new Size(185, 44);
+            btnNuevoProducto.Size = new Size(133, 33);
             btnNuevoProducto.TabIndex = 17;
             btnNuevoProducto.Text = "Nuevo Producto";
             btnNuevoProducto.UseVisualStyleBackColor = false;
@@ -365,9 +370,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(340, 53);
+            btnSalir.Location = new Point(442, 3);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(140, 44);
+            btnSalir.Size = new Size(67, 33);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -378,9 +383,9 @@
             btnAgregarMarca.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarMarca.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarMarca.ForeColor = SystemColors.ButtonFace;
-            btnAgregarMarca.Location = new Point(340, 3);
+            btnAgregarMarca.Location = new Point(142, 3);
             btnAgregarMarca.Name = "btnAgregarMarca";
-            btnAgregarMarca.Size = new Size(140, 44);
+            btnAgregarMarca.Size = new Size(74, 33);
             btnAgregarMarca.TabIndex = 21;
             btnAgregarMarca.Text = "Marcas";
             btnAgregarMarca.UseVisualStyleBackColor = false;
@@ -423,14 +428,14 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(372, 30);
+            tableLayoutPanel2.Size = new Size(350, 30);
             tableLayoutPanel2.TabIndex = 39;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(202, 0);
+            label1.Location = new Point(191, 0);
             label1.Name = "label1";
             label1.Size = new Size(61, 30);
             label1.TabIndex = 40;
@@ -440,11 +445,11 @@
             // txtFiltroMarca
             // 
             txtFiltroMarca.Dock = DockStyle.Fill;
-            txtFiltroMarca.Location = new Point(269, 3);
+            txtFiltroMarca.Location = new Point(258, 3);
             txtFiltroMarca.Name = "txtFiltroMarca";
             txtFiltroMarca.PlaceholderText = "(Todas)";
             txtFiltroMarca.ReadOnly = true;
-            txtFiltroMarca.Size = new Size(66, 25);
+            txtFiltroMarca.Size = new Size(55, 25);
             txtFiltroMarca.TabIndex = 34;
             // 
             // btnMarca
@@ -455,7 +460,7 @@
             btnMarca.Dock = DockStyle.Fill;
             btnMarca.FlatAppearance.BorderSize = 0;
             btnMarca.FlatStyle = FlatStyle.Flat;
-            btnMarca.Location = new Point(341, 3);
+            btnMarca.Location = new Point(319, 3);
             btnMarca.Name = "btnMarca";
             btnMarca.Size = new Size(28, 24);
             btnMarca.TabIndex = 2;
@@ -470,7 +475,7 @@
             btnCategoria.Dock = DockStyle.Fill;
             btnCategoria.FlatAppearance.BorderSize = 0;
             btnCategoria.FlatStyle = FlatStyle.Flat;
-            btnCategoria.Location = new Point(169, 3);
+            btnCategoria.Location = new Point(158, 3);
             btnCategoria.Name = "btnCategoria";
             btnCategoria.Size = new Size(27, 24);
             btnCategoria.TabIndex = 38;
@@ -484,7 +489,7 @@
             txtFiltroCategoria.Name = "txtFiltroCategoria";
             txtFiltroCategoria.PlaceholderText = "(Todas)";
             txtFiltroCategoria.ReadOnly = true;
-            txtFiltroCategoria.Size = new Size(66, 25);
+            txtFiltroCategoria.Size = new Size(55, 25);
             txtFiltroCategoria.TabIndex = 35;
             // 
             // label2
@@ -529,58 +534,20 @@
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
             rbMostrarHabilitados.UseVisualStyleBackColor = true;
-            // 
-            // lblFecha
-            // 
-            lblFecha.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Itim", 15.7499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblFecha.ForeColor = Color.FromArgb(148, 168, 187);
-            lblFecha.Location = new Point(730, 642);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(22, 25);
-            lblFecha.TabIndex = 30;
-            lblFecha.Text = "1";
-            lblFecha.Visible = false;
-            // 
-            // lblHora
-            // 
-            lblHora.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblHora.AutoSize = true;
-            lblHora.Font = new Font("Itim", 20.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblHora.ForeColor = Color.FromArgb(148, 168, 187);
-            lblHora.Location = new Point(730, 616);
-            lblHora.Name = "lblHora";
-            lblHora.Size = new Size(28, 33);
-            lblHora.TabIndex = 29;
-            lblHora.Text = "1";
-            lblHora.Visible = false;
+            rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
             // HoraFecha
             // 
             HoraFecha.Enabled = true;
-            // 
-            // btnIngresarPerdida
-            // 
-            btnIngresarPerdida.BackColor = Color.FromArgb(204, 116, 131);
-            btnIngresarPerdida.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnIngresarPerdida.ForeColor = SystemColors.ButtonFace;
-            btnIngresarPerdida.Location = new Point(194, 3);
-            btnIngresarPerdida.Name = "btnIngresarPerdida";
-            btnIngresarPerdida.Size = new Size(140, 44);
-            btnIngresarPerdida.TabIndex = 23;
-            btnIngresarPerdida.Text = "Perdidas";
-            btnIngresarPerdida.UseVisualStyleBackColor = false;
-            btnIngresarPerdida.Click += btnIngresarPerdida_Click;
             // 
             // btnAgregarCategoria
             // 
             btnAgregarCategoria.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarCategoria.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarCategoria.ForeColor = SystemColors.ButtonFace;
-            btnAgregarCategoria.Location = new Point(194, 53);
+            btnAgregarCategoria.Location = new Point(222, 3);
             btnAgregarCategoria.Name = "btnAgregarCategoria";
-            btnAgregarCategoria.Size = new Size(140, 44);
+            btnAgregarCategoria.Size = new Size(98, 33);
             btnAgregarCategoria.TabIndex = 22;
             btnAgregarCategoria.Text = "Categorias";
             btnAgregarCategoria.UseVisualStyleBackColor = false;
@@ -591,11 +558,11 @@
             btnEditarProducto.BackColor = Color.FromArgb(189, 215, 238);
             btnEditarProducto.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEditarProducto.ForeColor = Color.FromArgb(87, 99, 110);
-            btnEditarProducto.Location = new Point(3, 53);
+            btnEditarProducto.Location = new Point(326, 3);
             btnEditarProducto.Name = "btnEditarProducto";
-            btnEditarProducto.Size = new Size(185, 44);
+            btnEditarProducto.Size = new Size(110, 33);
             btnEditarProducto.TabIndex = 20;
-            btnEditarProducto.Text = "Editar Producto";
+            btnEditarProducto.Text = "Ver Producto";
             btnEditarProducto.UseVisualStyleBackColor = false;
             btnEditarProducto.Click += btnEditarProducto_Click;
             // 
@@ -603,11 +570,24 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.FromArgb(189, 215, 238);
+            panel1.Controls.Add(paginadorProductos);
             panel1.Controls.Add(panelCarrito);
             panel1.Location = new Point(12, 120);
             panel1.Name = "panel1";
-            panel1.Size = new Size(746, 437);
+            panel1.Size = new Size(746, 499);
             panel1.TabIndex = 32;
+            // 
+            // paginadorProductos
+            // 
+            paginadorProductos.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            paginadorProductos.BackColor = Color.FromArgb(189, 215, 238);
+            paginadorProductos.Font = new Font("Itim", 10.5F);
+            paginadorProductos.Location = new Point(15, 457);
+            paginadorProductos.Margin = new Padding(3, 4, 3, 4);
+            paginadorProductos.MinimumSize = new Size(550, 38);
+            paginadorProductos.Name = "paginadorProductos";
+            paginadorProductos.Size = new Size(550, 38);
+            paginadorProductos.TabIndex = 14;
             // 
             // lstSugerencias
             // 
@@ -630,14 +610,13 @@
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             flowLayoutPanel1.Controls.Add(btnNuevoProducto);
-            flowLayoutPanel1.Controls.Add(btnIngresarPerdida);
             flowLayoutPanel1.Controls.Add(btnAgregarMarca);
-            flowLayoutPanel1.Controls.Add(btnEditarProducto);
             flowLayoutPanel1.Controls.Add(btnAgregarCategoria);
+            flowLayoutPanel1.Controls.Add(btnEditarProducto);
             flowLayoutPanel1.Controls.Add(btnSalir);
-            flowLayoutPanel1.Location = new Point(12, 567);
+            flowLayoutPanel1.Location = new Point(12, 625);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(490, 100);
+            flowLayoutPanel1.Size = new Size(746, 42);
             flowLayoutPanel1.TabIndex = 33;
             // 
             // btnLimpiarFiltros
@@ -676,18 +655,18 @@
             pnlLimpiarFiltros.TabIndex = 36;
             pnlLimpiarFiltros.Visible = false;
             // 
-            // label3
+            // lblTotalProductos
             // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.DimGray;
-            label3.Location = new Point(627, 17);
-            label3.Name = "label3";
-            label3.RightToLeft = RightToLeft.Yes;
-            label3.Size = new Size(132, 36);
-            label3.TabIndex = 37;
-            label3.Text = ":Total de Productos\r\n110\r\n";
+            lblTotalProductos.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblTotalProductos.AutoSize = true;
+            lblTotalProductos.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTotalProductos.ForeColor = Color.DimGray;
+            lblTotalProductos.Location = new Point(627, 17);
+            lblTotalProductos.Name = "lblTotalProductos";
+            lblTotalProductos.RightToLeft = RightToLeft.Yes;
+            lblTotalProductos.Size = new Size(128, 18);
+            lblTotalProductos.TabIndex = 37;
+            lblTotalProductos.Text = "Total de Productos\r\n";
             // 
             // frmProductos
             // 
@@ -695,19 +674,18 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.White;
             ClientSize = new Size(770, 679);
-            Controls.Add(label3);
+            Controls.Add(lblTotalProductos);
             Controls.Add(pnlLimpiarFiltros);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(lstSugerencias);
             Controls.Add(gbxEstado);
             Controls.Add(panelBusqueda);
-            Controls.Add(lblFecha);
-            Controls.Add(lblHora);
             Controls.Add(panel1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProductos";
             Text = "frmProductos";
+            FormClosing += frmProductos_FormClosing;
             Load += frmProductos_Load;
             panelCarrito.ResumeLayout(false);
             panel10.ResumeLayout(false);
@@ -741,13 +719,10 @@
         private RadioButton rbMostrardeshabilitados;
         private RadioButton rbMostrarTodos;
         private RadioButton rbMostrarHabilitados;
-        private Label lblFecha;
-        private Label lblHora;
         private System.Windows.Forms.Timer HoraFecha;
         private Button btnAgregarCategoria;
         private Button btnEditarProducto;
         private Panel panel1;
-        private Button btnIngresarPerdida;
         private ListBox lstSugerencias;
         private TextBox txtFiltroCategoria;
         private TextBox txtFiltroMarca;
@@ -760,13 +735,15 @@
         private Panel pnlLimpiarFiltros;
         private Label label2;
         private Label label1;
-        private Label label3;
+        private Label lblTotalProductos;
+        private ClasesUI.PaginadorControl paginador;
+        private ClasesUI.PaginadorControl paginadorProductos;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Contenido;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn Categoria;
+        private DataGridViewTextBoxColumn Contenido;
         private DataGridViewTextBoxColumn Presentacion;
+        private DataGridViewTextBoxColumn Categoria;
         private DataGridViewTextBoxColumn CantidadProducto;
         private DataGridViewTextBoxColumn PrecioVenta;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;

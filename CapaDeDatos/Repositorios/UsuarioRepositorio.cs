@@ -49,17 +49,17 @@ namespace CapaDeDatos.Repositorios
         }
 
 
-        public async Task<List<Usuario>> ObtenerTodosLosUsuarios(CancellationToken cancellationToken = default)
+        public async Task<List<UsuarioDisplay>> ObtenerTodosLosUsuarios(CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = await GetClient();
-
-                var queryBuilder = client.From<Usuario>()
-                                         .Order("alias_usuario", Supabase.Postgrest.Constants.Ordering.Ascending);
-
-                var response = await queryBuilder.Get(cancellationToken);
-                return response.Models ?? new List<Usuario>();
+                var response = await client
+                    .From<UsuarioDisplay>()
+                    .Select("*, roles(*)")
+                    .Order("alias_usuario", Supabase.Postgrest.Constants.Ordering.Ascending)
+                    .Get(cancellationToken);
+                return response.Models ?? new List<UsuarioDisplay>();
             }
             catch (PostgrestException ex)
             {

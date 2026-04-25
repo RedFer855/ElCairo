@@ -45,6 +45,7 @@ namespace ModernMenuUI
         private bool _usuarioSeleccionoConMouse = false;
         private string _sugerenciaActual = "";
         private const int MAX_SUGGESTIONS = 10;
+        private decimal precio_nuevo = 0;
         #endregion
 
         #region Constructor
@@ -63,6 +64,14 @@ namespace ModernMenuUI
             _proveedorRepositorio = new ProveedorRepositorio();
 
             dgvProductos.AutoGenerateColumns = false;
+        }
+        #endregion
+
+        #region Setter centralizado de proveedor
+        private void SetProveedorSeleccionado(Proveedor prov)
+        {
+            _proveedorSeleccionado = prov;
+            lblMensaje.Visible = (prov == null);
         }
         #endregion
 
@@ -261,26 +270,26 @@ namespace ModernMenuUI
 
         private void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Validar que se hizo clic dentro de una fila válida
             if (e.RowIndex < 0 || e.RowIndex >= dgvCarrito.RowCount) return;
 
-            // --- COLUMNA 4: ELIMINAR ---
             if (e.ColumnIndex == 4)
             {
                 if (dgvCarrito.CurrentRow != null)
+                {
                     dgvCarrito.Rows.RemoveAt(e.RowIndex);
+                    ActualizarTotales();
+                }
                 return;
             }
 
-            // --- COLUMNA 5: RESTAR ---
             if (e.ColumnIndex == 5)
             {
-                // Leemos la cantidad actual (Celda 3)
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
                     if (cantidad > 1)
                     {
                         dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad - 1;
+                        ActualizarTotales();
                     }
                     else
                     {
@@ -290,15 +299,19 @@ namespace ModernMenuUI
                 return;
             }
 
-            // --- COLUMNA 6: SUMAR (Posición Original) ---
             if (e.ColumnIndex == 6)
             {
                 if (int.TryParse(dgvCarrito.Rows[e.RowIndex].Cells[3].Value?.ToString(), out int cantidad))
                 {
                     if (cantidad < 400)
+                    {
                         dgvCarrito.Rows[e.RowIndex].Cells[3].Value = cantidad + 1;
+                        ActualizarTotales();
+                    }
                     else
+                    {
                         MessageBox.Show("La cantidad máxima por producto es 400.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 return;
             }
@@ -306,16 +319,13 @@ namespace ModernMenuUI
 
         private void AgregarAlCarrito(string codigoBarra, int cantidadAgregar)
         {
-            // 1. Validaciones básicas
             if (string.IsNullOrWhiteSpace(codigoBarra)) return;
             string codigoBuscado = codigoBarra.Trim();
 
-            // 2. Recursos
             Image Eliminar = Properties.Resources.eliminar__1_;
             Image Restar = Properties.Resources.signo_menos__1_;
             Image Sumar = Properties.Resources.mas__2_;
 
-            // 3. Buscar producto en la Grilla de Productos (dgvProductos)
             DataGridViewRow producto = null;
             foreach (DataGridViewRow fila in dgvProductos.Rows)
             {
@@ -334,12 +344,10 @@ namespace ModernMenuUI
                 return;
             }
 
-            // 4. Obtener datos
             string descripcion = producto.Cells[1].Value?.ToString() ?? "";
             decimal costo = 0;
             decimal.TryParse(producto.Cells[4].Value?.ToString(), out costo);
 
-            // 5. Verificar si ya existe en el Carrito (para sumar)
             foreach (DataGridViewRow filaCarrito in dgvCarrito.Rows)
             {
                 string codCarrito = filaCarrito.Cells[0].Value?.ToString();
@@ -351,90 +359,78 @@ namespace ModernMenuUI
                     if (nuevaCant > 400) nuevaCant = 400;
 
                     filaCarrito.Cells[3].Value = nuevaCant;
-                    return; // Ya actualizamos, salimos.
+                    return;
                 }
             }
 
-            // 6. Agregar nueva fila (ESTRUCTURA ORIGINAL DE 7 COLUMNAS)
             int cantidadFinal = Math.Min(cantidadAgregar, 400);
 
-            // Índices: 0=Código, 1=Desc, 2=Precio, 3=Cant, 4=Del, 5=Restar, 6=Sumar
-            dgvCarrito.Rows.Add(codigoBuscado, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
+            if (txtNuevoPrecio.Enabled == false)
+            {
+                dgvCarrito.Rows.Add(codigoBuscado, descripcion, costo, cantidadFinal, Eliminar, Restar, Sumar);
+            }
+            else
+            {
+                decimal precioNuevo = txtNuevoPrecio.Value;
+                dgvCarrito.Rows.Add(codigoBuscado, descripcion, precioNuevo, cantidadFinal, Eliminar, Restar, Sumar);
+            }
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (nudCantidad.Value <= 0)
+            var datoscompra = ((int)nudCantidad.Value, txtCodigo.Text, txtProducto.Text);
+
+            var resultado = ServicioValidacionesIngresoDatos.EjecutarValidacionesCompra(datoscompra);
+            if (resultado.Error)
             {
-                MessageBox.Show("No puede ingresar 0 o negativo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(resultado.Mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (nudCantidad.Value > 400)
+            if (txtNuevoPrecio.Enabled == false && !chkprecioNuevo.Checked)
             {
-                MessageBox.Show("El límite de compra es de 400 unidades por producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
 
-            if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
+                nudCantidad.Value = 1;
+                txtCodigo.Text = null;
+                txtProducto.Text = null;
+                dgvProductos.ClearSelection();
+                chkprecioNuevo.Checked = false;
+                txtPrecio.Text = null;
+                ActualizarTotales();
+                ActualizarImagenCarrito();
+            }
+            else
             {
-                MessageBox.Show("Por favor seleccione un producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                precio_nuevo = txtNuevoPrecio.Value;
+
+                if (precio_nuevo == 0)
+                {
+                    MessageBox.Show("Error, campo vacio", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
+
+                nudCantidad.Value = 1;
+                txtCodigo.Text = null;
+                txtProducto.Text = null;
+                dgvProductos.ClearSelection();
+                txtNuevoPrecio.Enabled = false;
+
+                ActualizarTotales();
             }
-
-            // Validación de texto vacío
-            if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtProducto.Text))
-            {
-                MessageBox.Show("Por favor seleccione un producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // --- CAMBIO AQUÍ ---
-            // Pasamos txtCodigo.Text directamente (es string), ya no lo convertimos a Int32
-            AgregarAlCarrito(txtCodigo.Text, Convert.ToInt32(nudCantidad.Value));
-
-            // Reiniciar controles
-            nudCantidad.Value = 1;
-            txtCodigo.Text = null;
-            txtProducto.Text = null;
-            dgvProductos.ClearSelection();
-            txtPrecio.Text = null;
-            ActualizarTotales();
-            ActualizarImagenCarrito();
         }
         #endregion
 
         #region Registrar Compra
         private async void btnAgregarCompra_Click(object sender, EventArgs e)
         {
-
-            if (_proveedorSeleccionado == null)
-            {
-                MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-
-            if (dgvCarrito.Rows.Count == 0)
-            {
-                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            int proveedrId = _proveedorSeleccionado.IdProveedor;
-
             var supabase = await CapaDeDatos.Datos.Conexion.GetClientAsync();
             var Actual = supabase.Auth.CurrentUser;
-
-            if (Actual == null)
-            {
-                throw new Exception("No hay usuario autenticado en la sesión actual.");
-            }
-            int proveedorId = _proveedorSeleccionado.IdProveedor;
-
-
+            var idProveedor = _proveedorSeleccionado?.IdProveedor;
             var respEmpleado = await CompraRepositorio.getUserId(Actual.Id);
-
+            int idEmpleado = respEmpleado.IdUsuario;
+            int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
             var detalles = dgvCarrito.Rows
                 .Cast<DataGridViewRow>()
                 .Where(r => !r.IsNewRow)
@@ -444,41 +440,38 @@ namespace ModernMenuUI
                     cantidad_compra = Convert.ToInt32(r.Cells[3].Value)
                 }).ToList();
 
+            if (_proveedorSeleccionado == null)
+            {
+                MessageBox.Show("Por favor seleccione un proveedor antes de registrar la compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (dgvCarrito.Rows.Count == 0)
+            {
+                MessageBox.Show($"Por favor seleccione un Producto", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (Actual == null)
+            {
+                throw new Exception("No hay usuario autenticado en la sesión actual.");
+            }
+
             if (respEmpleado == null)
             {
                 MessageBox.Show("No se encontró empleado asociado al usuario autenticado.");
                 return;
             }
 
-            int idEmpleado = respEmpleado.IdUsuario;
-            int idBodega = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerIdBodega();
-
-            var parametros = new
-            {
-                p_id_empleado = idEmpleado,
-                p_id_proveedor = proveedrId,
-                p_id_bodega = idBodega,
-                p_fecha_compra = DateTime.UtcNow,
-                p_detalles = detalles
-            };
-
             try
             {
-                if (!string.IsNullOrWhiteSpace(txtNuevoPrecio.Text))
+                if (precio_nuevo != 0)
                 {
-                    decimal precioNuevo = Convert.ToDecimal(txtNuevoPrecio.Text);
-
-                    if (!decimal.TryParse(txtNuevoPrecio.Text, out precioNuevo))
-                    {
-                        MessageBox.Show("Ingrese un precio válido.", "Advertencia",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
+                    decimal precioNuevo = txtNuevoPrecio.Value;
 
                     foreach (DataGridViewRow row in dgvCarrito.Rows)
                     {
                         if (row.IsNewRow) continue;
+
+                        this.Cursor = Cursors.WaitCursor;
 
                         string codigoBarra = row.Cells[0].Value.ToString();
                         int cantidadIngresar = Convert.ToInt32(row.Cells[3].Value);
@@ -493,21 +486,21 @@ namespace ModernMenuUI
                         };
 
                         await supabase.Rpc("actualizar_precios_producto_tras_compra", parametrosPrecio);
-                        MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.","Compra ingresada",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        MessageBox.Show("Precio ingresado correctamente y compra realizada sin errores.", "Compra ingresada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    var result = await supabase.Rpc<int>("registrar_compra_nuevo_inv", parametros);
-
-                    if (result == 0)
+                    var parametros = new
                     {
-                        MessageBox.Show("La función no retornó un id de compra. Puede haber ocurrido un error interno.");
-                        return;
-                    }
-
-                    //await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
+                        p_id_empleado = idEmpleado,
+                        p_id_proveedor = idProveedor,
+                        p_id_bodega = idBodega,
+                        p_fecha_compra = DateTime.UtcNow,
+                        p_detalles = detalles
+                    };
+                    await supabase.Rpc("registrar_compra_nuevo_inv", parametros);
 
                     MessageBox.Show($"Compra registrada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -518,20 +511,29 @@ namespace ModernMenuUI
             }
             finally
             {
-                this.Cursor = Cursors.Default;
-                dgvCarrito.Rows.Clear();
-                _proveedorSeleccionado = null;
-                txtNombreProveedor.Text = "";
-                txtNuevoPrecio.Text = "";
-                txtSubTotal.Text = "0.00";
-                txtImpuesto.Text = "0.00";
-                txtTotal.Text = "0.00";
-                nudCantidad.Value = 1;
-                _listaMaestraProductos.Clear();
-                dgvProductos.DataSource = null;
-                dgvProductos.Rows.Clear();
-                ActualizarImagenCarrito();
+                limpiarcosas();
             }
+        }
+
+        private void limpiarcosas()
+        {
+            this.Cursor = Cursors.Default;
+            dgvCarrito.Rows.Clear();
+            SetProveedorSeleccionado(null);
+            txtNombreProveedor.Text = "";
+            txtSubTotal.Text = "0.00";
+            txtImpuesto.Text = "0.00";
+            txtTotal.Text = "0.00";
+            nudCantidad.Value = 1;
+            _listaMaestraProductos.Clear();
+            dgvProductos.DataSource = null;
+            dgvProductos.Rows.Clear();
+            chkprecioNuevo.CheckedChanged -= chkprecioNuevo_CheckedChanged;
+            chkprecioNuevo.Checked = false;
+            chkprecioNuevo.CheckedChanged += chkprecioNuevo_CheckedChanged;
+            txtNuevoPrecio.Enabled = false;
+            txtNuevoPrecio.Value = 1;
+            ActualizarImagenCarrito();
         }
         #endregion
 
@@ -551,7 +553,6 @@ namespace ModernMenuUI
             }
 
             decimal impuesto = subtotal * 0.15m;
-
             decimal total = subtotal + impuesto;
 
             txtSubTotal.Text = subtotal.ToString("N2");
@@ -567,7 +568,6 @@ namespace ModernMenuUI
         #endregion
 
         #region Búsqueda y Sugerencias Proveedores
-        // Filtra la lista maestra de proveedores (sin usar teléfono)
         private List<Proveedor> BuscarProveedores(string textoBusqueda)
         {
             string busqueda = textoBusqueda?.ToLower().Trim() ?? "";
@@ -588,12 +588,29 @@ namespace ModernMenuUI
             return resultados;
         }
 
+        private List<Producto> BuscarProductos(string textoBusqueda)
+        {
+            string busqueda = textoBusqueda?.ToLower().Trim() ?? "";
+
+            if (string.IsNullOrEmpty(busqueda))
+                return _listaMaestraProductos;
+
+            return _listaMaestraProductos
+                .Where(p =>
+                    (p.NombreProducto != null && p.NombreProducto.ToLower().Contains(busqueda)) ||
+                    (p.CodigoBarraProducto != null && p.CodigoBarraProducto.ToLower().Contains(busqueda))
+                )
+                .ToList();
+        }
+
         private void AjustarAlturaListBox(int numeroDeResultados)
         {
             int alturaItem = lstSugerencias.ItemHeight;
             int alturaMaxima = (alturaItem * MAX_SUGGESTIONS) + 10;
             int alturaNecesaria = (alturaItem * numeroDeResultados) + 10;
             lstSugerencias.Height = Math.Min(alturaNecesaria, alturaMaxima);
+
+            lstSugerenciasCompra.Height = Math.Min(alturaNecesaria, alturaMaxima);
         }
 
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
@@ -628,13 +645,43 @@ namespace ModernMenuUI
             }
             catch (TaskCanceledException)
             {
-                // Búsqueda cancelada por el usuario: normal
             }
+        }
+
+        private async void txtBuscarProductos_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+                return;
+
+            _ctsBusqueda?.Cancel();
+            _ctsBusqueda = new CancellationTokenSource();
+
+            try
+            {
+                await Task.Delay(300, _ctsBusqueda.Token);
+
+                var resultados = BuscarProductos(txtBuscarProducto.Text);
+                var top = resultados.Take(10).ToList();
+
+                if (top.Count > 0 && !string.IsNullOrEmpty(txtBuscarProducto.Text))
+                {
+                    lstSugerenciasCompra.DataSource = null;
+                    lstSugerenciasCompra.DataSource = top;
+                    lstSugerenciasCompra.DisplayMember = "NombreProducto";
+
+                    AjustarAlturaListBox(top.Count);
+                    lstSugerenciasCompra.Visible = true;
+                }
+                else
+                {
+                    lstSugerenciasCompra.Visible = false;
+                }
+            }
+            catch (TaskCanceledException) { }
         }
 
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (!lstSugerencias.Visible) return;
 
             if (e.KeyCode == Keys.Down)
@@ -663,12 +710,47 @@ namespace ModernMenuUI
                     txtNombreProveedor.SelectionStart = txtNombreProveedor.Text.Length;
                     lstSugerencias.Visible = false;
                     _ctsBusqueda?.Cancel();
-                    _proveedorSeleccionado = proveedorSel;
+                    SetProveedorSeleccionado(proveedorSel);
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
             }
         }
+
+        private void txtBuscarProductos_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!lstSugerenciasCompra.Visible) return;
+
+            if (e.KeyCode == Keys.Down)
+            {
+                int i = Math.Min(lstSugerenciasCompra.SelectedIndex + 1, lstSugerenciasCompra.Items.Count - 1);
+                if (i >= 0) lstSugerenciasCompra.SelectedIndex = i;
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                int i = Math.Max(lstSugerenciasCompra.SelectedIndex - 1, 0);
+                if (i >= 0) lstSugerenciasCompra.SelectedIndex = i;
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                if (lstSugerenciasCompra.SelectedItem is Producto prod)
+                {
+                    txtBuscarProducto.Text = prod.NombreProducto;
+
+                    txtCodigo.Text = prod.CodigoBarraProducto;
+                    txtProducto.Text = prod.NombreProducto;
+                    txtPrecio.Text = prod.PrecioVenta.ToString();
+
+                    lstSugerenciasCompra.Visible = false;
+                }
+
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
         private async Task EjecutarBusqueda()
         {
             try
@@ -685,7 +767,7 @@ namespace ModernMenuUI
         {
             if (_ignorarTextChanged) return;
             _sugerenciaActual = "";
-            _proveedorSeleccionado = null;
+            SetProveedorSeleccionado(null);
         }
 
         private async void txtBuscar_Leave(object sender, EventArgs e)
@@ -697,6 +779,13 @@ namespace ModernMenuUI
             }
         }
 
+        private async void txtBuscarProductos_Leave(object sender, EventArgs e)
+        {
+            await Task.Delay(150);
+            if (!lstSugerenciasCompra.Focused)
+                lstSugerenciasCompra.Visible = false;
+        }
+
         private void lstSugerencias_MouseClick(object sender, MouseEventArgs e)
         {
             if (lstSugerencias.SelectedItem != null)
@@ -706,7 +795,22 @@ namespace ModernMenuUI
                 txtNombreProveedor.SelectionStart = txtNombreProveedor.Text.Length;
                 lstSugerencias.Visible = false;
                 _ctsBusqueda?.Cancel();
-                _proveedorSeleccionado = proveedorSel;
+                SetProveedorSeleccionado(proveedorSel);
+            }
+        }
+
+        private void lstSugerenciasCompra_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (lstSugerenciasCompra.SelectedItem is Producto prod)
+            {
+                txtBuscarProducto.Text = prod.NombreProducto;
+                txtBuscarProducto.SelectionStart = txtBuscarProducto.Text.Length;
+
+                lstSugerenciasCompra.Visible = false;
+
+                txtCodigo.Text = prod.CodigoBarraProducto;
+                txtProducto.Text = prod.NombreProducto;
+                txtPrecio.Text = prod.PrecioVenta.ToString();
             }
         }
 
@@ -725,7 +829,7 @@ namespace ModernMenuUI
 
                     lstSugerencias.Visible = false;
                     _sugerenciaActual = "";
-                    _proveedorSeleccionado = proveedorSel;
+                    SetProveedorSeleccionado(proveedorSel);
                 }
 
                 e.Handled = true;
@@ -744,7 +848,7 @@ namespace ModernMenuUI
                 {
                     txtNombreProveedor.Text = proveedorSel.NombreProveedor;
                     lstSugerencias.Visible = false;
-                    _proveedorSeleccionado = proveedorSel;
+                    SetProveedorSeleccionado(proveedorSel);
                 }
             }
         }
@@ -765,7 +869,6 @@ namespace ModernMenuUI
         #endregion
 
         #region Buscar Proveedor (botones)
-        // Método helper para evitar duplicación entre dos botones que hacían lo mismo.
         private async Task HandleBuscarProveedorAsync()
         {
             string nombre = txtNombreProveedor.Text?.Trim() ?? "";
@@ -779,7 +882,6 @@ namespace ModernMenuUI
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                // 1. Obtener id del proveedor por nombre
                 var idProveedor = await ProveedorRepositorio.ObtenerIdProveedorPorNombreAsync(nombre);
 
                 if (idProveedor == null)
@@ -788,24 +890,24 @@ namespace ModernMenuUI
                     return;
                 }
 
-                // 2. Cargar proveedor (desde memoria o Supabase)
-                _proveedorSeleccionado = _listaMaestraProveedores
+                var provEncontrado = _listaMaestraProveedores
                     .FirstOrDefault(p => p.IdProveedor == idProveedor.Value);
 
-                if (_proveedorSeleccionado == null)
+                if (provEncontrado == null)
                 {
-                    _proveedorSeleccionado = await ProveedorRepositorio.CargarProveedorPorIdAsync(idProveedor.Value);
-                    if (_proveedorSeleccionado != null)
-                        _listaMaestraProveedores.Add(_proveedorSeleccionado);
+                    provEncontrado = await ProveedorRepositorio.CargarProveedorPorIdAsync(idProveedor.Value);
+                    if (provEncontrado != null)
+                        _listaMaestraProveedores.Add(provEncontrado);
                 }
 
-                if (_proveedorSeleccionado == null)
+                if (provEncontrado == null)
                 {
                     MessageBox.Show("Error cargando la información del proveedor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // 3. Obtener marcas asociadas al proveedor
+                SetProveedorSeleccionado(provEncontrado);
+
                 var marcas = await MarcaRepositorio.ObtenerMarcasPorProveedorAsync(_proveedorSeleccionado.IdProveedor);
 
                 if (marcas == null || marcas.Count == 0)
@@ -814,28 +916,17 @@ namespace ModernMenuUI
                     return;
                 }
 
-                // 4. Obtener productos por hoja de marcas
                 var idMarcas = marcas.Select(m => m.IdMarca).ToList();
                 var productos = await _productoRepositorio.ObtenerProductosPorMarcasAsync(idMarcas);
 
-                // 5. Actualizar grid
                 _listaMaestraProductos = productos;
                 RefrescarGrid();
-
-                // Opcional (si quieres mostrar mensaje)
-                MessageBox.Show(
-                    $"Proveedor seleccionado:\nID: {_proveedorSeleccionado.IdProveedor}\nNombre: {_proveedorSeleccionado.NombreProveedor}",
-                    "Proveedor encontrado",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
             }
             finally
             {
                 this.Cursor = Cursors.Default;
             }
         }
-
 
         private async void btnBuscarProv_Click(object sender, EventArgs e)
         {
@@ -845,11 +936,10 @@ namespace ModernMenuUI
                 if (result == DialogResult.OK)
                 {
                     var prov = frm.ProveedorSeleccionado;
-                    txtNombreProveedor.Text = prov.NombreProveedor;       
-                    await HandleBuscarProveedorAsync(); 
+                    txtNombreProveedor.Text = prov.NombreProveedor;
+                    await HandleBuscarProveedorAsync();
                 }
             }
-
         }
         #endregion
 
@@ -870,47 +960,32 @@ namespace ModernMenuUI
                 return;
             }
 
-            // 3. OBTENER EL NOMBRE DEL USUARIO
             this.Cursor = Cursors.WaitCursor;
             string nombreUsuario = CapaServiciosSeguridadValidacion.ServicioSesionUsuario.ObtenerEmailUsuario();
             this.Cursor = Cursors.Default;
 
             List<OrdenCompra> itemsParaReporte = new List<OrdenCompra>();
 
-            // 4. LEER EL CARRITO (CORREGIDO)
             foreach (DataGridViewRow row in dgvCarrito.Rows)
             {
                 if (row.IsNewRow) continue;
 
                 OrdenCompra item = new OrdenCompra();
 
-                // --- CAMBIOS AQUÍ: Usar índices en lugar de nombres ---
-                // Índice 0: Código de Barra (String)
                 item.Codigo = row.Cells[0].Value?.ToString() ?? "";
-
-                // Índice 1: Descripción/Producto
                 item.Producto = row.Cells[1].Value?.ToString() ?? "";
-
-                // Índice 2: Precio/Costo
                 item.Precio = Convert.ToDecimal(row.Cells[2].Value ?? 0);
-
-                // Índice 3: Cantidad
                 item.Cantidad = Convert.ToInt32(row.Cells[3].Value ?? 0);
 
                 itemsParaReporte.Add(item);
             }
 
-            // ... (El resto del método paso 5, 6 y 7 queda igual) ...
-
-            // 5. LEER LOS TOTALES
             string sub = txtSubTotal.Text;
             string imp = txtImpuesto.Text;
             string total = txtTotal.Text;
 
-            // 6. OBTENER EL PROVEEDOR
             string nombreProveedor = txtNombreProveedor.Text.Trim();
 
-            // 7. CREAR Y MOSTRAR EL REPORTE
             frmReporteOrdenCompra frmReporte = new frmReporteOrdenCompra(
                 itemsParaReporte,
                 sub,
@@ -927,6 +1002,32 @@ namespace ModernMenuUI
         {
 
         }
-    }
 
+        private void chkprecioNuevo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_proveedorSeleccionado == null)
+            {
+                chkprecioNuevo.CheckedChanged -= chkprecioNuevo_CheckedChanged;
+                chkprecioNuevo.Checked = false;
+                chkprecioNuevo.CheckedChanged += chkprecioNuevo_CheckedChanged;
+
+                MessageBox.Show("Porfavor seleccione un proveedor.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                txtNuevoPrecio.Enabled = chkprecioNuevo.Checked;
+                if (!chkprecioNuevo.Checked)
+                {
+                    txtNuevoPrecio.Value = 1;
+                    txtNuevoPrecio.Enabled = false;
+                }
+            }
+        }
+
+        private void btnBuscarProductos_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

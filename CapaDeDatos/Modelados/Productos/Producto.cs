@@ -47,6 +47,9 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("precio_compra")]
         public decimal PrecioCompra { get; set; }
 
+        [Column("tipo_calculo_ganancia_producto")]
+        public int TipoCalculoGananciaProducto { get; set; }
+
         [Column("precio_costo")]
         public decimal PrecioCosto { get; set; }
 
@@ -68,13 +71,25 @@ namespace CapaDeDatos.Modelados.Productos
         [Column("cantidad_producto")]
         public int CantidadProducto { get; set; }
 
-        [Column("imagen_producto")]
+        [Column("producto_path")]
         public string? ImagenProducto { get; set; } 
 
         [Column("id_proveedor")]
         public int IdProveedorProducto { get; set; }
 
         public int StockEnBodega { get; set; }
+
+        public string NombreMarcaCache { get; set; }
+
+        public string NombrePresentacionCache { get; set; }
+
+        public string NombreCompleto => string.Join(" ", new[]
+        {
+            NombreProducto,
+            Marca?.NombreMarca ?? NombreMarcaCache,
+            Presentacion?.NombrePresentacion ?? NombrePresentacionCache,
+            ContenidoProducto
+        }.Where(s => !string.IsNullOrWhiteSpace(s) && s != "N/A" && s != "Sin Marca" && s != "Sin Presentación"));
 
         public override string ToString()
         {

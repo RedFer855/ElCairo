@@ -54,8 +54,9 @@
             panBarraControl.Dock = DockStyle.Top;
             panBarraControl.ForeColor = Color.Coral;
             panBarraControl.Location = new Point(0, 0);
+            panBarraControl.Margin = new Padding(3, 4, 3, 4);
             panBarraControl.Name = "panBarraControl";
-            panBarraControl.Size = new Size(497, 41);
+            panBarraControl.Size = new Size(568, 55);
             panBarraControl.TabIndex = 15;
             // 
             // lblNombreModulo
@@ -65,7 +66,7 @@
             lblNombreModulo.ForeColor = Color.White;
             lblNombreModulo.Location = new Point(0, 0);
             lblNombreModulo.Name = "lblNombreModulo";
-            lblNombreModulo.Size = new Size(497, 41);
+            lblNombreModulo.Size = new Size(568, 55);
             lblNombreModulo.TabIndex = 13;
             lblNombreModulo.Text = "USUARIO";
             lblNombreModulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -78,9 +79,10 @@
             btnVolver.Font = new Font("Itim", 11.9999981F);
             btnVolver.ForeColor = SystemColors.ButtonFace;
             btnVolver.ImageAlign = ContentAlignment.BottomLeft;
-            btnVolver.Location = new Point(135, 203);
+            btnVolver.Location = new Point(154, 271);
+            btnVolver.Margin = new Padding(3, 4, 3, 4);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(95, 37);
+            btnVolver.Size = new Size(109, 49);
             btnVolver.TabIndex = 10;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
@@ -88,9 +90,10 @@
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(124, 20);
+            radioButton2.Location = new Point(142, 27);
+            radioButton2.Margin = new Padding(3, 4, 3, 4);
             radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(82, 23);
+            radioButton2.Size = new Size(100, 28);
             radioButton2.TabIndex = 9;
             radioButton2.Text = "Inactivo";
             radioButton2.UseVisualStyleBackColor = true;
@@ -103,9 +106,10 @@
             btnGuardarEmpleado.Font = new Font("Itim", 11.9999981F);
             btnGuardarEmpleado.ForeColor = SystemColors.ButtonFace;
             btnGuardarEmpleado.ImageAlign = ContentAlignment.BottomLeft;
-            btnGuardarEmpleado.Location = new Point(17, 203);
+            btnGuardarEmpleado.Location = new Point(19, 271);
+            btnGuardarEmpleado.Margin = new Padding(3, 4, 3, 4);
             btnGuardarEmpleado.Name = "btnGuardarEmpleado";
-            btnGuardarEmpleado.Size = new Size(103, 37);
+            btnGuardarEmpleado.Size = new Size(118, 49);
             btnGuardarEmpleado.TabIndex = 11;
             btnGuardarEmpleado.Text = "Guardar";
             btnGuardarEmpleado.UseVisualStyleBackColor = false;
@@ -116,9 +120,9 @@
             label3.AutoSize = true;
             label3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(87, 99, 110);
-            label3.Location = new Point(26, 103);
+            label3.Location = new Point(30, 137);
             label3.Name = "label3";
-            label3.Size = new Size(109, 18);
+            label3.Size = new Size(137, 23);
             label3.TabIndex = 32;
             label3.Text = "Rol del Usuario:";
             // 
@@ -128,9 +132,11 @@
             groupBox1.Controls.Add(rdbActivo);
             groupBox1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.DimGray;
-            groupBox1.Location = new Point(152, 131);
+            groupBox1.Location = new Point(174, 175);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(308, 51);
+            groupBox1.Padding = new Padding(3, 4, 3, 4);
+            groupBox1.Size = new Size(352, 68);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
@@ -138,9 +144,10 @@
             // 
             rdbActivo.AutoSize = true;
             rdbActivo.Checked = true;
-            rdbActivo.Location = new Point(8, 21);
+            rdbActivo.Location = new Point(9, 28);
+            rdbActivo.Margin = new Padding(3, 4, 3, 4);
             rdbActivo.Name = "rdbActivo";
-            rdbActivo.Size = new Size(70, 23);
+            rdbActivo.Size = new Size(84, 28);
             rdbActivo.TabIndex = 8;
             rdbActivo.TabStop = true;
             rdbActivo.Text = "Activo";
@@ -151,9 +158,9 @@
             label6.AutoSize = true;
             label6.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(87, 99, 110);
-            label6.Location = new Point(17, 60);
+            label6.Location = new Point(19, 80);
             label6.Name = "label6";
-            label6.Size = new Size(118, 18);
+            label6.Size = new Size(148, 23);
             label6.TabIndex = 27;
             label6.Text = "Correo enlazado:";
             // 
@@ -162,9 +169,9 @@
             label5.AutoSize = true;
             label5.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(87, 99, 110);
-            label5.Location = new Point(78, 147);
+            label5.Location = new Point(89, 196);
             label5.Name = "label5";
-            label5.Size = new Size(57, 18);
+            label5.Size = new Size(70, 23);
             label5.TabIndex = 26;
             label5.Text = "Estado:";
             // 
@@ -174,10 +181,11 @@
             txtCorreo.BorderStyle = BorderStyle.None;
             txtCorreo.Enabled = false;
             txtCorreo.Font = new Font("Itim", 13F);
-            txtCorreo.Location = new Point(152, 60);
+            txtCorreo.Location = new Point(174, 80);
+            txtCorreo.Margin = new Padding(3, 4, 3, 4);
             txtCorreo.Name = "txtCorreo";
             txtCorreo.ReadOnly = true;
-            txtCorreo.Size = new Size(308, 21);
+            txtCorreo.Size = new Size(352, 26);
             txtCorreo.TabIndex = 5;
             // 
             // panel2
@@ -193,29 +201,34 @@
             panel2.Controls.Add(txtCorreo);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(497, 253);
+            panel2.Size = new Size(568, 337);
             panel2.TabIndex = 16;
             // 
             // cmbRol
             // 
             cmbRol.FormattingEnabled = true;
-            cmbRol.Location = new Point(152, 102);
+            cmbRol.Location = new Point(174, 136);
+            cmbRol.Margin = new Padding(3, 4, 3, 4);
             cmbRol.Name = "cmbRol";
-            cmbRol.Size = new Size(308, 23);
+            cmbRol.Size = new Size(351, 28);
             cmbRol.TabIndex = 34;
+            cmbRol.SelectedIndexChanged += cmbRol_SelectedIndexChanged;
             // 
             // frmAgregarEditarUsuario
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(497, 253);
+            ClientSize = new Size(568, 337);
             Controls.Add(panBarraControl);
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmAgregarEditarUsuario";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Usuario";
             Load += frmAgregarEditarUsuario_Load;
             panBarraControl.ResumeLayout(false);

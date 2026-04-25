@@ -126,6 +126,14 @@ namespace ModernMenuUI.InterfacesUsuarios.Ventas
                     _clienteActual.DireccionCliente = txtDireccion.Text.Trim();
                     _clienteActual.EstadoCliente = rbdActivo.Checked;
 
+                    var validacion = ServicioValidacionesIngresoDatos.EjecutarValidacionesClinte(_clienteActual);
+                    if (validacion.Error)
+                    {
+                        MessageBox.Show(validacion.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        btnGuardarCliente.Enabled = true;
+                        return;
+                    }
+
                     await ClienteRepositorio.ActualizarCliente(_clienteActual);
 
                     MessageBox.Show("¡Cliente actualizado exitosamente!", "Éxito",

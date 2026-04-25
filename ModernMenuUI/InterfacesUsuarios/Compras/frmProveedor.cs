@@ -4,84 +4,46 @@ using CapaDeDatos.Repositorios;
 using CapaServiciosSeguridadValidacion;
 using ModernMenuUI.ClasesUI;
 using ModernMenuUI.ServiciosUI;
+using Supabase.Realtime.PostgresChanges;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ModernMenuUI.InterfacesUsuarios.Compras
 {
-    /// <summary>
-    /// Formulario para gestionar proveedores.
-    /// Proporciona funcionalidades para listar, buscar, filtrar, agregar, editar y seleccionar proveedores con soporte de sincronización en tiempo real.
-    /// </summary>
     public partial class frmProveedor : Form
     {
-        #region 1. Campos y Dependencias
-
-        /// <summary>
-        /// Repositorio responsable de las operaciones de datos para <see cref="Proveedor"/>.
-        /// </summary>
         private readonly ProveedorRepositorio _repositorioProveedor;
 
-        /// <summary>
-        /// Gestor que mantiene suscripción a cambios en la base de datos en tiempo real para la entidad <see cref="Proveedor"/>.
-        /// </summary>
-        private readonly GestorRealtime<Proveedor> _gestorRealtime;
-
-        /// <summary>
-        /// Control lógico encargado de manejar búsqueda interactiva, sugerencias y navegación.
-        /// </summary>
         private BuscadorInteractivo<Proveedor> _buscadorProveedores;
-
-        /// <summary>
-        /// Lista maestra en memoria con todos los proveedores cargados desde la fuente de datos.
-        /// </summary>
         private List<Proveedor> _listaMaestraProveedores = new List<Proveedor>();
-
-        /// <summary>
-        /// Proveedor seleccionado internamente en el DataGridView.
-        /// </summary>
         private Proveedor _proveedorSeleccionadoInterno;
 
-        /// <summary>
-        /// Proveedor seleccionado que puede ser consultado desde fuera del formulario cuando se cierra con DialogResult.OK.
-        /// </summary>
         public Proveedor ProveedorSeleccionado { get; private set; }
 
         private bool _modoForm = false;
 
-        #endregion
+        private Action<PostgresChangesResponse> _handlerCambioProveedor;
 
-        #region 2. Constructores
-
-        /// <summary>
-        /// Inicializa una nueva instancia de <see cref="frmProveedor"/> en modo de administración.
-        /// </summary>
         public frmProveedor()
         {
             InitializeComponent();
             ConfigurarFormulario();
 
             _repositorioProveedor = new ProveedorRepositorio();
-            _gestorRealtime = new GestorRealtime<Proveedor>();
 
             ConfigurarRealtime();
         }
 
-        /// <summary>
-        /// Inicializa una nueva instancia de <see cref="frmProveedor"/> en modo selección (diálogo).
-        /// </summary>
-        /// <param name="tipo">Parámetro que indica el modo; se mantiene para compatibilidad con la sobrecarga.</param>
         public frmProveedor(bool _modoForm)
         {
             InitializeComponent();
             ConfigurarFormulario();
             this._modoForm = _modoForm;
+
             _repositorioProveedor = new ProveedorRepositorio();
-            _gestorRealtime = new GestorRealtime<Proveedor>();
 
             FormBorderStyle = FormBorderStyle.None;
             btnSeleccionarProveedor.Visible = false;
@@ -89,64 +51,47 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             ConfigurarRealtime();
         }
 
-        /// <summary>
-        /// Configura propiedades visuales y comportamiento inicial del formulario.
-        /// </summary>
         private void ConfigurarFormulario()
         {
             this.DoubleBuffered = true;
             dgvProveedores.AutoGenerateColumns = false;
         }
 
-        /// <summary>
-        /// Conecta los manejadores del gestor de tiempo real con métodos de recarga segura.
-        /// </summary>
         private void ConfigurarRealtime()
         {
-            _gestorRealtime.OnCambioBaseDatos += (c) => RecargarInterfazSafe();
-            _gestorRealtime.OnReconexionExitosa += () => RecargarInterfazSafe();
+            _handlerCambioProveedor = (c) => RecargarInterfazSafe();
+
+            RealtimeManager.OnProveedorChanged += _handlerCambioProveedor;
         }
 
-        #endregion
-
-        #region 3. Ciclo de Vida
-
-        /// <summary>
-        /// Evento que se ejecuta al cargar el formulario; configura filtros, inicializa datos y suscribe al gestor realtime.
-        /// </summary>
         private async void frmProveedores_Load(object sender, EventArgs e)
         {
             ConfigurarEventosFiltros();
             await InicializarDatosYBuscador();
-            await _gestorRealtime.SuscribirAsync();
         }
 
-        /// <summary>
-        /// Evento que se ejecuta cuando el formulario se está cerrando; desuscribe del gestor realtime de forma asíncrona.
-        /// </summary>
-        private async void frmProveedores_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmProveedores_FormClosing(object sender, FormClosingEventArgs e)
         {
-            await _gestorRealtime.DesuscribirAsync();
+            try
+            {
+                if (_handlerCambioProveedor != null)
+                    RealtimeManager.OnProveedorChanged -= _handlerCambioProveedor;
+            }
+            catch { }
         }
 
-        #endregion
-
-        #region 4. Lógica de Datos y Buscador
-
-        /// <summary>
-        /// Recarga la interfaz de manera segura desde hilos que no son el hilo de la UI.
-        /// </summary>
         private void RecargarInterfazSafe()
         {
-            if (!this.IsDisposed && this.IsHandleCreated)
+            if (this.IsDisposed) return;
+            if (!this.IsHandleCreated) return;
+
+            try
             {
                 this.BeginInvoke((MethodInvoker)(async () => await CargarDatosMaestros()));
             }
+            catch { }
         }
 
-        /// <summary>
-        /// Inicializa la lista de proveedores desde el repositorio y configura el <see cref="BuscadorInteractivo{Proveedor}"/>.
-        /// </summary>
         private async Task InicializarDatosYBuscador()
         {
             try
@@ -159,15 +104,26 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     lstSugerencias,
                     dgvProveedores,
                     _listaMaestraProveedores,
-                    (p, term) => p.IdProveedor.ToString() == term,
-                    (p, term) => p.NombreProveedor != null && p.NombreProveedor.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
+
+                    (p, term) =>
+                    {
+                        if (int.TryParse(term, out int id))
+                            return p.IdProveedor == id;
+                        return false;
+                    },
+
+                    (p, term) =>
+                        p.NombreProveedor != null &&
+                        p.NombreProveedor.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0,
+
                     (p) => p.NombreProveedor,
+
                     (busquedaActiva) =>
                     {
                         pnlLimpiarFiltros.Visible = busquedaActiva;
-
                         if (!busquedaActiva) RefrescarGrid();
                     },
+
                     (txt) => false
                 );
 
@@ -175,7 +131,8 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error inicializando datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error inicializando datos: {ex.Message}", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -183,9 +140,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Carga la lista maestra de proveedores desde el repositorio y actualiza el buscador y el grid.
-        /// </summary>
         private async Task CargarDatosMaestros()
         {
             try
@@ -205,9 +159,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Refresca la vista del DataGridView aplicando filtros de estado y texto de búsqueda.
-        /// </summary>
         private void RefrescarGrid()
         {
             if (_listaMaestraProveedores == null) return;
@@ -224,7 +175,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                 query = query.Where(p => p.EstadoProveedor == false);
             }
 
-
             var listaFinal = query.ToList();
             dgvProveedores.DataSource = null;
             dgvProveedores.DataSource = listaFinal;
@@ -238,37 +188,19 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             this.Cursor = Cursors.Default;
         }
 
-        /// <summary>
-        /// Configura manejadores de eventos para los RadioButtons que filtran la lista por estado.
-        /// </summary>
         private void ConfigurarEventosFiltros()
         {
             rbMostrarTodos.CheckedChanged += (s, e) => { if (rbMostrarTodos.Checked) RefrescarGrid(); };
             rbMostrarHabilitados.CheckedChanged += (s, e) => { if (rbMostrarHabilitados.Checked) RefrescarGrid(); };
             rbMostrarDeshabilitados.CheckedChanged += (s, e) => { if (rbMostrarDeshabilitados.Checked) RefrescarGrid(); };
         }
-        #endregion
 
-        #region 5. Eventos del Buscador y Limpieza
-
-        /// <summary>
-        /// Maneja la pulsación de teclas en el cuadro de búsqueda (evento KeyUp) y delega al buscador interactivo.
-        /// </summary>
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e) => await _buscadorProveedores.ManejarKeyUpAsync(e);
 
-        /// <summary>
-        /// Maneja eventos KeyDown en el cuadro de búsqueda para navegación y entradas especiales.
-        /// Además corrige el bug donde el usuario presiona Enter antes de que aparezcan las sugerencias.
-        /// Si estamos en modo selección (modal) y no hay sugerencias visibles, intentamos resolver el nombre directamente.
-        /// </summary>
         private async void txtBuscar_KeyDown(object sender, KeyEventArgs e)
         {
-            // Si el buscador está manejando la navegación de flechas / enter, delegamos primero.
             _buscadorProveedores.ManejarKeyDown(e);
 
-            // Si el usuario presionó Enter y estamos en modo selección,
-            // y las sugerencias NO están visibles (o no se poblaron aún),
-            // intentamos buscar por nombre completo y seleccionar automáticamente.
             if (e.KeyCode == Keys.Enter && _modoForm && !lstSugerencias.Visible)
             {
                 e.Handled = true;
@@ -280,19 +212,9 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Maneja el evento Leave del cuadro de búsqueda para ocultar sugerencias y cancelar búsquedas activas.
-        /// </summary>
         private void txtBuscar_Leave(object sender, EventArgs e) => _buscadorProveedores.ManejarLeave();
-
-        /// <summary>
-        /// Maneja clics en la lista de sugerencias y delega la selección al buscador interactivo.
-        /// </summary>
         private void lstSugerencias_MouseClick(object sender, MouseEventArgs e) => _buscadorProveedores.ManejarClickLista();
 
-        /// <summary>
-        /// Limpia filtros de búsqueda y restablece la vista de proveedores.
-        /// </summary>
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             _buscadorProveedores.LimpiarBusqueda();
@@ -301,13 +223,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             RefrescarGrid();
         }
 
-        #endregion
-
-        #region 6. Acciones CRUD y Selección
-
-        /// <summary>
-        /// Abre el formulario para agregar un nuevo proveedor y recarga los datos si la operación fue exitosa.
-        /// </summary>
         private async void btnAgregarProveedor_Click(object sender, EventArgs e)
         {
             frmAgregarEditarProveedor nuevoProv = new frmAgregarEditarProveedor();
@@ -317,9 +232,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Abre el formulario de edición para el proveedor seleccionado. Si no hay selección, muestra un aviso.
-        /// </summary>
         private async void btnEditarProveedor_Click(object sender, EventArgs e)
         {
             if (_proveedorSeleccionadoInterno != null)
@@ -336,9 +248,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Actualiza la referencia interna al proveedor seleccionado cuando cambia la selección del DataGridView.
-        /// </summary>
         private void dgvProveedores_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvProveedores.SelectedRows.Count > 0)
@@ -351,10 +260,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Maneja el clic del mouse sobre el DataGridView.
-        /// Si estamos en modo selección (modal), un único click en una fila selecciona y cierra (comportamiento pedido).
-        /// </summary>
         private void dgvProveedores_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (_modoForm && e.RowIndex >= 0 && e.RowIndex < dgvProveedores.Rows.Count)
@@ -368,25 +273,16 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Maneja la acción del botón seleccionar proveedor y confirma la selección actual.
-        /// </summary>
         private void btnSeleccionarProveedor_Click(object sender, EventArgs e)
         {
             ConfirmarSeleccion();
         }
 
-        /// <summary>
-        /// Maneja el doble clic sobre el DataGridView para confirmar la selección.
-        /// </summary>
         private void dgvProveedores_DoubleClick(object sender, EventArgs e)
         {
             ConfirmarSeleccion();
         }
 
-        /// <summary>
-        /// Confirma la selección actual y cierra el formulario estableciendo DialogResult.OK.
-        /// </summary>
         private void ConfirmarSeleccion()
         {
             if (_proveedorSeleccionadoInterno != null)
@@ -401,10 +297,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Intenta resolver un proveedor por nombre (vía repositorio) y si lo encuentra lo selecciona y cierra.
-        /// Usado para el caso donde el usuario presionó Enter antes de que cargaran las sugerencias.
-        /// </summary>
         private async Task IntentarSeleccionarProveedorPorNombreAsync(string nombre)
         {
             if (string.IsNullOrWhiteSpace(nombre)) return;
@@ -420,7 +312,6 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
                     return;
                 }
 
-                // buscar en la memoria primero
                 var prov = _listaMaestraProveedores.FirstOrDefault(p => p.IdProveedor == id.Value);
 
                 if (prov == null)
@@ -448,19 +339,17 @@ namespace ModernMenuUI.InterfacesUsuarios.Compras
             }
         }
 
-        /// <summary>
-        /// Cierra el formulario.
-        /// </summary>
+        private void lstSugerencias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void rbMostrarHabilitados_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        #endregion
-
-        private void btnbuscar_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -32,9 +32,16 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmpleado));
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmpleado));
             dgvEmpleados = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
+            PorcentajeGanancia = new DataGridViewTextBoxColumn();
+            Email = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewCheckBoxColumn();
             panel10 = new Panel();
             txtBuscar = new TextBox();
             panel1 = new Panel();
@@ -54,13 +61,6 @@
             btnLimpiarFiltros = new Button();
             pbxClean = new PictureBox();
             lstSugerencias = new ListBox();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            Categoria = new DataGridViewTextBoxColumn();
-            PorcentajeGanancia = new DataGridViewTextBoxColumn();
-            Email = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).BeginInit();
             panel10.SuspendLayout();
             panel1.SuspendLayout();
@@ -126,6 +126,84 @@
             dgvEmpleados.TabIndex = 1;
             dgvEmpleados.SelectionChanged += dgvEmpleados_SelectionChanged;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn1.DataPropertyName = "DniEmpleado";
+            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewTextBoxColumn1.FillWeight = 60F;
+            dataGridViewTextBoxColumn1.HeaderText = "DNI";
+            dataGridViewTextBoxColumn1.MinimumWidth = 45;
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewTextBoxColumn2.DataPropertyName = "NombreEmpleado";
+            dataGridViewTextBoxColumn2.FillWeight = 35.1780434F;
+            dataGridViewTextBoxColumn2.HeaderText = "NombreEmpleado";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 164;
+            // 
+            // Categoria
+            // 
+            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            Categoria.DataPropertyName = "ApellidoEmpleado";
+            Categoria.FillWeight = 40.203476F;
+            Categoria.HeaderText = "Apellido";
+            Categoria.MinimumWidth = 6;
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
+            Categoria.Width = 99;
+            // 
+            // PorcentajeGanancia
+            // 
+            PorcentajeGanancia.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            PorcentajeGanancia.DataPropertyName = "TelefonoEmpleado";
+            PorcentajeGanancia.FillWeight = 40.203476F;
+            PorcentajeGanancia.HeaderText = "Teléfono";
+            PorcentajeGanancia.MinimumWidth = 6;
+            PorcentajeGanancia.Name = "PorcentajeGanancia";
+            PorcentajeGanancia.ReadOnly = true;
+            PorcentajeGanancia.Width = 101;
+            // 
+            // Email
+            // 
+            Email.DataPropertyName = "EmailEmpleado";
+            Email.FillWeight = 40.203476F;
+            Email.HeaderText = "Correo";
+            Email.MinimumWidth = 6;
+            Email.Name = "Email";
+            Email.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.DataPropertyName = "DireccionEmpleado";
+            dataGridViewTextBoxColumn4.FillWeight = 70F;
+            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
+            dataGridViewTextBoxColumn4.MinimumWidth = 20;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewTextBoxColumn3.DataPropertyName = "EstadoEmpleado";
+            dataGridViewTextBoxColumn3.FillWeight = 40.203476F;
+            dataGridViewTextBoxColumn3.HeaderText = "Estado";
+            dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            dataGridViewTextBoxColumn3.Resizable = DataGridViewTriState.True;
+            dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
+            dataGridViewTextBoxColumn3.Width = 89;
+            // 
             // panel10
             // 
             panel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -173,6 +251,7 @@
             btnbuscar.Size = new Size(48, 20);
             btnbuscar.TabIndex = 0;
             btnbuscar.UseVisualStyleBackColor = false;
+            btnbuscar.Visible = false;
             btnbuscar.Click += btnBuscar_Click;
             // 
             // panelBusqueda
@@ -195,6 +274,7 @@
             rbMostrarDeshabilitados.TabIndex = 30;
             rbMostrarDeshabilitados.Text = "Deshabilitados";
             rbMostrarDeshabilitados.UseVisualStyleBackColor = true;
+            rbMostrarDeshabilitados.CheckedChanged += rbMostrarDeshabilitados_CheckedChanged;
             // 
             // rbMostrarHabilitados
             // 
@@ -207,6 +287,7 @@
             rbMostrarHabilitados.TabStop = true;
             rbMostrarHabilitados.Text = "Habilitados";
             rbMostrarHabilitados.UseVisualStyleBackColor = true;
+            rbMostrarHabilitados.CheckedChanged += rbMostrarHabilitados_CheckedChanged;
             // 
             // rbMostrarTodos
             // 
@@ -240,9 +321,9 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(220, 3);
+            btnSalir.Location = new Point(220, 4);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(125, 44);
+            btnSalir.Size = new Size(125, 43);
             btnSalir.TabIndex = 18;
             btnSalir.Text = "Salir";
             btnSalir.UseVisualStyleBackColor = false;
@@ -254,9 +335,9 @@
             btnAgregarEmpleado.BackColor = Color.FromArgb(149, 195, 172);
             btnAgregarEmpleado.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAgregarEmpleado.ForeColor = SystemColors.ButtonFace;
-            btnAgregarEmpleado.Location = new Point(3, 3);
+            btnAgregarEmpleado.Location = new Point(3, 4);
             btnAgregarEmpleado.Name = "btnAgregarEmpleado";
-            btnAgregarEmpleado.Size = new Size(211, 44);
+            btnAgregarEmpleado.Size = new Size(210, 43);
             btnAgregarEmpleado.TabIndex = 22;
             btnAgregarEmpleado.Text = "Agregar Empleado";
             btnAgregarEmpleado.UseVisualStyleBackColor = false;
@@ -270,7 +351,7 @@
             btnEditarEmpleado.ForeColor = Color.FromArgb(87, 99, 110);
             btnEditarEmpleado.Location = new Point(3, 53);
             btnEditarEmpleado.Name = "btnEditarEmpleado";
-            btnEditarEmpleado.Size = new Size(211, 44);
+            btnEditarEmpleado.Size = new Size(210, 44);
             btnEditarEmpleado.TabIndex = 20;
             btnEditarEmpleado.Text = "Editar Empleado";
             btnEditarEmpleado.UseVisualStyleBackColor = false;
@@ -370,84 +451,6 @@
             lstSugerencias.MouseClick += lstSugerencias_MouseClick;
             lstSugerencias.KeyDown += lstSugerencias_KeyDown;
             lstSugerencias.KeyUp += txtBuscar_KeyUp;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewTextBoxColumn1.DataPropertyName = "DniEmpleado";
-            dataGridViewCellStyle3.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.Padding = new Padding(0, 1, 0, 0);
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewTextBoxColumn1.FillWeight = 60F;
-            dataGridViewTextBoxColumn1.HeaderText = "DNI";
-            dataGridViewTextBoxColumn1.MinimumWidth = 45;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 70;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewTextBoxColumn2.DataPropertyName = "NombreEmpleado";
-            dataGridViewTextBoxColumn2.FillWeight = 35.1780434F;
-            dataGridViewTextBoxColumn2.HeaderText = "NombreEmpleado";
-            dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 164;
-            // 
-            // Categoria
-            // 
-            Categoria.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            Categoria.DataPropertyName = "ApellidoEmpleado";
-            Categoria.FillWeight = 40.203476F;
-            Categoria.HeaderText = "Apellido";
-            Categoria.MinimumWidth = 6;
-            Categoria.Name = "Categoria";
-            Categoria.ReadOnly = true;
-            Categoria.Width = 99;
-            // 
-            // PorcentajeGanancia
-            // 
-            PorcentajeGanancia.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            PorcentajeGanancia.DataPropertyName = "TelefonoEmpleado";
-            PorcentajeGanancia.FillWeight = 40.203476F;
-            PorcentajeGanancia.HeaderText = "Teléfono";
-            PorcentajeGanancia.MinimumWidth = 6;
-            PorcentajeGanancia.Name = "PorcentajeGanancia";
-            PorcentajeGanancia.ReadOnly = true;
-            PorcentajeGanancia.Width = 101;
-            // 
-            // Email
-            // 
-            Email.DataPropertyName = "EmailEmpleado";
-            Email.FillWeight = 40.203476F;
-            Email.HeaderText = "Correo";
-            Email.MinimumWidth = 6;
-            Email.Name = "Email";
-            Email.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "DireccionEmpleado";
-            dataGridViewTextBoxColumn4.FillWeight = 70F;
-            dataGridViewTextBoxColumn4.HeaderText = "Dirección";
-            dataGridViewTextBoxColumn4.MinimumWidth = 20;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewTextBoxColumn3.DataPropertyName = "EstadoEmpleado";
-            dataGridViewTextBoxColumn3.FillWeight = 40.203476F;
-            dataGridViewTextBoxColumn3.HeaderText = "Estado";
-            dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            dataGridViewTextBoxColumn3.Resizable = DataGridViewTriState.True;
-            dataGridViewTextBoxColumn3.SortMode = DataGridViewColumnSortMode.Automatic;
-            dataGridViewTextBoxColumn3.Width = 89;
             // 
             // frmEmpleado
             // 

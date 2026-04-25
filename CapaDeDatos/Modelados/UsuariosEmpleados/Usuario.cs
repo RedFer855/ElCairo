@@ -21,6 +21,7 @@ namespace CapaDeDatos.Modelados.UsuariosEmpleados
 
         [Column("id_rol")]
         public int RolUsuario { get; set; }
+        
 
         [Column("estado_usuario")]
         public bool EstadoUsuario { get; set; }

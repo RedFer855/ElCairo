@@ -20,6 +20,11 @@ namespace CapaDeDatos.Modelados.UsuariosEmpleados
 
         [Column("estado_rol")]
         public bool EstadoRolRol { get; set; }
+
+        public override string ToString()
+        {
+            return NombreRolRol;
+        }
     }
 
 }

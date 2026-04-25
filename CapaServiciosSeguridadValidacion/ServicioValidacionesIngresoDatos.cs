@@ -1,5 +1,6 @@
 ﻿
 using CapaDeDatos.Modelados;
+using CapaDeDatos.Modelados.Compras;
 using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Modelados.UsuariosEmpleados;
@@ -28,8 +29,7 @@ namespace CapaServiciosSeguridadValidacion
                 p => ValidarSeleccion(p.IdCategoria, "una categoría"),
                 p => ValidarSeleccion(p.IdMarca, "una marca"),
                 p => ValidarSeleccion(p.IdPresentacion, "una presentación"),
-                p => ValidarEnteroValido(p.CantidadProducto, "CantidadCierre"),
-                p => ValidarCampoVacio(p.ContenidoProducto, "el contenido del producto"),
+                //p => ValidarCampoVacio(p.ContenidoProducto, "el contenido del producto"),
                 //p => ValidarDecimalValido(p.PrecioVenta, "Precio costo"),
                 //p => ValidarSeleccion(p.CantidadProducto,"La cantidad")
             };
@@ -193,7 +193,45 @@ namespace CapaServiciosSeguridadValidacion
             return (false, "");
         }
 
+        public static readonly List<Func<(int Cantidad, string codigo, string producto), (bool Error, string Mensaje)>> ListaValidacionesCompra =
+            new List<Func<(int Cantidad, string codigo, string producto), (bool Error, string Mensaje)>>
+            {
+                cr => ValidarCantidadPositiva(cr.Cantidad,"Cantidad"),
+                cr => ValidarCantidadMaxima(cr.Cantidad,"Cantidad"),
+                cr => ValidarProductoSeleccionado(cr.codigo, cr.producto),
+            };
+        public static (bool Error, string Mensaje) EjecutarValidacionesCompra((int Cantidad, string codigo, string producto) compra)
+        {
+            foreach (var regla in ListaValidacionesCompra)
+            {
+                var resultado = regla(compra);
+                if (resultado.Error) return resultado;
+            }
+            return (false, "");
+        }
+
+
         // --- Validaciones individuales ---
+        public static (bool Error, string Mensaje) ValidarCantidadPositiva(decimal cantidad, string nombrecampo)
+        {
+            if (cantidad <= 0)
+                return (true, $"La {nombrecampo} no puede ser negativa o igual a 0");
+            return (false, "");
+        }
+
+        public static (bool Error, string Mensaje) ValidarCantidadMaxima(decimal cantidad, string nombrecampo)
+        {
+            if (cantidad > 400)
+                return (true, $"La {nombrecampo} limite es de 400");
+            return (false, "");
+        }
+
+        public static (bool Error, string Mensaje) ValidarProductoSeleccionado(string codigo, string producto)
+        {
+            if (string.IsNullOrWhiteSpace(codigo) || string.IsNullOrWhiteSpace(producto))
+                return (true, "Por favor seleccione un producto");
+            return (false, "");
+        }
         public static (bool Error, string Mensaje) ValidarCampoVacio(string valor, string nombrecampo)
             => string.IsNullOrWhiteSpace(valor)
                 ? (true, $"Debe ingresar {nombrecampo}.")
@@ -356,10 +394,15 @@ namespace CapaServiciosSeguridadValidacion
         {
             if (valor == null)
                 return (true, $"{nombrecampo} no puede estar vacío.");
-            if (valor.Length >= 301 || valor.Length < 10)
-                return (true, $"{nombrecampo} no puede ser menor de 10 o mayor de 300 caracteres.");
+            if (valor.Length >= 201 || valor.Length < 10)
+                return (true, $"{nombrecampo} no puede ser menor de 10 o mayor de 200 caracteres.");
             if (valor.Contains("  "))
                 return (true, $"{nombrecampo} no puede contener multiples espacios.");
+
+            string patron = @"^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s,.\-#_]+$";
+
+            if (!Regex.IsMatch(valor, patron))
+                return (true, $"{nombrecampo} contiene caracteres no permitidos.");
 
             return (false, "");
         }

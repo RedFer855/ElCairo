@@ -1,4 +1,5 @@
-﻿using CapaDeDatos.Modelados.Inventario;
+﻿using CapaDeDatos.Datos;
+using CapaDeDatos.Modelados.Inventario;
 using CapaDeDatos.Modelados.Productos;
 using CapaDeDatos.Repositorios;
 using CapaDominio.Enums;
@@ -10,51 +11,32 @@ using ModernMenuUI.ClasesUI.Extenciones;
 using ModernMenuUI.InterfacesUsuarios.Inventario;
 using ModernMenuUI.ServiciosUI;
 using ModernMenuUI.ServiciosUI.GridFormatters;
+using Supabase.Realtime.PostgresChanges;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ModernMenuUI
 {
-    /// <summary>
-    /// Formulario principal para gestionar el inventario por bodega.
-    /// Provee:
-    /// - Carga y refresco de inventario.
-    /// - Filtrado por bodega y por estado de stock.
-    /// - Búsqueda interactiva con sugerencias.
-    /// - Integración con Realtime para recargar cuando cambian los datos.
-    /// - Acciones para crear bodegas y limpiar filtros.
-    /// </summary>
     public partial class frmInventarioBodega : Form
     {
-        /// <summary>Repositorio para acceder a datos de inventario.</summary>
         private readonly InventarioRepositorio _inventarioRepo = new();
-
-        /// <summary>Repositorio para acceder a datos de bodegas.</summary>
         private readonly BodegaRepositorio _bodegaRepo = new();
-
-        /// <summary>Servicio UI que aplica permisos y registra botones.</summary>
         private readonly ServicioPermisosUI _permUI = new();
 
-        /// <summary>Gestor realtime para inventario (suscripciones y eventos).</summary>
-        private readonly GestorRealtime<Inventario> _rtInventario;
-
-        /// <summary>Gestor realtime para bodegas (suscripciones y eventos).</summary>
-        private readonly GestorRealtime<Bodega> _rtBodega;
-
-        /// <summary>Controlador de búsquedas interactivas y sugerencias.</summary>
         private BuscadorInteractivo<Inventario> _buscador;
-
-        /// <summary>Lista maestra de inventario en memoria.</summary>
         private List<Inventario> _maestro = new();
+        private bool _modoSoloLectura = false;
 
-        /// <summary>
-        /// Constructor: inicializa componentes, config de DataGridView y suscripciones de eventos locales.
-        /// No realiza cargas de datos — eso ocurre en el Load.
-        /// </summary>
+        private Action<PostgresChangesResponse> _handlerCambio;
+
+        public frmInventarioBodega(bool modoSoloLectura) : this()
+        {
+            _modoSoloLectura = modoSoloLectura;
+        }
+
         public frmInventarioBodega()
         {
             InitializeComponent();
@@ -65,54 +47,38 @@ namespace ModernMenuUI
 
             this.FormClosing += frmInventarioBodega_FormClosing;
 
-            _rtInventario = new();
-            _rtBodega = new();
-
-            // Cuando haya cambios remotos, recargar UI de forma segura
-            _rtInventario.OnCambioBaseDatos += (_) => RecargarUI();
-            _rtInventario.OnReconexionExitosa += () => RecargarUI();
-            _rtBodega.OnCambioBaseDatos += (_) => RecargarUI();
-            _rtBodega.OnReconexionExitosa += () => RecargarUI();
+            _handlerCambio = (_) => RecargarUI();
+            RealtimeManager.OnInventarioChanged += _handlerCambio;
 
             _permUI.AplicarPermisos();
             _permUI.RegistrarBoton(btnCambiarBodega, "update_inventario");
             _permUI.RegistrarBoton(btnCrearBodega, "update_inventario");
         }
 
-        /// <summary>
-        /// Evento Load del formulario. Carga datos iniciales, bodegas, configura controles y suscribe a realtime.
-        /// </summary>
         private async void frmInventarioBodega_Load(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
+            this.Cursor = Cursors.WaitCursor;
 
             await CargarDatos();
             await CargarBodegas();
             ConfigurarComboEstado();
-            ConectarEventosUI();
 
             txtBodegaActual.Text = ServicioSesionUsuario.ObtenerNombreBodega();
-
-            await _rtInventario.SuscribirAsync();
-            await _rtBodega.SuscribirAsync();
 
             RefrescarGrid();
             Cursor = Cursors.Default;
         }
 
-        /// <summary>
-        /// Evento FormClosing: intenta desuscribir de realtime limpiamente.
-        /// </summary>
-        private async void frmInventarioBodega_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmInventarioBodega_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try { await _rtInventario.DesuscribirAsync(); } catch { }
-            try { await _rtBodega.DesuscribirAsync(); } catch { }
+            try
+            {
+                if (_handlerCambio != null)
+                    RealtimeManager.OnInventarioChanged -= _handlerCambio;
+            }
+            catch { }
         }
 
-        /// <summary>
-        /// Carga los datos maestros de inventario y configura el buscador interactivo.
-        /// Este método sólo obtiene los datos en memoria; el refresco visual queda en RefrescarGrid.
-        /// </summary>
         private async Task CargarDatos()
         {
             _maestro = await _inventarioRepo.ObtenerTodoElInventario();
@@ -141,9 +107,6 @@ namespace ModernMenuUI
             RefrescarGrid();
         }
 
-        /// <summary>
-        /// Recarga la lista maestra desde repositorio y actualiza el buscador si existe.
-        /// </summary>
         private async Task RecargarDatos()
         {
             _maestro = await _inventarioRepo.ObtenerTodoElInventario();
@@ -151,10 +114,6 @@ namespace ModernMenuUI
             RefrescarGrid();
         }
 
-        /// <summary>
-        /// Método seguro invocado por eventos realtime para recargar UI en el hilo de la interfaz.
-        /// Se encarga también de recargar la lista de bodegas antes de refrescar datos.
-        /// </summary>
         private void RecargarUI()
         {
             if (!IsHandleCreated || IsDisposed) return;
@@ -167,9 +126,6 @@ namespace ModernMenuUI
             });
         }
 
-        /// <summary>
-        /// Carga la lista de bodegas al combobox, preservando la selección actual si existe.
-        /// </summary>
         private async Task CargarBodegas()
         {
             var selected = cmbBodega.SelectedValue;
@@ -197,9 +153,6 @@ namespace ModernMenuUI
             cmbBodega.SelectedIndexChanged += cmbBodega_SelectedIndexChanged;
         }
 
-        /// <summary>
-        /// Llena y asigna los items del combo de estado (Todos / Crítico / Advertencia / Normal).
-        /// </summary>
         private void ConfigurarComboEstado()
         {
             cmbEstado.SelectedIndexChanged -= cmbEstado_SelectedIndexChanged;
@@ -214,52 +167,9 @@ namespace ModernMenuUI
             cmbEstado.SelectedIndexChanged += cmbEstado_SelectedIndexChanged;
         }
 
-        /// <summary>
-        /// Conecta (y asegura desconexión previa) los manejadores de eventos de UI para evitar duplicados.
-        /// Centraliza la unión de los eventos del buscador, listbox y combos.
-        /// </summary>
-        private void ConectarEventosUI()
-        {
-            cmbBodega.SelectedIndexChanged -= cmbBodega_SelectedIndexChanged;
-            cmbBodega.SelectedIndexChanged += cmbBodega_SelectedIndexChanged;
-
-            cmbEstado.SelectedIndexChanged -= cmbEstado_SelectedIndexChanged;
-            cmbEstado.SelectedIndexChanged += cmbEstado_SelectedIndexChanged;
-
-            txtBuscar.KeyUp -= txtBuscar_KeyUp;
-            txtBuscar.KeyUp += txtBuscar_KeyUp;
-
-            txtBuscar.KeyDown -= txtBuscar_KeyDown;
-            txtBuscar.KeyDown += txtBuscar_KeyDown;
-
-            txtBuscar.Leave -= txtBuscar_Leave;
-            txtBuscar.Leave += txtBuscar_Leave;
-
-            lstSugerencias.MouseClick -= lstSugerencias_MouseClick;
-            lstSugerencias.MouseClick += lstSugerencias_MouseClick;
-
-            lstSugerencias.KeyDown -= lstSugerencias_KeyDown;
-            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
-
-            btnBuscar.Click -= btnBuscar_Click;
-            btnBuscar.Click += btnBuscar_Click;
-        }
-
-        /// <summary>
-        /// Handler para cambio de selección en el combo de bodegas.
-        /// Simplemente refresca la grilla aplicando filtros.
-        /// </summary>
         private void cmbBodega_SelectedIndexChanged(object sender, EventArgs e) => RefrescarGrid();
-
-        /// <summary>
-        /// Handler para cambio de selección en el combo de estado.
-        /// Simplemente refresca la grilla aplicando filtros.
-        /// </summary>
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e) => RefrescarGrid();
 
-        /// <summary>
-        /// Delegados para el buscador interactivo — encapsulan llamadas al controlador de búsqueda.
-        /// </summary>
         private void txtBuscar_KeyUp(object sender, KeyEventArgs e) => _ = _buscador?.ManejarKeyUpAsync(e);
         private void txtBuscar_KeyDown(object sender, KeyEventArgs e) => _buscador?.ManejarKeyDown(e);
         private void txtBuscar_Leave(object sender, EventArgs e) => _buscador?.ManejarLeave();
@@ -267,21 +177,12 @@ namespace ModernMenuUI
         private void lstSugerencias_KeyDown(object sender, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) _buscador?.ManejarClickLista(); }
         private void btnBuscar_Click(object sender, EventArgs e) => _buscador?.ManejarKeyDown(new KeyEventArgs(Keys.Enter));
 
-        /// <summary>
-        /// Obtiene el estado de stock desde la capa de dominio (usa adapters y evaluador).
-        /// </summary>
         private EstadoStock EstadoDominio(Inventario inv)
         {
             var dom = InventarioAdapter.Map(inv);
             return EvaluadorStock.ObtenerEstado(dom);
         }
 
-        /// <summary>
-        /// Refresca la grilla aplicando los filtros activos:
-        /// - filtro por bodega (cmbBodega)
-        /// - filtro por estado de stock (cmbEstado)
-        /// Además muestra/oculta pnlLimpiarFiltros en función de si hay filtros activos.
-        /// </summary>
         private void RefrescarGrid()
         {
             if (_maestro == null) return;
@@ -297,11 +198,10 @@ namespace ModernMenuUI
             }
             catch { idBodega = 0; }
 
-            bool filtroBodegaActivo = idBodega != 0;
-            if (filtroBodegaActivo) lista = lista.Where(x => x.IdBodegaInventario == idBodega);
+            if (idBodega != 0)
+                lista = lista.Where(x => x.IdBodegaInventario == idBodega);
 
-            bool filtroEstadoActivo = cmbEstado.SelectedIndex != 0;
-            if (filtroEstadoActivo)
+            if (cmbEstado.SelectedIndex != 0)
             {
                 switch (cmbEstado.SelectedIndex)
                 {
@@ -311,28 +211,21 @@ namespace ModernMenuUI
                 }
             }
 
-            var resultado = lista.ToList();
-
             dgvProducto.DataSource = null;
-            dgvProducto.DataSource = resultado;
+            dgvProducto.DataSource = lista.ToList();
 
-            if (dgvProducto.Rows.Count > 0) dgvProducto.ClearSelection();
+            if (dgvProducto.Rows.Count > 0)
+                dgvProducto.ClearSelection();
 
-            pnlLimpiarFiltros.Visible = filtroBodegaActivo || filtroEstadoActivo;
+            pnlLimpiarFiltros.Visible = idBodega != 0 || cmbEstado.SelectedIndex != 0;
         }
 
-        /// <summary>
-        /// Formatea la fila de la grilla delegando al InventarioGridFormatter (colores, estilos).
-        /// </summary>
         private void dgvProducto_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex < 0) return;
             InventarioGridFormatter.AplicarFormato(dgvProducto.Rows[e.RowIndex]);
         }
 
-        /// <summary>
-        /// Maneja el botón "Limpiar filtros": restablece combo bodega y estado y limpia la búsqueda.
-        /// </summary>
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             _buscador?.LimpiarBusqueda();
@@ -345,18 +238,12 @@ namespace ModernMenuUI
             RefrescarGrid();
         }
 
-        /// <summary>
-        /// Botón salir: vuelve al menú principal.
-        /// </summary>
         private void btnSalir_Click(object sender, EventArgs e)
         {
             clsAnmaciones.NombreMenuPrincipal();
             Close();
         }
 
-        /// <summary>
-        /// Abre el formulario para crear una nueva bodega. Si se creó, recarga bodegas e inventario.
-        /// </summary>
         private async void btnCrearBodega_Click(object sender, EventArgs e)
         {
             using var frm = new frmAgregarEditarBodega();
