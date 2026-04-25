@@ -31,18 +31,18 @@
             components = new System.ComponentModel.Container();
             Panel panBarraControl;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenuPrincipal));
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel6 = new Panel();
             lblEstadoConexion = new Label();
             panel12 = new Panel();
@@ -97,9 +97,11 @@
             btnAbrirMenu = new Button();
             panelFormHijo = new Panel();
             panel7 = new Panel();
+            pnlAccesosLaterales = new Panel();
             pbxCalculadora = new PictureBox();
             btnSalir = new Button();
-            pictureBox3 = new PictureBox();
+            pnlContenidoPrincipal = new Panel();
+            barraProductosMenu = new ModernMenuUI.ClasesUI.BarraProductosSugeridos();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
             panel5 = new Panel();
@@ -136,8 +138,9 @@
             panelMneuLateral.SuspendLayout();
             panelFormHijo.SuspendLayout();
             panel7.SuspendLayout();
+            pnlAccesosLaterales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            pnlContenidoPrincipal.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
@@ -965,20 +968,29 @@
             // 
             // panel7
             // 
-            panel7.Controls.Add(pbxCalculadora);
-            panel7.Controls.Add(btnSalir);
-            panel7.Controls.Add(pictureBox3);
+            panel7.Controls.Add(pnlAccesosLaterales);
+            panel7.Controls.Add(pnlContenidoPrincipal);
             panel7.Dock = DockStyle.Fill;
             panel7.Location = new Point(0, 0);
             panel7.Name = "panel7";
             panel7.Size = new Size(934, 696);
             panel7.TabIndex = 47;
             // 
+            // pnlAccesosLaterales
+            // 
+            pnlAccesosLaterales.Controls.Add(pbxCalculadora);
+            pnlAccesosLaterales.Controls.Add(btnSalir);
+            pnlAccesosLaterales.Dock = DockStyle.Right;
+            pnlAccesosLaterales.Location = new Point(818, 0);
+            pnlAccesosLaterales.Name = "pnlAccesosLaterales";
+            pnlAccesosLaterales.Size = new Size(116, 696);
+            pnlAccesosLaterales.TabIndex = 22;
+            // 
             // pbxCalculadora
             // 
             pbxCalculadora.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pbxCalculadora.Image = Properties.Resources.calculadora;
-            pbxCalculadora.Location = new Point(829, 22);
+            pbxCalculadora.Location = new Point(14, 22);
             pbxCalculadora.Margin = new Padding(10);
             pbxCalculadora.Name = "pbxCalculadora";
             pbxCalculadora.Size = new Size(86, 100);
@@ -994,7 +1006,7 @@
             btnSalir.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
             btnSalir.ImageAlign = ContentAlignment.TopCenter;
-            btnSalir.Location = new Point(817, 619);
+            btnSalir.Location = new Point(14, 613);
             btnSalir.Margin = new Padding(4);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(98, 54);
@@ -1003,17 +1015,23 @@
             btnSalir.UseVisualStyleBackColor = false;
             btnSalir.Click += btnSalir_Click;
             // 
-            // pictureBox3
+            // pnlContenidoPrincipal
             // 
-            pictureBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox3.Image = Properties.Resources.el_cairo_2__1__1__1_;
-            pictureBox3.Location = new Point(192, 134);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(570, 400);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 0;
-            pictureBox3.TabStop = false;
-            pictureBox3.Click += pictureBox3_Click;
+            pnlContenidoPrincipal.Controls.Add(barraProductosMenu);
+            pnlContenidoPrincipal.Dock = DockStyle.Fill;
+            pnlContenidoPrincipal.Location = new Point(0, 0);
+            pnlContenidoPrincipal.Name = "pnlContenidoPrincipal";
+            pnlContenidoPrincipal.Size = new Size(934, 696);
+            pnlContenidoPrincipal.TabIndex = 21;
+            // 
+            // barraProductosMenu
+            // 
+            barraProductosMenu.Dock = DockStyle.Fill;
+            barraProductosMenu.ForeColor = Color.FromArgb(220, 230, 241);
+            barraProductosMenu.Location = new Point(0, 0);
+            barraProductosMenu.Name = "barraProductosMenu";
+            barraProductosMenu.Size = new Size(934, 696);
+            barraProductosMenu.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
@@ -1070,10 +1088,10 @@
             // dgvProducto
             // 
             dgvProducto.AllowUserToAddRows = false;
-            dataGridViewCellStyle13.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle13.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle13.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dgvProducto.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dgvProducto.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvProducto.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvProducto.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProducto.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
@@ -1081,40 +1099,40 @@
             dgvProducto.BorderStyle = BorderStyle.None;
             dgvProducto.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvProducto.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle14.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle14.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle14.SelectionBackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
-            dgvProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProducto.Columns.AddRange(new DataGridViewColumn[] { Codigo, Producto, Bodega, Anaquel, StockTotal, StockMinimo });
-            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = Color.White;
-            dataGridViewCellStyle17.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle17.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle17.NullValue = "(Vacío)";
-            dataGridViewCellStyle17.Padding = new Padding(5);
-            dataGridViewCellStyle17.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle17.SelectionForeColor = Color.White;
-            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.False;
-            dgvProducto.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle5.NullValue = "(Vacío)";
+            dataGridViewCellStyle5.Padding = new Padding(5);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle5.SelectionForeColor = Color.White;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvProducto.DefaultCellStyle = dataGridViewCellStyle5;
             dgvProducto.EnableHeadersVisualStyles = false;
             dgvProducto.GridColor = Color.FromArgb(189, 215, 238);
             dgvProducto.Location = new Point(20, 45);
             dgvProducto.Name = "dgvProducto";
             dgvProducto.ReadOnly = true;
             dgvProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = Color.FromArgb(220, 230, 241);
-            dataGridViewCellStyle18.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle18.ForeColor = Color.FromArgb(102, 102, 102);
-            dataGridViewCellStyle18.SelectionBackColor = Color.FromArgb(148, 168, 187);
-            dataGridViewCellStyle18.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.True;
-            dgvProducto.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(220, 230, 241);
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(102, 102, 102);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(148, 168, 187);
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            dgvProducto.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dgvProducto.RowHeadersWidth = 30;
             dgvProducto.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvProducto.RowTemplate.Height = 50;
@@ -1162,8 +1180,8 @@
             // 
             StockTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             StockTotal.DataPropertyName = "StockProductoBodegaInventario";
-            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            StockTotal.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            StockTotal.DefaultCellStyle = dataGridViewCellStyle3;
             StockTotal.HeaderText = "Stock";
             StockTotal.MinimumWidth = 6;
             StockTotal.Name = "StockTotal";
@@ -1174,9 +1192,9 @@
             // 
             StockMinimo.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             StockMinimo.DataPropertyName = "StockMinimoProductoBodegaInventario";
-            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.NullValue = "(Sin Stock Mínimo)";
-            StockMinimo.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.NullValue = "(Sin Stock Mínimo)";
+            StockMinimo.DefaultCellStyle = dataGridViewCellStyle4;
             StockMinimo.HeaderText = "Stock Mínimo";
             StockMinimo.MinimumWidth = 130;
             StockMinimo.Name = "StockMinimo";
@@ -1186,20 +1204,20 @@
             // chart1
             // 
             chart1.BackColor = Color.FromArgb(189, 215, 238);
-            chartArea5.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea5);
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
             chart1.Dock = DockStyle.Fill;
-            legend5.Name = "Legend1";
-            chart1.Legends.Add(legend5);
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
             chart1.Location = new Point(0, 0);
             chart1.Margin = new Padding(0, 0, 20, 20);
             chart1.Name = "chart1";
             chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            chart1.Series.Add(series5);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chart1.Series.Add(series1);
             chart1.Size = new Size(378, 307);
             chart1.TabIndex = 1;
             chart1.Text = "chart1";
@@ -1208,19 +1226,19 @@
             // chart2
             // 
             chart2.BackColor = Color.FromArgb(189, 215, 238);
-            chartArea6.Name = "ChartArea1";
-            chart2.ChartAreas.Add(chartArea6);
+            chartArea2.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea2);
             chart2.Dock = DockStyle.Fill;
-            legend6.Name = "Legend1";
-            chart2.Legends.Add(legend6);
+            legend2.Name = "Legend1";
+            chart2.Legends.Add(legend2);
             chart2.Location = new Point(418, 0);
             chart2.Margin = new Padding(20, 0, 0, 20);
             chart2.Name = "chart2";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            series6.YValuesPerPoint = 4;
-            chart2.Series.Add(series6);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            chart2.Series.Add(series2);
             chart2.Size = new Size(378, 307);
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
@@ -1307,6 +1325,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "El Cairo";
             Load += Form1_Load;
+            Shown += frmMenuPrincipal_Shown;
             panBarraControl.ResumeLayout(false);
             panBarraControl.PerformLayout();
             panel6.ResumeLayout(false);
@@ -1328,8 +1347,9 @@
             panelFormHijo.ResumeLayout(false);
             panelFormHijo.PerformLayout();
             panel7.ResumeLayout(false);
+            pnlAccesosLaterales.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxCalculadora).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            pnlContenidoPrincipal.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
@@ -1427,6 +1447,8 @@
         private Panel panel7;
         private PictureBox pbxCalculadora;
         private Button btnSalir;
-        private PictureBox pictureBox3;
+        private Panel pnlAccesosLaterales;
+        private Panel pnlContenidoPrincipal;
+        private ClasesUI.BarraProductosSugeridos barraProductosMenu;
     }
 }

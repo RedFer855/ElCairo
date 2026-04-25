@@ -88,6 +88,17 @@ namespace ModernMenuUI
             lblBodega.Text = ServicioSesionUsuario.ObtenerNombreBodega();
         }
 
+        private async void frmMenuPrincipal_Shown(object sender, EventArgs e)
+        {
+            await CargarDatosPesadosAsync();
+        }
+    
+        private async Task CargarDatosPesadosAsync()
+        {
+            int idBodega = ServicioSesionUsuario.ObtenerIdBodega();
+            await barraProductosMenu.CargarMasVendidosAsync(idBodega, 20);
+        }
+
         /// <summary>
         /// Configura el controlador/animador de notificaciones en modo overlay.
         /// </summary>
@@ -739,5 +750,7 @@ namespace ModernMenuUI
         {
 
         }
+
+      
     }
 }

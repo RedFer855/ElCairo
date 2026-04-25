@@ -335,7 +335,7 @@ namespace ModernMenuUI
             dataGridViewCellStyle1.BackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(87, 99, 110);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(87, 99, 110);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(220, 230, 241);
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvCarrito.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
@@ -369,6 +369,7 @@ namespace ModernMenuUI
             dgvCarrito.RowHeadersWidth = 51;
             dgvCarrito.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dgvCarrito.RowTemplate.Height = 50;
+            dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCarrito.Size = new Size(693, 625);
             dgvCarrito.TabIndex = 1;
             dgvCarrito.CellClick += dgvCarrito_CellClick;
@@ -678,7 +679,7 @@ namespace ModernMenuUI
             lstClientes.ForeColor = Color.DimGray;
             lstClientes.FormattingEnabled = true;
             lstClientes.ItemHeight = 18;
-            lstClientes.Location = new Point(33, 47);
+            lstClientes.Location = new Point(33, 46);
             lstClientes.Name = "lstClientes";
             lstClientes.Size = new Size(403, 22);
             lstClientes.TabIndex = 18;
@@ -757,7 +758,7 @@ namespace ModernMenuUI
             btnDetalleAgregar.FlatStyle = FlatStyle.Flat;
             btnDetalleAgregar.Font = new Font("Itim", 9.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDetalleAgregar.ForeColor = Color.White;
-            btnDetalleAgregar.Location = new Point(367, 120);
+            btnDetalleAgregar.Location = new Point(367, 126);
             btnDetalleAgregar.Name = "btnDetalleAgregar";
             btnDetalleAgregar.Size = new Size(107, 35);
             btnDetalleAgregar.TabIndex = 7;
@@ -768,11 +769,11 @@ namespace ModernMenuUI
             // 
             // lblDetalleCodigo
             // 
-            lblDetalleCodigo.Font = new Font("Itim", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetalleCodigo.Font = new Font("Itim", 9F);
             lblDetalleCodigo.ForeColor = Color.Gray;
-            lblDetalleCodigo.Location = new Point(8, 105);
+            lblDetalleCodigo.Location = new Point(8, 137);
             lblDetalleCodigo.Name = "lblDetalleCodigo";
-            lblDetalleCodigo.Size = new Size(90, 18);
+            lblDetalleCodigo.Size = new Size(120, 18);
             lblDetalleCodigo.TabIndex = 6;
             lblDetalleCodigo.Visible = false;
             // 
@@ -780,9 +781,9 @@ namespace ModernMenuUI
             // 
             lblDetalleStock.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDetalleStock.ForeColor = Color.Gray;
-            lblDetalleStock.Location = new Point(108, 96);
+            lblDetalleStock.Location = new Point(141, 96);
             lblDetalleStock.Name = "lblDetalleStock";
-            lblDetalleStock.Size = new Size(150, 18);
+            lblDetalleStock.Size = new Size(176, 18);
             lblDetalleStock.TabIndex = 5;
             lblDetalleStock.Visible = false;
             // 
@@ -790,9 +791,9 @@ namespace ModernMenuUI
             // 
             lblDetallePrecio.Font = new Font("Itim", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblDetallePrecio.ForeColor = Color.FromArgb(149, 195, 172);
-            lblDetallePrecio.Location = new Point(108, 72);
+            lblDetallePrecio.Location = new Point(141, 72);
             lblDetallePrecio.Name = "lblDetallePrecio";
-            lblDetallePrecio.Size = new Size(150, 22);
+            lblDetallePrecio.Size = new Size(169, 22);
             lblDetallePrecio.TabIndex = 4;
             lblDetallePrecio.Visible = false;
             // 
@@ -800,18 +801,18 @@ namespace ModernMenuUI
             // 
             lblDetalleMarca.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDetalleMarca.ForeColor = Color.Gray;
-            lblDetalleMarca.Location = new Point(108, 50);
+            lblDetalleMarca.Location = new Point(141, 50);
             lblDetalleMarca.Name = "lblDetalleMarca";
-            lblDetalleMarca.Size = new Size(250, 20);
+            lblDetalleMarca.Size = new Size(217, 20);
             lblDetalleMarca.TabIndex = 3;
             lblDetalleMarca.Visible = false;
             // 
             // lblDetalleNombre
             // 
             lblDetalleNombre.Font = new Font("Itim", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDetalleNombre.Location = new Point(108, 8);
+            lblDetalleNombre.Location = new Point(141, 8);
             lblDetalleNombre.Name = "lblDetalleNombre";
-            lblDetalleNombre.Size = new Size(250, 40);
+            lblDetalleNombre.Size = new Size(333, 40);
             lblDetalleNombre.TabIndex = 2;
             lblDetalleNombre.Visible = false;
             // 
@@ -819,7 +820,7 @@ namespace ModernMenuUI
             // 
             pbxDetalleImagen.Location = new Point(8, 8);
             pbxDetalleImagen.Name = "pbxDetalleImagen";
-            pbxDetalleImagen.Size = new Size(90, 90);
+            pbxDetalleImagen.Size = new Size(120, 120);
             pbxDetalleImagen.SizeMode = PictureBoxSizeMode.Zoom;
             pbxDetalleImagen.TabIndex = 1;
             pbxDetalleImagen.TabStop = false;
@@ -833,13 +834,13 @@ namespace ModernMenuUI
             BackColor = Color.White;
             ClientSize = new Size(1265, 816);
             Controls.Add(lstSugerencias);
-            Controls.Add(tableLayoutPanel2);
             Controls.Add(lstClientes);
             Controls.Add(btnSalir);
             Controls.Add(panel5);
             Controls.Add(btnFacturar);
             Controls.Add(panel4);
             Controls.Add(panelBusqueda);
+            Controls.Add(tableLayoutPanel2);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmFacturacion";

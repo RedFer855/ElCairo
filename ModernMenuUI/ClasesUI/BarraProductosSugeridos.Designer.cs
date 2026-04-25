@@ -52,13 +52,11 @@
             flowContenedor.AutoScroll = true;
             flowContenedor.Controls.Add(lblVacio);
             flowContenedor.Dock = DockStyle.Fill;
-            flowContenedor.FlowDirection = FlowDirection.TopDown;
             flowContenedor.Location = new Point(0, 30);
             flowContenedor.Name = "flowContenedor";
             flowContenedor.Padding = new Padding(5);
             flowContenedor.Size = new Size(460, 270);
             flowContenedor.TabIndex = 1;
-            flowContenedor.WrapContents = false;
             // 
             // lblVacio
             // 

@@ -33,6 +33,8 @@ namespace ModernMenuUI
         // =========================================================
         // CAMPOS
         // =========================================================
+        private Producto _productoInicial;   
+
         private readonly InventarioRepositorio _inventarioRepo = new InventarioRepositorio();
         private readonly ClienteRepositorio _clienteRepo = new ClienteRepositorio();
         private readonly CarritoManager _carrito = new CarritoManager();
@@ -50,8 +52,14 @@ namespace ModernMenuUI
         private readonly HttpClient _httpClient = new HttpClient();
 
         // =========================================================
-        // CONSTRUCTOR
+        // CONSTRUCTORES
         // =========================================================
+
+        // Constructor nuevo que acepta producto inicial
+        public frmFacturacion(Producto productoInicial) : this()
+        {
+            _productoInicial = productoInicial;
+        }
         public frmFacturacion()
         {
             InitializeComponent();
@@ -103,6 +111,15 @@ namespace ModernMenuUI
             int idBodega = CapaServiciosSeguridadValidacion
                 .ServicioSesionUsuario.ObtenerIdBodega();
             await barraProductos.CargarMasVendidosAsync(idBodega, 20);
+
+            if (_productoInicial != null)
+            {
+                var resultado = _carrito.AgregarProducto(_productoInicial, 1);
+                if (resultado != ResultadoCarrito.Exitoso)
+                    ManejarResultadoCarrito(resultado, _productoInicial);
+
+                await MostrarDetalleProductoAsync(_productoInicial);
+            }
         }
 
         private void frmFacturacion_FormClosing(object sender, FormClosingEventArgs e)
@@ -147,6 +164,8 @@ namespace ModernMenuUI
                         var resultado = _carrito.AgregarProducto(producto, (int)nudCantidad.Value);
                         if (resultado != ResultadoCarrito.Exitoso)
                             ManejarResultadoCarrito(resultado, producto);
+
+                        await MostrarDetalleProductoAsync(producto);
                     }
                     else
                     {
