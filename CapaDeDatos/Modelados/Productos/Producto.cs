@@ -79,23 +79,23 @@ namespace CapaDeDatos.Modelados.Productos
 
         public int StockEnBodega { get; set; }
 
+        public string NombreMarcaCache { get; set; }
+
+        public string NombrePresentacionCache { get; set; }
+
+        public string NombreCompleto => string.Join(" ", new[]
+        {
+            NombreProducto,
+            Marca?.NombreMarca ?? NombreMarcaCache,
+            Presentacion?.NombrePresentacion ?? NombrePresentacionCache,
+            ContenidoProducto
+        }.Where(s => !string.IsNullOrWhiteSpace(s) && s != "N/A" && s != "Sin Marca" && s != "Sin Presentación"));
+
         public override string ToString()
         {
             // Esto une las palabras con espacio, ignorando las que sean nulas o vacías
             return string.Join(" ", new[] { NombreProducto, NombreMarca, NombrePresentacion, ContenidoProducto }
                    .Where(s => !string.IsNullOrEmpty(s)));
         }
-
-        // Agregar en Producto.cs, junto a los otros computed properties
-        public string NombreCompleto => string.Join(" ", new[]
-        {
-            NombreProducto,
-            NombreMarca,
-            NombrePresentacion,
-            ContenidoProducto
-        }.Where(s => !string.IsNullOrWhiteSpace(s)
-              && s != "N/A"
-              && s != "Sin Marca"
-              && s != "Sin Presentación"));
     }
 }

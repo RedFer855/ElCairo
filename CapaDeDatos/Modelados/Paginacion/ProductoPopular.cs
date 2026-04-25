@@ -10,6 +10,9 @@ namespace CapaDeDatos.Modelados.Paginacion
 {
     public class ProductoPopular
     {
+        [JsonProperty("id_producto")]
+        public int IdProducto { get; set; }
+
         [JsonProperty("codigo_barra")]
         public string CodigoBarra { get; set; }
 

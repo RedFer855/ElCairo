@@ -1,4 +1,4 @@
-﻿namespace ModernMenuUI
+namespace ModernMenuUI
 {
     partial class frmFacturacion
     {
@@ -59,14 +59,6 @@
             Restar = new DataGridViewImageColumn();
             Sumar = new DataGridViewImageColumn();
             Eliminar = new DataGridViewImageColumn();
-            panelBusqueda = new Panel();
-            txtBuscar = new TextBox();
-            buscar = new Button();
-            lstSugerencias = new ListBox();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            panel4 = new Panel();
-            panel9 = new Panel();
-            lstClientes = new ListBox();
             panel2 = new Panel();
             nudCantidad = new NumericUpDown();
             label9 = new Label();
@@ -78,8 +70,26 @@
             txtProducto = new TextBox();
             txtPrecio = new TextBox();
             btnAgregar = new Button();
+            panelBusqueda = new Panel();
+            txtBuscar = new TextBox();
+            buscar = new Button();
+            lstSugerencias = new ListBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panel4 = new Panel();
+            panel9 = new Panel();
+            lstClientes = new ListBox();
             tableLayoutPanel2 = new TableLayoutPanel();
+            panelIzquierda = new Panel();
             barraProductos = new ModernMenuUI.ClasesUI.BarraProductosSugeridos();
+            pnlDetalleProducto = new Panel();
+            lblSinSeleccion = new Label();
+            btnDetalleAgregar = new Button();
+            lblDetalleCodigo = new Label();
+            lblDetalleStock = new Label();
+            lblDetallePrecio = new Label();
+            lblDetalleMarca = new Label();
+            lblDetalleNombre = new Label();
+            pbxDetalleImagen = new PictureBox();
             panel5.SuspendLayout();
             panel8.SuspendLayout();
             panel6.SuspendLayout();
@@ -89,12 +99,15 @@
             ((System.ComponentModel.ISupportInitialize)pbxCarritoVacio).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbxCarrito).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
             panelBusqueda.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
             tableLayoutPanel2.SuspendLayout();
+            panelIzquierda.SuspendLayout();
+            pnlDetalleProducto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbxDetalleImagen).BeginInit();
             SuspendLayout();
             // 
             // btnSalir
@@ -120,7 +133,7 @@
             txtCliente.Location = new Point(21, 14);
             txtCliente.Name = "txtCliente";
             txtCliente.PlaceholderText = "Buscar Cliente...";
-            txtCliente.Size = new Size(328, 20);
+            txtCliente.Size = new Size(403, 20);
             txtCliente.TabIndex = 13;
             txtCliente.TextChanged += txtCliente_TextChanged;
             txtCliente.KeyDown += txtCliente_KeyDown;
@@ -132,7 +145,7 @@
             panel5.Controls.Add(txtCliente);
             panel5.Location = new Point(12, 12);
             panel5.Name = "panel5";
-            panel5.Size = new Size(421, 51);
+            panel5.Size = new Size(496, 51);
             panel5.TabIndex = 14;
             // 
             // btnBuscarCliente
@@ -143,7 +156,7 @@
             btnBuscarCliente.BackgroundImageLayout = ImageLayout.Zoom;
             btnBuscarCliente.FlatAppearance.BorderSize = 0;
             btnBuscarCliente.FlatStyle = FlatStyle.Flat;
-            btnBuscarCliente.Location = new Point(355, 14);
+            btnBuscarCliente.Location = new Point(430, 14);
             btnBuscarCliente.Name = "btnBuscarCliente";
             btnBuscarCliente.Size = new Size(48, 20);
             btnBuscarCliente.TabIndex = 17;
@@ -282,6 +295,7 @@
             panel10.Controls.Add(pbxCarritoVacio);
             panel10.Controls.Add(pbxCarrito);
             panel10.Controls.Add(dgvCarrito);
+            panel10.Controls.Add(panel2);
             panel10.Location = new Point(21, 16);
             panel10.Name = "panel10";
             panel10.Size = new Size(693, 625);
@@ -430,113 +444,6 @@
             Eliminar.Resizable = DataGridViewTriState.True;
             Eliminar.Width = 50;
             // 
-            // panelBusqueda
-            // 
-            panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
-            panelBusqueda.Controls.Add(txtBuscar);
-            panelBusqueda.Controls.Add(buscar);
-            panelBusqueda.Location = new Point(439, 12);
-            panelBusqueda.Name = "panelBusqueda";
-            panelBusqueda.Size = new Size(814, 51);
-            panelBusqueda.TabIndex = 9;
-            // 
-            // txtBuscar
-            // 
-            txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtBuscar.BorderStyle = BorderStyle.None;
-            txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtBuscar.Location = new Point(21, 14);
-            txtBuscar.Name = "txtBuscar";
-            txtBuscar.PlaceholderText = "Buscar Productos...";
-            txtBuscar.Size = new Size(723, 20);
-            txtBuscar.TabIndex = 1;
-            txtBuscar.KeyUp += txtBuscar_KeyUp;
-            // 
-            // buscar
-            // 
-            buscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buscar.BackColor = Color.FromArgb(168, 191, 212);
-            buscar.BackgroundImage = (Image)resources.GetObject("buscar.BackgroundImage");
-            buscar.BackgroundImageLayout = ImageLayout.Zoom;
-            buscar.FlatAppearance.BorderSize = 0;
-            buscar.FlatStyle = FlatStyle.Flat;
-            buscar.Location = new Point(751, 14);
-            buscar.Name = "buscar";
-            buscar.Size = new Size(48, 20);
-            buscar.TabIndex = 0;
-            buscar.UseVisualStyleBackColor = false;
-            // 
-            // lstSugerencias
-            // 
-            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstSugerencias.ForeColor = Color.DimGray;
-            lstSugerencias.FormattingEnabled = true;
-            lstSugerencias.ItemHeight = 18;
-            lstSugerencias.Location = new Point(460, 46);
-            lstSugerencias.Name = "lstSugerencias";
-            lstSugerencias.Size = new Size(724, 22);
-            lstSugerencias.TabIndex = 19;
-            lstSugerencias.Visible = false;
-            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
-            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 7;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5.147059F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.3921566F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.352941F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.833334F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6.372549F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.90196F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 42F));
-            tableLayoutPanel1.Controls.Add(panel8, 5, 0);
-            tableLayoutPanel1.Controls.Add(panel3, 3, 0);
-            tableLayoutPanel1.Controls.Add(panel6, 1, 0);
-            tableLayoutPanel1.Dock = DockStyle.Top;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(901, 63);
-            tableLayoutPanel1.TabIndex = 0;
-            // 
-            // panel4
-            // 
-            panel4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel4.BackColor = Color.FromArgb(189, 215, 238);
-            panel4.Controls.Add(panel9);
-            panel4.Controls.Add(tableLayoutPanel1);
-            panel4.Location = new Point(12, 741);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(901, 63);
-            panel4.TabIndex = 13;
-            // 
-            // panel9
-            // 
-            panel9.Dock = DockStyle.Left;
-            panel9.Location = new Point(0, 63);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(30, 0);
-            panel9.TabIndex = 1;
-            // 
-            // lstClientes
-            // 
-            lstClientes.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstClientes.ForeColor = Color.DimGray;
-            lstClientes.FormattingEnabled = true;
-            lstClientes.ItemHeight = 18;
-            lstClientes.Location = new Point(33, 47);
-            lstClientes.Name = "lstClientes";
-            lstClientes.Size = new Size(328, 22);
-            lstClientes.TabIndex = 18;
-            lstClientes.Visible = false;
-            lstClientes.MouseClick += lstClientes_MouseClick;
-            lstClientes.KeyDown += lstClientes_KeyDown;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(189, 215, 238);
@@ -550,7 +457,7 @@
             panel2.Controls.Add(txtProducto);
             panel2.Controls.Add(txtPrecio);
             panel2.Controls.Add(btnAgregar);
-            panel2.Location = new Point(946, 744);
+            panel2.Location = new Point(299, 371);
             panel2.Name = "panel2";
             panel2.Size = new Size(418, 235);
             panel2.TabIndex = 11;
@@ -672,6 +579,113 @@
             btnAgregar.Text = "Añadir";
             btnAgregar.UseVisualStyleBackColor = false;
             // 
+            // panelBusqueda
+            // 
+            panelBusqueda.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panelBusqueda.BackColor = Color.FromArgb(189, 215, 238);
+            panelBusqueda.Controls.Add(txtBuscar);
+            panelBusqueda.Controls.Add(buscar);
+            panelBusqueda.Location = new Point(515, 12);
+            panelBusqueda.Name = "panelBusqueda";
+            panelBusqueda.Size = new Size(738, 51);
+            panelBusqueda.TabIndex = 9;
+            // 
+            // txtBuscar
+            // 
+            txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscar.BorderStyle = BorderStyle.None;
+            txtBuscar.Font = new Font("Itim", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtBuscar.Location = new Point(21, 14);
+            txtBuscar.Name = "txtBuscar";
+            txtBuscar.PlaceholderText = "Buscar Productos...";
+            txtBuscar.Size = new Size(647, 20);
+            txtBuscar.TabIndex = 1;
+            txtBuscar.KeyUp += txtBuscar_KeyUp;
+            // 
+            // buscar
+            // 
+            buscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buscar.BackColor = Color.FromArgb(168, 191, 212);
+            buscar.BackgroundImage = (Image)resources.GetObject("buscar.BackgroundImage");
+            buscar.BackgroundImageLayout = ImageLayout.Zoom;
+            buscar.FlatAppearance.BorderSize = 0;
+            buscar.FlatStyle = FlatStyle.Flat;
+            buscar.Location = new Point(675, 14);
+            buscar.Name = "buscar";
+            buscar.Size = new Size(48, 20);
+            buscar.TabIndex = 0;
+            buscar.UseVisualStyleBackColor = false;
+            // 
+            // lstSugerencias
+            // 
+            lstSugerencias.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lstSugerencias.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstSugerencias.ForeColor = Color.DimGray;
+            lstSugerencias.FormattingEnabled = true;
+            lstSugerencias.ItemHeight = 18;
+            lstSugerencias.Location = new Point(536, 46);
+            lstSugerencias.Name = "lstSugerencias";
+            lstSugerencias.Size = new Size(647, 22);
+            lstSugerencias.TabIndex = 19;
+            lstSugerencias.Visible = false;
+            lstSugerencias.DoubleClick += lstSugerencias_DoubleClick;
+            lstSugerencias.KeyDown += lstSugerencias_KeyDown;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 7;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5.147059F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.3921566F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.352941F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.833334F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6.372549F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.90196F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 42F));
+            tableLayoutPanel1.Controls.Add(panel8, 5, 0);
+            tableLayoutPanel1.Controls.Add(panel3, 3, 0);
+            tableLayoutPanel1.Controls.Add(panel6, 1, 0);
+            tableLayoutPanel1.Dock = DockStyle.Top;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(901, 63);
+            tableLayoutPanel1.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            panel4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel4.BackColor = Color.FromArgb(189, 215, 238);
+            panel4.Controls.Add(panel9);
+            panel4.Controls.Add(tableLayoutPanel1);
+            panel4.Location = new Point(12, 741);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(901, 63);
+            panel4.TabIndex = 13;
+            // 
+            // panel9
+            // 
+            panel9.Dock = DockStyle.Left;
+            panel9.Location = new Point(0, 63);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(30, 0);
+            panel9.TabIndex = 1;
+            // 
+            // lstClientes
+            // 
+            lstClientes.Font = new Font("Itim", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstClientes.ForeColor = Color.DimGray;
+            lstClientes.FormattingEnabled = true;
+            lstClientes.ItemHeight = 18;
+            lstClientes.Location = new Point(33, 47);
+            lstClientes.Name = "lstClientes";
+            lstClientes.Size = new Size(403, 22);
+            lstClientes.TabIndex = 18;
+            lstClientes.Visible = false;
+            lstClientes.MouseClick += lstClientes_MouseClick;
+            lstClientes.KeyDown += lstClientes_KeyDown;
+            // 
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -679,7 +693,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 500F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.Controls.Add(panelCarrito, 1, 0);
-            tableLayoutPanel2.Controls.Add(barraProductos, 0, 0);
+            tableLayoutPanel2.Controls.Add(panelIzquierda, 0, 0);
             tableLayoutPanel2.Location = new Point(12, 75);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
@@ -687,14 +701,129 @@
             tableLayoutPanel2.Size = new Size(1241, 660);
             tableLayoutPanel2.TabIndex = 19;
             // 
+            // panelIzquierda
+            // 
+            panelIzquierda.Controls.Add(barraProductos);
+            panelIzquierda.Controls.Add(pnlDetalleProducto);
+            panelIzquierda.Dock = DockStyle.Fill;
+            panelIzquierda.Location = new Point(3, 3);
+            panelIzquierda.Name = "panelIzquierda";
+            panelIzquierda.Size = new Size(494, 654);
+            panelIzquierda.TabIndex = 13;
+            // 
             // barraProductos
             // 
             barraProductos.Dock = DockStyle.Fill;
             barraProductos.ForeColor = Color.FromArgb(220, 230, 241);
-            barraProductos.Location = new Point(3, 3);
+            barraProductos.Location = new Point(0, 180);
             barraProductos.Name = "barraProductos";
-            barraProductos.Size = new Size(494, 654);
+            barraProductos.Size = new Size(494, 474);
             barraProductos.TabIndex = 13;
+            // 
+            // pnlDetalleProducto
+            // 
+            pnlDetalleProducto.BackColor = Color.White;
+            pnlDetalleProducto.BorderStyle = BorderStyle.FixedSingle;
+            pnlDetalleProducto.Controls.Add(lblSinSeleccion);
+            pnlDetalleProducto.Controls.Add(btnDetalleAgregar);
+            pnlDetalleProducto.Controls.Add(lblDetalleCodigo);
+            pnlDetalleProducto.Controls.Add(lblDetalleStock);
+            pnlDetalleProducto.Controls.Add(lblDetallePrecio);
+            pnlDetalleProducto.Controls.Add(lblDetalleMarca);
+            pnlDetalleProducto.Controls.Add(lblDetalleNombre);
+            pnlDetalleProducto.Controls.Add(pbxDetalleImagen);
+            pnlDetalleProducto.Dock = DockStyle.Top;
+            pnlDetalleProducto.Location = new Point(0, 0);
+            pnlDetalleProducto.Name = "pnlDetalleProducto";
+            pnlDetalleProducto.Size = new Size(494, 180);
+            pnlDetalleProducto.TabIndex = 14;
+            // 
+            // lblSinSeleccion
+            // 
+            lblSinSeleccion.Dock = DockStyle.Fill;
+            lblSinSeleccion.Font = new Font("Itim", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblSinSeleccion.ForeColor = Color.Gray;
+            lblSinSeleccion.Location = new Point(0, 0);
+            lblSinSeleccion.Name = "lblSinSeleccion";
+            lblSinSeleccion.Size = new Size(492, 178);
+            lblSinSeleccion.TabIndex = 0;
+            lblSinSeleccion.Text = "Busque o seleccione un producto";
+            lblSinSeleccion.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnDetalleAgregar
+            // 
+            btnDetalleAgregar.BackColor = Color.FromArgb(149, 195, 172);
+            btnDetalleAgregar.FlatAppearance.BorderSize = 0;
+            btnDetalleAgregar.FlatStyle = FlatStyle.Flat;
+            btnDetalleAgregar.Font = new Font("Itim", 9.749999F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDetalleAgregar.ForeColor = Color.White;
+            btnDetalleAgregar.Location = new Point(367, 120);
+            btnDetalleAgregar.Name = "btnDetalleAgregar";
+            btnDetalleAgregar.Size = new Size(107, 35);
+            btnDetalleAgregar.TabIndex = 7;
+            btnDetalleAgregar.Text = "Agregar";
+            btnDetalleAgregar.UseVisualStyleBackColor = false;
+            btnDetalleAgregar.Visible = false;
+            btnDetalleAgregar.Click += btnDetalleAgregar_Click;
+            // 
+            // lblDetalleCodigo
+            // 
+            lblDetalleCodigo.Font = new Font("Itim", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetalleCodigo.ForeColor = Color.Gray;
+            lblDetalleCodigo.Location = new Point(8, 105);
+            lblDetalleCodigo.Name = "lblDetalleCodigo";
+            lblDetalleCodigo.Size = new Size(90, 18);
+            lblDetalleCodigo.TabIndex = 6;
+            lblDetalleCodigo.Visible = false;
+            // 
+            // lblDetalleStock
+            // 
+            lblDetalleStock.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetalleStock.ForeColor = Color.Gray;
+            lblDetalleStock.Location = new Point(108, 96);
+            lblDetalleStock.Name = "lblDetalleStock";
+            lblDetalleStock.Size = new Size(150, 18);
+            lblDetalleStock.TabIndex = 5;
+            lblDetalleStock.Visible = false;
+            // 
+            // lblDetallePrecio
+            // 
+            lblDetallePrecio.Font = new Font("Itim", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDetallePrecio.ForeColor = Color.FromArgb(149, 195, 172);
+            lblDetallePrecio.Location = new Point(108, 72);
+            lblDetallePrecio.Name = "lblDetallePrecio";
+            lblDetallePrecio.Size = new Size(150, 22);
+            lblDetallePrecio.TabIndex = 4;
+            lblDetallePrecio.Visible = false;
+            // 
+            // lblDetalleMarca
+            // 
+            lblDetalleMarca.Font = new Font("Itim", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDetalleMarca.ForeColor = Color.Gray;
+            lblDetalleMarca.Location = new Point(108, 50);
+            lblDetalleMarca.Name = "lblDetalleMarca";
+            lblDetalleMarca.Size = new Size(250, 20);
+            lblDetalleMarca.TabIndex = 3;
+            lblDetalleMarca.Visible = false;
+            // 
+            // lblDetalleNombre
+            // 
+            lblDetalleNombre.Font = new Font("Itim", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDetalleNombre.Location = new Point(108, 8);
+            lblDetalleNombre.Name = "lblDetalleNombre";
+            lblDetalleNombre.Size = new Size(250, 40);
+            lblDetalleNombre.TabIndex = 2;
+            lblDetalleNombre.Visible = false;
+            // 
+            // pbxDetalleImagen
+            // 
+            pbxDetalleImagen.Location = new Point(8, 8);
+            pbxDetalleImagen.Name = "pbxDetalleImagen";
+            pbxDetalleImagen.Size = new Size(90, 90);
+            pbxDetalleImagen.SizeMode = PictureBoxSizeMode.Zoom;
+            pbxDetalleImagen.TabIndex = 1;
+            pbxDetalleImagen.TabStop = false;
+            pbxDetalleImagen.Visible = false;
             // 
             // frmFacturacion
             // 
@@ -704,7 +833,6 @@
             BackColor = Color.White;
             ClientSize = new Size(1265, 816);
             Controls.Add(lstSugerencias);
-            Controls.Add(panel2);
             Controls.Add(tableLayoutPanel2);
             Controls.Add(lstClientes);
             Controls.Add(btnSalir);
@@ -731,14 +859,17 @@
             ((System.ComponentModel.ISupportInitialize)pbxCarritoVacio).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbxCarrito).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
             panelBusqueda.ResumeLayout(false);
             panelBusqueda.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
+            panelIzquierda.ResumeLayout(false);
+            pnlDetalleProducto.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbxDetalleImagen).EndInit();
             ResumeLayout(false);
         }
 
@@ -791,5 +922,15 @@
         private Button btnAgregar;
         private TableLayoutPanel tableLayoutPanel2;
         private ClasesUI.BarraProductosSugeridos barraProductos;
+        private Panel panelIzquierda;
+        private Panel pnlDetalleProducto;
+        private Label lblSinSeleccion;
+        private PictureBox pbxDetalleImagen;
+        private Label lblDetalleNombre;
+        private Label lblDetalleMarca;
+        private Label lblDetallePrecio;
+        private Label lblDetalleStock;
+        private Label lblDetalleCodigo;
+        private Button btnDetalleAgregar;
     }
 }

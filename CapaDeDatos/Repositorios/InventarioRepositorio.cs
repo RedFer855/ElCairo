@@ -149,19 +149,15 @@ namespace CapaDeDatos.Repositorios
                 if (string.IsNullOrEmpty(response?.Content))
                     return new List<Producto>();
 
-                // ← Usar System.Text.Json con PropertyNameCaseInsensitive
-                var resultados = System.Text.Json.JsonSerializer
-                    .Deserialize<List<BusquedaProductoResult>>(
-                        response.Content,
-                        new System.Text.Json.JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
+                var resultados = Newtonsoft.Json.JsonConvert
+                .DeserializeObject<List<BusquedaProductoResult>>(response.Content);
 
                 return resultados?.Select(r => new Producto
                 {
                     IdProducto = r.IdProducto,
                     NombreProducto = r.NombreProducto,
+                    NombreMarcaCache = r.NombreMarca,
+                    NombrePresentacionCache = r.NombrePresentacion,
                     CodigoBarraProducto = r.CodigoBarra,
                     PrecioVenta = r.PrecioVenta,
                     ContenidoProducto = r.Contenido,
@@ -211,11 +207,28 @@ namespace CapaDeDatos.Repositorios
     // DTO interno para deserializar resultado de buscar_productos_bodega
     internal class BusquedaProductoResult
     {
+        [Newtonsoft.Json.JsonProperty("id_producto")]
         public int IdProducto { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("nombre_producto")]
         public string NombreProducto { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("nombre_marca")]
+        public string NombreMarca { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("nombre_presentacion")]
+        public string NombrePresentacion { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("codigo_barra")]
         public string CodigoBarra { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("precio_venta")]
         public decimal PrecioVenta { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("contenido")]
         public string Contenido { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("stock")]
         public int Stock { get; set; }
     }
 }

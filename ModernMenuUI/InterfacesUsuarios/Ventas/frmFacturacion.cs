@@ -14,6 +14,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using ModernMenuUI.ClasesUI;
 using Supabase.Realtime.PostgresChanges;
+using System.Net.Http;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -43,6 +44,10 @@ namespace ModernMenuUI
         // Debounce + cancelación para buscador
         private readonly System.Windows.Forms.Timer _timerDebounce;
         private CancellationTokenSource _ctsSugerencias;
+
+        // Panel de detalle
+        private Producto _productoEnDetalle;
+        private readonly HttpClient _httpClient = new HttpClient();
 
         // =========================================================
         // CONSTRUCTOR
@@ -89,9 +94,9 @@ namespace ModernMenuUI
             // Suscribir evento de la barra: agregar al carrito al clickear
             barraProductos.ProductoSeleccionado += (s, producto) =>
             {
-                if (!_carrito.AgregarProducto(producto, (int)nudCantidad.Value))
-                    MessageBox.Show("Stock insuficiente.", "Advertencia",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                var resultado = _carrito.AgregarProducto(producto, (int)nudCantidad.Value);
+                if (resultado != ResultadoCarrito.Exitoso)
+                    ManejarResultadoCarrito(resultado, producto);
             };
 
             // Cargar top 20 más vendidos de esta bodega
@@ -108,6 +113,7 @@ namespace ModernMenuUI
                 _timerDebounce?.Dispose();
                 _ctsSugerencias?.Cancel();
                 _ctsSugerencias?.Dispose();
+                _httpClient?.Dispose();
             }
             catch { }
         }
@@ -117,42 +123,51 @@ namespace ModernMenuUI
         // =========================================================
         private async void txtBuscar_KeyUp(object sender, KeyEventArgs e)
         {
-            // SCANNER o Enter: busca directo por código de barras
             if (e.KeyCode == Keys.Enter)
             {
                 _timerDebounce.Stop();
-                lstSugerencias.Visible = false;
                 string texto = txtBuscar.Text?.Trim();
+                if (string.IsNullOrEmpty(texto)) return;
 
-                if (!string.IsNullOrEmpty(texto))
+                int idBodega = CapaServiciosSeguridadValidacion
+                    .ServicioSesionUsuario.ObtenerIdBodega();
+
+                bool esCodigo = texto.All(char.IsDigit)
+                                && texto.Length >= 8
+                                && texto.Length <= 13;
+
+                if (esCodigo)
                 {
-                    int idBodega = CapaServiciosSeguridadValidacion
-                        .ServicioSesionUsuario.ObtenerIdBodega();
-
+                    lstSugerencias.Visible = false;
                     var producto = await _inventarioRepo
                         .BuscarPorCodigoBarraEnBodegaAsync(texto, idBodega);
 
                     if (producto != null)
                     {
-                        if (!_carrito.AgregarProducto(producto, (int)nudCantidad.Value))
-                            MessageBox.Show(
-                                "Stock insuficiente o producto agotado.",
-                                "Advertencia",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
+                        var resultado = _carrito.AgregarProducto(producto, (int)nudCantidad.Value);
+                        if (resultado != ResultadoCarrito.Exitoso)
+                            ManejarResultadoCarrito(resultado, producto);
                     }
                     else
                     {
-                        MessageBox.Show(
-                            "Producto no encontrado en esta bodega.",
-                            "No encontrado",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                        MessageBox.Show("Producto no encontrado en esta bodega.",
+                            "No encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     txtBuscar.Clear();
                     txtBuscar.Focus();
+                    return;
                 }
+
+                // Es texto: si hay sugerencia seleccionada, mostrar detalle
+                if (lstSugerencias.Visible && lstSugerencias.SelectedItem is Producto pSugerido)
+                {
+                    lstSugerencias.Visible = false;
+                    txtBuscar.Clear();
+                    await MostrarDetalleProductoAsync(pSugerido);
+                }
+
+                // Si es texto sin sugerencia seleccionada: no hacer nada
                 return;
             }
 
@@ -206,7 +221,10 @@ namespace ModernMenuUI
 
                 if (_ctsSugerencias.IsCancellationRequested) return;
 
-                await barraProductos.MostrarSugerenciasAsync(sugerencias);
+                lstSugerencias.DataSource = null;
+                lstSugerencias.DataSource = sugerencias;
+                lstSugerencias.DisplayMember = "NombreCompleto";
+                lstSugerencias.Visible = sugerencias.Count > 0;
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
@@ -215,17 +233,13 @@ namespace ModernMenuUI
             }
         }
 
-        private void lstSugerencias_DoubleClick(object sender, EventArgs e)
+        private async void lstSugerencias_DoubleClick(object sender, EventArgs e)
         {
             if (lstSugerencias.SelectedItem is Producto producto)
             {
-                if (!_carrito.AgregarProducto(producto, (int)nudCantidad.Value))
-                    MessageBox.Show("Stock insuficiente.", "Advertencia",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
                 lstSugerencias.Visible = false;
                 txtBuscar.Clear();
-                txtBuscar.Focus();
+                await MostrarDetalleProductoAsync(producto);
             }
         }
 
@@ -233,10 +247,10 @@ namespace ModernMenuUI
         {
             if (e.KeyCode == Keys.Enter && lstSugerencias.SelectedItem is Producto p)
             {
-                _carrito.AgregarProducto(p, (int)nudCantidad.Value);
                 lstSugerencias.Visible = false;
                 txtBuscar.Clear();
                 txtBuscar.Focus();
+                await MostrarDetalleProductoAsync(p);
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.Escape)
@@ -298,7 +312,7 @@ namespace ModernMenuUI
         // =========================================================
         // EVENTOS DEL CARRITO (botones eliminar/restar/sumar)
         // =========================================================
-        private void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvCarrito_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.RowIndex >= dgvCarrito.RowCount) return;
 
@@ -323,6 +337,15 @@ namespace ModernMenuUI
                 if (!_carrito.ModificarCantidad(codigoBarra, +1))
                     MessageBox.Show("Stock insuficiente.",
                         "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            // Columnas de datos: mostrar detalle del producto
+            else if (e.ColumnIndex >= 0 && e.ColumnIndex <= 3)
+            {
+                int idBodega = CapaServiciosSeguridadValidacion
+                    .ServicioSesionUsuario.ObtenerIdBodega();
+                var producto = await _inventarioRepo
+                    .BuscarPorCodigoBarraEnBodegaAsync(codigoBarra, idBodega);
+                await MostrarDetalleProductoAsync(producto);
             }
         }
 
@@ -513,6 +536,11 @@ namespace ModernMenuUI
                     p_computadora_host = Environment.MachineName
                 };
 
+                // DEBUG TEMPORAL
+                System.Diagnostics.Debug.WriteLine("=== DETALLES VENTA ===");
+                foreach (var d in detallesVenta)
+                    System.Diagnostics.Debug.WriteLine($"IdProducto={d.id_producto}, Cantidad={d.cantidad_venta}, IdBodega={d.id_bodega}");
+
                 await supabase.Rpc("registrar_venta", parametros);
 
                 // Generar PDF
@@ -659,6 +687,95 @@ namespace ModernMenuUI
                 }
                 catch { }
             });
+        }
+
+        // =========================================================
+        // DETALLE DE PRODUCTO
+        // =========================================================
+        private void ManejarResultadoCarrito(ResultadoCarrito resultado, Producto p)
+        {
+            switch (resultado)
+            {
+                case ResultadoCarrito.AjustadoAlStock:
+                    var item = _carrito.Items.FirstOrDefault(i => i.CodigoBarra == p.CodigoBarraProducto);
+                    MessageBox.Show(
+                        $"Solo hay {p.StockEnBodega} unidades disponibles.\nSe ajustó la cantidad a {item?.Cantidad}.",
+                        "Stock ajustado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    break;
+                case ResultadoCarrito.SinStock:
+                    MessageBox.Show($"'{p.NombreProducto}' está agotado en esta bodega.",
+                        "Sin Stock", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case ResultadoCarrito.LimiteAlcanzado:
+                    MessageBox.Show("El carrito alcanzó el límite de productos.",
+                        "Límite", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    break;
+            }
+        }
+
+        private async Task MostrarDetalleProductoAsync(Producto p)
+        {
+            if (p == null)
+            {
+                _productoEnDetalle = null;
+                lblSinSeleccion.Visible = true;
+                pbxDetalleImagen.Visible = false;
+                lblDetalleNombre.Visible = false;
+                lblDetalleMarca.Visible = false;
+                lblDetallePrecio.Visible = false;
+                lblDetalleStock.Visible = false;
+                lblDetalleCodigo.Visible = false;
+                btnDetalleAgregar.Visible = false;
+                return;
+            }
+
+            _productoEnDetalle = p;
+            lblSinSeleccion.Visible = false;
+            pbxDetalleImagen.Visible = true;
+            lblDetalleNombre.Visible = true;
+            lblDetalleMarca.Visible = true;
+            lblDetallePrecio.Visible = true;
+            lblDetalleStock.Visible = true;
+            lblDetalleCodigo.Visible = true;
+            btnDetalleAgregar.Visible = true;
+
+            lblDetalleNombre.Text = p.NombreCompleto;
+            lblDetalleMarca.Text = p.Marca?.NombreMarca ?? p.NombreMarcaCache ?? "Sin Marca";
+            lblDetallePrecio.Text = p.PrecioVenta.ToString("C", new CultureInfo("es-HN"));
+            lblDetalleStock.Text = $"Stock: {p.StockEnBodega}";
+            lblDetalleCodigo.Text = p.CodigoBarraProducto;
+            btnDetalleAgregar.Enabled = p.StockEnBodega > 0;
+
+            pbxDetalleImagen.Image = null;
+
+            try
+            {
+                string url = await ImagenHelper.ObtenerUrlPublicaAsync(p.ImagenProducto);
+
+                if (string.IsNullOrEmpty(url))
+                {
+                    pbxDetalleImagen.Image = Properties.Resources.sin_imagen;
+                    return;
+                }
+
+                var bytes = await _httpClient.GetByteArrayAsync(url);
+                using var ms = new MemoryStream(bytes);
+
+                pbxDetalleImagen.Image = new Bitmap(ms);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                pbxDetalleImagen.Image = Properties.Resources.sin_imagen;
+            }
+        }
+
+        private void btnDetalleAgregar_Click(object sender, EventArgs e)
+        {
+            if (_productoEnDetalle == null) return;
+            var resultado = _carrito.AgregarProducto(_productoEnDetalle, (int)nudCantidad.Value);
+            if (resultado != ResultadoCarrito.Exitoso)
+                ManejarResultadoCarrito(resultado, _productoEnDetalle);
         }
 
         // =========================================================

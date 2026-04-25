@@ -46,6 +46,7 @@ namespace ModernMenuUI.ClasesUI
 
                 var productos = populares.Select(pp => new Producto
                 {
+                    IdProducto = pp.IdProducto,
                     CodigoBarraProducto = pp.CodigoBarra,
                     NombreProducto = string.Join(" ", new[]
                     {

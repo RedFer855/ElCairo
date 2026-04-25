@@ -41,12 +41,12 @@ namespace ModernMenuUI.ClasesUI
 
         /// <summary>
         /// Agrega o incrementa un producto.
-        /// Retorna true si tuvo éxito, false si no hay stock suficiente.
+        /// Retorna el resultado de la operación como <see cref="ResultadoCarrito"/>.
         /// </summary>
-        public bool AgregarProducto(Producto producto, int cantidad = 1)
+        public ResultadoCarrito AgregarProducto(Producto producto, int cantidad = 1)
         {
-            if (producto == null || cantidad <= 0) return false;
-            if (producto.StockEnBodega <= 0) return false;
+            if (producto == null || cantidad <= 0) return ResultadoCarrito.SinStock;
+            if (producto.StockEnBodega <= 0) return ResultadoCarrito.SinStock;
 
             var existente = _items.FirstOrDefault(
                 i => i.CodigoBarra == producto.CodigoBarraProducto);
@@ -58,27 +58,33 @@ namespace ModernMenuUI.ClasesUI
                 {
                     existente.Cantidad = existente.StockDisponible;
                     CarritoCambiado?.Invoke(this, EventArgs.Empty);
-                    return false; // stock insuficiente
+                    return ResultadoCarrito.AjustadoAlStock;
                 }
                 existente.Cantidad = nueva;
             }
             else
             {
-                if (_items.Count >= _limiteProductos) return false;
+                if (_items.Count >= _limiteProductos) return ResultadoCarrito.LimiteAlcanzado;
 
+                int cantidadFinal = Math.Min(cantidad, producto.StockEnBodega);
                 _items.Add(new ItemCarrito
                 {
                     CodigoBarra = producto.CodigoBarraProducto,
                     NombreProducto = producto.NombreProducto,
                     PrecioVenta = producto.PrecioVenta,
-                    Cantidad = Math.Min(cantidad, producto.StockEnBodega),
+                    Cantidad = cantidadFinal,
                     StockDisponible = producto.StockEnBodega,
                     IdProducto = producto.IdProducto
                 });
+
+                CarritoCambiado?.Invoke(this, EventArgs.Empty);
+                return cantidadFinal < cantidad
+                    ? ResultadoCarrito.AjustadoAlStock
+                    : ResultadoCarrito.Exitoso;
             }
 
             CarritoCambiado?.Invoke(this, EventArgs.Empty);
-            return true;
+            return ResultadoCarrito.Exitoso;
         }
 
         /// <summary>Elimina un producto del carrito por código de barras.</summary>
