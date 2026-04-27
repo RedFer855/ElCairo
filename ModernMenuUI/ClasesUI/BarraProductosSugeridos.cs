@@ -9,8 +9,13 @@ using System.Windows.Forms;
 
 namespace ModernMenuUI.ClasesUI
 {
+
     public partial class BarraProductosSugeridos : UserControl
     {
+
+        // Agregar esta propiedad pública
+        public bool ModoTabular { get; set; } = false;
+
         private readonly InventarioRepositorio _inventarioRepo = new InventarioRepositorio();
 
         public event EventHandler<Producto> ProductoSeleccionado;
@@ -116,11 +121,20 @@ namespace ModernMenuUI.ClasesUI
             flowContenedor.Visible = true;
             flowContenedor.PerformLayout();
 
-            int anchoItem = flowContenedor.ClientSize.Width
-                            - SystemInformation.VerticalScrollBarWidth - 10;
-
-            foreach (Control ctrl in flowContenedor.Controls)
-                ctrl.Width = anchoItem;
+            if (ModoTabular)
+            {
+                // Modo grid: ancho fijo por tarjeta, FlowLayoutPanel envuelve solo
+                foreach (Control ctrl in flowContenedor.Controls)
+                    ctrl.Width = 440; // ← ancho de tarjeta en grid
+            }
+            else
+            {
+                // Modo lista: ancho completo (comportamiento actual en ventas)
+                int anchoItem = flowContenedor.ClientSize.Width
+                                - SystemInformation.VerticalScrollBarWidth - 10;
+                foreach (Control ctrl in flowContenedor.Controls)
+                    ctrl.Width = anchoItem;
+            }
         }
 
         // =========================================================

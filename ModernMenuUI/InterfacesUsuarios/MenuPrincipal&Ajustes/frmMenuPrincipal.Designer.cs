@@ -1029,6 +1029,7 @@
             barraProductosMenu.Dock = DockStyle.Fill;
             barraProductosMenu.ForeColor = Color.FromArgb(220, 230, 241);
             barraProductosMenu.Location = new Point(0, 0);
+            barraProductosMenu.ModoTabular = false;
             barraProductosMenu.Name = "barraProductosMenu";
             barraProductosMenu.Size = new Size(934, 696);
             barraProductosMenu.TabIndex = 0;

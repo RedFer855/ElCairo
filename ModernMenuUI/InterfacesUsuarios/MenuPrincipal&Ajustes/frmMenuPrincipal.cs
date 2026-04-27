@@ -92,10 +92,27 @@ namespace ModernMenuUI
         {
             await CargarDatosPesadosAsync();
         }
-    
+
         private async Task CargarDatosPesadosAsync()
         {
             int idBodega = ServicioSesionUsuario.ObtenerIdBodega();
+
+            barraProductosMenu.ModoTabular = true; // ← AGREGAR ESTA LÍNEA
+
+            barraProductosMenu.ProductoSeleccionado += async (s, producto) =>
+            {
+                int id = ServicioSesionUsuario.ObtenerIdBodega();
+                var repo = new CapaDeDatos.Repositorios.InventarioRepositorio();
+                var productoCompleto = await repo.BuscarPorCodigoBarraEnBodegaAsync(
+                    producto.CodigoBarraProducto, id);
+                if (productoCompleto != null)
+                {
+                    var frmVentas = new frmFacturacion(productoCompleto);
+                    ManejarFormularios.Instancia.AbrirFormulario(frmVentas);
+                    clsAnmaciones.CambiarNombreMenu(lblNombreModulo, "VENTAS");
+                }
+            };
+
             await barraProductosMenu.CargarMasVendidosAsync(idBodega, 20);
         }
 
