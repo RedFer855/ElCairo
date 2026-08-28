@@ -51,6 +51,10 @@ namespace ModernMenuUI
         private Producto _productoEnDetalle;
         private readonly HttpClient _httpClient = new HttpClient();
 
+        // Servicios de facturación
+        private static readonly EmpresaRepositorio _empresaRepo = new CapaDeDatos.Repositorios.EmpresaRepositorio();
+        private static readonly ModernMenuUI.Servicios.ServicioFacturaPDF _servicioPDF = new ModernMenuUI.Servicios.ServicioFacturaPDF();
+
         // =========================================================
         // CONSTRUCTORES
         // =========================================================
@@ -120,6 +124,13 @@ namespace ModernMenuUI
 
                 await MostrarDetalleProductoAsync(_productoInicial);
             }
+
+            // Pre-calentar Chromium en background mientras el usuario llena el carrito
+            _ = Task.Run(async () =>
+            {
+                try { await ModernMenuUI.Servicios.ServicioFacturaPDF.PreCalentarAsync(); }
+                catch { }
+            });
         }
 
         private void frmFacturacion_FormClosing(object sender, FormClosingEventArgs e)
@@ -291,6 +302,7 @@ namespace ModernMenuUI
         // =========================================================
         private void ActualizarGridCarrito()
         {
+            dgvCarrito.SuspendLayout();
             dgvCarrito.Rows.Clear();
 
             foreach (var item in _carrito.Items)
@@ -305,6 +317,8 @@ namespace ModernMenuUI
                     Properties.Resources.mas__2_
                 );
             }
+            dgvCarrito.ResumeLayout(false);
+            dgvCarrito.PerformLayout();
         }
 
         private void ActualizarTotales()
@@ -338,6 +352,9 @@ namespace ModernMenuUI
             string codigoBarra = dgvCarrito.Rows[e.RowIndex].Cells[0].Value?.ToString();
             if (string.IsNullOrEmpty(codigoBarra)) return;
 
+            dgvCarrito.SuspendLayout();
+            int filaAnterior = dgvCarrito.CurrentCell?.RowIndex ?? -1;
+
             // Eliminar
             if (e.ColumnIndex == 4)
             {
@@ -365,6 +382,14 @@ namespace ModernMenuUI
                 var producto = await _inventarioRepo
                     .BuscarPorCodigoBarraEnBodegaAsync(codigoBarra, idBodega);
                 await MostrarDetalleProductoAsync(producto);
+            }
+
+            dgvCarrito.ResumeLayout();
+            if (filaAnterior >= 0 && filaAnterior < dgvCarrito.RowCount)
+            {
+                dgvCarrito.ClearSelection();
+                dgvCarrito.Rows[filaAnterior].Selected = true;
+                dgvCarrito.CurrentCell = dgvCarrito.Rows[filaAnterior].Cells[0];
             }
         }
 
@@ -555,27 +580,24 @@ namespace ModernMenuUI
                     p_computadora_host = Environment.MachineName
                 };
 
-                // DEBUG TEMPORAL
-                System.Diagnostics.Debug.WriteLine("=== DETALLES VENTA ===");
-                foreach (var d in detallesVenta)
-                    System.Diagnostics.Debug.WriteLine($"IdProducto={d.id_producto}, Cantidad={d.cantidad_venta}, IdBodega={d.id_bodega}");
-
                 await supabase.Rpc("registrar_venta", parametros);
 
-                // Generar PDF
-                Factura factura = CrearFacturaDesdeCarrito();
-                factura.NombreCliente = _clienteSeleccionado.NombreCliente;
-                factura.RTNCliente = _clienteSeleccionado.DniCliente;
-                factura.DireccionCliente = _clienteSeleccionado.DireccionCliente;
+                // Generar factura SAR con la nueva plantilla HTML
+                var empresa = await _empresaRepo.ObtenerConfiguracionAsync();
+                var factura = ModernMenuUI.Servicios.FacturaMapper.DesdeCarrito(
+                    _carrito,
+                    _clienteSeleccionado,
+                    empresa);
 
-                string carpeta = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "Facturas");
-                Directory.CreateDirectory(carpeta);
-                string ruta = Path.Combine(carpeta,
-                    $"Factura_{DateTime.Now:yyyyMMdd_HHmmss}_{Guid.NewGuid().ToString()[..6]}.pdf");
+                string rutaPDF = await _servicioPDF.GenerarAsync(
+                    factura,
+                    Properties.Resources.logo_ElCairo);
 
-                await GenerarPDFFacturaAsync(factura, ruta);
+                _servicioPDF.AbrirPDF(rutaPDF);
+
+                // Limpiar después de facturar
+                _carrito.Limpiar();
+                await MostrarDetalleProductoAsync(null);
 
                 MessageBox.Show(
                     $"¡Venta registrada para {_clienteSeleccionado.NombreCliente}!",
@@ -597,115 +619,6 @@ namespace ModernMenuUI
                 txtTotal.Text = "0.00";
                 _clienteSeleccionado = null;
             }
-        }
-
-        // =========================================================
-        // PDF (sin cambios por ahora — Fase 7 la mueve a su clase)
-        // =========================================================
-        private Factura CrearFacturaDesdeCarrito()
-        {
-            var factura = new Factura
-            {
-                NombreEmisor = "El Cairo S.A.",
-                RTNEmisor = "08011999123999",
-                DireccionEmisor = "Tegucigalpa, Honduras",
-                FechaEmision = DateTime.Now,
-                NumeroFactura = "FAC-001"
-            };
-
-            foreach (var item in _carrito.Items)
-            {
-                factura.Items.Add(new ItemFactura
-                {
-                    Descripcion = item.NombreProducto,
-                    PrecioUnitario = item.PrecioVenta,
-                    Cantidad = item.Cantidad
-                });
-            }
-
-            return factura;
-        }
-
-        private async Task GenerarPDFFacturaAsync(Factura factura, string ruta)
-        {
-            await Task.Run(() =>
-            {
-                var culture = new CultureInfo("es-HN");
-                var fontNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
-                var fontBold = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
-                var fontItalic = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
-                Image logo = Properties.Resources.logo_ElCairo;
-
-                using var ms = new MemoryStream();
-                using var writer = new PdfWriter(ms);
-                using var pdf = new PdfDocument(writer);
-                using var doc = new Document(pdf, iText.Kernel.Geom.PageSize.A4);
-
-                doc.SetMargins(20, 20, 20, 20);
-
-                if (logo != null)
-                {
-                    try
-                    {
-                        using var lms = new MemoryStream();
-                        logo.Save(lms, System.Drawing.Imaging.ImageFormat.Png);
-                        doc.Add(new iText.Layout.Element.Image(
-                            iText.IO.Image.ImageDataFactory.Create(lms.ToArray()))
-                            .ScaleToFit(120, 60));
-                    }
-                    catch { }
-                }
-
-                doc.Add(new Paragraph("FACTURA")
-                    .SetFont(fontBold).SetFontSize(20)
-                    .SetTextAlignment(TextAlignment.CENTER));
-
-                doc.Add(new Paragraph($"Cliente: {factura.NombreCliente}").SetFont(fontNormal));
-                doc.Add(new Paragraph($"RTN: {factura.RTNCliente}").SetFont(fontNormal));
-                doc.Add(new Paragraph($"Dirección: {factura.DireccionCliente}").SetFont(fontNormal));
-                doc.Add(new Paragraph(" "));
-
-                // Tabla con código de barras incluido
-                var t = new Table(UnitValue.CreatePercentArray(
-                    new float[] { 20, 40, 10, 15, 15 }))
-                    .UseAllAvailableWidth();
-
-                t.AddHeaderCell("Código");
-                t.AddHeaderCell("Producto");
-                t.AddHeaderCell("Cant.");
-                t.AddHeaderCell("Precio");
-                t.AddHeaderCell("Total");
-
-                foreach (var item in factura.Items)
-                {
-                    t.AddCell(item.CodigoBarra ?? "");
-                    t.AddCell(item.Descripcion);
-                    t.AddCell(item.Cantidad.ToString());
-                    t.AddCell(item.PrecioUnitario.ToString("C", culture));
-                    t.AddCell(item.TotalLinea.ToString("C", culture));
-                }
-
-                doc.Add(t);
-                doc.Add(new Paragraph($"\nSubtotal: {factura.SubTotal.ToString("C", culture)}"));
-                doc.Add(new Paragraph($"ISV (15%): {factura.ISV.ToString("C", culture)}"));
-                doc.Add(new Paragraph($"TOTAL: {factura.Total.ToString("C", culture)}").SetFont(fontBold));
-                doc.Add(new Paragraph("\nGracias por su compra!")
-                    .SetFont(fontItalic).SetTextAlignment(TextAlignment.CENTER));
-                doc.Close();
-
-                File.WriteAllBytes(ruta, ms.ToArray());
-
-                try
-                {
-                    System.Diagnostics.Process.Start(
-                        new System.Diagnostics.ProcessStartInfo
-                        {
-                            FileName = ruta,
-                            UseShellExecute = true
-                        });
-                }
-                catch { }
-            });
         }
 
         // =========================================================

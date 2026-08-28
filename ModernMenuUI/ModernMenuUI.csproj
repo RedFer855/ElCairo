@@ -27,6 +27,7 @@
     <PackageReference Include="itext7" Version="9.4.0" />
     <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.4.0" />
     <PackageReference Include="QuestPDF" Version="2025.7.4" />
+    <PackageReference Include="PuppeteerSharp" Version="24.40.0" />
     <PackageReference Include="WinForms.DataVisualization" Version="1.10.0" />
   </ItemGroup>
 
@@ -64,6 +65,9 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Recursos\factura_sar_honduras.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -16,8 +16,13 @@ namespace CapaDominio
         public string TelefonoEmisor { get; set; }
         public string CorreoEmisor { get; set; }
         public string CAI { get; set; }
+        public string RangoDesde { get; set; }
+        public string RangoHasta { get; set; }
+        public DateTime? FechaLimiteEmision { get; set; }
         public DateTime FechaEmision { get; set; }
         public string NumeroFactura { get; set; }
+        public string NumeroFacturaPrefijo { get; set; }
+        public string NumeroFacturaSecuencial { get; set; }
 
         public string NombreCliente { get; set; }
         public string RTNCliente { get; set; }
@@ -40,7 +45,8 @@ namespace CapaDominio
         public string Descripcion { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
-        public decimal TotalLinea => Cantidad * PrecioUnitario;
+        public decimal Descuento { get; set; }
+        public decimal TotalLinea => (Cantidad * PrecioUnitario) - Descuento;
     }
 
 }
